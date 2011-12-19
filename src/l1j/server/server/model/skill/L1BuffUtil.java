@@ -1323,15 +1323,15 @@ public class L1BuffUtil {
 			break;
 
 		// 怪物专属魔法
-		case 10026:
+		case 10026: // 火龙安息字串
 		case 10027:
 		case 10028:
 		case 10029:
 			if (_user instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) _user;
-				_user.broadcastPacket(new S_NpcChatPacket(npc, "$3717", 0)); // さあ、おまえに安息を与えよう。
+				_user.broadcastPacket(new S_NpcChatPacket(npc, (cha.getName())+("! ")+("$3717"), (byte) 2)); // 龙的安息字串
 			} else {
-				_player.broadcastPacket(new S_ChatPacket(_player, "$3717", 0, 0)); // さあ、おまえに安息を与えよう。
+				_player.broadcastPacket(new S_ChatPacket(_player, (cha.getName())+("! ")+("$3717"), 0, (byte) 0)); // 龙的安息字串
 			}
 			break;
 		case 10057:

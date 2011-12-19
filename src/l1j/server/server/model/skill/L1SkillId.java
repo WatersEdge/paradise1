@@ -941,6 +941,8 @@ public class L1SkillId {
 	public static final int MAGIC_STONE_END = 6036;
 
 	// 怪物增加
+	/** 巴拉卡斯火牢 **/
+	public static final int BLKS_FIRE_WALL = 14000;
 	/** 亚力安冰矛围篱 **/
 	public static final int ICE_LANCE_COCKATRICE = 15003;
 	/** 邪恶蜥蜴冰矛围篱 **/

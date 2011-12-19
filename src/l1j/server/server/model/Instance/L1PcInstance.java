@@ -43,6 +43,7 @@ import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.ScheduledFuture;
@@ -1313,7 +1314,10 @@ public class L1PcInstance extends L1Character {
 				}
 				if ((attacker instanceof L1PcInstance) && ((L1PcInstance) attacker).isPinkName()) {
 					// ガードが画面内にいれば、攻击者をガードのターゲットに设定する
-					for (L1Object object : L1World.getInstance().getVisibleObjects(attacker)) {
+					Iterator<L1Object> itr = L1World.getInstance().getVisibleObjects(attacker).iterator();
+					while (itr.hasNext()) {
+						L1Object object = itr.next();
+					/*for (L1Object object : L1World.getInstance().getVisibleObjects(attacker)) {*/
 						if (object instanceof L1GuardInstance) {
 							L1GuardInstance guard = (L1GuardInstance) object;
 							guard.setTarget(((L1PcInstance) attacker));
