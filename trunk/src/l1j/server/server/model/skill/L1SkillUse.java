@@ -1642,6 +1642,10 @@ public class L1SkillUse {
 			case FIRE_WALL: // 火牢
 				L1EffectSpawn.getInstance().doSpawnFireWall(_user, _targetX, _targetY);
 				return;
+			case BLKS_FIRE_WALL: // 巴拉卡斯火牢
+				_user.setSkillEffect(_skillId, 11 * 1000);
+				L1EffectSpawn.getInstance().doSpawnFireWallforNpc(_user, _target);
+				return;
 			case TRUE_TARGET: // 精准目标
 				if (_user instanceof L1PcInstance) {
 					L1PcInstance pri = (L1PcInstance) _user;

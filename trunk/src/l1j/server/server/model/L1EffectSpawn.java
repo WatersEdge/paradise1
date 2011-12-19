@@ -27,6 +27,7 @@ import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
+import l1j.server.server.model.skill.NpcFireDamage;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.templates.L1Npc;
 
@@ -186,6 +187,36 @@ public class L1EffectSpawn {
 			}
 			base = effect;
 		}
-
 	}
+
+	/** 巴拉卡斯火牢 */
+	public void doSpawnFireWallforNpc(L1Character _user, L1Character target) {
+		@SuppressWarnings("unused")
+		L1Character base = _user;
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				L1EffectInstance effect = spawnEffect(81157, 10 * 1000, target.getX() + i, target.getY() + j, target.getMapId());
+				if (effect == null) {
+					break;
+				}
+				for (L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
+					if (objects instanceof L1EffectInstance) {
+						L1EffectInstance npc = (L1EffectInstance) objects;
+						if (npc.getNpcTemplate().get_npcId() == 81157) {
+							npc.deleteMe();
+						}
+					}
+				}
+				// 火牢伤害
+				@SuppressWarnings("unused")
+				L1Map map = L1WorldMap.getInstance().getMap(_user.getMapId());
+
+				NpcFireDamage firedamage = new NpcFireDamage(_user, effect);
+				firedamage.onDamageAction();
+				// 火牢伤害  end
+				base = effect;
+			}
+		}
+	}
+
 }
