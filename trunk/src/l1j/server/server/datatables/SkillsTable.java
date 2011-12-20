@@ -60,7 +60,7 @@ public class SkillsTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM skills");
+			pstm = con.prepareStatement("SELECT * FROM skills union SELECT * FROM z_copy_skills");
 			rs = pstm.executeQuery();
 			FillSkillsTable(rs);
 
