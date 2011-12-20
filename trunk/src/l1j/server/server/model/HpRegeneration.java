@@ -21,6 +21,7 @@ import l1j.server.server.utils.Random;
 
 import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.serverpackets.S_bonusstats;
 import l1j.server.server.types.Point;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
@@ -101,6 +102,20 @@ public class HpRegeneration extends TimerTask {
 			maxBonus = _pc.getCon() - 12;
 			if (25 < _pc.getCon()) {
 				maxBonus = 14;
+			}
+		}
+
+		// 免登出可点完奖励点
+		if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
+			if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
+				if ((_pc.getBaseStr()
+						+ _pc.getBaseDex()
+						+ _pc.getBaseCon()
+						+ _pc.getBaseInt()
+						+ _pc.getBaseWis()
+						+ _pc.getBaseCha()) < 150) {
+					_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
+				}
 			}
 		}
 
