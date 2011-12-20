@@ -446,6 +446,11 @@ public final class Config {
 	/** 备份的输出SQL是否启用GZip压缩 */
 	public static boolean CompressGzip;
 
+	// -----------------------------------------------------------------------------
+	// 其他设置相关 /** OtherSettings Settings */
+	// -----------------------------------------------------------------------------
+
+
 	// 配置文件
 	// -----------------------------------------------------------------------------
 	// 设定档路径 /** Configuration files */
@@ -462,6 +467,8 @@ public final class Config {
 	public static final String FIGHT_SETTINGS_CONFIG_FILE = "./config/fights.properties";
 	/** 纪录设定档 */
 	public static final String RECORD_SETTINGS_CONFIG_FILE = "./config/record.properties";
+	/** 其他设定档 */
+	public static final String OTHER_SETTINGS_CONFIG_FILE = "./config/othersettings.properties";
 
 	// -----------------------------------------------------------------------------
 	// 其他设定 /** Other files */
@@ -771,6 +778,20 @@ public final class Config {
 		}catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + RECORD_SETTINGS_CONFIG_FILE);
+		}
+
+		_log.info("读取游戏其他设定...");
+		// othersettings.properties
+		try {
+			Properties othersettings = new Properties();
+			InputStream is = new FileInputStream(new File(OTHER_SETTINGS_CONFIG_FILE));
+			othersettings.load(is);
+			is.close();
+
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw new Error("无法读取设定档: " + OTHER_SETTINGS_CONFIG_FILE);
 		}
 
 		validate();
@@ -1163,7 +1184,11 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
 			LOGGING_ARMOR_ENCHANT = Byte.parseByte(pValue);
-		} else {
+		}
+
+		// othersettings.properties
+
+		else {
 			return false;
 		}
 		return true;
