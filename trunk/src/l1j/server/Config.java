@@ -449,7 +449,8 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	// 其他设置相关 /** OtherSettings Settings */
 	// -----------------------------------------------------------------------------
-
+	/** 升级血魔满 */
+	public static boolean LvUpHpMpFull;
 
 	// 配置文件
 	// -----------------------------------------------------------------------------
@@ -783,11 +784,13 @@ public final class Config {
 		_log.info("读取游戏其他设定...");
 		// othersettings.properties
 		try {
-			Properties othersettings = new Properties();
+			Properties otherSettings = new Properties();
 			InputStream is = new FileInputStream(new File(OTHER_SETTINGS_CONFIG_FILE));
-			othersettings.load(is);
+			otherSettings.load(is);
 			is.close();
 
+			LvUpHpMpFull = Boolean.parseBoolean(otherSettings.getProperty(
+					"LvUpHpMpFull", "false"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
