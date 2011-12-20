@@ -114,6 +114,7 @@ import l1j.server.server.serverpackets.S_Lawful;
 import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_OtherCharPacks;
+import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_Poison;
@@ -4830,7 +4831,7 @@ public class L1PcInstance extends L1Character {
 			case 1:
 				addAc(2);
 				addMr(-3);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
 				break;
@@ -4838,7 +4839,7 @@ public class L1PcInstance extends L1Character {
 			case 2:
 				addAc(4);
 				addMr(-6);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
 				break;
@@ -4846,7 +4847,7 @@ public class L1PcInstance extends L1Character {
 			case 3:
 				addAc(6);
 				addMr(-9);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
 				break;
@@ -4881,7 +4882,7 @@ public class L1PcInstance extends L1Character {
 			case 1:
 				addAc(-2);
 				addMr(3);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
 				break;
@@ -4889,7 +4890,7 @@ public class L1PcInstance extends L1Character {
 			case 2:
 				addAc(-4);
 				addMr(6);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
 				break;
@@ -4897,7 +4898,7 @@ public class L1PcInstance extends L1Character {
 			case 3:
 				addAc(-6);
 				addMr(9);
-				sendPackets(new S_OwnCharStatus(this)); // 更新物理防显示
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
 				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
 				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
 				break;
