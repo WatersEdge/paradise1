@@ -451,6 +451,10 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	/** 升级血魔满 */
 	public static boolean LvUpHpMpFull;
+	/** 伺服器重启时间 */
+	public static int REST_TIME;
+	/** 整点报时 */
+	public static boolean HOURLY_CHIME;
 
 	// 配置文件
 	// -----------------------------------------------------------------------------
@@ -791,6 +795,10 @@ public final class Config {
 
 			LvUpHpMpFull = Boolean.parseBoolean(otherSettings.getProperty(
 					"LvUpHpMpFull", "false"));
+			REST_TIME = Integer.parseInt(otherSettings.getProperty(
+					"RestartTime", "240"));
+			HOURLY_CHIME = Boolean.parseBoolean(otherSettings.getProperty(
+					"HourlyChime", "false"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -1190,6 +1198,9 @@ public final class Config {
 		}
 
 		// othersettings.properties
+		else if (pName.equalsIgnoreCase("RestartTime")) {
+			REST_TIME = Integer.parseInt(pValue);
+		}
 
 		else {
 			return false;

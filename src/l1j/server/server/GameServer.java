@@ -66,6 +66,7 @@ import l1j.server.server.model.L1NpcRegenerationTimer;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.game.L1BugBearRace;
+import l1j.server.server.model.gametime.L1GameReStart;
 import l1j.server.server.model.gametime.L1GameTimeClock;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.map.L1WorldMap;
@@ -191,6 +192,11 @@ public class GameServer extends Thread {
 
 		// 初始化游戏时间
 		L1GameTimeClock.init();
+
+		// 初始化伺服器重启时间
+		if (Config.REST_TIME != 0) {
+			L1GameReStart.init();
+		}
 
 		// 初始化无限大战
 		UbTimeController ubTimeContoroller = UbTimeController.getInstance();
