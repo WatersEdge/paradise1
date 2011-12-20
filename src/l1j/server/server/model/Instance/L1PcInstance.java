@@ -2672,6 +2672,11 @@ public class L1PcInstance extends L1Character {
 			short randomMp = CalcStat.calcStatMp(getType(), getBaseMaxMp(), getBaseWis(), getOriginalMpup());
 			addBaseMaxHp(randomHp);
 			addBaseMaxMp(randomMp);
+
+			if (Config.LvUpHpMpFull) {
+				setCurrentHp(getMaxHp()); // 升级血满
+				setCurrentMp(getMaxMp()); // 升级魔满
+			}
 		}
 		resetBaseHitup();
 		resetBaseDmgup();
