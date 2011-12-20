@@ -15,6 +15,8 @@
 package l1j.server.server.clientpackets;
 
 import java.util.logging.Logger;
+
+import l1j.server.server.Account;
 import l1j.server.server.ClientThread;
 import l1j.server.server.LoginController;
 
@@ -31,6 +33,11 @@ public class C_ReturnToLogin extends ClientBasePacket {
 	public C_ReturnToLogin(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
 		String account = client.getAccountName();
+
+		// 修正 (经常卡在帐号密码或是提示帐号在使用中)
+		if (client.getAccount() != null) {
+			Account.online(client.getAccount(), false);
+		}
 		_log.finest((new StringBuilder()).append("账号 : ").append(account).toString());
 		LoginController.getInstance().logout(client);
 	}
