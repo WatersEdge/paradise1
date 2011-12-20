@@ -55,6 +55,11 @@ public class L1GameTime {
 		return new L1GameTime(t2 - t3);
 	}
 
+	/** 伺服器重启 */
+	public L1GameTime() {
+        this((int) System.currentTimeMillis());
+    }
+
 	public static L1GameTime fromSystemCurrentTime() {
 		return L1GameTime.valueOf(System.currentTimeMillis());
 	}
