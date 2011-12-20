@@ -56,7 +56,7 @@ public class ArmorSetTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM armor_set");
+			pstm = con.prepareStatement("SELECT * FROM armor_set union SELECT * FROM z_copy_armor_set");
 			rs = pstm.executeQuery();
 			fillTable(rs);
 		}
