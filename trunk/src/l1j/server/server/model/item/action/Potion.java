@@ -151,6 +151,11 @@ public class Potion {
 			return;
 		}
 
+		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+			cancelAbsoluteBarrier(pc); // 解除绝对屏障状态
+			return;
+		}
+
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 		pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
@@ -378,4 +383,15 @@ public class Potion {
 		pc.setSkillEffect(CURSE_BLIND, time * 1000);
 		pc.getInventory().removeItem(item, 1);
 	}
+
+	/** 解除绝对屏障状态 */
+	private static void cancelAbsoluteBarrier(L1PcInstance pc) {
+		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
+			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
+			pc.startHpRegeneration();
+			pc.startMpRegeneration();
+			pc.startMpRegenerationByDoll();
+		}
+	}
+
 }
