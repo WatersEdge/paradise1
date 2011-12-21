@@ -948,4 +948,8 @@ public class L1SkillId {
 	/** 邪恶蜥蜴冰矛围篱 **/
 	public static final int ICE_LANCE_BASILISK = 15004;
 
+	// 自定义状态
+	/** 法利昂的治愈结界 **/
+	public static final int FLA_CURE_WARD = 20000;
+
 }
