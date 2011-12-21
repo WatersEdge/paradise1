@@ -50,6 +50,7 @@ import l1j.server.server.serverpackets.S_SkillIconBloodstain;
 import l1j.server.server.serverpackets.S_SkillIconShield;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Strup;
 import l1j.server.server.templates.L1Skills;
 
@@ -615,6 +616,29 @@ class L1SkillStop {
 		// ****** 毒关系
 		else if (skillId == STATUS_POISON) { // 毒伤害
 			cha.curePoison();
+		}
+
+		// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
+		else if (skillId == FLA_CURE_WARD) {
+			L1PcInstance pc = (L1PcInstance) cha;
+			int healHp = 80;
+			if ((cha instanceof L1PcInstance) && (!pc.isDead())) {
+				pc.setCurrentHp(pc.getCurrentHp() + healHp);
+				pc.sendPackets(new S_SkillSound(pc.getId(), 2187)); // 特效
+				pc.broadcastPacket(new S_SkillSound(pc.getId(), 2187));
+				//pc.sendPackets(new S_SkillIconGFX(75, 8));
+				pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
+				if ((pc.getInventory().checkEquipped(21119)) // 法利昂的力量
+						|| (pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
+						|| (pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
+						|| (pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
+						) {
+					pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
+				}
+				else {
+					return;
+				}
+			}
 		}
 
 		// ****** 料理关系

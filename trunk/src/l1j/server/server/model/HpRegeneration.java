@@ -105,6 +105,19 @@ public class HpRegeneration extends TimerTask {
 			}
 		}
 
+		// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
+		if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) {  // 没有法利昂的治愈结界
+			if ((_pc.getInventory().checkEquipped(21119)) // 法利昂的力量
+					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
+					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
+					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
+					) {
+				_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
+			}
+			else {
+				return;
+			}
+		}
 		// 免登出可点完奖励点
 		if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
 			if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
