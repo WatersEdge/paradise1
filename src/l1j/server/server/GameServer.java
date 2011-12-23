@@ -238,6 +238,9 @@ public class GameServer extends Thread {
 		// 初始化游戏公告
 		Announcements.getInstance();
 
+		// 初始化游戏循环公告
+		AnnouncementsCycle.getInstance();
+
 		// 初始化MySQL自动备份程序
 		MysqlAutoBackup.getInstance();
 
