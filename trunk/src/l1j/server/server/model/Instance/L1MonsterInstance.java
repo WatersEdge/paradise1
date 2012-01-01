@@ -18,6 +18,8 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHA
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +44,7 @@ import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.serverpackets.S_ChangeName;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.serverpackets.S_NpcChangeShape;
@@ -354,6 +357,11 @@ public class L1MonsterInstance extends L1NpcInstance {
 		}
 	}
 
+	// 打怪才显示血条
+	Timer cancel_broadcast = null;
+	L1PcInstance pc = null;
+	L1PcInstance pc_party[] = null;
+
 	@Override
 	public void receiveDamage(L1Character attacker, int damage) { // 攻击でＨＰを减らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
@@ -390,9 +398,28 @@ public class L1MonsterInstance extends L1NpcInstance {
 				player.setPetTarget(this);
 			}
 
+			// 打怪才显示血条
+			if ( L1World.getInstance().getPlayer(attacker.getName()) != null )
+				pc = L1World.getInstance().getPlayer(attacker.getName());
+			else {
+				L1NpcInstance pet = (L1NpcInstance) L1World.getInstance().findObject(attacker.getId());
+				pc = L1World.getInstance().getPlayer(pet.getMaster().getName());
+			}
+			if ( pc.getParty() != null )
+				pc_party = pc.getParty().getMembers();
+
 			int newHp = getCurrentHp() - damage;
 			if ((newHp <= 0) && !isDead()) {
 				int transformId = getNpcTemplate().getTransformId();
+
+				// 打怪才显示血条
+				pc.sendPackets(new S_HPMeter(this.getId(), 0xFF)); // 关闭血条
+				if ( pc.getParty() != null ) {
+					for ( int i = 0; i < pc_party.length; i++ ) {
+						pc_party[i].sendPackets(new S_HPMeter(this.getId(), 0xFF));
+					}
+				}
+
 				// 变身しないモンスター
 				if (transformId == -1) {
 					if (getPortalNumber() != -1) {
@@ -436,7 +463,33 @@ public class L1MonsterInstance extends L1NpcInstance {
 			if (newHp > 0) {
 				setCurrentHp(newHp);
 				hide();
+
+				// 打怪才显示血条
+				pc.sendPackets(new S_HPMeter(this));
+				if ( pc.getParty() != null ) {
+					for ( int i = 0; i < pc_party.length; i++ ) {
+						pc_party[i].sendPackets(new S_HPMeter(this));
+					}
+				}
+				if ( cancel_broadcast != null ) {
+					cancel_broadcast.cancel();
+					cancel_broadcast = null;
+				}
 			}
+			cancel_broadcast = new Timer();
+			final L1Object broadcastMonster = this;
+			cancel_broadcast.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					pc.sendPackets(new S_HPMeter(broadcastMonster.getId(), 0xFF)); // 关闭血条
+					if ( pc.getParty() != null ) {
+						for ( int i = 0; i < pc_party.length; i++ ) {
+							pc_party[i].sendPackets(new S_HPMeter(broadcastMonster.getId(), 0xFF));
+						}
+					}
+					cancel_broadcast.cancel();
+				}
+			}, 10000); // 10秒没继续打怪就关闭血条
 		} else if (!isDead()) { // 念のため
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);
