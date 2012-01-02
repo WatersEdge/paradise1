@@ -218,34 +218,34 @@ public class Potion {
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), 191));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 191));
-		// XXX:ヘイストアイテム装备时、醉った状态が解除されるのか不明
+		// XXX:装备加速道具时、解除醉酒状态不明
 		if (pc.getHasteItemEquipped() > 0) {
 			return;
 		}
-		// 醉った状态を解除
+		// 醉酒状态解除
 		pc.setDrink(false);
 
 		// 消除重复状态
-		if (pc.hasSkillEffect(HASTE)) {
+		if (pc.hasSkillEffect(HASTE)) { // 加速术
 			pc.killSkillEffectTimer(HASTE);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.setMoveSpeed(0);
 		}
-		else if (pc.hasSkillEffect(GREATER_HASTE)) {
+		else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
 			pc.killSkillEffectTimer(GREATER_HASTE);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.setMoveSpeed(0);
 		}
-		else if (pc.hasSkillEffect(STATUS_HASTE)) {
+		else if (pc.hasSkillEffect(STATUS_HASTE)) { // 一段加速
 			pc.killSkillEffectTimer(STATUS_HASTE);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
 			pc.setMoveSpeed(0);
 		}
 
-		// スロー、マス スロー、エンタングル中はスロー状态を解除するだけ
+		// 缓速术、集体缓速术、地面障碍中解除缓速状态
 		if (pc.hasSkillEffect(SLOW)) { // 缓速术
 			pc.killSkillEffectTimer(SLOW);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
@@ -265,7 +265,7 @@ public class Potion {
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time));
 			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
 			pc.setMoveSpeed(1);
-			pc.setSkillEffect(STATUS_HASTE, time * 1000);
+			pc.setSkillEffect(STATUS_HASTE, time * 1000); // 给予一段加速效果
 		}
 		pc.getInventory().removeItem(item, 1);
 	}
@@ -286,7 +286,7 @@ public class Potion {
 			time = 2400;
 		}
 
-		if (pc.hasSkillEffect(STATUS_BLUE_POTION)) {
+		if (pc.hasSkillEffect(STATUS_BLUE_POTION)) { // 蓝水状态
 			pc.killSkillEffectTimer(STATUS_BLUE_POTION);
 		}
 		pc.sendPackets(new S_SkillIconGFX(34, time)); // 状态图示
@@ -294,7 +294,7 @@ public class Potion {
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
 		pc.sendPackets(new S_ServerMessage(1007)); // 你感觉到魔力恢复速度加快。
 
-		pc.setSkillEffect(STATUS_BLUE_POTION, time * 1000);
+		pc.setSkillEffect(STATUS_BLUE_POTION, time * 1000); // 给予蓝水状态
 		pc.getInventory().removeItem(item, 1);
 	}
 
@@ -314,7 +314,7 @@ public class Potion {
 			time = 1000;
 		}
 
-		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
+		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) { // 智慧药水状态
 			pc.addSp(2);
 		} else {
 			pc.killSkillEffectTimer(STATUS_WISDOM_POTION);
@@ -361,6 +361,7 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
+	/** 使用黑色药水 */
 	public static void useBlindPotion(L1PcInstance pc, L1ItemInstance item) {
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
@@ -368,20 +369,20 @@ public class Potion {
 		}
 
 		int time = 16;
-		if (pc.hasSkillEffect(CURSE_BLIND)) {
+		if (pc.hasSkillEffect(CURSE_BLIND)) { // 法师魔法 (闇盲咒术)
 			pc.killSkillEffectTimer(CURSE_BLIND);
-		} else if (pc.hasSkillEffect(DARKNESS)) {
+		} else if (pc.hasSkillEffect(DARKNESS)) { // 法师魔法 (黑闇之影)
 			pc.killSkillEffectTimer(DARKNESS);
 		}
 
-		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
+		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) { // 漂浮之眼肉
 			pc.sendPackets(new S_CurseBlind(2));
 		} else {
 			pc.sendPackets(new S_CurseBlind(1));
 		}
 
-		pc.setSkillEffect(CURSE_BLIND, time * 1000);
-		pc.getInventory().removeItem(item, 1);
+		pc.setSkillEffect(CURSE_BLIND, time * 1000); // 给予16秒效果
+		pc.getInventory().removeItem(item, 1); // 删除道具
 	}
 
 	/** 解除绝对屏障状态 */
