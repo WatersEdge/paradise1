@@ -285,7 +285,7 @@ public class C_LoginToServer extends ClientBasePacket {
 
 		if ((pc.getLevel() >= 51) && (pc.getLevel() - 50 > pc.getBonusStats())) {
 			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon()
-					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < 210) {
+					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 				pc.sendPackets(new S_bonusstats(pc.getId(), 1));
 			}
 		}

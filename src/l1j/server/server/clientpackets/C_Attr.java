@@ -49,6 +49,7 @@ import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_Resurrection;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_Trade;
 import l1j.server.server.templates.L1House;
 import l1j.server.server.templates.L1Npc;
@@ -417,88 +418,88 @@ public class C_Attr extends ClientBasePacket {
 				}
 				break;
 
-		case 479: // 提升能力值？（str、dex、int、con、wis、cha）
-			if (readC() == 1) {
-				String s = readS();
-				if (!(pc.getLevel() - 50 > pc.getBonusStats())) {
-					return;
+			case 479: // 提升能力值？（str、dex、int、con、wis、cha）
+				if (readC() == 1) {
+					String s = readS();
+					if (!(pc.getLevel() - 50 > pc.getBonusStats())) {
+						return;
+					}
+					if (s.toLowerCase().equals("str".toLowerCase())) {
+						// if(l1pcinstance.get_str() < 255)
+						if (pc.getBaseStr() < Config.BONUS_STATS1) {
+							pc.addBaseStr((byte) 1); // 素のSTR值に+1
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("力量属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。"));// \f1属性最大值只能到35。请重试一次。
+						}
+					} else if (s.toLowerCase().equals("dex".toLowerCase())) {
+						// if(l1pcinstance.get_dex() < 255)
+						if (pc.getBaseDex() < Config.BONUS_STATS1) {
+							pc.addBaseDex((byte) 1); // 素のDEX值に+1
+							pc.resetBaseAc();
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("敏捷属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。")); // \f1属性最大值只能到35。请重试一次。
+						}
+					} else if (s.toLowerCase().equals("con".toLowerCase())) {
+						// if(l1pcinstance.get_con() < 255)
+						if (pc.getBaseCon() < Config.BONUS_STATS1) {
+							pc.addBaseCon((byte) 1); // 素のCON值に+1
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("体质属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。")); // \f1属性最大值只能到35。 请重试一次。
+						}
+					} else if (s.toLowerCase().equals("int".toLowerCase())) {
+						// if(l1pcinstance.get_int() < 255)
+						if (pc.getBaseInt() < Config.BONUS_STATS1) {
+							pc.addBaseInt((byte) 1); // 素のINT值に+1
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("智力属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。")); // \f1属性最大值只能到35。 请重试一次。
+						}
+					} else if (s.toLowerCase().equals("wis".toLowerCase())) {
+						// if(l1pcinstance.get_wis() < 255)
+						if (pc.getBaseWis() < Config.BONUS_STATS1) {
+							pc.addBaseWis((byte) 1); // 素のWIS值に+1
+							pc.resetBaseMr();
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("精神属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。")); // \f1属性最大值只能到35。 请重试一次。
+						}
+					} else if (s.toLowerCase().equals("cha".toLowerCase())) {
+						// if(l1pcinstance.get_cha() < 255)
+						if (pc.getBaseCha() < Config.BONUS_STATS1) {
+							pc.addBaseCha((byte) 1); // 素のCHA值に+1
+							pc.setBonusStats(pc.getBonusStats() + 1);
+							pc.sendPackets(new S_OwnCharStatus2(pc));
+							pc.sendPackets(new S_CharVisualUpdate(pc));
+							pc.save(); // 将玩家资料储存到资料库中
+						} else {
+							pc.sendPackets(new S_SystemMessage("魅力属性最大值只能到" + Config.BONUS_STATS1 + ",请选择其他能力值。")); // \f1属性最大值只能到35。 请重试一次。
+						}
+					}
 				}
-				if (s.toLowerCase().equals("str".toLowerCase())) {
-					// if(l1pcinstance.get_str() < 255)
-					if (pc.getBaseStr() < 35) {
-						pc.addBaseStr((byte) 1); // 素のSTR值に+1
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				} else if (s.toLowerCase().equals("dex".toLowerCase())) {
-					// if(l1pcinstance.get_dex() < 255)
-					if (pc.getBaseDex() < 35) {
-						pc.addBaseDex((byte) 1); // 素のDEX值に+1
-						pc.resetBaseAc();
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				} else if (s.toLowerCase().equals("con".toLowerCase())) {
-					// if(l1pcinstance.get_con() < 255)
-					if (pc.getBaseCon() < 35) {
-						pc.addBaseCon((byte) 1); // 素のCON值に+1
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				} else if (s.toLowerCase().equals("int".toLowerCase())) {
-					// if(l1pcinstance.get_int() < 255)
-					if (pc.getBaseInt() < 35) {
-						pc.addBaseInt((byte) 1); // 素のINT值に+1
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				} else if (s.toLowerCase().equals("wis".toLowerCase())) {
-					// if(l1pcinstance.get_wis() < 255)
-					if (pc.getBaseWis() < 35) {
-						pc.addBaseWis((byte) 1); // 素のWIS值に+1
-						pc.resetBaseMr();
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				} else if (s.toLowerCase().equals("cha".toLowerCase())) {
-					// if(l1pcinstance.get_cha() < 255)
-					if (pc.getBaseCha() < 35) {
-						pc.addBaseCha((byte) 1); // 素のCHA值に+1
-						pc.setBonusStats(pc.getBonusStats() + 1);
-						pc.sendPackets(new S_OwnCharStatus2(pc));
-						pc.sendPackets(new S_CharVisualUpdate(pc));
-						pc.save(); // 将玩家资料储存到资料库中
-					} else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
-					}
-				}
-			}
-			break;
-		case 1256:// 宠物竞速 预约名单回应
-			l1j.server.server.model.game.L1PolyRace.getInstance().requsetAttr(pc, readC());
-			break;
-		default:
-			break;
+				break;
+			case 1256:// 宠物竞速 预约名单回应
+				l1j.server.server.model.game.L1PolyRace.getInstance().requsetAttr(pc, readC());
+				break;
+			default:
+				break;
 		}
 	}
 
