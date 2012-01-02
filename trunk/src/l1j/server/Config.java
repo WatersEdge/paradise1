@@ -455,6 +455,13 @@ public final class Config {
 	public static int REST_TIME;
 	/** 整点报时 */
 	public static boolean HOURLY_CHIME;
+	// 能力值上限调整原创 by 阿傑
+	/** 能力值上限调整 */
+	public static int BONUS_STATS1;
+	/** 能力值上限调整 */
+	public static int BONUS_STATS2;
+	/** 能力值上限调整 */
+	public static int BONUS_STATS3;
 
 	// 配置文件
 	// -----------------------------------------------------------------------------
@@ -799,6 +806,13 @@ public final class Config {
 					"RestartTime", "240"));
 			HOURLY_CHIME = Boolean.parseBoolean(otherSettings.getProperty(
 					"HourlyChime", "false"));
+			// 能力值上限调整原创 by 阿傑
+			BONUS_STATS1 = Integer.parseInt(otherSettings.getProperty(
+					"BONUS_STATS1", "35"));
+			BONUS_STATS2 = Integer.parseInt(otherSettings.getProperty(
+					"BONUS_STATS2", "5"));
+			BONUS_STATS3 = Integer.parseInt(otherSettings.getProperty(
+					"BONUS_STATS3", "35"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -1200,6 +1214,16 @@ public final class Config {
 		// othersettings.properties
 		else if (pName.equalsIgnoreCase("RestartTime")) {
 			REST_TIME = Integer.parseInt(pValue);
+		}
+		// 能力值上限调整原创 by 阿傑
+		else if (pName.equalsIgnoreCase("BONUS_STATS1")) {
+			BONUS_STATS1 = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BONUS_STATS2")) {
+			BONUS_STATS2 = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BONUS_STATS3")) {
+			BONUS_STATS3 = Integer.parseInt(pValue);
 		}
 
 		else {

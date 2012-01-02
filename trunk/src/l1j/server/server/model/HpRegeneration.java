@@ -17,6 +17,8 @@ package l1j.server.server.model;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import l1j.server.Config;
 import l1j.server.server.utils.Random;
 
 import l1j.server.server.model.Instance.L1EffectInstance;
@@ -126,7 +128,7 @@ public class HpRegeneration extends TimerTask {
 						+ _pc.getBaseCon()
 						+ _pc.getBaseInt()
 						+ _pc.getBaseWis()
-						+ _pc.getBaseCha()) < 150) {
+						+ _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 					_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
 				}
 			}

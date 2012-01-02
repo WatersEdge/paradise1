@@ -2701,7 +2701,7 @@ public class L1PcInstance extends L1Character {
 					+ getBaseCon()
 					+ getBaseInt()
 					+ getBaseWis()
-					+ getBaseCha()) < 210) {
+					+ getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 				sendPackets(new S_bonusstats(getId(), 1));
 			}
 		}

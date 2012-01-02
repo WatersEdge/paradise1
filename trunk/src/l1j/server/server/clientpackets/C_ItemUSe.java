@@ -105,6 +105,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_ShowPolyList;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Sound;
+import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
 import l1j.server.server.serverpackets.S_UseMap;
 import l1j.server.server.storage.CharactersItemStorage;
@@ -144,6 +145,10 @@ public class C_ItemUSe extends ClientBasePacket {
 
 		if ((l1iteminstance == null) || (pc.isDead())) {
 			return;
+		}
+
+		if (pc.getElixirStats() >= Config.BONUS_STATS2) {
+			pc.sendPackets(new S_SystemMessage("\\f1万能药只能喝 " + Config.BONUS_STATS2 + " 瓶。")); // \f1万能药只能喝 %0 瓶。
 		}
 
 		// none:不能使用的道具
@@ -445,7 +450,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 				// 万能药水:力量
 				else if (itemId == 40033) {
-					if ((pc.getBaseStr() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseStr() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseStr((byte) 1); // 素のSTR值に+1
 						pc.setElixirStats(pc.getElixirStats() + 1);
 						pc.getInventory().removeItem(l1iteminstance, 1);
@@ -453,13 +458,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseStr() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Str " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
 				// 万能药水:体质
 				else if (itemId == 40034) {
-					if ((pc.getBaseCon() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseCon() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseCon((byte) 1); // 素のCON值に+1
 						pc.setElixirStats(pc.getElixirStats() + 1);
 						pc.getInventory().removeItem(l1iteminstance, 1);
@@ -467,13 +473,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseCon() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Con " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
 				// 万能药水:敏捷
 				else if (itemId == 40035) {
-					if ((pc.getBaseDex() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseDex() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseDex((byte) 1); // 素のDEX值に+1
 						pc.resetBaseAc();
 						pc.setElixirStats(pc.getElixirStats() + 1);
@@ -482,13 +489,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseDex() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Dex " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
 				// 万能药水:智力
 				else if (itemId == 40036) {
-					if ((pc.getBaseInt() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseInt() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseInt((byte) 1); // 素のINT值に+1
 						pc.setElixirStats(pc.getElixirStats() + 1);
 						pc.getInventory().removeItem(l1iteminstance, 1);
@@ -496,13 +504,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseInt() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Int " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
 				// 万能药水:精神
 				else if (itemId == 40037) {
-					if ((pc.getBaseWis() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseWis() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseWis((byte) 1); // 素のWIS值に+1
 						pc.resetBaseMr();
 						pc.setElixirStats(pc.getElixirStats() + 1);
@@ -511,13 +520,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseWis() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Wis " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
 				// 万能药水:魅力
 				else if (itemId == 40038) {
-					if ((pc.getBaseCha() < 35) && (pc.getElixirStats() < 5)) {
+					if ((pc.getBaseCha() < Config.BONUS_STATS3) && (pc.getElixirStats() < Config.BONUS_STATS2)) {
 						pc.addBaseCha((byte) 1); // 素のCHA值に+1
 						pc.setElixirStats(pc.getElixirStats() + 1);
 						pc.getInventory().removeItem(l1iteminstance, 1);
@@ -525,7 +535,8 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.save(); // 将玩家资料储存到资料库中
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
+						if (pc.getBaseCha() >= Config.BONUS_STATS3)
+							pc.sendPackets(new S_SystemMessage("能力值Cha " + Config.BONUS_STATS3 + " 以后不能喝万能药。")); // \f1能力值 %0%s %1 以后不能喝万能药！
 					}
 				}
 
