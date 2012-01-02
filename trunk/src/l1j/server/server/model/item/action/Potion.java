@@ -390,6 +390,7 @@ public class Potion {
 			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
 			pc.startHpRegeneration();
 			pc.startMpRegeneration();
+			pc.startHpRegenerationByDoll();
 			pc.startMpRegenerationByDoll();
 		}
 	}
