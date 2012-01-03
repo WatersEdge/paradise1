@@ -147,10 +147,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		if (pc.getElixirStats() >= Config.BONUS_STATS2) {
-			pc.sendPackets(new S_SystemMessage("\\f1万能药只能喝 " + Config.BONUS_STATS2 + " 瓶。")); // \f1万能药只能喝 %0 瓶。
-		}
-
 		// none:不能使用的道具
 		if (l1iteminstance.getItem().getUseType() == -1) {
 			pc.sendPackets(new S_ServerMessage(74, l1iteminstance.getLogName())); // \\f1%0%o 无法使用。
@@ -446,6 +442,18 @@ public class C_ItemUSe extends ClientBasePacket {
 
 					// 处理新手保护系统(遭遇的守护)状态资料的变动
 					pc.checkNoviceType();
+				}
+
+				if (itemId == 40033
+						|| itemId == 40034
+						|| itemId == 40035
+						|| itemId == 40036
+						|| itemId == 40037
+						|| itemId == 40038
+						) {
+					if (pc.getElixirStats() >= Config.BONUS_STATS2) {
+						pc.sendPackets(new S_SystemMessage("\\f1万能药只能喝 " + Config.BONUS_STATS2 + " 瓶。")); // \f1万能药只能喝 %0 瓶。
+					}
 				}
 
 				// 万能药水:力量
