@@ -98,6 +98,9 @@ public class L1ItemId {
 	/** 浓缩终极体力恢复剂 */
 	public static final int CONDENSED_POTION_OF_GREATER_HEALING = 40021;
 
+	/** 万圣节南瓜派 */
+	public static final int HALLOWEEN_PUMPKIN_PIE = 400000;
+
     //药水类道具
 	/** 蓝色药水 */
 	public static final int POTION_OF_MANA = 40015;

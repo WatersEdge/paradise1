@@ -573,6 +573,11 @@ public class C_ItemUSe extends ClientBasePacket {
 					Potion.UseHeallingPotion(pc, l1iteminstance, 75, 197);
 				}
 
+				// 万圣节南瓜派
+				else if (itemId == L1ItemId.HALLOWEEN_PUMPKIN_PIE) { // 万圣节南瓜派
+					Potion.UseHeallingPotion(pc, l1iteminstance, 100, 197); // 加血量与效果
+				}
+
 				// 古代体力恢复剂
 				else if (itemId == 40022) {
 					Potion.UseHeallingPotion(pc, l1iteminstance, 20, 189);

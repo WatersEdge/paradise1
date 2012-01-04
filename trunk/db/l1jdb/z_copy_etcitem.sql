@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2011-12-20 œ¬ŒÁ 11:35:18
+Date: 2012-1-5 …œŒÁ 01:27:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,8 +42,9 @@ CREATE TABLE `z_copy_etcitem` (
   `food_volume` int(10) unsigned NOT NULL DEFAULT '0',
   `save_at_once` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=240102 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=400001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `z_copy_etcitem` VALUES ('400000', '‰∏áÂú£ËäÇÂçóÁìúÊ¥æ', '$4324', '$4324', 'potion', 'normal', 'glass', '4900', '2260', '43', '15', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '2', '1000', '0', '0', '0');

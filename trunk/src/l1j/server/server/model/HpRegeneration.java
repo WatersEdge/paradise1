@@ -63,6 +63,38 @@ public class HpRegeneration extends TimerTask {
 				return;
 			}
 
+			// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
+			if ((_pc.getInventory().checkEquipped(21119)) // 法利昂的力量
+					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
+					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
+					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
+					) {
+				if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) {  // 没有法利昂的治愈结界
+					_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
+				}
+			}
+
+			// 装备南瓜魔法帽获得万圣节南瓜派
+			if (_pc.getInventory().checkEquipped(20380)) { // 检查是否装备南瓜魔法帽
+				if (!_pc.hasSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN) && !_pc.isDead()) {  // 如果没有南瓜魔法帽效果
+					_pc.setSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN, 5 * 60 * 1000); // 加上效果并开始倒计时5分钟
+				}
+			}
+
+			// 免登出可点完奖励点
+			if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
+				if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
+					if ((_pc.getBaseStr()
+							+ _pc.getBaseDex()
+							+ _pc.getBaseCon()
+							+ _pc.getBaseInt()
+							+ _pc.getBaseWis()
+							+ _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+						_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
+					}
+				}
+			}
+
 			_regenPoint += _curPoint;
 			_curPoint = 4;
 
@@ -104,33 +136,6 @@ public class HpRegeneration extends TimerTask {
 			maxBonus = _pc.getCon() - 12;
 			if (25 < _pc.getCon()) {
 				maxBonus = 14;
-			}
-		}
-
-		// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
-		if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) {  // 没有法利昂的治愈结界
-			if ((_pc.getInventory().checkEquipped(21119)) // 法利昂的力量
-					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
-					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
-					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
-					) {
-				_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
-			}
-			else {
-				return;
-			}
-		}
-		// 免登出可点完奖励点
-		if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
-			if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
-				if ((_pc.getBaseStr()
-						+ _pc.getBaseDex()
-						+ _pc.getBaseCon()
-						+ _pc.getBaseInt()
-						+ _pc.getBaseWis()
-						+ _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
-					_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
-				}
 			}
 		}
 

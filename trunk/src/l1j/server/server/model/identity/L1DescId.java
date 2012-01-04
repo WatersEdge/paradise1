@@ -4546,5 +4546,411 @@ public class L1DescId {
 		public static final int $2735 = 2735;
 		/**  */
 		public static final int $2736 = 2736;
+		/**  */
+		public static final int $2737 = 2737;
+		/**  */
+		public static final int $2738 = 2738;
+		/**  */
+		public static final int $2739 = 2739;
+		/**  */
+		public static final int $2740 = 2740;
+		/**  */
+		public static final int $2741 = 2741;
+		/**  */
+		public static final int $2742 = 2742;
+		/**  */
+		public static final int $2743 = 2743;
+		/**  */
+		public static final int $2744 = 2744;
+		/**  */
+		public static final int $2745 = 2745;
+		/**  */
+		public static final int $2746 = 2746;
+		/**  */
+		public static final int $2747 = 2747;
+		/**  */
+		public static final int $2748 = 2748;
+		/**  */
+		public static final int $2749 = 2749;
+		/**  */
+		public static final int $2750 = 2750;
+		/**  */
+		public static final int $2751 = 2751;
+		/**  */
+		public static final int $2752 = 2752;
+		/**  */
+		public static final int $2753 = 2753;
+		/**  */
+		public static final int $2754 = 2754;
+		/**  */
+		public static final int $2755 = 2755;
+		/**  */
+		public static final int $2756 = 2756;
+		/**  */
+		public static final int $2757 = 2757;
+		/**  */
+		public static final int $2758 = 2758;
+		/**  */
+		public static final int $2759 = 2759;
+		/**  */
+		public static final int $2760 = 2760;
+		/**  */
+		public static final int $2761 = 2761;
+		/**  */
+		public static final int $2762 = 2762;
+		/**  */
+		public static final int $2763 = 2763;
+		/**  */
+		public static final int $2764 = 2764;
+		/**  */
+		public static final int $2765 = 2765;
+		/**  */
+		public static final int $2766 = 2766;
+		/**  */
+		public static final int $2767 = 2767;
+		/**  */
+		public static final int $2768 = 2768;
+		/**  */
+		public static final int $2769 = 2769;
+		/**  */
+		public static final int $2770 = 2770;
+		/**  */
+		public static final int $2771 = 2771;
+		/**  */
+		public static final int $2772 = 2772;
+		/**  */
+		public static final int $2773 = 2773;
+		/**  */
+		public static final int $2774 = 2774;
+		/**  */
+		public static final int $2775 = 2775;
+		/**  */
+		public static final int $2776 = 2776;
+		/**  */
+		public static final int $2777 = 2777;
+		/**  */
+		public static final int $2778 = 2778;
+		/**  */
+		public static final int $2779 = 2779;
+		/**  */
+		public static final int $2780 = 2780;
+		/**  */
+		public static final int $2781 = 2781;
+		/**  */
+		public static final int $2782 = 2782;
+		/**  */
+		public static final int $2783 = 2783;
+		/**  */
+		public static final int $2784 = 2784;
+		/**  */
+		public static final int $2785 = 2785;
+		/**  */
+		public static final int $2786 = 2786;
+		/**  */
+		public static final int $2787 = 2787;
+		/**  */
+		public static final int $2788 = 2788;
+		/**  */
+		public static final int $2789 = 2789;
+		/**  */
+		public static final int $2790 = 2790;
+		/**  */
+		public static final int $2791 = 2791;
+		/**  */
+		public static final int $2792 = 2792;
+		/**  */
+		public static final int $2793 = 2793;
+		/**  */
+		public static final int $2794 = 2794;
+		/**  */
+		public static final int $2795 = 2795;
+		/**  */
+		public static final int $2796 = 2796;
+		/**  */
+		public static final int $2797 = 2797;
+		/**  */
+		public static final int $2798 = 2798;
+		/**  */
+		public static final int $2799 = 2799;
+		/**  */
+		public static final int $2800 = 2800;
+		/**  */
+		public static final int $2801 = 2801;
+		/**  */
+		public static final int $2802 = 2802;
+		/**  */
+		public static final int $2803 = 2803;
+		/**  */
+		public static final int $2804 = 2804;
+		/**  */
+		public static final int $2805 = 2805;
+		/**  */
+		public static final int $2806 = 2806;
+		/**  */
+		public static final int $2807 = 2807;
+		/**  */
+		public static final int $2808 = 2808;
+		/**  */
+		public static final int $2809 = 2809;
+		/**  */
+		public static final int $2810 = 2810;
+		/**  */
+		public static final int $2811 = 2811;
+		/**  */
+		public static final int $2812 = 2812;
+		/**  */
+		public static final int $2813 = 2813;
+		/**  */
+		public static final int $2814 = 2814;
+		/**  */
+		public static final int $2815 = 2815;
+		/**  */
+		public static final int $2816 = 2816;
+		/**  */
+		public static final int $2817 = 2817;
+		/**  */
+		public static final int $2818 = 2818;
+		/**  */
+		public static final int $2819 = 2819;
+		/**  */
+		public static final int $2820 = 2820;
+		/**  */
+		public static final int $2821 = 2821;
+		/**  */
+		public static final int $2822 = 2822;
+		/**  */
+		public static final int $2823 = 2823;
+		/**  */
+		public static final int $2824 = 2824;
+		/**  */
+		public static final int $2825 = 2825;
+		/**  */
+		public static final int $2826 = 2826;
+		/**  */
+		public static final int $2827 = 2827;
+		/**  */
+		public static final int $2828 = 2828;
+		/**  */
+		public static final int $2829 = 2829;
+		/**  */
+		public static final int $2830 = 2830;
+		/**  */
+		public static final int $2831 = 2831;
+		/**  */
+		public static final int $2832 = 2832;
+		/**  */
+		public static final int $2833 = 2833;
+		/**  */
+		public static final int $2834 = 2834;
+		/**  */
+		public static final int $2835 = 2835;
+		/**  */
+		public static final int $2836 = 2836;
+		/**  */
+		public static final int $2837 = 2837;
+		/**  */
+		public static final int $2838 = 2838;
+		/**  */
+		public static final int $2839 = 2839;
+		/**  */
+		public static final int $2840 = 2840;
+		/**  */
+		public static final int $2841 = 2841;
+		/**  */
+		public static final int $2842 = 2842;
+		/**  */
+		public static final int $2843 = 2843;
+		/**  */
+		public static final int $2844 = 2844;
+		/**  */
+		public static final int $2845 = 2845;
+		/**  */
+		public static final int $2846 = 2846;
+		/**  */
+		public static final int $2847 = 2847;
+		/**  */
+		public static final int $2848 = 2848;
+		/**  */
+		public static final int $2849 = 2849;
+		/**  */
+		public static final int $2850 = 2850;
+		/**  */
+		public static final int $2851 = 2851;
+		/**  */
+		public static final int $2852 = 2852;
+		/**  */
+		public static final int $2853 = 2853;
+		/**  */
+		public static final int $2854 = 2854;
+		/**  */
+		public static final int $2855 = 2855;
+		/**  */
+		public static final int $2856 = 2856;
+		/**  */
+		public static final int $2857 = 2857;
+		/**  */
+		public static final int $2858 = 2858;
+		/**  */
+		public static final int $2859 = 2859;
+		/**  */
+		public static final int $2860 = 2860;
+		/**  */
+		public static final int $2861 = 2861;
+		/**  */
+		public static final int $2862 = 2862;
+		/**  */
+		public static final int $2863 = 2863;
+		/**  */
+		public static final int $2864 = 2864;
+		/**  */
+		public static final int $2865 = 2865;
+		/**  */
+		public static final int $2866 = 2866;
+		/**  */
+		public static final int $2867 = 2867;
+		/**  */
+		public static final int $2868 = 2868;
+		/**  */
+		public static final int $2869 = 2869;
+		/**  */
+		public static final int $2870 = 2870;
+		/**  */
+		public static final int $2871 = 2871;
+		/**  */
+		public static final int $2872 = 2872;
+		/**  */
+		public static final int $2873 = 2873;
+		/**  */
+		public static final int $2874 = 2874;
+		/**  */
+		public static final int $2875 = 2875;
+		/**  */
+		public static final int $2876 = 2876;
+		/**  */
+		public static final int $2877 = 2877;
+		/**  */
+		public static final int $2878 = 2878;
+		/**  */
+		public static final int $2879 = 2879;
+		/**  */
+		public static final int $2880 = 2880;
+		/**  */
+		public static final int $2881 = 2881;
+		/**  */
+		public static final int $2882 = 2882;
+		/**  */
+		public static final int $2883 = 2883;
+		/**  */
+		public static final int $2884 = 2884;
+		/**  */
+		public static final int $2885 = 2885;
+		/**  */
+		public static final int $2886 = 2886;
+		/**  */
+		public static final int $2887 = 2887;
+		/**  */
+		public static final int $2888 = 2888;
+		/**  */
+		public static final int $2889 = 2889;
+		/**  */
+		public static final int $2890 = 2890;
+		/**  */
+		public static final int $2891 = 2891;
+		/**  */
+		public static final int $2892 = 2892;
+		/**  */
+		public static final int $2893 = 2893;
+		/**  */
+		public static final int $2894 = 2894;
+		/**  */
+		public static final int $2895 = 2895;
+		/**  */
+		public static final int $2896 = 2896;
+		/**  */
+		public static final int $2897 = 2897;
+		/**  */
+		public static final int $2898 = 2898;
+		/**  */
+		public static final int $2899 = 2899;
+		/**  */
+		public static final int $2900 = 2900;
+		/**  */
+		public static final int $2901 = 2901;
+		/**  */
+		public static final int $2902 = 2902;
+		/**  */
+		public static final int $2903 = 2903;
+		/**  */
+		public static final int $2904 = 2904;
+		/**  */
+		public static final int $2905 = 2905;
+		/**  */
+		public static final int $2906 = 2906;
+		/**  */
+		public static final int $2907 = 2907;
+		/**  */
+		public static final int $2908 = 2908;
+		/**  */
+		public static final int $2909 = 2909;
+		/**  */
+		public static final int $2910 = 2910;
+		/**  */
+		public static final int $2911 = 2911;
+		/**  */
+		public static final int $2912 = 2912;
+		/**  */
+		public static final int $2913 = 2913;
+		/**  */
+		public static final int $2914 = 2914;
+		/**  */
+		public static final int $2915 = 2915;
+		/**  */
+		public static final int $2916 = 2916;
+		/**  */
+		public static final int $2917 = 2917;
+		/**  */
+		public static final int $2918 = 2918;
+		/**  */
+		public static final int $2919 = 2919;
+		/**  */
+		public static final int $2920 = 2920;
+		/**  */
+		public static final int $2921 = 2921;
+		/**  */
+		public static final int $2922 = 2922;
+		/**  */
+		public static final int $2923 = 2923;
+		/**  */
+		public static final int $2924 = 2924;
+		/**  */
+		public static final int $2925 = 2925;
+		/**  */
+		public static final int $2926 = 2926;
+		/**  */
+		public static final int $2927 = 2927;
+		/**  */
+		public static final int $2928 = 2928;
+		/**  */
+		public static final int $2929 = 2929;
+		/**  */
+		public static final int $2930 = 2930;
+		/**  */
+		public static final int $2931 = 2931;
+		/**  */
+		public static final int $2932 = 2932;
+		/**  */
+		public static final int $2933 = 2933;
+		/**  */
+		public static final int $2934 = 2934;
+		/**  */
+		public static final int $2935 = 2935;
+		/**  */
+		public static final int $2936 = 2936;
+		/** 南瓜魔法帽 */
+		public static final int $4323 = 4323;
+		/** 万圣节南瓜派 */
+		public static final int $4324 = 4324;
+		/** 拉斯塔巴德补给箱 */
+		public static final int $4325 = 4325;
 
 }
