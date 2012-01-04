@@ -21,10 +21,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.server.GeneralThreadPool;
+import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1EffectSpawn;
+import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1PolyMorph;
+import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -635,9 +639,27 @@ class L1SkillStop {
 						) {
 					pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
 				}
-				else {
-					return;
+			}
+		}
+
+		// 装备南瓜魔法帽获得万圣节南瓜派
+		else if (skillId == EFFECT_HELMET_OF_MAGIC_PUMPKIN) {
+			L1PcInstance pc = (L1PcInstance) cha;
+			if (cha instanceof L1PcInstance) {
+				L1ItemInstance item = ItemTable.getInstance().createItem(400000); // 万圣节南瓜派
+				item.setCount(1); // 一次给予的数量
+				if (item != null) {
+					if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
+						pc.getInventory().storeItem(item);
+					}
+					else { // 如果身上道具满则掉落地面上
+						L1World.getInstance().getInventory(pc.getX(), pc.getY(),pc.getMapId()).storeItem(item);
+					}
+					pc.sendPackets(new S_ServerMessage(403,item.getLogName())); // 获得%0%o 。
 				}
+			}
+			if (pc.getInventory().checkEquipped(20380) && !pc.isDead()) { // 检查是否装备南瓜魔法帽
+				pc.setSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN, 5 * 60 * 1000); // 加上效果并开始倒计时5分钟
 			}
 		}
 

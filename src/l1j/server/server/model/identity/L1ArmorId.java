@@ -22,6 +22,9 @@ public class L1ArmorId {
 	/** 抗魔法头盔 */
 	public static final int HELMET_OF_MAGIC_RESISTANCE = 20011;
 
+	/** 南瓜魔法帽 */
+	public static final int HELMET_OF_MAGIC_PUMPKIN = 20380;
+
 	/** 受祝福的 抗魔法头盔 */
 	public static final int B_HELMET_OF_MAGIC_RESISTANCE = 120011;
 

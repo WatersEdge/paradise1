@@ -951,5 +951,7 @@ public class L1SkillId {
 	// 自定义状态
 	/** 法利昂的治愈结界 **/
 	public static final int FLA_CURE_WARD = 20000;
+	/** 南瓜魔法帽状态 */
+	public static final int EFFECT_HELMET_OF_MAGIC_PUMPKIN = 20001;
 
 }
