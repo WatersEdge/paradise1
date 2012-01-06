@@ -92,22 +92,40 @@ public class L1Status implements L1CommandExecutor {
 					target.sendPackets(new S_SystemMessage("您已被提升为GM权限，小退生效。"));
 				}
 				else if (param.equalsIgnoreCase("STR")) {
-					target.addBaseStr((byte) (value - target.getBaseStr()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseStr((short) (value - target.getBaseStr()));
 				}
 				else if (param.equalsIgnoreCase("CON")) {
-					target.addBaseCon((byte) (value - target.getBaseCon()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseCon((short) (value - target.getBaseCon()));
 				}
 				else if (param.equalsIgnoreCase("DEX")) {
-					target.addBaseDex((byte) (value - target.getBaseDex()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseDex((short) (value - target.getBaseDex()));
 				}
 				else if (param.equalsIgnoreCase("INT")) {
-					target.addBaseInt((byte) (value - target.getBaseInt()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseInt((short) (value - target.getBaseInt()));
 				}
 				else if (param.equalsIgnoreCase("WIS")) {
-					target.addBaseWis((byte) (value - target.getBaseWis()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseWis((short) (value - target.getBaseWis()));
 				}
 				else if (param.equalsIgnoreCase("CHA")) {
-					target.addBaseCha((byte) (value - target.getBaseCha()));
+					if (value > 255) {
+						value = 255;
+					}
+					target.addBaseCha((short) (value - target.getBaseCha()));
 				}
 				else {
 					pc.sendPackets(new S_SystemMessage("状态 " + param + " 不明。"));

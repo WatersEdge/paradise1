@@ -970,17 +970,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 力量值（1～127） */
-	private byte _str = 0;
+	private short _str = 0;
 	/** 真正的力量值 */
 	private short _trueStr = 0;
 	/** 取得力量值 */
-	public byte getStr() {
+	public short getStr() {
 		return _str;
 	}
 	/** 设定力量值 */
 	public void setStr(int i) {
 		_trueStr = (short) i;
-		_str = (byte) IntRange.ensure(i, 1, 127);
+		_str = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加力量值 */
 	public void addStr(int i) {
@@ -988,17 +988,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 体质值（1～127） */
-	private byte _con = 0;
+	private short _con = 0;
 	/** 真正的体质值 */
 	private short _trueCon = 0;
 	/** 取得体质值 */
-	public byte getCon() {
+	public short getCon() {
 		return _con;
 	}
 	/** 设定体质值 */
 	public void setCon(int i) {
 		_trueCon = (short) i;
-		_con = (byte) IntRange.ensure(i, 1, 127);
+		_con = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加体质值 */
 	public void addCon(int i) {
@@ -1006,17 +1006,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 敏捷值（1～127） */
-	private byte _dex = 0;
+	private short _dex = 0;
 	/** 真正的敏捷值 */
 	private short _trueDex = 0;
 	/** 取得敏捷值 */
-	public byte getDex() {
+	public short getDex() {
 		return _dex;
 	}
 	/** 设定敏捷值 */
 	public void setDex(int i) {
 		_trueDex = (short) i;
-		_dex = (byte) IntRange.ensure(i, 1, 127);
+		_dex = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加敏捷值 */
 	public void addDex(int i) {
@@ -1024,17 +1024,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 魅力值（1～127） */
-	private byte _cha = 0;
+	private short _cha = 0;
 	/** 真正的魅力值 */
 	private short _trueCha = 0;
 	/** 取得魅力值 */
-	public byte getCha() {
+	public short getCha() {
 		return _cha;
 	}
 	/** 设定魅力值 */
 	public void setCha(int i) {
 		_trueCha = (short) i;
-		_cha = (byte) IntRange.ensure(i, 1, 127);
+		_cha = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加魅力值 */
 	public void addCha(int i) {
@@ -1042,17 +1042,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 智力值（1～127） */
-	private byte _int = 0;
+	private short _int = 0;
 	/** 真正的智力值 */
 	private short _trueInt = 0;
 	/** 取得智力值 */
-	public byte getInt() {
+	public short getInt() {
 		return _int;
 	}
 	/** 设定智力值 */
 	public void setInt(int i) {
 		_trueInt = (short) i;
-		_int = (byte) IntRange.ensure(i, 1, 127);
+		_int = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加智力值 */
 	public void addInt(int i) {
@@ -1060,17 +1060,17 @@ public class L1Character extends L1Object {
 	}
 
 	/** 精神值（1～127） */
-	private byte _wis = 0;
+	private short _wis = 0;
 	/** 真正的精神值 */
 	private short _trueWis = 0;
 	/** 取得精神值 */
-	public byte getWis() {
+	public short getWis() {
 		return _wis;
 	}
 	/** 设定精神值 */
 	public void setWis(int i) {
 		_trueWis = (short) i;
-		_wis = (byte) IntRange.ensure(i, 1, 127);
+		_wis = (short) IntRange.ensure(i, 1, 255);
 	}
 	/** 增加精神值 */
 	public void addWis(int i) {
