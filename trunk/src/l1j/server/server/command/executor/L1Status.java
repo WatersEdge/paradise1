@@ -54,7 +54,7 @@ public class L1Status implements L1CommandExecutor {
 
 			// -- not use DB --
 			if (param.equalsIgnoreCase("AC")) {
-				target.addAc((byte) (value - target.getAc()));
+				target.addAc((short) (value - target.getAc())); // byte -->> short
 			}
 			else if (param.equalsIgnoreCase("MR")) {
 				target.addMr((short) (value - target.getMr()));
