@@ -145,12 +145,48 @@ public class C_CommonClick {
 				else if (ac > 211) { // 貌似不可能达到
 					ac = 211;
 				}
-				int str = rs.getByte("Str");
-				int dex = rs.getByte("Dex");
-				int con = rs.getByte("Con");
-				int wis = rs.getByte("Wis");
-				int cha = rs.getByte("Cha");
-				int intel = rs.getByte("Intel");
+				int str = rs.getShort("Str");
+				if (str < 1) {
+					str = 1;
+				}
+				else if (str > 255) {
+					str = 255;
+				}
+				int dex = rs.getShort("Dex");
+				if (dex < 1) {
+					dex = 1;
+				}
+				else if (dex > 255) {
+					dex = 255;
+				}
+				int con = rs.getShort("Con");
+				if (con < 1) {
+					con = 1;
+				}
+				else if (con > 255) {
+					con = 255;
+				}
+				int wis = rs.getShort("Wis");
+				if (wis < 1) {
+					wis = 1;
+				}
+				else if (wis > 255) {
+					wis = 255;
+				}
+				int cha = rs.getShort("Cha");
+				if (cha < 1) {
+					cha = 1;
+				}
+				else if (cha > 255) {
+					cha = 255;
+				}
+				int intel = rs.getShort("Intel");
+				if (intel < 1) {
+					intel = 1;
+				}
+				else if (intel > 255) {
+					intel = 255;
+				}
 				int accessLevel = rs.getShort("AccessLevel");
 				Timestamp _birthday = (Timestamp) rs.getTimestamp("birthday");
 				SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");

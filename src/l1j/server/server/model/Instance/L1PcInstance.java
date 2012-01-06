@@ -2102,111 +2102,111 @@ public class L1PcInstance extends L1Character {
 		return _originalAc;
 	}
 	/** 基本的力量值 */
-	private byte _baseStr = 0; // ● 基本ＳＴＲ（1～127）
+	private short _baseStr = 0; // ● 基本ＳＴＲ（1～255）
 	/** 取得基本的力量值 */
-	public byte getBaseStr() {
+	public short getBaseStr() {
 		return _baseStr;
 	}
 	/** 增加基本的力量值 */
-	public void addBaseStr(byte i) {
-		i += _baseStr;
-		if (i >= 127) {
-			i = 127;
+	public void addBaseStr(short s) {
+		s += _baseStr;
+		if (s >= 255) {
+			s = 255;
 		}
-		else if (i < 1) {
-			i = 1;
+		else if (s < 1) {
+			s = 1;
 		}
-		addStr((byte) (i - _baseStr));
-		_baseStr = i;
+		addStr((short) (s - _baseStr));
+		_baseStr = s;
 	}
 	/** 基本的体质值 */
-	private byte _baseCon = 0; // ● 基本ＣＯＮ（1～127）
+	private short _baseCon = 0; // ● 基本ＣＯＮ（1～255）
 	/** 取得基本的体质值 */
-	public byte getBaseCon() {
+	public short getBaseCon() {
 		return _baseCon;
 	}
 	/** 增加基本的体质值 */
-	public void addBaseCon(byte i) {
+	public void addBaseCon(short i) {
 		i += _baseCon;
-		if (i >= 127) {
-			i = 127;
+		if (i >= 255) {
+			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addCon((byte) (i - _baseCon));
+		addCon((short) (i - _baseCon));
 		_baseCon = i;
 	}
 	/** 基本的敏捷值 */
-	private byte _baseDex = 0; // ● 基本ＤＥＸ（1～127）
+	private short _baseDex = 0; // ● 基本ＤＥＸ（1～255）
 	/** 取得基本的敏捷值 */
-	public byte getBaseDex() {
+	public short getBaseDex() {
 		return _baseDex;
 	}
 	/** 增加基本的敏捷值 */
-	public void addBaseDex(byte i) {
+	public void addBaseDex(short i) {
 		i += _baseDex;
-		if (i >= 127) {
-			i = 127;
+		if (i >= 255) {
+			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addDex((byte) (i - _baseDex));
+		addDex((short) (i - _baseDex));
 		_baseDex = i;
 	}
 	/** 基本的魅力值 */
-	private byte _baseCha = 0; // ● 基本ＣＨＡ（1～127）
+	private short _baseCha = 0; // ● 基本ＣＨＡ（1～255）
 	/** 取得基本的魅力值 */
-	public byte getBaseCha() {
+	public short getBaseCha() {
 		return _baseCha;
 	}
 	/** 增加基本的魅力值 */
-	public void addBaseCha(byte i) {
+	public void addBaseCha(short i) {
 		i += _baseCha;
-		if (i >= 127) {
-			i = 127;
+		if (i >= 255) {
+			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addCha((byte) (i - _baseCha));
+		addCha((short) (i - _baseCha));
 		_baseCha = i;
 	}
 	/** 基本的智力值 */
-	private byte _baseInt = 0; // ● 基本ＩＮＴ（1～127）
+	private short _baseInt = 0; // ● 基本ＩＮＴ（1～255）
 	/** 取得基本的智力值 */
-	public byte getBaseInt() {
+	public short getBaseInt() {
 		return _baseInt;
 	}
 	/** 增加基本的智力值 */
-	public void addBaseInt(byte i) {
+	public void addBaseInt(short i) {
 		i += _baseInt;
-		if (i >= 127) {
-			i = 127;
+		if (i >= 255) {
+			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addInt((byte) (i - _baseInt));
+		addInt((short) (i - _baseInt));
 		_baseInt = i;
 	}
 	/** 基本的精神值 */
-	private byte _baseWis = 0; // ● 基本ＷＩＳ（1～127）
+	private short _baseWis = 0; // ● 基本ＷＩＳ（1～255）
 	/** 取得基本的精神值 */
-	public byte getBaseWis() {
+	public short getBaseWis() {
 		return _baseWis;
 	}
 	/** 增加基本的精神值 */
-	public void addBaseWis(byte i) {
+	public void addBaseWis(short i) {
 		i += _baseWis;
-		if (i >= 127) {
-			i = 127;
+		if (i >= 255) {
+			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addWis((byte) (i - _baseWis));
+		addWis((short) (i - _baseWis));
 		_baseWis = i;
 	}
 	/** 原始的力量值 */
