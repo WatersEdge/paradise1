@@ -105,15 +105,15 @@ public class CalcStat {
 	 * 
 	 * @param charType
 	 * @param baseMaxHp
-	 * @param s
+	 * @param baseCon
 	 * @param originalHpup
 	 * @return HP上升值
 	 */
-	public static short calcStatHp(int charType, int baseMaxHp, short s,
+	public static short calcStatHp(int charType, int baseMaxHp, short baseCon,
 			int originalHpup) {
 		short randomhp = 0;
-		if (s > 15) {
-			randomhp = (short) (s - 15);
+		if (baseCon > 15) {
+			randomhp = (short) (baseCon - 15);
 		}
 		if (charType == 0) { // 王族
 			randomhp += (short) (11 + Random.nextInt(2)); // 初期值分追加
@@ -172,41 +172,41 @@ public class CalcStat {
 	 * 
 	 * @param charType
 	 * @param baseMaxMp
-	 * @param s
+	 * @param baseWis
 	 * @param originalMpup
 	 * @return MP上升值
 	 */
-	public static short calcStatMp(int charType, int baseMaxMp, short s,
+	public static short calcStatMp(int charType, int baseMaxMp, short baseWis,
 			int originalMpup) {
 		int randommp = 0;
 		int seedY = 0;
 		int seedZ = 0;
-		if (s < 9 || s > 9 && s < 12) {
+		if (baseWis < 9 || baseWis > 9 && baseWis < 12) {
 			seedY = 2;
-		} else if (s == 9 || s >= 12 && s <= 17) {
+		} else if (baseWis == 9 || baseWis >= 12 && baseWis <= 17) {
 			seedY = 3;
-		} else if (s >= 18 && s <= 23 || s == 25
-				|| s == 26 || s == 29 || s == 30
-				|| s == 33 || s == 34) {
+		} else if (baseWis >= 18 && baseWis <= 23 || baseWis == 25
+				|| baseWis == 26 || baseWis == 29 || baseWis == 30
+				|| baseWis == 33 || baseWis == 34) {
 			seedY = 4;
-		} else if (s == 24 || s == 27 || s == 28
-				|| s == 31 || s == 32 || s >= 35) {
+		} else if (baseWis == 24 || baseWis == 27 || baseWis == 28
+				|| baseWis == 31 || baseWis == 32 || baseWis >= 35) {
 			seedY = 5;
 		}
 
-		if (s >= 7 && s <= 9) {
+		if (baseWis >= 7 && baseWis <= 9) {
 			seedZ = 0;
-		} else if (s >= 10 && s <= 14) {
+		} else if (baseWis >= 10 && baseWis <= 14) {
 			seedZ = 1;
-		} else if (s >= 15 && s <= 20) {
+		} else if (baseWis >= 15 && baseWis <= 20) {
 			seedZ = 2;
-		} else if (s >= 21 && s <= 24) {
+		} else if (baseWis >= 21 && baseWis <= 24) {
 			seedZ = 3;
-		} else if (s >= 25 && s <= 28) {
+		} else if (baseWis >= 25 && baseWis <= 28) {
 			seedZ = 4;
-		} else if (s >= 29 && s <= 32) {
+		} else if (baseWis >= 29 && baseWis <= 32) {
 			seedZ = 5;
-		} else if (s >= 33) {
+		} else if (baseWis >= 33) {
 			seedZ = 6;
 		}
 
