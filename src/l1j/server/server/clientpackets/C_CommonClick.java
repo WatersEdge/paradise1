@@ -138,7 +138,13 @@ public class C_CommonClick {
 					lvl = 1;
 				}
 
-				int ac = rs.getByte("Ac");
+				int ac = rs.getInt("Ac");
+				if (ac < -211) {
+					ac = -211;
+				}
+				else if (ac > 211) { // 貌似不可能达到
+					ac = 211;
+				}
 				int str = rs.getByte("Str");
 				int dex = rs.getByte("Dex");
 				int con = rs.getByte("Con");

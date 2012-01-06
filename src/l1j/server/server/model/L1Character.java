@@ -962,7 +962,7 @@ public class L1Character extends L1Object {
 	/** 设定物理防御 */
 	public void setAc(int i) {
 		_trueAc = i;
-		_ac = IntRange.ensure(i, -128, 127);
+		_ac = IntRange.ensure(i, -211, 211);
 	}
 	/** 增加物理防御 */
 	public void addAc(int i) {
