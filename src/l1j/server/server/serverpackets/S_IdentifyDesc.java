@@ -17,12 +17,15 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
 
+/**
+ * 物品资讯讯息 (使用String-h.tbl)
+ */
 public class S_IdentifyDesc extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
 	/**
-	 * 確認スクロール使用時のメッセージを表示する
+	 * 物品资讯讯息 (使用String-h.tbl)
 	 */
 	public S_IdentifyDesc(L1ItemInstance item) {
 		buildPacket(item);
@@ -35,64 +38,64 @@ public class S_IdentifyDesc extends ServerBasePacket {
 		StringBuilder name = new StringBuilder();
 
 		if (item.getItem().getBless() == 0) {
-			name.append("$227 "); // 祝福された
+			name.append("$227 "); // 祝福
 		}
 		else if (item.getItem().getBless() == 2) {
-			name.append("$228 "); // 呪われた
+			name.append("$228 "); // 诅咒
 		}
 
 		name.append(item.getItem().getIdentifiedNameId());
 
-		// 旅館鑰匙
+		// 旅馆钥匙
 		if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) {
 			name.append(item.getInnKeyName());
 		}
 
-		if (item.getItem().getType2() == 1) { // weapon
-			writeH(134); // \f1%0：小さなモンスター打撃%1 大きなモンスター打撃%2
+		if (item.getItem().getType2() == 1) { // 武器 (weapon)
+			writeH(134); // \f1%0：对小怪物的伤害 %1 对大怪物的伤害 %2
 			writeC(3);
 			writeS(name.toString());
 			writeS(item.getItem().getDmgSmall() + "+" + item.getEnchantLevel());
 			writeS(item.getItem().getDmgLarge() + "+" + item.getEnchantLevel());
 
 		}
-		else if (item.getItem().getType2() == 2) { // armor
-			if (item.getItem().getItemId() == 20383) { // 騎馬用ヘルム
-				writeH(137); // \f1%0：使用可能回数%1［重さ%2］
+		else if (item.getItem().getType2() == 2) { // 防具 (armor)
+			if (item.getItem().getItemId() == 20383) { // 军马头盔
+				writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
 				writeC(3);
 				writeS(name.toString());
 				writeS(String.valueOf(item.getChargeCount()));
 			}
 			else {
-				writeH(135); // \f1%0：防御力%1 防御具
+				writeH(135); // \f1%0：防御力 %1 防御装备
 				writeC(2);
 				writeS(name.toString());
 				writeS(Math.abs(item.getItem().get_ac()) + "+" + item.getEnchantLevel());
 			}
 
 		}
-		else if (item.getItem().getType2() == 0) { // etcitem
+		else if (item.getItem().getType2() == 0) { // 道具 (etcitem)
 			if (item.getItem().getType() == 1) { // wand
-				writeH(137); // \f1%0：使用可能回数%1［重さ%2］
+				writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
 				writeC(3);
 				writeS(name.toString());
 				writeS(String.valueOf(item.getChargeCount()));
 			}
-			else if (item.getItem().getType() == 2) { // light系アイテム
-				writeH(138);
+			else if (item.getItem().getType() == 2) { // 照明类道具 (light)
+				writeH(138); // \f1%0 [重量 %1]
 				writeC(2);
-				name.append(": $231 "); // 残りの燃料
+				name.append(": $231 "); // 剩余燃料量
 				name.append(String.valueOf(item.getRemainingTime()));
 				writeS(name.toString());
 			}
-			else if (item.getItem().getType() == 7) { // food
-				writeH(136); // \f1%0：満腹度%1［重さ%2］
+			else if (item.getItem().getType() == 7) { // 食物 (food)
+				writeH(136); // \f1%0：营养度 %1 [重量 %2]
 				writeC(3);
 				writeS(name.toString());
 				writeS(String.valueOf(item.getItem().getFoodVolume()));
 			}
 			else {
-				writeH(138); // \f1%0：［重さ%1］
+				writeH(138); // \f1%0 [重量 %1]
 				writeC(2);
 				writeS(name.toString());
 			}

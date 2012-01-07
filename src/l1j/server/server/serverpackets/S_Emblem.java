@@ -24,7 +24,11 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 血盟徽章
+ */
 public class S_Emblem extends ServerBasePacket {
+
 	private static final String S_EMBLEM = "[S] S_Emblem";
 
 	public S_Emblem(int clanid) {

@@ -20,10 +20,19 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 创造新角色
+ */
 public class S_NewCharPacket extends ServerBasePacket {
+
 	private static final String _S__25_NEWCHARPACK = "[S] New Char Packet";
+
 	private byte[] _byte = null;
 
+	/**
+	 * 创造新角色
+	 * @param pc
+	 */
 	public S_NewCharPacket(L1PcInstance pc) {
 		buildPacket(pc);
 	}
@@ -45,8 +54,8 @@ public class S_NewCharPacket extends ServerBasePacket {
 		writeC(pc.getWis());
 		writeC(pc.getCha());
 		writeC(pc.getInt());
-		writeC(0);// is Administrator
-		/* 生日待後續的實作 */
+		writeC(0);// is Administrator 大于0为GM
+		/* 生日待后续的实做 */
 		// writeD(Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(pc.getBirthday())));
 		writeD(pc.getSimpleBirthday());
 	}

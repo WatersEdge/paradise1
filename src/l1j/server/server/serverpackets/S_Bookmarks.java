@@ -16,11 +16,20 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 角色记忆坐标清单
+ */
 public class S_Bookmarks extends ServerBasePacket {
 	private static final String _S__1F_S_Bookmarks = "[S] S_Bookmarks";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 角色坐标清单
+	 * @param name
+	 * @param map
+	 * @param id
+	 */
 	public S_Bookmarks(String name, int map, int id) {
 		buildPacket(name, map, id);
 	}

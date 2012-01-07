@@ -17,15 +17,18 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
 
+/**
+ * 删除物品
+ */
 public class S_DeleteInventoryItem extends ServerBasePacket {
 
 	private static final String S_DELETE_INVENTORY_ITEM = "[S] S_DeleteInventoryItem";
 
 	/**
-	 * インベントリからアイテムを削除する。
+	 * 从背包中删除一个物品。
 	 * 
 	 * @param item
-	 *            - 削除するアイテム
+	 *            - 要删除的物品
 	 */
 	public S_DeleteInventoryItem(L1ItemInstance item) {
 		if (item != null) {

@@ -20,19 +20,22 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SendInvOnLogin
 
+/**
+ * 更新物品显示名称 (背包)
+ */
 public class S_ItemName extends ServerBasePacket {
 
 	private static final String S_ITEM_NAME = "[S] S_ItemName";
 
 	/**
-	 * 变更道具名称。发送装备强化状态变动。
+	 * 更新道具名称。装备强化状态变动时发送。
 	 */
 	public S_ItemName(L1ItemInstance item) {
 		if (item == null) {
 			return;
 		}
-		// jumpを見る限り、このOpcodeはアイテム名を更新させる目的だけに使用される模様（装備後やOE後専用？）
-		// 後に何かデータを続けて送っても全て無視されてしまう
+		// 至于jump、Opcode目的很可能是只用于更新道具的名称（装备上之后OE後専用？）
+		// 之后继续发送数据 全部无视
 		writeC(Opcodes.S_OPCODE_ITEMNAME);
 		writeD(item.getId());
 		writeS(item.getViewName());

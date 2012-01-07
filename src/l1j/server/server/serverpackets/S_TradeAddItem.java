@@ -27,13 +27,19 @@ public class S_TradeAddItem extends ServerBasePacket {
 
 	private static final String S_TRADE_ADD_ITEM = "[S] S_TradeAddItem";
 
+	/**
+	 * 增加交易物品
+	 * @param item
+	 * @param count
+	 * @param type
+	 */
 	public S_TradeAddItem(L1ItemInstance item, int count, int type) {
 		writeC(Opcodes.S_OPCODE_TRADEADDITEM);
 		writeC(type); // 0:最大的交易窗口 1:最小的交易窗口
 		writeH(item.getItem().getGfxId());
 		writeS(item.getNumberedViewName(count));
-		// 0:祝福 1:通常 2:诅咒 3:未鑑定
-		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鑑定&封印
+		// 0:祝福 1:通常 2:诅咒 3:未鉴定
+		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鉴定&封印
 		if (!item.isIdentified()) {
 			writeC(3);
 			writeC(0);

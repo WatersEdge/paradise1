@@ -19,15 +19,18 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 魔法效果:中毒
+ */
 public class S_Poison extends ServerBasePacket {
 
 	/**
-	 * キャラクターの外見を毒状態へ変更する際に送信するパケットを構築する
+	 * 发送一个使角色外观因为中毒而改变的数据包
 	 * 
 	 * @param objId
-	 *            外見を変えるキャラクターのID
+	 *            外观变化的角色ID
 	 * @param type
-	 *            外見のタイプ 0 = 通常色, 1 = 緑色, 2 = 灰色
+	 *            外观类型 0 = 通常色, 1 = 绿色, 2 = 灰色
 	 */
 	public S_Poison(int objId, int type) {
 		writeC(Opcodes.S_OPCODE_POISON);
@@ -36,14 +39,14 @@ public class S_Poison extends ServerBasePacket {
 		if (type == 0) { // 通常
 			writeC(0);
 			writeC(0);
-		} else if (type == 1) { // 緑色
+		} else if (type == 1) { // 绿色
 			writeC(1);
 			writeC(0);
 		} else if (type == 2) { // 灰色
 			writeC(0);
 			writeC(1);
 		} else {
-			throw new IllegalArgumentException("不正な引数です。type = " + type);
+			throw new IllegalArgumentException("非法参数。type = " + type);
 		}
 	}
 

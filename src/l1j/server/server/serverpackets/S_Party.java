@@ -17,23 +17,24 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 组队名单
+ */
 public class S_Party extends ServerBasePacket {
 
 	private static final String _S_Party = "[S] S_Party";
+
 	private byte[] _byte = null;
 
 	public S_Party(String htmlid, int objid) {
 		buildPacket(htmlid, objid, "", "", 0);
 	}
 
-	public S_Party(String htmlid, int objid, String partyname,
-			String partymembers) {
-
+	public S_Party(String htmlid, int objid, String partyname, String partymembers) {
 		buildPacket(htmlid, objid, partyname, partymembers, 1);
 	}
 
-	private void buildPacket(String htmlid, int objid, String partyname,
-			String partymembers, int type) {
+	private void buildPacket(String htmlid, int objid, String partyname, String partymembers, int type) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS(htmlid);
@@ -43,7 +44,7 @@ public class S_Party extends ServerBasePacket {
 		writeS(partymembers);
 	}
 
-	public S_Party(int type, L1PcInstance pc) {// 3.3C 組隊系統
+	public S_Party(int type, L1PcInstance pc) { // 3.3C 组队系统
 		switch (type) {
 		case 104:
 			newMember(pc);
@@ -62,7 +63,7 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	/**
-	 * 新加入隊伍的玩家
+	 * 新加入队伍的玩家
 	 * 
 	 * @param pc
 	 */
@@ -102,7 +103,7 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	/**
-	 * 舊的隊員
+	 * 旧的队员
 	 * 
 	 * @param pc
 	 */
@@ -117,7 +118,7 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	/**
-	 * 更換隊長
+	 * 更换队长
 	 * 
 	 * @param pc
 	 */
@@ -129,7 +130,7 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	/**
-	 * 更新隊伍
+	 * 更新队伍
 	 * 
 	 * @param pc
 	 */

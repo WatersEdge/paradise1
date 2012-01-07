@@ -28,13 +28,21 @@ import l1j.server.server.utils.SQLUtil;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色配置
+ */
 public class S_CharacterConfig extends ServerBasePacket {
 
-	private static Logger _log = Logger.getLogger(S_CharacterConfig.class
-			.getName());
+	private static Logger _log = Logger.getLogger(S_CharacterConfig.class.getName());
+
 	private static final String S_CHARACTER_CONFIG = "[S] S_CharacterConfig";
+
 	private byte[] _byte = null;
 
+	/**
+	 * 角色配置
+	 * @param objId
+	 */
 	public S_CharacterConfig(int objectId) {
 		buildPacket(objectId);
 	}

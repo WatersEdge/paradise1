@@ -4,7 +4,11 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PetInstance;
 
+/**
+ * 宠物装备
+ */
 public class S_PetEquipment extends ServerBasePacket {
+
 	private static final String S_PET_EQUIPMENT = "[S] S_PetEquipment";
 
 	/**
@@ -21,7 +25,7 @@ public class S_PetEquipment extends ServerBasePacket {
 		writeC(i);
 		writeD(pet.getId());
 		writeC(j);
-		writeC(pet.getAc()); // 寵物防禦
+		writeC(pet.getAc()); // 宠物防御
 	}
 
 	@Override

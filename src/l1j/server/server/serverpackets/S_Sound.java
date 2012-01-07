@@ -19,6 +19,9 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 播放音效
+ */
 public class S_Sound extends ServerBasePacket {
 
 	private static final String S_SOUND = "[S] S_Sound";
@@ -26,9 +29,9 @@ public class S_Sound extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/**
-	 * 効果音を鳴らす(soundフォルダのwavファイル)。
+	 * 播放音效(sound文件夹中的WAV文件)。
 	 * 
-	 * @param sound
+	 * @param sound 音效编号
 	 */
 	public S_Sound(int sound) {
 		buildPacket(sound);

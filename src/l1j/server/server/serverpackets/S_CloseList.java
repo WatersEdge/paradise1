@@ -16,7 +16,15 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 关闭对话视窗
+ */
 public class S_CloseList extends ServerBasePacket {
+
+	/**
+	 * 关闭对话视窗
+	 * @param objid
+	 */
 	public S_CloseList(int objid) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);

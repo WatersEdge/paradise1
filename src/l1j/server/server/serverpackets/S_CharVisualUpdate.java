@@ -18,9 +18,17 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 物件动作种类 (长时间)
+ */
 public class S_CharVisualUpdate extends ServerBasePacket {
+
 	private static final String _S__0B_S_CharVisualUpdate = "[C] S_CharVisualUpdate";
 
+	/**
+	 * 物件动作种类 (长时间)
+	 * @param cha
+	 */
 	public S_CharVisualUpdate(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
 		writeD(pc.getId());
@@ -29,6 +37,11 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 		writeC(0xff);
 	}
 
+	/**
+	 * 物件动作种类 (长时间)
+	 * @param cha
+	 * @param status
+	 */
 	public S_CharVisualUpdate(L1Character cha, int status) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
 		writeD(cha.getId());

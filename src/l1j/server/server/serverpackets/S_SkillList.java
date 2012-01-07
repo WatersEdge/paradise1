@@ -19,7 +19,11 @@ import static l1j.server.server.Opcodes.S_OPCODE_DELSKILL;
 
 import l1j.server.server.templates.L1Skills;
 
+/**
+ * 魔法清单
+ */
 public class S_SkillList extends ServerBasePacket {
+
 	private static final String S_SKILL_LIST = "[S] S_SkillList";
 
 	/*
@@ -46,7 +50,7 @@ public class S_SkillList extends ServerBasePacket {
 		for (int i : SkillList)
 			writeC(i);
 
-		writeC(0x00); // 區分用的數值
+		writeC(0x00); // 区分用的数值
 	}
 
 	@Override

@@ -31,10 +31,13 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1ShopItem;
 
+/**
+ * 商店贩卖清单
+ */
 public class S_ShopSellList extends ServerBasePacket {
 
 	/**
-	 * 店の品物リストを表示する。キャラクターがBUYボタンを押した時に送る。
+	 * 表示商店道具清单。角色按下购买按钮时发送。
 	 */
 	public S_ShopSellList(int objId, L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SHOWSHOPBUYLIST);
@@ -59,11 +62,10 @@ public class S_ShopSellList extends ServerBasePacket {
 		for (int i = 0; i < shopItems.size(); i++) {
 			L1ShopItem shopItem = shopItems.get(i);
 			L1Item item = shopItem.getItem();
-			int price = calc
-					.layTax((int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE));
-			writeD(i);
-			writeH(shopItem.getItem().getGfxId());
-			writeD(price);
+			int price = calc.layTax((int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE));
+			writeD(i); // 排序
+			writeH(shopItem.getItem().getGfxId()); // 圆形
+			writeD(price); // 售价
 
 			if (shopItem.getPackCount() > 1) {
 				writeS(item.getName() + " (" + shopItem.getPackCount() + ")");
@@ -92,7 +94,7 @@ public class S_ShopSellList extends ServerBasePacket {
 				}
 			}
 		}
-		writeH(0x07); // 0x00:kaimo 0x01:pearl 0x07:adena
+		writeH(0x07); // 0x00:无显示 0x01:珍珠 0x07:金币
 	}
 
 	@Override

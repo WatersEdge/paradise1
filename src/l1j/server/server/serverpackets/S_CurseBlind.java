@@ -19,14 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 法术效果:暗盲咒术
+ */
 public class S_CurseBlind extends ServerBasePacket {
 
 	private static final String S_CurseBlind = "[S] S_CurseBlind";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 法术效果:暗盲咒术
+	 * @param type 0:OFF 1:自己 2:周边物件可见
+	 */
 	public S_CurseBlind(int type) {
-		// type 0:OFF 1:自分以外見えない 2:周りのキャラクターが見える
 		buildPacket(type);
 	}
 

@@ -16,7 +16,14 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 立即中断连线
+ */
 public class S_Disconnect extends ServerBasePacket {
+
+	/**
+	 * 立即中断连线
+	 */
 	public S_Disconnect() {
 		int content = 500;
 		writeC(Opcodes.S_OPCODE_DISCONNECT);
@@ -25,7 +32,7 @@ public class S_Disconnect extends ServerBasePacket {
 	}
 
 	/**
-	 * 0~21, 連線中斷 22, 有人以同樣的帳號登入，請注意，您的密碼可能已經外洩
+	 * 0~21, 连线中断 22, 有人以同样的账号登入，请注意，您的密码可能已经外泄
 	 */
 	public S_Disconnect(int id) {
 		writeC(Opcodes.S_OPCODE_DISCONNECT);

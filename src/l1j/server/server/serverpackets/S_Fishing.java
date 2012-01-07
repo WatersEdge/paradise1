@@ -19,6 +19,10 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物件动作种类 (短时间)<BR>
+ * 		- 钓鱼
+ */
 public class S_Fishing extends ServerBasePacket {
 
 	private static final String S_FISHING = "[S] S_Fishing";
@@ -29,6 +33,14 @@ public class S_Fishing extends ServerBasePacket {
 		buildPacket();
 	}
 
+	/**
+	 * 物件动作种类 (短时间)<BR>
+	 * 		- 钓鱼
+	 * @param objectId
+	 * @param motionNum
+	 * @param x
+	 * @param y
+	 */
 	public S_Fishing(int objectId, int motionNum, int x, int y) {
 		buildPacket(objectId, motionNum, x, y);
 	}

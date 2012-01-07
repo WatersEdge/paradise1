@@ -19,10 +19,13 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 
+ */
 public class S_SkillIconWindShackle extends ServerBasePacket {
 
 	public S_SkillIconWindShackle(int objectId, int time) {
-		int buffTime = (time / 4); // なぜか4倍されるため4で割っておく
+		int buffTime = (time / 4); // 为什么是4倍 因为他除以4
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(0x2c);
 		writeD(objectId);

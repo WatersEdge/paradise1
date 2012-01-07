@@ -23,12 +23,19 @@ import l1j.server.server.model.Instance.L1PetInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物品名单 (宠物背包)
+ */
 public class S_PetInventory extends ServerBasePacket {
 
 	private static final String S_PET_INVENTORY = "[S] S_PetInventory";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物品名单 (宠物背包)
+	 * @param pet
+	 */
 	public S_PetInventory(L1PetInstance pet) {
 		List<L1ItemInstance> itemList = pet.getInventory().getItems();
 
@@ -43,12 +50,12 @@ public class S_PetInventory extends ServerBasePacket {
 				continue;
 			}
 			writeD(petItem.getId());
-			writeC(0x02); // 值:0x00  無、0x01:武器類、0x02:防具類、0x16:牙齒類 、0x33:藥水類
+			writeC(0x02); // 值:0x00  无、0x01:武器类、0x02:防具类、0x16:牙齿类 、0x33:药水类
 			writeH(petItem.get_gfxid());
 			writeC(petItem.getBless());
 			writeD(petItem.getCount());
 
-			// 顯示裝備中的寵物裝備
+			// 显示装备中的宠物装备
 			if (petItem.getItem().getType2() == 0 
 					&& petItem.getItem().getType() == 11
 					&& petItem.isEquipped()) {
@@ -59,7 +66,7 @@ public class S_PetInventory extends ServerBasePacket {
 			writeS(petItem.getViewName());
 
 		}
-		writeC(pet.getAc()); // 寵物防禦
+		writeC(pet.getAc()); // 宠物防御
 	}
 
 	@Override

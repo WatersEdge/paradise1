@@ -19,12 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 血盟小屋地图 (地点)
+ */
 public class S_HouseMap extends ServerBasePacket {
 
 	private static final String S_HOUSEMAP = "[S] S_HouseMap";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 血盟小屋地图 (地点)
+	 * @param objectId
+	 * @param house_number
+	 */
 	public S_HouseMap(int objectId, String house_number) {
 		buildPacket(objectId, house_number);
 	}

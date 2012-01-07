@@ -18,12 +18,23 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.npc.L1NpcHtml;
 
+/**
+ * NPC对话视窗
+ */
 public class S_NPCTalkReturn extends ServerBasePacket {
+
 	private static final String _S__25_TalkReturn = "[S] _S__25_TalkReturn";
+
 	private byte[] _byte = null;
 
-	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action,
-			String[] data) {
+	/**
+	 * NPC对话视窗
+	 * @param npc
+	 * @param objid
+	 * @param action
+	 * @param data
+	 */
+	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action, String[] data) {
 
 		String htmlid = "";
 
@@ -38,18 +49,40 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 		buildPacket(objid, htmlid, data);
 	}
 
+	/**
+	 * NPC对话视窗
+	 * @param npc
+	 * @param objid
+	 * @param action
+	 */
 	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action) {
 		this(npc, objid, action, null);
 	}
 
+	/**
+	 * NPC对话视窗
+	 * @param objid
+	 * @param htmlid
+	 * @param data
+	 */
 	public S_NPCTalkReturn(int objid, String htmlid, String[] data) {
 		buildPacket(objid, htmlid, data);
 	}
 
+	/**
+	 * NPC对话视窗
+	 * @param objid
+	 * @param htmlid
+	 */
 	public S_NPCTalkReturn(int objid, String htmlid) {
 		buildPacket(objid, htmlid, null);
 	}
 
+	/**
+	 * NPC对话视窗
+	 * @param objid
+	 * @param html
+	 */
 	public S_NPCTalkReturn(int objid, L1NpcHtml html) {
 		buildPacket(objid, html.getName(), html.getArgs());
 	}
@@ -60,8 +93,8 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 		writeD(objid);
 		writeS(htmlid);
 		if (data != null && 1 <= data.length) {
-			writeH(0x01); // 不明バイト 分かる人居たら修正願います
-			writeH(data.length); // 引数の数
+			writeH(0x01); // 如果有人知道请修复未知字节
+			writeH(data.length); // 数的参数
 			for (String datum : data) {
 				writeS(datum);
 			}

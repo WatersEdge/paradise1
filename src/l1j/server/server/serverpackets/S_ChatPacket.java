@@ -19,15 +19,25 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 聊天频道
+ */
 public class S_ChatPacket extends ServerBasePacket {
 
 	private static final String _S__1F_NORMALCHATPACK = "[S] S_ChatPacket";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 聊天频道
+	 * @param pc
+	 * @param chat
+	 * @param opcode
+	 * @param type
+	 */
 	public S_ChatPacket(L1PcInstance pc, String chat, int opcode, int type) {
 
-		if (type == 0) { // 通常チャット
+		if (type == 0) { // 一般频道
 			writeC(opcode);
 			writeC(type);
 			if (pc.isInvisble()) {
@@ -38,7 +48,7 @@ public class S_ChatPacket extends ServerBasePacket {
 			}
 			writeS(pc.getName() + ": " + chat);
 		}
-		else if (type == 2) { // 叫び
+		else if (type == 2) { // 大喊频道
 			writeC(opcode);
 			writeC(type);
 			if (pc.isInvisble()) {
@@ -51,7 +61,7 @@ public class S_ChatPacket extends ServerBasePacket {
 			writeH(pc.getX());
 			writeH(pc.getY());
 		}
-		else if (type == 3) { // 全体チャット
+		else if (type == 3) { // 全体频道
 			writeC(opcode);
 			writeC(type);
 			if (pc.isGm() == true) {
@@ -61,32 +71,32 @@ public class S_ChatPacket extends ServerBasePacket {
 				writeS("[" + pc.getName() + "] " + chat);
 			}
 		}
-		else if (type == 4) { // 血盟チャット
+		else if (type == 4) { // 血盟频道
 			writeC(opcode);
 			writeC(type);
 			writeS("{" + pc.getName() + "} " + chat);
 		}
-		else if (type == 9) { // ウィスパー
+		else if (type == 9) { // 密语频道 (发送)
 			writeC(opcode);
 			writeC(type);
 			writeS("-> (" + pc.getName() + ") " + chat);
 		}
-		else if (type == 11) { // パーティーチャット
+		else if (type == 11) { // 组队频道
 			writeC(opcode);
 			writeC(type);
 			writeS("(" + pc.getName() + ") " + chat);
 		}
-		else if (type == 12) { // トレードチャット
+		else if (type == 12) { // 交易频道
 			writeC(opcode);
 			writeC(type);
 			writeS("[" + pc.getName() + "] " + chat);
 		}
-		else if (type == 13) { // 連合チャット
+		else if (type == 13) { // 联盟频道
 			writeC(opcode);
 			writeC(type);
 			writeS("{{" + pc.getName() + "}} " + chat);
 		}
-		else if (type == 14) { // チャットパーティー
+		else if (type == 14) { // 组队频道 (聊天)
 			writeC(opcode);
 			writeC(type);
 			if (pc.isInvisble()) {
@@ -97,7 +107,7 @@ public class S_ChatPacket extends ServerBasePacket {
 			}
 			writeS("(" + pc.getName() + ") " + chat);
 		}
-		else if (type == 16) { // ウィスパー
+		else if (type == 16) { // 密语频道
 			writeC(opcode);
 			writeS(pc.getName());
 			writeS(chat);

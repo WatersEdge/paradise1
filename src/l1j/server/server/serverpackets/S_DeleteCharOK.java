@@ -16,12 +16,21 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 角色移除 (立即或非立即)
+ */
 public class S_DeleteCharOK extends ServerBasePacket {
+
 	private static final String S_DELETE_CHAR_OK = "[S] S_DeleteCharOK";
 
 	public static final int DELETE_CHAR_NOW = 0x05;
+
 	public static final int DELETE_CHAR_AFTER_7DAYS = 0x51;
 
+	/**
+	 * 角色移除 (立即或非立即)
+	 * @param type
+	 */
 	public S_DeleteCharOK(int type) {
 		writeC(Opcodes.S_OPCODE_DETELECHAROK);
 		writeC(type);

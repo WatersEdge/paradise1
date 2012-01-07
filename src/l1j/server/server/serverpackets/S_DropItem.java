@@ -20,6 +20,9 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物件封包 (道具)
+ */
 public class S_DropItem extends ServerBasePacket {
 
 	private static final String _S__OB_DropItem = "[S] S_DropItem";
@@ -37,7 +40,7 @@ public class S_DropItem extends ServerBasePacket {
 		// int setting = 4;
 
 		String itemName = item.getItem().getUnidentifiedNameId();
-		// 已鑑定
+		// 已鉴定
 		int isId = item.isIdentified() ? 1 : 0;
 		if (isId == 1) {
 			itemName = item.getItem().getIdentifiedNameId();
@@ -60,7 +63,7 @@ public class S_DropItem extends ServerBasePacket {
 		writeC(0);
 		writeC(0);
 		if (item.getCount() > 1) {
-			if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅館鑰匙
+			if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅馆钥匙
 				writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
 			} else {
 				writeS(itemName + " (" + item.getCount() + ")");
@@ -68,16 +71,16 @@ public class S_DropItem extends ServerBasePacket {
 		}
 		else {
 			int itemId = item.getItem().getItemId();
-			if ((itemId == 20383) && (isId == 1)) { // 軍馬頭盔
+			if ((itemId == 20383) && (isId == 1)) { // 军马头盔
 				writeS(itemName + " [" + item.getChargeCount() + "]");
 			}
-			else if (item.getChargeCount() != 0 && (isId == 1)) { // 可使用的次數
+			else if (item.getChargeCount() != 0 && (isId == 1)) { // 可使用的次数
 				writeS(itemName + " (" + item.getChargeCount() + ")");
 			}
-			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) { // 燈具
+			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) { // 灯具
 				writeS(itemName + " ($10)");
 			}
-			else if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅館鑰匙
+			else if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅馆钥匙
 				writeS(itemName + item.getInnKeyName());
 			}
 			else {

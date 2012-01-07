@@ -17,9 +17,17 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 
+/**
+ * 物件面向
+ */
 public class S_ChangeHeading extends ServerBasePacket {
+
 	private byte[] _byte = null;
 
+	/**
+	 * 物件面向
+	 * @param cha
+	 */
 	public S_ChangeHeading(L1Character cha) {
 		buildPacket(cha);
 	}

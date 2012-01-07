@@ -17,7 +17,7 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 
 /**
- * 系统讯息
+ * 服务器讯息
  */
 public class S_ServerMessage extends ServerBasePacket {
 
@@ -41,26 +41,65 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 */
 	public S_ServerMessage(int type) {
 		buildPacket(type, null, null, null, null, null, 0);
 	}
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 * @param msg1
+	 */
 	public S_ServerMessage(int type, String msg1) {
 		buildPacket(type, msg1, null, null, null, null, 1);
 	}
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 */
 	public S_ServerMessage(int type, String msg1, String msg2) {
 		buildPacket(type, msg1, msg2, null, null, null, 2);
 	}
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 * @param msg3
+	 */
 	public S_ServerMessage(int type, String msg1, String msg2, String msg3) {
 		buildPacket(type, msg1, msg2, msg3, null, null, 3);
 	}
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 * @param msg3
+	 * @param msg4
+	 */
 	public S_ServerMessage(int type, String msg1, String msg2, String msg3, String msg4) {
 		buildPacket(type, msg1, msg2, msg3, msg4, null, 4);
 	}
 
+	/**
+	 * 服务器讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 * @param msg3
+	 * @param msg4
+	 * @param msg5
+	 */
 	public S_ServerMessage(int type, String msg1, String msg2, String msg3, String msg4, String msg5) {
 
 		buildPacket(type, msg1, msg2, msg3, msg4, msg5, 5);

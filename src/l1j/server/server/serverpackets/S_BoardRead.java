@@ -17,12 +17,19 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.templates.L1BoardTopic;
 
+/**
+ * 布告栏内容 (讯息阅读)
+ */
 public class S_BoardRead extends ServerBasePacket {
 
 	private static final String S_BoardRead = "[S] S_BoardRead";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 布告栏内容 (讯息阅读)
+	 * @param number
+	 */
 	public S_BoardRead(int number) {
 		buildPacket(number);
 	}

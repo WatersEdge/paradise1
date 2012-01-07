@@ -20,7 +20,7 @@ import l1j.server.server.Opcodes;
 // ServerBasePacket
 
 /**
- * 配置封包
+ * 戒指
  */
 public class S_Ability extends ServerBasePacket {
 
@@ -28,6 +28,11 @@ public class S_Ability extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 戒指
+	 * @param type
+	 * @param equipped
+	 */
 	public S_Ability(int type, boolean equipped) {
 		buildPacket(type, equipped);
 	}

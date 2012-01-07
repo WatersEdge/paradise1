@@ -19,16 +19,23 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 选择一个目标
+ */
 public class S_SelectTarget extends ServerBasePacket {
 
 	private static final String S_SELECT_TARGET = "[S] S_SelectTarget";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 选择一个目标
+	 * @param ObjectId
+	 */
 	public S_SelectTarget(int ObjectId) {
 		writeC(Opcodes.S_OPCODE_SELECTTARGET);
 		writeD(ObjectId);
-		writeC(0x00);
+		writeC(0x00); // TYPE 未知用途
 		writeC(0x00);
 		writeC(0x02);
 	}

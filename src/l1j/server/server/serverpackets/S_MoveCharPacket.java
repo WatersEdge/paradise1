@@ -21,12 +21,19 @@ import l1j.server.server.utils.MoveUtil;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物件移动
+ */
 public class S_MoveCharPacket extends ServerBasePacket {
 
 	private static final String _S__1F_MOVECHARPACKET = "[S] S_MoveCharPacket";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件移动
+	 * @param cha
+	 */
 	public S_MoveCharPacket(L1Character cha) {
 		int heading = cha.getHeading();
 		int x = cha.getX() - MoveUtil.MoveX(heading);

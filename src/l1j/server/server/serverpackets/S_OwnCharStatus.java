@@ -21,7 +21,11 @@ import l1j.server.server.model.gametime.L1GameTimeClock;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色属性与能力值
+ */
 public class S_OwnCharStatus extends ServerBasePacket {
+
 	private static final String S_OWB_CHAR_STATUS = "[S] S_OwnCharStatus";
 
 	private byte[] _byte = null;
@@ -30,7 +34,7 @@ public class S_OwnCharStatus extends ServerBasePacket {
 		int time = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		time = time - (time % 300);
 		// _log.warning((new
-		// StringBuilder()).append("送信時間:").append(i).toString());
+		// StringBuilder()).append("送信时间:").append(i).toString());
 		writeC(Opcodes.S_OPCODE_OWNCHARSTATUS);
 		writeD(pc.getId());
 

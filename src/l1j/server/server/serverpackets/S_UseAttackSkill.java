@@ -27,7 +27,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // ServerBasePacket
 
 /**
- * 使用攻击技能
+ * 物件攻击 (使用技能)
  */
 public class S_UseAttackSkill extends ServerBasePacket {
 
@@ -47,44 +47,42 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	private void buildPacket(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
 		if (cha instanceof L1PcInstance) {
-			// シャドウ系変身中に攻撃魔法を使用するとクライアントが落ちるため暫定対応
+			// 变身中使用攻击魔法时动作代号异动
 			if (cha.hasSkillEffect(SHAPE_CHANGE) && (data[0] == ActionCodes.ACTION_SkillAttack)) {
 				int tempchargfx = cha.getTempCharGfx();
 				if ((tempchargfx == 5727) || (tempchargfx == 5730)) {
 					data[0] = ActionCodes.ACTION_SkillBuff;
 				}
 				else if ((tempchargfx == 5733) || (tempchargfx == 5736)) {
-					// 補助魔法モーションにすると攻撃魔法のグラフィックと
-					// 対象へのダメージモーションが発生しなくなるため
-					// 攻撃モーションで代用
+					// 物件具有变身 改变动作代码
 					data[0] = ActionCodes.ACTION_Attack;
 				}
 			}
 		}
-		// 火の精の主がデフォルトだと攻撃魔法のグラフィックが発生しないので強制置き換え
-		// どこか別で管理した方が良い？
+		// 火灵之主动作代码强制变更
 		if (cha.getTempCharGfx() == 4013) {
 			data[0] = ActionCodes.ACTION_Attack;
 		}
 
+		// 设置新面向
 		int newheading = calcheading(cha.getX(), cha.getY(), x, y);
 		cha.setHeading(newheading);
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(data[0]); // actionId
-		writeD(withCastMotion ? cha.getId() : 0);
-		writeD(targetobj);
-		writeH(data[1]); // dmg
-		writeC(newheading);
-		writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
-		writeH(data[2]); // spellgfx
-		writeC(data[3]); // use_type 0:弓箭 6:遠距離魔法 8:遠距離範圍魔法
-		writeH(cha.getX());
-		writeH(cha.getY());
-		writeH(x);
-		writeH(y);
+		writeC(data[0]); // actionId 动作代码
+		writeD(withCastMotion ? cha.getId() : 0); // 使用者的OBJ
+		writeD(targetobj); // 目标的OBJ
+		writeH(data[1]); // dmg 伤害值
+		writeC(newheading); // 新面向
+		writeD(_sequentialNumber.incrementAndGet()); // 以原子方式将当前值加 1。
+		writeH(data[2]); // spellgfx 远程动画代码
+		writeC(data[3]); // use_type 0:弓箭 6:远距离魔法 8:远距离范围魔法
+		writeH(cha.getX()); // 使用者X坐标
+		writeH(cha.getY()); // 使用者Y坐标
+		writeH(x); // 目标X坐标
+		writeH(y); // 目标Y坐标
 		writeC(0);
 		writeC(0);
-		writeC(0); // 0:none 2:爪痕 4:雙擊 8:鏡返射
+		writeC(0); // 0:none 2:爪痕 4:双击 8:镜返射
 	}
 
 	@Override

@@ -20,10 +20,15 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1TrapInstance;
 
 /**
- * 陷阱
+ * 物件封包 - 陷阱 (GM测试用)
  */
 public class S_Trap extends ServerBasePacket {
 
+	/**
+	 * 物件封包 - 陷阱 (GM测试用)
+	 * @param trap
+	 * @param name
+	 */
 	public S_Trap(L1TrapInstance trap, String name) {
 
 		writeC(Opcodes.S_OPCODE_DROPITEM);
@@ -31,26 +36,26 @@ public class S_Trap extends ServerBasePacket {
 		writeH(trap.getY());
 		writeD(trap.getId());
 		writeH(7); // adena
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeD(0);
-		writeC(0);
-		writeC(0);
-		writeS(name);
-		writeC(0);
-		writeD(0);
-		writeD(0);
-		writeC(255);
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeH(65535);
+		writeC(0); // 物件外观属性
+		writeC(0); // 方向
+		writeC(0); // 亮度 0:normal, 1:fast, 2:slow
+		writeC(0); // 速度
+		writeD(0); // 数量 经验值
+		writeC(0); // 
+		writeC(0); // 
+		writeS(name); // 名称
+		writeC(0); // 
+		writeD(0); // 
+		writeD(0); // 
+		writeC(255); // 
+		writeC(0); // 
+		writeC(0); // 
+		writeC(0); // 
+		writeH(65535); // 
 		// writeD(0x401799a);
-		writeD(0);
-		writeC(8);
-		writeC(0);
+		writeD(0); // 
+		writeC(8); // 
+		writeC(0); // 
 	}
 
 	@Override

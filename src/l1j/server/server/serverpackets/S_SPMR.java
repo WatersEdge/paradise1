@@ -18,6 +18,9 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_WISDOM_POTION;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 更新魔防以及魔攻
+ */
 public class S_SPMR extends ServerBasePacket {
 
 	private static final String S_SPMR = "[S] S_S_SPMR";
@@ -31,14 +34,14 @@ public class S_SPMR extends ServerBasePacket {
 
 	private void buildPacket(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SPMR);
-		// ウィズダムポーションのSPはS_SkillBrave送信時に更新されるため差し引いておく
+		// 智慧药水增加的SP在S_SkillBrave送信时更新
 		if (pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
-			writeC(pc.getSp() - pc.getTrueSp() - 2); // 装備増加したSP
+			writeC(pc.getSp() - pc.getTrueSp() - 2); // 装备增加的SP
 		}
 		else {
-			writeC(pc.getSp() - pc.getTrueSp()); // 装備増加したSP
+			writeC(pc.getSp() - pc.getTrueSp()); // 装备增加的SP
 		}
-		writeH(pc.getTrueMr() - pc.getBaseMr()); // 装備や魔法で増加したMR
+		writeH(pc.getTrueMr() - pc.getBaseMr()); // 装备与魔法增加的MR
 	}
 
 	@Override

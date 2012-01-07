@@ -16,7 +16,16 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 魔力与最大魔力更新
+ */
 public class S_MPUpdate extends ServerBasePacket {
+
+	/**
+	 * 魔力与最大魔力更新
+	 * @param currentmp
+	 * @param maxmp
+	 */
 	public S_MPUpdate(int currentmp, int maxmp) {
 		writeC(Opcodes.S_OPCODE_MPUPDATE);
 

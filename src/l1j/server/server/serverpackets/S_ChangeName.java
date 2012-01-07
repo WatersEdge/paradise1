@@ -19,12 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 改变物件名称
+ */
 public class S_ChangeName extends ServerBasePacket {
 
 	private static final String S_CHANGE_NAME = "[S] S_ChangeName";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 改变物件名称
+	 * @param objectId
+	 * @param name
+	 */
 	public S_ChangeName(int objectId, String name) {
 		writeC(Opcodes.S_OPCODE_CHANGENAME);
 		writeD(objectId);

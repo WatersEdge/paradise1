@@ -19,6 +19,9 @@ import java.io.IOException;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1NpcInstance;
 
+/**
+ * 选取物品数量 (与NPC交换道具数量)
+ */
 public class S_HowManyKey extends ServerBasePacket {
 
 	/*
@@ -28,19 +31,26 @@ public class S_HowManyKey extends ServerBasePacket {
 	 *  0020	39 35 35 00 33 30 30 00                            955.300.
 	 */
 
+	/**
+	 * 选取物品数量
+	 * (与NPC道具交换 - 附加HTML)
+	 * @param objId
+	 * @param max
+	 * @param htmlId
+	 */
 	public S_HowManyKey(L1NpcInstance npc, int price, int min, int max, String htmlId) {
 		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 		writeD(npc.getId());
-		writeD(price); // 價錢
-		writeD(min); // 起始數量
-		writeD(min); // 起始數量
-		writeD(max); // 購買上限
+		writeD(price); // 价钱
+		writeD(min); // 起始数量
+		writeD(min); // 起始数量
+		writeD(max); // 购买上限
 		writeH(0); // ?
-		writeS(htmlId); // 對話檔檔名
+		writeS(htmlId); // 对话档档名
 		writeH(1); // ?
-		writeH(0x02); // writeS 數量
-		writeS(npc.getName()); // 顯示NPC名稱
-		writeS(String.valueOf(price)); // 顯示價錢
+		writeH(0x02); // writeS 数量
+		writeS(npc.getName()); // 显示NPC名称
+		writeS(String.valueOf(price)); // 显示价钱
 	}
 
 	@Override

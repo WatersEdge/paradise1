@@ -19,8 +19,16 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 魔法效果:操作混乱 (醉酒状态)
+ */
 public class S_Liquor extends ServerBasePacket {
 
+	/**
+	 * 魔法效果:操作混乱 (醉酒状态)
+	 * @param objecId
+	 * @param type
+	 */
 	public S_Liquor(int objecId, int j) {
 		writeC(Opcodes.S_OPCODE_LIQUOR);
 		writeD(objecId);

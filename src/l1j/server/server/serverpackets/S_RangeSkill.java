@@ -22,6 +22,9 @@ import l1j.server.server.model.L1Character;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 范围魔法
+ */
 public class S_RangeSkill extends ServerBasePacket {
 
 	private static final String S_RANGE_SKILL = "[S] S_RangeSkill";
@@ -38,6 +41,14 @@ public class S_RangeSkill extends ServerBasePacket {
 		buildPacket(cha, target, spellgfx, actionId, type);
 	}
 
+	/**
+	 * 范围魔法
+	 * @param cha
+	 * @param target
+	 * @param spellgfx
+	 * @param actionId
+	 * @param type
+	 */
 	private void buildPacket(L1Character cha, L1Character[] target, int spellgfx, int actionId, int type) {
 		writeC(Opcodes.S_OPCODE_RANGESKILLS);
 		writeC(actionId);
@@ -54,12 +65,12 @@ public class S_RangeSkill extends ServerBasePacket {
 		}
 		writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
 		writeH(spellgfx);
-		writeC(type); // 0:範囲 6:遠距離 8:範囲&遠距離
+		writeC(type); // 0:范围 6:远距离 8:范围&远距离
 		writeH(0);
 		writeH(target.length);
 		for (L1Character element : target) {
 			writeD(element.getId());
-			writeH(0x20); // 0:ダメージモーションあり 0以外:なし
+			writeH(0x20); // 0:伤害动作 0以外:无
 		}
 	}
 

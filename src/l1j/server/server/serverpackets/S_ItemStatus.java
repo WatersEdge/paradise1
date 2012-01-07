@@ -20,12 +20,15 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 更新物品使用状态 (背包) - 数量/状态
+ */
 public class S_ItemStatus extends ServerBasePacket {
 
 	private static final String S_ITEM_STATUS = "[S] S_ItemStatus";
 
 	/**
-	 * 更新道具的名称、状态、特性、重量
+	 * 更新道具的名称、状态、特性、数量
 	 */
 	public S_ItemStatus(L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ITEMSTATUS);
@@ -33,7 +36,7 @@ public class S_ItemStatus extends ServerBasePacket {
 		writeS(item.getViewName());
 		writeD(item.getCount());
 		if (!item.isIdentified()) {
-			// 未鑑定の場合ステータスを送る必要はない
+			// 未鉴定情况不发送详细资料
 			writeC(0);
 		}
 		else {

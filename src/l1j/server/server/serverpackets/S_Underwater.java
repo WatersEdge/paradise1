@@ -20,7 +20,7 @@ import l1j.server.server.Opcodes;
 // ServerBasePacket
 
 /**
- * 水下
+ * 更新现在的地图 (水中)
  */
 public class S_Underwater extends ServerBasePacket {
 

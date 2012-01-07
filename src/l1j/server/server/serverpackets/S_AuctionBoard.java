@@ -34,7 +34,7 @@ import l1j.server.server.utils.collections.Lists;
 // ServerBasePacket
 
 /**
- * 拍卖盟屋
+ * 拍卖盟屋公告栏列表
  */
 public class S_AuctionBoard extends ServerBasePacket {
 
@@ -68,25 +68,25 @@ public class S_AuctionBoard extends ServerBasePacket {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				houseId = rs.getInt(1);
-				if ((board.getX() == 33421) && (board.getY() == 32823)) { // 競売掲示板(ギラン)
+				if ((board.getX() == 33421) && (board.getY() == 32823)) { // 拍卖公告栏(奇岩)
 					if ((houseId >= 262145) && (houseId <= 262189)) {
 						houseList.add(houseId);
 						count++;
 					}
 				}
-				else if ((board.getX() == 33585) && (board.getY() == 33235)) { // 競売掲示板(ハイネ)
+				else if ((board.getX() == 33585) && (board.getY() == 33235)) { // 拍卖公告栏(海音)
 					if ((houseId >= 327681) && (houseId <= 327691)) {
 						houseList.add(houseId);
 						count++;
 					}
 				}
-				else if ((board.getX() == 33959) && (board.getY() == 33253)) { // 競売掲示板(アデン)
+				else if ((board.getX() == 33959) && (board.getY() == 33253)) { // 拍卖公告栏(亚丁)
 					if ((houseId >= 458753) && (houseId <= 458819)) {
 						houseList.add(houseId);
 						count++;
 					}
 				}
-				else if ((board.getX() == 32611) && (board.getY() == 32775)) { // 競売掲示板(グルーディン)
+				else if ((board.getX() == 32611) && (board.getY() == 32775)) { // 拍卖公告栏(古鲁丁)
 					if ((houseId >= 524289) && (houseId <= 524294)) {
 						houseList.add(houseId);
 						count++;
@@ -129,12 +129,12 @@ public class S_AuctionBoard extends ServerBasePacket {
 		writeD(board.getId());
 		writeH(count); // 记录数
 		for (int i = 0; i < count; ++i) {
-			writeD(id[i]); // アジトの番号
-			writeS(name[i]); // アジトの名前
-			writeH(area[i]); // アジトの広さ
-			writeC(month[i]); // 截止月
-			writeC(day[i]); // 截止日
-			writeD(price[i]); // 现在的价格
+			writeD(id[i]);		// 盟屋编号
+			writeS(name[i]);	// 盟屋名称
+			writeH(area[i]);	// 盟屋面积
+			writeC(month[i]);	// 截止月
+			writeC(day[i]);		// 截止日
+			writeD(price[i]);	// 售屋价格
 		}
 	}
 

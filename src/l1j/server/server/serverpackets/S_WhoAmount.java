@@ -17,7 +17,7 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 
 /**
- * WHO数量
+ * 系统讯息 (WHO数量)
  */
 public class S_WhoAmount extends ServerBasePacket {
 

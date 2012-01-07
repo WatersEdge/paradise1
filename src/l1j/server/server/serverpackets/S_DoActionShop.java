@@ -16,13 +16,22 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 物件动作种类 (短时间) - 个人商店
+ */
 public class S_DoActionShop extends ServerBasePacket {
 
+	/**
+	 * 物件动作种类 (短时间) - 个人商店
+	 * @param object
+	 * @param gfxid
+	 * @param message
+	 */
 	public S_DoActionShop(int object, int gfxid, byte[] message) {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeD(object);
-		writeC(gfxid);
-		writeByte(message);
+		writeC(gfxid); // 动作编号
+		writeByte(message); // 文字内容
 	}
 
 	@Override

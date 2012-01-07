@@ -17,14 +17,22 @@ package l1j.server.server.serverpackets;
 import l1j.server.Config;
 import l1j.server.server.Opcodes;
 
+/**
+ * 伺服器版本
+ */
 public class S_ServerVersion extends ServerBasePacket {
+
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
+
 	private static final int uptime = (int) (System.currentTimeMillis() / 1000);
 
 	/*
-	 * [來源:Server]<位址:17>{長度:32}(時間:1314150068749) 0000: 11 00 38 32 c7 a8 00 a7
+	 * [来源:Server]<位址:17>{长度:32}(时间:1314150068749) 0000: 11 00 38 32 c7 a8 00 a7
 	 * c6 a8 00 ba 6e cf 77 ad ..82........n.w. 0010: cd a8 00 71 23 53 4e 00 00
 	 * 03 00 00 00 00 08 00 ...q#SN.........
+	 */
+	/**
+	 * 伺服器版本
 	 */
 	public S_ServerVersion() {
 		writeC(Opcodes.S_OPCODE_SERVERVERSION);

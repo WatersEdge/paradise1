@@ -20,12 +20,19 @@ import l1j.server.server.model.Instance.L1DollInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket , S_DollPack
 
+/**
+ * 物件封包 (门)
+ */
 public class S_DollPack extends ServerBasePacket {
 
 	private static final String S_DOLLPACK = "[S] S_DollPack";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件封包 (门)
+	 * @param door
+	 */
 	public S_DollPack(L1DollInstance doll) {
 		/*
 		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting =
@@ -39,17 +46,17 @@ public class S_DollPack extends ServerBasePacket {
 		writeC(doll.getStatus()); // Modes in List.spr
 		writeC(doll.getHeading());
 		writeC(0); // (Bright) - 0~15
-		writeC(doll.getMoveSpeed()); // 1段加速狀態
+		writeC(doll.getMoveSpeed()); // 1段加速状态
 		writeD(0);
 		writeH(0);
 		writeS(doll.getNameId());
 		writeS(doll.getTitle());
-		writeC((doll.getBraveSpeed() * 16)); // 狀態、2段加速狀態
+		writeC((doll.getBraveSpeed() * 16)); // 状态、2段加速状态
 		writeD(0); // ??
 		writeS(null); // ??
 		writeS(doll.getMaster() != null ? doll.getMaster().getName() : "");
-		writeC(0); // ??
-		writeC(0xFF);
+		writeC(0); // 物件分类
+		writeC(0xFF); // HP
 		writeC(0);
 		writeC(doll.getLevel()); // PC = 0, Mon = Lv
 		writeC(0);

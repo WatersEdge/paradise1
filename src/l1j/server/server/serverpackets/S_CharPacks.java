@@ -19,9 +19,33 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色资讯
+ */
 public class S_CharPacks extends ServerBasePacket {
+
 	private static final String S_CHAR_PACKS = "[S] S_CharPacks";
 
+	/**
+	 * 角色资讯
+	 * @param name
+	 * @param clanName
+	 * @param type
+	 * @param sex
+	 * @param lawful
+	 * @param hp
+	 * @param mp
+	 * @param ac
+	 * @param lv
+	 * @param str
+	 * @param dex
+	 * @param con
+	 * @param wis
+	 * @param cha
+	 * @param intel
+	 * @param accessLevel
+	 * @param birthday
+	 */
 	public S_CharPacks(String name, String clanName, int type, int sex,
 			int lawful, int hp, int mp, int ac, int lv, int str, int dex,
 			int con, int wis, int cha, int intel, int accessLevel, int birthday) {

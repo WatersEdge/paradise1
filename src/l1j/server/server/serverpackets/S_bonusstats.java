@@ -19,10 +19,18 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 选择奖励属性点视窗
+ */
 public class S_bonusstats extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 选择奖励属性点视窗
+	 * @param i
+	 * @param j
+	 */
 	public S_bonusstats(int i, int j) {
 		buildPacket(i, j);
 	}

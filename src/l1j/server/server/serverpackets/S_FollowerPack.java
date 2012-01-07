@@ -21,6 +21,9 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_NPCPack
 
+/**
+ * 物件封包 - 跟随者
+ */
 public class S_FollowerPack extends ServerBasePacket {
 
 	private static final String S_FOLLOWER_PACK = "[S] S_FollowerPack";
@@ -29,6 +32,11 @@ public class S_FollowerPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件封包 - 跟随者
+	 * @param follower
+	 * @param pc
+	 */
 	public S_FollowerPack(L1FollowerInstance follower, L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(follower.getX());
@@ -44,19 +52,19 @@ public class S_FollowerPack extends ServerBasePacket {
 		writeS(follower.getNameId());
 		writeS(follower.getTitle());
 		int status = 0;
-		if (follower.getPoison() != null) { // 毒状態
+		if (follower.getPoison() != null) { // 毒状态
 			if (follower.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
 		}
-		writeC(status);
+		writeC(status); // 状态
 		writeD(0);
 		writeS(null);
 		writeS(null);
+		writeC(0); // 物件分类
+		writeC(0xFF); // HP
 		writeC(0);
-		writeC(0xFF);
-		writeC(0);
-		writeC(follower.getLevel());
+		writeC(follower.getLevel()); // LV
 		writeC(0);
 		writeC(0xFF);
 		writeC(0xFF);

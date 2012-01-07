@@ -18,6 +18,9 @@ import java.util.List;
 import l1j.server.server.Opcodes;
 import l1j.server.server.templates.L1BoardTopic;
 
+/**
+ * 布告栏列表 (对话视窗)
+ */
 public class S_Board extends ServerBasePacket {
 
 	private static final String S_BOARD = "[S] S_Board";
@@ -26,10 +29,19 @@ public class S_Board extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 布告栏列表 (对话视窗)
+	 * @param boardObjId
+	 */
 	public S_Board(int boardObjId) {
 		buildPacket(boardObjId, 0);
 	}
 
+	/**
+	 * 布告栏列表 (对话视窗)
+	 * @param boardObjId
+	 * @param number
+	 */
 	public S_Board(int boardObjId, int number) {
 		buildPacket(boardObjId, number);
 	}

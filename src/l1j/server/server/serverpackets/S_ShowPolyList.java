@@ -16,7 +16,15 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * NPC对话视窗 (变身清单)
+ */
 public class S_ShowPolyList extends ServerBasePacket {
+
+	/**
+	 * NPC对话视窗 (变身清单)
+	 * @param objid
+	 */
 	public S_ShowPolyList(int objid) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);

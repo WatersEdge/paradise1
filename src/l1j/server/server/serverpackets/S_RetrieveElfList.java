@@ -20,7 +20,16 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 精灵仓库物品名单
+ */
 public class S_RetrieveElfList extends ServerBasePacket {
+
+	/**
+	 * 物品名单 (精灵仓库)
+	 * @param objid
+	 * @param pc
+	 */
 	public S_RetrieveElfList(int objid, L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
 			int size = pc.getDwarfForElfInventory().getSize();
@@ -28,7 +37,7 @@ public class S_RetrieveElfList extends ServerBasePacket {
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
-				writeC(9); // エルフ倉庫
+				writeC(9); // 精灵仓库
 				for (Object itemObject : pc.getDwarfForElfInventory()
 						.getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
@@ -41,10 +50,10 @@ public class S_RetrieveElfList extends ServerBasePacket {
 					writeS(item.getViewName());
 				}
 			} else {
-				pc.sendPackets(new S_ServerMessage(1625));
+				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
 		} else {
-			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
+			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}
 

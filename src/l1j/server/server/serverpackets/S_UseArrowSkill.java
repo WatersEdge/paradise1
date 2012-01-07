@@ -23,7 +23,7 @@ import l1j.server.server.model.L1Character;
 // ServerBasePacket
 
 /**
- * 使用箭技能
+ * 物件攻击 (远程 - 物理攻击 PC/NPC共用)
  */
 public class S_UseArrowSkill extends ServerBasePacket {
 
@@ -49,7 +49,7 @@ public class S_UseArrowSkill extends ServerBasePacket {
 		writeH(y);
 		writeC(0);
 		writeC(0);
-		writeC(0); // 0:none 2:爪痕 4:雙擊 8:鏡返射
+		writeC(0); // 0:none 2:爪痕 4:双击 8:镜返射
 	}
 
 	@Override
