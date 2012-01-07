@@ -19,6 +19,9 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 
+ */
 public class S_SkillIconWaterLife extends ServerBasePacket {
 
 	public S_SkillIconWaterLife() {

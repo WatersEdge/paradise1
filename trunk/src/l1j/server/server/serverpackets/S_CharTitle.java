@@ -19,8 +19,16 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色封号
+ */
 public class S_CharTitle extends ServerBasePacket {
 
+	/**
+	 * 角色封号
+	 * @param objid
+	 * @param title
+	 */
 	public S_CharTitle(int objid, String title) {
 		writeC(Opcodes.S_OPCODE_CHARTITLE);
 		writeD(objid);

@@ -20,6 +20,9 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 更新角色属性防御
+ */
 public class S_OwnCharAttrDef extends ServerBasePacket {
 
 	private static final String S_OWNCHARATTRDEF = "[S] S_OwnCharAttrDef";

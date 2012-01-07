@@ -18,14 +18,14 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
- * @category 初始能力加成, 用於查看創腳色時初始能力的增幅
+ * @category 初始能力加成, 用于查看创角色时初始能力的增幅
  */
 public class S_InitialAbilityGrowth extends ServerBasePacket {
 	public S_InitialAbilityGrowth(L1PcInstance pc) {
 
 		int Str = pc.getOriginalStr();// 力量
 		int Dex = pc.getOriginalDex();// 敏捷
-		int Con = pc.getOriginalCon();// 體質
+		int Con = pc.getOriginalCon();// 体质
 		int Wis = pc.getOriginalWis();// 精神
 		int Cha = pc.getOriginalCha();// 魅力
 		int Int = pc.getOriginalInt();// 智力
@@ -41,7 +41,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[4] = Cha - Initial[4];
 			growth[5] = Int - Initial[5];
 		}
-		// 法師
+		// 法师
 		if (pc.isWizard()) {
 			int[] Initial = { 8, 7, 12, 12, 8, 12 };
 			growth[0] = Str - Initial[0];
@@ -51,7 +51,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[4] = Cha - Initial[4];
 			growth[5] = Int - Initial[5];
 		}
-		// 騎士
+		// 骑士
 		if (pc.isKnight()) {
 			int[] Initial = { 16, 12, 14, 9, 12, 8 };
 			growth[0] = Str - Initial[0];
@@ -81,7 +81,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[4] = Cha - Initial[4];
 			growth[5] = Int - Initial[5];
 		}
-		// 龍騎士
+		// 龙骑士
 		if (pc.isDragonKnight()) {
 			int[] Initial = { 13, 11, 14, 12, 8, 11 };
 			growth[0] = Str - Initial[0];
@@ -91,7 +91,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[4] = Cha - Initial[4];
 			growth[5] = Int - Initial[5];
 		}
-		// 幻術師
+		// 幻术师
 		if (pc.isIllusionist()) {
 			int[] Initial = { 11, 10, 12, 12, 8, 12 };
 			growth[0] = Str - Initial[0];
@@ -109,13 +109,13 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 	/**
 	 * 
 	 * @param pc
-	 *            腳色
+	 *            角色
 	 * @param Str
 	 *            力量
 	 * @param Dex
 	 *            敏捷
 	 * @param Con
-	 *            體質
+	 *            体质
 	 * @param Wis
 	 *            精神
 	 * @param Cha
@@ -132,7 +132,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		writeC(0x04);
 		writeC(write1);// 智力&力量
 		writeC(write2);// 敏捷&精神
-		writeC(write3);// 魅力&體質
+		writeC(write3);// 魅力&体质
 		writeC(0x00);
 	}
 

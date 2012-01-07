@@ -29,6 +29,10 @@ public class S_WarTime extends ServerBasePacket {
 
 	private static final String S_WAR_TIME = "[S] S_WarTime";
 
+	/**
+	 * 攻城时间设定
+	 * @param cal
+	 */
 	public S_WarTime(Calendar cal) {
 		// 1997/01/01 17:00を基点としている
 		Calendar base_cal = Calendar.getInstance();

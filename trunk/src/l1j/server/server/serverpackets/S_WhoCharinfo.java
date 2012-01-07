@@ -20,7 +20,7 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
- * WHO角色信息
+ * 伺服器讯息(行数/行数,附加字串)
  */
 public class S_WhoCharinfo extends ServerBasePacket {
 
@@ -30,17 +30,21 @@ public class S_WhoCharinfo extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 伺服器讯息(行数/行数,附加字串)
+	 * @param pc
+	 */
 	public S_WhoCharinfo(L1PcInstance pc) {
 		_log.fine("Who charpack for : " + pc.getName());
 
 		String lawfulness = "";
 		int lawful = pc.getLawful();
 		if (lawful < 0) {
-			lawfulness = "(Chaotic)";
+			lawfulness = "(Chaotic)"; // 邪恶者
 		} else if (lawful >= 0 && lawful < 500) {
-			lawfulness = "(Neutral)";
+			lawfulness = "(Neutral)"; // 中立者
 		} else if (lawful >= 500) {
-			lawfulness = "(Lawful)";
+			lawfulness = "(Lawful)"; // 正义者
 		}
 
 		writeC(Opcodes.S_OPCODE_SYSMSG);

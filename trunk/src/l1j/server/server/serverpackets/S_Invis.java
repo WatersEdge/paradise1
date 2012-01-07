@@ -19,10 +19,18 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物件隐形或现形
+ */
 public class S_Invis extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件隐形或现形
+	 * @param objid
+	 * @param type 0:无 1:隐形
+	 */
 	public S_Invis(int objid, int type) {
 		buildPacket(objid, type);
 	}

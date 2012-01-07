@@ -22,6 +22,9 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_OtherCharPacks
 
+/**
+ * 物件封包  - 其他角色
+ */
 public class S_OtherCharPacks extends ServerBasePacket {
 
 	private static final String S_OTHER_CHAR_PACKS = "[S] S_OtherCharPacks";
@@ -45,7 +48,7 @@ public class S_OtherCharPacks extends ServerBasePacket {
 	private void buildPacket(L1PcInstance pc, boolean isFindInvis) {
 		int status = STATUS_PC;
 
-		if (pc.getPoison() != null) { // 毒状態
+		if (pc.getPoison() != null) { // 毒状态
 			if (pc.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
@@ -83,15 +86,15 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		writeD(0x0000); // exp
 		// writeC(0x00);
 		writeH(pc.getLawful());
-		writeS(pc.getName());
-		writeS(pc.getTitle());
-		writeC(status);
+		writeS(pc.getName()); // 名称
+		writeS(pc.getTitle()); // 封号
+		writeC(status); // 状态
 		writeD(pc.getClanid());
-		writeS(pc.getClanname()); // クラン名
-		writeS(null); // ペッホチング？
+		writeS(pc.getClanname()); // 血盟名称
+		writeS(null); // 主人名称？
 		writeC(0); // ？
 		/*
-		 * if(pc.is_isInParty()) // パーティー中 { writeC(100 * pc.get_currentHp() /
+		 * if(pc.is_isInParty()) // 组队中 { writeC(100 * pc.get_currentHp() /
 		 * pc.get_maxHp()); } else { writeC(0xFF); }
 		 */
 

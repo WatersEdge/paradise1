@@ -2,6 +2,9 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 
+ */
 public class S_SkillIconThirdSpeed extends ServerBasePacket {
 
 	public S_SkillIconThirdSpeed(int j) {

@@ -27,7 +27,7 @@ import l1j.server.server.utils.SQLUtil;
 // ServerBasePacket
 
 /**
- * 
+ * 拍卖盟屋公告栏内容
  */
 public class S_AuctionBoardRead extends ServerBasePacket {
 
@@ -52,23 +52,23 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 			while (rs.next()) {
 				writeC(Opcodes.S_OPCODE_SHOWHTML);
 				writeD(objectId);
-				writeS("agsel");
-				writeS(house_number); // アジトの番号
-				writeH(9); // 以下の文字列の個数
-				writeS(rs.getString(2)); // アジトの名前
-				writeS(rs.getString(6)); // アジトの位置
-				writeS(String.valueOf(rs.getString(3))); // アジトの広さ
-				writeS(rs.getString(7)); // 以前の所有者
-				writeS(rs.getString(9)); // 現在の入札者
-				writeS(String.valueOf(rs.getInt(5))); // 現在の入札価格
+				writeS("agsel"); // 对话档名称
+				writeS(house_number); // 盟屋编号
+				writeH(9); // 以下显示数字个数
+				writeS(rs.getString(2)); // 盟屋名称
+				writeS(rs.getString(6)); // 盟屋位置
+				writeS(String.valueOf(rs.getString(3))); // 盟屋面积
+				writeS(rs.getString(7)); // 前任屋主
+				writeS(rs.getString(9)); // 现任屋主
+				writeS(String.valueOf(rs.getInt(5))); // 售屋价格
 				Calendar cal = timestampToCalendar((Timestamp) rs.
 						getObject(4));
 				int month = cal.get(Calendar.MONTH) + 1;
 				int day = cal.get(Calendar.DATE);
 				int hour = cal.get(Calendar.HOUR_OF_DAY);
-				writeS(String.valueOf(month)); // 締切月
-				writeS(String.valueOf(day)); // 締切日
-				writeS(String.valueOf(hour)); // 締切時
+				writeS(String.valueOf(month)); // 截止月
+				writeS(String.valueOf(day)); // 截止日
+				writeS(String.valueOf(hour)); // 截止时
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

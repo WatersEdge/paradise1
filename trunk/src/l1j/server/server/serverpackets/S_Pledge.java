@@ -16,7 +16,11 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 血盟成员清单
+ */
 public class S_Pledge extends ServerBasePacket {
+
 	private static final String _S_Pledge = "[S] _S_Pledge";
 
 	private byte[] _byte = null;
@@ -29,14 +33,11 @@ public class S_Pledge extends ServerBasePacket {
 		buildPacket(htmlid, objid, 1, clanname, olmembers, "");
 	}
 
-	public S_Pledge(String htmlid, int objid, String clanname,
-			String olmembers, String allmembers) {
-
+	public S_Pledge(String htmlid, int objid, String clanname, String olmembers, String allmembers) {
 		buildPacket(htmlid, objid, 2, clanname, olmembers, allmembers);
 	}
 
-	private void buildPacket(String htmlid, int objid, int type,
-			String clanname, String olmembers, String allmembers) {
+	private void buildPacket(String htmlid, int objid, int type, String clanname, String olmembers, String allmembers) {
 
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);

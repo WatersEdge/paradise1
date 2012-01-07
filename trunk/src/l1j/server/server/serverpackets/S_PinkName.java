@@ -19,8 +19,16 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色名称变紫色
+ */
 public class S_PinkName extends ServerBasePacket {
 
+	/**
+	 * 角色名称变紫色
+	 * @param objecId
+	 * @param time
+	 */
 	public S_PinkName(int objecId, int time) {
 		writeC(Opcodes.S_OPCODE_PINKNAME);
 		writeD(objecId);

@@ -22,7 +22,16 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 物品名单 (血盟仓库)
+ */
 public class S_RetrievePledgeList extends ServerBasePacket {
+
+	/**
+	 * 物品名单 (血盟仓库)
+	 * @param objid
+	 * @param pc
+	 */
 	public S_RetrievePledgeList(int objid, L1PcInstance pc) {
 		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan == null) {
@@ -30,20 +39,20 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 		}
 
 		if (clan.getWarehouseUsingChar() != 0
-				&& clan.getWarehouseUsingChar() != pc.getId()) // 自キャラ以外がクラン倉庫使用中
+				&& clan.getWarehouseUsingChar() != pc.getId()) // 本血盟其他人在使用
 		{
-			pc.sendPackets(new S_ServerMessage(209)); // \f1他の血盟員が倉庫を使用中です。しばらく経ってから利用してください。
+			pc.sendPackets(new S_ServerMessage(209)); // \f1血盟成员在使用仓库。请稍后再使用。
 			return;
 		}
 
 		if (pc.getInventory().getSize() < 180) {
 			int size = clan.getDwarfForClanInventory().getSize();
 			if (size > 0) {
-				clan.setWarehouseUsingChar(pc.getId()); // クラン倉庫をロック
+				clan.setWarehouseUsingChar(pc.getId()); // 锁定血盟仓库
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
-				writeC(5); // 血盟倉庫
+				writeC(5); // 血盟仓库
 				for (Object itemObject : clan.getDwarfForClanInventory()
 						.getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
@@ -55,12 +64,12 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeH(0x001e); // 金幣30
+				writeH(0x001e); // 金币30
 			} else {
-				pc.sendPackets(new S_ServerMessage(1625));
+				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
 		} else {
-			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
+			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}
 

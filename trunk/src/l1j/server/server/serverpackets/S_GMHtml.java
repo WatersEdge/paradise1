@@ -16,7 +16,16 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 显示指定HTML
+ */
 public class S_GMHtml extends ServerBasePacket {
+
+	/**
+	 * 显示指定HTML
+	 * @param _objid
+	 * @param html
+	 */
 	public S_GMHtml(int _objid, String html) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(_objid);

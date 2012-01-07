@@ -20,8 +20,17 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 将死亡的对象复活
+ */
 public class S_Resurrection extends ServerBasePacket {
 
+	/**
+	 * 将死亡的对象复活
+	 * @param target 被复活的角色
+	 * @param use 使用复活的角色
+	 * @param type
+	 */
 	public S_Resurrection(L1PcInstance target, L1PcInstance use, int type) {
 		writeC(Opcodes.S_OPCODE_RESURRECTION);
 		writeD(target.getId());

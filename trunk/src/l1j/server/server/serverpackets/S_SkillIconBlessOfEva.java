@@ -19,8 +19,16 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 效果图示 (水底呼吸)
+ */
 public class S_SkillIconBlessOfEva extends ServerBasePacket {
 
+	/**
+	 * 效果图示 (水底呼吸)
+	 * @param objectId
+	 * @param time
+	 */
 	public S_SkillIconBlessOfEva(int objectId, int time) {
 		writeC(Opcodes.S_OPCODE_BLESSOFEVA);
 		writeD(objectId);

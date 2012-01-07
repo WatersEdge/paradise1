@@ -16,9 +16,18 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 效果图示：龙之血痕
+ */
 public class S_SkillIconBloodstain extends ServerBasePacket {
+
 	private static final String S_SKILL_ICON_BLOODSTAIN = "[S] S_SkillIconBloodstain";
 
+	/**
+	 * 效果图示：龙之血痕
+	 * @param i
+	 * @param j
+	 */
 	public S_SkillIconBloodstain(int i, int j) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x64);

@@ -19,12 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 角色皇冠
+ */
 public class S_CastleMaster extends ServerBasePacket {
 
 	private static final String _S__08_CASTLEMASTER = "[S] S_CastleMaster";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 角色皇冠
+	 * @param type 城堡编号
+	 * @param objecId 角色的OBJID
+	 */
 	public S_CastleMaster(int type, int objecId) {
 		buildPacket(type, objecId);
 	}

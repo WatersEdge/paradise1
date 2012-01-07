@@ -19,10 +19,18 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
 
+/**
+ * NPC对话视窗
+ */
 public class S_PetMenuPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * NPC对话视窗
+	 * @param npc
+	 * @param exppercet
+	 */
 	public S_PetMenuPacket(L1NpcInstance npc, int exppercet) {
 		buildpacket(npc, exppercet);
 	}
@@ -30,7 +38,7 @@ public class S_PetMenuPacket extends ServerBasePacket {
 	private void buildpacket(L1NpcInstance npc, int exppercet) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 
-		if (npc instanceof L1PetInstance) { // ペット
+		if (npc instanceof L1PetInstance) { // 宠物
 			L1PetInstance pet = (L1PetInstance) npc;
 			writeD(pet.getId());
 			writeS("anicom");
@@ -38,10 +46,10 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			writeH(10);
 			switch (pet.getCurrentPetStatus()) {
 			case 1:
-				writeS("$469"); // 攻撃態勢
+				writeS("$469"); // 攻击态势
 				break;
 			case 2:
-				writeS("$470"); // 防御態勢
+				writeS("$470"); // 防御态势
 				break;
 			case 3:
 				writeS("$471"); // 休憩
@@ -53,11 +61,11 @@ public class S_PetMenuPacket extends ServerBasePacket {
 				writeS("$471"); // 休憩
 				break;
 			}
-			writeS(Integer.toString(pet.getCurrentHp())); // 現在のＨＰ
+			writeS(Integer.toString(pet.getCurrentHp())); // 现在ＨＰ
 			writeS(Integer.toString(pet.getMaxHp())); // 最大ＨＰ
-			writeS(Integer.toString(pet.getCurrentMp())); // 現在のＭＰ
+			writeS(Integer.toString(pet.getCurrentMp())); // 现在ＭＰ
 			writeS(Integer.toString(pet.getMaxMp())); // 最大ＭＰ
-			writeS(Integer.toString(pet.getLevel())); // レベル
+			writeS(Integer.toString(pet.getLevel())); // 等级
 
 			// 名前の文字数が8を超えると落ちる
 			// なぜか"セント バーナード","ブレイブ ラビット"はOK
@@ -73,31 +81,31 @@ public class S_PetMenuPacket extends ServerBasePacket {
 
 			String s = "$610";
 			if (pet.get_food() > 80) {
-				s = "$612"; // 非常飽。
+				s = "$612"; // 非常饱。
 			} else if (pet.get_food() > 60) {
-				s = "$611"; // 稍微飽。
+				s = "$611"; // 稍微饱。
 			} else if (pet.get_food() > 30) {
 				s = "$610"; // 普通。
 			} else if (pet.get_food() > 10) {
-				s = "$609"; // 稍微餓。
+				s = "$609"; // 稍微饿。
 			} else if (pet.get_food() >= 0) {
-				s = "$608"; // 非常餓。
+				s = "$608"; // 非常饿。
 			}
-			writeS(s); // 飽食度
-			writeS(Integer.toString(exppercet)); // 経験値
-			writeS(Integer.toString(pet.getLawful())); // アライメント
-		} else if (npc instanceof L1SummonInstance) { // サモンモンスター
+			writeS(s); // 饱食度
+			writeS(Integer.toString(exppercet)); // 经验值
+			writeS(Integer.toString(pet.getLawful())); // 正义值
+		} else if (npc instanceof L1SummonInstance) { // 召唤兽
 			L1SummonInstance summon = (L1SummonInstance) npc;
 			writeD(summon.getId());
 			writeS("moncom");
 			writeC(0x00);
-			writeH(6); // 渡す引数文字の数の模様
+			writeH(6); // 渡す引数文字の数の模样
 			switch (summon.get_currentPetStatus()) {
 			case 1:
-				writeS("$469"); // 攻撃態勢
+				writeS("$469"); // 攻击态势
 				break;
 			case 2:
-				writeS("$470"); // 防御態勢
+				writeS("$470"); // 防御态势
 				break;
 			case 3:
 				writeS("$471"); // 休憩
@@ -109,11 +117,11 @@ public class S_PetMenuPacket extends ServerBasePacket {
 				writeS("$471"); // 休憩
 				break;
 			}
-			writeS(Integer.toString(summon.getCurrentHp())); // 現在のＨＰ
+			writeS(Integer.toString(summon.getCurrentHp())); // 现在ＨＰ
 			writeS(Integer.toString(summon.getMaxHp())); // 最大ＨＰ
-			writeS(Integer.toString(summon.getCurrentMp())); // 現在のＭＰ
+			writeS(Integer.toString(summon.getCurrentMp())); // 现在ＭＰ
 			writeS(Integer.toString(summon.getMaxMp())); // 最大ＭＰ
-			writeS(Integer.toString(summon.getLevel())); // レベル
+			writeS(Integer.toString(summon.getLevel())); // 等级
 			// writeS(summon.getNpcTemplate().get_nameid());
 			// writeS(Integer.toString(0));
 			// writeS(Integer.toString(790));

@@ -17,15 +17,28 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 
+/**
+ * 物件血条
+ */
 public class S_HPMeter extends ServerBasePacket {
+
 	private static final String _typeString = "[S] S_HPMeter";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件血条
+	 * @param objId
+	 * @param hpRatio
+	 */
 	public S_HPMeter(int objId, int hpRatio) {
 		buildPacket(objId, hpRatio);
 	}
 
+	/**
+	 * 物件血条
+	 * @param cha
+	 */
 	public S_HPMeter(L1Character cha) {
 		int objId = cha.getId();
 		int hpRatio = 100;

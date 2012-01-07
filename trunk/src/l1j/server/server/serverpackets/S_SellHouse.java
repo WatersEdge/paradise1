@@ -19,12 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 选取物品数量 (卖出盟屋)
+ */
 public class S_SellHouse extends ServerBasePacket {
 
 	private static final String S_SELLHOUSE = "[S] S_SellHouse";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 选取物品数量 (卖出盟屋)
+	 * @param objectId
+	 * @param houseNumber
+	 */
 	public S_SellHouse(int objectId, String houseNumber) {
 		buildPacket(objectId, houseNumber);
 	}
@@ -33,9 +41,9 @@ public class S_SellHouse extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 		writeD(objectId);
 		writeD(0); // ?
-		writeD(100000); // スピンコントロールの初期価格
-		writeD(100000); // 価格の下限
-		writeD(2000000000); // 価格の上限
+		writeD(100000); // 初始价格
+		writeD(100000); // 价格下限
+		writeD(2000000000); // 价格上限
 		writeH(0); // ?
 		writeS("agsell");
 		writeS("agsell " + houseNumber);

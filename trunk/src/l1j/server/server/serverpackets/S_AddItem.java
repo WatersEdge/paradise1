@@ -21,7 +21,7 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // ServerBasePacket
 
 /**
- * 物品增加封包
+ * 物品增加
  */
 public class S_AddItem extends ServerBasePacket {
 
@@ -41,7 +41,7 @@ public class S_AddItem extends ServerBasePacket {
 		writeC((item.isIdentified()) ? 1 : 0);
 		writeS(item.getViewName());
 		if (!item.isIdentified()) {
-			// 未鑑定の場合ステータスを送る必要はない
+			// 未鉴定不发送详细讯息
 			writeC(0);
 		}
 		else {

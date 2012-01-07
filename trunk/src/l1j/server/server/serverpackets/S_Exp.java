@@ -17,12 +17,15 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 更新经验值
+ */
 public class S_Exp extends ServerBasePacket {
 
 	private static final String S_EXP = "[S] S_Exp";
 
 	/**
-	 * レベルと経験値データを送る。
+	 * 更新等级与经验值。
 	 * 
 	 * @param pc
 	 *            - PC

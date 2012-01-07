@@ -21,6 +21,8 @@ import l1j.server.server.Opcodes;
 
 /**
  * 游戏天气
+ * 1~3雨
+ * 17~19雪
  */
 public class S_Weather extends ServerBasePacket {
 
@@ -28,6 +30,10 @@ public class S_Weather extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 游戏天气
+	 * @param weather
+	 */
 	public S_Weather(int weather) {
 		buildPacket(weather);
 	}

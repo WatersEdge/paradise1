@@ -20,6 +20,9 @@ import l1j.server.server.model.Instance.L1SignboardInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SignboardPack
 
+/**
+ * 
+ */
 public class S_SignboardPack extends ServerBasePacket {
 
 	private static final String S_SIGNBOARD_PACK = "[S] S_SignboardPack";
@@ -43,7 +46,7 @@ public class S_SignboardPack extends ServerBasePacket {
 		writeS(null);
 		writeS(signboard.getNameId());
 		int status = 0;
-		if (signboard.getPoison() != null) { // 毒状態
+		if (signboard.getPoison() != null) { // 毒状态
 			if (signboard.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}

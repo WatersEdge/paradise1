@@ -19,18 +19,21 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SkillIconGFX, S_CharVisualUpdate
 
+/**
+ * 使用于怪物变身
+ */
 public class S_NpcChangeShape extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	/** 使用於怪物變身 */
+	/** 使用于怪物变身 */
 	public S_NpcChangeShape(int objId, int polyId, int lawful, int status) {
 		writeC(Opcodes.S_OPCODE_SPOLY);
 		writeD(objId);
 		writeD(0); // ???
 		writeH(polyId);
-		writeH(lawful); // 正義值
-		writeH(status); // 狀態
+		writeH(lawful); // 正义值
+		writeH(status); // 状态
 	}
 
 	@Override

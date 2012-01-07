@@ -19,8 +19,15 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 城堡宝库 (要求存入资金)
+ */
 public class S_Deposit extends ServerBasePacket {
 
+	/**
+	 * 城堡宝库 (要求存入资金)
+	 * @param objecId
+	 */
 	public S_Deposit(int objecId) {
 		writeC(Opcodes.S_OPCODE_DEPOSIT);
 		writeD(objecId);

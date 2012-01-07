@@ -29,6 +29,10 @@ public class S_Teleport extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 传送术或瞬移卷-传送锁定
+	 * @param pc
+	 */
 	public S_Teleport(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_TELEPORT);
 		writeC(0x00);

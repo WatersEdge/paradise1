@@ -16,6 +16,9 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 角色创造例外
+ */
 public class S_CharCreateStatus extends ServerBasePacket {
 	private static final String S_CHAR_CREATE_STATUS = "[S] S_CharCreateStatus";
 
@@ -27,6 +30,10 @@ public class S_CharCreateStatus extends ServerBasePacket {
 
 	public static final int REASON_WRONG_AMOUNT = 0x15;
 
+	/**
+	 * 角色创造例外
+	 * @param reason
+	 */
 	public S_CharCreateStatus(int reason) {
 		writeC(Opcodes.S_OPCODE_NEWCHARWRONG);
 		writeC(reason);

@@ -17,38 +17,46 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 战斗特化
+ */
 public class S_Fight extends ServerBasePacket {
 	private static final String S_FIGHT = "[S] S_Fight";
 
 	private byte[] _byte = null;
 
-	// 開啟
+	// 开启
 	public static final int FLAG_ON = 1;
 
-	// 關閉
+	// 关闭
 	public static final int FLAG_OFF = 0;
 
-	// 正義第一階段(10000 ~ 19999)
+	// 正义第一阶段(10000 ~ 19999)
 	public static final int TYPE_JUSTICE_LEVEL1 = 0;
 
-	// 正義第二階段(20000 ~ 29999)
+	// 正义第二阶段(20000 ~ 29999)
 	public static final int TYPE_JUSTICE_LEVEL2 = 1;
 
-	// 正義第三階段(30000 ~ 32767)
+	// 正义第三阶段(30000 ~ 32767)
 	public static final int TYPE_JUSTICE_LEVEL3 = 2;
 
-	// 邪惡第一階段(-10000 ~ -19999)
+	// 邪恶第一阶段(-10000 ~ -19999)
 	public static final int TYPE_EVIL_LEVEL1 = 3;
 
-	// 邪惡第二階段(-20000 ~ -29999)
+	// 邪恶第二阶段(-20000 ~ -29999)
 	public static final int TYPE_EVIL_LEVEL2 = 4;
 
-	// 邪惡第三階段(-30000 ~ -32768)
+	// 邪恶第三阶段(-30000 ~ -32768)
 	public static final int TYPE_EVIL_LEVEL3 = 5;
 
-	// 遭遇的守護(新手保護)
+	// 遭遇的守护(新手保护)
 	public static final int TYPE_ENCOUNTER = 6;
 
+	/**
+	 * 战斗特化
+	 * @param type
+	 * @param flag
+	 */
 	public S_Fight(int type, int flag) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x72);

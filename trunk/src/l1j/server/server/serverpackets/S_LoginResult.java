@@ -16,19 +16,23 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 登入状态
+ */
 public class S_LoginResult extends ServerBasePacket {
+
 	public static final String S_LOGIN_RESULT = "[S] S_LoginResult";
-
+	/** 登入伺服器成功 (无讯息 ) */
 	public static final int REASON_LOGIN_OK = 0x00;
-
+	/** 账号已经使用中 */
 	public static final int REASON_ACCOUNT_IN_USE = 0x16;
-
+	/** 已经有同样的账号 请重新输入 */
 	public static final int REASON_ACCOUNT_ALREADY_EXISTS = 0x07;
-
+	/** 无法登入的原因如下： 1.您的帐号密码输入错误。 2.帐号受PlaySafe保护但未用PlaySafe登入。 */
 	public static final int REASON_ACCESS_FAILED = 0x08;
-
+	/** 3.帐号受GAMAOTP保护但未用GAMAOTP登入。 4.帐号已升级为GASH+，但未用beanfun! 登入。 */
 	public static final int REASON_USER_OR_PASS_WRONG = 0x08;
-
+	/** 5.使用GAMAOTP或PlaySafe或beanfun!登入逾时，请重新登入。 若仍有疑问请洽客服中心02-8024-2002 */
 	public static final int REASON_PASS_WRONG = 0x08;
 
 	// public static int REASON_SYSTEM_ERROR = 0x01;

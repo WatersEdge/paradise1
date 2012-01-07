@@ -19,6 +19,9 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 
+ */
 public class S_SkillIconWisdomPotion extends ServerBasePacket {
 
 	public S_SkillIconWisdomPotion(int time) {

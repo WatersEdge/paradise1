@@ -20,22 +20,25 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 雇佣佣兵数量清单
+ */
 public class S_HireSoldier extends ServerBasePacket {
 
 	private static final String S_HIRE_SOLDIER = "[S] S_HireSldier";
 
 	private byte[] _byte = null;
 
-	// HTMLを開いているときにこのパケットを送るとnpcdeloy-j.htmlが表示される
-	// OKボタンを押すとC_127が飛ぶ
+	// 表示HTML打开后发送的数据包npcdeloy-j.html
+	// 按OK按钮飞C_127
 	public S_HireSoldier(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_HIRESOLDIER);
-		writeH(0); // ? クライアントが返すパケットに含まれる
-		writeH(0); // ? クライアントが返すパケットに含まれる
-		writeH(0); // 雇用された傭兵の総数
+		writeH(0); // ? 包含客户端返回的数据包
+		writeH(0); // ? 包含客户端返回的数据包
+		writeH(0); // 雇佣佣兵的总数
 		writeS(pc.getName());
-		writeD(0); // ? クライアントが返すパケットに含まれる
-		writeH(0); // 配置可能な傭兵数
+		writeD(0); // ? 包含客户端返回的数据包
+		writeH(0); // 可以雇佣佣兵的总数
 	}
 
 	@Override

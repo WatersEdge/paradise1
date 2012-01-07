@@ -17,7 +17,11 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.gametime.L1GameTimeClock;
 
+/**
+ * 更新目前游戏时间
+ */
 public class S_GameTime extends ServerBasePacket {
+
 	public S_GameTime(int time) {
 		buildPacket(time);
 	}

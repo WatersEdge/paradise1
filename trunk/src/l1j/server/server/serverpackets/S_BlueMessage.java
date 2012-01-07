@@ -16,20 +16,41 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 蓝色系统讯息 (游戏画面中间)
+ */
 public class S_BlueMessage extends ServerBasePacket {
 
 	private static final String _S__18_BLUEMESSAGE = "[S] S_BlueMessage";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 画面中的蓝色讯息
+	 * @param type
+	 * @param msg1
+	 */
 	public S_BlueMessage(int type, String msg1) {
 		buildPacket(type, msg1, null, null, 1);
 	}
 
+	/**
+	 * 画面中的蓝色讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 */
 	public S_BlueMessage(int type, String msg1, String msg2) {
 		buildPacket(type, msg1, msg2, null, 2);
 	}
 
+	/**
+	 * 画面中的蓝色讯息
+	 * @param type
+	 * @param msg1
+	 * @param msg2
+	 * @param msg3
+	 */
 	public S_BlueMessage(int type, String msg1, String msg2, String msg3) {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}

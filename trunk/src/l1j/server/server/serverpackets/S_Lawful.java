@@ -16,12 +16,20 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 正义值更新
+ */
 public class S_Lawful extends ServerBasePacket {
 
 	private static final String S_LAWFUL = "[S] S_Lawful";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 正义值更新
+	 * @param objid
+	 * @param lawful
+	 */
 	public S_Lawful(int objid, int lawful) {
 		buildPacket(objid, lawful);
 	}

@@ -16,13 +16,22 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 物件动作类型 (短时间)
+ */
 public class S_DoActionGFX extends ServerBasePacket {
+
 	private static final String S_DOACTIONGFX = "[S] S_SkillGFX";
 
 	public static int ACTION_MAGIC = 0x16;
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件动作类型 (短时间)
+	 * @param objectId
+	 * @param actionId
+	 */
 	public S_DoActionGFX(int objectId, int actionId) {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeD(objectId);

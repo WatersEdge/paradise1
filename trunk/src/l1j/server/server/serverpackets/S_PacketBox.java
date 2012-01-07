@@ -55,19 +55,19 @@ public class S_PacketBox extends ServerBasePacket {
 	/** C(id) H(?): %s的攻城战正在进行中。 */
 	public static final int MSG_WAR_GOING = 2;
 
-	/** -: 城の主导权を握りました。 (音乐が变わる) */
+	/** -: 已经掌握了城堡的主导权。 (音乐变化) */
 	public static final int MSG_WAR_INITIATIVE = 3;
 
-	/** -: 城を占据しました。 */
+	/** -: 已占领城堡。 */
 	public static final int MSG_WAR_OCCUPY = 4;
 
-	/** ?: 决斗が终りました。 (音乐が变わる) */
+	/** ?: 结束决斗。 (音乐变化) */
 	public static final int MSG_DUEL = 5;
 
-	/** C(count): SMSの送信に失败しました。 / 全部で%d件送信されました。 */
+	/** C(count): 您没有发送出任何简讯。 / 全部で%d件送信されました。 */
 	public static final int MSG_SMS_SENT = 6;
 
-	/** -: 祝福の中、2人は夫妇として结ばれました。 (音乐が变わる) */
+	/** -: 俩人的结婚在所有人的祝福下完成。 (音乐变化) */
 	public static final int MSG_MARRIED = 9;
 
 	/** C(weight): 重量(30段阶) */
@@ -76,7 +76,7 @@ public class S_PacketBox extends ServerBasePacket {
 	/** C(food): 饱食度(30段阶) */
 	public static final int FOOD = 11;
 
-	/** C(0) C(level): このアイテムは%dレベル以下のみ使用できます。 (0~49以外は表示されない) */
+	/** C(0) C(level): 等级%d以下才能使用此道具。 (0~49以外不显示) */
 	public static final int MSG_LEVEL_OVER = 12;
 
 	/** UB情报HTML */
@@ -84,21 +84,21 @@ public class S_PacketBox extends ServerBasePacket {
 
 	/**
 	 * C(id)<br>
-	 * 1:身に迂められていた精灵の力が空气の中に溶けて行くのを感じました。<br>
-	 * 2:体の隅々に火の精灵力が染みこんできます。<br>
-	 * 3:体の隅々に水の精灵力が染みこんできます。<br>
-	 * 4:体の隅々に风の精灵力が染みこんできます。<br>
-	 * 5:体の隅々に地の精灵力が染みこんできます。<br>
+	 * 1:感觉到在身上有的精灵力量被空气中融化。<br>
+	 * 2:忽然全身充满了%s的灵力。火。<br>
+	 * 3:忽然全身充满了%s的灵力。水。<br>
+	 * 4:忽然全身充满了%s的灵力。风。<br>
+	 * 5:忽然全身充满了%s的灵力。地。<br>
 	 */
 	public static final int MSG_ELF = 15;
 
-	/** C(count) S(name)...: 遮断リスト复数追加 */
+	/** C(count) S(name)...: 开启拒绝名单 */
 	public static final int ADD_EXCLUDE2 = 17;
 
-	/** S(name): 遮断リスト追加 */
+	/** S(name): 增加到拒绝名单 */
 	public static final int ADD_EXCLUDE = 18;
 
-	/** S(name): 遮断解除 */
+	/** S(name): 移除出拒绝名单 */
 	public static final int REM_EXCLUDE = 19;
 
 	/** 技能图标1 */
@@ -107,52 +107,52 @@ public class S_PacketBox extends ServerBasePacket {
 	/** 技能图标2 */
 	public static final int ICONS2 = 21;
 
-	/** オーラ系のスキルアイコン */
+	/** 光系技能图标 */
 	public static final int ICON_AURA = 22;
 
-	/** S(name): タウンリーダーに%sが选ばれました。 */
+	/** S(name): 新村长由%s选出 */
 	public static final int MSG_TOWN_LEADER = 23;
 
 	/**
-	 * C(id): あなたのランクが%sに变更されました。<br>
-	 * id - 1:见习い 2:一般 3:ガーディアン
+	 * C(id): 你的阶级变更为%s。<br>
+	 * id - 1:见习 2:一般 3:守护骑士
 	 */
 	public static final int MSG_RANK_CHANGED = 27;
 
-	/** D(?) S(name) S(clanname): %s血盟の%sがラスタバド军を退けました。 */
+	/** D(?) S(name) S(clanname): %s 血盟的 %s打败了反王 */
 	public static final int MSG_WIN_LASTAVARD = 30;
 
-	/** -: \f1气分が良くなりました。 */
+	/** -: \f1你觉得舒服多了。 */
 	public static final int MSG_FEEL_GOOD = 31;
 
-	/** 不明。C_30パケットが飞ぶ */
+	/** 不明。C_30客户端会传回一个封包 */
 	public static final int SOMETHING1 = 33;
 
-	/** H(time): ブルーポーションのアイコンが表示される。 */
+	/** H(time): 蓝水图示。 */
 	public static final int ICON_BLUEPOTION = 34;
 
-	/** H(time): 变身のアイコンが表示される。 */
+	/** H(time): 变身图示。 */
 	public static final int ICON_POLYMORPH = 35;
 
-	/** H(time): チャット禁止のアイコンが表示される。 */
+	/** H(time): 禁言图示。 */
 	public static final int ICON_CHATBAN = 36;
 
 	/** 不明。C_7パケットが飞ぶ。C_7はペットのメニューを开いたときにも飞ぶ。 */
 	public static final int SOMETHING2 = 37;
 
-	/** 血盟情报のHTMLが表示される */
+	/** 血盟成员清单HTML */
 	public static final int HTML_CLAN1 = 38;
 
-	/** H(time): イミュのアイコンが表示される */
+	/** H(time): 圣结界图示 */
 	public static final int ICON_I2H = 40;
 
-	/** キャラクターのゲームオプション、ショートカット情报などを送る */
+	/** 更新角色使用的快捷键 */
 	public static final int CHARACTER_CONFIG = 41;
 
-	/** キャラクター选択画面に戻る */
+	/** 角色选择视窗 */
 	public static final int LOGOUT = 42;
 
-	/** 战斗中に再始动することはできません。 */
+	/** 战斗中无法重新开始。 */
 	public static final int MSG_CANT_LOGOUT = 43;
 
 	/**
@@ -164,21 +164,21 @@ public class S_PacketBox extends ServerBasePacket {
 	public static final int CALL_SOMETHING = 45;
 
 	/**
-	 * C(id): バトル コロシアム、カオス大战がー<br>
-	 * id - 1:开始します 2:取り消されました 3:终了します
+	 * C(id): 大圆形竞技场、混沌的大战<br>
+	 * id - 1:开始 2:取消 3:结束
 	 */
 	public static final int MSG_COLOSSEUM = 49;
 
-	/** 血盟情报のHTML */
+	/** 血盟情报HTML */
 	public static final int HTML_CLAN2 = 51;
 
-	/** 料理ウィンドウを开く */
+	/** 料理清单 */
 	public static final int COOK_WINDOW = 52;
 
 	/** C(type) H(time): 料理アイコンが表示される */
 	public static final int ICON_COOKING = 53;
 
-	/** 鱼がかかったグラフィックが表示される */
+	/** 鱼上钩的图示 */
 	public static final int FISHING = 55;
 
 	/** 魔法娃娃状态图示*/
@@ -234,7 +234,7 @@ public class S_PacketBox extends ServerBasePacket {
 				break;
 			case MSG_LEVEL_OVER:
 				writeC(0); // ?
-				writeC(value); // 0-49以外は表示されない
+				writeC(value); // 0-49以外不显示
 				break;
 			case COOK_WINDOW:
 				writeC(0xdb); // ?
@@ -307,8 +307,8 @@ public class S_PacketBox extends ServerBasePacket {
 				}
 				break;
 			case MSG_DUEL:
-				writeD(type); // 相手のオブジェクトID
-				writeD(time); // 自分のオブジェクトID
+				writeD(type); // 对方ID
+				writeD(time); // 自己ID
 				break;
 			case ICON_MAGIC_DOLL:
 				if (type == 32) { // 爱心图示
@@ -347,7 +347,7 @@ public class S_PacketBox extends ServerBasePacket {
 
 		switch (subCode) {
 			case MSG_WIN_LASTAVARD:
-				writeD(id); // クランIDか何か？
+				writeD(id); // 血盟ID或者什么？
 				writeS(name);
 				writeS(clanName);
 				break;
@@ -394,9 +394,9 @@ public class S_PacketBox extends ServerBasePacket {
 				writeD(time); // JST 1970 1/1 09:00 が基准
 			}
 
-			// キャラ情报
-			writeS(pc.getName()); // 半角12字まで
-			writeS(pc.getClanname()); // []内に表示される文字列。半角12字まで
+			// 角色信息
+			writeS(pc.getName()); // 半角最多12字符
+			writeS(pc.getClanname()); // 出现在[]内的文字信息。半角最多12字符
 		}
 	}
 

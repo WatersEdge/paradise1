@@ -17,9 +17,17 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Object;
 
+/**
+ * 物件删除
+ */
 public class S_RemoveObject extends ServerBasePacket {
+
 	private byte[] _byte = null;
 
+	/**
+	 * 物件刪除
+	 * @param obj
+	 */
 	public S_RemoveObject(L1Object obj) {
 		writeC(Opcodes.S_OPCODE_REMOVE_OBJECT);
 		writeD(obj.getId());

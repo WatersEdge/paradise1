@@ -23,8 +23,13 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 魔法购买 (金币)
+ */
 public class S_SkillBuy extends ServerBasePacket {
+
 	private static Logger _log = Logger.getLogger(S_SkillBuy.class.getName());
+
 	private static final String _S_SKILL_BUY = "[S] S_SkillBuy";
 
 	private byte[] _byte = null;
@@ -63,13 +68,13 @@ public class S_SkillBuy extends ServerBasePacket {
 			}
 			break;
 
-		case 1: // ナイト
+		case 1: // 骑士
 			if (pc.getLevel() >= 50 || pc.isGm()) {
 				RC = 8;
 			}
 			break;
 
-		case 2: // エルフ
+		case 2: // 精灵
 			if (pc.getLevel() >= 24 || pc.isGm()) {
 				RC = 23;
 			} else if (pc.getLevel() >= 16) {
@@ -79,7 +84,7 @@ public class S_SkillBuy extends ServerBasePacket {
 			}
 			break;
 
-		case 3: // WIZ
+		case 3: // 法师
 			if (pc.getLevel() >= 12 || pc.isGm()) {
 				RC = 23;
 			} else if (pc.getLevel() >= 8) {
@@ -89,7 +94,7 @@ public class S_SkillBuy extends ServerBasePacket {
 			}
 			break;
 
-		case 4: // DE
+		case 4: // 黑暗精灵
 			if (pc.getLevel() >= 24 || pc.isGm()) {
 				RC = 16;
 			} else if (pc.getLevel() >= 12) {

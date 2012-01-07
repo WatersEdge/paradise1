@@ -18,7 +18,7 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 
 /**
- * NPC物件攻击封包
+ * 物件攻击 (NPC用  - 近距离)
  */
 public class S_AttackPacketForNpc extends ServerBasePacket {
 
@@ -26,6 +26,12 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 物件攻击
+	 * @param cha
+	 * @param npcObjectId
+	 * @param type 动作编号
+	 */
 	public S_AttackPacketForNpc(L1Character cha, int npcObjectId, int type) {
 		buildpacket(cha, npcObjectId, type);
 	}

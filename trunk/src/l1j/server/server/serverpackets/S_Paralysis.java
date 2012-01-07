@@ -20,7 +20,7 @@ import l1j.server.server.Opcodes;
 // ServerBasePacket
 
 /**
- * 魔法效果：麻痹类
+ * 魔法效果：诅咒
  */
 public class S_Paralysis extends ServerBasePacket {
 	/** 你的身体完全麻痹了 */
@@ -35,7 +35,7 @@ public class S_Paralysis extends ServerBasePacket {
 	public static final int TYPE_STUN = 5;
 	/** 束缚状态 */
 	public static final int TYPE_BIND = 6;
-	/** 解除瞬移状态 */
+	/** 解除传送锁定状态 */
 	public static final int TYPE_TELEPORT_UNLOCK = 7;
 
 	public S_Paralysis(int type, boolean flag) {
@@ -54,10 +54,10 @@ public class S_Paralysis extends ServerBasePacket {
 			} else {
 				writeC(5);
 			}
-		} else if (type == TYPE_TELEPORT_UNLOCK) // 解除瞬移状态
+		} else if (type == TYPE_TELEPORT_UNLOCK) // 解除传送锁定
 		{
 			writeC(7);
-		} else if (type == TYPE_SLEEP) // 強力な睡魔が襲ってきて、寝てしまいました。
+		} else if (type == TYPE_SLEEP) // 你开始沉睡。
 		{
 			if (flag == true) {
 				writeC(10);

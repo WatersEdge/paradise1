@@ -26,7 +26,7 @@ import l1j.server.server.utils.SQLUtil;
 // ServerBasePacket
 
 /**
- * 
+ * 选取物品数量 (盟屋拍卖公告)
  */
 public class S_ApplyAuction extends ServerBasePacket {
 
@@ -34,6 +34,11 @@ public class S_ApplyAuction extends ServerBasePacket {
 	private static final String S_APPLYAUCTION = "[S] S_ApplyAuction";
 	private byte[] _byte = null;
 
+	/**
+	 * 选取物品数量 (盟屋拍卖公告)
+	 * @param objectId
+	 * @param houseNumber
+	 */
 	public S_ApplyAuction(int objectId, String houseNumber) {
 		buildPacket(objectId, houseNumber);
 	}
@@ -63,8 +68,8 @@ public class S_ApplyAuction extends ServerBasePacket {
 				}
 				writeD(2000000000); // 价格上限
 				writeH(0); // ?
-				writeS("agapply");
-				writeS("agapply " + houseNumber);
+				writeS("agapply"); // HTML
+				writeS("agapply " + houseNumber); // 命令
 			}
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

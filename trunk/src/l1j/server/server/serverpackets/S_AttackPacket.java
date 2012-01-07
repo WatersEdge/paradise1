@@ -18,7 +18,7 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 
 /**
- * 物件攻击封包
+ * 物件攻击 (PC 用)
  */
 public class S_AttackPacket extends ServerBasePacket {
 

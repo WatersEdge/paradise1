@@ -22,7 +22,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.Random;
 
 /**
- * 多功能封包
+ * 登入时给于角色状态剩余时间
  */
 public class S_ActiveSpells extends ServerBasePacket {
 

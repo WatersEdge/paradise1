@@ -21,6 +21,9 @@ import l1j.server.server.model.Instance.L1PetInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_NPCPack
 
+/**
+ * 宠物封包
+ */
 public class S_PetPack extends ServerBasePacket {
 
 	private static final String S_PET_PACK = "[S] S_PetPack";
@@ -42,14 +45,13 @@ public class S_PetPack extends ServerBasePacket {
 		writeC(pet.getStatus()); // Modes in List.spr
 		writeC(pet.getHeading());
 		writeC(pet.getChaLightSize()); // (Bright) - 0~15
-		writeC(pet.getMoveSpeed()); // スピード - 0:normal, 1:fast,
-		// 2:slow
+		writeC(pet.getMoveSpeed()); // 速度 - 0:normal, 1:fast, 2:slow
 		writeD(pet.getExp());
 		writeH(pet.getTempLawful());
 		writeS(pet.getName());
 		writeS(pet.getTitle());
 		int status = 0;
-		if (pet.getPoison() != null) { // 毒状態
+		if (pet.getPoison() != null) { // 毒状态
 			if (pet.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}

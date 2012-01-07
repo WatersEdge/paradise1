@@ -19,11 +19,20 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 更新物件亮度
+ */
 public class S_Light extends ServerBasePacket {
 
 	private static final String S_LIGHT = "[S] S_Light";
+
 	private byte[] _byte = null;
 
+	/**
+	 * 更新物件亮度
+	 * @param objid
+	 * @param type
+	 */
 	public S_Light(int objid, int type) {
 		buildPacket(objid, type);
 	}

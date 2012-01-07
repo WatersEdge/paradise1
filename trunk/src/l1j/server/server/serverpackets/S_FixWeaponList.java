@@ -24,10 +24,17 @@ import l1j.server.server.utils.collections.Lists;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SystemMessage
 
+/**
+ * 损坏武器清单
+ */
 public class S_FixWeaponList extends ServerBasePacket {
 
 	private static final String S_FIX_WEAPON_LIST = "[S] S_FixWeaponList";
 
+	/**
+	 * 损坏武器清单
+	 * @param pc 该角色
+	 */
 	public S_FixWeaponList(L1PcInstance pc) {
 		buildPacket(pc);
 	}

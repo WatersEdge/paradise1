@@ -19,10 +19,18 @@ import l1j.server.server.Account;
 import l1j.server.server.ClientThread;
 import l1j.server.server.Opcodes;
 
+/**
+ * 角色列表
+ */
 public class S_CharAmount extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 角色列表
+	 * @param value 已创建的角色数量
+	 * @param client
+	 */
 	public S_CharAmount(int value, ClientThread client) {
 		buildPacket(value, client);
 	}
@@ -34,8 +42,6 @@ public class S_CharAmount extends ServerBasePacket {
 
 		writeC(Opcodes.S_OPCODE_CHARAMOUNT);
 		writeC(value);
-// writeD(0x00000000);
-// writeD(0x0000);
 		writeC(maxAmount); // max amount
 	}
 

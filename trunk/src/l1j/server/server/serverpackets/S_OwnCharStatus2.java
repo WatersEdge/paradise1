@@ -20,6 +20,10 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SendInvOnLogin
 
+/**
+ * 角色状态<br>
+ * 游戏视窗显示人物資料用
+ */
 public class S_OwnCharStatus2 extends ServerBasePacket {
 
 	/** 更新六項能力值以及負重 */

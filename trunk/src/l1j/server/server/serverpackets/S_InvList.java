@@ -22,28 +22,31 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物品名单 (背包)
+ */
 public class S_InvList extends ServerBasePacket {
 
 	private static final String S_INV_LIST = "[S] S_InvList";
 
 	/**
-	 * インベントリにアイテムを複数個まとめて追加する。
+	 * 一起增加多个道具到背包。
 	 */
 	public S_InvList(List<L1ItemInstance> items) {
 		writeC(Opcodes.S_OPCODE_INVLIST);
-		writeC(items.size()); // アイテム数
+		writeC(items.size()); // 道具数量
 
 		for (L1ItemInstance item : items) {
 			writeD(item.getId());
-			writeC(item.getItem().getUseType());
-			writeC(0);
-			writeH(item.get_gfxid());
-			writeC(item.getBless());
-			writeD(item.getCount());
-			writeC((item.isIdentified()) ? 1 : 0);
-			writeS(item.getViewName());
+			writeC(item.getItem().getUseType()); // 使用类型
+			writeC(0); // 可用次数
+			writeH(item.get_gfxid()); // 图示
+			writeC(item.getBless()); // 祝福状态
+			writeD(item.getCount()); // 数量
+			writeC((item.isIdentified()) ? 1 : 0); // 鉴定状态
+			writeS(item.getViewName()); // 名称
 			if (!item.isIdentified()) {
-				// 未鑑定の場合ステータスを送る必要はない
+				// 未鉴定状态不发送详细资料
 				writeC(0);
 			}
 			else {

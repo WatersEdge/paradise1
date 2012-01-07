@@ -17,9 +17,20 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 
+/**
+ * 物件移动
+ */
 public class S_MoveNpcPacket extends ServerBasePacket {
+
 	private static final String _S__1F_S_MOVENPCPACKET = "[S] S_MoveNpcPacket";
 
+	/***
+	 * 物件移动
+	 * @param npc
+	 * @param x
+	 * @param y
+	 * @param heading
+	 */
 	public S_MoveNpcPacket(L1MonsterInstance npc, int x, int y, int heading) {
 		// npc.set_moving(true);
 

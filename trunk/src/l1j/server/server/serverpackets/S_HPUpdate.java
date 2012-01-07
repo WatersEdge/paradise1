@@ -18,13 +18,26 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.IntRange;
 
+/**
+ * 体力与最大体力更新
+ */
 public class S_HPUpdate extends ServerBasePacket {
+
 	private static final IntRange hpRange = new IntRange(1, 32767);
 
+	/**
+	 * 体力与最大体力更新
+	 * @param currentHp
+	 * @param maxHp
+	 */
 	public S_HPUpdate(int currentHp, int maxHp) {
 		buildPacket(currentHp, maxHp);
 	}
 
+	/**
+	 * 体力与最大体力更新
+	 * @param pc
+	 */
 	public S_HPUpdate(L1PcInstance pc) {
 		buildPacket(pc.getCurrentHp(), pc.getMaxHp());
 	}

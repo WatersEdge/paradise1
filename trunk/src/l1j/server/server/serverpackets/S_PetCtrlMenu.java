@@ -18,7 +18,11 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.Instance.L1NpcInstance;
 
+/**
+ * 宠物控制界面移除
+ */
 public class S_PetCtrlMenu extends ServerBasePacket {
+
 	public S_PetCtrlMenu(L1Character cha, L1NpcInstance npc, boolean open) {
 		//int index = open ? 1 : cha.getPetList().size() - 1;
 		writeC(Opcodes.S_OPCODE_PETCTRL);

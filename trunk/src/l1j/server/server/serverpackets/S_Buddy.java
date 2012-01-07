@@ -17,12 +17,22 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Buddy;
 
+/**
+ * 好友清单
+ */
 public class S_Buddy extends ServerBasePacket {
+
 	private static final String _S_Buddy = "[S] _S_Buddy";
+
 	private static final String _HTMLID = "buddy";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 好友清单
+	 * @param objId
+	 * @param buddy
+	 */
 	public S_Buddy(int objId, L1Buddy buddy) {
 		buildPacket(objId, buddy);
 	}

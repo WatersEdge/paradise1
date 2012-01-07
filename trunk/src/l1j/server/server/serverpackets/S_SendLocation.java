@@ -16,6 +16,9 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 发送坐标
+ */
 public class S_SendLocation extends ServerBasePacket {
 
 	private static final String S_SEND_LOCATION = "[S] S_SendLocation";
@@ -28,7 +31,7 @@ public class S_SendLocation extends ServerBasePacket {
 		writeH(mapId);
 		writeH(x);
 		writeH(y);
-		writeC(msgId); // 發信者位在的地圖ID
+		writeC(msgId); // 发信者所在的地图ID
 	}
 
 	@Override

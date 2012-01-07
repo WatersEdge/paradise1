@@ -28,6 +28,9 @@ import l1j.server.server.model.shop.L1Shop;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SystemMessage
 
+/**
+ * 商店收购清单
+ */
 public class S_ShopBuyList extends ServerBasePacket {
 
 	private static final String S_SHOP_BUY_LIST = "[S] S_ShopBuyList";
@@ -59,7 +62,7 @@ public class S_ShopBuyList extends ServerBasePacket {
 			writeD(item.getTargetId());
 			writeD(item.getAssessedPrice());
 		}
-		writeH(0x0007); // 7 = 金幣為單位 顯示總金額
+		writeH(0x0007); // 7 = 金币为单位 显示总金额
 	}
 
 	@Override

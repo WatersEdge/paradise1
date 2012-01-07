@@ -16,22 +16,36 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
+/**
+ * 产生动画 (物件)
+ */
 public class S_SkillSound extends ServerBasePacket {
+
 	private static final String S_SKILL_SOUND = "[S] S_SkillSound";
 
 	private byte[] _byte = null;
 
+	/**
+	 * 产生动画 (物件)
+	 * @param objid
+	 * @param gfxid
+	 * @param aid
+	 */
 	public S_SkillSound(int objid, int gfxid, int aid) {
-
 		buildPacket(objid, gfxid, aid);
 	}
 
+	/**
+	 * 产生动画 (物件)
+	 * @param objid
+	 * @param gfxid
+	 */
 	public S_SkillSound(int objid, int gfxid) {
 		buildPacket(objid, gfxid, 0);
 	}
 
 	private void buildPacket(int objid, int gfxid, int aid) {
-		// aidは使われていない
+		// 不使用aid
 		writeC(Opcodes.S_OPCODE_SKILLSOUNDGFX);
 		writeD(objid);
 		writeH(gfxid);

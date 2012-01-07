@@ -18,36 +18,39 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.types.Point;
 
+/**
+ * 产生动画 (坐标)
+ */
 public class S_EffectLocation extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
 	/**
-	 * 指定された位置へエフェクトを表示するパケットを構築する。
+	 * 在指定位置显示动画效果。
 	 * 
-	 * @param pt - エフェクトを表示する位置を格納したPointオブジェクト
-	 * @param gfxId - 表示するエフェクトのID
+	 * @param pt - 动画效果坐标 包含Point对象
+	 * @param gfxId - 动画ID
 	 */
 	public S_EffectLocation(Point pt, int gfxId) {
 		this(pt.getX(), pt.getY(), gfxId);
 	}
 
 	/**
-	 * 指定された位置へエフェクトを表示するパケットを構築する。
+	 * 在指定位置显示动画效果。
 	 * 
-	 * @param loc - エフェクトを表示する位置を格納したL1Locationオブジェクト
-	 * @param gfxId - 表示するエフェクトのID
+	 * @param loc - 动画效果坐标 包含L1Location对象
+	 * @param gfxId - 动画ID
 	 */
 	public S_EffectLocation(L1Location loc, int gfxId) {
 		this(loc.getX(), loc.getY(), gfxId);
 	}
 
 	/**
-	 * 指定された位置へエフェクトを表示するパケットを構築する。
+	 * 在指定位置显示动画效果。
 	 * 
-	 * @param x - エフェクトを表示する位置のX座標
-	 * @param y - エフェクトを表示する位置のY座標
-	 * @param gfxId - 表示するエフェクトのID
+	 * @param x - 动画效果X坐标
+	 * @param y - 动画效果Y坐标
+	 * @param gfxId - 动画ID
 	 */
 	public S_EffectLocation(int x, int y, int gfxId) {
 		writeC(Opcodes.S_OPCODE_EFFECTLOCATION);

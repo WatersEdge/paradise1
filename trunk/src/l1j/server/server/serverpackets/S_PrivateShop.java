@@ -26,8 +26,17 @@ import l1j.server.server.templates.L1PrivateShopSellList;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 个人商店清单 (购买)
+ */
 public class S_PrivateShop extends ServerBasePacket {
 
+	/**
+	 * 对象是PC
+	 * @param pc
+	 * @param objectId
+	 * @param type
+	 */
 	public S_PrivateShop(L1PcInstance pc, int objectId, int type) {
 		L1PcInstance shopPc = (L1PcInstance) L1World.getInstance().findObject(objectId);
 
@@ -39,7 +48,7 @@ public class S_PrivateShop extends ServerBasePacket {
 		writeC(type);
 		writeD(objectId);
 
-		if (type == 0) {
+		if (type == 0) { // 卖出物品
 			List<L1PrivateShopSellList> list = shopPc.getSellList();
 			int size = list.size();
 			pc.setPartnersPrivateShopItemCount(size);
@@ -61,7 +70,7 @@ public class S_PrivateShop extends ServerBasePacket {
 				}
 			}
 		}
-		else if (type == 1) {
+		else if (type == 1) { // 回收物品
 			List<L1PrivateShopBuyList> list = shopPc.getBuyList();
 			int size = list.size();
 			writeH(size);

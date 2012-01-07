@@ -26,6 +26,9 @@ import l1j.server.server.utils.collections.Lists;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 公告视窗 (点击登入后)
+ */
 public class S_CommonNews extends ServerBasePacket {
 
 	public S_CommonNews() {
@@ -39,11 +42,16 @@ public class S_CommonNews extends ServerBasePacket {
 		writeS(message);
 	}
 
+	/**
+	 * 公告视窗 (点击登入后)
+	 * @param s
+	 */
 	public S_CommonNews(String s) {
 		writeC(Opcodes.S_OPCODE_COMMONNEWS);
 		writeS(s);
 	}
 
+	/** 载入公告 */
 	private void loadAnnouncements() {
 		_announcements.clear();
 		File file = new File("data/announcements.txt");
@@ -52,6 +60,7 @@ public class S_CommonNews extends ServerBasePacket {
 		}
 	}
 
+	/** 读取 */
 	private void readFromDisk(File file) {
 		LineNumberReader lnr = null;
 		try {

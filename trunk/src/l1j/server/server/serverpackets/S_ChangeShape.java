@@ -19,6 +19,9 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SkillIconGFX, S_CharVisualUpdate
 
+/**
+ * 改变物件外形
+ */
 public class S_ChangeShape extends ServerBasePacket {
 
 	private byte[] _byte = null;

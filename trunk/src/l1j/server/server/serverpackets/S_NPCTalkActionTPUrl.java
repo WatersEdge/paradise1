@@ -17,10 +17,21 @@ package l1j.server.server.serverpackets;
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1NpcTalkData;
 
+/**
+ * NPC对话视窗
+ */
 public class S_NPCTalkActionTPUrl extends ServerBasePacket {
+
 	private static final String _S__25_TalkReturnAction = "[S] S_NPCTalkActionTPUrl";
+
 	private byte[] _byte = null;
 
+	/**
+	 * NPC对话视窗
+	 * @param cha
+	 * @param prices
+	 * @param objid
+	 */
 	public S_NPCTalkActionTPUrl(L1NpcTalkData cha, Object[] prices, int objid) {
 		buildPacket(cha, prices, objid);
 	}
@@ -32,7 +43,7 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 		writeD(objid);
 		writeS(htmlid);
 		writeH(0x01); // 不明
-		writeH(prices.length); // 引数の数
+		writeH(prices.length); // 数的参数
 
 		for (Object price : prices) {
 			writeS(String.valueOf(((Integer) price).intValue()));

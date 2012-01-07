@@ -19,6 +19,9 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 阅读邮件 (旧) 已废止
+ */
 public class S_Letter extends ServerBasePacket {
 
 	private static final String S_LETTER = "[S] S_Letter";

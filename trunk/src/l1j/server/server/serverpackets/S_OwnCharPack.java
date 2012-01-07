@@ -22,6 +22,9 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 物件封包 - 角色本身
+ */
 public class S_OwnCharPack extends ServerBasePacket {
 
 	private static final String S_OWN_CHAR_PACK = "[S] S_OwnCharPack";
@@ -82,8 +85,8 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeS(pc.getTitle());
 		writeC(status);
 		writeD(pc.getClanid());
-		writeS(pc.getClanname()); // クラン名
-		writeS(null); // ペッホチング？
+		writeS(pc.getClanname()); // 血盟名称
+		writeS(null); // 主人名称？
 		writeC(0); // ？
 		if (pc.isInParty()) // 组队中
 		{

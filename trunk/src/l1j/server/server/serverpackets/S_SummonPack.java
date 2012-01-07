@@ -21,6 +21,9 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SummonPack
 
+/**
+ * 物件封包 (召唤)
+ */
 public class S_SummonPack extends ServerBasePacket {
 
 	private static final String _S__1F_SUMMONPACK = "[S] S_SummonPack";
@@ -46,13 +49,13 @@ public class S_SummonPack extends ServerBasePacket {
 		writeC(pet.getStatus()); // Modes in List.spr
 		writeC(pet.getHeading());
 		writeC(pet.getChaLightSize()); // (Bright) - 0~15
-		writeC(pet.getMoveSpeed()); // スピード - 0:normal, 1:fast, 2:slow
+		writeC(pet.getMoveSpeed()); // 速度 - 0:normal, 1:fast, 2:slow
 		writeD(0);
 		writeH(0);
 		writeS(pet.getNameId());
 		writeS(pet.getTitle());
 		int status = 0;
-		if (pet.getPoison() != null) { // 毒状態
+		if (pet.getPoison() != null) { // 毒状态
 			if (pet.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
@@ -67,7 +70,7 @@ public class S_SummonPack extends ServerBasePacket {
 			writeS("");
 		}
 		writeC(0); // ??
-		// HPのパーセント
+		// HP的百分比
 		if ((pet.getMaster() != null) && (pet.getMaster().getId() == pc.getId())) {
 			int percent = pet.getMaxHp() != 0 ? 100 * pet.getCurrentHp() / pet.getMaxHp() : 100;
 			writeC(percent);

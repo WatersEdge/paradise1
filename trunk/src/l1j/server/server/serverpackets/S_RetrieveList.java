@@ -20,6 +20,9 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 
+/**
+ * 物品名单 (个人仓库)
+ */
 public class S_RetrieveList extends ServerBasePacket {
 	public S_RetrieveList(int objid, L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
@@ -28,7 +31,7 @@ public class S_RetrieveList extends ServerBasePacket {
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
-				writeC(3); // 個人倉庫
+				writeC(3); // 个人仓库
 				for (Object itemObject : pc.getDwarfInventory().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
@@ -39,9 +42,9 @@ public class S_RetrieveList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeH(0x001e); // 金幣30
+				writeH(0x001e); // 金币30
 			} else {
-				pc.sendPackets(new S_ServerMessage(1625));
+				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
 			// クライアントに適当なメッセージ見つからなかったので非表示
 			/*
@@ -49,7 +52,7 @@ public class S_RetrieveList extends ServerBasePacket {
 			 * S_SystemMessage("何もお預かりしていません。")); }
 			 */
 		} else {
-			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
+			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}
 

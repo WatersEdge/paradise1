@@ -26,11 +26,15 @@ import l1j.server.server.utils.collections.Lists;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
 
+/**
+ * 宠物领取清单
+ */
 public class S_PetList extends ServerBasePacket {
 
 	private static final String S_PETLIST = "[S] S_PetList";
 
 	private byte[] _byte = null;
+
 
 	public S_PetList(int npcObjId, L1PcInstance pc) {
 		buildPacket(npcObjId, pc);
@@ -38,7 +42,7 @@ public class S_PetList extends ServerBasePacket {
 
 	private void buildPacket(int npcObjId, L1PcInstance pc) {
 		List<L1ItemInstance> amuletList = Lists.newList();
-		// 判斷身上是否有寵物項圈！
+		// 判断身上是否有宠物项圈！
 		for (L1ItemInstance item : pc.getInventory().getItems()) {
 			if ((item.getItem().getItemId() == 40314) || (item.getItem().getItemId() == 40316)) {
 				if (!isWithdraw(pc, item)) {
