@@ -55,7 +55,7 @@ import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.Random;
 
 /**
- * 怪物相关
+ * 怪物控制项
  */
 public class L1MonsterInstance extends L1NpcInstance {
 

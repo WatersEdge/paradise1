@@ -24,7 +24,7 @@ import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.collections.Lists;
 
 /**
- * 
+ * 木人控制项
  */
 public class L1ScarecrowInstance extends L1NpcInstance {
 

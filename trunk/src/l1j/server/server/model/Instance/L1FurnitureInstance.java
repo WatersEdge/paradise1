@@ -19,7 +19,7 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 家具
+ * 家具控制项
  */
 public class L1FurnitureInstance extends L1NpcInstance {
 

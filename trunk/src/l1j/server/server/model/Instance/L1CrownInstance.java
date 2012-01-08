@@ -31,7 +31,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 王冠
+ * 王冠控制项
  */
 public class L1CrownInstance extends L1NpcInstance {
 

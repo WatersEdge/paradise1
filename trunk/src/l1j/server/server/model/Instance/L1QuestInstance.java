@@ -25,7 +25,7 @@ import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 任务相关
+ * 任务NPC控制项
  */
 public class L1QuestInstance extends L1NpcInstance {
 

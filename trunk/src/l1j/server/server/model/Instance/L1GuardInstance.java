@@ -30,7 +30,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.types.Point;
 
 /**
- * 城门守卫
+ * 城门守卫控制项
  */
 public class L1GuardInstance extends L1NpcInstance {
 

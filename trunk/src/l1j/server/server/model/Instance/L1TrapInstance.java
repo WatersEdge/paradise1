@@ -29,7 +29,7 @@ import l1j.server.server.utils.Random;
 import l1j.server.server.utils.collections.Lists;
 
 /**
- * 陷阱相关
+ * 陷阱控制项
  */
 public class L1TrapInstance extends L1Object {
 

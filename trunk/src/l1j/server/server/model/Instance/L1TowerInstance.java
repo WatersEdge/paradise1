@@ -31,7 +31,7 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 守护塔相关
+ * 守护塔控制项
  */
 public class L1TowerInstance extends L1NpcInstance {
 

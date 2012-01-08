@@ -25,7 +25,7 @@ import l1j.server.server.templates.L1House;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 盟屋管家控制项
  */
 public class L1HousekeeperInstance extends L1NpcInstance {
 

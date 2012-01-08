@@ -15,7 +15,7 @@
 package l1j.server.server.model.identity;
 
 /**
- * 
+ * 防具类定义
  */
 public class L1ArmorId {
 

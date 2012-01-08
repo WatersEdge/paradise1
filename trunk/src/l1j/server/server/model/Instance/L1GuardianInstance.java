@@ -45,7 +45,7 @@ import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.Random;
 
 /**
- * 精灵森林守护神
+ * 精灵森林守护神控制项
  */
 public class L1GuardianInstance extends L1NpcInstance {
 

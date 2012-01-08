@@ -26,7 +26,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 龙门控制项
  */
 public class L1DragonPortalInstance extends L1NpcInstance {
 

@@ -31,7 +31,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 跟随者控制项
  */
 public class L1FollowerInstance extends L1NpcInstance {
 

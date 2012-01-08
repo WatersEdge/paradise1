@@ -18,7 +18,7 @@ import l1j.server.server.serverpackets.S_AuctionBoard;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 盟屋拍卖布告栏控制项
  */
 public class L1AuctionBoardInstance extends L1NpcInstance {
 

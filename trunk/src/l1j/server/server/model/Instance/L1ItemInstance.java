@@ -44,7 +44,7 @@ import l1j.server.server.utils.BinaryOutputStream;
 // L1Object, L1PcInstance
 
 /**
- * 道具显示
+ * 道具类控制项
  */
 public class L1ItemInstance extends L1Object {
 	private static final long serialVersionUID = 1L;

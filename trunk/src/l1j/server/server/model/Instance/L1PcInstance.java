@@ -141,7 +141,7 @@ import l1j.server.server.utils.collections.Lists;
 //
 
 /**
- * 
+ * 对象:PC 控制项
  */
 public class L1PcInstance extends L1Character {
 	private static final long serialVersionUID = 1L;
@@ -692,7 +692,11 @@ public class L1PcInstance extends L1Character {
 		_currentWeapon = i;
 	}
 
-	/** 取得类型 */
+	/**
+	 * 取得类型 <b>
+	 * 0:王族 1:骑士 2:精灵 3:法师 4:黑妖 5:龙骑 6:幻术
+	 * @return
+	 */
 	public int getType() {
 		return _type;
 	}
@@ -982,11 +986,11 @@ public class L1PcInstance extends L1Character {
 		_isTeleport = flag;
 	}
 
-	/** 喝酒中 */
+	/** 醉酒状态 */
 	public boolean isDrink() {
 		return _isDrink;
 	}
-	/** 设定喝酒 */
+	/** 设定醉酒状态 */
 	public void setDrink(boolean flag) {
 		_isDrink = flag;
 	}
@@ -1034,47 +1038,70 @@ public class L1PcInstance extends L1Character {
 		return _shopChat;
 	}
 
-	/** 个人商店 */
+	/** 商店模式 */
 	private boolean _isPrivateShop = false;
-	/** 个人商店中 */
+
+	/** 商店模式 */
 	public boolean isPrivateShop() {
 		return _isPrivateShop;
 	}
-	/** 设定个人商店 */
+
+	/**
+	 * 设定商店模式
+	 * @param flag
+	 */
 	public void setPrivateShop(boolean flag) {
 		_isPrivateShop = flag;
 	}
 
-	/** 个人商店交易 */
+	/** 正在进行个人商店交易 */
 	private boolean _isTradingInPrivateShop = false;
-	/** 个人商店交易中 */
+	/**
+	 * 正在进行个人商店交易
+	 * @return
+	 */
 	public boolean isTradingInPrivateShop() {
 		return _isTradingInPrivateShop;
 	}
-	/** 设定个人商店交易 */
+	/** 设定正在进行个人商店交易
+	 * @param flag
+	 */
 	public void setTradingInPrivateShop(boolean flag) {
 		_isTradingInPrivateShop = flag;
 	}
 
-	/** 阅览个人商店道具数量 */
-	private int _partnersPrivateShopItemCount = 0; // 阅览中の个人商店のアイテム数
-	/** 取得阅览个人商店道具数量 */
+	/** 出售物品种类数量 */
+	private int _partnersPrivateShopItemCount = 0;
+
+	/**
+	 * 取得出售物品种类数量
+	 */
 	public int getPartnersPrivateShopItemCount() {
 		return _partnersPrivateShopItemCount;
 	}
-	/** 设定阅览个人商店道具数量 */
+
+	/**
+	 * 设定出售物品种类数量
+	 * @param i
+	 */
 	public void setPartnersPrivateShopItemCount(int i) {
 		_partnersPrivateShopItemCount = i;
 	}
 
-	/** 输出 */
+	/** 封包加密管理 */
 	private PacketOutput _out;
-	/** 设定数据包输出 */
+
+	/**
+	 * 设定封包加密管理
+	 * @param out
+	 */
 	public void setPacketOutput(PacketOutput out) {
 		_out = out;
 	}
 
-	/** 发送数据包 */
+	/** 发送单体封包
+	 * @param serverbasepacket 封包
+	 */
 	public void sendPackets(ServerBasePacket serverbasepacket) {
 		if (_out == null) {
 			return;
@@ -1086,11 +1113,20 @@ public class L1PcInstance extends L1Character {
 		catch (Exception e) {}
 	}
 
+	/**
+	 * 对该物件攻击的调用
+	 * @param attacker 攻击方
+	 */
 	@Override
 	public void onAction(L1PcInstance attacker) {
 		onAction(attacker, 0);
 	}
 
+	/**
+	 * 对该物件攻击的调用
+	 * @param attacker 攻击方
+	 * @param skillId 技能ID
+	 */
 	@Override
 	public void onAction(L1PcInstance attacker, int skillId) {
 		// XXX:NullPointerException回避。onActionの引数の型はL1Characterのほうが良い？
@@ -1101,7 +1137,8 @@ public class L1PcInstance extends L1Character {
 		if (isTeleport()) {
 			return;
 		}
-		// 攻击或攻击方在安全区
+
+		// 攻击或攻击方在安全区 仅送出动作资讯
 		if ((getZoneType() == 1) || (attacker.getZoneType() == 1)) {
 			// 发送攻击动作
 			L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
@@ -1109,6 +1146,7 @@ public class L1PcInstance extends L1Character {
 			return;
 		}
 
+		// 禁止PK服务器 仅送出动作资讯
 		if (checkNonPvP(this, attacker) == true) {
 			// 发送攻击动作
 			L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
@@ -1116,10 +1154,13 @@ public class L1PcInstance extends L1Character {
 			return;
 		}
 
+		// 攻击解除隐身
 		if ((getCurrentHp() > 0) && !isDead()) {
 			attacker.delInvis();
 
 			boolean isCounterBarrier = false;
+
+			// 开始计算攻击
 			L1Attack attack = new L1Attack(attacker, this, skillId);
 			if (attack.calcHit()) {
 				if (hasSkillEffect(COUNTER_BARRIER)) {
@@ -1150,7 +1191,12 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 检查NonPvP */
+	/**
+	 * 检查是否可以攻击
+	 * @param pc
+	 * @param target
+	 * @return
+	 */
 	public boolean checkNonPvP(L1PcInstance pc, L1Character target) {
 		L1PcInstance targetpc = null;
 		if (target instanceof L1PcInstance) {
@@ -1193,7 +1239,12 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 在战争区和战争时间 */
+	/**
+	 * 在战争旗帜坐标內
+	 * @param pc
+	 * @param target
+	 * @return
+	 */
 	private boolean isInWarAreaAndWarTime(L1PcInstance pc, L1PcInstance target) {
 		// pcとtargetが战争中に战争エリアに居るか
 		int castleId = L1CastleLocation.getCastleIdByArea(pc);
@@ -1206,7 +1257,10 @@ public class L1PcInstance extends L1Character {
 		return false;
 	}
 
-	/** 设定宠物目标 */
+	/**
+	 * 设定 宠物/召唤兽 攻击目标
+	 * @param target
+	 */
 	public void setPetTarget(L1Character target) {
 		Object[] petList = getPetList().values().toArray();
 		for (Object pet : petList) {
@@ -1221,7 +1275,9 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 解除隐形状态 */
+	/**
+	 * 解除隐形状态
+	 */
 	public void delInvis() {
 		// 魔法接续时间内はこちらを利用
 		if (hasSkillEffect(INVISIBILITY)) { // 法师魔法 (隐身术)
@@ -1236,7 +1292,9 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 解除暗隐术 */
+	/**
+	 * 解除暗隐术
+	 */
 	public void delBlindHiding() {
 		// 魔法接续时间终了はこちら
 		killSkillEffectTimer(BLIND_HIDING); // 黑暗妖精魔法 (暗隐术)
@@ -1244,7 +1302,11 @@ public class L1PcInstance extends L1Character {
 		broadcastPacket(new S_OtherCharPacks(this));
 	}
 
-	// 魔法的伤害使用场合 (ここで魔法伤害轻减处理) attr:0.无属性魔法,1.地魔法,2.火魔法,3.水魔法,4.风魔法
+	/** 魔法具有属性傷害使用 (ここで魔法伤害轻减处理) attr:0.无属性魔法,1.地魔法,2.火魔法,3.水魔法,4.风魔法
+	 * @param attacker 攻击者
+	 * @param damage 伤害
+	 * @param attr 属性
+	 * */
 	public void receiveDamage(L1Character attacker, int damage, int attr) {
 		int player_mr = getMr();
 		int rnd = Random.nextInt(100) + 1;
@@ -1254,7 +1316,11 @@ public class L1PcInstance extends L1Character {
 		receiveDamage(attacker, damage, false);
 	}
 
-	/** 受到攻击MP减少 */
+	/**
+	 * 处理受到攻击MP减少
+	 * @param attacker
+	 * @param mpDamage
+	 */
 	public void receiveManaDamage(L1Character attacker, int mpDamage) { // 攻击でＭＰを减らすときはここを使用
 		if ((mpDamage > 0) && !isDead()) {
 			delInvis();
@@ -1285,7 +1351,12 @@ public class L1PcInstance extends L1Character {
 
 	public double _oldTime = 0; // 连续魔法伤害の轻减に使用する
 
-	/** 受到攻击时HP减少 */
+	/**
+	 * 处理受到攻击HP减少
+	 * @param attacker
+	 * @param Damage
+	 * @param isMagicDamage
+	 */
 	public void receiveDamage(L1Character attacker, double damage, boolean isMagicDamage) { // 攻击でＨＰを减らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
 			if (attacker != this) {
@@ -1347,10 +1418,10 @@ public class L1PcInstance extends L1Character {
 			}
 			if (getInventory().checkEquipped(145) // 狂战士斧
 					|| getInventory().checkEquipped(149)) { // 牛人斧头
-				damage *= 1.5; // 被ダメ1.5倍
+				damage *= 1.5; // 伤害提高1.5倍
 			}
 			if (hasSkillEffect(ILLUSION_AVATAR)) {// 幻术师魔法 (幻觉：化身)
-				damage *= 1.2; // 被ダメ1.2倍
+				damage *= 1.2; // 伤害提高1.2倍
 			}
 			if (attacker instanceof L1PetInstance) {
 				L1PetInstance pet = (L1PetInstance) attacker;
@@ -1387,7 +1458,10 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 角色死亡 */
+	/**
+	 * 死亡处理
+	 * @param lastAttacker 攻击致死的攻击者
+	 */
 	public void death(L1Character lastAttacker) {
 		synchronized (this) {
 			if (isDead()) {
@@ -1400,6 +1474,9 @@ public class L1PcInstance extends L1Character {
 
 	}
 
+	/**
+	 * 角色死亡的处理
+	 */
 	private class Death implements Runnable {
 		L1Character _lastAttacker;
 
@@ -1427,8 +1504,7 @@ public class L1PcInstance extends L1Character {
 			int targetobjid = getId();
 			getMap().setPassable(getLocation(), true);
 
-			// エンチャントを解除する
-			// 变身状态も解除されるため、キャンセレーションをかけてから变身状态に戻す
+			// 死亡时解除变身
 			int tempchargfx = 0;
 			if (hasSkillEffect(SHAPE_CHANGE)) {
 				tempchargfx = getTempCharGfx();
@@ -1438,7 +1514,7 @@ public class L1PcInstance extends L1Character {
 				setTempCharGfxAtDead(getClassId());
 			}
 
-			// キャンセレーションをエフェクトなしでかける
+			// 死亡时解除现有技能效果
 			L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(L1PcInstance.this, CANCELLATION, getId(), getX(), getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 
@@ -1520,7 +1596,7 @@ public class L1PcInstance extends L1Character {
 			 * if (getExpRes() == 0) { setExpRes(1); }
 			 */
 
-			// ガードに杀された场合のみ、PKカウントを减らしガードに攻击されなくなる
+			// 减少PK次数
 			if (lastAttacker instanceof L1GuardInstance) {
 				if (get_PKcount() > 0) {
 					set_PKcount(get_PKcount() - 1);
@@ -1661,7 +1737,9 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 停止PC删除定时器 */
+	/**
+	 * 复活后移出死亡清单
+	 */
 	public void stopPcDeleteTimer() {
 		if (_pcDeleteTimer != null) {
 			_pcDeleteTimer.cancel();
@@ -1683,7 +1761,10 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 攻城战结果 */
+	/**
+	 * 是否在參加攻城战中
+	 * @return true:是 false:不是
+	 */
 	public boolean castleWarResult() {
 		if ((getClanid() != 0) && isCrown()) { // 有血盟并且是王族
 			L1Clan clan = L1World.getInstance().getClan(getClanname());
@@ -1712,7 +1793,11 @@ public class L1PcInstance extends L1Character {
 		return isNowWar;
 	}
 
-	/** 红人战争结果 */
+	/**
+	 * 是否在参加血盟战争中
+	 * @param lastAttacker
+	 * @return true:是 false:不是
+	 */
 	public boolean simWarResult(L1Character lastAttacker) {
 		if (getClanid() == 0) { // 没有血盟
 			return false;
@@ -1762,7 +1847,9 @@ public class L1PcInstance extends L1Character {
 		return false;
 	}
 
-	/** 恢复经验值 */
+	/**
+	 * 恢复经验值
+	 */
 	public void resExp() {
 		int oldLevel = getLevel();
 		int needExp = ExpTable.getNeedExpNextLevel(oldLevel);
@@ -1792,7 +1879,9 @@ public class L1PcInstance extends L1Character {
 		addExp(exp);
 	}
 
-	/** 角色死亡处罚 */
+	/**
+	 * 角色死亡经验值处罚
+	 */
 	public void deathPenalty() {
 		int oldLevel = getLevel();
 		int needExp = ExpTable.getNeedExpNextLevel(oldLevel);
@@ -1910,11 +1999,18 @@ public class L1PcInstance extends L1Character {
 		_bookmarks.remove(book);
 	}
 
-	/** 取得武器 */
+	/**
+	 * 取得使用的武器
+	 * @return
+	 */
 	public L1ItemInstance getWeapon() {
 		return _weapon;
 	}
-	/** 设定武器 */
+
+	/**
+	 * 设定使用的武器
+	 * @param weapon
+	 */
 	public void setWeapon(L1ItemInstance weapon) {
 		_weapon = weapon;
 	}
@@ -1924,33 +2020,61 @@ public class L1PcInstance extends L1Character {
 		return _quest;
 	}
 
-	/** 是王族 */
+	/**
+	 * 是王族
+	 * @return
+	 */
 	public boolean isCrown() {
-		return ((getClassId() == CLASSID_PRINCE) || (getClassId() == CLASSID_PRINCESS));
+		return ((getClassId() == CLASSID_PRINCE) ||
+				(getClassId() == CLASSID_PRINCESS));
 	}
-	/** 是骑士 */
+	/**
+	 * 是骑士
+	 * @return
+	 */
 	public boolean isKnight() {
-		return ((getClassId() == CLASSID_KNIGHT_MALE) || (getClassId() == CLASSID_KNIGHT_FEMALE));
+		return ((getClassId() == CLASSID_KNIGHT_MALE) ||
+				(getClassId() == CLASSID_KNIGHT_FEMALE));
 	}
-	/** 是精灵 */
+	/**
+	 * 是精灵
+	 * @return
+	 */
 	public boolean isElf() {
-		return ((getClassId() == CLASSID_ELF_MALE) || (getClassId() == CLASSID_ELF_FEMALE));
+		return ((getClassId() == CLASSID_ELF_MALE) ||
+				(getClassId() == CLASSID_ELF_FEMALE));
 	}
-	/** 是法师 */
+	/**
+	 * 是法师
+	 * @return
+	 */
 	public boolean isWizard() {
-		return ((getClassId() == CLASSID_WIZARD_MALE) || (getClassId() == CLASSID_WIZARD_FEMALE));
+		return ((getClassId() == CLASSID_WIZARD_MALE) ||
+				(getClassId() == CLASSID_WIZARD_FEMALE));
 	}
-	/** 是黑暗精灵 */
+	/**
+	 * 是黑暗精灵
+	 * @return
+	 */
 	public boolean isDarkelf() {
-		return ((getClassId() == CLASSID_DARK_ELF_MALE) || (getClassId() == CLASSID_DARK_ELF_FEMALE));
+		return ((getClassId() == CLASSID_DARK_ELF_MALE) ||
+				(getClassId() == CLASSID_DARK_ELF_FEMALE));
 	}
-	/** 是龙骑士 */
+	/**
+	 * 是龙骑士
+	 * @return
+	 */
 	public boolean isDragonKnight() {
-		return ((getClassId() == CLASSID_DRAGON_KNIGHT_MALE) || (getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
+		return ((getClassId() == CLASSID_DRAGON_KNIGHT_MALE)
+				|| (getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
 	}
-	/** 是幻术师 */
+	/**
+	 * 是幻术师
+	 * @return
+	 */
 	public boolean isIllusionist() {
-		return ((getClassId() == CLASSID_ILLUSIONIST_MALE) || (getClassId() == CLASSID_ILLUSIONIST_FEMALE));
+		return ((getClassId() == CLASSID_ILLUSIONIST_MALE)
+				|| (getClassId() == CLASSID_ILLUSIONIST_FEMALE));
 	}
 
 	private static Logger _log = Logger.getLogger(L1PcInstance.class.getName());
@@ -2406,12 +2530,23 @@ public class L1PcInstance extends L1Character {
 		_bonusStats = i;
 	}
 
-	private int _elixirStats; // ● エリクサーで上がったステータス
+	/**
+	 * 万能药使用状况
+	 * @return
+	 */
+	private int _elixirStats;
 
+	/**
+	 * 取得万能药使用状况
+	 */
 	public int getElixirStats() {
 		return _elixirStats;
 	}
 
+	/**
+	 * 设定万能药使用状况
+	 * @param i
+	 */
 	public void setElixirStats(int i) {
 		_elixirStats = i;
 	}
@@ -2516,6 +2651,11 @@ public class L1PcInstance extends L1Character {
 		return _equipSlot;
 	}
 
+	/**
+	 * 加载指定PC资料
+	 * @param charName PC名称
+	 * @return
+	 */
 	public static L1PcInstance load(String charName) {
 		L1PcInstance result = null;
 		try {
@@ -2637,16 +2777,24 @@ public class L1PcInstance extends L1Character {
 			_exp = ExpTable.MAX_EXP;
 		}
 	}
-	/** 增加贡献 */
+
+	/**
+	 * 增加贡献度
+	 * @param contribution
+	 */
 	public synchronized void addContribution(int contribution) {
 		_contribution += contribution;
 	}
+
 	/** 开始经验值监视器 */
 	public void beginExpMonitor() {
 		_expMonitorFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcExpMonitor(getId()), 0L, INTERVAL_EXP_MONITOR);
 	}
 
-	/** 提升等级 */
+	/**
+	 * 判断提升等级
+	 * @param gap
+	 */
 	private void levelUp(int gap) {
 		resetLevel();
 
@@ -2705,7 +2853,7 @@ public class L1PcInstance extends L1Character {
 				sendPackets(new S_bonusstats(getId(), 1));
 			}
 		}
-		sendPackets(new S_OwnCharStatus(this));
+		sendPackets(new S_OwnCharStatus(this)); // 更新角色属性资料
 
 		// 根据等级判断地图限制
 		if ((getMapId() == 2005 || getMapId() == 86)) { // 新手村
@@ -2727,7 +2875,10 @@ public class L1PcInstance extends L1Character {
 		checkNoviceType();
 	}
 
-	/** 等级下降 */
+	/**
+	 * 等级下降
+	 * @param gap
+	 */
 	private void levelDown(int gap) {
 		resetLevel();
 
@@ -2777,32 +2928,52 @@ public class L1PcInstance extends L1Character {
 	private void setGhost(boolean flag) {
 		_ghost = flag;
 	}
-	/**  */
-	private boolean _ghostCanTalk = true; // NPCに话しかけられるか
-	/**  */
+
+	/** 幽灵状态可以与NPC对话 */
+	private boolean _ghostCanTalk = true;
+
+	/** 幽灵状态可以与NPC对话 */
 	public boolean isGhostCanTalk() {
 		return _ghostCanTalk;
 	}
-	/**  */
+
+	/** 设定幽灵状态可以与NPC对话 */
 	private void setGhostCanTalk(boolean flag) {
 		_ghostCanTalk = flag;
 	}
 
-	/** 保留幽灵状态中 */
+	/** 准备解除幽灵状态 */
 	private boolean _isReserveGhost = false;
-	/** 保留幽灵状态中 */
+
+	/** 准备解除幽灵状态 */
 	public boolean isReserveGhost() {
 		return _isReserveGhost;
 	}
-	/** 设定保留幽灵状态中 */
+
+	/** 设定准备解除幽灵状态 */
 	private void setReserveGhost(boolean flag) {
 		_isReserveGhost = flag;
 	}
-	/** 开始幽灵状态 */
+
+	/**
+	 * 幽灵状态传送
+	 * @param locx
+	 * @param locy
+	 * @param mapid
+	 * @param canTalk
+	 */
 	public void beginGhost(int locx, int locy, short mapid, boolean canTalk) {
 		beginGhost(locx, locy, mapid, canTalk, 0);
 	}
-	/** 开始幽灵状态 */
+
+	/**
+	 * 幽灵状态传送
+	 * @param locx
+	 * @param locy
+	 * @param mapid
+	 * @param canTalk
+	 * @param sec
+	 */
 	public void beginGhost(int locx, int locy, short mapid, boolean canTalk, int sec) {
 		if (isGhost()) {
 			return;
@@ -2819,13 +2990,17 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 准备好幽灵状态 */
+	/**
+	 * 离开幽灵状态 (传送回出发点)
+	 */
 	public void makeReadyEndGhost() {
 		setReserveGhost(true);
 		L1Teleport.teleport(this, _ghostSaveLocX, _ghostSaveLocY, _ghostSaveMapId, _ghostSaveHeading, true);
 	}
 
-	/** 结束幽灵状态 */
+	/**
+	 * 结束幽灵状态
+	 */
 	public void endGhost() {
 		setGhost(false);
 		setGhostCanTalk(true);
@@ -3011,10 +3186,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 角色删除时间 */
 	private Timestamp _deleteTime;
+
 	/** 取得角色删除时间 */
 	public Timestamp getDeleteTime() {
 		return _deleteTime;
 	}
+
 	/** 设定角色删除时间 */
 	public void setDeleteTime(Timestamp time) {
 		_deleteTime = time;
@@ -3293,7 +3470,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/**
-	 * EXPから现在のLvを再计算して设定する 初期设定时、死亡时或LVUP时呼出
+	 * 重新设定等级与目前的经验值匹配
 	 */
 	public void resetLevel() {
 		setLevel(ExpTable.getLevelByExp(_exp));
@@ -4493,7 +4670,9 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 重置 */
+	/**
+	 * 全属性重置
+	 */
 	public void refresh() {
 		resetLevel(); // 重置等级
 		resetBaseHitup(); // 重置基本命中率
@@ -4550,15 +4729,20 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	/** 排除名单 */
+	/** 角色讯息拒绝名单 */
 	private final L1ExcludingList _excludingList = new L1ExcludingList();
-	/** 取得排除名单 */
+
+	/**
+	 * 取得角色讯息拒绝名单
+	 * @return
+	 */
 	public L1ExcludingList getExcludingList() {
 		return _excludingList;
 	}
 
 	/** -- 加速器检知机能 -- */
 	private final AcceleratorChecker _acceleratorChecker = new AcceleratorChecker(this);
+
 	/** 取得 -- 加速器检知机能 -- */
 	public AcceleratorChecker getAcceleratorChecker() {
 		return _acceleratorChecker;
@@ -4566,54 +4750,72 @@ public class L1PcInstance extends L1Character {
 
 	/** 使用屠宰者判断 */
 	private boolean _FoeSlayer = false;
+
 	/** 设定使用屠宰者判断 */
 	public void setFoeSlayer(boolean FoeSlayer) {
 		_FoeSlayer = FoeSlayer;
 	}
+
 	/** 使用屠宰者判断 */
 	public boolean isFoeSlayer() {
 		return _FoeSlayer;
 	}
 
 	/**
-	 * 瞬移坐标X
+	 * 传送目的地坐标X
 	 */
 	private int _teleportX = 0;
-	/** 取得瞬移坐标X */
+
+	/**
+	 * 取得传送目的地坐标X
+	 */
 	public int getTeleportX() {
 		return _teleportX;
 	}
-	/** 设定瞬移坐标X */
+
+	/**
+	 * 设定传送目的地坐标X
+	 * @param i
+	 */
 	public void setTeleportX(int i) {
 		_teleportX = i;
 	}
-	/** 瞬移坐标Y */
+
+	/** 传送目的地坐标Y */
 	private int _teleportY = 0;
-	/** 取得瞬移坐标Y */
+
+	/**
+	 * 取得传送目的地坐标Y
+	 */
 	public int getTeleportY() {
 		return _teleportY;
 	}
-	/** 设定瞬移坐标Y */
+
+	/**
+	 * 设定传送目的地坐标Y
+	 * @param i
+	 */
 	public void setTeleportY(int i) {
 		_teleportY = i;
 	}
-	/** 瞬移地图ID */
+
+	/** 传送目的地地图ID */
 	private short _teleportMapId = 0;
-	/** 取得瞬移地图ID */
+	/** 取得传送目的地地图ID */
 	public short getTeleportMapId() {
 		return _teleportMapId;
 	}
-	/** 设定瞬移地图ID */
+	/** 设定传送目的地地图ID */
 	public void setTeleportMapId(short i) {
 		_teleportMapId = i;
 	}
-	/** 瞬移面向 */
+	/** 传送目的地面向 */
 	private int _teleportHeading = 0;
-	/** 取得瞬移面向 */
+	/** 取得传送目的地面向 */
 	public int getTeleportHeading() {
 		return _teleportHeading;
 	}
-	/** 设定瞬移面向 */
+	/** 设定传送目的地面向 */
 	public void setTeleportHeading(int i) {
 		_teleportHeading = i;
 	}
