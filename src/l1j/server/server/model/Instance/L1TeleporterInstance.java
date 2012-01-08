@@ -33,7 +33,7 @@ import l1j.server.server.templates.L1Npc;
 // L1TeleporterPrices, L1TeleportLocations
 
 /**
- * 传送相关
+ * 传送控制项
  */
 public class L1TeleporterInstance extends L1NpcInstance {
 

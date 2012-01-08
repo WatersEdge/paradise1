@@ -38,8 +38,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	// ■■■■■■ L1EtcItem,L1Weapon,L1Armor 共通项目 ■■■■■■
 
 	/**
-	 * 道具类型2 <br>
-	 * @param 0 = L1EtcItem, 1 = L1Weapon, 2 = L1Armor
+	 * 道具类型2
 	 */
 	private int _type2;
 
@@ -53,302 +52,511 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具类型2 <br>
-	 * @return 0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
+	 * @param  type 0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
 	public void setType2(int type) {
 		_type2 = type;
 	}
 
-	/** 道具ＩＤ */
+	/**
+	 * 道具ＩＤ
+	 */
 	private int _itemId;
-	/** 获得道具ＩＤ */
+
+	/**
+	 * 获得道具ＩＤ
+	 * @return
+	 */
 	public int getItemId() {
 		return _itemId;
 	}
-	/** 设置道具ＩＤ */
+
+	/**
+	 * 设置道具ＩＤ
+	 * @param itemId
+	 */
 	public void setItemId(int itemId) {
 		_itemId = itemId;
 	}
 
-	/** 道具名称 */
+	/**
+	 * 道具名称
+	 */
 	private String _name;
-	/** 获得道具名称 */
+
+	/**
+	 * 获得道具名称
+	 * @return
+	 */
 	public String getName() {
 		return _name;
 	}
-	/** 设置道具名称 */
+
+	/**
+	 * 设置道具名称
+	 * @param name
+	 */
 	public void setName(String name) {
 		_name = name;
 	}
 
-	/** 未鉴定道具的名称ＩＤ */
+	/**
+	 * 未鉴定道具的名称ＩＤ
+	 */
 	private String _unidentifiedNameId;
-	/** 获得未鉴定道具的名称ＩＤ */
+
+	/**
+	 * 获得未鉴定道具的名称ＩＤ
+	 * @return
+	 */
 	public String getUnidentifiedNameId() {
 		return _unidentifiedNameId;
 	}
-	/** 设置未鉴定道具的名称ＩＤ */
+
+	/**
+	 * 设置未鉴定道具的名称ＩＤ
+	 * @param unidentifiedNameId
+	 */
 	public void setUnidentifiedNameId(String unidentifiedNameId) {
 		_unidentifiedNameId = unidentifiedNameId;
 	}
 
-	/** 鉴定道具的名称ＩＤ */
+	/**
+	 * 鉴定道具的名称ＩＤ
+	 */
 	private String _identifiedNameId;
-	/** 获得鉴定道具的名称ＩＤ */
+
+	/**
+	 * 获得鉴定道具的名称ＩＤ
+	 * @return
+	 */
 	public String getIdentifiedNameId() {
 		return _identifiedNameId;
 	}
-	/** 设置鉴定道具的名称ＩＤ */
+
+	/**
+	 * 设置鉴定道具的名称ＩＤ
+	 * @param identifiedNameId
+	 */
 	public void setIdentifiedNameId(String identifiedNameId) {
 		_identifiedNameId = identifiedNameId;
 	}
 
-	/** 详细类型 */
+	/**
+	 * 道具的详细类型
+	 */
 	private int _type;
 
-	/*
-	 * アイテムの種類を返す。<br>
-	 * 
-	 * @return <p>
-	 *         [etcitem]<br>
-	 *         0:arrow, 1:wand, 2:light, 3:gem, 4:totem, 5:firecracker,
-	 *         6:potion, 7:food, 8:scroll, 9:questitem, 10:spellbook,
-	 *         11:petitem, 12:other, 13:material, 14:event, 15:sting
-	 *         </p>
-	 *         <p>
-	 *         [weapon]<br>
-	 *         1:sword, 2:dagger, 3:tohandsword, 4:bow, 5:spear, 6:blunt,
-	 *         7:staff, 8:throwingknife, 9:arrow, 10:gauntlet, 11:claw,
-	 *         12:edoryu, 13:singlebow, 14:singlespear, 15:tohandblunt,
-	 *         16:tohandstaff, 17:kiringku 18chainsword
-	 *         </p>
-	 *         <p>
-	 *         [armor]<br>
-	 *         1:helm, 2:armor, 3:T, 4:cloak, 5:glove, 6:boots, 7:shield,
-	 *         8:amulet, 9:ring, 10:belt, 11:ring2, 12:earring
-	 */
 	/**
-	 * 返回该项目的种类。<br>
-	 * 
+	 * 返回该项目的种类<br>
+	 *
 	 * @return <p>
-	 *         [道具]<br>
-	 *         0:箭头, 1:魔杖, 2:光线 (灯), 3:宝物 (金币), 4:图腾, 5:烟火,
-	 *         6:货币 (名誉货币), 7:肉, 8:卷轴, 9:任务物品, 10:魔法书,
-	 *         11:宠物装备, 12:其他, 13:材料, 14:活动物品, 15:飞刀
+	 *         <font color=#ff0000>[etcitem]-道具类型</font><br>
+	 *         0:arrow <font color=#00800>箭</font><br>
+	 *         1:wand <font color=#00800>魔杖</font><br>
+	 *         2:light <font color=#00800>光线 (灯)</font><br>
+	 *         3:gem <font color=#00800>宝物 (金币)</font><br>
+	 *         4:totem <font color=#00800>图腾</font><br>
+	 *         5:firecracker <font color=#00800>烟火</font><br>
+	 *         6:potion <font color=#00800>货币 (名誉货币)</font><br>
+	 *         7:food <font color=#00800>肉</font><br>
+	 *         8:scroll <font color=#00800>卷轴</font><br>
+	 *         9:questitem <font color=#00800>任务物品</font><br>
+	 *         10:spellbook <font color=#00800>魔法书</font><br>
+	 *         11:petitem <font color=#00800>宠物装备</font><br>
+	 *         12:other <font color=#00800>其他</font><br>
+	 *         13:material <font color=#00800>材料</font><br>
+	 *         14:event <font color=#00800>活动物品</font><br>
+	 *         15:sting <font color=#00800>飞刀</font><br>
 	 *         </p>
 	 *         <p>
-	 *         [武器]<br>
-	 *         1:长剑, 2:短剑, 3:巨剑, 4:弓, 5:长矛, 6:斧,
-	 *         7:魔杖, 8:飞刀, 9:箭头, 10:铁手甲, 11:钢爪,
-	 *         12:双刀, 13:单手弓, 14:单手矛, 15:双手斧,
-	 *         16:双手魔杖, 17:奇古兽 18:锁链剑
+	 *         <font color=#ff0000>[weapon]-武器类型</font><br>
+	 *         1: sword <font color=#00800>剑(单手)</font><br>
+	 *         2: dagger <font color=#00800>匕首(单手)</font><br>
+	 *         3: tohandsword <font color=#00800>双手剑(双手)</font><br>
+	 *         4: bow <font color=#00800>弓(双手)</font><br>
+	 *         5: spear <font color=#00800>矛(双手)</font><br>
+	 *         6: blunt <font color=#00800>斧(单手)</font><br>
+	 *         7: staff <font color=#00800>魔杖(单手)</font><br>
+	 *         8: throwingknife <font color=#00800>飞刀</font><br>
+	 *         9: arrow <font color=#00800>箭</font><br>
+	 *         10: gauntlet <font color=#00800>铁手甲</font><br>
+	 *         11: claw <font color=#00800>钢爪(双手)</font><br>
+	 *         12: edoryu <font color=#00800>双刀(双手)</font><br>
+	 *         13: singlebow <font color=#00800>弓(单手)</font><br>
+	 *         14: singlespear <font color=#00800>矛(单手)</font><br>
+	 *         15: tohandblunt <font color=#00800>双手斧(双手)</font><br>
+	 *         16: tohandstaff <font color=#00800>魔杖(双手)</font><br>
+	 *         17: kiringku <font color=#00800>奇古兽(单手)</font><br>
+	 *         18: chainsword <font color=#00800>锁链剑(单手)</font><br>
 	 *         </p>
 	 *         <p>
-	 *         [装备]<br>
-	 *         1:头盔, 2:盔甲, 3:T恤, 4:斗篷, 5:手套, 6:长靴, 7:盾牌,
-	 *         8:项链, 9:戒指, 10:腰带, 11:戒指2, 12:耳环
+	 *         <font color=#ff0000>[armor]-防具类型</font><br>
+	 *         1: helm <font color=#00800>头盔</font><br>
+	 *         2: armor <font color=#00800>盔甲</font><br>
+	 *         3: T <font color=#00800>内衣</font><br>
+	 *         4: cloak <font color=#00800>斗篷</font><br>
+	 *         5: glove <font color=#00800>手套</font><br>
+	 *         6: boots <font color=#00800>靴子</font><br>
+	 *         7: shield <font color=#00800>盾</font><br>
+	 *         8: amulet <font color=#00800>项链</font><br>
+	 *         9: ring <font color=#00800>戒指</font><br>
+	 *         10: belt <font color=#00800>腰带</font><br>
+	 *         11: ring2 <font color=#00800>戒指2</font><br>
+	 *         12: earring <font color=#00800>耳环</font> <br>
+	 *         13: guarder <font color=#00800>臂甲</font><br>
+	 *         </p>
 	 */
 	public int getType() {
 		return _type;
 	}
-	/** 设置道具种类 */
+
+	/**
+	 * 设置道具种类
+	 * @param type
+	 */
 	public void setType(int type) {
 		_type = type;
 	}
 
-	/** 道具类型1 */
+	/**
+	 * 道具类型1 (武器)
+	 */
 	private int _type1;
 
-	/*
-	 * アイテムの種類を返す。<br>
-	 * 
-	 * @return <p>
-	 *         [weapon]<br>
-	 *         sword:4, dagger:46, tohandsword:50, bow:20, blunt:11, spear:24,
-	 *         staff:40, throwingknife:2922, arrow:66, gauntlet:62, claw:58,
-	 *         edoryu:54, singlebow:20, singlespear:24, tohandblunt:11,
-	 *         tohandstaff:40, kiringku:58, chainsword:24
-	 *         </p>
-	 */
 	/**
-	 * 返回该项目的种类。<br>
-	 * 
+	 * 返回该项目的种类<br>
+	 *
 	 * @return <p>
-	 *         [武器]<br>
-	 *         长剑:4, 短剑:46, 巨剑:50, 弓:20, 斧:11, 长矛:24,
-	 *         魔杖:40, 飞刀:2922, 箭头:66, 铁手甲 :62, 钢爪:58,
-	 *         双刀:54, 单手弓:20, 单手矛:24, 双手斧:11,
-	 *         双手魔杖:40, 奇古兽:58, 锁链剑:24
+	 *         <font color=#ff0000>[weapon]-武器类型</font><br>
+	 *         sword: 4 <font color=#00800>长剑</font><br>
+	 *         dagger: 46 <font color=#00800>匕首</font><br>
+	 *         tohandsword: 50 <font color=#00800>双手剑</font><br>
+	 *         bow: 20 <font color=#00800>弓</font><br>
+	 *         blunt: 11 <font color=#00800>斧(单手)</font><br>
+	 *         spear: 24 <font color=#00800>矛(双手)</font><br>
+	 *         staff: 40 <font color=#00800>魔杖</font><br>
+	 *         throwingknife: 2922 <font color=#00800>飞刀</font><br>
+	 *         arrow: 66 <font color=#00800>箭</font><br>
+	 *         gauntlet: 62 <font color=#00800>铁手甲</font><br>
+	 *         claw: 58 <font color=#00800>钢爪</font><br>
+	 *         edoryu: 54 <font color=#00800>双刀</font><br>
+	 *         singlebow: 20 <font color=#00800>弓(单手)</font><br>
+	 *         singlespear: 24 <font color=#00800>矛(单手)</font><br>
+	 *         tohandblunt: 11 <font color=#00800>双手斧</font><br>
+	 *         tohandstaff: 40 <font color=#00800>魔杖(双手)</font><br>
+	 *         kiringku: 58 <font color=#00800>奇古兽</font><br>
+	 *         chainsword: 24 <font color=#00800>锁链剑</font><br>
 	 *         </p>
 	 */
 	public int getType1() {
 		return _type1;
 	}
-	/** 设置道具类型1 */
+
+	/**
+	 * 设置道具类型1 (武器)
+	 * @param type1
+	 */
 	public void setType1(int type1) {
 		_type1 = type1;
 	}
 
-	/** 道具的材质 */
+	/**
+	 * 道具的材质
+	 */
 	private int _material;
 
-	/*
-	 * アイテムの素材を返す
-	 * 
-	 * @return 0:none 1:液体 2:web 3:植物性 4:動物性 5:紙 6:布 7:皮 8:木 9:骨 10:竜の鱗 11:鉄
-	 *         12:鋼鉄 13:銅 14:銀 15:金 16:プラチナ 17:ミスリル 18:ブラックミスリル 19:ガラス 20:宝石
-	 *         21:鉱物 22:オリハルコン
-	 */
 	/**
-	 * 返回道具的材质
+	 * 返回道具的材质<br>
 	 * 
-	 * @return 0:无 1:液体 2:蛛丝 3:植物性 4:动物性 5:纸 6:布 7:皮 8:木 9:骨 10:龙鳞 11:铁
-	 *         12:钢铁 13:铜 14:银 15:金 16:白金 17:米索莉 18:黑色米索莉 19:玻璃 20:宝石
-	 *         21:矿物 22:オリハルコン
+	 * @return <p>
+	 * 		   <font color=#ff0000>道具的材质</font><br>
+	 * 			0:<font color=#00800>无</font><br>
+	 * 			1:<font color=#00800>液体</font><br>
+	 * 			2:<font color=#00800>蜡</font><br>
+	 *			3:<font color=#00800>植物性</font><br>
+	 * 			4:<font color=#00800>动物性</font><br>
+	 * 			5:<font color=#00800>纸</font><br>
+	 * 			6:<font color=#00800>布</font><br>
+	 * 			7:<font color=#00800>皮</font><br>
+	 * 			8:<font color=#00800>木</font><br>
+	 * 			9:<font color=#00800>骨</font><br>
+	 * 			10:<font color=#00800>龙鳞</font><br>
+	 * 			11:<font color=#00800>铁</font><br>
+	 * 			12:<font color=#00800>钢铁</font><br>
+	 * 			13:<font color=#00800>铜</font><br>
+	 * 			14:<font color=#00800>银</font><br>
+	 * 			15:<font color=#00800>金</font><br>
+	 * 			16:<font color=#00800>白金</font><br>
+	 * 			17:<font color=#00800>米索莉</font><br>
+	 * 			18:<font color=#00800>黑色米索莉</font><br>
+	 * 			19:<font color=#00800>玻璃</font><br>
+	 * 			20:<font color=#00800>宝石</font><br>
+	 * 			21:<font color=#00800>矿物</font><br>
+	 * 			22:<font color=#00800>奥里哈鲁根</font><br>
 	 */
 	public int getMaterial() {
 		return _material;
 	}
-	/** 设置道具的材质 */
+
+	/**
+	 * 设置道具的材质
+	 * @param material
+	 */
 	public void setMaterial(int material) {
 		_material = material;
 	}
 
-	/** 重量 */
+	/**
+	 * 重量
+	 */
 	private int _weight;
-	/** 获得重量 */
+
+	/**
+	 * 获得重量
+	 * @return
+	 */
 	public int getWeight() {
 		return _weight;
 	}
-	/** 设置重量 */
+
+	/**
+	 * 设置重量
+	 * @param weight
+	 */
 	public void setWeight(int weight) {
 		_weight = weight;
 	}
 
-	/** 清单内的图形ＩＤ */
+	/**
+	 * 清单内的图形ＩＤ
+	 */
 	private int _gfxId;
-	/** 获得清单内的图形ＩＤ */
+
+	/**
+	 * 获得清单内的图形ＩＤ
+	 * @return
+	 */
 	public int getGfxId() {
 		return _gfxId;
 	}
-	/** 设置清单内的图形ＩＤ */
+
+	/**
+	 * 设置清单内的图形ＩＤ
+	 * @param gfxId
+	 */
 	public void setGfxId(int gfxId) {
 		_gfxId = gfxId;
 	}
 
-	/** 道具放到地面上的图形ＩＤ */
+	/**
+	 * 道具放到地面上的图形ＩＤ
+	 */
 	private int _groundGfxId;
-	/** 获得道具放到地面上的图形ＩＤ */
+
+	/**
+	 * 获得道具放到地面上的图形ＩＤ
+	 * @return
+	 */
 	public int getGroundGfxId() {
 		return _groundGfxId;
 	}
-	/** 设置道具放到地面上的图形ＩＤ */
+
+	/**
+	 * 设置道具放到地面上的图形ＩＤ
+	 * @param groundGfxId
+	 */
 	public void setGroundGfxId(int groundGfxId) {
 		_groundGfxId = groundGfxId;
 	}
 
-	/** 道具的ItemDesc.tbl信息 */
+	/**
+	 * 道具的ItemDesc.tbl信息
+	 */
 	private int _itemDescId;
 
 	/**
 	 * 返回鉴定时显示的ItemDesc.tbl信息。
+	 * @return
 	 */
 	public int getItemDescId() {
 		return _itemDescId;
 	}
-	/** 设置鉴定时显示的ItemDesc.tbl信息 */
+
+	/**
+	 * 设置鉴定时显示的ItemDesc.tbl信息
+	 * @param descId
+	 */
 	public void setItemDescId(int descId) {
 		_itemDescId = descId;
 	}
 
-	/** 能使用装备的最低ＬＶ */
+	/**
+	 * 能使用装备的最低ＬＶ
+	 */
 	private int _minLevel;
-	/** 获得能使用装备的最低ＬＶ */
+
+	/**
+	 * 获得能使用装备的最低ＬＶ
+	 * @return
+	 */
 	public int getMinLevel() {
 		return _minLevel;
 	}
-	/** 设置能使用装备的最低ＬＶ */
+
+	/**
+	 * 设置能使用装备的最低ＬＶ
+	 * @param level
+	 */
 	public void setMinLevel(int level) {
 		_minLevel = level;
 	}
 
-	/** 能使用装备的最高ＬＶ */
+	/**
+	 * 能使用装备的最高ＬＶ
+	 */
 	private int _maxLevel;
-	/** 获得能使用装备的最高ＬＶ */
+
+	/**
+	 * 获得能使用装备的最高ＬＶ
+	 * @return
+	 */
 	public int getMaxLevel() {
 		return _maxLevel;
 	}
-	/** 设置能使用装备的最高ＬＶ */
+
+	/**
+	 * 设置能使用装备的最高ＬＶ
+	 * @param maxlvl
+	 */
 	public void setMaxLevel(int maxlvl) {
 		_maxLevel = maxlvl;
 	}
 
-	/** 祝福状态 */
+	/**
+	 * 取得属性
+	 */
 	private int _bless;
-	/** 获得祝福状态 */
+
+	/**
+	 * 取得属性
+	 * @return 0:祝福 1:一般 2:诅咒
+	 */
 	public int getBless() {
 		return _bless;
 	}
-	/** 设置祝福状态 */
+
+	/**
+	 * 设置取得属性
+	 * @param i
+	 */
 	public void setBless(int i) {
 		_bless = i;
 	}
 
-	/** 可交易／不可 */
+	/**
+	 * 可交易／不可
+	 */
 	private boolean _tradable;
-	/** 交易 */
+
+	/**
+	 * 交易
+	 * @return true:可以 false:不可以
+	 */
 	public boolean isTradable() {
 		return _tradable;
 	}
-	/** 设置交易 */
+
+	/**
+	 * 设置交易
+	 * @param flag
+	 */
 	public void setTradable(boolean flag) {
 		_tradable = flag;
 	}
 
-	/** 无法删除 */
+	/**
+	 * 删除
+	 */
 	private boolean _cantDelete;
-	/** 是无法删除 */
+
+	/**
+	 * 删除
+	 * @return true:可以 false:不可以
+	 */
 	public boolean isCantDelete() {
 		return _cantDelete;
 	}
-	/** 设置无法删除 */
+
+	/**
+	 * 设置删除
+	 * @param flag
+	 */
 	public void setCantDelete(boolean flag) {
 		_cantDelete = flag;
 	}
 
-	/** 将道具保存至资料库 */
+	/**
+	 * 将道具的数量变化写入资料库
+	 */
 	private boolean _save_at_once;
 
 	/**
-	 * 返回道具的个数变化并立即写入资料库中。
+	 * 将道具的数量变化写入资料库。
+	 * @return
 	 */
 	public boolean isToBeSavedAtOnce() {
 		return _save_at_once;
 	}
-	/** 设置道具的个数变化并立即写入资料库中 */
+
+	/**
+	 * 设置将道具的数量变化写入资料库
+	 * @param flag
+	 */
 	public void setToBeSavedAtOnce(boolean flag) {
 		_save_at_once = flag;
 	}
 
 	// ■■■■■■ L1EtcItem,L1Weapon 共通项目 ■■■■■■
-	/** 最低伤害 */
+
+	/**
+	 * 最低伤害
+	 */
 	private int _dmgSmall = 0;
-	/** 获得最低伤害 */
+
+	/**
+	 * 获得最低伤害
+	 * @return
+	 */
 	public int getDmgSmall() {
 		return _dmgSmall;
 	}
-	/** 设置最低伤害 */
+
+	/**
+	 * 设置最低伤害
+	 * @param dmgSmall
+	 */
 	public void setDmgSmall(int dmgSmall) {
 		_dmgSmall = dmgSmall;
 	}
 
-	/** 最高伤害 */
+	/**
+	 * 最高伤害
+	 */
 	private int _dmgLarge = 0;
-	/** 获得最高伤害 */
+
+	/**
+	 * 获得最高伤害
+	 * @return
+	 */
 	public int getDmgLarge() {
 		return _dmgLarge;
 	}
-	/** 设置最高伤害 */
+
+	/**
+	 * 设置最高伤害
+	 * @param dmgLarge
+	 */
 	public void setDmgLarge(int dmgLarge) {
 		_dmgLarge = dmgLarge;
 	}
@@ -356,255 +564,514 @@ public abstract class L1Item implements Cloneable, Serializable {
 	// ■■■■■■ L1EtcItem,L1Armor 共通项目 ■■■■■■
 
 	// ■■■■■■ L1Weapon,L1Armor 共通项目 ■■■■■■
-	/** ＯＥ安全圏 */
+
+	/**
+	 * 安定值
+	 */
 	private int _safeEnchant = 0;
-	/** 获得ＯＥ安全圏 */
+
+	/**
+	 * 安定值
+	 * @return
+	 */
 	public int get_safeenchant() {
 		return _safeEnchant;
 	}
-	/** 设置ＯＥ安全圏 */
+
+	/**
+	 * 设定安定值
+	 * @param safeenchant
+	 */
 	public void set_safeenchant(int safeenchant) {
 		_safeEnchant = safeenchant;
 	}
 
-	/** 王族可用装备 */
+	/**
+	 * 王族可用装备
+	 */
 	private boolean _useRoyal = false;
-	/** 是王族可用装备 */
+
+	/**
+	 * 是王族可用装备
+	 * @return
+	 */
 	public boolean isUseRoyal() {
 		return _useRoyal;
 	}
-	/** 设置王族可用装备 */
+
+	/**
+	 * 设置王族可用装备
+	 * @param flag
+	 */
 	public void setUseRoyal(boolean flag) {
 		_useRoyal = flag;
 	}
-	/** 骑士可用装备 */
+
+	/**
+	 * 骑士可用装备
+	 */
 	private boolean _useKnight = false;
-	/** 是骑士可用装备 */
+
+	/**
+	 * 是骑士可用装备
+	 * @return
+	 */
 	public boolean isUseKnight() {
 		return _useKnight;
 	}
-	/** 设置骑士可用装备 */
+
+	/**
+	 * 设置骑士可用装备
+	 * @param flag
+	 */
 	public void setUseKnight(boolean flag) {
 		_useKnight = flag;
 	}
-	/** 精灵可用装备 */
+
+	/**
+	 * 精灵可用装备
+	 */
 	private boolean _useElf = false;
-	/** 是精灵可用装备 */
+
+	/**
+	 * 是精灵可用装备
+	 * @return
+	 */
 	public boolean isUseElf() {
 		return _useElf;
 	}
-	/** 设置精灵可用装备 */
+
+	/**
+	 * 设置精灵可用装备
+	 * @param flag
+	 */
 	public void setUseElf(boolean flag) {
 		_useElf = flag;
 	}
-	/** 法师可用装备 */
+
+	/**
+	 * 法师可用装备
+	 */
 	private boolean _useMage = false;
-	/** 是法师可用装备 */
+
+	/**
+	 * 是法师可用装备
+	 * @return
+	 */
 	public boolean isUseMage() {
 		return _useMage;
 	}
-	/** 设置法师可用装备 */
+
+	/**
+	 * 设置法师可用装备
+	 * @param flag
+	 */
 	public void setUseMage(boolean flag) {
 		_useMage = flag;
 	}
-	/** 黑暗妖精可用装备 */
+
+	/**
+	 * 黑暗妖精可用装备
+	 */
 	private boolean _useDarkelf = false;
-	/** 是黑暗妖精可用装备 */
+
+	/**
+	 * 是黑暗妖精可用装备
+	 * @return
+	 */
 	public boolean isUseDarkelf() {
 		return _useDarkelf;
 	}
-	/** 设置黑暗妖精可用装备 */
+
+	/**
+	 * 设置黑暗妖精可用装备
+	 * @param flag
+	 */
 	public void setUseDarkelf(boolean flag) {
 		_useDarkelf = flag;
 	}
-	/** 龙骑士可用装备 */
+
+	/**
+	 * 龙骑士可用装备
+	 */
 	private boolean _useDragonknight = false;
-	/** 是龙骑士可用装备 */
+
+	/**
+	 * 是龙骑士可用装备
+	 * @return
+	 */
 	public boolean isUseDragonknight() {
 		return _useDragonknight;
 	}
-	/** 设置龙骑士可用装备 */
+
+	/**
+	 * 设置龙骑士可用装备
+	 * @param flag
+	 */
 	public void setUseDragonknight(boolean flag) {
 		_useDragonknight = flag;
 	}
-	/** 幻术师可用装备 */
+
+	/**
+	 * 幻术师可用装备
+	 */
 	private boolean _useIllusionist = false;
-	/** 是幻术师可用装备 */
+
+	/**
+	 * 是幻术师可用装备
+	 * @return
+	 */
 	public boolean isUseIllusionist() {
 		return _useIllusionist;
 	}
-	/** 设置幻术师可用装备 */
+
+	/**
+	 * 设置幻术师可用装备
+	 * @param flag
+	 */
 	public void setUseIllusionist(boolean flag) {
 		_useIllusionist = flag;
 	}
 
-	/** 增加ＳＴＲ */
+	/**
+	 * 增加ＳＴＲ
+	 */
 	private byte _addstr = 0;
-	/** 获得增加ＳＴＲ */
+
+	/**
+	 * 获得增加ＳＴＲ
+	 * @return
+	 */
 	public byte get_addstr() {
 		return _addstr;
 	}
-	/** 设置增加ＳＴＲ */
+
+	/**
+	 * 设置增加ＳＴＲ
+	 * @param addstr
+	 */
 	public void set_addstr(byte addstr) {
 		_addstr = addstr;
 	}
-	/** 增加ＤＥＸ */
+
+	/**
+	 * 增加ＤＥＸ
+	 */
 	private byte _adddex = 0;
-	/** 获得增加ＤＥＸ */
+
+	/**
+	 * 获得增加ＤＥＸ
+	 * @return
+	 */
 	public byte get_adddex() {
 		return _adddex;
 	}
-	/** 设置增加ＤＥＸ */
+
+	/**
+	 * 设置增加ＤＥＸ
+	 * @param adddex
+	 */
 	public void set_adddex(byte adddex) {
 		_adddex = adddex;
 	}
-	/** 增加ＣＯＮ */
+
+	/**
+	 * 增加ＣＯＮ
+	 */
 	private byte _addcon = 0;
-	/** 获得增加ＣＯＮ */
+
+	/**
+	 * 获得增加ＣＯＮ
+	 * @return
+	 */
 	public byte get_addcon() {
 		return _addcon;
 	}
-	/** 设置增加ＣＯＮ */
+
+	/**
+	 * 设置增加ＣＯＮ
+	 * @param addcon
+	 */
 	public void set_addcon(byte addcon) {
 		_addcon = addcon;
 	}
-	/** 增加ＩＮＴ */
+
+	/**
+	 * 增加ＩＮＴ
+	 */
 	private byte _addint = 0;
-	/** 获得增加ＩＮＴ */
+
+	/**
+	 * 获得增加ＩＮＴ
+	 * @return
+	 */
 	public byte get_addint() {
 		return _addint;
 	}
-	/** 设置增加ＩＮＴ */
+
+	/**
+	 * 设置增加ＩＮＴ
+	 * @param addint
+	 */
 	public void set_addint(byte addint) {
 		_addint = addint;
 	}
-	/** 增加ＷＩＳ */
+
+	/**
+	 * 增加ＷＩＳ
+	 */
 	private byte _addwis = 0;
-	/** 获得增加ＷＩＳ */
+
+	/**
+	 * 获得增加ＷＩＳ
+	 * @return
+	 */
 	public byte get_addwis() {
 		return _addwis;
 	}
-	/** 设置增加ＷＩＳ */
+
+	/**
+	 * 设置增加ＷＩＳ
+	 * @param addwis
+	 */
 	public void set_addwis(byte addwis) {
 		_addwis = addwis;
 	}
-	/** 增加ＣＨＡ */
+
+	/**
+	 * 增加ＣＨＡ
+	 */
 	private byte _addcha = 0;
-	/** 获得增加ＣＨＡ */
+
+	/**
+	 * 获得增加ＣＨＡ
+	 * @return
+	 */
 	public byte get_addcha() {
 		return _addcha;
 	}
-	/** 设置增加ＣＨＡ */
+
+	/**
+	 * 设置增加ＣＨＡ
+	 * @param addcha
+	 */
 	public void set_addcha(byte addcha) {
 		_addcha = addcha;
 	}
-	/** 增加ＨＰ */
+
+	/**
+	 * 增加ＨＰ
+	 */
 	private int _addhp = 0;
-	/** 获得增加ＨＰ */
+
+	/**
+	 * 获得增加ＨＰ
+	 * @return
+	 */
 	public int get_addhp() {
 		return _addhp;
 	}
-	/** 设置增加ＨＰ */
+
+	/**
+	 * 设置增加ＨＰ
+	 * @param addhp
+	 */
 	public void set_addhp(int addhp) {
 		_addhp = addhp;
 	}
-	/** 增加ＭＰ */
+
+	/**
+	 * 增加ＭＰ
+	 */
 	private int _addmp = 0;
-	/** 获得增加ＭＰ */
+
+	/**
+	 * 获得增加ＭＰ
+	 * @return
+	 */
 	public int get_addmp() {
 		return _addmp;
 	}
-	/** 设置增加ＭＰ */
+
+	/**
+	 * 设置增加ＭＰ
+	 * @param addmp
+	 */
 	public void set_addmp(int addmp) {
 		_addmp = addmp;
 	}
-	/** 增加ＨＰＲ */
+
+	/**
+	 * 增加ＨＰＲ
+	 */
 	private int _addhpr = 0;
-	/** 获得增加ＨＰＲ */
+
+	/**
+	 * 获得增加ＨＰＲ
+	 * @return
+	 */
 	public int get_addhpr() {
 		return _addhpr;
 	}
-	/** 设置增加ＨＰＲ */
+
+	/**
+	 * 设置增加ＨＰＲ
+	 * @param addhpr
+	 */
 	public void set_addhpr(int addhpr) {
 		_addhpr = addhpr;
 	}
-	/** 增加ＭＰＲ */
+
+	/**
+	 * 增加ＭＰＲ
+	 */
 	private int _addmpr = 0;
-	/** 获得增加ＭＰＲ */
+
+	/**
+	 * 获得增加ＭＰＲ
+	 * @return
+	 */
 	public int get_addmpr() {
 		return _addmpr;
 	}
-	/** 设置增加ＭＰＲ */
+
+	/**
+	 * 设置增加ＭＰＲ
+	 * @param addmpr
+	 */
 	public void set_addmpr(int addmpr) {
 		_addmpr = addmpr;
 	}
-	/** 增加ＳＰ */
+
+	/**
+	 * 增加ＳＰ
+	 */
 	private int _addsp = 0;
-	/** 获得增加ＳＰ */
+
+	/**
+	 * 获得增加ＳＰ
+	 * @return
+	 */
 	public int get_addsp() {
 		return _addsp;
 	}
-	/** 设置增加ＳＰ */
+
+	/**
+	 * 设置增加ＳＰ
+	 * @param addsp
+	 */
 	public void set_addsp(int addsp) {
 		_addsp = addsp;
 	}
-	/** 增加ＭＲ */
+
+	/**
+	 * 抗魔(MR)
+	 */
 	private int _mdef = 0;
-	/** 获得增加ＭＲ */
+
+	/**
+	 * 取得抗魔(MR)
+	 * @return
+	 */
 	public int get_mdef() {
 		return _mdef;
 	}
-	/** 设置增加ＭＲ */
+
+	/**
+	 * 设定抗魔(MR)
+	 * @param i
+	 */
 	public void set_mdef(int i) {
 		this._mdef = i;
 	}
-	/** 有无加速效果的道具 */
+
+	/**
+	 * 是否具有加速效果
+	 */
 	private boolean _isHasteItem = false;
-	/** 是加速道具 */
+
+	/**
+	 * 是否具有加速效果
+	 * @return
+	 */
 	public boolean isHasteItem() {
 		return _isHasteItem;
 	}
-	/** 设置加速道具 */
+
+	/**
+	 * 设定是否具有加速效果
+	 * @param flag
+	 */
 	public void setHasteItem(boolean flag) {
 		_isHasteItem = flag;
 	}
-	/** 最低使用时间 */
+
+	/**
+	 * 物品可使用时间(能持有的时间)
+	 */
 	private int _maxUseTime = 0;
-	/** 获得最低使用时间 */
+
+	/**
+	 * 取得物品可使用时间(能持有的时间)
+	 * @return
+	 */
 	public int getMaxUseTime() {
 		return _maxUseTime;
 	}
-	/** 设置最低使用时间 */
+
+	/**
+	 * 设置物品可使用时间(能持有的时间)
+	 * @param i
+	 */
 	public void setMaxUseTime(int i) {
 		_maxUseTime = i;
 	}
-	/** 使用类型 */
+
+	/**
+	 * 物品使用封包类型
+	 */
 	private int _useType;
 
 	/**
-	 * 取得使用类型
+	 * 取得物品使用封包类型
+	 * @return
 	 */
 	public int getUseType() {
 		return _useType;
 	}
-	/** 设定使用类型 */
+
+	/**
+	 * 设定物品使用封包类型
+	 * @param useType
+	 */
 	public void setUseType(int useType) {
 		_useType = useType;
 	}
-	/** 饱食度物品，如肉类。 */
+
+	/**
+	 * 食品类道具饱食度
+	 */
 	private int _foodVolume;
 
-	/** 取得饱食度物品，如肉类。 */
+	/**
+	 * 取得食品类道具饱食度
+	 * @return
+	 */
 	public int getFoodVolume() {
 		return _foodVolume;
 	}
-	/** 设定饱食度物品，如肉类。 */
+
+	/**
+	 * 设定食品类道具饱食度
+	 * @param volume
+	 */
 	public void setFoodVolume(int volume) {
 		_foodVolume = volume;
 	}
 
 	/**
 	 * 取得照明类道具的亮度设置。
+	 * @return
 	 */
 	public int getLightRange() {
 		if (_itemId == 40001) { // 灯
@@ -622,6 +1089,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得照明类道具的燃料量。
+	 * @return
 	 */
 	public int getLightFuel() {
 		if (_itemId == 40001) { // 灯
@@ -640,139 +1108,271 @@ public abstract class L1Item implements Cloneable, Serializable {
 	}
 
 	// ■■■■■■ 由L1EtcItem 覆盖的道具 ■■■■■■
-	/** 是可堆叠 */
+
+	/**
+	 * 物品可堆叠
+	 * @return true:可 false:不可
+	 */
 	public boolean isStackable() {
 		return false;
 	}
-	/** 取得X坐标 */
+
+	/**
+	 * 取得X坐标
+	 * @return
+	 */
 	public int get_locx() {
 		return 0;
 	}
-	/** 取得Y坐标 */
+
+	/**
+	 * 取得Y坐标
+	 * @return
+	 */
 	public int get_locy() {
 		return 0;
 	}
-	/** 取得地图ID */
+
+	/**
+	 * 取得地图ID
+	 * @return
+	 */
 	public short get_mapid() {
 		return 0;
 	}
-	/** 取得延迟ID */
+
+	/**
+	 * 取得延迟编号
+	 * @return
+	 */
 	public int get_delayid() {
 		return 0;
 	}
-	/** 取得延迟时间 */
+
+	/**
+	 * 取得延迟时间
+	 * @return
+	 */
 	public int get_delaytime() {
 		return 0;
 	}
-	/** 取得最高使用次数 */
+
+	/**
+	 * 取得最大可用次数
+	 * @return
+	 */
 	public int getMaxChargeCount() {
 		return 0;
 	}
-	/** 是可以封印 */
+
+	/**
+	 * 是可以封印
+	 * @return
+	 */
 	public boolean isCanSeal() {
 		return false;
 	}
 
 	// ■■■■■■ 由L1Weapon 覆盖的项目 ■■■■■■
-	/** 取得武器的射程范围 */
+
+	/**
+	 * 取得武器的射程范围
+	 * @return
+	 */
 	public int getRange() {
 		return 0;
 	}
-	/** 取得命中率修正 */
+
+	/**
+	 * 取得命中率修正
+	 * @return
+	 */
 	public int getHitModifier() {
 		return 0;
 	}
-	/** 取得伤害修正 */
+
+	/**
+	 * 取得伤害修正
+	 * @return
+	 */
 	public int getDmgModifier() {
 		return 0;
 	}
-	/** 取得双倍伤害发动几率 */
+
+	/**
+	 * 取得双倍伤害发动几率
+	 * @return
+	 */
 	public int getDoubleDmgChance() {
 		return 0;
 	}
-	/** 取得魔法攻击的伤害修正 */
+
+	/**
+	 * 取得魔法攻击的伤害修正
+	 * @return
+	 */
 	public int getMagicDmgModifier() {
 		return 0;
 	}
-	/** 取得有无损伤 */
+
+	/**
+	 * 取得有无损伤
+	 * @return
+	 */
 	public int get_canbedmg() {
 		return 0;
 	}
-	/** 是双手武器 */
+
+	/**
+	 * 是双手武器
+	 * @return
+	 */
 	public boolean isTwohandedWeapon() {
 		return false;
 	}
 
 	// ■■■■■■ 由L1Armor 覆盖的项目 ■■■■■■
-	/** 取得AC */
+
+	/**
+	 * 取得物理防御
+	 * @return
+	 */
 	public int get_ac() {
 		return 0;
 	}
-	/** 取得伤害减免 */
+
+	/**
+	 * 取得伤害减免
+	 * @return
+	 */
 	public int getDamageReduction() {
 		return 0;
 	}
-	/** 取得负重减轻 */
+
+	/**
+	 * 取得负重减轻
+	 * @return
+	 */
 	public int getWeightReduction() {
 		return 0;
 	}
-	/** 取得装备的命中修正 */
+
+	/**
+	 * 取得装备的命中修正
+	 * @return
+	 */
 	public int getHitModifierByArmor() {
 		return 0;
 	}
-	/** 取得装备的伤害修正 */
+
+	/**
+	 * 取得装备的伤害修正
+	 * @return
+	 */
 	public int getDmgModifierByArmor() {
 		return 0;
 	}
-	/** 取得弓类装备的命中修正 */
+
+	/**
+	 * 取得弓类装备的命中修正
+	 * @return
+	 */
 	public int getBowHitModifierByArmor() {
 		return 0;
 	}
-	/** 取得弓类装备的伤害修正 */
+
+	/**
+	 * 取得弓类装备的伤害修正
+	 * @return
+	 */
 	public int getBowDmgModifierByArmor() {
 		return 0;
 	}
-	/** 取得水属性防御 */
+
+	/**
+	 * 增加水属性
+	 * @return
+	 */
 	public int get_defense_water() {
 		return 0;
 	}
-	/** 取得火属性防御 */
+
+	/**
+	 * 增加火属性
+	 * @return
+	 */
 	public int get_defense_fire() {
 		return 0;
 	}
-	/** 取得地属性防御 */
+
+	/**
+	 * 增加地属性
+	 * @return
+	 */
 	public int get_defense_earth() {
 		return 0;
 	}
-	/** 取得风属性防御 */
+
+	/**
+	 * 增加风属性
+	 * @return
+	 */
 	public int get_defense_wind() {
 		return 0;
 	}
-	/** 取得昏迷耐性 */
+
+	/**
+	 * 昏迷耐性
+	 * @return
+	 */
 	public int get_regist_stun() {
 		return 0;
 	}
-	/** 取得石化耐性 */
+
+	/**
+	 * 石化耐性
+	 * @return
+	 */
 	public int get_regist_stone() {
 		return 0;
 	}
-	/** 取得昏睡耐性 */
+
+	/**
+	 * 睡眠耐性
+	 * @return
+	 */
 	public int get_regist_sleep() {
 		return 0;
 	}
-	/** 取得寒冰耐性 */
+
+	/**
+	 * 寒冰耐性
+	 * @return
+	 */
 	public int get_regist_freeze() {
 		return 0;
 	}
-	/** 取得支撑耐性 */
+
+	/**
+	 * 支撑耐性
+	 * @return
+	 */
 	public int get_regist_sustain() {
 		return 0;
 	}
-	/** 取得暗闇耐性 */
+
+	/**
+	 * 暗黑耐性
+	 * @return
+	 */
 	public int get_regist_blind() {
 		return 0;
 	}
-	/** 取得饰品级别 */
+
+	/**
+	 * 饰品强度
+	 * @return
+	 */
 	public int getGrade() {
 		return 0;
 	}

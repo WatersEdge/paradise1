@@ -76,7 +76,7 @@ import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * Npc相关
+ * Npc控制项
  */
 public class L1NpcInstance extends L1Character {
 

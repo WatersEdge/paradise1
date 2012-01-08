@@ -48,7 +48,7 @@ import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
 
 /**
- * 宠物相关
+ * 宠物控制项
  */
 public class L1PetInstance extends L1NpcInstance {
 

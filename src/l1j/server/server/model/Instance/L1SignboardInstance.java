@@ -18,7 +18,7 @@ import l1j.server.server.serverpackets.S_SignboardPack;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 告示控制项
  */
 public class L1SignboardInstance extends L1NpcInstance {
 

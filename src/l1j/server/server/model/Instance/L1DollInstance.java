@@ -29,7 +29,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.Random;
 
 /**
- * 
+ * 魔法娃娃控制项
  */
 public class L1DollInstance extends L1NpcInstance {
 

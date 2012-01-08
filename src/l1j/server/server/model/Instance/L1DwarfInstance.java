@@ -24,7 +24,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 仓库控制项
  */
 public class L1DwarfInstance extends L1NpcInstance {
 

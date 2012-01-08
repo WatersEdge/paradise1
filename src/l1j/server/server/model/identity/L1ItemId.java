@@ -15,7 +15,7 @@
 package l1j.server.server.model.identity;
 
 /**
- * 
+ * 道具类定义
  */
 public class L1ItemId {
 

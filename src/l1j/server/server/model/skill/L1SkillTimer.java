@@ -374,7 +374,7 @@ class L1SkillStop {
 			cha.addInt((byte) 1);
 		}
 
-		// ****** 状态变化が解けた场合
+		// ****** 状态变化 (技能结束处理)
 		else if ((skillId == CURSE_BLIND) || (skillId == DARKNESS)) { // 暗盲咒术,黑暗之影
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
@@ -554,7 +554,7 @@ class L1SkillStop {
 		}
 		else if (skillId == STATUS_CUBE_SHOCK_TO_ENEMY) { // 立方:冲击 (敌方)
 		}
-		else if (skillId == STATUS_MR_REDUCTION_BY_CUBE_SHOCK) { // キューブ[ショック]によるMR减少
+		else if (skillId == STATUS_MR_REDUCTION_BY_CUBE_SHOCK) { // 由于 立方:冲击 (敌方)MR减少
 			// cha.addMr(10);
 			// if (cha instanceof L1PcInstance) {
 			// L1PcInstance pc = (L1PcInstance) cha;
@@ -583,8 +583,8 @@ class L1SkillStop {
 			}
 		}
 		/** 生命之树果实 */
-		/*else if (skillId == STATUS_RIBRAVE) { // ユグドラの实
-			// XXX ユグドラの实のアイコンを消す方法が不明
+		/*else if (skillId == STATUS_RIBRAVE) { // 生命之树果实
+			// XXX 生命之树果实状态消除方法不明
 			cha.setBraveSpeed(0);
 		}*/
 		else if (skillId == STATUS_HASTE) { // 一段加速

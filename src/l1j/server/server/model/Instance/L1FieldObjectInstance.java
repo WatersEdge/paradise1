@@ -26,7 +26,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 景观控制项
  */
 public class L1FieldObjectInstance extends L1NpcInstance {
 

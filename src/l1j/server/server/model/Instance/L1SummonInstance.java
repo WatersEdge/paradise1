@@ -44,7 +44,7 @@ import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
 
 /**
- * 召唤物相关
+ * 召唤物控制项
  */
 public class L1SummonInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;

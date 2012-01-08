@@ -28,7 +28,7 @@ import l1j.server.server.templates.L1DoorGfx;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 门相关
+ * 门控制项
  */
 public class L1DoorInstance extends L1NpcInstance {
 

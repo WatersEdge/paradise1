@@ -24,7 +24,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.Random;
 
 /**
- * 钓鱼
+ * 钓鱼控制项
  */
 public class L1FishInstance extends L1NpcInstance {
 

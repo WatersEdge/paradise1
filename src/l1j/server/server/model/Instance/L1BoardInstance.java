@@ -19,7 +19,7 @@ import l1j.server.server.serverpackets.S_BoardRead;
 import l1j.server.server.templates.L1Npc;
 
 /**
- * 
+ * 布告栏列表控制项
  */
 public class L1BoardInstance extends L1NpcInstance {
 
