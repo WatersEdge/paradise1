@@ -14,12 +14,15 @@
  */
 package l1j.server.server.utils;
 
+/**
+ * 系统控制
+ */
 public class SystemUtil {
 	/**
-	 * システムが利用中のヒープサイズをメガバイト単位で返す。<br>
-	 * この値にスタックのサイズは含まれない。
+	 * 返回兆字节的可用系统堆大小。<br>
+	 * 栈的大小是不包括在这个值。
 	 * 
-	 * @return 利用中のヒープサイズ
+	 * @return 使用中的堆大小
 	 */
 	public static long getUsedMemoryMB() {
 		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime()

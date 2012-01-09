@@ -30,9 +30,21 @@ import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
+/**
+ * 召唤控制项
+ */
 public class L1SpawnUtil {
+
 	private static Logger _log = Logger.getLogger(L1SpawnUtil.class.getName());
 
+	/**
+	 * 依PC位置召唤指定NPC
+	 * 
+	 * @param pc 召唤者
+	 * @param npcId NPC编号
+	 * @param randomRange 召唤距离 (不为0 NPC召唤与PC将有距离 否则将重叠)
+	 * @param timeMillisToDelete 存在时间(秒) 小于等于0不限制
+	 */
 	public static void spawn(L1PcInstance pc, int npcId, int randomRange,
 			int timeMillisToDelete) {
 		try {
@@ -91,12 +103,20 @@ public class L1SpawnUtil {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getTempCharGfx() == 7548 || npc.getTempCharGfx() == 7550 || npc.getTempCharGfx() == 7552
-					|| npc.getTempCharGfx() == 7554 || npc.getTempCharGfx() == 7585 || npc.getTempCharGfx() == 7591) {
+			if (npc.getTempCharGfx() == 7548
+					|| npc.getTempCharGfx() == 7550
+					|| npc.getTempCharGfx() == 7552
+					|| npc.getTempCharGfx() == 7554
+					|| npc.getTempCharGfx() == 7585
+					|| npc.getTempCharGfx() == 7591) {
 				npc.broadcastPacket(new S_NPCPack(npc));
 				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk));
-			} else if (npc.getTempCharGfx() == 7539 || npc.getTempCharGfx() == 7557 || npc.getTempCharGfx() == 7558
-					|| npc.getTempCharGfx() == 7864 || npc.getTempCharGfx() == 7869 || npc.getTempCharGfx() == 7870) {
+			} else if (npc.getTempCharGfx() == 7539
+					|| npc.getTempCharGfx() == 7557
+					|| npc.getTempCharGfx() == 7558
+					|| npc.getTempCharGfx() == 7864
+					|| npc.getTempCharGfx() == 7869
+					|| npc.getTempCharGfx() == 7870) {
 				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
 					if (npc.getTempCharGfx() == 7539) {
 						_pc.sendPackets(new S_ServerMessage(1570));

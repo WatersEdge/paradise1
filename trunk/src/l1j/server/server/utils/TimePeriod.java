@@ -25,9 +25,15 @@ public class TimePeriod {
 
 	/** 开始时间 */
 	private final Time _timeStart;
+
 	/** 结束时间 */
 	private final Time _timeEnd;
 
+	/**
+	 * 时间周期
+	 * @param timeStart 开始时间
+	 * @param timeEnd 结束时间
+	 */
 	public TimePeriod(Time timeStart, Time timeEnd) {
 		if (timeStart.equals(timeEnd)) {
 			throw new IllegalArgumentException("开始时间不能等于结束时间");

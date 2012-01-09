@@ -14,6 +14,9 @@
  */
 package l1j.server.server.utils;
 
+/**
+ * 移动控制项
+ */
 public class MoveUtil {
 
 	/** 角色方向-X */
@@ -21,28 +24,59 @@ public class MoveUtil {
 	/** 角色方向-Y */
 	private static final int[] HEADING_TABLE_Y = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
+	/**
+	 * 移动面向
+	 * @param loc
+	 * @param heading
+	 */
 	public static void MoveLoc(int[] loc, final int heading) {
 		loc[0] += MoveX(heading);
 		loc[1] += MoveY(heading);
 	}
 
+	/**
+	 * 移动坐标
+	 * @param loc
+	 */
 	public static void MoveLoc(int[] loc) {
 		loc[0] += MoveX(loc[2]);
 		loc[1] += MoveY(loc[2]);
 	}
 
+	/**
+	 * 移动坐标X
+	 * @param heading
+	 * @return 面向 X
+	 */
 	public static int MoveX(final int heading) {
 		return HEADING_TABLE_X[heading];
 	}
 
+	/**
+	 * 移动坐标X + 面向
+	 * @param x
+	 * @param heading
+	 * @return X + 面向 X
+	 */
 	public static int MoveLocX(final int x, final int heading) {
 		return x + MoveX(heading);
 	}
 
+	/**
+	 * 移动坐标Y
+	 * @param heading
+	 * @return 面向 Y
+	 */
 	public static int MoveY(final int heading) {
 		return HEADING_TABLE_Y[heading];
 	}
 
+	/**
+	 * 移动坐标Y + 面向
+	 * @param y
+	 * @param heading
+	 * @return y + 面向 y
+	 */
 	public static int MoveLocY(final int y, final int heading) {
 		return y + MoveY(heading);
 	}

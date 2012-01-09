@@ -24,20 +24,28 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 // FaceToFace
 
 /**
- * 面对面
+ * 面向物件判断
  */
 public class FaceToFace {
 
 	private FaceToFace() {
 	}
 
+	/**
+	 * 面向物件判断
+	 * @param pc
+	 */
 	public static L1PcInstance faceToFace(L1PcInstance pc) {
+
+		// X坐标
 		int pcX = pc.getX();
+		// Y坐标
 		int pcY = pc.getY();
+		// 面向
 		int pcHeading = pc.getHeading();
 		List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(pc, 1);
 
-		if (players.size() == 0) { // 1セル以内にPCが居ない場合
+		if (players.size() == 0) { // 1格内无物件 (PC)
 			pc.sendPackets(new S_ServerMessage(93)); // \f1你注视的地方没有人。
 			return null;
 		}

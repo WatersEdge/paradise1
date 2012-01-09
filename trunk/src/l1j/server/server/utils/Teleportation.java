@@ -42,10 +42,18 @@ import l1j.server.server.serverpackets.S_SummonPack;
 // Referenced classes of package l1j.server.server.utils:
 // FaceToFace
 
+/**
+ * 更新移动后的坐标
+ */
 public class Teleportation {
+
 	private Teleportation() {
 	}
 
+	/**
+	 * 更新移动后的坐标
+	 * @param pc
+	 */
 	public static void actionTeleportation(final L1PcInstance pc) {
 		if (pc.isDead() || pc.isTeleport()) {
 			return;
@@ -56,7 +64,8 @@ public class Teleportation {
 		short mapId = pc.getTeleportMapId();
 		final int head = pc.getTeleportHeading();
 
-		// テレポート先が不正であれば元の座標へ(GMは除く)
+		// 原来的坐标传送，如果目标是无效的(GM除外)
+		// 防止坐标异常
 		final L1Map map = L1WorldMap.getInstance().getMap(mapId);
 
 		if (!map.isInMap(x, y) && !pc.isGm()) {
@@ -69,8 +78,8 @@ public class Teleportation {
 
 		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			if (clan.getWarehouseUsingChar() == pc.getId()) { // 自キャラがクラン倉庫使用中
-				clan.setWarehouseUsingChar(0); // クラン倉庫のロックを解除
+			if (clan.getWarehouseUsingChar() == pc.getId()) { // 使用血盟仓库中
+				clan.setWarehouseUsingChar(0); // 解除使用状态
 			}
 		}
 
