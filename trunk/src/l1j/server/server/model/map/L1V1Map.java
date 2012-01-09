@@ -206,9 +206,9 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isPassable(int x, int y, int heading) {
-		// 現在のタイル
+		// 目前的面向
 		int tile1 = accessTile(x, y);
-		// 移動予定のタイル
+		// 移动后的面向
 		int tile2;
 
 		if (heading == 0) {

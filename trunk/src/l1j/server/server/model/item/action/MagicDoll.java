@@ -31,7 +31,12 @@ import l1j.server.server.templates.L1Npc;
  */
 public class MagicDoll {
 
-	/** 使用魔法娃娃 */
+	/**
+	 * 使用魔法娃娃
+	 * @param pc
+	 * @param itemId
+	 * @param itemObjectId
+	 */
 	public static void useMagicDoll(L1PcInstance pc, int itemId, int itemObjectId) {
 		L1MagicDoll magic_doll = MagicDollTable.getInstance().getTemplate((itemId));
 		if (magic_doll != null) {

@@ -47,6 +47,7 @@ import l1j.server.server.utils.BinaryOutputStream;
  * 道具类控制项
  */
 public class L1ItemInstance extends L1Object {
+
 	private static final long serialVersionUID = 1L;
 
 	private int _count;
@@ -90,6 +91,11 @@ public class L1ItemInstance extends L1Object {
 		_enchantLevel = 0;
 	}
 
+	/**
+	 * 道具类控制项
+	 * @param item
+	 * @param count
+	 */
 	public L1ItemInstance(L1Item item, int count) {
 		this();
 		setItem(item);

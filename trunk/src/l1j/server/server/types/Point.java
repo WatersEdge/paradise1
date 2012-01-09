@@ -14,6 +14,9 @@
  */
 package l1j.server.server.types;
 
+/**
+ * 坐标点
+ */
 public class Point {
 
 	protected int _x = 0;
@@ -23,37 +26,71 @@ public class Point {
 	public Point() {
 	}
 
+	/**
+	 * 坐标点
+	 * @param x
+	 * @param y
+	 */
 	public Point(int x, int y) {
 		_x = x;
 		_y = y;
 	}
 
+	/**
+	 * 坐标点
+	 * @param pt
+	 */
 	public Point(Point pt) {
 		_x = pt._x;
 		_y = pt._y;
 	}
 
+	/**
+	 * 取得X坐标点
+	 * @return
+	 */
 	public int getX() {
 		return _x;
 	}
 
+	/**
+	 * 设定X坐标点
+	 * @param x
+	 */
 	public void setX(int x) {
 		_x = x;
 	}
 
+	/**
+	 * 取得Y坐标点
+	 * @return
+	 */
 	public int getY() {
 		return _y;
 	}
 
+	/**
+	 * 设定Y坐标点
+	 * @param y
+	 */
 	public void setY(int y) {
 		_y = y;
 	}
 
+	/**
+	 * 设定坐标点
+	 * @param pt 坐标点
+	 */
 	public void set(Point pt) {
 		_x = pt._x;
 		_y = pt._y;
 	}
 
+	/**
+	 * 设定坐标点
+	 * @param x 坐标点X
+	 * @param y 坐标点Y
+	 */
 	public void set(int x, int y) {
 		_x = x;
 		_y = y;
@@ -64,7 +101,7 @@ public class Point {
 	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	/**
-	 * 指定一个方向的坐标前进。
+	 * 指定面向前进位置坐标。
 	 * 
 	 * @param heading
 	 *            面向(0~7)
@@ -75,7 +112,7 @@ public class Point {
 	}
 
 	/**
-	 * 指定一个相反方向的坐标前进。
+	 * 指定面向反向前进位置坐标。
 	 * 
 	 * @param heading
 	 *            面向(0~7)
@@ -86,11 +123,11 @@ public class Point {
 	}
 
 	/**
-	 * 返回到指定坐标的直线距离。
+	 * 指定坐标的直线距离。
 	 * 
 	 * @param pt
 	 *            坐标保存的Point对象
-	 * @return 坐标的直线距离
+	 * @return 直线距离值
 	 */
 	public double getLineDistance(Point pt) {
 		long diffX = pt.getX() - getX();
@@ -99,11 +136,11 @@ public class Point {
 	}
 
 	/**
-	 * 指定された座標までの直線タイル数を返す。
+	 * 指定坐标直线距离 (相对位置最大距离)。
 	 * 
 	 * @param pt
-	 *            座標を保持するPointオブジェクト
-	 * @return 指定された座標までの直線タイル数。
+	 *            坐标保存的Point对象
+	 * @return 直线距离值。
 	 */
 	public int getTileLineDistance(Point pt) {
 		return Math.max(Math.abs(pt.getX() - getX()),
@@ -111,11 +148,11 @@ public class Point {
 	}
 
 	/**
-	 * 指定された座標までのタイル数を返す。
+	 * 指定坐标直线距离 (相对位置最大距离)。
 	 * 
 	 * @param pt
-	 *            座標を保持するPointオブジェクト
-	 * @return 指定された座標までのタイル数。
+	 *            坐标保存的Point对象
+	 * @return 直线距离值。
 	 */
 	public int getTileDistance(Point pt) {
 		return Math.abs(pt.getX() - getX()) + Math.abs(pt.getY() - getY());
@@ -126,7 +163,7 @@ public class Point {
 	 * 左上(2,-15)右上(15,-2)左下(-15,2)右下(-2,15)となる。 チャット欄に隠れて見えない部分も画面内に含まれる。
 	 * 
 	 * @param pt
-	 *            座標を保持するPointオブジェクト
+	 *            坐标保存的Point对象
 	 * @return 指定された座標が画面内に見える場合はtrue。そうでない場合はfalse。
 	 */
 	public boolean isInScreen(Point pt) {
@@ -152,11 +189,11 @@ public class Point {
 	}
 
 	/**
-	 * 返回与指定坐标相同的坐标。
+	 * 是否与制定坐标位置重叠。
 	 * 
 	 * @param pt
 	 *            坐标保存的Point对象
-	 * @return 指定坐标相同的坐标。
+	 * @return true是 false否。
 	 */
 	public boolean isSamePoint(Point pt) {
 		return ((pt.getX() == getX()) && (pt.getY() == getY()));

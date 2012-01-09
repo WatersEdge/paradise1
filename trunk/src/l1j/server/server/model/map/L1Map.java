@@ -20,29 +20,46 @@ import l1j.server.server.types.Point;
  * L1Map 保存地图信息提供各种接口。
  */
 public abstract class L1Map {
+
 	private static L1NullMap _nullMap = new L1NullMap();
 
 	protected L1Map() {
 	}
 
 	/**
-	 * 返回地图ID。
+	 * 取得地图ID。
 	 * 
 	 * @return 地图ID
 	 */
 	public abstract int getId();
 
 	// TODO JavaDoc
+	/**
+	 * 取得起点X
+	 * @return
+	 */
 	public abstract int getX();
 
+	/**
+	 * 取得起点Y
+	 * @return
+	 */
 	public abstract int getY();
 
+	/**
+	 * 取得地图宽度 (终点X - 起点X)
+	 * @return
+	 */
 	public abstract int getWidth();
 
+	/**
+	 * 取得地图高度 (终点Y - 起点Y)
+	 * @return
+	 */
 	public abstract int getHeight();
 
 	/**
-	 * 返回指定的坐标值。
+	 * 传回指定的坐标值。
 	 * 
 	 * 不推荐。这种方法是为兼容现有的代码。
 	 * L1Map用户通常需要知道什么是地图存储在不值。
@@ -57,7 +74,7 @@ public abstract class L1Map {
 	public abstract int getTile(int x, int y);
 
 	/**
-	 * 返回指定的坐标值。
+	 * 传回指定的坐标值。
 	 * 
 	 * 不推荐。这种方法是为兼容现有的代码。
 	 * L1Map用户通常需要知道什么是地图存储在不值。
@@ -68,184 +85,188 @@ public abstract class L1Map {
 	 * @param y
 	 *            坐标的Y值
 	 * @return 坐标指定值
+	 * 			0 : 无法通过
+	 * 			15: 一般区域
+	 *			31: 安全区域
+	 *			47: 战斗区域
 	 */
 	public abstract int getOriginalTile(int x, int y);
 
 	/**
-	 * 返回指定地图坐标范围。
+	 * 传回坐标是否在地图指定的可用位置。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 范围内true
+	 *            坐标 (Point)，其中包含的坐标
+	 * @return 范围内可用 true
 	 */
 	public abstract boolean isInMap(Point pt);
 
 	/**
-	 * 返回指定地图坐标范围。
+	 * 传回坐标是否在地图指定的可用位置。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 范围内true
+	 * @return 范围内可用 true
 	 */
 	public abstract boolean isInMap(int x, int y);
 
 	/**
-	 * 返回是否可通过指定的坐标。
+	 * 传回指定的坐标能否通过。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 通行可能true
+	 *            坐标 (Point)，其中包含的坐标
+	 * @return 可以通过 true	不能通过 false
 	 */
 	public abstract boolean isPassable(Point pt);
 
 	/**
-	 * 返回是否可通过指定的坐标。
+	 * 传回指定的坐标能否通过。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 通行可能true
+	 * @return 可以通过 true	不能通过 false
 	 */
 	public abstract boolean isPassable(int x, int y);
 
 	/**
-	 * 返回是否可通过指定的坐标方向。
+	 * 传回指定的坐标heading方向能否通过。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 通行可能true
+	 *            坐标 (Point)，其中包含的坐标
+	 * @return 可以通过 true	不能通过 false
 	 */
 	public abstract boolean isPassable(Point pt, int heading);
 
 	/**
-	 * 返回是否可通过指定的坐标方向。
+	 * 传回指定的坐标heading方向能否通过。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 通行可能true
+	 * @return 可以通过 true	不能通过 false
 	 */
 	public abstract boolean isPassable(int x, int y, int heading);
 
 	/**
-	 * 设置指定的坐标可能通过。
+	 * 设置坐标障碍宣告。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
+	 *            坐标 (Point)，其中包含的坐标
 	 * @param isPassable
-	 *            通行可能true
+	 *            可以通过 true	不能通过 false
 	 */
 	public abstract void setPassable(Point pt, boolean isPassable);
 
 	/**
-	 * 设置指定的坐标可能通过。
+	 * 设置坐标障碍宣告。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
 	 * @param isPassable
-	 *            通行可能true
+	 *            可以通过 true	不能通过 false
 	 */
 	public abstract void setPassable(int x, int y, boolean isPassable);
 
 	/**
-	 * 返回指定的坐标是否安全区。
+	 * 传回指定的坐标位置是安全区域。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 如果安全区true
+	 *            坐标资料
+	 * @return 安全区域返回 true
 	 */
 	public abstract boolean isSafetyZone(Point pt);
 
 	/**
-	 * 返回指定的坐标是否安全区。
+	 * 传回指定的坐标位置是安全区域。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 如果安全区true
+	 * @return 安全区域返回 true
 	 */
 	public abstract boolean isSafetyZone(int x, int y);
 
 	/**
-	 * 返回指定坐标是否战斗区。
+	 * 传回指定坐标是战斗区域。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 如果战斗区true
+	 *            坐标资料
+	 * @return 战斗区域返回 true
 	 */
 	public abstract boolean isCombatZone(Point pt);
 
 	/**
-	 * 返回指定坐标是否战斗区。
+	 * 传回指定坐标是战斗区域。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 如果战斗区true
+	 * @return 战斗区域返回 true
 	 */
 	public abstract boolean isCombatZone(int x, int y);
 
 	/**
-	 * 返回指定坐标是否安全区。
+	 * 传回指定坐标是一般区域。
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 如果安全区true
+	 *            坐标资料
+	 * @return 一般区域返回 true
 	 */
 	public abstract boolean isNormalZone(Point pt);
 
 	/**
-	 * 返回指定坐标是否安全区。
+	 * 传回指定坐标是一般区域。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 如果安全区true
+	 * @return 一般区域返回 true
 	 */
 	public abstract boolean isNormalZone(int x, int y);
 
 	/**
-	 * 返回指定的坐标通过魔法箭。
+	 * 传回指定的坐标远程攻击能否通过。 (魔法箭)
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
-	 * @return 如果通过魔法箭、true
+	 *            资料
+	 * @return 远程攻击可以通过返回 true
 	 */
 	public abstract boolean isArrowPassable(Point pt);
 
 	/**
-	 * 返回指定的坐标通过魔法箭。
+	 * 传回指定的坐标远程攻击能否通过。 (魔法箭)
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 如果通过魔法箭、true
+	 * @return 远程攻击可以通过返回 true
 	 */
 	public abstract boolean isArrowPassable(int x, int y);
 
 	/**
-	 * 返回指定的坐标方向 (heading)，是否箭头通过。
+	 * 传回指定的坐标远程攻击能否通过。 (一般箭)
 	 * 
 	 * @param pt
-	 *            点对象 (Point)，其中包含的坐标
+	 *            坐标 (Point)，其中包含的坐标
 	 * @param heading
 	 *            方向
-	 * @return 如果通过魔法箭、true
+	 * @return 远程攻击可以通过返回 true
 	 */
 	public abstract boolean isArrowPassable(Point pt, int heading);
 
 	/**
-	 * 返回指定的坐标方向 (heading)，是否箭头通过。
+	 * 传回指定的坐标远程攻击能否通过。 (一般箭)
 	 * 
 	 * @param x
 	 *            坐标的X值
@@ -253,100 +274,100 @@ public abstract class L1Map {
 	 *            坐标的Y值
 	 * @param heading
 	 *            方向
-	 * @return 如果通过魔法箭、true
+	 * @return 远程攻击可以通过返回 true
 	 */
 	public abstract boolean isArrowPassable(int x, int y, int heading);
 
 	/**
-	 * 这张地图、返回地图是否在水下。
+	 * 传回这张地图是否在水下。
 	 * 
 	 * @return 如果在水中、true
 	 */
 	public abstract boolean isUnderwater();
 
 	/**
-	 * 这张地图，返回是否有可记忆坐标。
+	 * 传回这张地图是否有可记忆坐标。
 	 * 
 	 * @return 如果可记忆坐标、true
 	 */
 	public abstract boolean isMarkable();
 
 	/**
-	 * 这张地图，返回是否随机传送。
+	 * 传回这张地图是否随机传送。
 	 * 
-	 * @return 如果可能的话，随机传送、true
+	 * @return 如果可随机传送、true
 	 */
 	public abstract boolean isTeleportable();
 
 	/**
-	 * 这张地图，返回是否超出了地图是可以瞬移。
+	 * 传回这张地图是否可使用回家卷。
 	 * 
-	 * @return 如果可能的传送、true
+	 * @return 可使用回家卷、true
 	 */
 	public abstract boolean isEscapable();
 
 	/**
-	 * 这张地图，返回是否可复活。
+	 * 传回这张地图是否可复活。
 	 * 
-	 * @return 如果可能复活、true
+	 * @return 如果能复活、true
 	 */
 	public abstract boolean isUseResurrection();
 
 	/**
-	 * 这张地图，返回是否可使用魔杖。
+	 * 传回这张地图是否可使用魔杖。
 	 * 
-	 * @return 如果可能，使用魔杖、true
+	 * @return 如果可使用魔杖、true
 	 */
 	public abstract boolean isUsePainwand();
 
 	/**
-	 * 这张地图，返回是否有死亡惩罚。
+	 * 传回这张地图是否有死亡惩罚。
 	 * 
-	 * @return 如果死亡惩罚、true
+	 * @return 如果有死亡惩罚、true
 	 */
 	public abstract boolean isEnabledDeathPenalty();
 
 	/**
-	 * 这张地图，返回是否可召唤宠物。
+	 * 传回这张地图是否可携带宠物。
 	 * 
-	 * @return 如果召唤宠物true
+	 * @return 如果可携带宠物、true
 	 */
 	public abstract boolean isTakePets();
 
 	/**
-	 * 这张地图，返回是否可召回宠物。
+	 * 传回这张地图是否可召唤宠物。
 	 * 
-	 * @return 如果召回宠物true
+	 * @return 如果可召唤宠物、true
 	 */
 	public abstract boolean isRecallPets();
 
 	/**
-	 * 返回这张地图是否可以使用道具。
+	 * 传回这张地图是否可以使用道具。
 	 * 
-	 * @return 如果可以使用道具true
+	 * @return 如果可使用道具、true
 	 */
 	public abstract boolean isUsableItem();
 
 	/**
-	 * 这张地图，返回是否可以使用技能。
+	 * 传回这张地图是否可以使用技能。
 	 * 
-	 * @return 如果你可以使用你的技能true
+	 * @return 如果可使用技能、true
 	 */
 	public abstract boolean isUsableSkill();
 
 	/**
-	 * 返回指定坐标是否捕鱼区。
+	 * 传回指定坐标是否可钓鱼。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 如果捕鱼区true
+	 * @return 如果可钓鱼、true
 	 */
     public abstract boolean isFishingZone(int x, int y);
 
     /**
-	 * 返回指定的坐标是否有一个门。
+	 * 传回指定坐标是否有一个门。
 	 * 
 	 * @param x
 	 *            坐标的X值
@@ -366,7 +387,7 @@ public abstract class L1Map {
 	public abstract String toString(Point pt);
 
 	/**
-	 * 返回此地图是否为空 (null)。
+	 * 传回此地图是否为空 (null)。
 	 * 
 	 * @return 如果空 (null)、true
 	 */

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import l1j.server.server.utils.PerformanceTimer;
 
 /**
- * 世界地图
+ * 世界地图信息
  */
 public class L1WorldMap {
 
@@ -30,6 +30,7 @@ public class L1WorldMap {
 
 	private static L1WorldMap _instance;
 
+	/** MAPID MAP信息 */
 	private Map<Integer, L1Map> _maps;
 
 	public static L1WorldMap getInstance() {
@@ -61,11 +62,11 @@ public class L1WorldMap {
 	}
 
 	/**
-	 * 返回指定的信息保存给L1Map。
+	 * 指定的地图ID 返回给L1Map。
 	 * 
 	 * @param mapId
 	 *            地图ID
-	 * @return 保存地图信息、L1Map对象。
+	 * @return 地图信息、L1Map对象。
 	 */
 	public L1Map getMap(short mapId) {
 		L1Map map = _maps.get((int) mapId);
