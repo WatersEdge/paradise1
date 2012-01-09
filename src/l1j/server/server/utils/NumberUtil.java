@@ -14,14 +14,17 @@
  */
 package l1j.server.server.utils;
 
+/**
+ * 编号控制项
+ */
 public class NumberUtil {
 
 	/**
-	 * 少数を小数点第二位までの確率で上か下に丸めた整数を返す。
-	 * 例えば1.3は30%の確率で切り捨て、70%の確率で切り上げられる。
+	 * 返回一个整数四舍五入或与几个小数位在第二的概率下降。
+	 * 例如，1.3被四舍五入为30％的概率、70%的几率四舍五入。
 	 * 
-	 * @param number - もとの少数
-	 * @return 丸められた整数
+	 * @param number - 原始的数
+	 * @return 四舍五入的整数
 	 */
 	public static int randomRound(double number) {
 		double percentage = (number - Math.floor(number)) * 100;

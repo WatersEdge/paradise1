@@ -19,7 +19,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * SQL控制项
+ */
 public class SQLUtil {
+
 	public static SQLException close(Connection con) {
 		try {
 			if (con != null) {

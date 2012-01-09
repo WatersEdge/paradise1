@@ -48,23 +48,44 @@ import l1j.server.server.templates.L1Pet;
 // CalcStat
 
 /**
- * 计算经验
+ * 计算取得的经验值
  */
 public class CalcExp {
-
-	private static final long serialVersionUID = 1L;
-
-	private static Logger _log = Logger.getLogger(CalcExp.class.getName());
-	/** 最高经验 */
-	public static final int MAX_EXP = ExpTable.getExpByLevel(100) - 1;
 
 	private CalcExp() {
 	}
 
+	/**
+	 * 序列版本UID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 纪录用
+	 */
+	private static Logger _log = Logger.getLogger(CalcExp.class.getName());
+
+	/**
+	 * 最高经验值
+	 */
+	public static final int MAX_EXP = ExpTable.getExpByLevel(100) - 1;
+
+	/**
+	 * 取得序列版本UID
+	 * @return
+	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+	/**
+	 * 计算取得的经验值
+	 * @param l1pcinstance PC
+	 * @param targetid 目标ID
+	 * @param acquisitorList 累计列表
+	 * @param hateList
+	 * @param exp 经验值
+	 */
 	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, int exp) {
 
 		int i = 0;
@@ -75,7 +96,7 @@ public class CalcExp {
 		L1Object l1object = L1World.getInstance().findObject(targetid);
 		L1NpcInstance npc = (L1NpcInstance) l1object;
 
-		// ヘイトの合计を取得
+		// 取得累积的 hate
 		L1Character acquisitor;
 		int hate = 0;
 		int acquire_exp = 0;
@@ -100,12 +121,12 @@ public class CalcExp {
 					totalHateLawful += hate;
 				}
 			}
-			else { // nullだったり死んでいたら排除
+			else { // 排除 null、删除 或 死亡
 				acquisitorList.remove(i);
 				hateList.remove(i);
 			}
 		}
-		if (totalHateExp == 0) { // 取得者がいない场合
+		if (totalHateExp == 0) { // 没有取得经验值的情况
 			return;
 		}
 
@@ -117,14 +138,16 @@ public class CalcExp {
 			}*/ // 取消由打怪获得村庄贡献度，改由制作村庄福利品获得贡献度 for 3.3C
 			int lawful = npc.getLawful();
 
-			if (l1pcinstance.isInParty()) { // パーティー中
-				// パーティーのヘイトの合计を算出
-				// パーティーメンバー以外にはそのまま配分
+			if (l1pcinstance.isInParty()) { // 组队中
+				// 计算组队的 hate
+				// 组队以外的仍然分配
 				partyHateExp = 0;
 				partyHateLawful = 0;
 				for (i = hateList.size() - 1; i >= 0; i--) {
 					acquisitor = acquisitorList.get(i);
 					hate = hateList.get(i);
+
+					// PC
 					if (acquisitor instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) acquisitor;
 						if (pc == l1pcinstance) {
@@ -145,6 +168,8 @@ public class CalcExp {
 							AddExp(pc, acquire_exp, acquire_lawful);
 						}
 					}
+
+					// 宠物
 					else if (acquisitor instanceof L1PetInstance) {
 						L1PetInstance pet = (L1PetInstance) acquisitor;
 						L1PcInstance master = (L1PcInstance) pet.getMaster();
@@ -161,6 +186,8 @@ public class CalcExp {
 							AddExpPet(pet, acquire_exp);
 						}
 					}
+
+					// 召唤物
 					else if (acquisitor instanceof L1SummonInstance) {
 						L1SummonInstance summon = (L1SummonInstance) acquisitor;
 						L1PcInstance master = (L1PcInstance) summon.getMaster();
@@ -182,7 +209,7 @@ public class CalcExp {
 
 				// EXP、ロウフル配分
 
-				// プリボーナス
+				// 预奖励
 				double pri_bonus = 0;
 				L1PcInstance leader = l1pcinstance.getParty().getLeader();
 				if (leader.isCrown() && (l1pcinstance.knownsObject(leader) || l1pcinstance.equals(leader))) {
@@ -203,7 +230,7 @@ public class CalcExp {
 
 				party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
 
-				// 自キャラクターとそのペット・サモンのヘイトの合计を算出
+				// 计算自己和召唤物宠物的 Hate
 				if (party_level > 0) {
 					dist = ((l1pcinstance.getLevel() * l1pcinstance.getLevel()) / party_level);
 				}
@@ -235,8 +262,8 @@ public class CalcExp {
 						}
 					}
 				}
-				// 自キャラクターとそのペット・サモンに分配
-				if (ownHateExp != 0) { // 攻击に参加していた
+				// 分配自己和召唤物宠物
+				if (ownHateExp != 0) { // 参加了攻击
 					for (i = hateList.size() - 1; i >= 0; i--) {
 						acquisitor = acquisitorList.get(i);
 						hate = hateList.get(i);
@@ -262,12 +289,12 @@ public class CalcExp {
 						else if (acquisitor instanceof L1SummonInstance) {}
 					}
 				}
-				else { // 攻击に参加していなかった
-						// 自キャラクターのみに分配
+				else { // 没有参加攻击
+						//只分配自己的
 					AddExp(l1pcinstance, member_exp, member_lawful);
 				}
 
-				// パーティーメンバーとそのペット・サモンのヘイトの合计を算出
+				// 计算队员的召唤物宠物的 Hate 总和
 				for (L1PcInstance ptMember : ptMembers) {
 					if (l1pcinstance.knownsObject(ptMember)) {
 						if (party_level > 0) {
@@ -301,8 +328,8 @@ public class CalcExp {
 								}
 							}
 						}
-						// パーティーメンバーとそのペット・サモンに分配
-						if (ownHateExp != 0) { // 攻击に参加していた
+						// 分配队员的召唤物宠物的 Hate
+						if (ownHateExp != 0) { // 参加过攻击
 							for (i = hateList.size() - 1; i >= 0; i--) {
 								acquisitor = acquisitorList.get(i);
 								hate = hateList.get(i);
@@ -328,8 +355,8 @@ public class CalcExp {
 								else if (acquisitor instanceof L1SummonInstance) {}
 							}
 						}
-						else { // 攻击に参加していなかった
-								// パーティーメンバーのみに分配
+						else { // 没有参加攻击
+								// 只分配该队员自己的
 							AddExp(ptMember, member_exp, member_lawful);
 						}
 					}
@@ -361,14 +388,18 @@ public class CalcExp {
 		}
 	}
 
-	/** 增加经验 */
+	/**
+	 * 增加经验值
+	 * @param pc 角色
+	 * @param exp 经验值
+	 * @param lawful 正义值
+	 */
 	private static void AddExp(L1PcInstance pc, int exp, int lawful) {
 
-		int add_lawful = (int) (lawful * Config.RATE_LA) * -1;
-		pc.addLawful(add_lawful);
-
-		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel());
-		double foodBonus = 1.0; // 魔法料理经验加成
+		int add_lawful = (int) (lawful * Config.RATE_LA) * -1;		// 计算可取得的正义值
+		pc.addLawful(add_lawful); // 为PC增加正义值
+		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel()); // 目前等级可获得的经验值
+		double foodBonus = 1.0;	// 魔法料理经验加成
 		double expBonus = 1.0;	// 战斗药水经验加成
 
 		// 魔法料理经验加成
@@ -397,28 +428,44 @@ public class CalcExp {
 			expBonus = 3.5;
 		}
 
-		int add_exp = (int) (exp
-				* exppenalty
-				* Config.RATE_XP
-				* foodBonus // 魔法料理经验加成
-				* expBonus	// 战斗药水经验加成
+		int add_exp = (int) (exp	// 基本经验值
+				* exppenalty		// 目前等级可获得的经验值
+				* Config.RATE_XP	// 经验值倍率
+				* foodBonus			// 魔法料理经验加成
+				* expBonus			// 战斗药水经验加成
 				);
-		pc.addExp(add_exp);
+		pc.addExp(add_exp); // 为PC增加经验值
 	}
 
-	/** 增加宠物经验 */
+	/**
+	 * 增加宠物经验
+	 * @param pet 宠物
+	 * @param exp 经验值
+	 */
 	private static void AddExpPet(L1PetInstance pet, int exp) {
+
+		// 宠物主人
 		L1PcInstance pc = (L1PcInstance) pet.getMaster();
 
+		// 宠物道具
 		int petItemObjId = pet.getItemObjId();
 
+		// 宠物等级
 		int levelBefore = pet.getLevel();
+
+		// 宠物经验值
 		int totalExp = (int) (exp * Config.RATE_XP + pet.getExp());
-		if (totalExp >= ExpTable.getExpByLevel(51)) {
-			totalExp = ExpTable.getExpByLevel(51) - 1;
+
+		// 宠物最高等级
+		final int maxLevel = 51;
+		if (totalExp >= ExpTable.getExpByLevel(maxLevel)) {
+			totalExp = ExpTable.getExpByLevel(maxLevel) - 1;
 		}
+
+		// 设定宠物经验值
 		pet.setExp(totalExp);
 
+		// 设定宠物等级
 		pet.setLevel(ExpTable.getLevelByExp(totalExp));
 
 		int expPercentage = ExpTable.getExpPercentage(pet.getLevel(), totalExp);
@@ -434,17 +481,17 @@ public class CalcExp {
 		pet.setExpPercent(expPercentage);
 		pc.sendPackets(new S_PetPack(pet, pc));
 
-		if (gap != 0) { // レベルアップしたらDBに书き迂む
+		if (gap != 0) { // 将宠物等级等变化保存至资料库
 			L1Pet petTemplate = PetTable.getInstance().getTemplate(petItemObjId);
-			if (petTemplate == null) { // PetTableにない
+			if (petTemplate == null) { // PetTable无
 				_log.warning("L1Pet == null");
 				return;
 			}
-			petTemplate.set_exp(pet.getExp());
-			petTemplate.set_level(pet.getLevel());
-			petTemplate.set_hp(pet.getMaxHp());
-			petTemplate.set_mp(pet.getMaxMp());
-			PetTable.getInstance().storePet(petTemplate); // DBに书き迂み
+			petTemplate.set_exp(pet.getExp()); // 经验值
+			petTemplate.set_level(pet.getLevel()); // 等级
+			petTemplate.set_hp(pet.getMaxHp()); // HP
+			petTemplate.set_mp(pet.getMaxMp()); // MP
+			PetTable.getInstance().storePet(petTemplate); // 保存资料
 			pc.sendPackets(new S_ServerMessage(320, pet.getName())); // \f1%0升级了。
 		}
 	}

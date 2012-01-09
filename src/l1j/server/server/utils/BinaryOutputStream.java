@@ -20,9 +20,15 @@ import java.io.OutputStream;
 
 import l1j.server.Config;
 
+/**
+ * 二进制输出流
+ */
 public class BinaryOutputStream extends OutputStream {
-	private static final String CLIENT_LANGUAGE_CODE = Config
-			.CLIENT_LANGUAGE_CODE;
+
+	/**
+	 * 客户端编码
+	 */
+	private static final String CLIENT_LANGUAGE_CODE = Config.CLIENT_LANGUAGE_CODE;
 
 	private final ByteArrayOutputStream _bao = new ByteArrayOutputStream();
 

@@ -19,10 +19,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 流控制
+ */
 public class StreamUtil {
 
 	private static Logger _log = Logger.getLogger(StreamUtil.class.getName());
 
+	/**
+	 * 关闭此流并释放与此流关联的所有系统资源。如果已经关闭该流，则调用此方法无效。
+	 * @param closeables
+	 */
 	public static void close(Closeable... closeables) {
 		for (Closeable c : closeables) {
 			try {

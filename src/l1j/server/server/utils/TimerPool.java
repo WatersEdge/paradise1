@@ -16,11 +16,19 @@ package l1j.server.server.utils;
 
 import java.util.Timer;
 
+/**
+ * 定时器池
+ */
 public class TimerPool {
+
 	private Timer _timers[];
 	private int _numOfTimers;
 	private int _pointer = 0;
 
+	/**
+	 * 定时器池
+	 * @param numOfTimers
+	 */
 	public TimerPool(int numOfTimers) {
 		_timers = new Timer[numOfTimers];
 		for (int i = 0; i < numOfTimers; i++) {
@@ -29,6 +37,10 @@ public class TimerPool {
 		_numOfTimers = numOfTimers;
 	}
 
+	/**
+	 * 取得定时器池
+	 * @return
+	 */
 	public synchronized Timer getTimer() {
 		if (_numOfTimers <= _pointer) {
 			_pointer = 0;

@@ -18,6 +18,10 @@ package l1j.server.server.utils;
  * 随机数
  */
 public class Random {
+
+	/**
+	 * 最高 32767 [0x7fff]
+	 */
 	private static final int _max = Short.MAX_VALUE;
 
 	private static int _idx = 0;

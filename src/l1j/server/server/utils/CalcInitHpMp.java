@@ -17,7 +17,7 @@ package l1j.server.server.utils;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
- * 计算初始HP MP
+ * 初始化角色的HP MP
  */
 public class CalcInitHpMp {
 
@@ -25,7 +25,7 @@ public class CalcInitHpMp {
 	}
 
 	/**
-	 * 返回各职业的初始HP
+	 * 初始化各职业的HP
 	 * 
 	 * @param pc
 	 * @return hp
@@ -52,7 +52,7 @@ public class CalcInitHpMp {
 	}
 
 	/**
-	 * 返回各职业的初始MP
+	 * 初始化各职业的MP
 	 * 
 	 * @param pc
 	 * @return mp

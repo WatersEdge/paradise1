@@ -17,7 +17,7 @@ package l1j.server.server.utils;
 import l1j.server.Config;
 
 /**
- * 计算统计
+ * 计算统计各属性对角色的影响
  */
 public class CalcStat {
 
@@ -26,7 +26,7 @@ public class CalcStat {
 	}
 
 	/**
-	 * 返回敏捷对AC的影响
+	 * 追加敏捷对AC的影响
 	 * 
 	 * @param level
 	 * @param dex
@@ -50,7 +50,7 @@ public class CalcStat {
 	}
 
 	/**
-	 * <b> 传回精 wis 对应的抗魔值 </b>
+	 * <b> 追加精神对抗魔的影响 </b>
 	 * 
 	 * @param wis 精神点数
 	 *            
@@ -101,13 +101,13 @@ public class CalcStat {
 	}
 
 	/**
-	 * 返回各职业LVUP时のHP上升值
+	 * 计算各职业LVUP时的HP上升值
 	 * 
-	 * @param charType
-	 * @param baseMaxHp
-	 * @param baseCon
+	 * @param charType 职业
+	 * @param baseMaxHp 目前的最大HP
+	 * @param baseCon 体质
 	 * @param originalHpup
-	 * @return HP上升值
+	 * @return HP上升后的数值
 	 */
 	public static short calcStatHp(int charType, int baseMaxHp, short baseCon,
 			int originalHpup) {
@@ -168,13 +168,13 @@ public class CalcStat {
 	}
 
 	/**
-	 * 返回各职业各LVUP时のMP上升值
+	 * <b>计算各职业LVUP时的MP上升值</b>
 	 * 
-	 * @param charType
-	 * @param baseMaxMp
-	 * @param baseWis
+	 * @param charType 职业
+	 * @param baseMaxMp 目前的最大MP
+	 * @param baseWis 精神
 	 * @param originalMpup
-	 * @return MP上升值
+	 * @return MP上升后的数值
 	 */
 	public static short calcStatMp(int charType, int baseMaxMp, short baseWis,
 			int originalMpup) {

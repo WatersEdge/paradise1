@@ -17,9 +17,16 @@ package l1j.server.server.utils;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 二进制输入流
+ */
 public class BinaryInputStream extends InputStream {
 	InputStream _in;
 
+	/**
+	 * 二进制输入流
+	 * @param in
+	 */
 	public BinaryInputStream(InputStream in) {
 		_in = in;
 	}

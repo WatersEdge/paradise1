@@ -15,24 +15,42 @@
 package l1j.server.server.utils;
 
 /**
- * 骰子
+ * 取回随机值
  */
 public class Dice {
+
+	/** 基础值 */
 	private final int _faces;
 
+	/**
+	 * 取回随机值
+	 * @param faces 基础值
+	 */
 	public Dice(int faces) {
 		_faces = faces;
 	}
 
-	/** 获得面向 */
+	/**
+	 * 取回基础值
+	 * @return faces 基础值
+	 */
 	public int getFaces() {
 		return _faces;
 	}
 
+	/**
+	 * 单次随机值
+	 * @return
+	 */
 	public int roll() {
 		return Random.nextInt(_faces) + 1;
 	}
 
+	/**
+	 * 多次随机值
+	 * @param count 计算次数
+	 * @return 多次随机值总和
+	 */
 	public int roll(int count) {
 		int n = 0;
 		for(int i = 0; i < count; i++) {

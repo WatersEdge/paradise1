@@ -14,7 +14,11 @@
  */
 package l1j.server.server.utils;
 
+/**
+ * 执行时间计算器
+ */
 public class PerformanceTimer {
+
 	private long _begin = System.currentTimeMillis();
 
 	public void reset() {
