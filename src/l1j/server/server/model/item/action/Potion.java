@@ -34,9 +34,17 @@ import static l1j.server.server.model.skill.L1SkillId.*;
  * 药水
  */
 public class Potion {
-	/** 2段加速效果 **/
+
+	/**
+	 * 2段加速效果
+	 * @param pc
+	 * @param item
+	 * @param item_id
+	 */
 	public static void Brave(L1PcInstance pc, L1ItemInstance item, int item_id) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
@@ -66,8 +74,10 @@ public class Potion {
 			}
 			buff_brave(pc, STATUS_BRAVE, (byte) 1, time); // 给予勇敢药水效果
 			pc.getInventory().removeItem(item, 1);
-			/* 精灵饼干 & 祝福的精灵饼干 */
-		} else if (item_id == L1ItemId.ELVEN_WAFER
+		}
+
+		/* 精灵饼干 & 祝福的精灵饼干 */
+		else if (item_id == L1ItemId.ELVEN_WAFER
 				|| item_id == L1ItemId.B_ELVEN_WAFER
 				|| item_id == L1ItemId.W_POTION_OF_FOREST) {
 			if (item_id == L1ItemId.ELVEN_WAFER) { // 精灵饼干
@@ -79,8 +89,10 @@ public class Potion {
 			}
 			buff_brave(pc, STATUS_ELFBRAVE, (byte) 3, time); // 给予精灵饼干效果
 			pc.getInventory().removeItem(item, 1);
-			/* 生命之树果实 */
-		} else if (item_id == L1ItemId.FORBIDDEN_FRUIT) { // 生命之树果实
+		}
+
+		/* 生命之树果实 */
+		else if (item_id == L1ItemId.FORBIDDEN_FRUIT) { // 生命之树果实
 			time = 480;
 			pc.setSkillEffect(STATUS_RIBRAVE, time * 1000);
 			pc.sendPackets(new S_SkillSound(pc.getId(), 7110));
@@ -89,7 +101,13 @@ public class Potion {
 		}
 	}
 
-	/** 二段加速状态 (消除重复状态) */
+	/**
+	 * 二段加速状态 (消除重复状态)
+	 * @param pc
+	 * @param skillId
+	 * @param type
+	 * @param timeMillis
+	 */
 	private static void buff_brave(L1PcInstance pc, int skillId, byte type, int timeMillis) {
 
 		// 消除重复状态
@@ -123,13 +141,21 @@ public class Potion {
 		pc.setBraveSpeed(type);
 	}
 
-	/** 3段加速效果 **/
+	/**
+	 * 3段加速效果
+	 * @param pc
+	 * @param item
+	 * @param time
+	 */
 	public static void ThirdSpeed(L1PcInstance pc, L1ItemInstance item, int time) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 三段加速
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
 			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
 		}
@@ -144,13 +170,22 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 使用治愈药水 */
+	/**
+	 * 使用治愈类药水
+	 * @param pc
+	 * @param item
+	 * @param healHp
+	 * @param gfxid
+	 */
 	public static void UseHeallingPotion(L1PcInstance pc, L1ItemInstance item, int healHp, int gfxid) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 绝对屏障状态
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			cancelAbsoluteBarrier(pc); // 解除绝对屏障状态
 			return;
@@ -160,16 +195,26 @@ public class Potion {
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 		pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
 		healHp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D;
-		if (pc.hasSkillEffect(POLLUTE_WATER)) { // 污浊之水 - 效果减半
+
+		// 污浊之水 - 效果减半
+		if (pc.hasSkillEffect(POLLUTE_WATER)) {
 			healHp /= 2;
 		}
 		pc.setCurrentHp(pc.getCurrentHp() + healHp);
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 使用MP药水 */
+	/**
+	 * 使用MP药水
+	 * @param pc
+	 * @param item
+	 * @param mp
+	 * @param i
+	 */
 	public static void UseMpPotion(L1PcInstance pc, L1ItemInstance item, int mp, int i) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
@@ -187,32 +232,65 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 使用绿色药水 */
+	/**
+	 * 使用绿色药水
+	 * @param pc
+	 * @param item
+	 * @param itemId
+	 */
 	public static void useGreenPotion(L1PcInstance pc, L1ItemInstance item, int itemId) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 给予的时间
 		int time = 0;
-		if (itemId == L1ItemId.POTION_OF_HASTE_SELF || itemId == 40030) { // 自我加速药水、象牙塔加速药水
+
+		// 自我加速药水、象牙塔加速药水
+		if (itemId == L1ItemId.POTION_OF_HASTE_SELF || itemId == 40030) {
 			time = 300;
-		} else if (itemId == L1ItemId.B_POTION_OF_HASTE_SELF) { // 受祝福的 自我加速药水
+		}
+
+		// 受祝福的 自我加速药水
+		else if (itemId == L1ItemId.B_POTION_OF_HASTE_SELF) {
 			time = 350;
-		} else if ((itemId == 40018) || (itemId == 41338)
-				|| (itemId == 41342) || (itemId == 49140)) { // 强化 自我加速药水、受祝福的葡萄酒、梅杜莎之血、绿茶蛋糕卷
+		}
+
+		// 强化 自我加速药水、受祝福的葡萄酒、梅杜莎之血、绿茶蛋糕卷
+		else if ((itemId == 40018)
+				|| (itemId == 41338)
+				|| (itemId == 41342)
+				|| (itemId == 49140)) {
 			time = 1800;
-		} else if (itemId == 140018) { // 受祝福的 强化 自我加速药水
+		}
+
+		// 受祝福的 强化 自我加速药水
+		else if (itemId == 140018) {
 			time = 2100;
-		} else if (itemId == 40039) { // 红酒
+		}
+
+		// 红酒
+		else if (itemId == 40039) {
 			time = 600;
-		} else if (itemId == 40040) { // 威士忌
+		}
+
+		// 威士忌
+		else if (itemId == 40040) {
 			time = 900;
-		} else if (itemId == 49302) { // 福利加速药水
+		}
+
+		// 福利加速药水
+		else if (itemId == 49302) {
 			time = 1200;
-		} else if ((itemId == 41261) || (itemId == 41262) || (itemId == 41268)
+		}
+
+		// 商店料理
+		else if ((itemId == 41261) || (itemId == 41262) || (itemId == 41268)
 				|| (itemId == 41269) || (itemId == 41271) || (itemId == 41272)
-				|| (itemId == 41273)) { // 商店料理
+				|| (itemId == 41273)) {
 			time = 30;
 		}
 
@@ -270,23 +348,40 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 恢复魔力药水 (蓝色药水) */
+	/**
+	 * 恢复魔力药水 (蓝色药水)
+	 * @param pc
+	 * @param item
+	 * @param item_id
+	 */
 	public static void useBluePotion(L1PcInstance pc, L1ItemInstance item, int item_id) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 给予效果的时间
 		int time = 0;
-		if ((item_id == 40015) || (item_id == 40736)) { // 蓝色药水、智慧货币
+
+		// 蓝色药水、智慧货币
+		if ((item_id == 40015) || (item_id == 40736)) {
 			time = 600;
-		} else if (item_id == 140015) { // 受祝福的 蓝色药水
+		}
+
+		// 受祝福的 蓝色药水
+		else if (item_id == 140015) {
 			time = 700;
-		} else if (item_id == 49306) { // 福利蓝色药水
+		}
+
+		// 福利蓝色药水
+		else if (item_id == 49306) {
 			time = 2400;
 		}
 
-		if (pc.hasSkillEffect(STATUS_BLUE_POTION)) { // 蓝水状态
+		// 蓝水状态
+		if (pc.hasSkillEffect(STATUS_BLUE_POTION)) {
 			pc.killSkillEffectTimer(STATUS_BLUE_POTION);
 		}
 		pc.sendPackets(new S_SkillIconGFX(34, time)); // 状态图示
@@ -298,23 +393,40 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 增加魔攻药水 (智慧药水) */
+	/**
+	 * 增加魔攻药水 (智慧药水)
+	 * @param pc
+	 * @param item
+	 * @param item_id
+	 */
 	public static void useWisdomPotion(L1PcInstance pc, L1ItemInstance item, int item_id) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 给予效果的时间
 		int time = 0;
-		if (item_id == L1ItemId.POTION_OF_EMOTION_WISDOM) { // 慎重药水
+
+		// 慎重药水
+		if (item_id == L1ItemId.POTION_OF_EMOTION_WISDOM) {
 			time = 300;
-		} else if (item_id == L1ItemId.B_POTION_OF_EMOTION_WISDOM) { // 受祝福的 慎重药水
+		}
+
+		// 受祝福的 慎重药水
+		else if (item_id == L1ItemId.B_POTION_OF_EMOTION_WISDOM) {
 			time = 360;
-		} else if (item_id == 49307) { // 福利慎重药水
+		}
+
+		// 福利慎重药水
+		else if (item_id == 49307) {
 			time = 1000;
 		}
 
-		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) { // 智慧药水状态
+		// 智慧药水状态
+		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
 			pc.addSp(2);
 		} else {
 			pc.killSkillEffectTimer(STATUS_WISDOM_POTION);
@@ -328,25 +440,45 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 可以在水中呼吸的药水 (伊娃的祝福) */
+	/**
+	 * 可以在水中呼吸的药水 (伊娃的祝福)
+	 * @param pc
+	 * @param item
+	 * @param item_id
+	 */
 	public static void useBlessOfEva(L1PcInstance pc, L1ItemInstance item, int item_id) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 给予效果的时间
 		int time = 0;
-		if (item_id == 40032) { // 伊娃的祝福
+
+		// 伊娃的祝福
+		if (item_id == 40032) {
 			time = 1800;
-		} else if (item_id == 40041) { // 人鱼之鳞
+		}
+
+		// 人鱼之鳞
+		else if (item_id == 40041) {
 			time = 300;
-		} else if (item_id == 41344) { // 水中的水
+		}
+
+		// 水中的水
+		else if (item_id == 41344) {
 			time = 2100;
-		} else if (item_id == 49303) { // 福利呼吸药水
+		}
+
+		// 福利呼吸药水
+		else if (item_id == 49303) {
 			time = 7200;
 		}
 
-		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) { // 持续时间可累加
+		// 持续时间可累加
+		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
 			int timeSec = pc.getSkillEffectTimeSec(STATUS_UNDERWATER_BREATH);
 			time += timeSec;
 			if (time > 7200) {
@@ -361,21 +493,34 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	/** 使用黑色药水 */
+	/**
+	 * 使用黑色药水
+	 * @param pc
+	 * @param item
+	 */
 	public static void useBlindPotion(L1PcInstance pc, L1ItemInstance item) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
+		// 给予效果的时间
 		int time = 16;
-		if (pc.hasSkillEffect(CURSE_BLIND)) { // 法师魔法 (闇盲咒术)
+
+		// 法师魔法 (闇盲咒术)
+		if (pc.hasSkillEffect(CURSE_BLIND)) {
 			pc.killSkillEffectTimer(CURSE_BLIND);
-		} else if (pc.hasSkillEffect(DARKNESS)) { // 法师魔法 (黑闇之影)
+		}
+
+		// 法师魔法 (黑闇之影)
+		else if (pc.hasSkillEffect(DARKNESS)) {
 			pc.killSkillEffectTimer(DARKNESS);
 		}
 
-		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) { // 漂浮之眼肉
+		// 漂浮之眼肉
+		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
 			pc.sendPackets(new S_CurseBlind(2));
 		} else {
 			pc.sendPackets(new S_CurseBlind(1));
@@ -385,7 +530,10 @@ public class Potion {
 		pc.getInventory().removeItem(item, 1); // 删除道具
 	}
 
-	/** 解除绝对屏障状态 */
+	/**
+	 * 解除绝对屏障状态
+	 * @param pc
+	 */
 	private static void cancelAbsoluteBarrier(L1PcInstance pc) {
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);

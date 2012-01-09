@@ -49,6 +49,12 @@ public class L1Shop {
 	/** 购买项目 */
 	private final List<L1ShopItem> _purchasingItems;
 
+	/**
+	 * 商店
+	 * @param npcId
+	 * @param sellingItems 销售项目
+	 * @param purchasingItems 购买项目
+	 */
 	public L1Shop(int npcId, List<L1ShopItem> sellingItems,
 			List<L1ShopItem> purchasingItems) {
 		if ((sellingItems == null) || (purchasingItems == null)) {
@@ -93,7 +99,10 @@ public class L1Shop {
 		return true;
 	}
 
-	/** 获得购买道具 */
+	/**
+	 * 获得购买道具
+	 * @param itemId
+	 */
 	private L1ShopItem getPurchasingItem(int itemId) {
 		for (L1ShopItem shopItem : _purchasingItems) {
 			if (shopItem.getItemId() == itemId) {
@@ -103,7 +112,10 @@ public class L1Shop {
 		return null;
 	}
 
-	/** 评估道具 */
+	/**
+	 * 评估道具
+	 * @param item
+	 */
 	public L1AssessedItem assessItem(L1ItemInstance item) {
 		L1ShopItem shopItem = getPurchasingItem(item.getItemId());
 		if (shopItem == null) {
@@ -112,7 +124,10 @@ public class L1Shop {
 		return new L1AssessedItem(item.getId(), getAssessedPrice(shopItem));
 	}
 
-	/** 获得评估价格 */
+	/**
+	 * 获得评估价格
+	 * @param item
+	 */
 	private int getAssessedPrice(L1ShopItem item) {
 		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item.getPackCount());
 	}
@@ -288,6 +303,8 @@ public class L1Shop {
 
 	/**
 	 * 销售交易
+	 * @param inv 
+	 * @param orderList 
 	 */
 	private void sellItems(L1PcInventory inv, L1ShopBuyOrderList orderList) {
 		if (!inv.consumeItem(L1ItemId.ADENA, orderList.getTotalPriceTaxIncluded())) {

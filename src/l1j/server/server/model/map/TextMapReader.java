@@ -37,8 +37,7 @@ import l1j.server.server.utils.collections.Maps;
 public class TextMapReader extends MapReader {
 
 	/** 纪录用 */
-	private static Logger _log = Logger
-			.getLogger(TextMapReader.class.getName());
+	private static Logger _log = Logger.getLogger(TextMapReader.class.getName());
 
 	/** 地图的路径 */
 	private static final String MAP_DIR = "./maps/";

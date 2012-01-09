@@ -33,6 +33,11 @@ import l1j.server.server.serverpackets.S_SPMR;
  */
 public class Effect {
 
+	/**
+	 * 道具使用效果
+	 * @param pc 使用者
+	 * @param item 道具
+	 */
 	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
 		boolean isMagicStone = false;
 		boolean deteleItem = true;
@@ -143,6 +148,12 @@ public class Effect {
 		}
 	}
 
+	/**
+	 * 使用效果
+	 * @param pc 使用者
+	 * @param skillId 技能ID
+	 * @param time 时间
+	 */
 	public static void useEffect(L1PcInstance pc, int skillId, int time) {
 		if (!pc.hasSkillEffect(skillId)) {
 			switch(skillId) {
@@ -225,7 +236,11 @@ public class Effect {
 		pc.setSkillEffect(skillId, time * 1000);
 	}
 
-	// 设定不可重复的魔法状态 
+	/**
+	 * 设定不可重复的魔法状态
+	 * @param pc
+	 * @param skillId
+	 */
 	public static void deleteRepeatedSkills(L1PcInstance pc, int skillId) {
 		final int[][] repeatedSkills =
 		{
@@ -264,7 +279,12 @@ public class Effect {
 		}
 	}
 
-	// 将重复的状态删除
+	/**
+	 * 将重复的状态删除
+	 * @param pc
+	 * @param _skillId
+	 * @param repeat_skill
+	 */
 	private static void stopSkillList(L1PcInstance pc, int _skillId, int[] repeat_skill) {
 		for (int skillId : repeat_skill) {
 			if (skillId != _skillId) {
@@ -273,6 +293,12 @@ public class Effect {
 		}
 	}
 
+	/**
+	 * 附魔石效果
+	 * @param pc
+	 * @param skillId
+	 * @param time
+	 */
 	public static void magicStoneEffect(L1PcInstance pc, int skillId, int time) {
 		byte type = 0;
 		if (!pc.hasSkillEffect(skillId)) {
