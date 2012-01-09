@@ -20,6 +20,7 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_WhoAmount;
 import l1j.server.server.serverpackets.S_WhoCharinfo;
+import l1j.server.server.serverpackets.S_WhoStationery;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
@@ -45,6 +46,7 @@ public class C_Who extends ClientBasePacket {
 			if (Config.ALT_WHO_COMMAND) {
 				String amount = String.valueOf(L1World.getInstance().getAllPlayers().size());
 				S_WhoAmount s_whoamount = new S_WhoAmount(amount);
+				pc.sendPackets(new S_WhoStationery(pc)); // 布告栏(讯息阅读)模式讯息
 				pc.sendPackets(s_whoamount);
 			}
 			// TODO: ChrisLiu: SystemMessage 109
