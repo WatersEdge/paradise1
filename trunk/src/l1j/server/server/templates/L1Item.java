@@ -205,6 +205,9 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         11: ring2 <font color=#00800>戒指2</font><br>
 	 *         12: earring <font color=#00800>耳环</font> <br>
 	 *         13: guarder <font color=#00800>臂甲</font><br>
+	 *         14: tattoo_r <font color=#00800>辅助装备 (右)</font><br>
+	 *         15: tattoo_l <font color=#00800>辅助装备 (左)</font><br>
+	 *         16: tattoo_m <font color=#00800>辅助装备 (中)</font><br>
 	 *         </p>
 	 */
 	public int getType() {
@@ -271,29 +274,30 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @return <p>
 	 * 		   <font color=#ff0000>道具的材质</font><br>
-	 * 			0:<font color=#00800>无</font><br>
-	 * 			1:<font color=#00800>液体</font><br>
-	 * 			2:<font color=#00800>蜡</font><br>
-	 *			3:<font color=#00800>植物性</font><br>
-	 * 			4:<font color=#00800>动物性</font><br>
-	 * 			5:<font color=#00800>纸</font><br>
-	 * 			6:<font color=#00800>布</font><br>
-	 * 			7:<font color=#00800>皮</font><br>
-	 * 			8:<font color=#00800>木</font><br>
-	 * 			9:<font color=#00800>骨</font><br>
-	 * 			10:<font color=#00800>龙鳞</font><br>
-	 * 			11:<font color=#00800>铁</font><br>
-	 * 			12:<font color=#00800>钢铁</font><br>
-	 * 			13:<font color=#00800>铜</font><br>
-	 * 			14:<font color=#00800>银</font><br>
-	 * 			15:<font color=#00800>金</font><br>
-	 * 			16:<font color=#00800>白金</font><br>
-	 * 			17:<font color=#00800>米索莉</font><br>
-	 * 			18:<font color=#00800>黑色米索莉</font><br>
-	 * 			19:<font color=#00800>玻璃</font><br>
-	 * 			20:<font color=#00800>宝石</font><br>
-	 * 			21:<font color=#00800>矿物</font><br>
-	 * 			22:<font color=#00800>奥里哈鲁根</font><br>
+	 * 			none: 0 <font color=#00800>无</font><br>
+	 * 			liquid: 1 <font color=#00800>液体</font><br>
+	 * 			web: 2 <font color=#00800>蜡</font><br>
+	 *			vegetation: 3 <font color=#00800>植物性</font><br>
+	 * 			animalmatter: 4 <font color=#00800>动物性</font><br>
+	 * 			paper: 5 <font color=#00800>纸</font><br>
+	 * 			cloth: 6 <font color=#00800>布</font><br>
+	 * 			leather: 7 <font color=#00800>皮革</font><br>
+	 * 			wood: 8 <font color=#00800>木</font><br>
+	 * 			bone: 9 <font color=#00800>骨</font><br>
+	 * 			dragonscale: 10 <font color=#00800>龙鳞</font><br>
+	 * 			iron: 11 <font color=#00800>铁</font><br>
+	 * 			steel: 12 <font color=#00800>钢铁</font><br>
+	 * 			copper: 13 <font color=#00800>铜</font><br>
+	 * 			silver: 14 <font color=#00800>银</font><br>
+	 * 			gold: 15 <font color=#00800>金</font><br>
+	 * 			platinum: 16 <font color=#00800>白金</font><br>
+	 * 			mithril: 17 <font color=#00800>米索莉</font><br>
+	 * 			blackmithril: 18 <font color=#00800>黑色米索莉</font><br>
+	 * 			glass: 19 <font color=#00800>玻璃</font><br>
+	 * 			gemstone: 20 <font color=#00800>宝石</font><br>
+	 * 			mineral: 21 <font color=#00800>矿物</font><br>
+	 * 			oriharukon: 22 <font color=#00800>奥里哈鲁根</font><br>
+	 * 			</p>
 	 */
 	public int getMaterial() {
 		return _material;

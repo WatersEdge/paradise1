@@ -129,6 +129,9 @@ public class ItemTable {
 		// 5と同じ？
 		_useTypes.put("earring", new Integer(40));
 		_useTypes.put("fishing_rod", new Integer(42));
+		_useTypes.put("tattoo_r",new Integer(43)); // 辅助装备 (右)
+		_useTypes.put("tattoo_l",new Integer(44)); // 辅助装备 (左)
+		_useTypes.put("tattoo_m",new Integer(45)); // 辅助装备 (中)
 		_useTypes.put("del", new Integer(46));
 
 		_armorTypes.put("none", new Integer(0));
@@ -145,6 +148,9 @@ public class ItemTable {
 		_armorTypes.put("ring2", new Integer(11));
 		_armorTypes.put("earring", new Integer(12));
 		_armorTypes.put("guarder", new Integer(13));
+		_armorTypes.put("tattoo_r",new Integer(14)); // 辅助装备 (右)
+		_armorTypes.put("tattoo_l",new Integer(15)); // 辅助装备 (左)
+		_armorTypes.put("tattoo_m",new Integer(16)); // 辅助装备 (中)
 
 		_weaponTypes.put("sword", new Integer(1));
 		_weaponTypes.put("dagger", new Integer(2));
