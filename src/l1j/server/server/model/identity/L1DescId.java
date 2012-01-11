@@ -5790,4 +5790,378 @@ public class L1DescId {
 		/**  */
 		public static final int $5662 = 5662;
 
+
+		/** 上锁的欧西里斯高级魔方 */
+		public static final int $5965 = 5965;
+		/** 开锁的欧西里斯高级魔方 */
+		public static final int $5966 = 5966;
+		/** 天宝 */
+		public static final int $5967 = 5967;
+		/** 宠物战甲[1天] */
+		public static final int $5968 = 5968;
+		/** 宠物幻魔甲[1天] */
+		public static final int $5969 = 5969;
+		/** 宠物灵甲[1天] */
+		public static final int $5970 = 5970;
+		/** 精准之牙[1天] */
+		public static final int $5971 = 5971;
+		/** 狂暴之牙[1天] */
+		public static final int $5972 = 5972;
+		/** 幻魔之牙[1天] */
+		public static final int $5973 = 5973;
+		/** 1.5倍经验肩章[3小时] */
+		public static final int $5974 = 5974;
+		/** 死亡保护勋章 */
+		public static final int $5975 = 5975;
+		/** 力量药水 */
+		public static final int $5976 = 5976;
+		/** 坚韧药水 */
+		public static final int $5977 = 5977;
+		/** 暴怒药水 */
+		public static final int $5978 = 5978;
+		/** 智力药水 */
+		public static final int $5979 = 5979;
+		/** 活化药水 */
+		public static final int $5980 = 5980;
+		/** 巫师药水 */
+		public static final int $5981 = 5981;
+		/** 突袭药水 */
+		public static final int $5982 = 5982;
+		/** 强力恢复药水 */
+		public static final int $5983 = 5983;
+		/** 疯狂力量药水 */
+		public static final int $5984 = 5984;
+		/** 保护卷轴 */
+		public static final int $5985 = 5985;
+		/** 力量纹章[1天] */
+		public static final int $5986 = 5986;
+		/** 敏捷纹章[1天] */
+		public static final int $5987 = 5987;
+		/** 体质纹章[1天] */
+		public static final int $5988 = 5988;
+		/** 魅力纹章[1天] */
+		public static final int $5989 = 5989;
+		/** 智慧纹章[1天] */
+		public static final int $5990 = 5990;
+		/** 精神纹章[1天] */
+		public static final int $5991 = 5991;
+		/** 防护纹章[3小时] */
+		public static final int $5992 = 5992;
+		/** 抗魔纹章[3小时] */
+		public static final int $5993 = 5993;
+		/** 生命纹章[3小时] */
+		public static final int $5994 = 5994;
+		/** 魔力纹章[3小时] */
+		public static final int $5995 = 5995;
+		/** 自然纹章[3小时] */
+		public static final int $5996 = 5996;
+		/** 冥想纹章[3小时] */
+		public static final int $5997 = 5997;
+		/** rabbit token */
+		public static final int $5998 = 5998;
+		/** saint token */
+		public static final int $5999 = 5999;
+		/** beagle token */
+		public static final int $6000 = 6000;
+		/** fox token */
+		public static final int $6001 = 6001;
+		/** cat token */
+		public static final int $6002 = 6002;
+		/** phy damage bonus tatoo[3小时] */
+		public static final int $6003 = 6003;
+		/** magic damage bonus tatoo[3小时] */
+		public static final int $6004 = 6004;
+		/** 强化对武器施法的卷轴 */
+		public static final int $6005 = 6005;
+		/** 瞬移[冒险洞窟2F]推荐lv20 */
+		public static final int $6006 = 6006;
+		/** 瞬移[古鲁丁地监6F]推荐lv30 */
+		public static final int $6007 = 6007;
+		/** 瞬移[妖森地监2F]推荐lv20 */
+		public static final int $6008 = 6008;
+		/** 瞬移[风木地监4F] */
+		public static final int $6009 = 6009;
+		/** 瞬移[龙之谷地监3F]推荐lv40 */
+		public static final int $6010 = 6010;
+		/** 瞬移[象牙塔5F]推荐lv35 */
+		public static final int $6011 = 6011;
+		/** 瞬移[海音地监2F]推荐lv35 */
+		public static final int $6012 = 6012;
+		/** 瞬移[奇岩地监3F]推荐lv30 */
+		public static final int $6013 = 6013;
+		/** 瞬移[蚂蚁洞穴]推荐lv15 */
+		public static final int $6014 = 6014;
+		/** 炎魔变身卷[lv52] */
+		public static final int $6015 = 6015;
+		/** 死亡骑士变身卷[lv52] */
+		public static final int $6016 = 6016;
+		/** 刺客首领变身卷[lv52] */
+		public static final int $6017 = 6017;
+		/** 黑妖将军变身卷[lv52] */
+		public static final int $6018 = 6018;
+		/** 黑暗精灵变身卷[lv52] */
+		public static final int $6019 = 6019;
+		/** 宠物战甲[7天] */
+		public static final int $6020 = 6020;
+		/** 宠物幻魔甲[7天] */
+		public static final int $6021 = 6021;
+		/** 宠物灵甲[7天] */
+		public static final int $6022 = 6022;
+		/** 精准之牙[7天] */
+		public static final int $6023 = 6023;
+		/** 狂暴之牙[7天] */
+		public static final int $6024 = 6024;
+		/** 幻魔之牙[7天] */
+		public static final int $6025 = 6025;
+		/** 宠物战甲[30天] */
+		public static final int $6026 = 6026;
+		/** 宠物幻魔甲[30天] */
+		public static final int $6027 = 6027;
+		/** 宠物灵甲[30天] */
+		public static final int $6028 = 6028;
+		/** 精准之牙[30天] */
+		public static final int $6029 = 6029;
+		/** 狂暴之牙[30天] */
+		public static final int $6030 = 6030;
+		/** 幻魔之牙[30天] */
+		public static final int $6031 = 6031;
+		/** 1.5倍经验肩章[12小时] */
+		public static final int $6032 = 6032;
+		/** 1.5倍经验肩章[24小时] */
+		public static final int $6033 = 6033;
+		/** 力量纹章[7天] */
+		public static final int $6034 = 6034;
+		/** 敏捷纹章[7天] */
+		public static final int $6035 = 6035;
+		/** 体质纹章[7天] */
+		public static final int $6036 = 6036;
+		/** 魅力纹章[7天] */
+		public static final int $6037 = 6037;
+		/** 智慧纹章[7天] */
+		public static final int $6038 = 6038;
+		/** 精神纹章[7天] */
+		public static final int $6039 = 6039;
+		/** 防护纹章[12小时] */
+		public static final int $6040 = 6040;
+		/** 抗魔纹章[12小时] */
+		public static final int $6041 = 6041;
+		/** 生命纹章[12小时] */
+		public static final int $6042 = 6042;
+		/** 魔力纹章[12小时] */
+		public static final int $6043 = 6043;
+		/** 自然纹章[12小时] */
+		public static final int $6044 = 6044;
+		/** 冥想纹章[12小时] */
+		public static final int $6045 = 6045;
+		/** 力量纹章[30天] */
+		public static final int $6046 = 6046;
+		/** 敏捷纹章[30天] */
+		public static final int $6047 = 6047;
+		/** 体质纹章[30天] */
+		public static final int $6048 = 6048;
+		/** 魅力纹章[30天] */
+		public static final int $6049 = 6049;
+		/** 智慧纹章[30天] */
+		public static final int $6050 = 6050;
+		/** 精神纹章[30天] */
+		public static final int $6051 = 6051;
+		/** 防护纹章[24小时] */
+		public static final int $6052 = 6052;
+		/** 抗魔纹章[24小时] */
+		public static final int $6053 = 6053;
+		/** 生命纹章[24小时] */
+		public static final int $6054 = 6054;
+		/** 魔力纹章[24小时] */
+		public static final int $6055 = 6055;
+		/** 自然纹章[24小时] */
+		public static final int $6056 = 6056;
+		/** 冥想纹章[24小时] */
+		public static final int $6057 = 6057;
+		/** phy damage bonus tatoo[12小时] */
+		public static final int $6058 = 6058;
+		/** magic damage bonus tatoo[12小时] */
+		public static final int $6059 = 6059;
+		/** phy damage bonus tatoo[24小时] */
+		public static final int $6060 = 6060;
+		/** magic damage bonus tatoo[24小时] */
+		public static final int $6061 = 6061;
+		/** 中国日本用dummy */
+		public static final int $6062 = 6062;
+		/** 中国日本用dummy */
+		public static final int $6063 = 6063;
+		/** 中国日本用dummy */
+		public static final int $6064 = 6064;
+		/** 中国日本用dummy */
+		public static final int $6065 = 6065;
+		/** 中国日本用dummy */
+		public static final int $6066 = 6066;
+		/** 战斗药水包 */
+		public static final int $6067 = 6067;
+		/** 公爵之间谍 */
+		public static final int $6068 = 6068;
+		/** 死亡竞赛 */
+		public static final int $6069 = 6069;
+		/** 药物箱 */
+		public static final int $6070 = 6070;
+		/** 妖魔密使 */
+		public static final int $6071 = 6071;
+		/** 刻印的骨头碎片 */
+		public static final int $6072 = 6072;
+		/** 生命之树果实 */
+		public static final int $6073 = 6073;
+		/** 史塔利的证明 */
+		public static final int $6074 = 6074;
+		/** 狩猎秘籍 */
+		public static final int $6075 = 6075;
+		/** 便当袋 */
+		public static final int $6076 = 6076;
+		/** 底比斯 欧西里斯祭坛守门人 */
+		public static final int $6077 = 6077;
+		/** 魔法娃娃组合包 */
+		public static final int $6078 = 6078;
+		/** 神秘方块组合包 */
+		public static final int $6079 = 6079;
+		/** 特殊变身组合包 */
+		public static final int $6080 = 6080;
+		/** 象牙塔 */
+		public static final int $6081 = 6081;
+		/** 助手 */
+		public static final int $6082 = 6082;
+		/** 变身石 */
+		public static final int $6083 = 6083;
+		/** 幻术士 艾希雅 */
+		public static final int $6084 = 6084;
+		/** 龙骑士 费艾娜 */
+		public static final int $6085 = 6085;
+		/** 变身 */
+		public static final int $6086 = 6086;
+		/** 袋子 */
+		public static final int $6087 = 6087;
+		/** 特别的 */
+		public static final int $6088 = 6088;
+		/** : */
+		public static final int $6089 = 6089;
+		/** 拉曼斯 */
+		public static final int $6090 = 6090;
+		/** 安迪斯 */
+		public static final int $6091 = 6091;
+		/** 艾迪尔 */
+		public static final int $6092 = 6092;
+		/** 底比斯欧西里斯祭坛钥匙 */
+		public static final int $6093 = 6093;
+		/** 古代神射臂甲 */
+		public static final int $6094 = 6094;
+		/** 古代斗士臂甲 */
+		public static final int $6095 = 6095;
+		/** 谢谢你的帮忙~~ */
+		public static final int $6096 = 6096;
+		/** 万圣节木人 */
+		public static final int $6097 = 6097;
+		/** 弓打击值 */
+		public static final int $6098 = 6098;
+		/** 烤奎斯坦修的螯 */
+		public static final int $6099 = 6099;
+		/** 烤格利芬肉 */
+		public static final int $6100 = 6100;
+		/** 亚力安的尾巴肉排 */
+		public static final int $6101 = 6101;
+		/** 烤巨王龟肉 */
+		public static final int $6102 = 6102;
+		/** 幼龙翅膀串烧 */
+		public static final int $6103 = 6103;
+		/** 烤飞龙肉 */
+		public static final int $6104 = 6104;
+		/** 炖深海鱼肉 */
+		public static final int $6105 = 6105;
+		/** 邪恶蜥蜴蛋汤 */
+		public static final int $6106 = 6106;
+		/** 奎斯坦修的螯 */
+		public static final int $6107 = 6107;
+		/** 格利芬肉 */
+		public static final int $6108 = 6108;
+		/** 亚力安的尾巴 */
+		public static final int $6109 = 6109;
+		/** 巨王龟肉 */
+		public static final int $6110 = 6110;
+		/** 幼龙翅膀 */
+		public static final int $6111 = 6111;
+		/** 飞龙肉 */
+		public static final int $6112 = 6112;
+		/** 深海鱼肉 */
+		public static final int $6113 = 6113;
+		/** 邪恶蜥蜴蛋 */
+		public static final int $6114 = 6114;
+		/** 火之 */
+		public static final int $6115 = 6115;
+		/** 烈焰 */
+		public static final int $6116 = 6116;
+		/** 火灵 */
+		public static final int $6117 = 6117;
+		/** 水之 */
+		public static final int $6118 = 6118;
+		/** 海啸 */
+		public static final int $6119 = 6119;
+		/** 水灵 */
+		public static final int $6120 = 6120;
+		/** 风之 */
+		public static final int $6121 = 6121;
+		/** 暴风 */
+		public static final int $6122 = 6122;
+		/** 风灵 */
+		public static final int $6123 = 6123;
+		/** 地之 */
+		public static final int $6124 = 6124;
+		/** 崩裂 */
+		public static final int $6125 = 6125;
+		/** 地灵 */
+		public static final int $6126 = 6126;
+		/** 哈...哈巴斯..被敌方袭击… */
+		public static final int $6127 = 6127;
+		/** 克鲁鲁…快跑…要告知首领. */
+		public static final int $6128 = 6128;
+		/**  */
+		public static final int $6129 = 6129;
+		/** dummy */
+		public static final int $6130 = 6130;
+		/** 恶魔王 */
+		public static final int $6131 = 6131;
+		/** 印记 */
+		public static final int $6132 = 6132;
+		/** 剑 */
+		public static final int $6133 = 6133;
+		/** 经验值增加(%) */
+		public static final int $6134 = 6134;
+		/** branch用dummy */
+		public static final int $6135 = 6135;
+		/** branch用dummy */
+		public static final int $6136 = 6136;
+		/** branch用dummy */
+		public static final int $6137 = 6137;
+		/** branch用dummy */
+		public static final int $6138 = 6138;
+		/** branch用dummy */
+		public static final int $6139 = 6139;
+		/** branch用dummy */
+		public static final int $6140 = 6140;
+		/**  */
+		public static final int $6141 = 6141;
+		/**  */
+		public static final int $6142 = 6142;
+		/**  */
+		public static final int $6143 = 6143;
+		/**  */
+		public static final int $6144 = 6144;
+		/**  */
+		public static final int $6145 = 6145;
+		/**  */
+		public static final int $6146 = 6146;
+		/**  */
+		public static final int $6147 = 6147;
+		/**  */
+		public static final int $6148 = 6148;
+		/**  */
+		public static final int $6149 = 6149;
+		/**  */
+		public static final int $6150 = 6150;
+
 }
