@@ -35,12 +35,13 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 道具表
+ * 武器、防具、道具资料表
  */
 public class ItemTable {
 
+	/** 序列版本UID */
 	private static final long serialVersionUID = 1L;
-
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(ItemTable.class.getName());
 	/** 防具类型 */
 	private static final Map<String, Integer> _armorTypes = Maps.newMap();
@@ -67,154 +68,159 @@ public class ItemTable {
 
 	static {
 
-		_etcItemTypes.put("arrow", new Integer(0));
-		_etcItemTypes.put("wand", new Integer(1));
-		_etcItemTypes.put("light", new Integer(2));
-		_etcItemTypes.put("gem", new Integer(3));
-		_etcItemTypes.put("totem", new Integer(4));
-		_etcItemTypes.put("firecracker", new Integer(5));
-		_etcItemTypes.put("potion", new Integer(6));
-		_etcItemTypes.put("food", new Integer(7));
-		_etcItemTypes.put("scroll", new Integer(8));
-		_etcItemTypes.put("questitem", new Integer(9));
-		_etcItemTypes.put("spellbook", new Integer(10));
-		_etcItemTypes.put("petitem", new Integer(11));
-		_etcItemTypes.put("other", new Integer(12));
-		_etcItemTypes.put("material", new Integer(13));
-		_etcItemTypes.put("event", new Integer(14));
-		_etcItemTypes.put("sting", new Integer(15));
-		_etcItemTypes.put("treasure_box", new Integer(16));
-		_etcItemTypes.put("magic_doll", new Integer(17));
+		// 物品类型
+		_etcItemTypes.put("arrow", new Integer(0));			// 箭
+		_etcItemTypes.put("wand", new Integer(1));			// 魔杖
+		_etcItemTypes.put("light", new Integer(2));			// 灯
+		_etcItemTypes.put("gem", new Integer(3));			// 宝石
+		_etcItemTypes.put("totem", new Integer(4));			// 图腾
+		_etcItemTypes.put("firecracker", new Integer(5));	// 烟火
+		_etcItemTypes.put("potion", new Integer(6));		// 药水
+		_etcItemTypes.put("food", new Integer(7));			// 食物
+		_etcItemTypes.put("scroll", new Integer(8));		// 卷轴
+		_etcItemTypes.put("questitem", new Integer(9));		// 任务物品
+		_etcItemTypes.put("spellbook", new Integer(10));	// 魔法书
+		_etcItemTypes.put("petitem", new Integer(11));		// 宠物物品
+		_etcItemTypes.put("other", new Integer(12));		// 其他
+		_etcItemTypes.put("material", new Integer(13));		// 材料
+		_etcItemTypes.put("event", new Integer(14));		// 活动物品
+		_etcItemTypes.put("sting", new Integer(15));		// 飞刀
+		_etcItemTypes.put("treasure_box", new Integer(16)); // 宝箱
+		_etcItemTypes.put("magic_doll", new Integer(17));	// 魔法娃娃
 
-		_useTypes.put("none", new Integer(-1)); // 使用不可能
-		_useTypes.put("normal", new Integer(0));
-		_useTypes.put("weapon", new Integer(1));
-		_useTypes.put("armor", new Integer(2));
+		// 物品使用类型
+		_useTypes.put("none", new Integer(-1));			// 无法使用
+		_useTypes.put("normal", new Integer(0));		// 一般物品
+		_useTypes.put("weapon", new Integer(1));		// 武器
+		_useTypes.put("armor", new Integer(2));			// 防具
 		// _useTypes.put("wand1", new Integer(3));
 		// _useTypes.put("wand", new Integer(4));
 		// ワンドを振るアクションをとる(C_RequestExtraCommandが送られる)
-		_useTypes.put("spell_long", new Integer(5)); // 地面 / 选择对象(远距离)
-		_useTypes.put("ntele", new Integer(6));
-		_useTypes.put("identify", new Integer(7));
-		_useTypes.put("res", new Integer(8));
-		_useTypes.put("letter", new Integer(12));
-		_useTypes.put("letter_w", new Integer(13));
-		_useTypes.put("choice", new Integer(14));
-		_useTypes.put("instrument", new Integer(15));
-		_useTypes.put("sosc", new Integer(16));
-		_useTypes.put("spell_short", new Integer(17)); // 地面 / 选择对象(近距离)
-		_useTypes.put("T", new Integer(18));
-		_useTypes.put("cloak", new Integer(19));
-		_useTypes.put("glove", new Integer(20));
-		_useTypes.put("boots", new Integer(21));
-		_useTypes.put("helm", new Integer(22));
-		_useTypes.put("ring", new Integer(23));
-		_useTypes.put("amulet", new Integer(24));
-		_useTypes.put("shield", new Integer(25));
-		_useTypes.put("guarder", new Integer(25));
-		_useTypes.put("dai", new Integer(26));
-		_useTypes.put("zel", new Integer(27));
-		_useTypes.put("blank", new Integer(28));
-		_useTypes.put("btele", new Integer(29));
-		_useTypes.put("spell_buff", new Integer(30)); // 选择对象(远距离)
-														// Ctrlを押さないとパケットが飛ばない？
-		_useTypes.put("ccard", new Integer(31));
-		_useTypes.put("ccard_w", new Integer(32));
-		_useTypes.put("vcard", new Integer(33));
-		_useTypes.put("vcard_w", new Integer(34));
-		_useTypes.put("wcard", new Integer(35));
-		_useTypes.put("wcard_w", new Integer(36));
-		_useTypes.put("belt", new Integer(37));
+		_useTypes.put("spell_long", new Integer(5));	// 魔杖类型 (须选取目标/坐标)地面 / 选择对象(远距离)
+		_useTypes.put("ntele", new Integer(6));			// 瞬间移动卷轴
+		_useTypes.put("identify", new Integer(7));		// 鉴定卷轴
+		_useTypes.put("res", new Integer(8));			// 复活卷轴
+		_useTypes.put("letter", new Integer(12));		// 信纸
+		_useTypes.put("letter_w", new Integer(13));		// 信纸 (寄出)
+		_useTypes.put("choice", new Integer(14));		// 请选择一个物品 (道具栏位)
+		_useTypes.put("instrument", new Integer(15));	// 哨子
+		_useTypes.put("sosc", new Integer(16));			// 变形卷轴
+		_useTypes.put("spell_short", new Integer(17));	// 选取目标 地面 / 选择对象(近距离)
+		_useTypes.put("T", new Integer(18));			// T恤
+		_useTypes.put("cloak", new Integer(19));		// 斗篷
+		_useTypes.put("glove", new Integer(20));		// 手套
+		_useTypes.put("boots", new Integer(21));		// 长靴
+		_useTypes.put("helm", new Integer(22));			// 头盔
+		_useTypes.put("ring", new Integer(23));			// 戒指
+		_useTypes.put("amulet", new Integer(24));		// 项链
+		_useTypes.put("shield", new Integer(25));		// 盾牌
+		_useTypes.put("guarder", new Integer(25));		// 臂甲
+		_useTypes.put("dai", new Integer(26));			// 对武器施法的卷轴
+		_useTypes.put("zel", new Integer(27));			// 对盔甲施法的卷轴
+		_useTypes.put("blank", new Integer(28));		// 空的魔法卷轴
+		_useTypes.put("btele", new Integer(29));		// 瞬间移动卷轴 (祝福)
+		_useTypes.put("spell_buff", new Integer(30));	// 选取目标 (对NPC需要Ctrl 远距离 无XY坐标传回) 选择对象(远距离)
+		_useTypes.put("ccard", new Integer(31));		// 圣诞卡片
+		_useTypes.put("ccard_w", new Integer(32));		// 圣诞卡片 (寄出)
+		_useTypes.put("vcard", new Integer(33));		// 情人节卡片
+		_useTypes.put("vcard_w", new Integer(34));		// 情人节卡片 (寄出)
+		_useTypes.put("wcard", new Integer(35));		// 白色情人节卡片
+		_useTypes.put("wcard_w", new Integer(36));		// 白色情人节卡片 (寄出)
+		_useTypes.put("belt", new Integer(37));			// 腰带
 		// _useTypes.put("spell_long2", new Integer(39)); // 地面 / 选择对象(远距离)
 		// 5と同じ？
-		_useTypes.put("earring", new Integer(40));
-		_useTypes.put("fishing_rod", new Integer(42));
-		_useTypes.put("tattoo_r",new Integer(43)); // 辅助装备 (右)
-		_useTypes.put("tattoo_l",new Integer(44)); // 辅助装备 (左)
-		_useTypes.put("tattoo_m",new Integer(45)); // 辅助装备 (中)
-		_useTypes.put("del", new Integer(46));
+		_useTypes.put("earring", new Integer(40));		// 耳环
+		_useTypes.put("fishing_rod", new Integer(42));	// 钓鱼竿
+		_useTypes.put("tattoo_r",new Integer(43));		// 辅助装备 (右)
+		_useTypes.put("tattoo_l",new Integer(44));		// 辅助装备 (左)
+		_useTypes.put("tattoo_m",new Integer(45));		// 辅助装备 (中)
+		_useTypes.put("del", new Integer(46));			// 饰品强化卷轴
 
-		_armorTypes.put("none", new Integer(0));
-		_armorTypes.put("helm", new Integer(1));
-		_armorTypes.put("armor", new Integer(2));
-		_armorTypes.put("T", new Integer(3));
-		_armorTypes.put("cloak", new Integer(4));
-		_armorTypes.put("glove", new Integer(5));
-		_armorTypes.put("boots", new Integer(6));
-		_armorTypes.put("shield", new Integer(7));
-		_armorTypes.put("amulet", new Integer(8));
-		_armorTypes.put("ring", new Integer(9));
-		_armorTypes.put("belt", new Integer(10));
-		_armorTypes.put("ring2", new Integer(11));
-		_armorTypes.put("earring", new Integer(12));
-		_armorTypes.put("guarder", new Integer(13));
+		// 防具类型
+		_armorTypes.put("none", new Integer(0));		// 无法使用
+		_armorTypes.put("helm", new Integer(1));		// 头盔
+		_armorTypes.put("armor", new Integer(2));		// 盔甲
+		_armorTypes.put("T", new Integer(3));			// T恤
+		_armorTypes.put("cloak", new Integer(4));		// 斗篷
+		_armorTypes.put("glove", new Integer(5));		// 手套
+		_armorTypes.put("boots", new Integer(6));		// 长靴
+		_armorTypes.put("shield", new Integer(7));		// 盾牌
+		_armorTypes.put("amulet", new Integer(8));		// 项链
+		_armorTypes.put("ring", new Integer(9));		// 戒指
+		_armorTypes.put("belt", new Integer(10));		// 腰带
+		_armorTypes.put("ring2", new Integer(11));		// 戒指2
+		_armorTypes.put("earring", new Integer(12)); // 耳环
+		_armorTypes.put("guarder", new Integer(13)); // 臂甲
 		_armorTypes.put("tattoo_r",new Integer(14)); // 辅助装备 (右)
 		_armorTypes.put("tattoo_l",new Integer(15)); // 辅助装备 (左)
 		_armorTypes.put("tattoo_m",new Integer(16)); // 辅助装备 (中)
 
-		_weaponTypes.put("sword", new Integer(1));
-		_weaponTypes.put("dagger", new Integer(2));
-		_weaponTypes.put("tohandsword", new Integer(3));
-		_weaponTypes.put("bow", new Integer(4));
-		_weaponTypes.put("spear", new Integer(5));
-		_weaponTypes.put("blunt", new Integer(6));
-		_weaponTypes.put("staff", new Integer(7));
-		_weaponTypes.put("throwingknife", new Integer(8));
-		_weaponTypes.put("arrow", new Integer(9));
-		_weaponTypes.put("gauntlet", new Integer(10));
-		_weaponTypes.put("claw", new Integer(11));
-		_weaponTypes.put("edoryu", new Integer(12));
-		_weaponTypes.put("singlebow", new Integer(13));
-		_weaponTypes.put("singlespear", new Integer(14));
-		_weaponTypes.put("tohandblunt", new Integer(15));
-		_weaponTypes.put("tohandstaff", new Integer(16));
-		_weaponTypes.put("kiringku", new Integer(17));
-		_weaponTypes.put("chainsword", new Integer(18));
-		_weaponTypes.put("tohandkiringku", new Integer(19));
+		// 武器类型
+		_weaponTypes.put("sword", new Integer(1));			// 剑 (单手)
+		_weaponTypes.put("dagger", new Integer(2));			// 匕首 (单手)
+		_weaponTypes.put("tohandsword", new Integer(3));	// 双手剑 (双手)
+		_weaponTypes.put("bow", new Integer(4));			// 弓 (双手)
+		_weaponTypes.put("spear", new Integer(5));			// 矛 (双手)
+		_weaponTypes.put("blunt", new Integer(6));			// 斧 (单手)
+		_weaponTypes.put("staff", new Integer(7));			// 魔杖 (单手)
+		_weaponTypes.put("throwingknife", new Integer(8));	// 飞刀
+		_weaponTypes.put("arrow", new Integer(9));			// 箭
+		_weaponTypes.put("gauntlet", new Integer(10));		// 铁手甲
+		_weaponTypes.put("claw", new Integer(11));			// 钢爪 (双手)
+		_weaponTypes.put("edoryu", new Integer(12));		// 双刀 (双手)
+		_weaponTypes.put("singlebow", new Integer(13));		// 弓 (单手)
+		_weaponTypes.put("singlespear", new Integer(14));	// 矛 (单手)
+		_weaponTypes.put("tohandblunt", new Integer(15));	// 双手斧 (双手)
+		_weaponTypes.put("tohandstaff", new Integer(16));	// 魔杖 (双手)
+		_weaponTypes.put("kiringku", new Integer(17));		// 奇古兽 (单手)
+		_weaponTypes.put("chainsword", new Integer(18));	// 锁链剑 (单手)
+		_weaponTypes.put("tohandkiringku", new Integer(19));// 艾尔摩奇古兽
 
-		_weaponId.put("sword", new Integer(4));
-		_weaponId.put("dagger", new Integer(46));
-		_weaponId.put("tohandsword", new Integer(50));
-		_weaponId.put("bow", new Integer(20));
-		_weaponId.put("blunt", new Integer(11));
-		_weaponId.put("spear", new Integer(24));
-		_weaponId.put("staff", new Integer(40));
-		_weaponId.put("throwingknife", new Integer(2922));
-		_weaponId.put("arrow", new Integer(66));
-		_weaponId.put("gauntlet", new Integer(62));
-		_weaponId.put("claw", new Integer(58));
-		_weaponId.put("edoryu", new Integer(54));
-		_weaponId.put("singlebow", new Integer(20));
-		_weaponId.put("singlespear", new Integer(24));
-		_weaponId.put("tohandblunt", new Integer(11));
-		_weaponId.put("tohandstaff", new Integer(40));
-		_weaponId.put("kiringku", new Integer(58));
-		_weaponId.put("chainsword", new Integer(24));
-		_weaponId.put("tohandkiringku", new Integer(58)); 
+		// 武器编号
+		_weaponId.put("sword", new Integer(4));				// 剑
+		_weaponId.put("dagger", new Integer(46));			// 匕首
+		_weaponId.put("tohandsword", new Integer(50));		// 双手剑
+		_weaponId.put("bow", new Integer(20));				// 弓
+		_weaponId.put("blunt", new Integer(11));			// 斧 (单手)
+		_weaponId.put("spear", new Integer(24));			// 矛 (双手)
+		_weaponId.put("staff", new Integer(40));			// 魔杖
+		_weaponId.put("throwingknife", new Integer(2922));	// 飞刀
+		_weaponId.put("arrow", new Integer(66));			// 箭
+		_weaponId.put("gauntlet", new Integer(62));			// 铁手甲
+		_weaponId.put("claw", new Integer(58));				// 钢爪
+		_weaponId.put("edoryu", new Integer(54));			// 双刀
+		_weaponId.put("singlebow", new Integer(20));		// 弓 (单手)
+		_weaponId.put("singlespear", new Integer(24));		// 矛 (单手)
+		_weaponId.put("tohandblunt", new Integer(11));		// 双手斧
+		_weaponId.put("tohandstaff", new Integer(40));		// 魔杖 (双手)
+		_weaponId.put("kiringku", new Integer(58));			// 奇古兽
+		_weaponId.put("chainsword", new Integer(24));		// 锁链剑
+		_weaponId.put("tohandkiringku", new Integer(58));	// 艾尔摩奇古兽
 
-		_materialTypes.put("none", new Integer(0));
-		_materialTypes.put("liquid", new Integer(1));
-		_materialTypes.put("web", new Integer(2));
-		_materialTypes.put("vegetation", new Integer(3));
-		_materialTypes.put("animalmatter", new Integer(4));
-		_materialTypes.put("paper", new Integer(5));
-		_materialTypes.put("cloth", new Integer(6));
-		_materialTypes.put("leather", new Integer(7));
-		_materialTypes.put("wood", new Integer(8));
-		_materialTypes.put("bone", new Integer(9));
-		_materialTypes.put("dragonscale", new Integer(10));
-		_materialTypes.put("iron", new Integer(11));
-		_materialTypes.put("steel", new Integer(12));
-		_materialTypes.put("copper", new Integer(13));
-		_materialTypes.put("silver", new Integer(14));
-		_materialTypes.put("gold", new Integer(15));
-		_materialTypes.put("platinum", new Integer(16));
-		_materialTypes.put("mithril", new Integer(17));
-		_materialTypes.put("blackmithril", new Integer(18));
-		_materialTypes.put("glass", new Integer(19));
-		_materialTypes.put("gemstone", new Integer(20));
-		_materialTypes.put("mineral", new Integer(21));
-		_materialTypes.put("oriharukon", new Integer(22));
+		// 道具材质
+		_materialTypes.put("none", new Integer(0));			// 无
+		_materialTypes.put("liquid", new Integer(1));		// 液体
+		_materialTypes.put("web", new Integer(2));			// 蜡
+		_materialTypes.put("vegetation", new Integer(3));	// 植物性
+		_materialTypes.put("animalmatter", new Integer(4)); // 动物性
+		_materialTypes.put("paper", new Integer(5));		// 纸
+		_materialTypes.put("cloth", new Integer(6));		// 布
+		_materialTypes.put("leather", new Integer(7));		// 皮革
+		_materialTypes.put("wood", new Integer(8));			// 木
+		_materialTypes.put("bone", new Integer(9));			// 骨头
+		_materialTypes.put("dragonscale", new Integer(10)); // 龙鳞
+		_materialTypes.put("iron", new Integer(11));		// 铁
+		_materialTypes.put("steel", new Integer(12));		// 钢铁
+		_materialTypes.put("copper", new Integer(13));		// 铜
+		_materialTypes.put("silver", new Integer(14));		// 银
+		_materialTypes.put("gold", new Integer(15));		// 黄金
+		_materialTypes.put("platinum", new Integer(16));	// 白金
+		_materialTypes.put("mithril", new Integer(17));		// 米索莉
+		_materialTypes.put("blackmithril", new Integer(18)); // 黑色米索莉
+		_materialTypes.put("glass", new Integer(19));		// 玻璃
+		_materialTypes.put("gemstone", new Integer(20));	// 宝石
+		_materialTypes.put("mineral", new Integer(21));		// 矿物
+		_materialTypes.put("oriharukon", new Integer(22));	// 奥里哈鲁根
 	}
 
 	/**  */
@@ -232,7 +238,10 @@ public class ItemTable {
 		buildFastLookupTable();
 	}
 
-	/** 所有道具 */
+	/**
+	 * 道具载入
+	 * @return
+	 */
 	private Map<Integer, L1EtcItem> allEtcItem() {
 		Map<Integer, L1EtcItem> result = Maps.newMap();
 
@@ -296,7 +305,10 @@ public class ItemTable {
 		return result;
 	}
 
-	/** 所有武器 */
+	/**
+	 * 武器载入
+	 * @return
+	 */
 	private Map<Integer, L1Weapon> allWeapon() {
 		Map<Integer, L1Weapon> result = Maps.newMap();
 
@@ -380,7 +392,10 @@ public class ItemTable {
 		return result;
 	}
 
-	/** 所有防具 */
+	/**
+	 * 防具载入
+	 * @return
+	 */
 	private Map<Integer, L1Armor> allArmor() {
 		Map<Integer, L1Armor> result = Maps.newMap();
 		Connection con = null;
@@ -473,7 +488,9 @@ public class ItemTable {
 		return result;
 	}
 
-	/** 构建快速查找表 */
+	/**
+	 * 构建快速查找表
+	 */
 	private void buildFastLookupTable() {
 		int highestId = 0;
 
@@ -516,12 +533,20 @@ public class ItemTable {
 		}
 	}
 
-	/** 取得所有模板 */
+	/**
+	 * 传回指定编号物品资料
+	 * @param id
+	 * @return
+	 */
 	public L1Item getTemplate(int id) {
 		return _allTemplates[id];
 	}
 
-	/** 创建项目 */
+	/**
+	 * 产生新物件
+	 * @param itemId
+	 * @return
+	 */
 	public L1ItemInstance createItem(int itemId) {
 		L1Item temp = getTemplate(itemId);
 		if (temp == null) {
@@ -534,7 +559,11 @@ public class ItemTable {
 		return item;
 	}
 
-	/** 按名称查找项目ID */
+	/**
+	 * 依名称 (NameId)找回itemid
+	 * @param name
+	 * @return
+	 */
 	public int findItemIdByName(String name) {
 		int itemid = 0;
 		for (L1Item item : _allTemplates) {
@@ -546,7 +575,11 @@ public class ItemTable {
 		return itemid;
 	}
 
-	/** 查找项目没有空间名称ID */
+	/**
+	 * 依名称 (中文)找回itemid
+	 * @param name
+	 * @return
+	 */
 	public int findItemIdByNameWithoutSpace(String name) {
 		int itemid = 0;
 		for (L1Item item : _allTemplates) {
@@ -558,7 +591,10 @@ public class ItemTable {
 		return itemid;
 	}
 
-	/** 获得序列版本UID */
+	/**
+	 * 取得序列版本UID
+	 * @return
+	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
