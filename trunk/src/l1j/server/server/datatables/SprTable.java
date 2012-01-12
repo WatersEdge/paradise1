@@ -56,10 +56,11 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 速度表
+ * 图形速度资料表
  */
 public class SprTable {
 
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(SprTable.class.getName());
 
 	private static class Spr {
@@ -176,7 +177,7 @@ public class SprTable {
 	}
 
 	/**
-	 * 返回指定spr的攻击速度。もしsprに指定されたweapon_typeのデータが 設定されていない場合は、1.返回attack的数据。
+	 * 传回攻击速度。
 	 * 
 	 * @param sprid
 	 *            - 检查spr的ID
@@ -199,6 +200,12 @@ public class SprTable {
 		return 0;
 	}
 
+	/**
+	 * 传回移动速度。
+	 * @param sprid
+	 * @param actid
+	 * @return
+	 */
 	public int getMoveSpeed(int sprid, int actid) {
 		if (_dataMap.containsKey(sprid)) {
 			if (_dataMap.get(sprid).moveSpeed.containsKey(actid)) {
@@ -214,6 +221,11 @@ public class SprTable {
 		return 0;
 	}
 
+	/**
+	 * 传回有向施法速度
+	 * @param sprid
+	 * @return
+	 */
 	public int getDirSpellSpeed(int sprid) {
 		if (_dataMap.containsKey(sprid)) {
 			return _dataMap.get(sprid).dirSpellSpeed;
@@ -221,6 +233,11 @@ public class SprTable {
 		return 0;
 	}
 
+	/**
+	 * 传回无向施法速度
+	 * @param sprid
+	 * @return
+	 */
 	public int getNodirSpellSpeed(int sprid) {
 		if (_dataMap.containsKey(sprid)) {
 			return _dataMap.get(sprid).nodirSpellSpeed;
@@ -228,6 +245,12 @@ public class SprTable {
 		return 0;
 	}
 
+	/**
+	 * 传回魔法娃娃表情动作速度
+	 * @param sprid
+	 * @param actid
+	 * @return
+	 */
 	public int getSpecialSpeed(int sprid, int actid) {
 		if (_dataMap.containsKey(sprid)) {
 			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
@@ -240,7 +263,11 @@ public class SprTable {
 		return 0;
 	}
 
-	/** Npc 各动作延迟时间 */
+	/**
+	 * Npc 各动作延迟时间
+	 * @param sprid
+	 * @param actid
+	 */
 	public int getSprSpeed(int sprid, int actid) {
 		switch (actid) {
 			case ACTION_Walk:

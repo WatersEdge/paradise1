@@ -28,37 +28,37 @@ public class ActionCodes {
 	public static final int ACTION_Hide = 11;
 	/** 安塔瑞斯隐藏动作 */
 	public static final int ACTION_AntharasHide = 20;
-	/** 行走动作 */
+	/** 移动动作 */
 	public static final int ACTION_Walk = 0;
 	/** 攻击动作 */
 	public static final int ACTION_Attack = 1;
-	/** 伤害动作 */
+	/** 受伤动作 */
 	public static final int ACTION_Damage = 2;
 	/** 空闲动作 */
 	public static final int ACTION_Idle = 3;
-	/** 剑行走动作 */
+	/** 持剑移动动作 */
 	public static final int ACTION_SwordWalk = 4;
-	/** 剑攻击动作 */
+	/** 持剑攻击动作 */
 	public static final int ACTION_SwordAttack = 5;
-	/** 剑伤害动作 */
+	/** 持剑受伤动作 */
 	public static final int ACTION_SwordDamage = 6;
-	/** 剑空闲动作 */
+	/** 持剑空闲动作 */
 	public static final int ACTION_SwordIdle = 7;
 	/** 死亡动作 */
 	public static final int ACTION_Die = 8;
-	/** 斧行走动作 */
+	/** 持斧移动动作 */
 	public static final int ACTION_AxeWalk = 11;
-	/** 斧攻击动作 */
+	/** 持斧攻击动作 */
 	public static final int ACTION_AxeAttack = 12;
-	/** 斧伤害动作 */
+	/** 持斧受伤动作 */
 	public static final int ACTION_AxeDamage = 13;
-	/** 斧空闲动作 */
+	/** 持斧空闲动作 */
 	public static final int ACTION_AxeIdle = 14;
 	/** 隐藏伤害动作 */
 	public static final int ACTION_HideDamage = 13;
 	/** 隐藏空闲动作 */
 	public static final int ACTION_HideIdle = 14;
-	/** 拾起动作 */
+	/** 捡取物品动作 */
 	public static final int ACTION_Pickup = 15;
 	/** 抛掷动作 */
 	public static final int ACTION_Throw = 16;
@@ -68,25 +68,25 @@ public class ActionCodes {
 	public static final int ACTION_SkillAttack = 18;
 	/** Buff技能动作 */
 	public static final int ACTION_SkillBuff = 19;
-	/** 弓行走动作 */
+	/** 持弓移动动作 */
 	public static final int ACTION_BowWalk = 20;
-	/** 弓攻击动作 */
+	/** 持弓攻击动作 */
 	public static final int ACTION_BowAttack = 21;
-	/** 弓伤害动作 */
+	/** 持弓受伤动作 */
 	public static final int ACTION_BowDamage = 22;
-	/** 弓空闲动作 */
+	/** 持弓空闲动作 */
 	public static final int ACTION_BowIdle = 23;
-	/** 矛行走动作 */
+	/** 持矛移动动作 */
 	public static final int ACTION_SpearWalk = 24;
-	/** 矛攻击动作 */
+	/** 持矛攻击动作 */
 	public static final int ACTION_SpearAttack = 25;
-	/** 矛伤害动作 */
+	/** 持矛受伤动作 */
 	public static final int ACTION_SpearDamage = 26;
-	/** 矛空闲动作 */
+	/** 持矛空闲动作 */
 	public static final int ACTION_SpearIdle = 27;
-	/** 开动作 */
+	/** 开箱动作 */
 	public static final int ACTION_On = 28;
-	/** 关动作 */
+	/** 关箱动作 */
 	public static final int ACTION_Off = 29;
 	/** 开门动作 */
 	public static final int ACTION_Open = 28;
@@ -108,69 +108,69 @@ public class ActionCodes {
 	public static final int ACTION_TowerCrack3 = 34;
 	/** 塔死亡动作 */
 	public static final int ACTION_TowerDie = 35;
-	/** 门动作1 */
+	/** 门损坏动作1 */
 	public static final int ACTION_DoorAction1 = 32;
-	/** 门动作 2*/
+	/** 门损坏动作 2*/
 	public static final int ACTION_DoorAction2 = 33;
-	/** 门动作 3*/
+	/** 门损坏动作 3*/
 	public static final int ACTION_DoorAction3 = 34;
-	/** 门动作 4*/
+	/** 门损坏动作 4*/
 	public static final int ACTION_DoorAction4 = 35;
-	/** 门动作 5*/
+	/** 门损坏动作 5*/
 	public static final int ACTION_DoorAction5 = 36;
 	/** 门死亡动作 */
 	public static final int ACTION_DoorDie = 37;
-	/** 角色行走动作 */
+	/** 持魔杖移动动作 */
 	public static final int ACTION_StaffWalk = 40;
-	/** 角色攻击动作 */
+	/** 持魔杖攻击动作 */
 	public static final int ACTION_StaffAttack = 41;
-	/** 角色伤害动作 */
+	/** 持魔杖受伤动作 */
 	public static final int ACTION_StaffDamage = 42;
-	/** 角色空闲动作 */
+	/** 持魔杖空闲动作 */
 	public static final int ACTION_StaffIdle = 43;
 	/** 上移动作 */
 	public static final int ACTION_Moveup = 44;
 	/** 下移动作 */
 	public static final int ACTION_Movedown = 45;
-	/** 匕首行走动作 */
+	/** 持匕首移动动作 */
 	public static final int ACTION_DaggerWalk = 46;
-	/** 匕首攻击动作 */
+	/** 持匕首攻击动作 */
 	public static final int ACTION_DaggerAttack = 47;
-	/** 匕首伤害动作 */
+	/** 持匕首受伤动作 */
 	public static final int ACTION_DaggerDamage = 48;
-	/** 匕首空闲动作 */
+	/** 持匕首空闲动作 */
 	public static final int ACTION_DaggerIdle = 49;
-	/** 双手剑行走动作 */
+	/** 持双手剑移动动作 */
 	public static final int ACTION_TwoHandSwordWalk = 50;
-	/** 双手剑攻击动作 */
+	/** 持双手剑攻击动作 */
 	public static final int ACTION_TwoHandSwordAttack = 51;
-	/** 双手剑伤害动作 */
+	/** 持双手剑受伤动作 */
 	public static final int ACTION_TwoHandSwordDamage = 52;
-	/** 双手剑空闲动作 */
+	/** 持双手剑空闲动作 */
 	public static final int ACTION_TwoHandSwordIdle = 53;
-	/** 双刀行走动作 */
+	/** 持双刀移动动作 */
 	public static final int ACTION_EdoryuWalk = 54;
-	/** 双刀攻击动作 */
+	/** 持双刀攻击动作 */
 	public static final int ACTION_EdoryuAttack = 55;
-	/** 双刀伤害动作 */
+	/** 持双刀受伤动作 */
 	public static final int ACTION_EdoryuDamage = 56;
-	/** 双刀空闲动作 */
+	/** 持双刀空闲动作 */
 	public static final int ACTION_EdoryuIdle = 57;
-	/** 双爪行走动作 */
+	/** 持双爪移动动作 */
 	public static final int ACTION_ClawWalk = 58;
-	/** 双爪攻击动作 */
+	/** 持双爪攻击动作 */
 	public static final int ACTION_ClawAttack = 59;
-	/** 双爪空闲动作 */
-	public static final int ACTION_ClawIdle = 61;
-	/** 双爪伤害动作 */
+	/** 持双爪受伤动作 */
 	public static final int ACTION_ClawDamage = 60;
-	/** 投掷飞刀动作 */
+	/** 持双爪空闲动作 */
+	public static final int ACTION_ClawIdle = 61;
+	/** 持铁手甲移动动作 */
 	public static final int ACTION_ThrowingKnifeWalk = 62;
-	/** 飞刀攻击动作 */
+	/** 持铁手甲攻击动作 */
 	public static final int ACTION_ThrowingKnifeAttack = 63;
-	/** 飞刀伤害动作 */
+	/** 持铁手甲受伤动作 */
 	public static final int ACTION_ThrowingKnifeDamage = 64;
-	/** 投掷飞刀空闲动作 */
+	/** 持铁手甲空闲动作 */
 	public static final int ACTION_ThrowingKnifeIdle = 65;
 	/** 思考动作 Alt+4 */
 	public static final int ACTION_Think = 66; // Alt+4

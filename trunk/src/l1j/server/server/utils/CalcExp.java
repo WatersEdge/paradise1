@@ -108,6 +108,36 @@ public class CalcExp {
 		int partyHateExp = 0;
 		int partyHateLawful = 0;
 		int ownHateExp = 0;
+		double tattoo_m_exp_125 = 1.25; // 1.25倍经验肩章 (经验倍率)
+		double tattoo_m_exp_150 = 1.50; // 1.50倍经验肩章 (经验倍率)
+		double tattoo_m_exp_175 = 1.75; // 1.75倍经验肩章 (经验倍率)
+
+		// 1.25倍经验肩章
+		if ((l1pcinstance.getInventory().checkEquipped(200036)) // [1小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
+				) {
+			exp = (int) (exp * tattoo_m_exp_125);
+		}
+
+		// 1.5倍经验肩章
+		if ((l1pcinstance.getInventory().checkEquipped(200040)) // [1小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
+				) {
+			exp = (int) (exp * tattoo_m_exp_150);
+		}
+
+		// 1.75倍经验肩章
+		if ((l1pcinstance.getInventory().checkEquipped(200044)) // [1小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
+				|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
+				) {
+			exp = (int) (exp * tattoo_m_exp_175);
+		}
 
 		if (acquisitorList.size() != hateList.size()) {
 			return;
@@ -228,7 +258,35 @@ public class CalcExp {
 					}
 				}
 
-				party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
+				// 1.25倍经验肩章
+				if ((l1pcinstance.getInventory().checkEquipped(200036)) // [1小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
+						) {
+					party_exp = (int) (party_exp * tattoo_m_exp_125 * (1 + pt_bonus + pri_bonus));
+				}
+
+				// 1.5倍经验肩章
+				else if ((l1pcinstance.getInventory().checkEquipped(200040)) // [1小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
+						) {
+					party_exp = (int) (party_exp * tattoo_m_exp_150 * (1 + pt_bonus + pri_bonus));
+				}
+
+				// 1.75倍经验肩章
+				else if ((l1pcinstance.getInventory().checkEquipped(200044)) // [1小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
+						|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
+						) {
+					party_exp = (int) (party_exp * tattoo_m_exp_175 * (1 + pt_bonus + pri_bonus));
+				}
+				else {
+					party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
+				}
 
 				// 计算自己和召唤物宠物的 Hate
 				if (party_level > 0) {
