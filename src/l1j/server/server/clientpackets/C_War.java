@@ -36,15 +36,18 @@ public class C_War extends ClientBasePacket {
 
 	private static final String C_WAR = "[C] C_War";
 
+	/**
+	 * 要求:宣战、停战、投降
+	 */
 	public C_War(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 		int type = readC();
 		String s = readS();
 
-		L1PcInstance player = clientthread.getActiveChar();
-		String playerName = player.getName();
-		String clanName = player.getClanname();
-		int clanId = player.getClanid();
+		L1PcInstance player = clientthread.getActiveChar(); // 线上角色
+		String playerName = player.getName(); // 角色名称
+		String clanName = player.getClanname(); // 血盟名称
+		int clanId = player.getClanid(); // 血盟ID
 
 		// 不是王族
 		if (!player.isCrown()) {
@@ -58,40 +61,57 @@ public class C_War extends ClientBasePacket {
 			return;
 		}
 
+		// 取回血盟
 		L1Clan clan = L1World.getInstance().getClan(clanName);
+
 		// 找不到血盟
 		if (clan == null) {
 			return;
 		}
 
-		// 血盟主
+		// 不是血盟主
 		if (player.getId() != clan.getLeaderId()) {
 			player.sendPackets(new S_ServerMessage(478)); // \f1只有王子和公主才能宣战。
 			return;
 		}
 
-		if (clanName.toLowerCase().equals(s.toLowerCase())) { // 自クランを指定
+		// 指定的为自己的血盟
+		if (clanName.toLowerCase().equals(s.toLowerCase())) {
 			return;
 		}
 
+		// 对手血盟
 		L1Clan enemyClan = null;
+
+		// 对手血盟名称
 		String enemyClanName = null;
-		for (L1Clan checkClan : L1World.getInstance().getAllClans()) { // 取得所有的血盟
+
+		// 取得所有的血盟
+		for (L1Clan checkClan : L1World.getInstance().getAllClans()) {
 			if (checkClan.getClanName().toLowerCase().equals(s.toLowerCase())) {
 				enemyClan = checkClan;
 				enemyClanName = checkClan.getClanName();
 				break;
 			}
 		}
-		if (enemyClan == null) { // 相手のクランが见つからなかった
+
+		// 对手为空血盟
+		if (enemyClan == null) {
 			return;
 		}
 
+		// 战争中
 		boolean inWar = false;
-		List<L1War> warList = L1World.getInstance().getWarList(); // 取得所有的盟战
+
+		// 取得所有的盟战
+		List<L1War> warList = L1World.getInstance().getWarList();
 		for (L1War war : warList) {
-			if (war.CheckClanInWar(clanName)) { // 检查是否在盟战中
-				if (type == 0) { // 宣战公告
+
+			// 检查是否在盟战中
+			if (war.CheckClanInWar(clanName)) {
+
+				// 宣战公告
+				if (type == 0) {
 					player.sendPackets(new S_ServerMessage(234)); // \f1你的血盟已经在战争中。
 					return;
 				}
@@ -99,12 +119,17 @@ public class C_War extends ClientBasePacket {
 				break;
 			}
 		}
-		if (!inWar && ((type == 2) || (type == 3))) { // 自クランが战争中以外で、降伏または终结
+
+		// 自己不在战争中的降伏或终结
+		if (!inWar && ((type == 2) || (type == 3))) {
 			return;
 		}
 
-		if (clan.getCastleId() != 0) { // 有城堡
-			if (type == 0) { // 宣战公告
+		// 有城堡
+		if (clan.getCastleId() != 0) {
+
+			// 宣战公告
+			if (type == 0) {
 				player.sendPackets(new S_ServerMessage(474)); // 你已经拥有城堡，无法再拥有其他城堡。
 				return;
 			}
@@ -113,21 +138,22 @@ public class C_War extends ClientBasePacket {
 			}
 		}
 
-		if ((enemyClan.getCastleId() == 0) && // 对方王族等级低于15
-				(player.getLevel() <= 15)) {
+		// 对方王族等级低于15
+		if ((enemyClan.getCastleId() == 0) && (player.getLevel() <= 15)) {
 			player.sendPackets(new S_ServerMessage(232)); // \f1等级25以下的君主无法宣战。
 			return;
 		}
 
-		if ((enemyClan.getCastleId() != 0) && // 对方王族等级低于25
-				(player.getLevel() < 25)) {
+		// 对方王族等级低于25
+		if ((enemyClan.getCastleId() != 0) && (player.getLevel() < 25)) {
 			player.sendPackets(new S_ServerMessage(475)); // 若要攻城，君主的等级得２５以上。
 			return;
 		}
 
-		if (enemyClan.getCastleId() != 0) { // 对方王族
+		// 对方王族有城堡
+		if (enemyClan.getCastleId() != 0) {
 			int castle_id = enemyClan.getCastleId();
-			if (WarTimeController.getInstance().isNowWar(castle_id)) { // 战争时间内
+			if (WarTimeController.getInstance().isNowWar(castle_id)) { // 在战争时间内
 				L1PcInstance clanMember[] = clan.getOnlineClanMember();
 				for (L1PcInstance element : clanMember) {
 					if (L1CastleLocation.checkInWarArea(castle_id, element)) {
@@ -139,8 +165,8 @@ public class C_War extends ClientBasePacket {
 				for (L1War war : warList) {
 					if (war.CheckClanInWar(enemyClanName)) { // 对方已经在战争中
 						if (type == 0) { // 宣战布告
-							war.DeclareWar(clanName, enemyClanName);
-							war.AddAttackClan(clanName);
+							war.DeclareWar(clanName, enemyClanName); // 谁对谁宣战
+							war.AddAttackClan(clanName); // 增加攻击血盟名称
 						}
 						else if ((type == 2) || (type == 3)) {
 							if (!war.CheckClanInSameWar(clanName, enemyClanName)) { // 对方在别的战争中
@@ -157,7 +183,7 @@ public class C_War extends ClientBasePacket {
 						break;
 					}
 				}
-				if (!enemyInWar && (type == 0)) { // 相手クランが战争中以外で、宣战布告
+				if (!enemyInWar && (type == 0)) { // 与对手不在同一场战争中、宣战布告
 					L1War war = new L1War();
 					war.handleCommands(1, clanName, enemyClanName); // 攻城战开始
 				}
@@ -168,16 +194,16 @@ public class C_War extends ClientBasePacket {
 				}
 			}
 		}
-		else { // 相手クランが城主ではない
+		else { // 没有对手的其他血盟主
 			boolean enemyInWar = false;
 			for (L1War war : warList) {
-				if (war.CheckClanInWar(enemyClanName)) { // 相手クランが既に战争中
+				if (war.CheckClanInWar(enemyClanName)) { // 对手在战争中
 					if (type == 0) { // 宣战布告
 						player.sendPackets(new S_ServerMessage(236, enemyClanName)); // %0 血盟拒绝你的宣战。
 						return;
 					}
-					else if ((type == 2) || (type == 3)) { // 降伏または终结
-						if (!war.CheckClanInSameWar(clanName, enemyClanName)) { // 自クランと相手クランが别の战争
+					else if ((type == 2) || (type == 3)) { // 降伏或终结
+						if (!war.CheckClanInSameWar(clanName, enemyClanName)) { // 自己与对手不在同一场战争
 							return;
 						}
 					}
@@ -185,28 +211,28 @@ public class C_War extends ClientBasePacket {
 					break;
 				}
 			}
-			if (!enemyInWar && ((type == 2) || (type == 3))) { // 相手クランが战争中以外で、降伏または终结
+			if (!enemyInWar && ((type == 2) || (type == 3))) { // 对手在战争时间以外、降伏或终结
 				return;
 			}
 
-			// 攻城战ではない场合、相手の血盟主の承认が必要
+			// 取回对方血盟主资料
 			L1PcInstance enemyLeader = L1World.getInstance().getPlayer(enemyClan.getLeaderName());
 
-			if (enemyLeader == null) { // 相手の血盟主が见つからなかった
+			if (enemyLeader == null) { // 没有找到对方血盟主
 				player.sendPackets(new S_ServerMessage(218, enemyClanName)); // \f1%0 血盟君主不在线上。
 				return;
 			}
 
 			if (type == 0) { // 宣战布告
-				enemyLeader.setTempID(player.getId()); // 相手のオブジェクトIDを保存しておく
+				enemyLeader.setTempID(player.getId()); // 保存对手ID
 				enemyLeader.sendPackets(new S_Message_YN(217, clanName, playerName)); // %0 血盟向你的血盟宣战。是否接受？(Y/N)
 			}
 			else if (type == 2) { // 降伏
-				enemyLeader.setTempID(player.getId()); // 相手のオブジェクトIDを保存しておく
+				enemyLeader.setTempID(player.getId()); // 保存对手ID
 				enemyLeader.sendPackets(new S_Message_YN(221, clanName)); // %0 血盟要向你投降。是否接受？(Y/N)
 			}
 			else if (type == 3) { // 终结
-				enemyLeader.setTempID(player.getId()); // 相手のオブジェクトIDを保存しておく
+				enemyLeader.setTempID(player.getId()); // 保存对手ID
 				enemyLeader.sendPackets(new S_Message_YN(222, clanName)); // %0 血盟要结束战争。是否接受？(Y/N)
 			}
 		}
