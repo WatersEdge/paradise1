@@ -59,6 +59,27 @@ public abstract class L1Item implements Cloneable, Serializable {
 	}
 
 	/**
+	 * 道具的 ClassName
+	 */
+	private String _className;
+
+	/**
+	 * 取得道具的 ClassName
+	 * @return
+	 */
+	public String getClassName() {
+		return this._className;
+	}
+
+	/**
+	 * 设置道具的 ClassName
+	 * @param classname
+	 */
+	public void setClassName(final String className) {
+		this._className = className;
+	}
+
+	/**
 	 * 道具ＩＤ
 	 */
 	private int _itemId;

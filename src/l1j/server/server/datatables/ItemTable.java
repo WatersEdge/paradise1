@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import l1j.server.data.ItemClass;
+
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.IdFactory;
 import l1j.server.server.model.L1World;
@@ -89,6 +91,7 @@ public class ItemTable {
 		_etcItemTypes.put("magic_doll", new Integer(17));	// 魔法娃娃
 
 		// 物品使用类型
+		_useTypes.put("hpr", new Integer(-2));			// 加血类道具 (治愈药水)
 		_useTypes.put("none", new Integer(-1));			// 无法使用
 		_useTypes.put("normal", new Integer(0));		// 一般物品
 		_useTypes.put("weapon", new Integer(1));		// 武器
@@ -256,8 +259,11 @@ public class ItemTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				item = new L1EtcItem();
-				item.setItemId(rs.getInt("item_id"));
+				final int item_id = rs.getInt("item_id");
+				item.setItemId(item_id);
 				item.setName(rs.getString("name"));
+				final String class_name = rs.getString("class_name");
+				item.setClassName(class_name);
 				item.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				item.setIdentifiedNameId(rs.getString("identified_name_id"));
 				item.setType((_etcItemTypes.get(rs.getString("item_type"))).intValue());
@@ -288,6 +294,7 @@ public class ItemTable {
 				item.setFoodVolume(rs.getInt("food_volume"));
 				item.setToBeSavedAtOnce((rs.getInt("save_at_once") == 1) ? true : false);
 
+				ItemClass.getInstance().addList(item_id, class_name, 0);
 				result.put(new Integer(item.getItemId()), item);
 			}
 		}

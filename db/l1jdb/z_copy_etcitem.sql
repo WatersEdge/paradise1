@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2012-1-5 …œŒÁ 01:27:02
+Date: 2012-1-13 œ¬ŒÁ 11:27:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -14,6 +14,7 @@ SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE `z_copy_etcitem` (
   `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT '',
+  `class_name` varchar(45) DEFAULT '0',
   `unidentified_name_id` varchar(45) NOT NULL DEFAULT '',
   `identified_name_id` varchar(45) NOT NULL DEFAULT '',
   `item_type` varchar(40) NOT NULL DEFAULT '',
@@ -47,4 +48,4 @@ CREATE TABLE `z_copy_etcitem` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `z_copy_etcitem` VALUES ('400000', '‰∏áÂú£ËäÇÂçóÁìúÊ¥æ', '$4324', '$4324', 'potion', 'normal', 'glass', '4900', '2260', '43', '15', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '2', '1000', '0', '0', '0');
+INSERT INTO `z_copy_etcitem` VALUES ('400000', '‰∏áÂú£ËäÇÂçóÁìúÊ¥æ', '0', '$4324', '$4324', 'potion', 'normal', 'glass', '4900', '2260', '43', '15', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '2', '1000', '0', '0', '0');
