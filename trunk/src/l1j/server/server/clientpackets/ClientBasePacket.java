@@ -22,18 +22,25 @@ import l1j.server.Config;
 import l1j.server.server.ClientThread;
 
 /**
- * 客户端基本封包
+ * 解析客户端封包
  */
 public abstract class ClientBasePacket {
 
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(ClientBasePacket.class.getName());
 
+	/** 客户端编码 */
 	private static final String CLIENT_LANGUAGE_CODE = Config.CLIENT_LANGUAGE_CODE;
 
 	private byte _decrypt[];
 
 	private int _off;
 
+	/**
+	 * 载入 byte 阵列
+	 *
+	 * @param abyte0
+	 */
 	public ClientBasePacket(byte abyte0[]) {
 		_log.finest("type=" + getType() + ", len=" + abyte0.length);
 		_decrypt = abyte0;
@@ -43,6 +50,10 @@ public abstract class ClientBasePacket {
 	public ClientBasePacket(ByteBuffer bytebuffer, ClientThread clientthread) {
 	}
 
+	/**
+	 * 由byte[]中取回一个 int
+	 * @return
+	 */
 	public int readD() {
 		int i = _decrypt[_off++] & 0xff;
 		i |= _decrypt[_off++] << 8 & 0xff00;
@@ -51,17 +62,29 @@ public abstract class ClientBasePacket {
 		return i;
 	}
 
+	/**
+	 * 由byte[]中取回一个 byte
+	 * @return
+	 */
 	public int readC() {
 		int i = _decrypt[_off++] & 0xff;
 		return i;
 	}
 
+	/**
+	 * 由byte[]中取回一个 short
+	 * @return
+	 */
 	public int readH() {
 		int i = _decrypt[_off++] & 0xff;
 		i |= _decrypt[_off++] << 8 & 0xff00;
 		return i;
 	}
 
+	/**
+	 * 由byte[]中取回一个 short
+	 * @return
+	 */
 	public int readCH() {
 		int i = _decrypt[_off++] & 0xff;
 		i |= _decrypt[_off++] << 8 & 0xff00;
@@ -69,6 +92,10 @@ public abstract class ClientBasePacket {
 		return i;
 	}
 
+	/**
+	 * 由byte[]中取回一个 double
+	 * @return
+	 */
 	public double readF() {
 		long l = _decrypt[_off++] & 0xff;
 		l |= _decrypt[_off++] << 8 & 0xff00;
@@ -81,6 +108,10 @@ public abstract class ClientBasePacket {
 		return Double.longBitsToDouble(l);
 	}
 
+	/**
+	 * 由byte[]中取回一个 String
+	 * @return
+	 */
 	public String readS() {
 		String s = null;
 		try {
@@ -94,6 +125,10 @@ public abstract class ClientBasePacket {
 		return s;
 	}
 
+	/**
+	 * 由byte[]中取回一组byte[]
+	 * @return
+	 */
 	public byte[] readByte() {
 		byte[] result = new byte[_decrypt.length - _off];
 		try {
