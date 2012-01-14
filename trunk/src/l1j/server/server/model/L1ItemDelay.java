@@ -14,8 +14,10 @@
  */
 package l1j.server.server.model;
 
-import java.util.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import l1j.server.server.model.L1ItemDelay;
 import l1j.server.server.ClientThread;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -31,8 +33,7 @@ import l1j.server.server.templates.L1EtcItem;
 public class L1ItemDelay {
 
 	/** 提示信息 */
-	private static final Logger _log = Logger.getLogger(L1ItemDelay.class
-			.getName());
+	private static final Log _log = LogFactory.getLog(L1ItemDelay.class);
 
 	/**
 	 * 500:武器禁止使用
@@ -61,12 +62,26 @@ public class L1ItemDelay {
 	 * 道具使用延迟计时器
 	 */
 	static class ItemDelayTimer implements Runnable {
-		private int _delayId;
 
-		private int _delayTime;
-
+		/** 延迟角色 */
 		private L1Character _cha;
 
+		/** 延迟ID */
+		private int _delayId;
+
+		/** 延迟时间 (毫秒) */
+		private int _delayTime;
+
+		/**
+		 * 道具使用延迟计时器
+		 * 
+		 * @param cha
+		 *            延迟角色
+		 * @param id
+		 *            延迟ID
+		 * @param delayTiem
+		 *            延迟时间 (毫秒)
+		 */
 		public ItemDelayTimer(final L1Character cha, final int id,
 				final int delayTime) {
 			this._cha = cha;
@@ -81,6 +96,8 @@ public class L1ItemDelay {
 
 		/**
 		 * 取得该物件延迟时间
+		 * 
+		 * @return 延迟时间 (毫秒)
 		 */
 		public int get_delayTime() {
 			return _delayTime;
@@ -90,6 +107,7 @@ public class L1ItemDelay {
 		 * 停止该物件使用延迟
 		 * 
 		 * @param delayId
+		 *            延迟ID
 		 */
 		public void stopDelayTimer(final int delayId) {
 			this._cha.removeItemDelay(delayId);
@@ -103,6 +121,7 @@ public class L1ItemDelay {
 	 *            使用人物
 	 * @param delayId
 	 *            延迟ID<br>
+	 * <br>
 	 *            500:武器禁止使用<br>
 	 *            501:防具禁止使用<br>
 	 *            502:道具禁止使用<br>
@@ -124,7 +143,7 @@ public class L1ItemDelay {
 			}
 
 		} catch (final Exception e) {
-			_log.info(e.getLocalizedMessage());
+			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -145,7 +164,7 @@ public class L1ItemDelay {
 			}
 
 		} catch (final Exception e) {
-			_log.info(e.getLocalizedMessage());
+			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -198,7 +217,7 @@ public class L1ItemDelay {
 			}
 
 		} catch (final Exception e) {
-			_log.info(e.getLocalizedMessage());
+			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -207,8 +226,15 @@ public class L1ItemDelay {
 	 */
 	static class TeleportUnlockTimer implements Runnable {
 
+		/** 角色 */
 		private L1PcInstance _pc;
 
+		/**
+		 * 瞬移解锁定时器
+		 * 
+		 * @param pc
+		 *            角色
+		 */
 		public TeleportUnlockTimer(L1PcInstance pc) {
 			_pc = pc;
 		}
@@ -222,6 +248,11 @@ public class L1ItemDelay {
 
 	/**
 	 * 瞬移解锁
+	 * 
+	 * @param pc
+	 *            角色
+	 * @param item
+	 *            物件
 	 */
 	public static void teleportUnlock(L1PcInstance pc, L1ItemInstance item) {
 		int delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
