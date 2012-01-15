@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2012-1-13 обнГ 11:27:27
+Date: 2012-1-15 обнГ 06:31:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;

@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2011-12-20 обнГ 11:35:42
+Date: 2012-1-15 обнГ 06:31:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -14,6 +14,7 @@ SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE `z_copy_weapon` (
   `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT '',
+  `class_name` varchar(45) DEFAULT '0',
   `unidentified_name_id` varchar(45) NOT NULL DEFAULT '',
   `identified_name_id` varchar(45) NOT NULL DEFAULT '',
   `type` varchar(45) NOT NULL DEFAULT '',
