@@ -44,6 +44,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得道具类型2 <br>
+	 * 
 	 * @return 0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
 	public int getType2() {
@@ -52,7 +53,9 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具类型2 <br>
-	 * @param  type 0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
+	 * 
+	 * @param type
+	 *            0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
 	public void setType2(int type) {
 		_type2 = type;
@@ -65,6 +68,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得道具的 ClassName
+	 * 
 	 * @return
 	 */
 	public String getClassName() {
@@ -73,6 +77,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具的 ClassName
+	 * 
 	 * @param classname
 	 */
 	public void setClassName(final String className) {
@@ -86,6 +91,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得道具ＩＤ
+	 * 
 	 * @return
 	 */
 	public int getItemId() {
@@ -94,6 +100,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具ＩＤ
+	 * 
 	 * @param itemId
 	 */
 	public void setItemId(int itemId) {
@@ -107,6 +114,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得道具名称
+	 * 
 	 * @return
 	 */
 	public String getName() {
@@ -115,10 +123,34 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具名称
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
 		_name = name;
+	}
+
+	/**
+	 * 道具名称ID
+	 */
+	private String _nameId;
+
+	/**
+	 * 获得道具名称ID
+	 * 
+	 * @return
+	 */
+	public String getNameId() {
+		return this._nameId;
+	}
+
+	/**
+	 * 设置道具名称ID
+	 * 
+	 * @param nameid
+	 */
+	public void setNameId(final String nameid) {
+		this._nameId = nameid;
 	}
 
 	/**
@@ -128,6 +160,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得未鉴定道具的名称ＩＤ
+	 * 
 	 * @return
 	 */
 	public String getUnidentifiedNameId() {
@@ -136,6 +169,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置未鉴定道具的名称ＩＤ
+	 * 
 	 * @param unidentifiedNameId
 	 */
 	public void setUnidentifiedNameId(String unidentifiedNameId) {
@@ -149,6 +183,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得鉴定道具的名称ＩＤ
+	 * 
 	 * @return
 	 */
 	public String getIdentifiedNameId() {
@@ -157,6 +192,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置鉴定道具的名称ＩＤ
+	 * 
 	 * @param identifiedNameId
 	 */
 	public void setIdentifiedNameId(String identifiedNameId) {
@@ -170,7 +206,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 返回该项目的种类<br>
-	 *
+	 * 
 	 * @return <p>
 	 *         <font color=#ff0000>[etcitem]-道具类型</font><br>
 	 *         0:arrow <font color=#00800>箭</font><br>
@@ -237,6 +273,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具种类
+	 * 
 	 * @param type
 	 */
 	public void setType(int type) {
@@ -250,7 +287,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 返回该项目的种类<br>
-	 *
+	 * 
 	 * @return <p>
 	 *         <font color=#ff0000>[weapon]-武器类型</font><br>
 	 *         sword: 4 <font color=#00800>长剑</font><br>
@@ -279,6 +316,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具类型1 (武器)
+	 * 
 	 * @param type1
 	 */
 	public void setType1(int type1) {
@@ -294,31 +332,31 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 返回道具的材质<br>
 	 * 
 	 * @return <p>
-	 * 		   <font color=#ff0000>道具的材质</font><br>
-	 * 			none: 0 <font color=#00800>无</font><br>
-	 * 			liquid: 1 <font color=#00800>液体</font><br>
-	 * 			web: 2 <font color=#00800>蜡</font><br>
-	 *			vegetation: 3 <font color=#00800>植物性</font><br>
-	 * 			animalmatter: 4 <font color=#00800>动物性</font><br>
-	 * 			paper: 5 <font color=#00800>纸</font><br>
-	 * 			cloth: 6 <font color=#00800>布</font><br>
-	 * 			leather: 7 <font color=#00800>皮革</font><br>
-	 * 			wood: 8 <font color=#00800>木</font><br>
-	 * 			bone: 9 <font color=#00800>骨</font><br>
-	 * 			dragonscale: 10 <font color=#00800>龙鳞</font><br>
-	 * 			iron: 11 <font color=#00800>铁</font><br>
-	 * 			steel: 12 <font color=#00800>钢铁</font><br>
-	 * 			copper: 13 <font color=#00800>铜</font><br>
-	 * 			silver: 14 <font color=#00800>银</font><br>
-	 * 			gold: 15 <font color=#00800>金</font><br>
-	 * 			platinum: 16 <font color=#00800>白金</font><br>
-	 * 			mithril: 17 <font color=#00800>米索莉</font><br>
-	 * 			blackmithril: 18 <font color=#00800>黑色米索莉</font><br>
-	 * 			glass: 19 <font color=#00800>玻璃</font><br>
-	 * 			gemstone: 20 <font color=#00800>宝石</font><br>
-	 * 			mineral: 21 <font color=#00800>矿物</font><br>
-	 * 			oriharukon: 22 <font color=#00800>奥里哈鲁根</font><br>
-	 * 			</p>
+	 *         <font color=#ff0000>道具的材质</font><br>
+	 *         none: 0 <font color=#00800>无</font><br>
+	 *         liquid: 1 <font color=#00800>液体</font><br>
+	 *         web: 2 <font color=#00800>蜡</font><br>
+	 *         vegetation: 3 <font color=#00800>植物性</font><br>
+	 *         animalmatter: 4 <font color=#00800>动物性</font><br>
+	 *         paper: 5 <font color=#00800>纸</font><br>
+	 *         cloth: 6 <font color=#00800>布</font><br>
+	 *         leather: 7 <font color=#00800>皮革</font><br>
+	 *         wood: 8 <font color=#00800>木</font><br>
+	 *         bone: 9 <font color=#00800>骨</font><br>
+	 *         dragonscale: 10 <font color=#00800>龙鳞</font><br>
+	 *         iron: 11 <font color=#00800>铁</font><br>
+	 *         steel: 12 <font color=#00800>钢铁</font><br>
+	 *         copper: 13 <font color=#00800>铜</font><br>
+	 *         silver: 14 <font color=#00800>银</font><br>
+	 *         gold: 15 <font color=#00800>金</font><br>
+	 *         platinum: 16 <font color=#00800>白金</font><br>
+	 *         mithril: 17 <font color=#00800>米索莉</font><br>
+	 *         blackmithril: 18 <font color=#00800>黑色米索莉</font><br>
+	 *         glass: 19 <font color=#00800>玻璃</font><br>
+	 *         gemstone: 20 <font color=#00800>宝石</font><br>
+	 *         mineral: 21 <font color=#00800>矿物</font><br>
+	 *         oriharukon: 22 <font color=#00800>奥里哈鲁根</font><br>
+	 *         </p>
 	 */
 	public int getMaterial() {
 		return _material;
@@ -326,6 +364,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具的材质
+	 * 
 	 * @param material
 	 */
 	public void setMaterial(int material) {
@@ -339,6 +378,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得重量
+	 * 
 	 * @return
 	 */
 	public int getWeight() {
@@ -347,6 +387,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置重量
+	 * 
 	 * @param weight
 	 */
 	public void setWeight(int weight) {
@@ -360,6 +401,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得清单内的图形ＩＤ
+	 * 
 	 * @return
 	 */
 	public int getGfxId() {
@@ -368,6 +410,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置清单内的图形ＩＤ
+	 * 
 	 * @param gfxId
 	 */
 	public void setGfxId(int gfxId) {
@@ -381,6 +424,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得道具放到地面上的图形ＩＤ
+	 * 
 	 * @return
 	 */
 	public int getGroundGfxId() {
@@ -389,6 +433,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置道具放到地面上的图形ＩＤ
+	 * 
 	 * @param groundGfxId
 	 */
 	public void setGroundGfxId(int groundGfxId) {
@@ -402,6 +447,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 返回鉴定时显示的ItemDesc.tbl信息。
+	 * 
 	 * @return
 	 */
 	public int getItemDescId() {
@@ -410,6 +456,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置鉴定时显示的ItemDesc.tbl信息
+	 * 
 	 * @param descId
 	 */
 	public void setItemDescId(int descId) {
@@ -423,6 +470,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得能使用装备的最低ＬＶ
+	 * 
 	 * @return
 	 */
 	public int getMinLevel() {
@@ -431,6 +479,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置能使用装备的最低ＬＶ
+	 * 
 	 * @param level
 	 */
 	public void setMinLevel(int level) {
@@ -444,6 +493,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得能使用装备的最高ＬＶ
+	 * 
 	 * @return
 	 */
 	public int getMaxLevel() {
@@ -452,6 +502,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置能使用装备的最高ＬＶ
+	 * 
 	 * @param maxlvl
 	 */
 	public void setMaxLevel(int maxlvl) {
@@ -465,6 +516,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得属性
+	 * 
 	 * @return 0:祝福 1:一般 2:诅咒
 	 */
 	public int getBless() {
@@ -473,6 +525,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置取得属性
+	 * 
 	 * @param i
 	 */
 	public void setBless(int i) {
@@ -486,6 +539,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 交易
+	 * 
 	 * @return true:可以 false:不可以
 	 */
 	public boolean isTradable() {
@@ -494,6 +548,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置交易
+	 * 
 	 * @param flag
 	 */
 	public void setTradable(boolean flag) {
@@ -507,6 +562,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 删除
+	 * 
 	 * @return true:可以 false:不可以
 	 */
 	public boolean isCantDelete() {
@@ -515,6 +571,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置删除
+	 * 
 	 * @param flag
 	 */
 	public void setCantDelete(boolean flag) {
@@ -528,6 +585,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 将道具的数量变化写入资料库。
+	 * 
 	 * @return
 	 */
 	public boolean isToBeSavedAtOnce() {
@@ -536,6 +594,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置将道具的数量变化写入资料库
+	 * 
 	 * @param flag
 	 */
 	public void setToBeSavedAtOnce(boolean flag) {
@@ -551,6 +610,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得最低伤害
+	 * 
 	 * @return
 	 */
 	public int getDmgSmall() {
@@ -559,6 +619,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置最低伤害
+	 * 
 	 * @param dmgSmall
 	 */
 	public void setDmgSmall(int dmgSmall) {
@@ -572,6 +633,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得最高伤害
+	 * 
 	 * @return
 	 */
 	public int getDmgLarge() {
@@ -580,6 +642,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置最高伤害
+	 * 
 	 * @param dmgLarge
 	 */
 	public void setDmgLarge(int dmgLarge) {
@@ -597,6 +660,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 安定值
+	 * 
 	 * @return
 	 */
 	public int get_safeenchant() {
@@ -605,6 +669,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设定安定值
+	 * 
 	 * @param safeenchant
 	 */
 	public void set_safeenchant(int safeenchant) {
@@ -618,6 +683,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是王族可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseRoyal() {
@@ -626,6 +692,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置王族可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseRoyal(boolean flag) {
@@ -639,6 +706,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是骑士可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseKnight() {
@@ -647,6 +715,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置骑士可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseKnight(boolean flag) {
@@ -660,6 +729,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是精灵可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseElf() {
@@ -668,6 +738,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置精灵可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseElf(boolean flag) {
@@ -681,6 +752,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是法师可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseMage() {
@@ -689,6 +761,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置法师可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseMage(boolean flag) {
@@ -702,6 +775,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是黑暗妖精可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseDarkelf() {
@@ -710,6 +784,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置黑暗妖精可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseDarkelf(boolean flag) {
@@ -723,6 +798,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是龙骑士可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseDragonknight() {
@@ -731,6 +807,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置龙骑士可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseDragonknight(boolean flag) {
@@ -744,6 +821,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是幻术师可用装备
+	 * 
 	 * @return
 	 */
 	public boolean isUseIllusionist() {
@@ -752,6 +830,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置幻术师可用装备
+	 * 
 	 * @param flag
 	 */
 	public void setUseIllusionist(boolean flag) {
@@ -765,6 +844,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＳＴＲ
+	 * 
 	 * @return
 	 */
 	public byte get_addstr() {
@@ -773,6 +853,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＳＴＲ
+	 * 
 	 * @param addstr
 	 */
 	public void set_addstr(byte addstr) {
@@ -786,6 +867,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＤＥＸ
+	 * 
 	 * @return
 	 */
 	public byte get_adddex() {
@@ -794,6 +876,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＤＥＸ
+	 * 
 	 * @param adddex
 	 */
 	public void set_adddex(byte adddex) {
@@ -807,6 +890,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＣＯＮ
+	 * 
 	 * @return
 	 */
 	public byte get_addcon() {
@@ -815,6 +899,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＣＯＮ
+	 * 
 	 * @param addcon
 	 */
 	public void set_addcon(byte addcon) {
@@ -828,6 +913,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＩＮＴ
+	 * 
 	 * @return
 	 */
 	public byte get_addint() {
@@ -836,6 +922,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＩＮＴ
+	 * 
 	 * @param addint
 	 */
 	public void set_addint(byte addint) {
@@ -849,6 +936,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＷＩＳ
+	 * 
 	 * @return
 	 */
 	public byte get_addwis() {
@@ -857,6 +945,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＷＩＳ
+	 * 
 	 * @param addwis
 	 */
 	public void set_addwis(byte addwis) {
@@ -870,6 +959,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＣＨＡ
+	 * 
 	 * @return
 	 */
 	public byte get_addcha() {
@@ -878,6 +968,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＣＨＡ
+	 * 
 	 * @param addcha
 	 */
 	public void set_addcha(byte addcha) {
@@ -891,6 +982,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＨＰ
+	 * 
 	 * @return
 	 */
 	public int get_addhp() {
@@ -899,6 +991,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＨＰ
+	 * 
 	 * @param addhp
 	 */
 	public void set_addhp(int addhp) {
@@ -912,6 +1005,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＭＰ
+	 * 
 	 * @return
 	 */
 	public int get_addmp() {
@@ -920,6 +1014,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＭＰ
+	 * 
 	 * @param addmp
 	 */
 	public void set_addmp(int addmp) {
@@ -933,6 +1028,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＨＰＲ
+	 * 
 	 * @return
 	 */
 	public int get_addhpr() {
@@ -941,6 +1037,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＨＰＲ
+	 * 
 	 * @param addhpr
 	 */
 	public void set_addhpr(int addhpr) {
@@ -954,6 +1051,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＭＰＲ
+	 * 
 	 * @return
 	 */
 	public int get_addmpr() {
@@ -962,6 +1060,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＭＰＲ
+	 * 
 	 * @param addmpr
 	 */
 	public void set_addmpr(int addmpr) {
@@ -975,6 +1074,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 获得增加ＳＰ
+	 * 
 	 * @return
 	 */
 	public int get_addsp() {
@@ -983,6 +1083,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置增加ＳＰ
+	 * 
 	 * @param addsp
 	 */
 	public void set_addsp(int addsp) {
@@ -996,6 +1097,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得抗魔(MR)
+	 * 
 	 * @return
 	 */
 	public int get_mdef() {
@@ -1004,6 +1106,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设定抗魔(MR)
+	 * 
 	 * @param i
 	 */
 	public void set_mdef(int i) {
@@ -1017,6 +1120,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是否具有加速效果
+	 * 
 	 * @return
 	 */
 	public boolean isHasteItem() {
@@ -1025,6 +1129,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设定是否具有加速效果
+	 * 
 	 * @param flag
 	 */
 	public void setHasteItem(boolean flag) {
@@ -1038,6 +1143,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得物品可使用时间(能持有的时间)
+	 * 
 	 * @return
 	 */
 	public int getMaxUseTime() {
@@ -1046,6 +1152,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设置物品可使用时间(能持有的时间)
+	 * 
 	 * @param i
 	 */
 	public void setMaxUseTime(int i) {
@@ -1058,7 +1165,54 @@ public abstract class L1Item implements Cloneable, Serializable {
 	private int _useType;
 
 	/**
-	 * 取得物品使用封包类型
+	 * 物品使用封包类型
+	 * 
+	 * @return <p>
+	 *         mpr: -3 <font color=#00800>回魔类道具 (蓝色药水)</font><br>
+	 *         hpr: -2 <font color=#00800>加血类道具 (治愈药水)</font><br>
+	 *         none: -1 <font color=#00800>无法使用 (材料等)</font><br>
+	 *         normal: 0 <font color=#00800>一般物品</font><br>
+	 *         weapon: 1 <font color=#00800>武器</font><br>
+	 *         armor: 2 <font color=#00800>盔甲</font><br>
+	 *         spell_long: 5 <font color=#00800>魔杖类型 (须选取目标/坐标)</font><br>
+	 *         ntele: 6 <font color=#00800>瞬间移动卷轴</font><br>
+	 *         identify: 7 <font color=#00800>鉴定卷轴</font><br>
+	 *         res: 8 <font color=#00800>复活卷轴</font><br>
+	 *         letter: 12 <font color=#00800>信纸</font><br>
+	 *         letter_card: 13 <font color=#00800>信纸(寄出)</font><br>
+	 *         choice: 14 <font color=#00800>请选择一个物品 (道具栏位)</font><br>
+	 *         instrument: 15 <font color=#00800>哨子</font><br>
+	 *         sosc: 16 <font color=#00800>变形卷轴</font><br>
+	 *         spell_short: 17 <font color=#00800>选取目标 (近距离)</font><br>
+	 *         T: 18 <font color=#00800>T恤</font><br>
+	 *         cloak: 19 <font color=#00800>斗篷</font><br>
+	 *         glove: 20 <font color=#00800>手套</font><br>
+	 *         boots: 21 <font color=#00800>长靴</font><br>
+	 *         helm: 22 <font color=#00800>头盔</font><br>
+	 *         ring: 23 <font color=#00800>戒指</font><br>
+	 *         amulet: 24 <font color=#00800>项链</font><br>
+	 *         shield: 25 <font color=#00800>盾牌</font><br>
+	 *         guarder: 25 <font color=#00800>臂甲</font><br>
+	 *         dai: 26 <font color=#00800>对武器施法的卷轴</font><br>
+	 *         zel: 27 <font color=#00800>对盔甲施法的卷轴</font><br>
+	 *         blank: 28 <font color=#00800>空的魔法卷轴</font><br>
+	 *         btele: 29 <font color=#00800>瞬间移动卷轴 (祝福)</font><br>
+	 *         spell_buff: 30 <font color=#00800>选取目标 (对NPC需要Ctrl 远距离
+	 *         无XY座标传回)</font><br>
+	 *         ccard: 31 <font color=#00800>圣诞卡片</font><br>
+	 *         ccard_w: 32 <font color=#00800>圣诞卡片 (寄出)</font><br>
+	 *         vcard: 33 <font color=#00800>情人节卡片</font><br>
+	 *         vcard_w: 34 <font color=#00800>情人节卡片 (寄出)</font><br>
+	 *         wcard: 35 <font color=#00800>白色情人节卡片</font><br>
+	 *         wcard_w: 36 <font color=#00800>白色情人节卡片 (寄出)</font><br>
+	 *         belt: 37 <font color=#00800>腰带</font><br>
+	 *         earring: 40 <font color=#00800>耳环</font><br>
+	 *         fishing_rod: 42 <font color=#00800>钓鱼杆</font><br>
+	 *         tattoo_r: 43 <font color=#ff0000>辅助装备 (右)</font><br>
+	 *         tattoo_l: 44 <font color=#ff0000>辅助装备 (左)</font><br>
+	 *         tattoo_m: 45 <font color=#ff0000>辅助装备 (中)</font><br>
+	 *         del: 46 <font color=#ff0000>饰品强化卷轴</font><br>
+	 *         </p>
 	 * @return
 	 */
 	public int getUseType() {
@@ -1067,6 +1221,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设定物品使用封包类型
+	 * 
 	 * @param useType
 	 */
 	public void setUseType(int useType) {
@@ -1080,6 +1235,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得食品类道具饱食度
+	 * 
 	 * @return
 	 */
 	public int getFoodVolume() {
@@ -1088,6 +1244,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 设定食品类道具饱食度
+	 * 
 	 * @param volume
 	 */
 	public void setFoodVolume(int volume) {
@@ -1096,6 +1253,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得照明类道具的亮度设置。
+	 * 
 	 * @return
 	 */
 	public int getLightRange() {
@@ -1114,6 +1272,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得照明类道具的燃料量。
+	 * 
 	 * @return
 	 */
 	public int getLightFuel() {
@@ -1136,6 +1295,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 物品可堆叠
+	 * 
 	 * @return true:可 false:不可
 	 */
 	public boolean isStackable() {
@@ -1144,6 +1304,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得X坐标
+	 * 
 	 * @return
 	 */
 	public int get_locx() {
@@ -1152,6 +1313,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得Y坐标
+	 * 
 	 * @return
 	 */
 	public int get_locy() {
@@ -1160,6 +1322,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得地图ID
+	 * 
 	 * @return
 	 */
 	public short get_mapid() {
@@ -1168,6 +1331,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得延迟编号
+	 * 
 	 * @return
 	 */
 	public int get_delayid() {
@@ -1176,6 +1340,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得延迟时间
+	 * 
 	 * @return
 	 */
 	public int get_delaytime() {
@@ -1184,6 +1349,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得最大可用次数
+	 * 
 	 * @return
 	 */
 	public int getMaxChargeCount() {
@@ -1192,6 +1358,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是可以封印
+	 * 
 	 * @return
 	 */
 	public boolean isCanSeal() {
@@ -1202,6 +1369,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得武器的射程范围
+	 * 
 	 * @return
 	 */
 	public int getRange() {
@@ -1210,6 +1378,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得命中率修正
+	 * 
 	 * @return
 	 */
 	public int getHitModifier() {
@@ -1218,6 +1387,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得伤害修正
+	 * 
 	 * @return
 	 */
 	public int getDmgModifier() {
@@ -1226,6 +1396,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得双倍伤害发动几率
+	 * 
 	 * @return
 	 */
 	public int getDoubleDmgChance() {
@@ -1234,6 +1405,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得魔法攻击的伤害修正
+	 * 
 	 * @return
 	 */
 	public int getMagicDmgModifier() {
@@ -1242,6 +1414,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得有无损伤
+	 * 
 	 * @return
 	 */
 	public int get_canbedmg() {
@@ -1250,6 +1423,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 是双手武器
+	 * 
 	 * @return
 	 */
 	public boolean isTwohandedWeapon() {
@@ -1260,6 +1434,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得物理防御
+	 * 
 	 * @return
 	 */
 	public int get_ac() {
@@ -1268,6 +1443,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得伤害减免
+	 * 
 	 * @return
 	 */
 	public int getDamageReduction() {
@@ -1276,6 +1452,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得负重减轻
+	 * 
 	 * @return
 	 */
 	public int getWeightReduction() {
@@ -1284,6 +1461,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得装备的命中修正
+	 * 
 	 * @return
 	 */
 	public int getHitModifierByArmor() {
@@ -1292,6 +1470,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得装备的伤害修正
+	 * 
 	 * @return
 	 */
 	public int getDmgModifierByArmor() {
@@ -1300,6 +1479,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得弓类装备的命中修正
+	 * 
 	 * @return
 	 */
 	public int getBowHitModifierByArmor() {
@@ -1308,6 +1488,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 取得弓类装备的伤害修正
+	 * 
 	 * @return
 	 */
 	public int getBowDmgModifierByArmor() {
@@ -1316,6 +1497,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 增加水属性
+	 * 
 	 * @return
 	 */
 	public int get_defense_water() {
@@ -1324,6 +1506,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 增加火属性
+	 * 
 	 * @return
 	 */
 	public int get_defense_fire() {
@@ -1332,6 +1515,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 增加地属性
+	 * 
 	 * @return
 	 */
 	public int get_defense_earth() {
@@ -1340,6 +1524,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 增加风属性
+	 * 
 	 * @return
 	 */
 	public int get_defense_wind() {
@@ -1348,6 +1533,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 昏迷耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_stun() {
@@ -1356,6 +1542,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 石化耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_stone() {
@@ -1364,6 +1551,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 睡眠耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_sleep() {
@@ -1372,6 +1560,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 寒冰耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_freeze() {
@@ -1380,6 +1569,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 支撑耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_sustain() {
@@ -1388,6 +1578,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 暗黑耐性
+	 * 
 	 * @return
 	 */
 	public int get_regist_blind() {
@@ -1396,6 +1587,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 
 	/**
 	 * 饰品强度
+	 * 
 	 * @return
 	 */
 	public int getGrade() {
