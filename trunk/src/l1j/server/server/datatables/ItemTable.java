@@ -18,13 +18,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import l1j.server.data.ItemClass;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.IdFactory;
 import l1j.server.server.model.L1World;
@@ -35,6 +33,7 @@ import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Weapon;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
+import lineage.console.ItemClass;
 
 /**
  * 武器、防具、道具资料表
@@ -90,18 +89,14 @@ public class ItemTable {
 		_etcItemTypes.put("treasure_box", new Integer(16)); // 宝箱
 		_etcItemTypes.put("magic_doll", new Integer(17)); // 魔法娃娃
 
-		// 物品使用类型
+		// 道具使用类型
 		_useTypes.put("mpr", new Integer(-3)); // 回魔类道具 (蓝色药水)
 		_useTypes.put("hpr", new Integer(-2)); // 加血类道具 (治愈药水)
 		_useTypes.put("none", new Integer(-1)); // 无法使用
 		_useTypes.put("normal", new Integer(0)); // 一般物品
 		_useTypes.put("weapon", new Integer(1)); // 武器
 		_useTypes.put("armor", new Integer(2)); // 盔甲
-		// _useTypes.put("wand1", new Integer(3));
-		// _useTypes.put("wand", new Integer(4));
-		// ワンドを振るアクションをとる(C_RequestExtraCommandが送られる)
-		_useTypes.put("spell_long", new Integer(5)); // 魔杖类型 (须选取目标/坐标)地面 /
-														// 选择对象(远距离)
+		_useTypes.put("spell_long", new Integer(5)); // 魔杖类型 (须选取目标/坐标)地面 / 选择对象(远距离)
 		_useTypes.put("ntele", new Integer(6)); // 瞬间移动卷轴
 		_useTypes.put("identify", new Integer(7)); // 鉴定卷轴
 		_useTypes.put("res", new Integer(8)); // 复活卷轴
@@ -124,8 +119,7 @@ public class ItemTable {
 		_useTypes.put("zel", new Integer(27)); // 对盔甲施法的卷轴
 		_useTypes.put("blank", new Integer(28)); // 空的魔法卷轴
 		_useTypes.put("btele", new Integer(29)); // 瞬间移动卷轴 (祝福)
-		_useTypes.put("spell_buff", new Integer(30)); // 选取目标 (对NPC需要Ctrl 远距离
-														// 无XY坐标传回) 选择对象(远距离)
+		_useTypes.put("spell_buff", new Integer(30)); // 选取目标 (对NPC需要Ctrl 远距离 无XY坐标传回) 选择对象(远距离)
 		_useTypes.put("ccard", new Integer(31)); // 圣诞卡片
 		_useTypes.put("ccard_w", new Integer(32)); // 圣诞卡片 (寄出)
 		_useTypes.put("vcard", new Integer(33)); // 情人节卡片
@@ -258,8 +252,7 @@ public class ItemTable {
 		L1EtcItem item = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("select * from etcitem union select * from z_copy_etcitem");
+			pstm = con.prepareStatement("select * from etcitem union select * from z_copy_etcitem");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -271,14 +264,11 @@ public class ItemTable {
 				item.setClassName(class_name);
 				item.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				item.setIdentifiedNameId(rs.getString("identified_name_id"));
-				item.setType((_etcItemTypes.get(rs.getString("item_type")))
-						.intValue());
-				item.setUseType(_useTypes.get(rs.getString("use_type"))
-						.intValue());
+				item.setType((_etcItemTypes.get(rs.getString("item_type"))).intValue());
+				item.setUseType(_useTypes.get(rs.getString("use_type")).intValue());
 				// item.setType1(0); // 使わない
 				item.setType2(0);
-				item.setMaterial((_materialTypes.get(rs.getString("material")))
-						.intValue());
+				item.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				item.setWeight(rs.getInt("weight"));
 				item.setGfxId(rs.getInt("invgfx"));
 				item.setGroundGfxId(rs.getInt("grdgfx"));
@@ -300,16 +290,13 @@ public class ItemTable {
 				item.set_delaytime(rs.getInt("delay_time"));
 				item.set_delayEffect(rs.getInt("delay_effect"));
 				item.setFoodVolume(rs.getInt("food_volume"));
-				item.setToBeSavedAtOnce((rs.getInt("save_at_once") == 1) ? true
-						: false);
+				item.setToBeSavedAtOnce((rs.getInt("save_at_once") == 1) ? true : false);
 
 				ItemClass.getInstance().addList(item_id, class_name, 0);
 				result.put(new Integer(item.getItemId()), item);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(item.getName())
-					.append("(" + item.getItemId() + ")").append("无法加载。")
-					.toString());
+			_log.log(Level.SEVERE, new StringBuilder().append(item.getName()).append("(" + item.getItemId() + ")").append("无法加载。").toString());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
@@ -334,8 +321,7 @@ public class ItemTable {
 		L1Weapon weapon = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("select * from weapon union select * from z_copy_weapon");
+			pstm = con.prepareStatement("select * from weapon union select * from z_copy_weapon");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -345,17 +331,13 @@ public class ItemTable {
 				weapon.setName(rs.getString("name"));
 				final String class_name = rs.getString("class_name");
 				weapon.setClassName(class_name);
-				weapon.setUnidentifiedNameId(rs
-						.getString("unidentified_name_id"));
+				weapon.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				weapon.setIdentifiedNameId(rs.getString("identified_name_id"));
-				weapon.setType((_weaponTypes.get(rs.getString("type")))
-						.intValue());
-				weapon.setType1((_weaponId.get(rs.getString("type")))
-						.intValue());
+				weapon.setType((_weaponTypes.get(rs.getString("type"))).intValue());
+				weapon.setType1((_weaponId.get(rs.getString("type"))).intValue());
 				weapon.setType2(1);
 				weapon.setUseType(1);
-				weapon.setMaterial((_materialTypes.get(rs.getString("material")))
-						.intValue());
+				weapon.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				weapon.setWeight(rs.getInt("weight"));
 				weapon.setGfxId(rs.getInt("invgfx"));
 				weapon.setGroundGfxId(rs.getInt("grdgfx"));
@@ -368,12 +350,9 @@ public class ItemTable {
 				weapon.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
 				weapon.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
 				weapon.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
-				weapon.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false
-						: true);
-				weapon.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false
-						: true);
-				weapon.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false
-						: true);
+				weapon.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
+				weapon.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
+				weapon.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);
 				weapon.setHitModifier(rs.getInt("hitmodifier"));
 				weapon.setDmgModifier(rs.getInt("dmgmodifier"));
 				weapon.set_addstr(rs.getByte("add_str"));
@@ -395,8 +374,7 @@ public class ItemTable {
 				weapon.setMaxLevel(rs.getInt("max_lvl"));
 				weapon.setBless(rs.getInt("bless"));
 				weapon.setTradable(rs.getInt("trade") == 0 ? true : false);
-				weapon.setCantDelete(rs.getInt("cant_delete") == 1 ? true
-						: false);
+				weapon.setCantDelete(rs.getInt("cant_delete") == 1 ? true : false);
 				weapon.setHasteItem(rs.getInt("haste_item") == 0 ? false : true);
 				weapon.setMaxUseTime(rs.getInt("max_use_time"));
 
@@ -404,9 +382,7 @@ public class ItemTable {
 				result.put(new Integer(weapon.getItemId()), weapon);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(weapon.getName())
-					.append("(" + weapon.getItemId() + ")").append("无法加载。")
-					.toString());
+			_log.log(Level.SEVERE, new StringBuilder().append(weapon.getName()).append("(" + weapon.getItemId() + ")").append("无法加载。").toString());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
@@ -432,8 +408,7 @@ public class ItemTable {
 		L1Armor armor = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("select * from armor union select * from z_copy_armor");
+			pstm = con.prepareStatement("select * from armor union select * from z_copy_armor");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -443,18 +418,14 @@ public class ItemTable {
 				armor.setName(rs.getString("name"));
 				final String class_name = rs.getString("class_name");
 				armor.setClassName(class_name);
-				armor.setUnidentifiedNameId(rs
-						.getString("unidentified_name_id"));
+				armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
 				armor.setIdentifiedNameId(rs.getString("identified_name_id"));
-				armor.setType((_armorTypes.get(rs.getString("type")))
-						.intValue());
+				armor.setType((_armorTypes.get(rs.getString("type"))).intValue());
 				// armor.setType1((_armorId
 				// .get(rs.getString("armor_type"))).intValue()); // 使わない
 				armor.setType2(2);
-				armor.setUseType((_useTypes.get(rs.getString("type")))
-						.intValue());
-				armor.setMaterial((_materialTypes.get(rs.getString("material")))
-						.intValue());
+				armor.setUseType((_useTypes.get(rs.getString("type"))).intValue());
+				armor.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
 				armor.setWeight(rs.getInt("weight"));
 				armor.setGfxId(rs.getInt("invgfx"));
 				armor.setGroundGfxId(rs.getInt("grdgfx"));
@@ -465,12 +436,9 @@ public class ItemTable {
 				armor.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
 				armor.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
 				armor.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
-				armor.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false
-						: true);
-				armor.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false
-						: true);
-				armor.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false
-						: true);
+				armor.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
+				armor.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
+				armor.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);
 				armor.set_addstr(rs.getByte("add_str"));
 				armor.set_addcon(rs.getByte("add_con"));
 				armor.set_adddex(rs.getByte("add_dex"));
@@ -494,8 +462,7 @@ public class ItemTable {
 				armor.setHasteItem(rs.getInt("haste_item") == 0 ? false : true);
 				armor.setBless(rs.getInt("bless"));
 				armor.setTradable(rs.getInt("trade") == 0 ? true : false);
-				armor.setCantDelete(rs.getInt("cant_delete") == 1 ? true
-						: false);
+				armor.setCantDelete(rs.getInt("cant_delete") == 1 ? true : false);
 				armor.set_defense_earth(rs.getInt("defense_earth"));
 				armor.set_defense_water(rs.getInt("defense_water"));
 				armor.set_defense_wind(rs.getInt("defense_wind"));
@@ -513,9 +480,7 @@ public class ItemTable {
 				result.put(new Integer(armor.getItemId()), armor);
 			}
 		} catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName())
-					.append("(" + armor.getItemId() + ")").append("无法加载。")
-					.toString());
+			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName()).append("(" + armor.getItemId() + ")").append("无法加载。").toString());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {

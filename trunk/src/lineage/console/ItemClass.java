@@ -1,15 +1,15 @@
-package l1j.server.data;
+package lineage.console;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import l1j.server.data.executor.ItemExecutor;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import lineage.console.executor.ItemExecutor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * 道具模组相关
@@ -54,22 +54,21 @@ public class ItemClass {
 			final StringBuilder stringBuilder = new StringBuilder();
 			switch (mode) {
 			case 0: // 道具
-				stringBuilder.append("l1j.server.data.item_etcitem.");
+				stringBuilder.append("lineage.item.etcitem.");
 				break;
 
 			case 1: // 武器
-				stringBuilder.append("l1j.server.data.item_weapon.");
+				stringBuilder.append("lineage.item.weapon.");
 				break;
 
 			case 2: // 防具
-				stringBuilder.append("l1j.server.data.item_armor.");
+				stringBuilder.append("lineage.item.armor.");
 				break;
 			}
 			stringBuilder.append(className);
 
 			final Class<?> cls = Class.forName(stringBuilder.toString());
-			final ItemExecutor exe = (ItemExecutor) cls.getMethod("get")
-					.invoke(null);
+			final ItemExecutor exe = (ItemExecutor) cls.getMethod("get").invoke(null);
 
 			_classList.put(new Integer(itemid), exe);
 
@@ -101,12 +100,11 @@ public class ItemClass {
 	 * @param data
 	 *            资料
 	 * @param pc
-	 *            角色
+	 *            对象
 	 * @param item
 	 *            道具
 	 */
-	public void item(final int[] data, final L1PcInstance pc,
-			final L1ItemInstance item) {
+	public void item(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 空角色
 		if (pc == null) {
@@ -120,8 +118,7 @@ public class ItemClass {
 
 		try {
 			// 取得Class执行位置
-			final ItemExecutor exe = _classList.get(new Integer(item
-					.getItemId()));
+			final ItemExecutor exe = _classList.get(new Integer(item.getItemId()));
 			if (exe != null) {
 				exe.execute(data, pc, item);
 			}
@@ -137,12 +134,11 @@ public class ItemClass {
 	 * @param equipped
 	 *            装备 (使用)
 	 * @param pc
-	 *            角色
+	 *            对象
 	 * @param item
-	 *            道具
+	 *            武器
 	 */
-	public void item_weapon(final boolean equipped, final L1PcInstance pc,
-			final L1ItemInstance item) {
+	public void item_weapon(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 空角色
 		if (pc == null) {
@@ -156,8 +152,7 @@ public class ItemClass {
 
 		try {
 			// 取得Class执行位置
-			final ItemExecutor exe = _classList.get(new Integer(item
-					.getItemId()));
+			final ItemExecutor exe = _classList.get(new Integer(item.getItemId()));
 			if (exe != null) {
 				int[] data = new int[1];
 				data[0] = equipped ? 1 : 0;
@@ -175,12 +170,11 @@ public class ItemClass {
 	 * @param equipped
 	 *            装备 (使用)
 	 * @param pc
-	 *            角色
+	 *            对象
 	 * @param item
-	 *            道具
+	 *            防具
 	 */
-	public void item_armor(final boolean equipped, final L1PcInstance pc,
-			final L1ItemInstance item) {
+	public void item_armor(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 空角色
 		if (pc == null) {
@@ -194,8 +188,7 @@ public class ItemClass {
 
 		try {
 			// 取得Class执行位置
-			final ItemExecutor exe = _classList.get(new Integer(item
-					.getItemId()));
+			final ItemExecutor exe = _classList.get(new Integer(item.getItemId()));
 			if (exe != null) {
 				int[] data = new int[1];
 				data[0] = equipped ? 1 : 0;

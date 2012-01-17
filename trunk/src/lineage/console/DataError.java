@@ -1,4 +1,4 @@
-package l1j.server.data;
+package lineage.console;
 
 import org.apache.commons.logging.Log;
 

@@ -30,6 +30,9 @@ public class S_OwnCharStatus extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/**
+	 * 更新角色属性与能力值
+	 */
 	public S_OwnCharStatus(L1PcInstance pc) {
 		int time = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		time = time - (time % 300);
@@ -40,15 +43,13 @@ public class S_OwnCharStatus extends ServerBasePacket {
 
 		if (pc.getLevel() < 1) {
 			writeC(1);
-		}
-		else if (pc.getLevel() > 127) {
+		} else if (pc.getLevel() > 127) {
 			writeC(127);
-		}
-		else {
+		} else {
 			writeC(pc.getLevel());
 		}
-		writeD(pc.getExp());
 
+		writeD(pc.getExp());
 		writeC(pc.getStr());
 		writeC(pc.getInt());
 		writeC(pc.getWis());

@@ -1,25 +1,24 @@
-package l1j.server.server.utils;
+package lineage.console.utils;
 
-import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
-import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_PARALYZED;
 import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
+import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
 import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
 import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
-import static l1j.server.server.model.skill.L1SkillId.SHOCK_SKIN;
-import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE_COCKATRICE;
 import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE_BASILISK;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE_COCKATRICE;
+import static l1j.server.server.model.skill.L1SkillId.SHOCK_SKIN;
 import static l1j.server.server.model.skill.L1SkillId.SHOCK_STUN;
-
+import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_PARALYZED;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.L1PolyMorph;
+import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
 import l1j.server.server.serverpackets.S_SPMR;
-
-import l1j.server.server.model.Instance.L1ItemInstance;
-import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
 /**
@@ -37,15 +36,9 @@ public class CheckUtil {
 	 * 
 	 * @param pc
 	 *            检查的对象
-	 * @return 如果可使用道具、true
+	 * @return 如果可用、true
 	 */
-	public static boolean getUseItem(final L1PcInstance pc) {
-
-		// 法师魔法 (药水霜化术)
-		if (pc.hasSkillEffect(DECAY_POTION)) {
-			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
-			return false;
-		}
+	public static boolean checkUseItem(final L1PcInstance pc) {
 
 		// 麻痹毒(木乃伊诅咒)后
 		if (pc.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
@@ -54,6 +47,11 @@ public class CheckUtil {
 
 		// 法师魔法 (冰矛围篱)
 		if (pc.hasSkillEffect(ICE_LANCE)) {
+			return false;
+		}
+
+		// 法师魔法 (冰雪飓风)
+		if (pc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			return false;
 		}
 
@@ -91,20 +89,88 @@ public class CheckUtil {
 		if (pc.hasSkillEffect(FREEZING_BREATH)) {
 			return false;
 		}
+
 		return true;
 	}
 
 	/**
-	 * 检查武器与防具该职业能否使用<br>
+	 * 检查能否使用药水
 	 * 
 	 * @param pc
-	 *            角色
+	 *            检查的对象
+	 * @return 如果可用、true
+	 */
+	public static boolean checkUsePotion(final L1PcInstance pc) {
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
+			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
+			return false;
+		}
+
+		// 麻痹毒(木乃伊诅咒)后
+		if (pc.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
+			return false;
+		}
+
+		// 法师魔法 (冰矛围篱)
+		if (pc.hasSkillEffect(ICE_LANCE)) {
+			return false;
+		}
+
+		// 法师魔法 (冰雪飓风)
+		if (pc.hasSkillEffect(FREEZING_BLIZZARD)) {
+			return false;
+		}
+
+		// 亚力安冰矛围篱
+		if (pc.hasSkillEffect(ICE_LANCE_COCKATRICE)) {
+			return false;
+		}
+
+		// 邪恶蜥蜴冰矛围篱
+		if (pc.hasSkillEffect(ICE_LANCE_BASILISK)) {
+			return false;
+		}
+
+		// 法师魔法 (沉睡之雾)
+		if (pc.hasSkillEffect(FOG_OF_SLEEPING)) {
+			return false;
+		}
+
+		// 骑士魔法 (冲击之晕)
+		if (pc.hasSkillEffect(SHOCK_STUN)) {
+			return false;
+		}
+
+		// 妖精魔法 (大地屏障)
+		if (pc.hasSkillEffect(EARTH_BIND)) {
+			return false;
+		}
+
+		// 龙骑士魔法 (冲击之肤)
+		if (pc.hasSkillEffect(SHOCK_SKIN)) { // 冲晕效果
+			return false;
+		}
+
+		// 龙骑士魔法 (寒冰喷吐)
+		if (pc.hasSkillEffect(FREEZING_BREATH)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * 检查武器与防具该职业能否使用
+	 * 
+	 * @param pc
+	 *            使用的对象
 	 * @param useItem
 	 *            使用的装备
 	 * @return 如果该职业可用、true
 	 */
-	public static boolean check(final L1PcInstance pc,
-			final L1ItemInstance useItem) {
+	public static boolean checkEquipped(final L1PcInstance pc, final L1ItemInstance useItem) {
 
 		// 是否能装备
 		boolean isEquipped = false;
@@ -170,12 +236,11 @@ public class CheckUtil {
 	 * 设置武器的装备
 	 * 
 	 * @param pc
-	 *            角色
+	 *            装备的对象
 	 * @param weapon
-	 *            武器
+	 *            装备的武器
 	 */
-	public static void useWeapon(final L1PcInstance pc,
-			final L1ItemInstance weapon) {
+	public static void useWeapon(final L1PcInstance pc, final L1ItemInstance weapon) {
 
 		// 取回角色背包道具
 		final L1PcInventory pcInventory = pc.getInventory();
@@ -195,8 +260,7 @@ public class CheckUtil {
 			}
 
 			// 装备盾牌时不可再使用双手武器
-			if (weapon.getItem().isTwohandedWeapon()
-					&& (pcInventory.getTypeEquipped(2, 7) >= 1)) {
+			if (weapon.getItem().isTwohandedWeapon() && (pcInventory.getTypeEquipped(2, 7) >= 1)) {
 				pc.sendPackets(new S_ServerMessage(128));
 				return;
 			}
@@ -222,8 +286,7 @@ public class CheckUtil {
 
 		// 被诅咒的装备
 		if (weapon.getItem().getBless() == 2) {
-			pc.sendPackets(new S_ServerMessage(149, weapon.getLogName())); // \f1%0%s
-																			// 主动固定在你的手上！
+			pc.sendPackets(new S_ServerMessage(149, weapon.getLogName())); // \f1%0%s 主动固定在你的手上！
 		}
 		pcInventory.setEquipped(weapon, true, false, false);
 	}
@@ -232,12 +295,11 @@ public class CheckUtil {
 	 * 设置防具的装备
 	 * 
 	 * @param pc
-	 *            角色
+	 *            装备的对象
 	 * @param armor
-	 *            防具
+	 *            装备的防具
 	 */
-	public static void useArmor(final L1PcInstance pc,
-			final L1ItemInstance armor) {
+	public static void useArmor(final L1PcInstance pc, final L1ItemInstance armor) {
 
 		// 取回防具类型
 		final int type = armor.getItem().getType();
@@ -251,7 +313,6 @@ public class CheckUtil {
 		// 戒指可戴2个,其他都只能戴1个
 		if (type == 9) {
 			equipeSpace = pcInventory.getTypeEquipped(2, 9) <= 1;
-
 		} else {
 			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 0;
 		}
@@ -268,9 +329,8 @@ public class CheckUtil {
 			}
 
 			// 已经装备其他东西。
-			if (((type == 13) && (pcInventory.getTypeEquipped(2, 7) >= 1))
-					|| ((type == 7) && (pcInventory.getTypeEquipped(2, 13) >= 1))) {
-				pc.sendPackets(new S_ServerMessage(124));
+			if (((type == 13) && (pcInventory.getTypeEquipped(2, 7) >= 1)) || ((type == 7) && (pcInventory.getTypeEquipped(2, 13) >= 1))) {
+				pc.sendPackets(new S_ServerMessage(124)); // 已经装备其他东西。
 				return;
 			}
 
@@ -284,28 +344,19 @@ public class CheckUtil {
 
 			// 穿着斗篷时不可穿内衣
 			if ((type == 3) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-				pc.sendPackets(new S_ServerMessage(126, "$224", "$225")); // \f1穿着%1
-																			// 无法装备
-																			// %0%o
-																			// 。
+				pc.sendPackets(new S_ServerMessage(126, "$224", "$225")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 
 			// 穿着盔甲时不可穿内衣
 			else if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
-				pc.sendPackets(new S_ServerMessage(126, "$224", "$226")); // \f1穿着%1
-																			// 无法装备
-																			// %0%o
-																			// 。
+				pc.sendPackets(new S_ServerMessage(126, "$224", "$226")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 
 			// 穿着斗篷时不可穿盔甲
 			else if ((type == 2) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-				pc.sendPackets(new S_ServerMessage(126, "$226", "$225")); // \f1穿着%1
-																			// 无法装备
-																			// %0%o
-																			// 。
+				pc.sendPackets(new S_ServerMessage(126, "$226", "$225")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 			pcInventory.setEquipped(armor, true);
@@ -327,8 +378,7 @@ public class CheckUtil {
 				}
 
 				// 穿着斗篷时不能脱下内衣
-				else if (((type == 2) || (type == 3))
-						&& (pcInventory.getTypeEquipped(2, 4) >= 1)) {
+				else if (((type == 2) || (type == 3)) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
 					pc.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
 					return;
 				}
@@ -346,21 +396,16 @@ public class CheckUtil {
 				pc.sendPackets(new S_ServerMessage(144)); // \f1你已经戴着二个戒指。
 				return;
 			} else {
-				pc.sendPackets(new S_ServerMessage(124));// \f1已经装备其他东西。
+				pc.sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
 				return;
 			}
 		}
 
-		// 更新HP,MP
-		pc.setCurrentHp(pc.getCurrentHp());
-		pc.setCurrentMp(pc.getCurrentMp());
-
-		// 更新角色防御及四种属性
-		pc.sendPackets(new S_OwnCharAttrDef(pc));
-		// 更改人物状态
-		pc.sendPackets(new S_OwnCharStatus(pc));
-		// 更改人物魔法攻击与魔法防御
-		pc.sendPackets(new S_SPMR(pc));
+		pc.setCurrentHp(pc.getCurrentHp()); // 更新角色HP
+		pc.setCurrentMp(pc.getCurrentMp()); // 更新角色MP
+		pc.sendPackets(new S_OwnCharAttrDef(pc)); // 更新角色物理防御与四属性防御
+		pc.sendPackets(new S_OwnCharStatus(pc)); // 更新角色属性与能力值
+		pc.sendPackets(new S_SPMR(pc)); // 更新角色魔法攻击与魔法防御
 	}
 
 }

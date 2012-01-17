@@ -21,7 +21,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // ServerBasePacket
 
 /**
- * 更新角色属性防御
+ * 更新角色物理防御与四属性防御
  */
 public class S_OwnCharAttrDef extends ServerBasePacket {
 
@@ -29,7 +29,9 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	/** 更新防御以及四种属性 */
+	/**
+	 * 更新角色物理防御与四属性防御
+	 */
 	public S_OwnCharAttrDef(L1PcInstance pc) {
 		buildPacket(pc);
 	}
