@@ -16,7 +16,7 @@ public abstract class ItemExecutor {
 	 * @param data
 	 *            参数
 	 * @param pc
-	 *            角色
+	 *            对象
 	 * @param item
 	 *            物件
 	 */
