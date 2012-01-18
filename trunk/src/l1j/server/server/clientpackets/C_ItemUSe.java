@@ -137,7 +137,8 @@ public class C_ItemUSe extends ClientBasePacket {
 			if ((min != 0) && (min > pc.getLevel())) {
 				pc.sendPackets(new S_ServerMessage(318, String.valueOf(min))); // 等级 %0以上才可使用此道具。
 				return;
-			} else if ((max != 0) && (max < pc.getLevel())) {
+			}
+			else if ((max != 0) && (max < pc.getLevel())) {
 				pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max)); // 等级 %d以下才能使用此道具。
 				return;
 			}
@@ -168,15 +169,8 @@ public class C_ItemUSe extends ClientBasePacket {
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
 
+			case -4: // 加速类道具 (绿色药水)
 			case -3: // 回魔类道具 (蓝色药水)
-				if (!CheckUtil.checkUsePotion(pc)) {
-					return;
-				}
-				if (isClass) {
-					ItemClass.getInstance().item(null, pc, useItem);
-				}
-				break;
-
 			case -2: // 加血类道具 (治愈药水)
 				if (!CheckUtil.checkUsePotion(pc)) {
 					return;

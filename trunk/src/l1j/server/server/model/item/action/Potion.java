@@ -14,21 +14,11 @@
  */
 package l1j.server.server.model.item.action;
 
-import static l1j.server.server.model.skill.L1SkillId.BLOODLUST;
 import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
 import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
-import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
-import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
-import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HOLY_WALK;
-import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
-import static l1j.server.server.model.skill.L1SkillId.MOVING_ACCELERATION;
 import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
-import static l1j.server.server.model.skill.L1SkillId.SLOW;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE2;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
@@ -36,7 +26,6 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_WISDOM_POTION;
-import static l1j.server.server.model.skill.L1SkillId.WIND_WALK;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.identity.L1ItemId;
@@ -63,101 +52,36 @@ public class Potion {
 	 * 使用一段加速药水 (绿色药水)
 	 * 
 	 * @param pc
-	 * @param item
-	 * @param itemId
+	 *            使用对象
+	 * @param time
+	 *            效果时间
 	 */
-	public static void useGreenPotion(L1PcInstance pc, L1ItemInstance item, int itemId) {
+	public static void useGreenPotion(L1PcInstance pc, int time) {
 
-		// 给予的时间
-		int time = 0;
-
-		// 自我加速药水、象牙塔加速药水
-		if (itemId == L1ItemId.POTION_OF_HASTE_SELF || itemId == 40030) {
-			time = 300;
-		}
-
-		// 受祝福的 自我加速药水
-		else if (itemId == L1ItemId.B_POTION_OF_HASTE_SELF) {
-			time = 350;
-		}
-
-		// 强化 自我加速药水、受祝福的葡萄酒、梅杜莎之血、绿茶蛋糕卷
-		else if ((itemId == 40018) || (itemId == 41338) || (itemId == 41342) || (itemId == 49140)) {
-			time = 1800;
-		}
-
-		// 受祝福的 强化 自我加速药水
-		else if (itemId == 140018) {
-			time = 2100;
-		}
-
-		// 红酒
-		else if (itemId == 40039) {
-			time = 600;
-		}
-
-		// 威士忌
-		else if (itemId == 40040) {
-			time = 900;
-		}
-
-		// 福利加速药水
-		else if (itemId == 49302) {
-			time = 1200;
-		}
-
-		// 商店料理
-		else if ((itemId == 41261) || (itemId == 41262) || (itemId == 41268) || (itemId == 41269) || (itemId == 41271) || (itemId == 41272) || (itemId == 41273)) {
-			time = 30;
-		}
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), 191));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 191));
-		// XXX:装备加速道具时、解除醉酒状态不明
+		// 装备加速道具时
 		if (pc.getHasteItemEquipped() > 0) {
 			return;
 		}
-		// 醉酒状态解除
+
+		// 解除醉酒状态
 		pc.setDrink(false);
 
-		// 消除重复状态
-		if (pc.hasSkillEffect(HASTE)) { // 加速术
-			pc.killSkillEffectTimer(HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		} else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
-			pc.killSkillEffectTimer(GREATER_HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		} else if (pc.hasSkillEffect(STATUS_HASTE)) { // 一段加速
-			pc.killSkillEffectTimer(STATUS_HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		}
+		// 删除重复的一段加速状态
+		RemoveSkillEffect.removeStatusGreenPotion(pc);
 
-		// 缓速术、集体缓速术、地面障碍中解除缓速状态
-		if (pc.hasSkillEffect(SLOW)) { // 缓速术
-			pc.killSkillEffectTimer(SLOW);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		} else if (pc.hasSkillEffect(MASS_SLOW)) { // 集体缓速术
-			pc.killSkillEffectTimer(MASS_SLOW);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		} else if (pc.hasSkillEffect(ENTANGLE)) { // 地面障碍
-			pc.killSkillEffectTimer(ENTANGLE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		} else {
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-			pc.setMoveSpeed(1);
+		pc.sendPackets(new S_SkillSound(pc.getId(), 191)); // 效果动画 (自己看得到)
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), 191)); // 效果动画 (同画面的其他人看得到)
+
+		// 删除重复的缓速状态
+		if (pc.getMoveSpeed() == 2) {
+			RemoveSkillEffect.removeStatusSlow(pc);
+		}
+		else {
+			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time)); // 加速效果与时间 (自己看得到)
+			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0)); // 加速效果与时间 (同画面的其他人看得到)
+			pc.setMoveSpeed(1); // 设置为加速状态
 			pc.setSkillEffect(STATUS_HASTE, time * 1000); // 给予一段加速效果
 		}
-		pc.getInventory().removeItem(item, 1);
 	}
 
 	/**
@@ -172,12 +96,6 @@ public class Potion {
 	 */
 	public static void Brave(L1PcInstance pc, L1ItemInstance item, int item_id) {
 
-		// 药水霜化术状态
-		if (pc.hasSkillEffect(DECAY_POTION)) {
-			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
-			return;
-		}
-
 		int time = 0;
 
 		// 判断持续时间 && 使用类型
@@ -186,15 +104,20 @@ public class Potion {
 				|| item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY || item_id == L1ItemId.DEVILS_BLOOD || item_id == L1ItemId.COIN_OF_REPUTATION) {
 			if (item_id == L1ItemId.POTION_OF_EMOTION_BRAVERY) { // 勇敢药水
 				time = 300;
-			} else if (item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY) { // 受祝福的勇敢药水
+			}
+			else if (item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY) { // 受祝福的勇敢药水
 				time = 350;
-			} else if (item_id == L1ItemId.POTION_OF_REINFORCED_CASE) { // 强化勇气的药水
+			}
+			else if (item_id == L1ItemId.POTION_OF_REINFORCED_CASE) { // 强化勇气的药水
 				time = 1800;
-			} else if (item_id == L1ItemId.DEVILS_BLOOD) { // 恶魔之血
+			}
+			else if (item_id == L1ItemId.DEVILS_BLOOD) { // 恶魔之血
 				time = 600;
-			} else if (item_id == L1ItemId.COIN_OF_REPUTATION) { // 名誉货币
+			}
+			else if (item_id == L1ItemId.COIN_OF_REPUTATION) { // 名誉货币
 				time = 600;
-			} else if (item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY) { // 福利勇敢药水
+			}
+			else if (item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY) { // 福利勇敢药水
 				time = 1200;
 			}
 			buff_brave(pc, STATUS_BRAVE, (byte) 1, time); // 给予勇敢药水效果
@@ -205,9 +128,11 @@ public class Potion {
 		else if (item_id == L1ItemId.ELVEN_WAFER || item_id == L1ItemId.B_ELVEN_WAFER || item_id == L1ItemId.W_POTION_OF_FOREST) {
 			if (item_id == L1ItemId.ELVEN_WAFER) { // 精灵饼干
 				time = 480;
-			} else if (item_id == L1ItemId.B_ELVEN_WAFER) { // 祝福的精灵饼干
+			}
+			else if (item_id == L1ItemId.B_ELVEN_WAFER) { // 祝福的精灵饼干
 				time = 700;
-			} else if (item_id == L1ItemId.W_POTION_OF_FOREST) { // 福利森林药水
+			}
+			else if (item_id == L1ItemId.W_POTION_OF_FOREST) { // 福利森林药水
 				time = 1920;
 			}
 			buff_brave(pc, STATUS_ELFBRAVE, (byte) 3, time); // 给予精灵饼干效果
@@ -233,11 +158,6 @@ public class Potion {
 	 */
 	public static void ThirdSpeed(L1PcInstance pc, L1ItemInstance item, int time) {
 
-		// 三段加速
-		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
-			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
-		}
-
 		pc.setSkillEffect(STATUS_THIRD_SPEED, time * 1000);
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
@@ -258,28 +178,6 @@ public class Potion {
 	 */
 	private static void buff_brave(L1PcInstance pc, int skillId, byte type, int timeMillis) {
 
-		// 消除重复状态
-		if (pc.hasSkillEffect(STATUS_BRAVE)) { // 勇敢药水类 1.33倍
-			pc.killSkillEffectTimer(STATUS_BRAVE);
-		}
-		if (pc.hasSkillEffect(STATUS_ELFBRAVE)) { // 精灵饼干 1.15倍
-			pc.killSkillEffectTimer(STATUS_ELFBRAVE);
-		}
-		if (pc.hasSkillEffect(HOLY_WALK)) { // 神圣疾走 移速1.33倍
-			pc.killSkillEffectTimer(HOLY_WALK);
-		}
-		if (pc.hasSkillEffect(MOVING_ACCELERATION)) { // 行走加速 移速1.33倍
-			pc.killSkillEffectTimer(MOVING_ACCELERATION);
-		}
-		if (pc.hasSkillEffect(WIND_WALK)) { // 风之疾走 移速1.33倍
-			pc.killSkillEffectTimer(WIND_WALK);
-		}
-		if (pc.hasSkillEffect(BLOODLUST)) { // 血之渴望 攻速1.33倍
-			pc.killSkillEffectTimer(BLOODLUST);
-		}
-		if (pc.hasSkillEffect(STATUS_BRAVE2)) { // 超级加速 2.66倍
-			pc.killSkillEffectTimer(STATUS_BRAVE2);
-		}
 		// 给予状态 && 效果
 		pc.setSkillEffect(skillId, timeMillis * 1000);
 		pc.sendPackets(new S_SkillSound(pc.getId(), 751));
@@ -305,11 +203,8 @@ public class Potion {
 		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc);
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-
 		pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
-
 		healHp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D; // 随机加血量
 
 		// 污浊之水 - 效果减半
@@ -340,7 +235,8 @@ public class Potion {
 		int newMp = 0;
 		if (i > 0) {
 			newMp = Random.nextInt(i, mp);
-		} else {
+		}
+		else {
 			newMp = mp;
 		}
 		pc.setCurrentMp(pc.getCurrentMp() + newMp);
@@ -364,13 +260,9 @@ public class Potion {
 		RemoveSkillEffect.removeStatusBluePotion(pc);
 
 		pc.sendPackets(new S_SkillIconGFX(34, time)); // 发送状态图示
-
 		pc.setSkillEffect(STATUS_BLUE_POTION, time * 1000); // 给予蓝水时间 (秒)
-
 		pc.sendPackets(new S_SkillSound(pc.getId(), 190)); // 效果动画 (自己看得到)
-
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 190)); // 效果动画 (同画面的其他人看得到)
-
 		pc.sendPackets(new S_ServerMessage(1007)); // 你感觉到魔力恢复速度加快。
 	}
 
@@ -405,14 +297,14 @@ public class Potion {
 		// 智慧药水状态
 		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
 			pc.addSp(2);
-		} else {
+		}
+		else {
 			pc.killSkillEffectTimer(STATUS_WISDOM_POTION);
 		}
 
 		pc.sendPackets(new S_SkillIconWisdomPotion((time / 4))); // 状态图示
 		pc.sendPackets(new S_SkillSound(pc.getId(), 750));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
-
 		pc.setSkillEffect(STATUS_WISDOM_POTION, time * 1000);
 		pc.getInventory().removeItem(item, 1);
 	}
@@ -491,12 +383,12 @@ public class Potion {
 		// 漂浮之眼肉
 		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
 			pc.sendPackets(new S_CurseBlind(2));
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_CurseBlind(1));
 		}
 
 		pc.setSkillEffect(CURSE_BLIND, time * 1000); // 给予16秒效果
 		pc.getInventory().removeItem(item, 1); // 删除道具
 	}
-
 }
