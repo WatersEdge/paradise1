@@ -26,6 +26,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	public L1Item() {
 	}
 
+	@Override
 	public Object clone() {
 		try {
 			return super.clone();
@@ -1168,6 +1169,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 物品使用封包类型
 	 * 
 	 * @return <p>
+	 *         green: -4 <font color=#00800>加速类道具 (绿色药水)</font><br>
 	 *         mpr: -3 <font color=#00800>回魔类道具 (蓝色药水)</font><br>
 	 *         hpr: -2 <font color=#00800>加血类道具 (治愈药水)</font><br>
 	 *         none: -1 <font color=#00800>无法使用 (材料等)</font><br>
@@ -1197,8 +1199,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         zel: 27 <font color=#00800>对盔甲施法的卷轴</font><br>
 	 *         blank: 28 <font color=#00800>空的魔法卷轴</font><br>
 	 *         btele: 29 <font color=#00800>瞬间移动卷轴 (祝福)</font><br>
-	 *         spell_buff: 30 <font color=#00800>选取目标 (对NPC需要Ctrl 远距离
-	 *         无XY座标传回)</font><br>
+	 *         spell_buff: 30 <font color=#00800>选取目标 (对NPC需要Ctrl 远距离 无XY座标传回)</font><br>
 	 *         ccard: 31 <font color=#00800>圣诞卡片</font><br>
 	 *         ccard_w: 32 <font color=#00800>圣诞卡片 (寄出)</font><br>
 	 *         vcard: 33 <font color=#00800>情人节卡片</font><br>
@@ -1259,13 +1260,17 @@ public abstract class L1Item implements Cloneable, Serializable {
 	public int getLightRange() {
 		if (_itemId == 40001) { // 灯
 			return 11;
-		} else if (_itemId == 40002) { // 灯笼
+		}
+		else if (_itemId == 40002) { // 灯笼
 			return 14;
-		} else if (_itemId == 40004) { // 魔法灯笼
+		}
+		else if (_itemId == 40004) { // 魔法灯笼
 			return 14;
-		} else if (_itemId == 40005) { // 蜡烛
+		}
+		else if (_itemId == 40005) { // 蜡烛
 			return 8;
-		} else {
+		}
+		else {
 			return 0;
 		}
 	}
@@ -1278,15 +1283,20 @@ public abstract class L1Item implements Cloneable, Serializable {
 	public int getLightFuel() {
 		if (_itemId == 40001) { // 灯
 			return 6000;
-		} else if (_itemId == 40002) { // 灯笼
+		}
+		else if (_itemId == 40002) { // 灯笼
 			return 12000;
-		} else if (_itemId == 40003) { // 灯油
+		}
+		else if (_itemId == 40003) { // 灯油
 			return 12000;
-		} else if (_itemId == 40004) { // 魔法灯笼
+		}
+		else if (_itemId == 40004) { // 魔法灯笼
 			return 0;
-		} else if (_itemId == 40005) { // 蜡烛
+		}
+		else if (_itemId == 40005) { // 蜡烛
 			return 600;
-		} else {
+		}
+		else {
 			return 0;
 		}
 	}

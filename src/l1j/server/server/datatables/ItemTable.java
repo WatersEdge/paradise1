@@ -90,6 +90,7 @@ public class ItemTable {
 		_etcItemTypes.put("magic_doll", new Integer(17)); // 魔法娃娃
 
 		// 道具使用类型
+		_useTypes.put("green", new Integer(-4)); // 加速类道具 (绿色药水)
 		_useTypes.put("mpr", new Integer(-3)); // 回魔类道具 (蓝色药水)
 		_useTypes.put("hpr", new Integer(-2)); // 加血类道具 (治愈药水)
 		_useTypes.put("none", new Integer(-1)); // 无法使用
