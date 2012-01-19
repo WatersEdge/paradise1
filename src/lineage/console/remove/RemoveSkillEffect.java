@@ -17,7 +17,7 @@ public class RemoveSkillEffect {
 	 * @param pc
 	 *            对象
 	 */
-	public static void removeAbsoluteBarrierEffect(L1PcInstance pc) {
+	public final static void removeAbsoluteBarrierEffect(final L1PcInstance pc) {
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
 			pc.startHpRegeneration(); // 开始角色回血
@@ -35,7 +35,7 @@ public class RemoveSkillEffect {
 	 * @param skill_id
 	 *            技能ID
 	 */
-	public final static void removeRepeat(L1PcInstance pc, int skill_id) {
+	public final static void removeRepeat(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 		}
@@ -49,7 +49,7 @@ public class RemoveSkillEffect {
 	 * @param skill_id
 	 *            技能ID
 	 */
-	public static void removeStatusGreenPotion(L1PcInstance pc, int skill_id) {
+	public final static void removeStatusGreenPotion(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
@@ -63,8 +63,10 @@ public class RemoveSkillEffect {
 	 * 
 	 * @param pc
 	 *            对象
+	 * @param skill_id
+	 *            技能ID
 	 */
-	public static void removeStatusSlow(L1PcInstance pc, int skill_id) {
+	public final static void removeStatusSlow(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
