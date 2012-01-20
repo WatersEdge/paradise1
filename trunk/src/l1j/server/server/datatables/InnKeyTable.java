@@ -26,7 +26,7 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 旅馆钥匙表
+ * 旅馆钥匙资料表
  */
 public class InnKeyTable {
 
@@ -35,7 +35,11 @@ public class InnKeyTable {
 	private InnKeyTable() {
 	}
 
-	/** 储存钥匙 */
+	/**
+	 * 储存钥匙
+	 * 
+	 * @param item
+	 */
 	public static void StoreKey(L1ItemInstance item) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
@@ -57,7 +61,11 @@ public class InnKeyTable {
 		}
 	}
 
-	/** 删除钥匙 */
+	/**
+	 * 删除钥匙
+	 * 
+	 * @param item
+	 */
 	public static void DeleteKey(L1ItemInstance item) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
@@ -75,7 +83,12 @@ public class InnKeyTable {
 		}
 	}
 
-	/** 检查钥匙 */
+	/**
+	 * 检查钥匙
+	 * 
+	 * @param item
+	 * @return
+	 */
 	public static boolean checkey(L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;

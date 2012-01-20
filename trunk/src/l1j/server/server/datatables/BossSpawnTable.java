@@ -26,7 +26,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 产生BOSS表
+ * 产生BOSS资料表
  */
 public class BossSpawnTable {
 
@@ -54,10 +54,10 @@ public class BossSpawnTable {
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 
 				if (template1 == null) {
-					_log.warning("mob data for id:" + npcTemplateId
-							+ " missing in npc table");
+					_log.warning("mob data for id:" + npcTemplateId + " missing in npc table");
 					spawnDat = null;
-				} else {
+				}
+				else {
 					spawnDat = new L1BossSpawn(template1);
 					spawnDat.setId(rs.getInt("id"));
 					spawnDat.setNpcid(npcTemplateId);
@@ -83,7 +83,7 @@ public class BossSpawnTable {
 
 					spawnDat.setName(template1.get_name());
 
-					// start the spawning
+					// 开始产生
 					spawnDat.init();
 					spawnCount += spawnDat.getAmount();
 

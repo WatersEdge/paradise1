@@ -24,11 +24,8 @@ import java.util.logging.Logger;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 角色配置表
+ * 角色配置资料表
  */
 public class CharacterConfigTable {
 
@@ -46,13 +43,19 @@ public class CharacterConfigTable {
 		return _instance;
 	}
 
+	/**
+	 * 储存角色配置
+	 * 
+	 * @param objectId
+	 * @param length
+	 * @param data
+	 */
 	public void storeCharacterConfig(int objectId, int length, byte[] data) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO character_config SET object_id=?, length=?, data=?");
+			pstm = con.prepareStatement("INSERT INTO character_config SET object_id=?, length=?, data=?");
 			pstm.setInt(1, objectId);
 			pstm.setInt(2, length);
 			pstm.setBytes(3, data);
@@ -65,13 +68,19 @@ public class CharacterConfigTable {
 		}
 	}
 
+	/**
+	 * 更新角色配置
+	 * 
+	 * @param objectId
+	 * @param length
+	 * @param data
+	 */
 	public void updateCharacterConfig(int objectId, int length, byte[] data) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE character_config SET length=?, data=? WHERE object_id=?");
+			pstm = con.prepareStatement("UPDATE character_config SET length=?, data=? WHERE object_id=?");
 			pstm.setInt(1, length);
 			pstm.setBytes(2, data);
 			pstm.setInt(3, objectId);
@@ -84,13 +93,17 @@ public class CharacterConfigTable {
 		}
 	}
 
+	/**
+	 * 删除角色配置
+	 * 
+	 * @param objectId
+	 */
 	public void deleteCharacterConfig(int objectId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_config WHERE object_id=?");
+			pstm = con.prepareStatement("DELETE FROM character_config WHERE object_id=?");
 			pstm.setInt(1, objectId);
 			pstm.execute();
 		} catch (SQLException e) {
@@ -101,6 +114,11 @@ public class CharacterConfigTable {
 		}
 	}
 
+	/**
+	 * 角色配置数量
+	 * 
+	 * @param objectId
+	 */
 	public int countCharacterConfig(int objectId) {
 		int result = 0;
 		Connection con = null;
@@ -108,8 +126,7 @@ public class CharacterConfigTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT count(*) as cnt FROM character_config WHERE object_id=?");
+			pstm = con.prepareStatement("SELECT count(*) as cnt FROM character_config WHERE object_id=?");
 			pstm.setInt(1, objectId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {

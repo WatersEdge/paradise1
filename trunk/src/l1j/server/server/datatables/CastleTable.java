@@ -30,11 +30,8 @@ import l1j.server.server.templates.L1Castle;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 城堡表
+ * 城堡资料表
  */
 public class CastleTable {
 
@@ -79,11 +76,9 @@ public class CastleTable {
 
 				_castles.put(castle.getId(), castle);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -98,6 +93,12 @@ public class CastleTable {
 		return _castles.get(id);
 	}
 
+	/**
+	 * 更新城堡
+	 * 
+	 * @param castle
+	 *            城堡
+	 */
 	public void updateCastle(L1Castle castle) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -114,11 +115,9 @@ public class CastleTable {
 			pstm.execute();
 
 			_castles.put(castle.getId(), castle);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

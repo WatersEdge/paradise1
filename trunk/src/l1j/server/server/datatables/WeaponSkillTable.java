@@ -28,7 +28,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 魔法武器表
+ * 魔法武器资料表
  */
 public class WeaponSkillTable {
 
@@ -59,11 +59,9 @@ public class WeaponSkillTable {
 			pstm = con.prepareStatement("SELECT * FROM weapon_skill union SELECT * FROM z_copy_weapon_skill");
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -83,8 +81,7 @@ public class WeaponSkillTable {
 			int effectTarget = rs.getInt("effect_target");
 			boolean isArrowType = rs.getBoolean("arrow_type");
 			int attr = rs.getInt("attr");
-			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability, fixDamage, randomDamage, area, skillId, skillTime, effectId,
-					effectTarget, isArrowType, attr);
+			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability, fixDamage, randomDamage, area, skillId, skillTime, effectId, effectTarget, isArrowType, attr);
 			_weaponIdIndex.put(weaponId, weaponSkill);
 		}
 		_log.config("魔法武器列表 " + _weaponIdIndex.size() + "件");

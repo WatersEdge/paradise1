@@ -28,9 +28,10 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 宠物道具表
+ * 宠物道具资料表
  */
 public class PetItemTable {
+
 	private static Logger _log = Logger.getLogger(PetItemTable.class.getName());
 
 	private static PetItemTable _instance;
@@ -65,11 +66,9 @@ public class PetItemTable {
 			pstm = con.prepareStatement("SELECT * FROM petitem");
 			rs = pstm.executeQuery();
 			fillPetItemTable(rs);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建etcitem_petitem表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

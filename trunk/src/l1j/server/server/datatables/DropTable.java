@@ -42,17 +42,15 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
-// Referenced classes of package l1j.server.server.templates:
-// L1Npc, L1Item, ItemTable
-
 /**
- * 掉宝表
+ * 掉落物品资料表
  */
 public class DropTable {
 
 	private static final Logger _log = Logger.getLogger(DropTable.class.getName());
 
 	private static DropTable _instance;
+
 	/** 每个怪物掉宝列表 */
 	private final Map<Integer, List<L1Drop>> _droplists;
 
@@ -67,7 +65,9 @@ public class DropTable {
 		_droplists = allDropList();
 	}
 
-	/** 所有掉宝列表 */
+	/**
+	 * 所有掉宝列表
+	 */
 	private Map<Integer, List<L1Drop>> allDropList() {
 		Map<Integer, List<L1Drop>> droplistMap = Maps.newMap();
 
@@ -79,11 +79,11 @@ public class DropTable {
 			pstm = con.prepareStatement("select * from droplist");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int mobId = rs.getInt("mobId");
-				int itemId = rs.getInt("itemId");
-				int min = rs.getInt("min");
-				int max = rs.getInt("max");
-				int chance = rs.getInt("chance");
+				int mobId = rs.getInt("mobId"); // 怪物ID
+				int itemId = rs.getInt("itemId"); // 道具ID
+				int min = rs.getInt("min"); // 最大数量
+				int max = rs.getInt("max"); // 最小数量
+				int chance = rs.getInt("chance"); // 几率
 
 				L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
 
@@ -94,11 +94,9 @@ public class DropTable {
 				}
 				dropList.add(drop);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -106,8 +104,14 @@ public class DropTable {
 		return droplistMap;
 	}
 
-	/** 设定掉落 */
+	/**
+	 * 设定掉落
+	 * 
+	 * @param npc
+	 * @param inventory
+	 */
 	public void setDrop(L1NpcInstance npc, L1Inventory inventory) {
+
 		// 取得掉落列表
 		int mobId = npc.getNpcTemplate().get_npcId();
 		List<L1Drop> dropList = _droplists.get(mobId);
@@ -116,11 +120,11 @@ public class DropTable {
 		}
 
 		// 取得掉落倍率
-		double droprate = Config.RATE_DROP_ITEMS;
+		double droprate = Config.RATE_DROP_ITEMS; // 道具
 		if (droprate <= 0) {
 			droprate = 0;
 		}
-		double adenarate = Config.RATE_DROP_ADENA;
+		double adenarate = Config.RATE_DROP_ADENA; // 金币
 		if (adenarate <= 0) {
 			adenarate = 0;
 		}
@@ -138,7 +142,7 @@ public class DropTable {
 			// 获得掉落物品
 			itemId = drop.getItemid();
 			if ((adenarate == 0) && (itemId == L1ItemId.ADENA)) {
-				continue; // アデナレート０でドロップがアデナの場合はスルー
+				continue; // 掉落金币倍率为0的情况
 			}
 
 			// 掉落几率判定
@@ -159,13 +163,13 @@ public class DropTable {
 			if (addCount > 1) {
 				itemCount += Random.nextInt(addCount);
 			}
-			if (itemId == L1ItemId.ADENA) { // ドロップがアデナの場合はアデナレートを掛ける
+			if (itemId == L1ItemId.ADENA) { // 掉落金币数量 + 掉落金币倍率
 				itemCount *= adenarate;
 			}
 			if (itemCount < 0) {
 				itemCount = 0;
 			}
-			if (itemCount > 2000000000) {
+			if (itemCount > 2000000000) { // 最高20亿
 				itemCount = 2000000000;
 			}
 
@@ -178,7 +182,13 @@ public class DropTable {
 		}
 	}
 
-	/** 掉落分配 */
+	/**
+	 * 掉落分配
+	 * 
+	 * @param npc
+	 * @param acquisitorList
+	 * @param hateList
+	 */
 	public void dropShare(L1NpcInstance npc, List<L1Character> acquisitorList, List<Integer> hateList) {
 		L1Inventory inventory = npc.getInventory();
 		if (inventory.getSize() == 0) {
@@ -197,8 +207,7 @@ public class DropTable {
 				acquisitorList.remove(i);
 				hateList.remove(i);
 			}
-			else if ((acquisitor != null) && (acquisitor.getMapId() == npc.getMapId())
-					&& (acquisitor.getLocation().getTileLineDistance(npc.getLocation()) <= Config.LOOTING_RANGE)) {
+			else if ((acquisitor != null) && (acquisitor.getMapId() == npc.getMapId()) && (acquisitor.getLocation().getTileLineDistance(npc.getLocation()) <= Config.LOOTING_RANGE)) {
 				totalHate += hateList.get(i);
 			}
 			else { // nullだったり死んでたり遠かったら排除
@@ -260,8 +269,7 @@ public class DropTable {
 											int partySize = 0;
 											int memberItemCount = 0;
 											for (L1PcInstance member : partyMember) {
-												if (member !=null && member.getMapId() == npc.getMapId() 
-													&& member.getCurrentHp() > 0 && !member.isDead()) {
+												if (member != null && member.getMapId() == npc.getMapId() && member.getCurrentHp() > 0 && !member.isDead()) {
 													partySize++;
 												}
 											}
@@ -272,8 +280,7 @@ public class DropTable {
 													item.setCount(memberItemCount + otherCount);
 												}
 												for (L1PcInstance member : partyMember) {
-													if (member !=null && member.getMapId() == npc.getMapId() 
-														&& member.getCurrentHp() > 0 && !member.isDead()) {
+													if (member != null && member.getMapId() == npc.getMapId() && member.getCurrentHp() > 0 && !member.isDead()) {
 														member.getInventory().storeItem(itemId, memberItemCount);
 														for (L1PcInstance pc : player.getParty().getMembers()) {
 															pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), member.getName()));
@@ -286,26 +293,28 @@ public class DropTable {
 												}
 												inventory.removeItem(item, item.getCount());
 												isPartyShare = true;
-											} else {
+											}
+											else {
 												for (L1PcInstance pc : player.getParty().getMembers()) {
 													pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
 												}
 											}
-										} else {
+										}
+										else {
 											for (L1PcInstance element : partyMember) {
 												element.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
 											}
 										}
 									}
 									else {
-										// 自身場合
+										// 自身情况
 										player.sendPackets(new S_ServerMessage(143, npc.getName(), item.getLogName())); // \f1%0%s 给你 %1%o 。
 									}
 								}
 							}
 						}
 						else {
-							targetInventory = L1World.getInstance().getInventory(acquisitor.getX(), acquisitor.getY(), acquisitor.getMapId()); // 持てないので足元に落とす
+							targetInventory = L1World.getInstance().getInventory(acquisitor.getX(), acquisitor.getY(), acquisitor.getMapId()); // 掉落地面
 							isGround = true;
 						}
 						break;
@@ -330,41 +339,40 @@ public class DropTable {
 					dir = dirList.get(randomInt);
 					dirList.remove(randomInt);
 					switch (dir) {
-						case 0:
-							x = 0;
-							y = -1;
-							break;
-						case 1:
-							x = 1;
-							y = -1;
-							break;
-						case 2:
-							x = 1;
-							y = 0;
-							break;
-						case 3:
-							x = 1;
-							y = 1;
-							break;
-						case 4:
-							x = 0;
-							y = 1;
-							break;
-						case 5:
-							x = -1;
-							y = 1;
-							break;
-						case 6:
-							x = -1;
-							y = 0;
-							break;
-						case 7:
-							x = -1;
-							y = -1;
-							break;
+					case 0:
+						x = 0;
+						y = -1;
+						break;
+					case 1:
+						x = 1;
+						y = -1;
+						break;
+					case 2:
+						x = 1;
+						y = 0;
+						break;
+					case 3:
+						x = 1;
+						y = 1;
+						break;
+					case 4:
+						x = 0;
+						y = 1;
+						break;
+					case 5:
+						x = -1;
+						y = 1;
+						break;
+					case 6:
+						x = -1;
+						y = 0;
+						break;
+					case 7:
+						x = -1;
+						y = -1;
+						break;
 					}
-				}
-				while (!npc.getMap().isPassable(npc.getX(), npc.getY(), dir));
+				} while (!npc.getMap().isPassable(npc.getX(), npc.getY(), dir));
 				targetInventory = L1World.getInstance().getInventory(npc.getX() + x, npc.getY() + y, npc.getMapId());
 				isGround = true;
 			}

@@ -27,9 +27,10 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 可溶解道具表
+ * 可溶解道具资料表
  */
 public final class ResolventTable {
+
 	private static Logger _log = Logger.getLogger(ResolventTable.class.getName());
 
 	private static ResolventTable _instance;
@@ -63,11 +64,9 @@ public final class ResolventTable {
 			}
 
 			_log.config("resolvent " + _resolvent.size());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

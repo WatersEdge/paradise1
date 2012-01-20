@@ -29,7 +29,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 无限大战表
+ * 无限大战资料表
  */
 public class UBTable {
 
@@ -37,7 +37,7 @@ public class UBTable {
 
 	private static UBTable _instance = new UBTable();
 
-	private Map<Integer, L1UltimateBattle> _ub = Maps.newMap();
+	private final Map<Integer, L1UltimateBattle> _ub = Maps.newMap();
 
 	public static UBTable getInstance() {
 		return _instance;
@@ -86,11 +86,9 @@ public class UBTable {
 
 				_ub.put(ub.getUbId(), ub);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.warning("ubsettings couldnt 被初始化:" + e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 		}
@@ -106,11 +104,9 @@ public class UBTable {
 					ub.addManager(rs.getInt("ub_manager_npc_id"));
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.warning("ub_managers couldnt 被初始化:" + e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 		}
@@ -126,11 +122,9 @@ public class UBTable {
 					ub.addUbTime(rs.getInt("ub_time"));
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.warning("ub_times couldnt 被初始化:" + e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
 		_log.config("UB名单 " + _ub.size() + "件");
@@ -174,11 +168,9 @@ public class UBTable {
 			if (rs.next()) {
 				n = rs.getInt(1);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

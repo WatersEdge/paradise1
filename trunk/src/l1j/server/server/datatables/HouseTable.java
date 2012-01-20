@@ -32,17 +32,15 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 盟屋表
+ * 盟屋资料表
  */
 public class HouseTable {
 
 	private static Logger _log = Logger.getLogger(HouseTable.class.getName());
 
 	private static HouseTable _instance;
+
 	/** 盟屋 */
 	private final Map<Integer, L1House> _house = Maps.newConcurrentMap();
 
@@ -66,8 +64,7 @@ public class HouseTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM house ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT * FROM house ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1House house = new L1House();
@@ -78,8 +75,7 @@ public class HouseTable {
 				house.setKeeperId(rs.getInt(5));
 				house.setOnSale(rs.getInt(6) == 1 ? true : false);
 				house.setPurchaseBasement(rs.getInt(7) == 1 ? true : false);
-				house.setTaxDeadline(timestampToCalendar((Timestamp) rs
-						.getObject(8)));
+				house.setTaxDeadline(timestampToCalendar((Timestamp) rs.getObject(8)));
 				_house.put(house.getHouseId(), house);
 			}
 		} catch (SQLException e) {
@@ -91,22 +87,33 @@ public class HouseTable {
 		}
 	}
 
-	/** 取得盟屋表列表 */
+	/**
+	 * 取得盟屋表列表
+	 * 
+	 * @return
+	 */
 	public L1House[] getHouseTableList() {
 		return _house.values().toArray(new L1House[_house.size()]);
 	}
-	/** 取得盟屋表 */
+
+	/**
+	 * 取得盟屋表
+	 * 
+	 * @return
+	 */
 	public L1House getHouseTable(int houseId) {
 		return _house.get(houseId);
 	}
-	/** 更新盟屋 */
+
+	/**
+	 * 更新盟屋
+	 */
 	public void updateHouse(L1House house) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE house SET house_name=?, house_area=?, location=?, keeper_id=?, is_on_sale=?, is_purchase_basement=?, tax_deadline=? WHERE house_id=?");
+			pstm = con.prepareStatement("UPDATE house SET house_name=?, house_area=?, location=?, keeper_id=?, is_on_sale=?, is_purchase_basement=?, tax_deadline=? WHERE house_id=?");
 			pstm.setString(1, house.getHouseName());
 			pstm.setInt(2, house.getHouseArea());
 			pstm.setString(3, house.getLocation());
@@ -125,7 +132,12 @@ public class HouseTable {
 			SQLUtil.close(con);
 		}
 	}
-	/** 取得盟屋ID列表 */
+
+	/**
+	 * 取得盟屋ID列表
+	 * 
+	 * @return
+	 */
 	public static List<Integer> getHouseIdList() {
 		List<Integer> houseIdList = Lists.newList();
 
@@ -135,8 +147,7 @@ public class HouseTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int houseId = rs.getInt("house_id");

@@ -26,15 +26,14 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 聊天记录表
+ * 聊天记录资料表
  */
 public class ChatLogTable {
 
 	private static Logger _log = Logger.getLogger(ChatLogTable.class.getName());
 
 	/*
-	 * 在代码中，而应该使用HashMap、因为有可能是一个性能问题，妥协安排。
-	 * 当考虑到一个HashMap的变化、不注重性能问题。
+	 * 在代码中，而应该使用HashMap、因为有可能是一个性能问题，妥协安排。 当考虑到一个HashMap的变化、不注重性能问题。
 	 */
 	private final boolean[] loggingConfig = new boolean[15];
 
@@ -42,7 +41,9 @@ public class ChatLogTable {
 		loadConfig();
 	}
 
-	/** 加载配置 */
+	/**
+	 * 加载配置
+	 */
 	private void loadConfig() {
 		loggingConfig[0] = Config.LOGGING_CHAT_NORMAL;
 		loggingConfig[1] = Config.LOGGING_CHAT_WHISPER;
@@ -63,14 +64,25 @@ public class ChatLogTable {
 		return _instance;
 	}
 
-	/** 记录目标 */
+	/**
+	 * 记录目标
+	 * 
+	 * @param type
+	 * @return
+	 */
 	private boolean isLoggingTarget(int type) {
 		return loggingConfig[type];
 	}
 
-	/** 储存聊天 */
-	public void storeChat(L1PcInstance pc, L1PcInstance target, String text,
-			int type) {
+	/**
+	 * 储存聊天
+	 * 
+	 * @param pc
+	 * @param target
+	 * @param text
+	 * @param type
+	 */
+	public void storeChat(L1PcInstance pc, L1PcInstance target, String text, int type) {
 		if (!isLoggingTarget(type)) {
 			return;
 		}
@@ -110,9 +122,9 @@ public class ChatLogTable {
 				pstm.setInt(16, target.getY());
 				pstm.setInt(17, target.getMapId());
 				pstm.setString(18, text);
-			} else {
-				pstm = con
-						.prepareStatement("INSERT INTO log_chat (account_name, char_id, name, clan_id, clan_name, locx, locy, mapid, type, content, datetime) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE())");
+			}
+			else {
+				pstm = con.prepareStatement("INSERT INTO log_chat (account_name, char_id, name, clan_id, clan_name, locx, locy, mapid, type, content, datetime) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE())");
 				pstm.setString(1, pc.getAccountName());
 				pstm.setInt(2, pc.getId());
 				pstm.setString(3, pc.isGm() ? "******" : pc.getName());

@@ -115,53 +115,51 @@ public class SprTable {
 				int speed = calcActionSpeed(frameCount, frameRate);
 
 				switch (actid) {
-					case ACTION_Walk:
-					case ACTION_SwordWalk:
-					case ACTION_AxeWalk:
-					case ACTION_BowWalk:
-					case ACTION_SpearWalk:
-					case ACTION_StaffWalk:
-					case ACTION_DaggerWalk:
-					case ACTION_TwoHandSwordWalk:
-					case ACTION_EdoryuWalk:
-					case ACTION_ClawWalk:
-					case ACTION_ThrowingKnifeWalk:
-						spr.moveSpeed.put(actid, speed);
-						break;
-					case ACTION_SkillAttack:
-						spr.dirSpellSpeed = speed;
-						break;
-					case ACTION_SkillBuff:
-						spr.nodirSpellSpeed = speed;
-						break;
-					case ACTION_Attack:
-					case ACTION_SwordAttack:
-					case ACTION_AxeAttack:
-					case ACTION_BowAttack:
-					case ACTION_SpearAttack:
-					case ACTION_AltAttack:
-					case ACTION_SpellDirectionExtra:
-					case ACTION_StaffAttack:
-					case ACTION_DaggerAttack:
-					case ACTION_TwoHandSwordAttack:
-					case ACTION_EdoryuAttack:
-					case ACTION_ClawAttack:
-					case ACTION_ThrowingKnifeAttack:
-						spr.attackSpeed.put(actid, speed);
-						break;
-					case ACTION_Think:
-					case ACTION_Aggress:
-						spr.specialSpeed.put(actid, speed);
-						break;
-					default:
-						break;
+				case ACTION_Walk:
+				case ACTION_SwordWalk:
+				case ACTION_AxeWalk:
+				case ACTION_BowWalk:
+				case ACTION_SpearWalk:
+				case ACTION_StaffWalk:
+				case ACTION_DaggerWalk:
+				case ACTION_TwoHandSwordWalk:
+				case ACTION_EdoryuWalk:
+				case ACTION_ClawWalk:
+				case ACTION_ThrowingKnifeWalk:
+					spr.moveSpeed.put(actid, speed);
+					break;
+				case ACTION_SkillAttack:
+					spr.dirSpellSpeed = speed;
+					break;
+				case ACTION_SkillBuff:
+					spr.nodirSpellSpeed = speed;
+					break;
+				case ACTION_Attack:
+				case ACTION_SwordAttack:
+				case ACTION_AxeAttack:
+				case ACTION_BowAttack:
+				case ACTION_SpearAttack:
+				case ACTION_AltAttack:
+				case ACTION_SpellDirectionExtra:
+				case ACTION_StaffAttack:
+				case ACTION_DaggerAttack:
+				case ACTION_TwoHandSwordAttack:
+				case ACTION_EdoryuAttack:
+				case ACTION_ClawAttack:
+				case ACTION_ThrowingKnifeAttack:
+					spr.attackSpeed.put(actid, speed);
+					break;
+				case ACTION_Think:
+				case ACTION_Aggress:
+					spr.specialSpeed.put(actid, speed);
+					break;
+				default:
+					break;
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -171,6 +169,9 @@ public class SprTable {
 
 	/**
 	 * 为从帧和帧速率（MS）动作的总时间来计算，并返回。
+	 * 
+	 * @param frameCount
+	 * @param frameRate
 	 */
 	private int calcActionSpeed(int frameCount, int frameRate) {
 		return (int) (frameCount * 40 * (24D / frameRate));
@@ -182,7 +183,7 @@ public class SprTable {
 	 * @param sprid
 	 *            - 检查spr的ID
 	 * @param actid
-	 *            - 武器种类表值。L1Item.getType1()一致返回值 + 1 
+	 *            - 武器种类表值。L1Item.getType1()一致返回值 + 1
 	 * @return 指定spr的攻击速度(ms)
 	 */
 	public int getAttackSpeed(int sprid, int actid) {
@@ -202,6 +203,7 @@ public class SprTable {
 
 	/**
 	 * 传回移动速度。
+	 * 
 	 * @param sprid
 	 * @param actid
 	 * @return
@@ -223,6 +225,7 @@ public class SprTable {
 
 	/**
 	 * 传回有向施法速度
+	 * 
 	 * @param sprid
 	 * @return
 	 */
@@ -235,6 +238,7 @@ public class SprTable {
 
 	/**
 	 * 传回无向施法速度
+	 * 
 	 * @param sprid
 	 * @return
 	 */
@@ -247,6 +251,7 @@ public class SprTable {
 
 	/**
 	 * 传回魔法娃娃表情动作速度
+	 * 
 	 * @param sprid
 	 * @param actid
 	 * @return
@@ -265,51 +270,52 @@ public class SprTable {
 
 	/**
 	 * Npc 各动作延迟时间
+	 * 
 	 * @param sprid
 	 * @param actid
 	 */
 	public int getSprSpeed(int sprid, int actid) {
 		switch (actid) {
-			case ACTION_Walk:
-			case ACTION_SwordWalk:
-			case ACTION_AxeWalk:
-			case ACTION_BowWalk:
-			case ACTION_SpearWalk:
-			case ACTION_StaffWalk:
-			case ACTION_DaggerWalk:
-			case ACTION_TwoHandSwordWalk:
-			case ACTION_EdoryuWalk:
-			case ACTION_ClawWalk:
-			case ACTION_ThrowingKnifeWalk:
-				// 移动
-				return getMoveSpeed(sprid, actid);
-			case ACTION_SkillAttack:
-				// 有向施法
-				return getDirSpellSpeed(sprid);
-			case ACTION_SkillBuff:
-				// 无向施法
-				return getNodirSpellSpeed(sprid);
-			case ACTION_Attack:
-			case ACTION_SwordAttack:
-			case ACTION_AxeAttack:
-			case ACTION_BowAttack:
-			case ACTION_SpearAttack:
-			case ACTION_AltAttack:
-			case ACTION_SpellDirectionExtra:
-			case ACTION_StaffAttack:
-			case ACTION_DaggerAttack:
-			case ACTION_TwoHandSwordAttack:
-			case ACTION_EdoryuAttack:
-			case ACTION_ClawAttack:
-			case ACTION_ThrowingKnifeAttack:
-				// 攻击
-				return getAttackSpeed(sprid, actid);
-			case ACTION_Think:
-			case ACTION_Aggress:
-				// 魔法娃娃表情动作
-				return getSpecialSpeed(sprid, actid);
-			default:
-				break;
+		case ACTION_Walk:
+		case ACTION_SwordWalk:
+		case ACTION_AxeWalk:
+		case ACTION_BowWalk:
+		case ACTION_SpearWalk:
+		case ACTION_StaffWalk:
+		case ACTION_DaggerWalk:
+		case ACTION_TwoHandSwordWalk:
+		case ACTION_EdoryuWalk:
+		case ACTION_ClawWalk:
+		case ACTION_ThrowingKnifeWalk:
+			// 移动
+			return getMoveSpeed(sprid, actid);
+		case ACTION_SkillAttack:
+			// 有向施法
+			return getDirSpellSpeed(sprid);
+		case ACTION_SkillBuff:
+			// 无向施法
+			return getNodirSpellSpeed(sprid);
+		case ACTION_Attack:
+		case ACTION_SwordAttack:
+		case ACTION_AxeAttack:
+		case ACTION_BowAttack:
+		case ACTION_SpearAttack:
+		case ACTION_AltAttack:
+		case ACTION_SpellDirectionExtra:
+		case ACTION_StaffAttack:
+		case ACTION_DaggerAttack:
+		case ACTION_TwoHandSwordAttack:
+		case ACTION_EdoryuAttack:
+		case ACTION_ClawAttack:
+		case ACTION_ThrowingKnifeAttack:
+			// 攻击
+			return getAttackSpeed(sprid, actid);
+		case ACTION_Think:
+		case ACTION_Aggress:
+			// 魔法娃娃表情动作
+			return getSpecialSpeed(sprid, actid);
+		default:
+			break;
 		}
 		return 0;
 	}

@@ -29,7 +29,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * NPC喊话表
+ * NPC喊话资料表
  */
 public class NpcChatTable {
 
@@ -37,13 +37,13 @@ public class NpcChatTable {
 
 	private static NpcChatTable _instance;
 
-	private Map<Integer, L1NpcChat> _npcChatAppearance = Maps.newMap();
+	private final Map<Integer, L1NpcChat> _npcChatAppearance = Maps.newMap();
 
-	private Map<Integer, L1NpcChat> _npcChatDead = Maps.newMap();
+	private final Map<Integer, L1NpcChat> _npcChatDead = Maps.newMap();
 
-	private Map<Integer, L1NpcChat> _npcChatHide = Maps.newMap();
+	private final Map<Integer, L1NpcChat> _npcChatHide = Maps.newMap();
 
-	private Map<Integer, L1NpcChat> _npcChatGameTime = Maps.newMap();
+	private final Map<Integer, L1NpcChat> _npcChatGameTime = Maps.newMap();
 
 	public static NpcChatTable getInstance() {
 		if (_instance == null) {
@@ -95,33 +95,64 @@ public class NpcChatTable {
 					_npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
+	/**
+	 * 取得NPC出现时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
 	public L1NpcChat getTemplateAppearance(int i) {
 		return _npcChatAppearance.get(new Integer(i));
 	}
 
+	/**
+	 * 取得NPC死亡时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
 	public L1NpcChat getTemplateDead(int i) {
 		return _npcChatDead.get(new Integer(i));
 	}
 
+	/**
+	 * 取得NPC取消隐藏状态时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
 	public L1NpcChat getTemplateHide(int i) {
 		return _npcChatHide.get(new Integer(i));
 	}
 
+	/**
+	 * 取得NPC定时喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
 	public L1NpcChat getTemplateGameTime(int i) {
 		return _npcChatGameTime.get(new Integer(i));
 	}
 
+	/**
+	 * 取得全部NPC喊话时间
+	 * 
+	 * @return
+	 */
 	public L1NpcChat[] getAllGameTime() {
 		return _npcChatGameTime.values().toArray(new L1NpcChat[_npcChatGameTime.size()]);
 	}

@@ -13,7 +13,7 @@ import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 魔法娃娃表
+ * 魔法娃娃资料表
  */
 public class MagicDollTable {
 
@@ -44,32 +44,32 @@ public class MagicDollTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1MagicDoll doll = new L1MagicDoll();
-				int itemId = rs.getInt("item_id");
+				int itemId = rs.getInt("item_id"); // 魔法娃娃道具编号 对应 etcitem
 				doll.setItemId(itemId);
-				doll.setDollId(rs.getInt("doll_id"));
-				doll.setAc(rs.getInt("ac"));
-				doll.setHpr(rs.getInt("hpr"));
-				doll.setHprTime(rs.getBoolean("hpr_time"));
-				doll.setMpr(rs.getInt("mpr"));
-				doll.setMprTime(rs.getBoolean("mpr_time"));
-				doll.setHit(rs.getInt("hit"));
-				doll.setDmg(rs.getInt("dmg"));
-				doll.setDmgChance(rs.getInt("dmg_chance"));
-				doll.setBowHit(rs.getInt("bow_hit"));
-				doll.setBowDmg(rs.getInt("bow_dmg"));
-				doll.setDmgReduction(rs.getInt("dmg_reduction"));
-				doll.setDmgReductionChance(rs.getInt("dmg_reduction_chance"));
-				doll.setDmgEvasionChance(rs.getInt("dmg_evasion_chance"));
-				doll.setWeightReduction(rs.getInt("weight_reduction"));
-				doll.setRegistStun(rs.getInt("regist_stun"));
-				doll.setRegistStone(rs.getInt("regist_stone"));
-				doll.setRegistSleep(rs.getInt("regist_sleep"));
-				doll.setRegistFreeze(rs.getInt("regist_freeze"));
-				doll.setRegistSustain(rs.getInt("regist_sustain"));
-				doll.setRegistBlind(rs.getInt("regist_blind"));
-				doll.setMakeItemId(rs.getInt("make_itemid"));
-				doll.setEffect(rs.getByte("effect"));
-				doll.setEffectChance(rs.getInt("effect_chance"));
+				doll.setDollId(rs.getInt("doll_id")); // 魔法娃娃编号 对应 npc
+				doll.setAc(rs.getInt("ac")); // 增加物理防御
+				doll.setHpr(rs.getInt("hpr")); // 增加体力回覆量
+				doll.setHprTime(rs.getBoolean("hpr_time")); // 体力回覆判断 0:增加自身体力回覆量、1:固定时间回覆一次 (希尔黛斯)
+				doll.setMpr(rs.getInt("mpr")); // 增加魔力回覆量
+				doll.setMprTime(rs.getBoolean("mpr_time")); // 魔力回覆判断 0:增加自身体力回覆量 (蛇女、幼龙)、1:固定时间回覆一次 (小思克巴、长老)
+				doll.setHit(rs.getInt("hit")); // 增加近距离物理命中率
+				doll.setDmg(rs.getInt("dmg")); // 增加近距离物理攻击力
+				doll.setDmgChance(rs.getInt("dmg_chance")); // 机率性增加物理攻击力
+				doll.setBowHit(rs.getInt("bow_hit")); // 增加远距离物理命中率
+				doll.setBowDmg(rs.getInt("bow_dmg")); // 增加远距离物理攻击力
+				doll.setDmgReduction(rs.getInt("dmg_reduction")); // 增加伤害减免
+				doll.setDmgReductionChance(rs.getInt("dmg_reduction_chance")); // 机率性伤害减免
+				doll.setDmgEvasionChance(rs.getInt("dmg_evasion_chance")); // 机率性回避伤害
+				doll.setWeightReduction(rs.getInt("weight_reduction")); // 增加负重
+				doll.setRegistStun(rs.getInt("regist_stun")); // 增加昏迷耐性
+				doll.setRegistStone(rs.getInt("regist_stone")); // 增加石化耐性
+				doll.setRegistSleep(rs.getInt("regist_sleep")); // 增加睡眠耐性
+				doll.setRegistFreeze(rs.getInt("regist_freeze")); // 增加寒冰耐性
+				doll.setRegistSustain(rs.getInt("regist_sustain")); // 增加支撑耐性
+				doll.setRegistBlind(rs.getInt("regist_blind")); // 增加闇黑耐性
+				doll.setMakeItemId(rs.getInt("make_itemid")); // 获得道具
+				doll.setEffect(rs.getByte("effect")); // 效果 1:中毒
+				doll.setEffectChance(rs.getInt("effect_chance")); // 中毒几率
 
 				_dolls.put(new Integer(itemId), doll);
 			}

@@ -30,14 +30,15 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 陷阱表
+ * 陷阱资料表
  */
 public class TrapTable {
+
 	private static Logger _log = Logger.getLogger(TrapTable.class.getName());
 
 	private static TrapTable _instance;
 
-	private Map<Integer, L1Trap> _traps = Maps.newMap();
+	private final Map<Integer, L1Trap> _traps = Maps.newMap();
 
 	private TrapTable() {
 		initialize();
@@ -46,8 +47,7 @@ public class TrapTable {
 	private L1Trap createTrapInstance(String name, TrapStorage storage) throws Exception {
 		final String packageName = "l1j.server.server.model.trap.";
 
-		Constructor<?> con = Class.forName(packageName + name).getConstructor(new Class[]
-		{ TrapStorage.class });
+		Constructor<?> con = Class.forName(packageName + name).getConstructor(new Class[] { TrapStorage.class });
 		return (L1Trap) con.newInstance(storage);
 	}
 
@@ -70,14 +70,11 @@ public class TrapTable {
 
 				_traps.put(trap.getId(), trap);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -113,8 +110,8 @@ public class TrapTable {
 		public String getString(String name) {
 			try {
 				return _rs.getString(name);
+			} catch (SQLException e) {
 			}
-			catch (SQLException e) {}
 			return "";
 		}
 
@@ -122,8 +119,7 @@ public class TrapTable {
 		public int getInt(String name) {
 			try {
 				return _rs.getInt(name);
-			}
-			catch (SQLException e) {
+			} catch (SQLException e) {
 
 			}
 			return 0;
@@ -133,8 +129,8 @@ public class TrapTable {
 		public boolean getBoolean(String name) {
 			try {
 				return _rs.getBoolean(name);
+			} catch (SQLException e) {
 			}
-			catch (SQLException e) {}
 			return false;
 		}
 	}

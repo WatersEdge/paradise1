@@ -30,7 +30,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 技能表
+ * 技能资料表
  */
 public class SkillsTable {
 
@@ -64,11 +64,9 @@ public class SkillsTable {
 			rs = pstm.executeQuery();
 			FillSkillsTable(rs);
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建skills表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -117,7 +115,15 @@ public class SkillsTable {
 		_log.config("技能 " + _skills.size() + "件");
 	}
 
-	/** 学会的技能 */
+	/**
+	 * 学会的技能
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 * @param skillname
+	 * @param active
+	 * @param time
+	 */
 	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
 		if (spellCheck(playerobjid, skillid)) {
 			return;
@@ -139,18 +145,21 @@ public class SkillsTable {
 			pstm.setInt(4, active);
 			pstm.setInt(5, time);
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 技能丢失 */
+	/**
+	 * 技能丢失
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 */
 	public void spellLost(int playerobjid, int skillid) {
 		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
@@ -166,18 +175,21 @@ public class SkillsTable {
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 检查技能 */
+	/**
+	 * 检查技能
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 */
 	public boolean spellCheck(int playerobjid, int skillid) {
 		boolean ret = false;
 		Connection con = null;
@@ -196,12 +208,10 @@ public class SkillsTable {
 			else {
 				ret = false;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

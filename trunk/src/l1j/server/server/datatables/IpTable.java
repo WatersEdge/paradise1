@@ -27,13 +27,15 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Lists;
 
 /**
- * 封锁IP表
+ * 封锁IP资料表
  */
 public class IpTable {
 
 	private static Logger _log = Logger.getLogger(IpTable.class.getName());
+
 	/** 封锁IP */
 	private static List<String> _banip;
+
 	/** 初始化 */
 	public static boolean isInitialized;
 
@@ -53,7 +55,11 @@ public class IpTable {
 		}
 	}
 
-	/** 封锁IP */
+	/**
+	 * 封锁IP
+	 * 
+	 * @param ip
+	 */
 	public void banIp(String ip) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -73,7 +79,12 @@ public class IpTable {
 		}
 	}
 
-	/** 封锁IP */
+	/**
+	 * 封锁IP
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public boolean isBannedIp(String s) {
 		for (String BanIpAddress : _banip) { // 被封锁的IP
 			// 判断如果使用*结尾
@@ -87,7 +98,8 @@ public class IpTable {
 				if (newaddress.equalsIgnoreCase(reip)) {
 					return true;
 				}
-			} else {
+			}
+			else {
 				if (s.equalsIgnoreCase(BanIpAddress)) {
 					return true;
 				}
@@ -96,7 +108,9 @@ public class IpTable {
 		return false;
 	}
 
-	/** 取得IP表 */
+	/**
+	 * 取得IP表
+	 */
 	public void getIpTable() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -123,7 +137,12 @@ public class IpTable {
 		}
 	}
 
-	/** 解封IP */
+	/**
+	 * 解封IP
+	 * 
+	 * @param ip
+	 * @return
+	 */
 	public boolean liftBanIp(String ip) {
 		boolean ret = false;
 		Connection con = null;

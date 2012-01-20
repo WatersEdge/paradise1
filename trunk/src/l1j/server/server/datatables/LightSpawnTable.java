@@ -31,7 +31,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 产生照明表
+ * 产生照明资料表
  */
 public class LightSpawnTable {
 
@@ -50,7 +50,9 @@ public class LightSpawnTable {
 		FillLightSpawnTable();
 	}
 
-	/** 填入产生照明表 */
+	/**
+	 * 填入产生照明表
+	 */
 	private void FillLightSpawnTable() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -69,8 +71,7 @@ public class LightSpawnTable {
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
 					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-					Object parameters[] =
-					{ l1npc };
+					Object parameters[] = { l1npc };
 					L1FieldObjectInstance field = (L1FieldObjectInstance) constructor.newInstance(parameters);
 					field = (L1FieldObjectInstance) constructor.newInstance(parameters);
 					field.setId(IdFactory.getInstance().nextId());
@@ -85,31 +86,22 @@ public class LightSpawnTable {
 					L1World.getInstance().storeObject(field);
 					L1World.getInstance().addVisibleObject(field);
 				}
-			}
-			while (true);
-		}
-		catch (SQLException e) {
+			} while (true);
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (SecurityException e) {
+		} catch (SecurityException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (InstantiationException e) {
+		} catch (InstantiationException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (InvocationTargetException e) {
+		} catch (InvocationTargetException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
