@@ -57,49 +57,18 @@ public class C_ItemUSe extends ClientBasePacket {
 		// 使用物件的OBJID
 		int itemObjid = readD();
 
+		// 不能使用道具的状态
+		if (!CheckUtil.checkUseItem(client)) {
+			return;
+		}
+
 		// 取得使用者
 		L1PcInstance pc = client.getActiveChar();
-
-		// 角色为空
-		if (pc == null) {
-			return;
-		}
-
-		// 幽灵状态
-		if (pc.isGhost()) {
-			return;
-		}
-
-		// 死亡状态
-		if (pc.isDead()) {
-			return;
-		}
-
-		// 传送状态
-		if (pc.isTeleport()) {
-			return;
-		}
-
-		// 开个人商店中
-		if (pc.isPrivateShop()) {
-			return;
-		}
-
-		// 不能使用道具的状态
-		if (!CheckUtil.checkUseItem(pc)) {
-			return;
-		}
-
-		// 不能使用道具的地图
-		if (!pc.getMap().isUsableItem()) {
-			pc.sendPackets(new S_ServerMessage(563)); // \f1你无法在这个地方使用。
-			return;
-		}
 
 		// 取得使用道具
 		L1ItemInstance useItem = pc.getInventory().getItem(itemObjid);
 
-		// 使用道具为空
+		// 例外:空道具
 		if (useItem == null) {
 			return;
 		}
@@ -172,7 +141,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			case -4: // 加速类道具 (绿色药水)
 			case -3: // 回魔类道具 (蓝色药水)
 			case -2: // 加血类道具 (治愈药水)
-				if (!CheckUtil.checkUsePotion(pc)) {
+				if (!CheckUtil.checkUsePotion(client)) {
 					return;
 				}
 				if (isClass) {

@@ -12,6 +12,7 @@ import static l1j.server.server.model.skill.L1SkillId.SHOCK_SKIN;
 import static l1j.server.server.model.skill.L1SkillId.SHOCK_STUN;
 import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_PARALYZED;
+import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.L1PolyMorph;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -34,59 +35,48 @@ public class CheckUtil {
 	/**
 	 * 检查能否使用指定道具
 	 * 
-	 * @param pc
-	 *            检查的对象
+	 * @param client
+	 *            连线端对象
 	 * @return 如果可用、true
 	 */
-	public static boolean checkUseItem(final L1PcInstance pc) {
+	public static boolean checkUseItem(final ClientThread client) {
 
-		// 麻痹毒(木乃伊诅咒)后
-		if (pc.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
+		// 取得使用者
+		L1PcInstance pc = client.getActiveChar();
+
+		// 角色为空
+		if (pc == null) {
 			return false;
 		}
 
-		// 法师魔法 (冰矛围篱)
-		if (pc.hasSkillEffect(ICE_LANCE)) {
+		// 幽灵状态
+		if (pc.isGhost()) {
 			return false;
 		}
 
-		// 法师魔法 (冰雪飓风)
-		if (pc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		// 死亡状态
+		if (pc.isDead()) {
 			return false;
 		}
 
-		// 亚力安冰矛围篱
-		if (pc.hasSkillEffect(ICE_LANCE_COCKATRICE)) {
+		// 传送状态
+		if (pc.isTeleport()) {
 			return false;
 		}
 
-		// 邪恶蜥蜴冰矛围篱
-		if (pc.hasSkillEffect(ICE_LANCE_BASILISK)) {
+		// 开个人商店中
+		if (pc.isPrivateShop()) {
 			return false;
 		}
 
-		// 法师魔法 (沉睡之雾)
-		if (pc.hasSkillEffect(FOG_OF_SLEEPING)) {
+		// 不能使用道具的地图
+		if (!pc.getMap().isUsableItem()) {
+			pc.sendPackets(new S_ServerMessage(563)); // \f1你无法在这个地方使用。
 			return false;
 		}
 
-		// 骑士魔法 (冲击之晕)
-		if (pc.hasSkillEffect(SHOCK_STUN)) {
-			return false;
-		}
-
-		// 妖精魔法 (大地屏障)
-		if (pc.hasSkillEffect(EARTH_BIND)) {
-			return false;
-		}
-
-		// 龙骑士魔法 (冲击之肤)
-		if (pc.hasSkillEffect(SHOCK_SKIN)) { // 冲晕效果
-			return false;
-		}
-
-		// 龙骑士魔法 (寒冰喷吐)
-		if (pc.hasSkillEffect(FREEZING_BREATH)) {
+		// 什么都不能做的状态
+		if (!CheckUtil.check(client)) {
 			return false;
 		}
 
@@ -96,17 +86,35 @@ public class CheckUtil {
 	/**
 	 * 检查能否使用药水
 	 * 
-	 * @param pc
-	 *            检查的对象
+	 * @param client
+	 *            连线端对象
 	 * @return 如果可用、true
 	 */
-	public static boolean checkUsePotion(final L1PcInstance pc) {
+	public static boolean checkUsePotion(final ClientThread client) {
+
+		// 取得使用者
+		L1PcInstance pc = client.getActiveChar();
 
 		// 药水霜化术状态
 		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return false;
 		}
+
+		return true;
+	}
+
+	/**
+	 * 什么都不能做的状态 (无法回城、无法移动、无法使用道具等)
+	 * 
+	 * @param client
+	 *            连线端对象
+	 * @return 如果可用、true
+	 */
+	public static boolean check(final ClientThread client) {
+
+		// 取得使用者
+		L1PcInstance pc = client.getActiveChar();
 
 		// 麻痹毒(木乃伊诅咒)后
 		if (pc.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
@@ -279,7 +287,8 @@ public class CheckUtil {
 			if (pc.getWeapon().equals(weapon)) {
 				pcInventory.setEquipped(pc.getWeapon(), false, false, false);
 				return;
-			} else { // 武器交换
+			}
+			else { // 武器交换
 				pcInventory.setEquipped(pc.getWeapon(), false, false, true);
 			}
 		}
@@ -313,7 +322,8 @@ public class CheckUtil {
 		// 戒指可戴2个,其他都只能戴1个
 		if (type == 9) {
 			equipeSpace = pcInventory.getTypeEquipped(2, 9) <= 1;
-		} else {
+		}
+		else {
 			equipeSpace = pcInventory.getTypeEquipped(2, type) <= 0;
 		}
 
@@ -368,7 +378,8 @@ public class CheckUtil {
 				pc.sendPackets(new S_ServerMessage(150)); // \f1你无法这样做。这个物品已经被诅咒了。
 				return;
 
-			} else {
+			}
+			else {
 
 				// 穿着盔甲时不能脱下内衣
 				if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
@@ -391,11 +402,13 @@ public class CheckUtil {
 				}
 				pcInventory.setEquipped(armor, false);
 			}
-		} else {
+		}
+		else {
 			if (armor.getItem().getUseType() == 23) {
 				pc.sendPackets(new S_ServerMessage(144)); // \f1你已经戴着二个戒指。
 				return;
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
 				return;
 			}
