@@ -28,7 +28,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 旅馆表
+ * 旅馆资料表
  */
 public class InnTable {
 
@@ -70,7 +70,8 @@ public class InnTable {
 				if (!_dataMap.containsKey(key)) {
 					inn = new Inn();
 					_dataMap.put(key, inn);
-				} else {
+				}
+				else {
 					inn = _dataMap.get(key);
 				}
 
@@ -95,7 +96,11 @@ public class InnTable {
 		}
 	}
 
-	/** 更新旅馆 */
+	/**
+	 * 更新旅馆
+	 * 
+	 * @param inn
+	 */
 	public void updateInn(L1Inn inn) {
 		Connection con = null;
 		PreparedStatement pstm = null;

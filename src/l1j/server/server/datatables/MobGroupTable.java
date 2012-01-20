@@ -31,7 +31,7 @@ import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * MOB集团名单表
+ * MOB集团(队伍)资料表
  */
 public class MobGroupTable {
 
@@ -74,11 +74,9 @@ public class MobGroupTable {
 				_mobGroupIndex.put(mobGroupId, mobGroup);
 			}
 			_log.config("MOB集团名单 " + _mobGroupIndex.size() + "件");
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建mobgroup表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

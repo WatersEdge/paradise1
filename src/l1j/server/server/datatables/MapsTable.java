@@ -27,9 +27,25 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 地图表
+ * 地图资料表
  */
 public final class MapsTable {
+
+	private static Logger _log = Logger.getLogger(MapsTable.class.getName());
+
+	private static MapsTable _instance;
+
+	/**
+	 * 返回一个MapsTable的实例。
+	 * 
+	 * @return MapsTable的实例
+	 */
+	public static MapsTable getInstance() {
+		if (_instance == null) {
+			_instance = new MapsTable();
+		}
+		return _instance;
+	}
 
 	private class MapData {
 		/** 开始坐标X */
@@ -54,7 +70,7 @@ public final class MapsTable {
 		public boolean escapable = false;
 		/** 复活 */
 		public boolean isUseResurrection = false;
-		/** 使用Painwand */
+		/** 使用魔杖 */
 		public boolean isUsePainwand = false;
 		/** 死亡惩罚 */
 		public boolean isEnabledDeathPenalty = false;
@@ -67,10 +83,6 @@ public final class MapsTable {
 		/** 使用技能 */
 		public boolean isUsableSkill = false;
 	}
-
-	private static Logger _log = Logger.getLogger(MapsTable.class.getName());
-
-	private static MapsTable _instance;
 
 	/**
 	 * 地图ID的Key、Valueにテレポート可否フラグが格納されるHashMap
@@ -85,7 +97,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 从数据库中读取地图可否传送、HashMap _maps存储。
+	 * 从数据库中加载地图。
 	 */
 	private void loadMapsFromDatabase() {
 		Connection con = null;
@@ -121,27 +133,13 @@ public final class MapsTable {
 			}
 
 			_log.config("Maps " + _maps.size());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 返回一个MapsTable的实例。
-	 * 
-	 * @return MapsTable的实例
-	 */
-	public static MapsTable getInstance() {
-		if (_instance == null) {
-			_instance = new MapsTable();
-		}
-		return _instance;
 	}
 
 	/**
@@ -251,7 +249,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回能够记忆坐标。
+	 * 地图、返回能否记忆坐标。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
@@ -312,12 +310,12 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回能使用Painwand。
+	 * 地图、返回能否使用魔杖。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
 	 * 
-	 * @return 如果能使用Painwand true
+	 * @return 如果能使用魔杖 true
 	 */
 	public boolean isUsePainwand(int mapId) {
 		MapData map = _maps.get(mapId);
@@ -328,7 +326,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回有死亡惩罚。
+	 * 地图、返回是否有死亡惩罚。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
@@ -344,7 +342,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回可以召唤宠物。
+	 * 地图、返回是否可以召唤宠物。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
@@ -360,7 +358,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回可以召回宠物。
+	 * 地图、返回是否可以召回宠物。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
@@ -376,7 +374,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回可以使用道具。
+	 * 地图、返回是否可以使用道具。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID
@@ -392,7 +390,7 @@ public final class MapsTable {
 	}
 
 	/**
-	 * 地图、返回可以使用技能。
+	 * 地图、返回是否可以使用技能。
 	 * 
 	 * @param mapId
 	 *            检查地图的地图ID

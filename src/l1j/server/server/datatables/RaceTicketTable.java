@@ -26,11 +26,8 @@ import l1j.server.L1DatabaseFactory;
 import l1j.server.server.templates.L1RaceTicket;
 import l1j.server.server.utils.SQLUtil;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 赛跑门票
+ * 赛跑门票资料表
  */
 public class RaceTicketTable {
 
@@ -98,8 +95,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO race_ticket SET item_obj_id=?,round=?," + "allotment_percentage=?,victory=?,runner_num=?");
+			pstm = con.prepareStatement("INSERT INTO race_ticket SET item_obj_id=?,round=?," + "allotment_percentage=?,victory=?,runner_num=?");
 			pstm.setInt(1, ticket.get_itemobjid());
 			pstm.setInt(2, ticket.get_round());
 			pstm.setDouble(3, ticket.get_allotment_percentage());
@@ -125,8 +121,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
+			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
 		} catch (Exception e) {
@@ -142,8 +137,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
+			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
 			pstm.setInt(1, round);
 			pstm.execute();
 		} catch (Exception e) {
@@ -165,8 +159,7 @@ public class RaceTicketTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE " + "race_ticket SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");
+			pstm = con.prepareStatement("UPDATE " + "race_ticket SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");
 
 			pstm.setInt(1, 1);
 			pstm.setDouble(2, allotment_percentage);

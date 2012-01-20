@@ -30,7 +30,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * NPC表
+ * NPC资料表
  */
 public class NpcTable {
 
@@ -62,18 +62,28 @@ public class NpcTable {
 		_initialized = true;
 	}
 
+	/**
+	 * 取得执行类位置
+	 * 
+	 * @param implName
+	 * @return
+	 */
 	private Constructor<?> getConstructor(String implName) {
 		try {
 			String implFullName = "l1j.server.server.model.Instance." + implName + "Instance";
 			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 		return null;
 	}
 
+	/**
+	 * 加载NPC执行类位置
+	 * 
+	 * @param implName
+	 */
 	private void registerConstructorCache(String implName) {
 		if (implName.isEmpty() || _constructorCache.containsKey(implName)) {
 			return;
@@ -171,21 +181,32 @@ public class NpcTable {
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
+	/**
+	 * 取得该编号NPC资料
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public L1Npc getTemplate(int id) {
 		return _npcs.get(id);
 	}
 
+	/**
+	 * 依照NPCID取回新的L1NpcInstance资料
+	 * 
+	 * @param id
+	 *            NPCID
+	 * @return
+	 */
 	public L1NpcInstance newNpcInstance(int id) {
 		L1Npc npcTemp = getTemplate(id);
 		if (npcTemp == null) {
@@ -194,18 +215,28 @@ public class NpcTable {
 		return newNpcInstance(npcTemp);
 	}
 
+	/**
+	 * 依照NPC资料 取回新的L1NpcInstance资料
+	 * 
+	 * @param template
+	 *            NPC资料
+	 * @return
+	 */
 	public L1NpcInstance newNpcInstance(L1Npc template) {
 		try {
 			Constructor<?> con = _constructorCache.get(template.getImpl());
-			return (L1NpcInstance) con.newInstance(new Object[]
-			{ template });
-		}
-		catch (Exception e) {
+			return (L1NpcInstance) con.newInstance(new Object[] { template });
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return null;
 	}
 
+	/**
+	 * 建立NPC家族清单
+	 * 
+	 * @return
+	 */
 	public static Map<String, Integer> buildFamily() {
 		Map<String, Integer> result = Maps.newMap();
 		Connection con = null;
@@ -220,11 +251,9 @@ public class NpcTable {
 				String family = rs.getString("family");
 				result.put(family, id++);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -232,6 +261,13 @@ public class NpcTable {
 		return result;
 	}
 
+	/**
+	 * 依照NPC名称传回NPCID
+	 * 
+	 * @param name
+	 *            依照NPC名称
+	 * @return
+	 */
 	public int findNpcIdByName(String name) {
 		for (L1Npc npc : _npcs.values()) {
 			if (npc.get_name().equals(name)) {
@@ -241,6 +277,13 @@ public class NpcTable {
 		return 0;
 	}
 
+	/**
+	 * 依照NPC名称传回NPCID
+	 * 
+	 * @param name
+	 *            依照NPC名称
+	 * @return
+	 */
 	public int findNpcIdByNameWithoutSpace(String name) {
 		for (L1Npc npc : _npcs.values()) {
 			if (npc.get_name().replace(" ", "").equals(name)) {

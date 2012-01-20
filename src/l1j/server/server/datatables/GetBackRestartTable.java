@@ -27,11 +27,8 @@ import l1j.server.server.templates.L1GetBackRestart;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 
+ * 回城坐标资料表
  */
 public class GetBackRestartTable {
 
@@ -58,7 +55,7 @@ public class GetBackRestartTable {
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1GetBackRestart gbr = new L1GetBackRestart();
-				int area = rs.getInt("area");
+				int area = rs.getInt("area"); // 范围
 				gbr.setArea(area);
 				gbr.setLocX(rs.getInt("locx"));
 				gbr.setLocY(rs.getInt("locy"));
@@ -66,17 +63,20 @@ public class GetBackRestartTable {
 
 				_getbackrestart.put(new Integer(area), gbr);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
+	/**
+	 * 取得回城资料清单
+	 * 
+	 * @return
+	 */
 	public L1GetBackRestart[] getGetBackRestartTableList() {
 		return _getbackrestart.values().toArray(new L1GetBackRestart[_getbackrestart.size()]);
 	}

@@ -33,11 +33,8 @@ import l1j.server.server.templates.L1Mail;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Lists;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 邮件表
+ * 邮件资料表
  */
 public class MailTable {
 
@@ -79,18 +76,20 @@ public class MailTable {
 
 				_allMail.add(mail);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建邮件表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 设定阅读状态 */
+	/**
+	 * 设定阅读状态
+	 * 
+	 * @param mailId
+	 */
 	public void setReadStatus(int mailId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -105,18 +104,21 @@ public class MailTable {
 
 				changeMailStatus(mailId);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 设定邮件类型 */
+	/**
+	 * 设置邮件类型
+	 * 
+	 * @param mailId
+	 * @param type
+	 */
 	public void setMailType(int mailId, int type) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -131,18 +133,20 @@ public class MailTable {
 
 				changeMailType(mailId, type);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 删除邮件 */
+	/**
+	 * 删除邮件
+	 * 
+	 * @param mailId
+	 */
 	public void deleteMail(int mailId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -153,18 +157,23 @@ public class MailTable {
 			pstm.execute();
 
 			delMail(mailId);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 
 	}
 
-	/** 写邮件 */
+	/**
+	 * 写邮件
+	 * 
+	 * @param type
+	 * @param receiver
+	 * @param writer
+	 * @param text
+	 */
 	public void writeMail(int type, String receiver, L1PcInstance writer, byte[] text) {
 		int readStatus = 0;
 
@@ -202,8 +211,7 @@ public class MailTable {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm2 = con.prepareStatement("INSERT INTO mail SET " + "id=?, type=?, sender=?, receiver=?,"
-					+ " date=?, read_status=?, subject=?, content=?");
+			pstm2 = con.prepareStatement("INSERT INTO mail SET " + "id=?, type=?, sender=?, receiver=?," + " date=?, read_status=?, subject=?, content=?");
 			int id = IdFactory.getInstance().nextId();
 			pstm2.setInt(1, id);
 			pstm2.setInt(2, type);
@@ -226,22 +234,28 @@ public class MailTable {
 			mail.setReadStatus(readStatus);
 
 			_allMail.add(mail);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm2);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 取得所有邮件 */
+	/**
+	 * 取得所有邮件
+	 * 
+	 * @return
+	 */
 	public static List<L1Mail> getAllMail() {
 		return _allMail;
 	}
 
-	/** 取得邮件 */
+	/**
+	 * 取得邮件
+	 * 
+	 * @param mailId
+	 */
 	public static L1Mail getMail(int mailId) {
 		for (L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
@@ -251,7 +265,11 @@ public class MailTable {
 		return null;
 	}
 
-	/** 更改邮件状态 */
+	/**
+	 * 更改邮件状态
+	 * 
+	 * @param mailId
+	 */
 	private void changeMailStatus(int mailId) {
 		for (L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
@@ -265,7 +283,12 @@ public class MailTable {
 		}
 	}
 
-	/** 更改邮件类型 */
+	/**
+	 * 更改邮件类型
+	 * 
+	 * @param mailId
+	 * @param type
+	 */
 	private void changeMailType(int mailId, int type) {
 		for (L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
@@ -279,7 +302,11 @@ public class MailTable {
 		}
 	}
 
-	/** 删除邮件 */
+	/**
+	 * 删除邮件
+	 * 
+	 * @param mailId
+	 */
 	private void delMail(int mailId) {
 		for (L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {

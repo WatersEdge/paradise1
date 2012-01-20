@@ -24,11 +24,8 @@ import java.util.logging.Logger;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
 
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 信件表
+ * 信件资料表
  */
 public class LetterTable {
 
@@ -54,8 +51,8 @@ public class LetterTable {
 	// 80:※内容不显示(黑字)
 	// 96:※内容不显示(黑字)
 	// 112:祝贺您。以 %1金币卖出您所拥有的房子。因此给您扣掉%n手续费 10%%的金额金币 %0。%n谢谢。%n%n。
-	// 128:有人提出比您高的金额，因此无法给你购买权。%n因为您参与拍卖没有得标，所以还给你 %0金币。%n谢谢。%n%n 
-	// 144:%n你在拍卖会上以 %0金币成交。%n现在去您的血盟小屋后，可利用多样的设备。%n谢谢。%n%n 
+	// 128:有人提出比您高的金额，因此无法给你购买权。%n因为您参与拍卖没有得标，所以还给你 %0金币。%n谢谢。%n%n
+	// 144:%n你在拍卖会上以 %0金币成交。%n现在去您的血盟小屋后，可利用多样的设备。%n谢谢。%n%n
 	// 160:あなたが所有していた家が最終価格%1アデナで落札されました。
 	// 176:あなたが申請なさった競売は、競売期間内に提示した金額以上での支払いを表明した方が現れなかったため、結局取り消されました。
 	// 192:あなたが申請なさった競売は、競売期間内に提示した金額以上での支払いを表明した方が現れなかったため、結局取り消されました。
@@ -63,9 +60,19 @@ public class LetterTable {
 	// 224:あなたは、あなたの家に課せられた税金%0アデナをまだ納めていません。
 	// 240:あなたは、結局あなたの家に課された税金%0を納めなかったので、警告どおりにあなたの家に対する所有権を剥奪します。
 
-	public void writeLetter(int itemObjectId, int code, String sender,
-			String receiver, String date, int templateId, byte[] subject,
-			byte[] content) {
+	/**
+	 * 写信
+	 * 
+	 * @param itemObjectId
+	 * @param code
+	 * @param sender
+	 * @param receiver
+	 * @param date
+	 * @param templateId
+	 * @param subject
+	 * @param content
+	 */
+	public void writeLetter(int itemObjectId, int code, String sender, String receiver, String date, int templateId, byte[] subject, byte[] content) {
 
 		Connection con = null;
 		PreparedStatement pstm1 = null;
@@ -73,11 +80,9 @@ public class LetterTable {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con
-					.prepareStatement("SELECT * FROM letter ORDER BY item_object_id");
+			pstm1 = con.prepareStatement("SELECT * FROM letter ORDER BY item_object_id");
 			rs = pstm1.executeQuery();
-			pstm2 = con
-					.prepareStatement("INSERT INTO letter SET item_object_id=?, code=?, sender=?, receiver=?, date=?, template_id=?, subject=?, content=?");
+			pstm2 = con.prepareStatement("INSERT INTO letter SET item_object_id=?, code=?, sender=?, receiver=?, date=?, template_id=?, subject=?, content=?");
 			pstm2.setInt(1, itemObjectId);
 			pstm2.setInt(2, code);
 			pstm2.setString(3, sender);
@@ -97,14 +102,17 @@ public class LetterTable {
 		}
 	}
 
-	/** 删除信件 */
+	/**
+	 * 删除信件
+	 * 
+	 * @param itemObjectId
+	 */
 	public void deleteLetter(int itemObjectId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM letter WHERE item_object_id=?");
+			pstm = con.prepareStatement("DELETE FROM letter WHERE item_object_id=?");
 			pstm.setInt(1, itemObjectId);
 			pstm.execute();
 		} catch (SQLException e) {

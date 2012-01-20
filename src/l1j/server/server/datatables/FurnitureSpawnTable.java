@@ -31,7 +31,7 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
 
 /**
- * 产生家具表
+ * 产生家具资料表
  */
 public class FurnitureSpawnTable {
 
@@ -68,8 +68,7 @@ public class FurnitureSpawnTable {
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
 					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-					Object parameters[] =
-					{ l1npc };
+					Object parameters[] = { l1npc };
 					L1FurnitureInstance furniture = (L1FurnitureInstance) constructor.newInstance(parameters);
 					furniture = (L1FurnitureInstance) constructor.newInstance(parameters);
 					furniture.setId(IdFactory.getInstance().nextId());
@@ -85,38 +84,33 @@ public class FurnitureSpawnTable {
 					L1World.getInstance().storeObject(furniture);
 					L1World.getInstance().addVisibleObject(furniture);
 				}
-			}
-			while (true);
-		}
-		catch (SQLException e) {
+			} while (true);
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (SecurityException e) {
+		} catch (SecurityException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (InstantiationException e) {
+		} catch (InstantiationException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (InvocationTargetException e) {
+		} catch (InvocationTargetException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 插入家具 */
+	/**
+	 * 插入家具
+	 * 
+	 * @param furniture
+	 */
 	public void insertFurniture(L1FurnitureInstance furniture) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -129,17 +123,19 @@ public class FurnitureSpawnTable {
 			pstm.setInt(4, furniture.getY());
 			pstm.setInt(5, furniture.getMapId());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 删除家具 */
+	/**
+	 * 删除家具
+	 * 
+	 * @param furniture
+	 */
 	public void deleteFurniture(L1FurnitureInstance furniture) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -148,11 +144,9 @@ public class FurnitureSpawnTable {
 			pstm = con.prepareStatement("DELETE FROM spawnlist_furniture WHERE item_obj_id=?");
 			pstm.setInt(1, furniture.getItemObjId());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

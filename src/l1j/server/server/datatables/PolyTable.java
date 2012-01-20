@@ -28,9 +28,10 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 变身名单表
+ * 变身名单资料表
  */
 public class PolyTable {
+
 	private static Logger _log = Logger.getLogger(PolyTable.class.getName());
 
 	private static PolyTable _instance;
@@ -60,11 +61,9 @@ public class PolyTable {
 			pstm = con.prepareStatement("SELECT * FROM polymorphs union SELECT * FROM z_copy_polymorphs");
 			rs = pstm.executeQuery();
 			fillPolyTable(rs);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

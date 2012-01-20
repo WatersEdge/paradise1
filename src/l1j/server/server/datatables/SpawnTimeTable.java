@@ -28,9 +28,10 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * NPC定时产生表
+ * NPC定时产生资料表
  */
 public class SpawnTimeTable {
+
 	private static Logger _log = Logger.getLogger(SpawnTimeTable.class.getName());
 
 	private static SpawnTimeTable _instance;
@@ -71,11 +72,9 @@ public class SpawnTimeTable {
 
 				_times.put(id, builder.build());
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

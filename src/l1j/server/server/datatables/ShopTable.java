@@ -31,7 +31,7 @@ import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 商店表
+ * 商店资料表
  */
 public class ShopTable {
 
@@ -67,11 +67,9 @@ public class ShopTable {
 			while (rs.next()) {
 				ids.add(rs.getInt("npc_id"));
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
 		return ids;
@@ -112,11 +110,9 @@ public class ShopTable {
 				_allShops.put(npcId, shop);
 				rs.close();
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
 	}

@@ -28,13 +28,15 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Lists;
 
 /**
- * 套装表
+ * 套装设置资料表
  */
 public class ArmorSetTable {
 
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(ArmorSetTable.class.getName());
 
 	private static ArmorSetTable _instance;
+
 	/** 套装清单 */
 	private final List<L1ArmorSets> _armorSetList = Lists.newList();
 
@@ -59,51 +61,57 @@ public class ArmorSetTable {
 			pstm = con.prepareStatement("SELECT * FROM armor_set union SELECT * FROM z_copy_armor_set");
 			rs = pstm.executeQuery();
 			fillTable(rs);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	// 写入表
+	/**
+	 * 写入资料表
+	 * 
+	 * @param rs
+	 */
 	private void fillTable(ResultSet rs) throws SQLException {
 		while (rs.next()) {
 			L1ArmorSets as = new L1ArmorSets();
-			as.setId(rs.getInt("id"));
-			as.setSets(rs.getString("sets"));
-			as.setPolyId(rs.getInt("polyid"));
-			as.setAc(rs.getInt("ac"));
-			as.setHp(rs.getInt("hp"));
-			as.setMp(rs.getInt("mp"));
-			as.setHpr(rs.getInt("hpr"));
-			as.setMpr(rs.getInt("mpr"));
-			as.setMr(rs.getInt("mr"));
-			as.setStr(rs.getInt("str"));
-			as.setDex(rs.getInt("dex"));
-			as.setCon(rs.getInt("con"));
-			as.setWis(rs.getInt("wis"));
-			as.setCha(rs.getInt("cha"));
-			as.setIntl(rs.getInt("intl"));
-			as.setHitModifier(rs.getInt("hit_modifier"));
-			as.setDmgModifier(rs.getInt("dmg_modifier"));
-			as.setBowHitModifier(rs.getInt("bow_hit_modifier"));
-			as.setBowDmgModifier(rs.getInt("bow_dmg_modifier"));
-			as.setSp(rs.getInt("sp"));
-			as.setDefenseWater(rs.getInt("defense_water"));
-			as.setDefenseWind(rs.getInt("defense_wind"));
-			as.setDefenseFire(rs.getInt("defense_fire"));
-			as.setDefenseEarth(rs.getInt("defense_earth"));
+			as.setId(rs.getInt("id")); // 流水编号 (不能重复)
+			as.setSets(rs.getString("sets")); // 组件 (几件装备组成一套)
+			as.setPolyId(rs.getInt("polyid")); // 变身编号
+			as.setAc(rs.getInt("ac")); // 增加物理防御
+			as.setHp(rs.getInt("hp")); // 增加血量
+			as.setMp(rs.getInt("mp")); // 增加魔量
+			as.setHpr(rs.getInt("hpr")); // 增加回血量
+			as.setMpr(rs.getInt("mpr")); // 增加回魔量
+			as.setMr(rs.getInt("mr")); // 增加魔法防御
+			as.setStr(rs.getInt("str")); // 增加力量
+			as.setDex(rs.getInt("dex")); // 增加敏捷
+			as.setCon(rs.getInt("con")); // 增加体质
+			as.setWis(rs.getInt("wis")); // 增加精神
+			as.setCha(rs.getInt("cha")); // 增加魅力
+			as.setIntl(rs.getInt("intl")); // 增加智力
+			as.setHitModifier(rs.getInt("hit_modifier")); // 增加近距离命中率
+			as.setDmgModifier(rs.getInt("dmg_modifier")); // 增加近距离伤害值
+			as.setBowHitModifier(rs.getInt("bow_hit_modifier")); // 增加远距离命中率
+			as.setBowDmgModifier(rs.getInt("bow_dmg_modifier")); // 增加远距离伤害值
+			as.setSp(rs.getInt("sp")); // 增加魔法攻击力
+			as.setDefenseWater(rs.getInt("defense_water")); // 增加水属性防御
+			as.setDefenseWind(rs.getInt("defense_wind")); // 增加风属性防御
+			as.setDefenseFire(rs.getInt("defense_fire")); // 增加火属性防御
+			as.setDefenseEarth(rs.getInt("defense_earth")); // 增加地属性防御
 
 			_armorSetList.add(as);
 		}
 	}
 
-	/** 取得所有清单 */
+	/**
+	 * 传回所有清单
+	 * 
+	 * @return 所有套装列表
+	 */
 	public L1ArmorSets[] getAllList() {
 		return _armorSetList.toArray(new L1ArmorSets[_armorSetList.size()]);
 	}

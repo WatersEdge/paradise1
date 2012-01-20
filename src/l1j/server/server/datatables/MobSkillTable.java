@@ -28,7 +28,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * MOB技能表
+ * MOB技能资料表
  */
 public class MobSkillTable {
 
@@ -111,22 +111,18 @@ public class MobSkillTable {
 					}
 
 					_mobskills.put(new Integer(mobid), mobskill);
-				}
-				catch (SQLException e1) {
+				} catch (SQLException e1) {
 					_log.log(Level.SEVERE, e1.getLocalizedMessage(), e1);
 
-				}
-				finally {
+				} finally {
 					SQLUtil.close(rs2);
 				}
 			}
 
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			_log.log(Level.SEVERE, "创建mobskill表时出现错误", e2);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs1);
 			SQLUtil.close(pstm1);
 			SQLUtil.close(pstm2);

@@ -33,16 +33,17 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 角色表
+ * 角色资料表
  */
 public class CharacterTable {
 
+	private static Logger _log = Logger.getLogger(CharacterTable.class.getName());
+
 	/** 存储角色 */
-	private CharacterStorage _charStorage;
+	private final CharacterStorage _charStorage;
 
 	private static CharacterTable _instance;
 
-	private static Logger _log = Logger.getLogger(CharacterTable.class.getName());
 	/** 角色名称清单 */
 	private final Map<String, L1CharName> _charNameList = Maps.newConcurrentMap();
 
@@ -57,7 +58,11 @@ public class CharacterTable {
 		return _instance;
 	}
 
-	/** 储存新的角色 */
+	/**
+	 * 储存新的角色
+	 * 
+	 * @param pc
+	 */
 	public void storeNewCharacter(L1PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.createCharacter(pc);
@@ -72,7 +77,11 @@ public class CharacterTable {
 		}
 	}
 
-	/** 储存角色 */
+	/**
+	 * 储存角色
+	 * 
+	 * @param pc
+	 */
 	public void storeCharacter(L1PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.storeCharacter(pc);
@@ -80,7 +89,14 @@ public class CharacterTable {
 		}
 	}
 
-	/** 删除角色 */
+	/**
+	 * 删除角色
+	 * 
+	 * @param accountName
+	 *            账号名称
+	 * @param charName
+	 *            角色名称
+	 */
 	public void deleteCharacter(String accountName, String charName) throws Exception {
 		// 也许，不需要同步
 		_charStorage.deleteCharacter(accountName, charName);
@@ -90,21 +106,33 @@ public class CharacterTable {
 		_log.finest("删除角色");
 	}
 
-	/** 恢复角色 */
+	/**
+	 * 恢复角色
+	 * 
+	 * @param charName
+	 *            角色名称
+	 * @return pc
+	 */
 	public L1PcInstance restoreCharacter(String charName) throws Exception {
 		L1PcInstance pc = _charStorage.loadCharacter(charName);
 		return pc;
 	}
 
-	/** 加载角色 */
+	/**
+	 * 加载角色
+	 * 
+	 * @param charName
+	 *            角色名称
+	 */
 	public L1PcInstance loadCharacter(String charName) throws Exception {
 		L1PcInstance pc = null;
 		try {
 			pc = restoreCharacter(charName);
 
-			// 地图范围外ならSKTに移動させる
+			// 取回角色所在地图ID
 			L1Map map = L1WorldMap.getInstance().getMap(pc.getMapId());
 
+			// 角色在地图不可用位置
 			if (!map.isInMap(pc.getX(), pc.getY())) {
 				pc.setX(33087);
 				pc.setY(33396);
@@ -112,21 +140,19 @@ public class CharacterTable {
 			}
 
 			/*
-			 * if(l1pcinstance.getClanid() != 0) { L1Clan clan = new L1Clan();
-			 * ClanTable clantable = new ClanTable(); clan =
-			 * clantable.getClan(l1pcinstance.getClanname());
-			 * l1pcinstance.setClanname(clan.GetClanName()); }
+			 * if(l1pcinstance.getClanid() != 0) { L1Clan clan = new L1Clan(); ClanTable clantable = new ClanTable(); clan = clantable.getClan(l1pcinstance.getClanname()); l1pcinstance.setClanname(clan.GetClanName()); }
 			 */
 			_log.finest("载入角色: " + pc.getName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return pc;
 
 	}
 
-	/** 明确在线状态 */
+	/**
+	 * 明确在线状态
+	 */
 	public static void clearOnlineStatus() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -134,17 +160,19 @@ public class CharacterTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE characters SET OnlineStatus=0");
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 更新在线状态 */
+	/**
+	 * 更新在线状态
+	 * 
+	 * @param pc
+	 */
 	public static void updateOnlineStatus(L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -154,21 +182,29 @@ public class CharacterTable {
 			pstm.setInt(1, pc.getOnlineStatus());
 			pstm.setInt(2, pc.getId());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 更新好友ID */
+	/**
+	 * 更新好友ID
+	 * 
+	 * @param targetId
+	 */
 	public static void updatePartnerId(int targetId) {
 		updatePartnerId(targetId, 0);
 	}
-	/** 更新好友ID */
+
+	/**
+	 * 更新好友ID
+	 * 
+	 * @param targetId
+	 * @param partnerId
+	 */
 	public static void updatePartnerId(int targetId, int partnerId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -178,24 +214,25 @@ public class CharacterTable {
 			pstm.setInt(1, partnerId);
 			pstm.setInt(2, targetId);
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 保存角色状态 */
+	/**
+	 * 储存角色状态
+	 * 
+	 * @param pc
+	 */
 	public static void saveCharStatus(L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET OriginalStr= ?" + ", OriginalCon= ?, OriginalDex= ?, OriginalCha= ?"
-					+ ", OriginalInt= ?, OriginalWis= ?" + " WHERE objid=?");
+			pstm = con.prepareStatement("UPDATE characters SET OriginalStr= ?" + ", OriginalCon= ?, OriginalDex= ?, OriginalCha= ?" + ", OriginalInt= ?, OriginalWis= ?" + " WHERE objid=?");
 			pstm.setInt(1, pc.getBaseStr());
 			pstm.setInt(2, pc.getBaseCon());
 			pstm.setInt(3, pc.getBaseDex());
@@ -204,24 +241,31 @@ public class CharacterTable {
 			pstm.setInt(6, pc.getBaseWis());
 			pstm.setInt(7, pc.getId());
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 恢复身上道具 */
+	/**
+	 * 恢复背包道具
+	 * 
+	 * @param pc
+	 */
 	public void restoreInventory(L1PcInstance pc) {
-		pc.getInventory().loadItems();
-		pc.getDwarfInventory().loadItems();
-		pc.getDwarfForElfInventory().loadItems();
+		pc.getInventory().loadItems(); // 加载背包道具
+		pc.getDwarfInventory().loadItems(); // 加载个人仓库道具
+		pc.getDwarfForElfInventory().loadItems(); // 加载精灵仓库道具
 	}
 
-	/** 角色名称是否存在 */
+	/**
+	 * 角色名称是否存在
+	 * 
+	 * @param name
+	 *            名称
+	 */
 	public static boolean doesCharNameExist(String name) {
 		boolean result = true;
 		java.sql.Connection con = null;
@@ -233,11 +277,9 @@ public class CharacterTable {
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();
 			result = rs.next();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.warning("could not check existing charname:" + e.getMessage());
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -245,7 +287,9 @@ public class CharacterTable {
 		return result;
 	}
 
-	/** 加载所有角色名称 */
+	/**
+	 * 加载所有角色名称
+	 */
 	public void loadAllCharName() {
 		L1CharName cn = null;
 		String name = null;
@@ -263,18 +307,20 @@ public class CharacterTable {
 				cn.setId(rs.getInt("objid"));
 				_charNameList.put(name, cn);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 取得角色名称清单 */
+	/**
+	 * 取得角色名称列表
+	 * 
+	 * @return
+	 */
 	public L1CharName[] getCharNameList() {
 		return _charNameList.values().toArray(new L1CharName[_charNameList.size()]);
 	}

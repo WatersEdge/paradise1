@@ -31,16 +31,17 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 宠物类型表
+ * 宠物类型资料表
  */
 public class PetTypeTable {
-	private static PetTypeTable _instance;
 
 	private static Logger _log = Logger.getLogger(PetTypeTable.class.getName());
 
-	private Map<Integer, L1PetType> _types = Maps.newMap();
+	private static PetTypeTable _instance;
 
-	private Set<String> _defaultNames = new HashSet<String>();
+	private final Map<Integer, L1PetType> _types = Maps.newMap();
+
+	private final Set<String> _defaultNames = new HashSet<String>();
 
 	public static void load() {
 		_instance = new PetTypeTable();
@@ -79,17 +80,15 @@ public class PetTypeTable {
 					msgIds[i] = rs.getInt("MessageId" + (i + 1));
 				}
 				int defyMsgId = rs.getInt("DefyMessageId");
-				boolean canUseEquipment =  rs.getBoolean("canUseEquipment");
+				boolean canUseEquipment = rs.getBoolean("canUseEquipment");
 				IntRange hpUpRange = new IntRange(hpUpMin, hpUpMax);
 				IntRange mpUpRange = new IntRange(mpUpMin, mpUpMax);
 				_types.put(baseNpcId, new L1PetType(baseNpcId, name, itemIdForTaming, hpUpRange, mpUpRange, evolvItemId, npcIdForEvolving, msgIds, defyMsgId, canUseEquipment));
 				_defaultNames.add(name.toLowerCase());
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

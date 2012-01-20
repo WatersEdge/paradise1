@@ -33,7 +33,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 产生表
+ * 产生怪物资料表
  */
 public class SpawnTable {
 
@@ -41,7 +41,7 @@ public class SpawnTable {
 
 	private static SpawnTable _instance;
 
-	private Map<Integer, L1Spawn> _spawntable = Maps.newMap();
+	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
 
 	private int _highestId;
 
@@ -144,11 +144,9 @@ public class SpawnTable {
 				}
 			}
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -177,8 +175,7 @@ public class SpawnTable {
 			String note = npc.get_name();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
+			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.get_npcId());
@@ -193,11 +190,9 @@ public class SpawnTable {
 			pstm.setInt(12, pc.getMapId());
 			pstm.execute();
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

@@ -29,7 +29,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 无限大战产生怪物表
+ * 无限大战产生怪物资料表
  */
 public class UBSpawnTable {
 
@@ -37,7 +37,7 @@ public class UBSpawnTable {
 
 	private static UBSpawnTable _instance;
 
-	private Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
+	private final Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
 
 	public static UBSpawnTable getInstance() {
 		if (_instance == null) {
@@ -80,12 +80,10 @@ public class UBSpawnTable {
 
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// problem with initializing spawn, go to next one
 			_log.warning("spawn couldnt 被初始化:" + e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -118,11 +116,9 @@ public class UBSpawnTable {
 			if (rs.next()) {
 				n = rs.getInt(1);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

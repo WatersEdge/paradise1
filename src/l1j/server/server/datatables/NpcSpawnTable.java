@@ -30,11 +30,8 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
-// Referenced classes of package l1j.server.server:
-// MobTable, IdFactory
-
 /**
- * 产生NPC表
+ * 产生NPC资料表
  */
 public class NpcSpawnTable {
 
@@ -42,7 +39,7 @@ public class NpcSpawnTable {
 
 	private static NpcSpawnTable _instance;
 
-	private Map<Integer, L1Spawn> _spawntable = Maps.newMap();
+	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
 
 	private int _highestId;
 
@@ -70,31 +67,42 @@ public class NpcSpawnTable {
 			pstm = con.prepareStatement("SELECT * FROM spawnlist_npc");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
+
+				// GM商店NPC
 				if (Config.ALT_GMSHOP == false) {
 					int npcid = rs.getInt(1);
+
+					// GM商店NPC
 					if ((npcid >= Config.ALT_GMSHOP_MIN_ID) && (npcid <= Config.ALT_GMSHOP_MAX_ID)) {
 						continue;
 					}
 				}
+
+				// 南瓜怪任务NPC
 				if (Config.ALT_HALLOWEENIVENT == false) {
 					int npcid = rs.getInt("id");
-					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734)) 
-						|| ((npcid >= 89634) && (npcid <= 89644))) {
+					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734)) || ((npcid >= 89634) && (npcid <= 89644))) {
 						continue;
 					}
 				}
+
+				// 日本特典道具NPC
 				if (Config.ALT_JPPRIVILEGED == false) {
 					int npcid = rs.getInt("id");
 					if ((npcid >= 1310368) && (npcid <= 1310379)) {
 						continue;
 					}
 				}
+
+				// 说话卷轴任务NPC
 				if (Config.ALT_TALKINGSCROLLQUEST == false) {
 					int npcid = rs.getInt("id");
 					if (((npcid >= 87537) && (npcid <= 87551)) || ((npcid >= 1310387) && (npcid <= 1310389))) {
 						continue;
 					}
 				}
+
+				// 说话卷轴任务NPC
 				if (Config.ALT_TALKINGSCROLLQUEST == true) {
 					int npcid = rs.getInt("id");
 					if ((npcid >= 90066) && (npcid <= 90069)) {
@@ -137,20 +145,24 @@ public class NpcSpawnTable {
 					}
 				}
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 
 		_log.config("NPC配置清单 " + _spawntable.size() + "件");
-		_log.fine("NPC总数 " + spawnCount + "件");
+		_log.fine("NPC总数 " + spawnCount + "只");
 	}
 
+	/**
+	 * 手动增加Spwan物件
+	 * 
+	 * @param pc
+	 * @param npc
+	 */
 	public void storeSpawn(L1PcInstance pc, L1Npc npc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -169,12 +181,10 @@ public class NpcSpawnTable {
 			pstm.setInt(6, pc.getHeading());
 			pstm.setInt(7, pc.getMapId());
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

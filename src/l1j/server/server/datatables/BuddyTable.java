@@ -27,13 +27,8 @@ import l1j.server.server.model.L1Buddy;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
-// import l1j.server.server.model.Instance.L1PcInstance;
-
-// Referenced classes of package l1j.server.server:
-// IdFactory
-
 /**
- * 好友表
+ * 好友资料表
  */
 public class BuddyTable {
 
@@ -76,27 +71,29 @@ public class BuddyTable {
 					}
 
 					_buddys.put(buddy.getCharId(), buddy);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				}
-				finally {
+				} finally {
 					SQLUtil.close(buddysRS);
 					SQLUtil.close(buddysPS);
 				}
 			}
-			_log.config("loaded " + _buddys.size() + " character's buddylists");
-		}
-		catch (SQLException e) {
+			_log.config("加载 " + _buddys.size() + " 角色的好友列表");
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(charIdRS);
 			SQLUtil.close(charIdPS);
 			SQLUtil.close(con);
 		}
 	}
 
+	/**
+	 * 取得好友资料表
+	 * 
+	 * @param charId
+	 * @return 好友
+	 */
 	public L1Buddy getBuddyTable(int charId) {
 		L1Buddy buddy = _buddys.get(charId);
 		if (buddy == null) {
@@ -106,6 +103,13 @@ public class BuddyTable {
 		return buddy;
 	}
 
+	/**
+	 * 增加好友
+	 * 
+	 * @param charId
+	 * @param objId
+	 * @param name
+	 */
 	public void addBuddy(int charId, int objId, String name) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -117,16 +121,20 @@ public class BuddyTable {
 			pstm.setInt(2, objId);
 			pstm.setString(3, name);
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
+	/**
+	 * 删除好友
+	 * 
+	 * @param charId
+	 * @param buddyName
+	 */
 	public void removeBuddy(int charId, String buddyName) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -143,11 +151,9 @@ public class BuddyTable {
 			pstm.execute();
 
 			buddy.remove(buddyName);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

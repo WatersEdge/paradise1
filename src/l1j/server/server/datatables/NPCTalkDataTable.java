@@ -27,7 +27,7 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * NPC说话数据表
+ * NPC说话动作资料表
  */
 public class NPCTalkDataTable {
 
@@ -35,7 +35,7 @@ public class NPCTalkDataTable {
 
 	private static NPCTalkDataTable _instance;
 
-	private Map<Integer, L1NpcTalkData> _datatable = Maps.newMap();
+	private final Map<Integer, L1NpcTalkData> _datatable = Maps.newMap();
 
 	public static NPCTalkDataTable getInstance() {
 		if (_instance == null) {
@@ -68,11 +68,9 @@ public class NPCTalkDataTable {
 				_datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
 			}
 			_log.config("NPC说话动作列表 " + _datatable.size() + "件");
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.warning("创建NPC说话表时出现错误 " + e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

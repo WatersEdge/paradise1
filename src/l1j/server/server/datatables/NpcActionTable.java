@@ -36,7 +36,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * NPC动作表
+ * NPC动作(对话)资料表
  */
 public class NpcActionTable {
 
@@ -92,8 +92,7 @@ public class NpcActionTable {
 			System.out.print("╠》正在读取 NpcAction...");
 			_instance = new NpcActionTable();
 			System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, "无法加载NpcAction", e);
 			System.exit(0);
 		}

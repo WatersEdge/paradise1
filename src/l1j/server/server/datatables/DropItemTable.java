@@ -27,19 +27,22 @@ import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
 /**
- * 掉落物品表
+ * 掉落物品几率资料表
  */
 public final class DropItemTable {
 
+	/**
+	 * 掉落物品几率资料
+	 */
 	private class dropItemData {
 		public double dropRate = 1;
-
 		public double dropAmount = 1;
 	}
 
 	private static Logger _log = Logger.getLogger(DropItemTable.class.getName());
 
 	private static DropItemTable _instance;
+
 	/** 掉落物品 */
 	private final Map<Integer, dropItemData> _dropItem = Maps.newMap();
 
@@ -54,7 +57,9 @@ public final class DropItemTable {
 		loadMapsFromDatabase();
 	}
 
-	/** 从数据库中加载地图 */
+	/**
+	 * 从数据库中加载地图
+	 */
 	private void loadMapsFromDatabase() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -73,18 +78,20 @@ public final class DropItemTable {
 			}
 
 			_log.config("drop_item " + _dropItem.size());
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	/** 取得掉落倍率 */
+	/**
+	 * 取得掉落倍率
+	 * 
+	 * @param itemId
+	 */
 	public double getDropRate(int itemId) {
 		dropItemData data = _dropItem.get(itemId);
 		if (data == null) {
@@ -93,7 +100,11 @@ public final class DropItemTable {
 		return data.dropRate;
 	}
 
-	/** 取得掉落数量 */
+	/**
+	 * 取得掉落数量
+	 * 
+	 * @param itemId
+	 */
 	public double getDropAmount(int itemId) {
 		dropItemData data = _dropItem.get(itemId);
 		if (data == null) {
