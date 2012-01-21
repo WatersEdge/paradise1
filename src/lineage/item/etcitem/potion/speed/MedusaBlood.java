@@ -1,22 +1,22 @@
-package lineage.item.etcitem.potion.hp;
+package lineage.item.etcitem.potion.speed;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.item.action.Potion;
+import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 受祝福的 五谷面包 - 41337
+ * 梅杜莎之血 - 41342
  * 
  * @author jrwz
  */
-public class BreadCrumbs3_B extends ItemExecutor {
+public class MedusaBlood extends ItemExecutor {
 
-	private BreadCrumbs3_B() {
+	private MedusaBlood() {
 	}
 
 	public static ItemExecutor get() {
-		return new BreadCrumbs3_B();
+		return new MedusaBlood();
 	}
 
 	/**
@@ -32,8 +32,8 @@ public class BreadCrumbs3_B extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 基本加血量与动画ID
-		Potion.UseHeallingPotion(pc, 85, 197);
+		// 效果时间 (秒)与动画ID
+		Factory.getPotion().useGreenPotion(pc, 1800, 191);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);
