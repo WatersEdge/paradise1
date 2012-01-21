@@ -1,22 +1,22 @@
-package lineage.item.etcitem.potion.speed;
+package lineage.item.etcitem.potion.hp;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.item.action.Potion;
+import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 受祝福的 强化 自我加速药水 - 140018
+ * 受祝福的 安特的水果 - 140506
  * 
  * @author jrwz
  */
-public class Green_Powerful_B extends ItemExecutor {
+public class BlessAnteFruit extends ItemExecutor {
 
-	private Green_Powerful_B() {
+	private BlessAnteFruit() {
 	}
 
 	public static ItemExecutor get() {
-		return new Green_Powerful_B();
+		return new BlessAnteFruit();
 	}
 
 	/**
@@ -32,8 +32,8 @@ public class Green_Powerful_B extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 效果时间 (秒)
-		Potion.useGreenPotion(pc, 2100);
+		// 基本加血量与动画ID
+		Factory.getPotion().useHeallingPotion(pc, 80, 197);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);

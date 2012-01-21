@@ -1,22 +1,22 @@
-package lineage.item.etcitem.potion.hp;
+package lineage.item.etcitem.potion.mp;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.item.action.Potion;
+import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 古代体力恢复剂 - 40022
+ * 受祝福的 蓝色药水 - 140015
  * 
  * @author jrwz
  */
-public class OldTimes1 extends ItemExecutor {
+public class BlessBluePotion extends ItemExecutor {
 
-	private OldTimes1() {
+	private BlessBluePotion() {
 	}
 
 	public static ItemExecutor get() {
-		return new OldTimes1();
+		return new BlessBluePotion();
 	}
 
 	/**
@@ -32,8 +32,8 @@ public class OldTimes1 extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 基本加血量与动画ID
-		Potion.UseHeallingPotion(pc, 20, 189);
+		// 效果时间 (秒)与动画ID
+		Factory.getPotion().useBluePotion(pc, 700, 190);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);
