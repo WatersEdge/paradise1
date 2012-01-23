@@ -1,4 +1,4 @@
-package lineage.console.remove;
+package lineage.console.delete;
 
 import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -9,7 +9,7 @@ import l1j.server.server.serverpackets.S_SkillHaste;
  * 
  * @author jrwz
  */
-public class RemoveSkillEffect {
+public class DeleteSkillEffect {
 
 	/**
 	 * 删除绝对屏障效果
@@ -17,7 +17,7 @@ public class RemoveSkillEffect {
 	 * @param pc
 	 *            对象
 	 */
-	public final static void removeAbsoluteBarrierEffect(final L1PcInstance pc) {
+	public final static void DeleteEffectOfAbsoluteBarrier(final L1PcInstance pc) {
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
 			pc.startHpRegeneration(); // 开始角色回血
@@ -35,7 +35,7 @@ public class RemoveSkillEffect {
 	 * @param skill_id
 	 *            技能ID
 	 */
-	public final static void removeRepeat(final L1PcInstance pc, final int skill_id) {
+	public final static void DeleteEffectOfRepeat(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 		}
@@ -49,7 +49,7 @@ public class RemoveSkillEffect {
 	 * @param skill_id
 	 *            技能ID
 	 */
-	public final static void removeStatusGreenPotion(final L1PcInstance pc, final int skill_id) {
+	public final static void DeleteEffectOfGreenPotion(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
@@ -66,7 +66,7 @@ public class RemoveSkillEffect {
 	 * @param skill_id
 	 *            技能ID
 	 */
-	public final static void removeStatusSlow(final L1PcInstance pc, final int skill_id) {
+	public final static void DeleteEffectOfSlow(final L1PcInstance pc, final int skill_id) {
 		if (pc.hasSkillEffect(skill_id)) {
 			pc.killSkillEffectTimer(skill_id);
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));

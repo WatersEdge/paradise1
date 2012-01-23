@@ -33,7 +33,7 @@ import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.ConnectorPotion;
-import lineage.console.remove.RemoveSkillEffect;
+import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 实例化 (接口引用:药水类)
@@ -55,17 +55,17 @@ public class CiteConnectorPotion implements ConnectorPotion {
 		pc.setDrink(false);
 
 		// 删除重复的一段加速状态
-		RemoveSkillEffect.removeStatusGreenPotion(pc, STATUS_HASTE); // 一段加速
-		RemoveSkillEffect.removeStatusGreenPotion(pc, HASTE); // 加速术
-		RemoveSkillEffect.removeStatusGreenPotion(pc, GREATER_HASTE); // // 强力加速术
+		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, STATUS_HASTE); // 一段加速
+		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, HASTE); // 加速术
+		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, GREATER_HASTE); // // 强力加速术
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
 
 		// 删除重复的缓速状态 (相互抵消、不加速)
 		if (pc.getMoveSpeed() == 2) {
-			RemoveSkillEffect.removeStatusSlow(pc, SLOW); // 缓速术
-			RemoveSkillEffect.removeStatusSlow(pc, MASS_SLOW); // 集体缓速术
-			RemoveSkillEffect.removeStatusSlow(pc, ENTANGLE); // 地面障碍
+			DeleteSkillEffect.DeleteEffectOfSlow(pc, SLOW); // 缓速术
+			DeleteSkillEffect.DeleteEffectOfSlow(pc, MASS_SLOW); // 集体缓速术
+			DeleteSkillEffect.DeleteEffectOfSlow(pc, ENTANGLE); // 地面障碍
 		}
 		else {
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time)); // 加速效果与时间 (自己看得到)
@@ -80,13 +80,13 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	public final void useBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 删除重复的二段加速效果
-		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
-		RemoveSkillEffect.removeRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
-		RemoveSkillEffect.removeRepeat(pc, HOLY_WALK); // 神圣疾走 移速1.33倍
-		RemoveSkillEffect.removeRepeat(pc, MOVING_ACCELERATION); // 行走加速 移速1.33倍
-		RemoveSkillEffect.removeRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
-		RemoveSkillEffect.removeRepeat(pc, BLOODLUST); // 血之渴望 攻速1.33倍
-		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, HOLY_WALK); // 神圣疾走 移速1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, MOVING_ACCELERATION); // 行走加速 移速1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, BLOODLUST); // 血之渴望 攻速1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
 
 		// 给予状态 && 效果
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
@@ -102,10 +102,10 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	public final void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 删除重复的二段加速效果
-		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
-		RemoveSkillEffect.removeRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
-		RemoveSkillEffect.removeRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
-		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
 
 		// 给予状态 && 效果
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
@@ -130,7 +130,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	@Override
 	public final void useThirdSpeedPotion(L1PcInstance pc, final int time, int gfxid) {
 
-		RemoveSkillEffect.removeRepeat(pc, STATUS_THIRD_SPEED); // 删除重复的三段加速效果
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_THIRD_SPEED); // 删除重复的三段加速效果
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
@@ -144,7 +144,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	@Override
 	public final void useHealingPotion(final L1PcInstance pc, int healHp, final int gfxid) {
 
-		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
+		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
@@ -162,7 +162,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	@Override
 	public final void useAddMpPotion(final L1PcInstance pc, int newMp, final int gfxid) {
 
-		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
+		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
@@ -175,8 +175,8 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	@Override
 	public final void useBluePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
-		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
-		RemoveSkillEffect.removeRepeat(pc, STATUS_BLUE_POTION); // 删除重复的蓝水效果
+		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BLUE_POTION); // 删除重复的蓝水效果
 
 		pc.sendPackets(new S_SkillIconGFX(34, time)); // 发送状态图示
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
@@ -189,7 +189,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	@Override
 	public final void useWisdomPotion(final L1PcInstance pc, final int time, final int gfxid) {
 
-		RemoveSkillEffect.removeRepeat(pc, STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
 
 		pc.sendPackets(new S_SkillIconWisdomPotion((time / 4))); // 状态图示
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
@@ -222,8 +222,8 @@ public class CiteConnectorPotion implements ConnectorPotion {
 	public final void useBlindPotion(final L1PcInstance pc, final int time) {
 
 		// 删除重复的技能效果
-		RemoveSkillEffect.removeRepeat(pc, CURSE_BLIND); // 法师魔法 (闇盲咒术)
-		RemoveSkillEffect.removeRepeat(pc, DARKNESS); // 法师魔法 (黑闇之影)
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, CURSE_BLIND); // 法师魔法 (闇盲咒术)
+		DeleteSkillEffect.DeleteEffectOfRepeat(pc, DARKNESS); // 法师魔法 (黑闇之影)
 
 		// 漂浮之眼肉
 		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
