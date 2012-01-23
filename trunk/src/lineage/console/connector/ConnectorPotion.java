@@ -19,7 +19,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useGreenPotion(L1PcInstance pc, int time, int gfxid);
+	void useGreenPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (勇敢药水)
@@ -31,7 +31,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useBravePotion(L1PcInstance pc, int time, int gfxid);
+	void useBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (精灵饼干)
@@ -43,7 +43,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useElfBravePotion(L1PcInstance pc, int time, int gfxid);
+	void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (生命之树果实)
@@ -55,7 +55,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useRiBravePotion(L1PcInstance pc, int time, int gfxid);
+	void useRiBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用三段加速药水 (巧克力蛋糕)
@@ -67,7 +67,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useThirdSpeedPotion(L1PcInstance pc, int time, int gfxid);
+	void useThirdSpeedPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用治愈类药水 (红色药水)
@@ -79,10 +79,10 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useHeallingPotion(L1PcInstance pc, int healHp, int gfxid);
+	void useHealingPotion(final L1PcInstance pc, final int healHp, final int gfxid);
 
 	/**
-	 * 使用加魔类药水 (月饼)
+	 * 使用增加魔力类药水 (月饼)
 	 * 
 	 * @param pc
 	 *            使用对象
@@ -91,10 +91,10 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useMpPotion(L1PcInstance pc, int newMp, int gfxid);
+	void useAddMpPotion(final L1PcInstance pc, final int newMp, final int gfxid);
 
 	/**
-	 * 恢复魔力药水 (蓝色药水)
+	 * 使用恢复魔力类药水 (蓝色药水)
 	 * 
 	 * @param pc
 	 *            使用对象
@@ -103,10 +103,10 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useBluePotion(L1PcInstance pc, int time, int gfxid);
+	void useBluePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
-	 * 增加魔攻药水 (智慧药水)
+	 * 使用增加魔攻类药水 (智慧药水)
 	 * 
 	 * @param pc
 	 *            使用对象
@@ -115,7 +115,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useWisdomPotion(L1PcInstance pc, int time, int gfxid);
+	void useWisdomPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 可以在水中呼吸的药水 (伊娃的祝福)
@@ -127,7 +127,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useBlessOfEvaPotion(L1PcInstance pc, int time, int gfxid);
+	void useBlessOfEvaPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用黑色药水 (失明药水)
@@ -137,5 +137,5 @@ public interface ConnectorPotion {
 	 * @param time
 	 *            效果时间
 	 */
-	void useBlindPotion(L1PcInstance pc, int time);
+	void useBlindPotion(final L1PcInstance pc, final int time);
 }

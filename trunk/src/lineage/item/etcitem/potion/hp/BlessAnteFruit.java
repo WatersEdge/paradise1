@@ -33,7 +33,7 @@ public class BlessAnteFruit extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 基本加血量与动画ID
-		Factory.getPotion().useHeallingPotion(pc, 80, 197);
+		Factory.getPotion().useHealingPotion(pc, 80, 197);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);
