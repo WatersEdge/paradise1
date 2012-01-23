@@ -44,7 +44,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 一段加速药水 (绿色药水)
 	@Override
-	public void useGreenPotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useGreenPotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 装备加速道具时
 		if (pc.getHasteItemEquipped() > 0) {
@@ -77,7 +77,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 二段加速药水 (勇敢药水)
 	@Override
-	public void useBravePotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 删除重复的二段加速效果
 		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
@@ -99,7 +99,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 二段加速药水 (精灵饼干)
 	@Override
-	public void useElfBravePotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 删除重复的二段加速效果
 		RemoveSkillEffect.removeRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
@@ -118,7 +118,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 二段加速药水 (生命之树果实)
 	@Override
-	public void useRiBravePotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useRiBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		// 删除状态不明
 		pc.setSkillEffect(STATUS_RIBRAVE, time * 1000); // 给予二段加速时间 (秒)
@@ -128,7 +128,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 三段加速药水 (巧克力蛋糕)
 	@Override
-	public void useThirdSpeedPotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useThirdSpeedPotion(L1PcInstance pc, final int time, int gfxid) {
 
 		RemoveSkillEffect.removeRepeat(pc, STATUS_THIRD_SPEED); // 删除重复的三段加速效果
 
@@ -142,7 +142,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 治愈类药水 (红色药水)
 	@Override
-	public void useHeallingPotion(L1PcInstance pc, int healHp, int gfxid) {
+	public final void useHealingPotion(final L1PcInstance pc, int healHp, final int gfxid) {
 
 		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
 
@@ -160,7 +160,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 加魔类药水 (月饼)
 	@Override
-	public void useMpPotion(L1PcInstance pc, int newMp, int gfxid) {
+	public final void useAddMpPotion(final L1PcInstance pc, int newMp, final int gfxid) {
 
 		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
 
@@ -173,7 +173,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 恢复魔力药水 (蓝色药水)
 	@Override
-	public void useBluePotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useBluePotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		RemoveSkillEffect.removeAbsoluteBarrierEffect(pc); // 删除绝对屏障效果
 		RemoveSkillEffect.removeRepeat(pc, STATUS_BLUE_POTION); // 删除重复的蓝水效果
@@ -187,7 +187,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 增加魔攻药水 (智慧药水)
 	@Override
-	public void useWisdomPotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useWisdomPotion(final L1PcInstance pc, final int time, final int gfxid) {
 
 		RemoveSkillEffect.removeRepeat(pc, STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
 
@@ -200,7 +200,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 可以在水中呼吸的药水 (伊娃的祝福)
 	@Override
-	public void useBlessOfEvaPotion(L1PcInstance pc, int time, int gfxid) {
+	public final void useBlessOfEvaPotion(final L1PcInstance pc, int time, final int gfxid) {
 
 		// 持续时间可累加
 		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
@@ -219,7 +219,7 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 	// 黑色药水 (失明药水)
 	@Override
-	public void useBlindPotion(L1PcInstance pc, int time) {
+	public final void useBlindPotion(final L1PcInstance pc, final int time) {
 
 		// 删除重复的技能效果
 		RemoveSkillEffect.removeRepeat(pc, CURSE_BLIND); // 法师魔法 (闇盲咒术)
@@ -227,10 +227,10 @@ public class CiteConnectorPotion implements ConnectorPotion {
 
 		// 漂浮之眼肉
 		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
-			pc.sendPackets(new S_CurseBlind(2));
+			pc.sendPackets(new S_CurseBlind(2)); // 周边物件可见
 		}
 		else {
-			pc.sendPackets(new S_CurseBlind(1));
+			pc.sendPackets(new S_CurseBlind(1)); // 自己
 		}
 		pc.setSkillEffect(CURSE_BLIND, time * 1000); // 给予16秒效果
 	}
