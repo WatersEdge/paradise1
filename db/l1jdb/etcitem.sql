@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2012-1-24 ���� 03:27:15
+Date: 2012-1-26 ���� 12:09:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,7 +43,7 @@ CREATE TABLE `etcitem` (
   `food_volume` int(10) unsigned NOT NULL DEFAULT '0',
   `save_at_once` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=240102 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=400001 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records 
@@ -2046,3 +2046,4 @@ INSERT INTO `etcitem` VALUES ('240010', '治愈药水', 'potion.hp.General1_C', 
 INSERT INTO `etcitem` VALUES ('240074', '对盔甲施法的卷轴', '0', '$249', '$249', 'scroll', 'zel', 'paper', '630', '467', '22', '26', '1', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('240087', '对武器施法的卷轴', '0', '$244', '$244', 'scroll', 'dai', 'paper', '630', '468', '22', '25', '1', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('240100', '瞬间移动卷轴', '0', '$230', '$230', 'scroll', 'normal', 'paper', '630', '473', '22', '411', '1', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '7', '30000', '0', '0', '0');
+INSERT INTO `etcitem` VALUES ('400000', '万圣节南瓜派', '0', '$4324', '$4324', 'potion', 'normal', 'glass', '4900', '2260', '43', '15', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '2', '1000', '0', '0', '0');

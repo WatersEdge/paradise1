@@ -56,7 +56,7 @@ public class WeaponSkillTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM weapon_skill union SELECT * FROM z_copy_weapon_skill");
+			pstm = con.prepareStatement("SELECT * FROM weapon_skill");
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
 		}

@@ -58,7 +58,7 @@ public class PolyTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM polymorphs union SELECT * FROM z_copy_polymorphs");
+			pstm = con.prepareStatement("SELECT * FROM polymorphs");
 			rs = pstm.executeQuery();
 			fillPolyTable(rs);
 		}
