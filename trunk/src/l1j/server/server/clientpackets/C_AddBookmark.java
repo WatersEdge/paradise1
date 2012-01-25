@@ -41,15 +41,14 @@ public class C_AddBookmark extends ClientBasePacket {
 		}
 
 		if (pc.getMap().isMarkable() || pc.isGm()) {
-			if ((L1CastleLocation.checkInAllWarArea(pc.getX(), pc.getY(),
-					pc.getMapId()) || L1HouseLocation.isInHouse(pc.getX(),
-					pc.getY(), pc.getMapId()))
-					&& !pc.isGm()) {
+			if ((L1CastleLocation.checkInAllWarArea(pc.getX(), pc.getY(), pc.getMapId()) || L1HouseLocation.isInHouse(pc.getX(), pc.getY(), pc.getMapId())) && !pc.isGm()) {
 				pc.sendPackets(new S_ServerMessage(214)); // \f1这个地点不能够标记。
-			} else {
+			}
+			else {
 				L1BookMark.addBookmark(pc, s);
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(214)); // \f1这个地点不能够标记。
 		}
 	}

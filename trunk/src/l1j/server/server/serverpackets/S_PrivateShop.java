@@ -33,6 +33,7 @@ public class S_PrivateShop extends ServerBasePacket {
 
 	/**
 	 * 对象是PC
+	 * 
 	 * @param pc
 	 * @param objectId
 	 * @param type

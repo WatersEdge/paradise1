@@ -133,8 +133,10 @@ public class L1TreasureBox {
 	private List<Item> getItems() {
 		return _items;
 	}
+
 	/** 几率总和 */
 	private int _totalChance;
+
 	/** 获得几率总和 */
 	private int getTotalChance() {
 		return _totalChance;
@@ -157,8 +159,7 @@ public class L1TreasureBox {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╚》正在读取 TreasureBox...");
 		try {
-			JAXBContext context = JAXBContext
-					.newInstance(L1TreasureBox.TreasureBoxList.class);
+			JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
@@ -169,7 +170,8 @@ public class L1TreasureBox {
 				each.init();
 				_dataMap.put(each.getBoxId(), each);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, PATH + "的载入失败。", e);
 			System.exit(0);
 		}
@@ -197,7 +199,8 @@ public class L1TreasureBox {
 				}
 			}
 
-		} else if (getType().equals(TYPE.RANDOM)) {
+		}
+		else if (getType().equals(TYPE.RANDOM)) {
 			// 出るアイテムがランダムに決まるもの
 			int chance = 0;
 
@@ -220,16 +223,18 @@ public class L1TreasureBox {
 
 		if (item == null) {
 			return false;
-		} else {
+		}
+		else {
 			int itemId = getBoxId();
 
 			// 灵魂水晶、黑暗安特的水果、魔族的卷轴
 			if ((itemId == 40576 // 灵魂水晶
-				) || (itemId == 40577 // 灵魂水晶
-				) || (itemId == 40578 // 灵魂水晶
-				) || (itemId == 40411 // 黑暗安特的水果
-				) || (itemId == 49013 // 魔族的卷轴
-				)) {
+					)
+					|| (itemId == 40577 // 灵魂水晶
+					) || (itemId == 40578 // 灵魂水晶
+					) || (itemId == 40411 // 黑暗安特的水果
+					) || (itemId == 49013 // 魔族的卷轴
+					)) {
 				pc.death(null); // 角色死亡
 			}
 
@@ -237,8 +242,7 @@ public class L1TreasureBox {
 			if ((itemId == 46000)) {
 				L1ItemInstance box = pc.getInventory().findItemId(itemId);
 				box.setChargeCount(box.getChargeCount() - 1);
-				pc.getInventory().updateItem(box,
-						L1PcInventory.COL_CHARGE_COUNT);
+				pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
 				if (box.getChargeCount() < 1) {
 					pc.getInventory().removeItem(box, 1);
 				}
@@ -253,7 +257,8 @@ public class L1TreasureBox {
 
 		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
 			inventory = pc.getInventory();
-		} else {
+		}
+		else {
 			// 如果在这个过程中取消不会掉在地上（不正防止）
 			inventory = L1World.getInstance().getInventory(pc.getLocation());
 		}

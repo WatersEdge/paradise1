@@ -28,6 +28,7 @@ public class S_PetMenuPacket extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param npc
 	 * @param exppercet
 	 */
@@ -82,19 +83,24 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			String s = "$610";
 			if (pet.get_food() > 80) {
 				s = "$612"; // 非常饱。
-			} else if (pet.get_food() > 60) {
+			}
+			else if (pet.get_food() > 60) {
 				s = "$611"; // 稍微饱。
-			} else if (pet.get_food() > 30) {
+			}
+			else if (pet.get_food() > 30) {
 				s = "$610"; // 普通。
-			} else if (pet.get_food() > 10) {
+			}
+			else if (pet.get_food() > 10) {
 				s = "$609"; // 稍微饿。
-			} else if (pet.get_food() >= 0) {
+			}
+			else if (pet.get_food() >= 0) {
 				s = "$608"; // 非常饿。
 			}
 			writeS(s); // 饱食度
 			writeS(Integer.toString(exppercet)); // 经验值
 			writeS(Integer.toString(pet.getLawful())); // 正义值
-		} else if (npc instanceof L1SummonInstance) { // 召唤兽
+		}
+		else if (npc instanceof L1SummonInstance) { // 召唤兽
 			L1SummonInstance summon = (L1SummonInstance) npc;
 			writeD(summon.getId());
 			writeS("moncom");

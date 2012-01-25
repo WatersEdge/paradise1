@@ -28,14 +28,17 @@ public class L1ItemSetItem {
 		this.amount = amount;
 		this.enchant = enchant;
 	}
+
 	/** 取得ID */
 	public int getId() {
 		return id;
 	}
+
 	/** 取得数量 */
 	public int getAmount() {
 		return amount;
 	}
+
 	/** 取得加成 */
 	public int getEnchant() {
 		return enchant;

@@ -30,6 +30,7 @@ public class S_Light extends ServerBasePacket {
 
 	/**
 	 * 更新物件亮度
+	 * 
 	 * @param objid
 	 * @param type
 	 */

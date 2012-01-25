@@ -23,6 +23,7 @@ public class S_ShowSummonList extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗 (召唤清单)
+	 * 
 	 * @param objid
 	 */
 	public S_ShowSummonList(int objid) {

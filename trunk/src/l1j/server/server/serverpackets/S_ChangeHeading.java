@@ -26,6 +26,7 @@ public class S_ChangeHeading extends ServerBasePacket {
 
 	/**
 	 * 物件面向
+	 * 
 	 * @param cha
 	 */
 	public S_ChangeHeading(L1Character cha) {

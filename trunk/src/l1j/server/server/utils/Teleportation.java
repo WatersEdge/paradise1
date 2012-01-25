@@ -52,6 +52,7 @@ public class Teleportation {
 
 	/**
 	 * 更新移动后的坐标
+	 * 
 	 * @param pc
 	 */
 	public static void actionTeleportation(final L1PcInstance pc) {
@@ -91,7 +92,8 @@ public class Teleportation {
 		if (pc.isReserveGhost()) { // 解除幽灵状态
 			pc.endGhost();
 		}
-		if (pc.isGhost() || pc.isGmInvis()) {}
+		if (pc.isGhost() || pc.isGmInvis()) {
+		}
 		else if (pc.isInvisble()) {
 			pc.broadcastPacketForFindInvis(new S_OtherCharPacks(pc, true), true);
 		}
@@ -111,9 +113,7 @@ public class Teleportation {
 		pc.setCallClanId(0); // コールクランを唱えた後に移動すると召喚無効
 
 		/*
-		 * subjects ペットとサモンのテレポート先画面内へ居たプレイヤー。
-		 * 各ペット毎にUpdateObjectを行う方がコード上ではスマートだが、
-		 * ネットワーク負荷が大きくなる為、一旦Setへ格納して最後にまとめてUpdateObjectする。
+		 * subjects ペットとサモンのテレポート先画面内へ居たプレイヤー。 各ペット毎にUpdateObjectを行う方がコード上ではスマートだが、 ネットワーク負荷が大きくなる為、一旦Setへ格納して最後にまとめてUpdateObjectする。
 		 */
 		final HashSet<L1PcInstance> subjects = new HashSet<L1PcInstance>();
 		subjects.add(pc);
@@ -126,8 +126,7 @@ public class Teleportation {
 					final L1Location loc = pc.getLocation().randomLocation(3, false);
 					int nx = loc.getX();
 					int ny = loc.getY();
-					if ((pc.getMapId() == 5125) || (pc.getMapId() == 5131) || (pc.getMapId() == 5132) || (pc.getMapId() == 5133)
-							|| (pc.getMapId() == 5134)) { // ペットマッチ会場
+					if ((pc.getMapId() == 5125) || (pc.getMapId() == 5131) || (pc.getMapId() == 5132) || (pc.getMapId() == 5133) || (pc.getMapId() == 5134)) { // ペットマッチ会場
 						nx = 32799 + Random.nextInt(5) - 3;
 						ny = 32864 + Random.nextInt(5) - 3;
 					}
@@ -195,8 +194,7 @@ public class Teleportation {
 		}
 
 		// 副本编号与副本地图不符
-		if (pc.getPortalNumber() != -1
-				&& (pc.getMapId() !=  (1005 + pc.getPortalNumber()))) {
+		if (pc.getPortalNumber() != -1 && (pc.getMapId() != (1005 + pc.getPortalNumber()))) {
 			L1DragonSlayer.getInstance().removePlayer(pc, pc.getPortalNumber());
 			pc.setPortalNumber(-1);
 		}

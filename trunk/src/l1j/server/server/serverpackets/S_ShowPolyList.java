@@ -23,6 +23,7 @@ public class S_ShowPolyList extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗 (变身清单)
+	 * 
 	 * @param objid
 	 */
 	public S_ShowPolyList(int objid) {

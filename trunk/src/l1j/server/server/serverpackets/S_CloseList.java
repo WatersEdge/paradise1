@@ -23,6 +23,7 @@ public class S_CloseList extends ServerBasePacket {
 
 	/**
 	 * 关闭对话视窗
+	 * 
 	 * @param objid
 	 */
 	public S_CloseList(int objid) {

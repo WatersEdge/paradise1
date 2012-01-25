@@ -38,16 +38,17 @@ public class L1RequestInstance extends L1NpcInstance {
 	public void onAction(L1PcInstance player) {
 		int objid = getId();
 
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 
 		if (talking != null) {
 			if (player.getLawful() < -1000) { // プレイヤーがカオティック
 				player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 			}
-		} else {
+		}
+		else {
 			_log.finest("npc没有动作id : " + objid);
 		}
 	}

@@ -243,7 +243,8 @@ public class L1Inventory extends L1Object {
 				}
 
 				return this.storeItem(item);
-			} else if (temp.isStackable()) {
+			}
+			else if (temp.isStackable()) {
 				final L1ItemInstance item = new L1ItemInstance(temp, count);
 
 				if (this.findItemId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
@@ -265,7 +266,8 @@ public class L1Inventory extends L1Object {
 			}
 			// 返回最后(最近一次)的道具。改变可能会更好的定义方法，返回一个数组。
 			return result;
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -300,9 +302,11 @@ public class L1Inventory extends L1Object {
 				L1ItemInstance findItem = findItemId(itemId);
 				if (itemId == 40309) { // Race Tickets (食人妖精竞赛票)
 					findItem = findItemNameId(item.getItem().getIdentifiedNameId());
-				} else if (itemId == 40312) { // 旅馆钥匙
+				}
+				else if (itemId == 40312) { // 旅馆钥匙
 					findItem = findKeyId(itemId);
-				} else {
+				}
+				else {
 					findItem = findItemId(itemId);
 				}
 				if (findItem != null) {
@@ -352,7 +356,8 @@ public class L1Inventory extends L1Object {
 			// light系列时间设置
 			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) {
 				item.setRemainingTime(item.getItem().getLightFuel());
-			} else {
+			}
+			else {
 				item.setRemainingTime(item.getItem().getMaxUseTime());
 			}
 
@@ -369,7 +374,8 @@ public class L1Inventory extends L1Object {
 			this.insertItem(item);
 			return item;
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -404,7 +410,8 @@ public class L1Inventory extends L1Object {
 					updateItem(findItem);
 					return findItem;
 				}
-			} else if (item.isStackable()) {
+			}
+			else if (item.isStackable()) {
 				L1ItemInstance findItem = findItemId(item.getItem().getItemId());
 				if (findItem != null) {
 					findItem.setCount(findItem.getCount() + item.getCount());
@@ -425,7 +432,8 @@ public class L1Inventory extends L1Object {
 			_items.add(item);
 			insertItem(item);
 			return item;
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -454,14 +462,16 @@ public class L1Inventory extends L1Object {
 				removeItem(item, count);
 				return true;
 			}
-		} else {
+		}
+		else {
 			final L1ItemInstance[] itemList = this.findItemsId(itemid);
 			if (itemList.length == count) {
 				for (int i = 0; i < count; i++) {
 					removeItem(itemList[i], 1);
 				}
 				return true;
-			} else if (itemList.length > count) { // 所持有的数量超过指定数量
+			}
+			else if (itemList.length > count) { // 所持有的数量超过指定数量
 				final DataComparator<L1ItemInstance> dc = new DataComparator<L1ItemInstance>();
 				Arrays.sort(itemList, dc); // 按照强化值 由低至高排列
 				for (int i = 0; i < count; i++) {
@@ -537,10 +547,12 @@ public class L1Inventory extends L1Object {
 			final int itemId = item.getItem().getItemId();
 			if ((itemId == 40314) || (itemId == 40316)) { // 宠物项圈
 				PetTable.getInstance().deletePet(item.getId());
-			} else if ((itemId >= 49016) && (itemId <= 49025)) { // 便箋
+			}
+			else if ((itemId >= 49016) && (itemId <= 49025)) { // 便箋
 				final LetterTable lettertable = new LetterTable();
 				lettertable.deleteLetter(item.getId());
-			} else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具
+			}
+			else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具
 				for (final L1Object l1object : L1World.getInstance().getObject()) {
 					if (l1object instanceof L1FurnitureInstance) {
 						final L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
@@ -549,12 +561,14 @@ public class L1Inventory extends L1Object {
 						}
 					}
 				}
-			} else if (item.getItemId() == 40309) {// Race Tickets
+			}
+			else if (item.getItemId() == 40309) {// Race Tickets
 				RaceTicketTable.getInstance().deleteTicket(item.getId());
 			}
 			this.deleteItem(item);
 			L1World.getInstance().removeObject(item);
-		} else {
+		}
+		else {
 			item.setCount(item.getCount() - count);
 			updateItem(item);
 		}
@@ -629,7 +643,8 @@ public class L1Inventory extends L1Object {
 		if (item.getCount() <= count) {
 			deleteItem(item);
 			carryItem = item;
-		} else {
+		}
+		else {
 			item.setCount(item.getCount() - count);
 			updateItem(item);
 			carryItem = ItemTable.getInstance().createItem(item.getItem().getItemId());
@@ -709,7 +724,8 @@ public class L1Inventory extends L1Object {
 			if (currentDurability > durability) {
 				item.set_durability(durability);
 			}
-		} else {
+		}
+		else {
 			final int maxDurability = item.getEnchantLevel() + 5;
 			int durability = currentDurability + count;
 			if (durability > maxDurability) {
@@ -749,7 +765,8 @@ public class L1Inventory extends L1Object {
 		if (itemType == 0) {
 			// 增加耐久度。
 			item.set_durability(durability + 1);
-		} else {
+		}
+		else {
 			// 增加损伤度。
 			item.set_durability(durability - 1);
 		}
@@ -875,7 +892,8 @@ public class L1Inventory extends L1Object {
 			if ((item != null) && (item.getCount() >= count)) {
 				return true;
 			}
-		} else { // 不可堆叠
+		}
+		else { // 不可堆叠
 			final Object[] itemList = findItemsId(id);
 			if (itemList.length >= count) {
 				return true;
@@ -1006,7 +1024,8 @@ public class L1Inventory extends L1Object {
 			if (item != null) {
 				return item.getCount();
 			}
-		} else { // 不可堆叠
+		}
+		else { // 不可堆叠
 			Object[] itemList = this.findItemsIdNotEquipped(id);
 			return itemList.length;
 		}

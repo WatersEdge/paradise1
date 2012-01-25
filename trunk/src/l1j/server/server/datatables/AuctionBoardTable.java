@@ -70,7 +70,8 @@ public class AuctionBoardTable {
 				board.setBidderId(rs.getInt(10)); // 盟屋购买者ID
 				_boards.put(board.getHouseId(), board);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -110,8 +111,7 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO board_auction SET house_id=?, house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=?");
+			pstm = con.prepareStatement("INSERT INTO board_auction SET house_id=?, house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=?");
 			pstm.setInt(1, board.getHouseId());
 			pstm.setString(2, board.getHouseName());
 			pstm.setInt(3, board.getHouseArea());
@@ -127,7 +127,8 @@ public class AuctionBoardTable {
 			pstm.execute();
 
 			_boards.put(board.getHouseId(), board);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -146,8 +147,7 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
+			pstm = con.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -161,7 +161,8 @@ public class AuctionBoardTable {
 			pstm.setInt(9, board.getBidderId());
 			pstm.setInt(10, board.getHouseId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -185,7 +186,8 @@ public class AuctionBoardTable {
 			pstm.execute();
 
 			_boards.remove(houseId);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

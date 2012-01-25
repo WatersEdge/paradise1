@@ -61,8 +61,7 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 				writeS(rs.getString(7)); // 前任屋主
 				writeS(rs.getString(9)); // 现任屋主
 				writeS(String.valueOf(rs.getInt(5))); // 售屋价格
-				Calendar cal = timestampToCalendar((Timestamp) rs.
-						getObject(4));
+				Calendar cal = timestampToCalendar((Timestamp) rs.getObject(4));
 				int month = cal.get(Calendar.MONTH) + 1;
 				int day = cal.get(Calendar.DATE);
 				int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -70,7 +69,8 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 				writeS(String.valueOf(day)); // 截止日
 				writeS(String.valueOf(hour)); // 截止时
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -69,23 +69,24 @@ public class S_ShopSellList extends ServerBasePacket {
 
 			if (shopItem.getPackCount() > 1) {
 				writeS(item.getName() + " (" + shopItem.getPackCount() + ")");
-			} else {
+			}
+			else {
 				if (item.getItemId() == 40309) {// 食人妖精RaceTicket
 					String[] temp = item.getName().split(" ");
 					String buf = temp[temp.length - 1];
 					temp = buf.split("-");
-					writeS(buf + " $"
-							+ (1212 + Integer.parseInt(temp[temp.length - 1])));
-				} else {
+					writeS(buf + " $" + (1212 + Integer.parseInt(temp[temp.length - 1])));
+				}
+				else {
 					writeS(item.getName());
 				}
 			}
 
-			L1Item template = ItemTable.getInstance().getTemplate(
-					item.getItemId());
+			L1Item template = ItemTable.getInstance().getTemplate(item.getItemId());
 			if (template == null) {
 				writeC(0);
-			} else {
+			}
+			else {
 				dummy.setItem(template);
 				byte[] status = dummy.getStatusBytes();
 				writeC(status.length);

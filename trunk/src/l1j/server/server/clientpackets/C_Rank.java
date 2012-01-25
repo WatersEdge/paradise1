@@ -106,13 +106,17 @@ public class C_Rank extends ClientBasePacket {
 					return;
 				}
 			}
-		} else if (data == 2) {
+		}
+		else if (data == 2) {
 			pc.sendPackets(new S_ServerMessage(74, "同盟目录"));
-		} else if (data == 3) {
+		}
+		else if (data == 3) {
 			pc.sendPackets(new S_ServerMessage(74, "加入同盟"));
-		} else if (data == 4) {
+		}
+		else if (data == 4) {
 			pc.sendPackets(new S_ServerMessage(74, "退出同盟")); // \f1%0%o 无法使用。
-		} else {
+		}
+		else {
 			/*
 			*/
 		}

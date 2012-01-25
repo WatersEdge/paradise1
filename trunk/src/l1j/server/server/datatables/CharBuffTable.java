@@ -153,7 +153,8 @@ public class CharBuffTable {
 			pstm.setInt(3, time);
 			pstm.setInt(4, polyId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -174,7 +175,8 @@ public class CharBuffTable {
 			pstm = con.prepareStatement("DELETE FROM character_buff WHERE char_obj_id=?");
 			pstm.setInt(1, pc.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -278,7 +280,8 @@ public class CharBuffTable {
 					break;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

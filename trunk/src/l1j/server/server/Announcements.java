@@ -35,6 +35,7 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class Announcements {
 
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(Announcements.class.getName());
 
 	private static Announcements _instance;
@@ -53,25 +54,32 @@ public class Announcements {
 		return _instance;
 	}
 
-	// 加载公告
+	/**
+	 * 加载公告
+	 */
 	private void loadAnnouncements() {
 		_announcements.clear();
 		File file = new File("data/announcements.txt");
 		if (file.exists()) {
 			readFromDisk(file);
-		} else {
+		}
+		else {
 			_log.config("data/announcements.txt 不存在");
 		}
 	}
 
-	/** 显示公告 */
+	/**
+	 * 显示公告
+	 */
 	public void showAnnouncements(L1PcInstance showTo) {
 		for (String msg : _announcements) {
 			showTo.sendPackets(new S_SystemMessage(msg));
 		}
 	}
 
-	// 从磁盘中读取
+	/**
+	 * 从磁盘中读取
+	 */
 	private void readFromDisk(File file) {
 		LineNumberReader lnr = null;
 		try {
@@ -89,15 +97,20 @@ public class Announcements {
 			}
 
 			_log.config("读取了  " + i + " 件公告");
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			// 如果档案不存在
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			StreamUtil.close(lnr);
 		}
 	}
 
+	/**
+	 * 全体公告
+	 */
 	public void announceToAll(String msg) {
 		L1World.getInstance().broadcastServerMessage(msg);
 	}

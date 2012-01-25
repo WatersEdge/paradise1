@@ -44,12 +44,12 @@ public class S_Emblem extends ServerBasePacket {
 				while ((data = bis.read()) != -1) {
 					writeP(data);
 				}
-				 writeC(0x00); // 3.5C 於盟徽封包末未知的值
-				 writeH(0x0000);
+				writeC(0x00); // 3.5C 於盟徽封包末未知的值
+				writeH(0x0000);
 			}
 		}
-		catch (Exception e) {}
-		finally {
+		catch (Exception e) {
+		} finally {
 			if (bis != null) {
 				try {
 					bis.close();

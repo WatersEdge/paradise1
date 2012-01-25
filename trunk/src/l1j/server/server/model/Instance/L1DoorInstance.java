@@ -40,8 +40,7 @@ public class L1DoorInstance extends L1NpcInstance {
 		super(template);
 	}
 
-	public L1DoorInstance(int doorId, L1DoorGfx gfx, L1Location loc, int hp,
-			int keeper, boolean isOpening) {
+	public L1DoorInstance(int doorId, L1DoorGfx gfx, L1Location loc, int hp, int keeper, boolean isOpening) {
 		super(NpcTable.getInstance().getTemplate(DOOR_NPC_ID));
 		setDoorId(doorId);
 		setMaxHp(hp);
@@ -128,13 +127,17 @@ public class L1DoorInstance extends L1NpcInstance {
 		int newStatus = 0;
 		if ((getMaxHp() * 1 / 6) > getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction5;
-		} else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
+		}
+		else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction4;
-		} else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
+		}
+		else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction3;
-		} else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
+		}
+		else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction2;
-		} else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
+		}
+		else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction1;
 		}
 		if (getStatus() == newStatus) {
@@ -173,12 +176,14 @@ public class L1DoorInstance extends L1NpcInstance {
 		int size = rightEdgeLocation - leftEdgeLocation;
 		if (size == 0) { // 1マス分の幅のドア
 			sendPacket(pc, entranceX, entranceY);
-		} else { // 2マス分以上の幅があるドア
+		}
+		else { // 2マス分以上の幅があるドア
 			if (getDirection() == 0) { // ／向き
 				for (int x = leftEdgeLocation; x <= rightEdgeLocation; x++) {
 					sendPacket(pc, x, entranceY);
 				}
-			} else { // ＼向き
+			}
+			else { // ＼向き
 				for (int y = leftEdgeLocation; y <= rightEdgeLocation; y++) {
 					sendPacket(pc, entranceX, y);
 				}
@@ -197,7 +202,8 @@ public class L1DoorInstance extends L1NpcInstance {
 			if (getOpenStatus() == ActionCodes.ACTION_Close) {
 				pc.sendPackets(packet);
 			}
-		} else {
+		}
+		else {
 			broadcastPacket(packet);
 		}
 	}
@@ -263,7 +269,8 @@ public class L1DoorInstance extends L1NpcInstance {
 		int entranceX = 0;
 		if (getDirection() == 0) { // ／向き
 			entranceX = getX();
-		} else { // ＼向き
+		}
+		else { // ＼向き
 			entranceX = getX() - 1;
 		}
 		return entranceX;
@@ -273,7 +280,8 @@ public class L1DoorInstance extends L1NpcInstance {
 		int entranceY = 0;
 		if (getDirection() == 0) { // ／向き
 			entranceY = getY() + 1;
-		} else { // ＼向き
+		}
+		else { // ＼向き
 			entranceY = getY();
 		}
 		return entranceY;
@@ -306,8 +314,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	private void setOpenStatus(int newStatus) {
-		if (newStatus != ActionCodes.ACTION_Open
-				&& newStatus != ActionCodes.ACTION_Close) {
+		if (newStatus != ActionCodes.ACTION_Open && newStatus != ActionCodes.ACTION_Close) {
 			throw new IllegalArgumentException();
 		}
 		_openStatus = newStatus;

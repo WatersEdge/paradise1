@@ -59,8 +59,7 @@ public class C_CommonClick {
 		try {
 
 			conn = L1DatabaseFactory.getInstance().getConnection();
-			pstm = conn
-					.prepareStatement("SELECT * FROM characters WHERE account_name=? ORDER BY objid");
+			pstm = conn.prepareStatement("SELECT * FROM characters WHERE account_name=? ORDER BY objid");
 			pstm.setString(1, client.getAccountName());
 			rs = pstm.executeQuery();
 
@@ -71,19 +70,18 @@ public class C_CommonClick {
 				Timestamp deleteTime = rs.getTimestamp("DeleteTime");
 				if (deleteTime != null) {
 					Calendar cal = Calendar.getInstance();
-					long checkDeleteTime = ((cal.getTimeInMillis() - deleteTime
-							.getTime()) / 1000) / 3600;
+					long checkDeleteTime = ((cal.getTimeInMillis() - deleteTime.getTime()) / 1000) / 3600;
 					if (checkDeleteTime >= 0) {
 						L1Clan clan = L1World.getInstance().getClan(clanname);
 						if (clan != null) {
 							clan.delMemberName(name);
 						}
-						CharacterTable.getInstance().deleteCharacter(
-								client.getAccountName(), name);
+						CharacterTable.getInstance().deleteCharacter(client.getAccountName(), name);
 					}
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -100,8 +98,7 @@ public class C_CommonClick {
 		try {
 
 			conn = L1DatabaseFactory.getInstance().getConnection();
-			pstm = conn
-					.prepareStatement("SELECT * FROM characters WHERE account_name=? ORDER BY objid");
+			pstm = conn.prepareStatement("SELECT * FROM characters WHERE account_name=? ORDER BY objid");
 			pstm.setString(1, client.getAccountName());
 			rs = pstm.executeQuery();
 
@@ -115,14 +112,16 @@ public class C_CommonClick {
 				int currenthp = rs.getInt("CurHp");
 				if (currenthp < 1) {
 					currenthp = 1;
-				} else if (currenthp > 32767) {
+				}
+				else if (currenthp > 32767) {
 					currenthp = 32767;
 				}
 
 				int currentmp = rs.getInt("CurMp");
 				if (currentmp < 1) {
 					currentmp = 1;
-				} else if (currentmp > 32767) {
+				}
+				else if (currentmp > 32767) {
 					currentmp = 32767;
 				}
 
@@ -131,10 +130,12 @@ public class C_CommonClick {
 					lvl = rs.getInt("level");
 					if (lvl < 1) {
 						lvl = 1;
-					} else if (lvl > 127) {
+					}
+					else if (lvl > 127) {
 						lvl = 127;
 					}
-				} else {
+				}
+				else {
 					lvl = 1;
 				}
 
@@ -192,13 +193,12 @@ public class C_CommonClick {
 				SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
 				int birthday = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
 
-				S_CharPacks cpk = new S_CharPacks(name, clanname, type, sex,
-						lawful, currenthp, currentmp, ac, lvl, str, dex, con,
-						wis, cha, intel, accessLevel, birthday);
+				S_CharPacks cpk = new S_CharPacks(name, clanname, type, sex, lawful, currenthp, currentmp, ac, lvl, str, dex, con, wis, cha, intel, accessLevel, birthday);
 
 				client.sendPacket(cpk);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

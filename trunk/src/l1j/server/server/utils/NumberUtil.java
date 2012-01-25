@@ -20,22 +20,24 @@ package l1j.server.server.utils;
 public class NumberUtil {
 
 	/**
-	 * 返回一个整数四舍五入或与几个小数位在第二的概率下降。
-	 * 例如，1.3被四舍五入为30％的概率、70%的几率四舍五入。
+	 * 返回一个整数四舍五入或与几个小数位在第二的概率下降。 例如，1.3被四舍五入为30％的概率、70%的几率四舍五入。
 	 * 
-	 * @param number - 原始的数
+	 * @param number
+	 *            - 原始的数
 	 * @return 四舍五入的整数
 	 */
 	public static int randomRound(double number) {
 		double percentage = (number - Math.floor(number)) * 100;
-		
+
 		if (percentage == 0) {
 			return ((int) number);
-		} else {
+		}
+		else {
 			int r = Random.nextInt(100);
 			if (r < percentage) {
 				return ((int) number + 1);
-			} else {
+			}
+			else {
 				return ((int) number);
 			}
 		}

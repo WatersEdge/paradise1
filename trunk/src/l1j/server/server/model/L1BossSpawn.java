@@ -70,12 +70,12 @@ public class L1BossSpawn extends L1Spawn {
 		// アクティブだった周期の开始时间 >= 最近の周期开始时间の场合、次の出现
 		if (!activeStart.before(latestStart)) {
 			spawnTime = calcNextSpawnTime(activeStart);
-		} else {
+		}
+		else {
 			// アクティブだった周期の开始时间 < 最近の周期开始时间の场合は、最近の周期で出现
 			// わかりづらいが确率计算する为に、无理やりcalcNextSpawnTimeを通している。
 			latestStart.add(Calendar.SECOND, -1);
-			spawnTime = calcNextSpawnTime(_cycle
-					.getLatestStartTime(latestStart));
+			spawnTime = calcNextSpawnTime(_cycle.getLatestStartTime(latestStart));
 		}
 		spawnBoss(spawnTime, objectId);
 	}
@@ -117,7 +117,8 @@ public class L1BossSpawn extends L1Spawn {
 		if (Config.INIT_BOSS_SPAWN && _percentage > Random.nextInt(100)) {
 			spawnTime = _cycle.calcSpawnTime(now);
 
-		} else {
+		}
+		else {
 			spawnTime = calcNextSpawnTime(now);
 		}
 		spawnBoss(spawnTime, 0);
@@ -141,8 +142,7 @@ public class L1BossSpawn extends L1Spawn {
 		_spawnCount = getAmount();
 		while (cnt < getAmount()) {
 			cnt++;
-			GeneralThreadPool.getInstance().schedule(
-					new SpawnTask(0, objectId), delay);
+			GeneralThreadPool.getInstance().schedule(new SpawnTask(0, objectId), delay);
 		}
 		_log.log(Level.FINE, toString());
 	}

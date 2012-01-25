@@ -53,7 +53,8 @@ public class InnKeyTable {
 			pstm.setBoolean(4, item.checkRoomOrHall());
 			pstm.setTimestamp(5, item.getDueTime());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -74,7 +75,8 @@ public class InnKeyTable {
 			pstm = con.prepareStatement("DELETE FROM inn_key WHERE item_obj_id=?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -109,7 +111,8 @@ public class InnKeyTable {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

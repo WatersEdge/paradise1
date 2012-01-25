@@ -145,7 +145,8 @@ public class NpcSpawnTable {
 					}
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -181,7 +182,8 @@ public class NpcSpawnTable {
 			pstm.setInt(6, pc.getHeading());
 			pstm.setInt(7, pc.getMapId());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {

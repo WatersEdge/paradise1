@@ -143,7 +143,8 @@ public class CharacterTable {
 			 * if(l1pcinstance.getClanid() != 0) { L1Clan clan = new L1Clan(); ClanTable clantable = new ClanTable(); clan = clantable.getClan(l1pcinstance.getClanname()); l1pcinstance.setClanname(clan.GetClanName()); }
 			 */
 			_log.finest("载入角色: " + pc.getName());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return pc;
@@ -160,7 +161,8 @@ public class CharacterTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE characters SET OnlineStatus=0");
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -182,7 +184,8 @@ public class CharacterTable {
 			pstm.setInt(1, pc.getOnlineStatus());
 			pstm.setInt(2, pc.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -214,7 +217,8 @@ public class CharacterTable {
 			pstm.setInt(1, partnerId);
 			pstm.setInt(2, targetId);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -241,7 +245,8 @@ public class CharacterTable {
 			pstm.setInt(6, pc.getBaseWis());
 			pstm.setInt(7, pc.getId());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -277,7 +282,8 @@ public class CharacterTable {
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();
 			result = rs.next();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("could not check existing charname:" + e.getMessage());
 		} finally {
 			SQLUtil.close(rs);
@@ -307,7 +313,8 @@ public class CharacterTable {
 				cn.setId(rs.getInt("objid"));
 				_charNameList.put(name, cn);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

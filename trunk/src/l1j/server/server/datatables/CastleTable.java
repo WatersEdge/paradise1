@@ -76,7 +76,8 @@ public class CastleTable {
 
 				_castles.put(castle.getId(), castle);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -115,7 +116,8 @@ public class CastleTable {
 			pstm.execute();
 
 			_castles.put(castle.getId(), castle);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

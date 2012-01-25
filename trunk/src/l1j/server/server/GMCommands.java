@@ -77,7 +77,8 @@ public class GMCommands {
 			exe.execute(pc, name, arg);
 			_log.info(pc.getName() + " 使用 ." + name + " " + arg + " 的指令。");
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, " 错误的GM指令。", e);
 		}
 		return false;
@@ -120,14 +121,16 @@ public class GMCommands {
 			if (arg.isEmpty()) {
 				pc.sendPackets(new S_SystemMessage("指令 " + lastCmd + " 重新执行。"));
 				handleCommands(pc, lastCmd);
-			} else {
+			}
+			else {
 				// 引数を变えて实行
 				StringTokenizer token = new StringTokenizer(lastCmd);
 				String cmd = token.nextToken() + " " + arg;
 				pc.sendPackets(new S_SystemMessage("指令 " + cmd + " 执行。"));
 				handleCommands(pc, cmd);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(".r 指令错误。"));
 		}

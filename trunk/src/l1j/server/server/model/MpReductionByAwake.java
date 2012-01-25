@@ -41,7 +41,8 @@ public class MpReductionByAwake extends TimerTask {
 				return;
 			}
 			decreaseMp();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

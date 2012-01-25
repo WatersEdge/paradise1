@@ -29,8 +29,8 @@ import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.datatables.ChatLogTable;
 import l1j.server.server.datatables.ClanTable;
 import l1j.server.server.datatables.DoorTable;
-import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.DropItemTable;
+import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.FurnitureSpawnTable;
 import l1j.server.server.datatables.GetBackRestartTable;
 import l1j.server.server.datatables.InnTable;
@@ -40,11 +40,11 @@ import l1j.server.server.datatables.MagicDollTable;
 import l1j.server.server.datatables.MailTable;
 import l1j.server.server.datatables.MapsTable;
 import l1j.server.server.datatables.MobGroupTable;
+import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.NpcActionTable;
 import l1j.server.server.datatables.NpcChatTable;
 import l1j.server.server.datatables.NpcSpawnTable;
 import l1j.server.server.datatables.NpcTable;
-import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.datatables.PolyTable;
@@ -87,8 +87,12 @@ import l1j.server.server.utils.SystemUtil;
  * 游戏服务器
  */
 public class GameServer extends Thread {
-	private ServerSocket _serverSocket;
+
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(GameServer.class.getName());
+
+	private ServerSocket _serverSocket;
+
 	private int _port;
 	// private Logins _logins;
 	private LoginController _loginController;
@@ -105,11 +109,13 @@ public class GameServer extends Thread {
 				String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
 					_log.info("禁用IP (" + host + ")");
-				} else {
+				}
+				else {
 					ClientThread client = new ClientThread(socket);
 					GeneralThreadPool.getInstance().execute(client);
 				}
-			} catch (IOException ioexception) {
+			}
+			catch (IOException ioexception) {
 			}
 		}
 	}
@@ -146,7 +152,8 @@ public class GameServer extends Thread {
 			inetaddress.getHostAddress();
 			_serverSocket = new ServerSocket(_port, 50, inetaddress);
 			System.out.println(L1Message.setporton + _port);
-		} else {
+		}
+		else {
 			_serverSocket = new ServerSocket(_port);
 			System.out.println(L1Message.setporton + _port);
 		}
@@ -156,19 +163,14 @@ public class GameServer extends Thread {
 		System.out.println("└───────────────────────────────┘" + "\n");
 
 		System.out.println(L1Message.settingslist + "\n");
-		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x
-				+ "\n\r├" + L1Message.justice + ": " + (LA) + L1Message.x
-				+ "\n\r├" + L1Message.karma + ": " + (rateKarma) + L1Message.x
-				+ "\n\r├" + L1Message.dropitems + ": " + (rateDropItems)+ L1Message.x 
-				+ "\n\r├" + L1Message.dropadena + ": "+ (rateDropAdena) + L1Message.x 
-				+ "\n\r├"+ L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + "%" 
-				+ "\n\r├"+ L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR)+ "%");
-		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl)
-				+ L1Message.level);
+		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x + "\n\r├" + L1Message.justice + ": " + (LA) + L1Message.x + "\n\r├" + L1Message.karma + ": " + (rateKarma) + L1Message.x + "\n\r├" + L1Message.dropitems + ": " + (rateDropItems) + L1Message.x
+				+ "\n\r├" + L1Message.dropadena + ": " + (rateDropAdena) + L1Message.x + "\n\r├" + L1Message.enchantweapon + ": " + (Config.ENCHANT_CHANCE_WEAPON) + "%" + "\n\r├" + L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR) + "%");
+		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl) + L1Message.level);
 
 		if (Config.ALT_NONPVP) { // Non-PvP设定
 			System.out.println("└" + L1Message.nonpvpNo + "\n");
-		} else {
+		}
+		else {
 			System.out.println("└" + L1Message.nonpvpYes + "\n");
 		}
 
@@ -246,7 +248,7 @@ public class GameServer extends Thread {
 
 		// 开始 MySQL自动备份程序 计时器
 		MysqlAutoBackupTimer.TimerStart();
-		
+
 		// 初始化账号使用状态
 		Account.InitialOnlineStatus();
 
@@ -302,10 +304,10 @@ public class GameServer extends Thread {
 
 		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
-		
-		Thread cp = new ConsoleProcess(); //cmd互动指令
+
+		Thread cp = new ConsoleProcess(); // cmd互动指令
 		cp.start();
-		
+
 		this.start();
 	}
 
@@ -344,19 +346,19 @@ public class GameServer extends Thread {
 				world.broadcastServerMessage("请玩家移动到安全区域先行登出");
 				while (0 < secondsCount) {
 					if (secondsCount <= 30) {
-						world.broadcastServerMessage("伺服器將在" + secondsCount
-								+ "秒后关闭，请玩家移动到安全区域先行登出。");
-					} else {
+						world.broadcastServerMessage("伺服器將在" + secondsCount + "秒后关闭，请玩家移动到安全区域先行登出。");
+					}
+					else {
 						if (secondsCount % 60 == 0) {
-							world.broadcastServerMessage("伺服器将在" + secondsCount
-									/ 60 + "分钟后关闭。");
+							world.broadcastServerMessage("伺服器将在" + secondsCount / 60 + "分钟后关闭。");
 						}
 					}
 					Thread.sleep(1000);
 					secondsCount--;
 				}
 				shutdown();
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				world.broadcastServerMessage("已取消伺服器关机。伺服器将会正常运作。");
 				return;
 			}

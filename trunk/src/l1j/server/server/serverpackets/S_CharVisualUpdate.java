@@ -27,6 +27,7 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 
 	/**
 	 * 物件动作种类 (长时间)
+	 * 
 	 * @param cha
 	 */
 	public S_CharVisualUpdate(L1PcInstance pc) {
@@ -39,6 +40,7 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 
 	/**
 	 * 物件动作种类 (长时间)
+	 * 
 	 * @param cha
 	 * @param status
 	 */

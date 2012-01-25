@@ -25,6 +25,7 @@ public class S_SkillIconBloodstain extends ServerBasePacket {
 
 	/**
 	 * 效果图示：龙之血痕
+	 * 
 	 * @param i
 	 * @param j
 	 */

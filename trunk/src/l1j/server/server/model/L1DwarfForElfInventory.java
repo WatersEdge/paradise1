@@ -48,8 +48,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_elf_warehouse WHERE account_name = ?");
+			pstm = con.prepareStatement("SELECT * FROM character_elf_warehouse WHERE account_name = ?");
 			pstm.setString(1, _owner.getAccountName());
 
 			rs = pstm.executeQuery();
@@ -58,8 +57,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 				L1ItemInstance item = new L1ItemInstance();
 				int objectId = rs.getInt("id");
 				item.setId(objectId);
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(
-						rs.getInt("item_id"));
+				L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
 				item.setEquipped(false);
@@ -90,7 +88,8 @@ public class L1DwarfForElfInventory extends L1Inventory {
 				L1World.getInstance().storeObject(item);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -133,7 +132,8 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm.setInt(23, item.getMpr());
 			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -149,12 +149,12 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE character_elf_warehouse SET count = ? WHERE id = ?");
+			pstm = con.prepareStatement("UPDATE character_elf_warehouse SET count = ? WHERE id = ?");
 			pstm.setInt(1, item.getCount());
 			pstm.setInt(2, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -169,11 +169,11 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_elf_warehouse WHERE id = ?");
+			pstm = con.prepareStatement("DELETE FROM character_elf_warehouse WHERE id = ?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -183,7 +183,6 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		_items.remove(_items.indexOf(item));
 	}
 
-	private static Logger _log = Logger.getLogger(L1DwarfForElfInventory.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1DwarfForElfInventory.class.getName());
 	private final L1PcInstance _owner;
 }

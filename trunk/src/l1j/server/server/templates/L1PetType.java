@@ -40,9 +40,7 @@ public class L1PetType {
 
 	private final boolean _canUseEquipment;
 
-	public L1PetType(int baseNpcId, String name, int itemIdForTaming,
-			IntRange hpUpRange, IntRange mpUpRange, int evolvItemId, int npcIdForEvolving,
-			int msgIds[], int defyMsgId, boolean canUseEquipment) {
+	public L1PetType(int baseNpcId, String name, int itemIdForTaming, IntRange hpUpRange, IntRange mpUpRange, int evolvItemId, int npcIdForEvolving, int msgIds[], int defyMsgId, boolean canUseEquipment) {
 		_baseNpcId = baseNpcId;
 		_baseNpcTemplate = NpcTable.getInstance().getTemplate(baseNpcId);
 		_name = name;
@@ -54,7 +52,7 @@ public class L1PetType {
 		_msgIds = msgIds;
 		_defyMsgId = defyMsgId;
 		_canUseEquipment = canUseEquipment;
-		
+
 	}
 
 	public int getBaseNpcId() {

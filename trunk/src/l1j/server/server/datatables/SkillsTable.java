@@ -64,7 +64,8 @@ public class SkillsTable {
 			rs = pstm.executeQuery();
 			FillSkillsTable(rs);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建skills表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);
@@ -145,7 +146,8 @@ public class SkillsTable {
 			pstm.setInt(4, active);
 			pstm.setInt(5, time);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -175,7 +177,8 @@ public class SkillsTable {
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -208,7 +211,8 @@ public class SkillsTable {
 			else {
 				ret = false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {

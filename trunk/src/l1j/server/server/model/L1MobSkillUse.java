@@ -266,11 +266,11 @@ public class L1MobSkillUse {
 			}
 
 			switch (_attacker.getNpcTemplate().get_npcId()) {
-				case 81082: // 火焰之影
-					pc.getInventory().takeoffEquip(945); // 将目标装备卸下。
-					break;
-				default:
-					break;
+			case 81082: // 火焰之影
+				pc.getInventory().takeoffEquip(945); // 将目标装备卸下。
+				break;
+			default:
+				break;
 			}
 			_attacker.broadcastPacket(new S_SkillSound(pc.getId(), 230));
 			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
@@ -291,8 +291,7 @@ public class L1MobSkillUse {
 		if (skillid > 0) {
 			skillUse.setSkillRanged(getMobSkillTemplate().getRange(idx)); // 变更技能施放距离
 			skillUse.setSkillRanged(getMobSkillTemplate().getSkillArea(idx)); // 变更技能施放范围
-			canUseSkill = skillUse.checkUseSkill(null, skillid, _target.getId(), _target.getX(), _target.getY(), null, 0, L1SkillUse.TYPE_NORMAL,
-					_attacker, actId, gfxId, mpConsume);
+			canUseSkill = skillUse.checkUseSkill(null, skillid, _target.getId(), _target.getX(), _target.getY(), null, 0, L1SkillUse.TYPE_NORMAL, _attacker, actId, gfxId, mpConsume);
 		}
 
 		L1Skills skill = SkillsTable.getInstance().getTemplate(skillid);
@@ -368,8 +367,7 @@ public class L1MobSkillUse {
 
 				if ((_target instanceof L1PcInstance) || (_target instanceof L1SummonInstance) || (_target instanceof L1PetInstance)) {
 					// 对PC
-					if (((obj instanceof L1PcInstance) && !((L1PcInstance) obj).isGhost() && !((L1PcInstance) obj).isGmInvis())
-							|| (obj instanceof L1SummonInstance) || (obj instanceof L1PetInstance)) {
+					if (((obj instanceof L1PcInstance) && !((L1PcInstance) obj).isGhost() && !((L1PcInstance) obj).isGmInvis()) || (obj instanceof L1SummonInstance) || (obj instanceof L1PetInstance)) {
 						targetList.put(obj.getId(), 0);
 					}
 				}
@@ -415,7 +413,8 @@ public class L1MobSkillUse {
 
 		if (actId > 0) {
 			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
-		} else {
+		}
+		else {
 			_sleepTime = _attacker.getAtkspeed();
 		}
 		return true;
@@ -434,15 +433,9 @@ public class L1MobSkillUse {
 		}
 
 		if (isTriRnd || (type == L1MobSkill.TYPE_SUMMON) || (type == L1MobSkill.TYPE_POLY)) {
-			/*if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) {
-				int chance = Random.nextInt(100) + 1;
-				if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) {
-					useble = true;
-				}
-				else {
-					return false;
-				}
-			}*/ // 确定此修改后的模式是仿正的，再移除此注解掉的程式码
+			/*
+			 * if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) { int chance = Random.nextInt(100) + 1; if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) { useble = true; } else { return false; } }
+			 */// 确定此修改后的模式是仿正的，再移除此注解掉的程式码
 			useble = true;
 		}
 
@@ -531,11 +524,8 @@ public class L1MobSkillUse {
 				L1NpcInstance mob = null;
 				try {
 					String implementationName = spawnmonster.getImpl();
-					Constructor<?> _constructor = Class.forName(
-							(new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance")
-									.toString()).getConstructors()[0];
-					mob = (L1NpcInstance) _constructor.newInstance(new Object[]
-					{ spawnmonster });
+					Constructor<?> _constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString()).getConstructors()[0];
+					mob = (L1NpcInstance) _constructor.newInstance(new Object[] { spawnmonster });
 					mob.setId(IdFactory.getInstance().nextId());
 					L1Location loc = _attacker.getLocation().randomLocation(8, false);
 					int heading = Random.nextInt(8);
@@ -557,7 +547,8 @@ public class L1MobSkillUse {
 						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_Appear));
 						newnpc.setStatus(0);
 						newnpc.broadcastPacket(new S_CharVisualUpdate(newnpc, newnpc.getStatus()));
-					} else if (newnpc.getTempCharGfx() == 7591) { // 泥龙(地)
+					}
+					else if (newnpc.getTempCharGfx() == 7591) { // 泥龙(地)
 						newnpc.broadcastPacket(new S_NPCPack(newnpc));
 						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_AxeWalk));
 					}
@@ -580,59 +571,59 @@ public class L1MobSkillUse {
 		L1Character target;
 
 		switch (type) {
-			case L1MobSkill.CHANGE_TARGET_ME:
-				target = _attacker;
-				break;
-			case L1MobSkill.CHANGE_TARGET_RANDOM:
-				// 选定候补目标
-				List<L1Character> targetList = Lists.newList();
-				for (L1Object obj : L1World.getInstance().getVisibleObjects(_attacker)) {
-					if ((obj instanceof L1PcInstance) || (obj instanceof L1PetInstance) || (obj instanceof L1SummonInstance)) {
-						L1Character cha = (L1Character) obj;
+		case L1MobSkill.CHANGE_TARGET_ME:
+			target = _attacker;
+			break;
+		case L1MobSkill.CHANGE_TARGET_RANDOM:
+			// 选定候补目标
+			List<L1Character> targetList = Lists.newList();
+			for (L1Object obj : L1World.getInstance().getVisibleObjects(_attacker)) {
+				if ((obj instanceof L1PcInstance) || (obj instanceof L1PetInstance) || (obj instanceof L1SummonInstance)) {
+					L1Character cha = (L1Character) obj;
 
-						int distance = _attacker.getLocation().getTileLineDistance(cha.getLocation());
+					int distance = _attacker.getLocation().getTileLineDistance(cha.getLocation());
 
-						// 目标在发动范围外
-						if (!getMobSkillTemplate().isTriggerDistance(idx, distance)) {
-							continue;
-						}
-
-						// 有障碍物
-						if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
-							continue;
-						}
-
-						if (!_attacker.getHateList().containsKey(cha)) { // 无攻击对象
-							continue;
-						}
-
-						if (cha.isDead()) { // 死亡
-							continue;
-						}
-
-						// 幽灵状态
-						if (cha instanceof L1PcInstance) {
-							if (((L1PcInstance) cha).isGhost()) {
-								continue;
-							}
-						}
-						targetList.add((L1Character) obj);
+					// 目标在发动范围外
+					if (!getMobSkillTemplate().isTriggerDistance(idx, distance)) {
+						continue;
 					}
-				}
 
-				if (targetList.isEmpty()) {
-					target = _target;
-				}
-				else {
-					int randomSize = targetList.size() * 100;
-					int targetIndex = Random.nextInt(randomSize) / 100;
-					target = targetList.get(targetIndex);
-				}
-				break;
+					// 有障碍物
+					if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
+						continue;
+					}
 
-			default:
+					if (!_attacker.getHateList().containsKey(cha)) { // 无攻击对象
+						continue;
+					}
+
+					if (cha.isDead()) { // 死亡
+						continue;
+					}
+
+					// 幽灵状态
+					if (cha instanceof L1PcInstance) {
+						if (((L1PcInstance) cha).isGhost()) {
+							continue;
+						}
+					}
+					targetList.add((L1Character) obj);
+				}
+			}
+
+			if (targetList.isEmpty()) {
 				target = _target;
-				break;
+			}
+			else {
+				int randomSize = targetList.size() * 100;
+				int targetIndex = Random.nextInt(randomSize) / 100;
+				target = targetList.get(targetIndex);
+			}
+			break;
+
+		default:
+			target = _target;
+			break;
 		}
 		return target;
 	}

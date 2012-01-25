@@ -27,6 +27,7 @@ public class S_HPUpdate extends ServerBasePacket {
 
 	/**
 	 * 体力与最大体力更新
+	 * 
 	 * @param currentHp
 	 * @param maxHp
 	 */
@@ -36,6 +37,7 @@ public class S_HPUpdate extends ServerBasePacket {
 
 	/**
 	 * 体力与最大体力更新
+	 * 
 	 * @param pc
 	 */
 	public S_HPUpdate(L1PcInstance pc) {

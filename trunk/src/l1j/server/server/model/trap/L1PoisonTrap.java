@@ -46,9 +46,11 @@ public class L1PoisonTrap extends L1Trap {
 
 		if (_type.equals("d")) {
 			L1DamagePoison.doInfection(trodFrom, trodFrom, _time, _damage);
-		} else if (_type.equals("s")) {
+		}
+		else if (_type.equals("s")) {
 			L1SilencePoison.doInfection(trodFrom);
-		} else if (_type.equals("p")) {
+		}
+		else if (_type.equals("p")) {
 			L1ParalysisPoison.doInfection(trodFrom, _delay, _time);
 		}
 	}

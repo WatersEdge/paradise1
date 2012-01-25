@@ -43,8 +43,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM characters WHERE char_name=?");
+			pstm = con.prepareStatement("SELECT * FROM characters WHERE char_name=?");
 			pstm.setString(1, charName);
 
 			rs = pstm.executeQuery();
@@ -91,15 +90,8 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			}
 			pc.setHeading(head);
 			/*
-			 * int locX = resultset.getInt("locX"); int locY =
-			 * resultset.getInt("locY"); short map =
-			 * resultset.getShort("MapID"); if (locX < 30000 || locX > 40000 ||
-			 * locY < 30000 || locY > 40000) { locX = 32564; locY = 32955; } if
-			 * (map == 70) { locX = 32828; locY = 32848; } // 強制移動 short
-			 * moveflag = Config.RANGE_RACE_RECOGNIT; if (moveflag != 1) {
-			 * Random random = new Random(); // 強制移動 int rndmap = 1 +
-			 * random.nextInt(5); switch (rndmap) { case 1: // skt locX = 33080;
-			 * locY = 33392; map = 4; break;
+			 * int locX = resultset.getInt("locX"); int locY = resultset.getInt("locY"); short map = resultset.getShort("MapID"); if (locX < 30000 || locX > 40000 || locY < 30000 || locY > 40000) { locX = 32564; locY = 32955; } if (map == 70) { locX = 32828; locY = 32848; } //
+			 * 強制移動 short moveflag = Config.RANGE_RACE_RECOGNIT; if (moveflag != 1) { Random random = new Random(); // 強制移動 int rndmap = 1 + random.nextInt(5); switch (rndmap) { case 1: // skt locX = 33080; locY = 33392; map = 4; break;
 			 * 
 			 * case 2: // ti locX = 32580; locY = 32931; map = 0; break;
 			 * 
@@ -109,8 +101,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			 * 
 			 * case 5: // h locX = 33612; locY = 33268; map = 4; break;
 			 * 
-			 * default: // skt locX = 33080; locY = 33392; map = 4; break; } }
-			 * pc.set_x(locX); pc.set_y(locY); pc.set_map(map);
+			 * default: // skt locX = 33080; locY = 33392; map = 4; break; } } pc.set_x(locX); pc.set_y(locY); pc.set_map(map);
 			 */
 			pc.setX(rs.getInt("locX"));
 			pc.setY(rs.getInt("locY"));
@@ -132,10 +123,12 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			if (pc.getAccessLevel() == 200) {
 				pc.setGm(true);
 				pc.setMonitor(false);
-			} else if (pc.getAccessLevel() == 100) {
+			}
+			else if (pc.getAccessLevel() == 100) {
 				pc.setGm(false);
 				pc.setMonitor(true);
-			} else {
+			}
+			else {
 				pc.setGm(false);
 				pc.setMonitor(false);
 			}
@@ -162,7 +155,8 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pc.setGmInvis(false);
 
 			_log.finest("restored char data: ");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			return null;
 		} finally {
@@ -241,7 +235,8 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.execute();
 
 			_log.finest("stored char data: " + pc.getName());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -258,55 +253,45 @@ public class MySqlCharacterStorage implements CharacterStorage {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM characters WHERE account_name=? AND char_name=?");
+			pstm = con.prepareStatement("SELECT * FROM characters WHERE account_name=? AND char_name=?");
 			pstm.setString(1, accountName);
 			pstm.setString(2, charName);
 			rs = pstm.executeQuery();
 			if (!rs.next()) {
 				/*
-				 * SELECTが値を返していない
-				 * 存在しないか、あるいは別のアカウントが所有しているキャラクター名が指定されたということになる。
+				 * SELECTが値を返していない 存在しないか、あるいは別のアカウントが所有しているキャラクター名が指定されたということになる。
 				 */
-				_log.warning("invalid delete char request: account="
-						+ accountName + " char=" + charName);
+				_log.warning("invalid delete char request: account=" + accountName + " char=" + charName);
 				throw new RuntimeException("could not delete character");
 			}
 
-			pstm = con
-					.prepareStatement("DELETE FROM character_buddys WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_buddys WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_buff WHERE char_obj_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_buff WHERE char_obj_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_config WHERE object_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_config WHERE object_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_items WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_items WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_quests WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_quests WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_skills WHERE char_obj_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM character_teleport WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
+			pstm = con.prepareStatement("DELETE FROM character_teleport WHERE char_id IN (SELECT objid FROM characters WHERE char_name = ?)");
 			pstm.setString(1, charName);
 			pstm.execute();
-			pstm = con
-					.prepareStatement("DELETE FROM characters WHERE char_name=?");
+			pstm = con.prepareStatement("DELETE FROM characters WHERE char_name=?");
 			pstm.setString(1, charName);
 			pstm.execute();
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
 		} finally {
 			SQLUtil.close(rs);
@@ -378,7 +363,8 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.setInt(++i, pc.getId());
 			pstm.execute();
 			_log.finest("储存的角色数据: " + pc.getName());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

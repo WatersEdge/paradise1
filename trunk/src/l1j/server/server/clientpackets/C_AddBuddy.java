@@ -41,7 +41,8 @@ public class C_AddBuddy extends ClientBasePacket {
 
 		if (charName.equalsIgnoreCase(pc.getName())) {
 			return;
-		} else if (buddyList.containsName(charName)) {
+		}
+		else if (buddyList.containsName(charName)) {
 			pc.sendPackets(new S_ServerMessage(1052, charName)); // %s 已注册。
 			return;
 		}

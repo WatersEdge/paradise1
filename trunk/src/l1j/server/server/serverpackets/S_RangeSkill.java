@@ -43,6 +43,7 @@ public class S_RangeSkill extends ServerBasePacket {
 
 	/**
 	 * 范围魔法
+	 * 
 	 * @param cha
 	 * @param target
 	 * @param spellgfx

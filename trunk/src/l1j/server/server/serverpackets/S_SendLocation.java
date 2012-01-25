@@ -23,8 +23,7 @@ public class S_SendLocation extends ServerBasePacket {
 
 	private static final String S_SEND_LOCATION = "[S] S_SendLocation";
 
-	public S_SendLocation(int type, String senderName, int mapId, int x, int y,
-			int msgId) {
+	public S_SendLocation(int type, String senderName, int mapId, int x, int y, int msgId) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x6f);
 		writeS(senderName);

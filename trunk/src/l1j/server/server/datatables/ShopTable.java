@@ -67,7 +67,8 @@ public class ShopTable {
 			while (rs.next()) {
 				ids.add(rs.getInt("npc_id"));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
@@ -110,7 +111,8 @@ public class ShopTable {
 				_allShops.put(npcId, shop);
 				rs.close();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);

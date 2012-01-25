@@ -23,6 +23,7 @@ public class S_MPUpdate extends ServerBasePacket {
 
 	/**
 	 * 魔力与最大魔力更新
+	 * 
 	 * @param currentmp
 	 * @param maxmp
 	 */
@@ -31,17 +32,21 @@ public class S_MPUpdate extends ServerBasePacket {
 
 		if (currentmp < 0) {
 			writeH(0);
-		} else if (currentmp > 32767) {
+		}
+		else if (currentmp > 32767) {
 			writeH(32767);
-		} else {
+		}
+		else {
 			writeH(currentmp);
 		}
 
 		if (maxmp < 1) {
 			writeH(1);
-		} else if (maxmp > 32767) {
+		}
+		else if (maxmp > 32767) {
 			writeH(32767);
-		} else {
+		}
+		else {
 			writeH(maxmp);
 		}
 

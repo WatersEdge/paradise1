@@ -93,6 +93,7 @@ public class L1ItemInstance extends L1Object {
 
 	/**
 	 * 道具类控制项
+	 * 
 	 * @param item
 	 * @param count
 	 */
@@ -146,7 +147,7 @@ public class L1ItemInstance extends L1Object {
 	}
 
 	/**
-	 * 	返回道具是否已装备。
+	 * 返回道具是否已装备。
 	 * 
 	 * @return 如果已经装备true、没有装备false。
 	 */
@@ -168,19 +169,23 @@ public class L1ItemInstance extends L1Object {
 	public L1Item getItem() {
 		return _item;
 	}
+
 	/** 设置道具 */
 	public void setItem(L1Item item) {
 		_item = item;
 		_itemId = item.getItemId();
 	}
+
 	/** 取得道具ID */
 	public int getItemId() {
 		return _itemId;
 	}
+
 	/** 设定道具ID */
 	public void setItemId(int itemId) {
 		_itemId = itemId;
 	}
+
 	/** 是可堆叠 */
 	public boolean isStackable() {
 		return _item.isStackable();
@@ -189,78 +194,97 @@ public class L1ItemInstance extends L1Object {
 	@Override
 	public void onAction(L1PcInstance player) {
 	}
+
 	/** 取得加成等级 */
 	public int getEnchantLevel() {
 		return _enchantLevel;
 	}
+
 	/** 设定加成等级 */
 	public void setEnchantLevel(int enchantLevel) {
 		_enchantLevel = enchantLevel;
 	}
+
 	/** 动画ID */
 	public int get_gfxid() {
 		return _item.getGfxId();
 	}
+
 	/** 取得耐久度 */
 	public int get_durability() {
 		return _durability;
 	}
+
 	/**  */
 	public int getChargeCount() {
 		return _chargeCount;
 	}
+
 	/**  */
 	public void setChargeCount(int i) {
 		_chargeCount = i;
 	}
+
 	/** 取得剩余时间 */
 	public int getRemainingTime() {
 		return _remainingTime;
 	}
+
 	/** 设定剩余时间 */
 	public void setRemainingTime(int i) {
 		_remainingTime = i;
 	}
+
 	/** 设定最后使用 */
 	public void setLastUsed(Timestamp t) {
 		_lastUsed = t;
 	}
+
 	/** 取得最后使用 */
 	public Timestamp getLastUsed() {
 		return _lastUsed;
 	}
+
 	/** 取得最后重量 */
 	public int getLastWeight() {
 		return _lastWeight;
 	}
+
 	/** 设定最后重量 */
 	public void setLastWeight(int weight) {
 		_lastWeight = weight;
 	}
+
 	/** 设定封印 */
 	public void setBless(int i) {
 		_bless = i;
 	}
+
 	/** 取得封印 */
 	public int getBless() {
 		return _bless;
 	}
+
 	/** 设定属性加成种类 */
 	public void setAttrEnchantKind(int i) {
 		_attrEnchantKind = i;
 	}
+
 	/** 取得属性加成种类 */
 	public int getAttrEnchantKind() {
 		return _attrEnchantKind;
 	}
+
 	/** 设定属性加成级别 */
 	public void setAttrEnchantLevel(int i) {
 		_attrEnchantLevel = i;
 	}
+
 	/** 取得属性加成级别 */
 	public int getAttrEnchantLevel() {
 		return _attrEnchantLevel;
 	}
+
 	/** 取得魔防 */
 	public int getMr() {
 		int mr = _item.get_mdef();
@@ -298,7 +322,8 @@ public class L1ItemInstance extends L1Object {
 	public int getWeight() {
 		if (getItem().getWeight() == 0) {
 			return 0;
-		} else {
+		}
+		else {
 			return Math.max(getCount() * getItem().getWeight() / 1000, 1);
 		}
 	}
@@ -567,8 +592,7 @@ public class L1ItemInstance extends L1Object {
 				L1Npc npc = NpcTable.getInstance().getTemplate(pet.get_npcid());
 				// name.append("[Lv." + pet.get_level() + " "
 				// + npc.get_nameid() + "]");
-				name.append("[Lv." + pet.get_level() + " " + pet.get_name()
-						+ "]HP" + pet.get_hp() + " " + npc.get_nameid());
+				name.append("[Lv." + pet.get_level() + " " + pet.get_name() + "]HP" + pet.get_hp() + " " + npc.get_nameid());
 			}
 		}
 
@@ -588,7 +612,8 @@ public class L1ItemInstance extends L1Object {
 		if (isEquipped()) {
 			if (itemType2 == 1) {
 				name.append(" ($9)"); // 装備(Armed)
-			} else if (itemType2 == 2) {
+			}
+			else if (itemType2 == 2) {
 				name.append(" ($117)"); // 装備(Worn)
 			}
 		}
@@ -626,36 +651,44 @@ public class L1ItemInstance extends L1Object {
 					case 1: // 地
 						if (attrEnchantLevel == 1) {
 							attrStr = "$6124";
-						} else if (attrEnchantLevel == 2) {
+						}
+						else if (attrEnchantLevel == 2) {
 							attrStr = "$6125";
-						} else if (attrEnchantLevel == 3) {
+						}
+						else if (attrEnchantLevel == 3) {
 							attrStr = "$6126";
 						}
 						break;
 					case 2: // 火
 						if (attrEnchantLevel == 1) {
 							attrStr = "$6115";
-						} else if (attrEnchantLevel == 2) {
+						}
+						else if (attrEnchantLevel == 2) {
 							attrStr = "$6116";
-						} else if (attrEnchantLevel == 3) {
+						}
+						else if (attrEnchantLevel == 3) {
 							attrStr = "$6117";
 						}
 						break;
 					case 4: // 水
 						if (attrEnchantLevel == 1) {
 							attrStr = "$6118";
-						} else if (attrEnchantLevel == 2) {
+						}
+						else if (attrEnchantLevel == 2) {
 							attrStr = "$6119";
-						} else if (attrEnchantLevel == 3) {
+						}
+						else if (attrEnchantLevel == 3) {
 							attrStr = "$6120";
 						}
 						break;
 					case 8: // 风
 						if (attrEnchantLevel == 1) {
 							attrStr = "$6121";
-						} else if (attrEnchantLevel == 2) {
+						}
+						else if (attrEnchantLevel == 2) {
 							attrStr = "$6122";
-						} else if (attrEnchantLevel == 3) {
+						}
+						else if (attrEnchantLevel == 3) {
 							attrStr = "$6123";
 						}
 						break;
@@ -668,7 +701,8 @@ public class L1ItemInstance extends L1Object {
 			if ((getItem().getType2() == 1) || (getItem().getType2() == 2)) { // 武器・防具
 				if (getEnchantLevel() >= 0) {
 					name.append("+" + getEnchantLevel() + " ");
-				} else if (getEnchantLevel() < 0) {
+				}
+				else if (getEnchantLevel() < 0) {
 					name.append(String.valueOf(getEnchantLevel()) + " ");
 				}
 			}
@@ -677,7 +711,8 @@ public class L1ItemInstance extends L1Object {
 		// 鉴定
 		if (isIdentified()) {
 			name.append(_item.getIdentifiedNameId());
-		} else {
+		}
+		else {
 			name.append(_item.getUnidentifiedNameId());
 		}
 
@@ -713,17 +748,18 @@ public class L1ItemInstance extends L1Object {
 		String chatText = String.valueOf(getKeyId());
 		String s1 = "";
 		String s2 = "";
-		for (int i = 0 ; i < chatText.length(); i++) {
+		for (int i = 0; i < chatText.length(); i++) {
 			if (i >= 5) {
 				break;
 			}
-			s1 =  s1 + String.valueOf(chatText.charAt(i));
+			s1 = s1 + String.valueOf(chatText.charAt(i));
 		}
 		name.append(s1);
-		for (int i = 0 ; i < chatText.length(); i++) {
+		for (int i = 0; i < chatText.length(); i++) {
 			if ((i % 2) == 0) {
-				s1 =  String.valueOf(chatText.charAt(i));
-			} else {
+				s1 = String.valueOf(chatText.charAt(i));
+			}
+			else {
 				s2 = s1 + String.valueOf(chatText.charAt(i));
 				name.append(Integer.toHexString(Integer.valueOf(s2)).toLowerCase()); // 转成16进位
 			}
@@ -747,7 +783,8 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(23); // 材质
 				os.writeC(getItem().getMaterial());
 				os.writeD(getWeight());
-			} else { // 盔甲
+			}
+			else { // 盔甲
 				// AC
 				os.writeC(19);
 				int ac = petItem.getAddAc();
@@ -803,7 +840,8 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(petItem.getAddSp());
 				}
 			}
-		} else if (itemType2 == 0) { // etcitem
+		}
+		else if (itemType2 == 0) { // etcitem
 			switch (getItem().getType()) {
 			case 2: // light
 				os.writeC(22); // 亮度
@@ -826,7 +864,8 @@ public class L1ItemInstance extends L1Object {
 			}
 			os.writeC(getItem().getMaterial());
 			os.writeD(getWeight());
-		} else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
+		}
+		else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
 			if (itemType2 == 1) { // weapon
 				// 打击值
 				os.writeC(1);
@@ -834,7 +873,8 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getDmgLarge());
 				os.writeC(getItem().getMaterial());
 				os.writeD(getWeight());
-			} else if (itemType2 == 2) { // armor
+			}
+			else if (itemType2 == 2) { // armor
 				// AC
 				os.writeC(19);
 				int ac = ((L1Armor) getItem()).get_ac();
@@ -850,12 +890,11 @@ public class L1ItemInstance extends L1Object {
 			if (getEnchantLevel() != 0) {
 				os.writeC(2);
 				/** 饰品强化卷轴 */
-				if (getItem().getType2() == 2
-						&& getItem().getType() >= 8
-						&& getItem().getType() <= 12) { // 8:项链 9:戒指1 10:腰带
-														// 11:戒指2 12:耳环
+				if (getItem().getType2() == 2 && getItem().getType() >= 8 && getItem().getType() <= 12) { // 8:项链 9:戒指1 10:腰带
+																											// 11:戒指2 12:耳环
 					os.writeC(0);
-				} else {
+				}
+				else {
 					os.writeC(getEnchantLevel());
 				}
 			}
@@ -874,7 +913,8 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(5);
 					os.writeC(getItem().getHitModifier());
 				}
-			} else if (itemType2 == 2) { // armor
+			}
+			else if (itemType2 == 2) { // armor
 				if (getItem().getHitModifierByArmor() != 0) {
 					os.writeC(5);
 					os.writeC(getItem().getHitModifierByArmor());
@@ -886,7 +926,8 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(6);
 					os.writeC(getItem().getDmgModifier());
 				}
-			} else if (itemType2 == 2) { // armor
+			}
+			else if (itemType2 == 2) { // armor
 				if (getItem().getDmgModifierByArmor() != 0) {
 					os.writeC(6);
 					os.writeC(getItem().getDmgModifierByArmor());
@@ -1085,7 +1126,8 @@ public class L1ItemInstance extends L1Object {
 				_pc.sendPackets(new S_ServerMessage(308, getLogName()));
 				_isRunning = false;
 				_timer = null;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 			}
 		}
 	}
@@ -1258,8 +1300,7 @@ public class L1ItemInstance extends L1Object {
 		_isRunning = true;
 	}
 
-	public void setSkillWeaponEnchant(L1PcInstance pc, int skillId,
-			int skillTime) {
+	public void setSkillWeaponEnchant(L1PcInstance pc, int skillId, int skillTime) {
 		if (getItem().getType2() != 1) {
 			return;
 		}

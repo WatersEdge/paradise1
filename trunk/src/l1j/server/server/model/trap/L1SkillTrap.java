@@ -38,9 +38,7 @@ public class L1SkillTrap extends L1Trap {
 	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
 		sendEffect(trapObj);
 
-		new L1SkillUse().handleCommands(trodFrom, _skillId, trodFrom.getId(),
-				trodFrom.getX(), trodFrom.getY(), null, _skillTimeSeconds,
-				L1SkillUse.TYPE_GMBUFF);
+		new L1SkillUse().handleCommands(trodFrom, _skillId, trodFrom.getId(), trodFrom.getX(), trodFrom.getY(), null, _skillTimeSeconds, L1SkillUse.TYPE_GMBUFF);
 	}
 
 }

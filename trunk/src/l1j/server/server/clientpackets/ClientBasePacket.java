@@ -38,7 +38,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 载入 byte 阵列
-	 *
+	 * 
 	 * @param abyte0
 	 */
 	public ClientBasePacket(byte abyte0[]) {
@@ -52,6 +52,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 int
+	 * 
 	 * @return
 	 */
 	public int readD() {
@@ -64,6 +65,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 byte
+	 * 
 	 * @return
 	 */
 	public int readC() {
@@ -73,6 +75,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 short
+	 * 
 	 * @return
 	 */
 	public int readH() {
@@ -83,6 +86,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 short
+	 * 
 	 * @return
 	 */
 	public int readCH() {
@@ -94,6 +98,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 double
+	 * 
 	 * @return
 	 */
 	public double readF() {
@@ -110,16 +115,17 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一个 String
+	 * 
 	 * @return
 	 */
 	public String readS() {
 		String s = null;
 		try {
-			s = new String(_decrypt, _off, _decrypt.length - _off,
-					CLIENT_LANGUAGE_CODE);
+			s = new String(_decrypt, _off, _decrypt.length - _off, CLIENT_LANGUAGE_CODE);
 			s = s.substring(0, s.indexOf('\0'));
 			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
 		return s;
@@ -127,6 +133,7 @@ public abstract class ClientBasePacket {
 
 	/**
 	 * 由byte[]中取回一组byte[]
+	 * 
 	 * @return
 	 */
 	public byte[] readByte() {
@@ -134,7 +141,8 @@ public abstract class ClientBasePacket {
 		try {
 			System.arraycopy(_decrypt, _off, result, 0, _decrypt.length - _off);
 			_off = _decrypt.length;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
 		return result;

@@ -46,7 +46,8 @@ public class C_Disconnect extends ClientBasePacket {
 				pc.logout();
 				client.setActiveChar(null);
 			}
-		} else {
+		}
+		else {
 			_log.fine("断开请求的账户 : " + client.getAccountName());
 		}
 	}

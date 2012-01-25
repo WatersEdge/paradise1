@@ -221,7 +221,8 @@ public class C_ItemUSe extends ClientBasePacket {
 			try {
 				L1ItemDelay.onItemUse(client, useItem); // 项目开始延迟
 
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.error("道具使用延迟异常:" + useItem.getItemId(), e);
 			}
 		}

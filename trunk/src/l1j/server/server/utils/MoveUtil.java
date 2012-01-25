@@ -26,6 +26,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动面向
+	 * 
 	 * @param loc
 	 * @param heading
 	 */
@@ -36,6 +37,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动坐标
+	 * 
 	 * @param loc
 	 */
 	public static void MoveLoc(int[] loc) {
@@ -45,6 +47,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动坐标X
+	 * 
 	 * @param heading
 	 * @return 面向 X
 	 */
@@ -54,6 +57,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动坐标X + 面向
+	 * 
 	 * @param x
 	 * @param heading
 	 * @return X + 面向 X
@@ -64,6 +68,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动坐标Y
+	 * 
 	 * @param heading
 	 * @return 面向 Y
 	 */
@@ -73,6 +78,7 @@ public class MoveUtil {
 
 	/**
 	 * 移动坐标Y + 面向
+	 * 
 	 * @param y
 	 * @param heading
 	 * @return y + 面向 y

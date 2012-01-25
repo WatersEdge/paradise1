@@ -80,29 +80,27 @@ public class L1BuffUtil {
 		int objId = pc.getId();
 
 		// 已存在加速状态消除
-		if (pc.hasSkillEffect(HASTE
-				) || pc.hasSkillEffect(GREATER_HASTE
-				) || pc.hasSkillEffect(STATUS_HASTE
-				)) {
+		if (pc.hasSkillEffect(HASTE) || pc.hasSkillEffect(GREATER_HASTE) || pc.hasSkillEffect(STATUS_HASTE)) {
 			if (pc.hasSkillEffect(HASTE)) { // 加速术
 				pc.killSkillEffectTimer(HASTE);
-			} else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
+			}
+			else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
 				pc.killSkillEffectTimer(GREATER_HASTE);
-			} else if (pc.hasSkillEffect(STATUS_HASTE)) { // 自我加速药水
+			}
+			else if (pc.hasSkillEffect(STATUS_HASTE)) { // 自我加速药水
 				pc.killSkillEffectTimer(STATUS_HASTE);
 			}
 		}
 
 		// 抵消缓速魔法效果 缓速术 集体缓速术 地面障碍
-		if (pc.hasSkillEffect(SLOW
-				) || pc.hasSkillEffect(MASS_SLOW
-				) || pc.hasSkillEffect(ENTANGLE
-				)) {
+		if (pc.hasSkillEffect(SLOW) || pc.hasSkillEffect(MASS_SLOW) || pc.hasSkillEffect(ENTANGLE)) {
 			if (pc.hasSkillEffect(SLOW)) { // 缓速术
 				pc.killSkillEffectTimer(SLOW);
-			} else if (pc.hasSkillEffect(MASS_SLOW)) { // 集体缓速术
+			}
+			else if (pc.hasSkillEffect(MASS_SLOW)) { // 集体缓速术
 				pc.killSkillEffectTimer(MASS_SLOW);
-			} else if (pc.hasSkillEffect(ENTANGLE)) { // 地面障碍
+			}
+			else if (pc.hasSkillEffect(ENTANGLE)) { // 地面障碍
 				pc.killSkillEffectTimer(ENTANGLE);
 			}
 			pc.sendPackets(new S_SkillHaste(objId, 0, 0));
@@ -186,7 +184,8 @@ public class L1BuffUtil {
 			}
 			iconType = 82;
 			// 安塔瑞斯的血痕
-		} else if (type == 1) { // 法利昂
+		}
+		else if (type == 1) { // 法利昂
 			skillId = EFFECT_BLOODSTAIN_OF_FAFURION;
 			if (!pc.hasSkillEffect(skillId)) {
 				pc.addWind(50); // 风属性 +50
@@ -199,8 +198,7 @@ public class L1BuffUtil {
 	}
 
 	/** 卡瑞、莎尔的祝福 */
-	public static void effectBlessOfDragonSlayer(L1PcInstance pc, int skillId,
-			int time, int showGfx) {
+	public static void effectBlessOfDragonSlayer(L1PcInstance pc, int skillId, int time, int showGfx) {
 		if (showGfx != 0) {
 			pc.sendPackets(new S_SkillSound(pc.getId(), showGfx));
 			pc.broadcastPacket(new S_SkillSound(pc.getId(), showGfx));
@@ -243,8 +241,7 @@ public class L1BuffUtil {
 	}
 
 	/** 设置技能效果 */
-	public static int skillEffect(L1Character _user, L1Character cha,
-			L1Character _target, int skillId, int _getBuffIconDuration, int dmg) {
+	public static int skillEffect(L1Character _user, L1Character cha, L1Character _target, int skillId, int _getBuffIconDuration, int dmg) {
 		L1PcInstance _player = null;
 		if (_user instanceof L1PcInstance) {
 			L1PcInstance _pc = (L1PcInstance) _user;
@@ -260,8 +257,7 @@ public class L1BuffUtil {
 		// 圣洁之光
 		case REMOVE_CURSE:
 			cha.curePoison();
-			if (cha.hasSkillEffect(STATUS_CURSE_PARALYZING)
-					|| cha.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
+			if (cha.hasSkillEffect(STATUS_CURSE_PARALYZING) || cha.hasSkillEffect(STATUS_CURSE_PARALYZED)) {
 				cha.cureParalaysis();
 			}
 			break;
@@ -272,8 +268,7 @@ public class L1BuffUtil {
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (_player.getId() != pc.getId()) {
 					if (L1World.getInstance().getVisiblePlayer(pc, 0).size() > 0) {
-						for (L1PcInstance visiblePc : L1World.getInstance()
-								.getVisiblePlayer(pc, 0)) {
+						for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(pc, 0)) {
 							if (!visiblePc.isDead()) {
 								_player.sendPackets(new S_ServerMessage(592)); // 复活失败，因为这个位置已被占据。
 								return 0;
@@ -284,7 +279,8 @@ public class L1BuffUtil {
 						if (pc.getMap().isUseResurrection()) {
 							if (skillId == RESURRECTION) {
 								pc.setGres(false);
-							} else if (skillId == GREATER_RESURRECTION) {
+							}
+							else if (skillId == GREATER_RESURRECTION) {
 								pc.setGres(true);
 							}
 							pc.setTempID(_player.getId());
@@ -292,18 +288,15 @@ public class L1BuffUtil {
 						}
 					}
 				}
-			} else if (cha instanceof L1NpcInstance) {
+			}
+			else if (cha instanceof L1NpcInstance) {
 				if (!(cha instanceof L1TowerInstance)) {
 					L1NpcInstance npc = (L1NpcInstance) cha;
-					if (npc.getNpcTemplate().isCantResurrect()
-							&& !(npc instanceof L1PetInstance)) {
+					if (npc.getNpcTemplate().isCantResurrect() && !(npc instanceof L1PetInstance)) {
 						return 0;
 					}
-					if ((npc instanceof L1PetInstance)
-							&& (L1World.getInstance().getVisiblePlayer(npc, 0)
-									.size() > 0)) {
-						for (L1PcInstance visiblePc : L1World.getInstance()
-								.getVisiblePlayer(npc, 0)) {
+					if ((npc instanceof L1PetInstance) && (L1World.getInstance().getVisiblePlayer(npc, 0).size() > 0)) {
+						for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(npc, 0)) {
 							if (!visiblePc.isDead()) {
 								_player.sendPackets(new S_ServerMessage(592)); // 复活失败，因为这个位置已被占据。
 								return 0;
@@ -331,8 +324,7 @@ public class L1BuffUtil {
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (_player.getId() != pc.getId()) {
 					if (L1World.getInstance().getVisiblePlayer(pc, 0).size() > 0) {
-						for (L1PcInstance visiblePc : L1World.getInstance()
-								.getVisiblePlayer(pc, 0)) {
+						for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(pc, 0)) {
 							if (!visiblePc.isDead()) {
 								_player.sendPackets(new S_ServerMessage(592)); // 复活失败，因为这个位置已被占据。
 								return 0;
@@ -344,18 +336,15 @@ public class L1BuffUtil {
 						pc.sendPackets(new S_Message_YN(322, "")); // 是否要复活？ (Y/N)
 					}
 				}
-			} else if (cha instanceof L1NpcInstance) {
+			}
+			else if (cha instanceof L1NpcInstance) {
 				if (!(cha instanceof L1TowerInstance)) {
 					L1NpcInstance npc = (L1NpcInstance) cha;
-					if (npc.getNpcTemplate().isCantResurrect()
-							&& !(npc instanceof L1PetInstance)) {
+					if (npc.getNpcTemplate().isCantResurrect() && !(npc instanceof L1PetInstance)) {
 						return 0;
 					}
-					if ((npc instanceof L1PetInstance)
-							&& (L1World.getInstance().getVisiblePlayer(npc, 0)
-									.size() > 0)) {
-						for (L1PcInstance visiblePc : L1World.getInstance()
-								.getVisiblePlayer(npc, 0)) {
+					if ((npc instanceof L1PetInstance) && (L1World.getInstance().getVisiblePlayer(npc, 0).size() > 0)) {
+						for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(npc, 0)) {
 							if (!visiblePc.isDead()) {
 								_player.sendPackets(new S_ServerMessage(592)); // 复活失败，因为这个位置已被占据。
 								return 0;
@@ -427,13 +416,8 @@ public class L1BuffUtil {
 		// 三重矢
 		case TRIPLE_ARROW:
 			boolean gfxcheck = false;
-			int[] BowGFX = {
-					37, 138, 3860, 3126, 3420, 2284, 3105, 3145, 3148,
-					3151, 3871, 4125, 2323, 3892, 3895, 3898, 3901, 4917, 4918,
-					4919, 4950, 6087, 6140, 6145, 6150, 6155, 6160, 6269, 6272,
-					6275, 6278, 6826, 6827, 6836, 6837, 6846, 6847, 6856, 6857,
-					6866, 6867, 6876, 6877, 6886, 6887, 8719
-					};
+			int[] BowGFX = { 37, 138, 3860, 3126, 3420, 2284, 3105, 3145, 3148, 3151, 3871, 4125, 2323, 3892, 3895, 3898, 3901, 4917, 4918, 4919, 4950, 6087, 6140, 6145, 6150, 6155, 6160, 6269, 6272, 6275, 6278, 6826, 6827, 6836, 6837, 6846, 6847, 6856, 6857, 6866, 6867, 6876,
+					6877, 6886, 6887, 8719 };
 			int playerGFX = _player.getTempCharGfx();
 			for (int gfx : BowGFX) {
 				if (playerGFX == gfx) {
@@ -459,20 +443,20 @@ public class L1BuffUtil {
 			}
 			_player.setFoeSlayer(false);
 
-			_player.sendPackets(new S_EffectLocation(_target.getX(), _target
-					.getY(), 6509));
-			_player.broadcastPacket(new S_EffectLocation(_target.getX(),
-					_target.getY(), 6509));
+			_player.sendPackets(new S_EffectLocation(_target.getX(), _target.getY(), 6509));
+			_player.broadcastPacket(new S_EffectLocation(_target.getX(), _target.getY(), 6509));
 			_player.sendPackets(new S_SkillSound(_player.getId(), 7020));
 			_player.broadcastPacket(new S_SkillSound(_player.getId(), 7020));
 
 			if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
 				_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
 				_player.sendPackets(new S_SkillIconGFX(75, 0));
-			} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
+			}
+			else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
 				_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
 				_player.sendPackets(new S_SkillIconGFX(75, 0));
-			} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+			}
+			else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
 				_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
 				_player.sendPackets(new S_SkillIconGFX(75, 0));
 			}
@@ -515,7 +499,8 @@ public class L1BuffUtil {
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) { // 漂浮之眼肉效果
 					pc.sendPackets(new S_CurseBlind(2));
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_CurseBlind(1));
 				}
 			}
@@ -527,13 +512,11 @@ public class L1BuffUtil {
 		// 木乃伊的咀咒
 		case CURSE_PARALYZE:
 		case CURSE_PARALYZE2:
-			if (!cha.hasSkillEffect(EARTH_BIND)
-					&& !cha.hasSkillEffect(ICE_LANCE)
-					&& !cha.hasSkillEffect(FREEZING_BLIZZARD)
-					&& !cha.hasSkillEffect(FREEZING_BREATH)) {
+			if (!cha.hasSkillEffect(EARTH_BIND) && !cha.hasSkillEffect(ICE_LANCE) && !cha.hasSkillEffect(FREEZING_BLIZZARD) && !cha.hasSkillEffect(FREEZING_BREATH)) {
 				if (cha instanceof L1PcInstance) {
 					L1CurseParalysis.curse(cha, 8000, 16000);
-				} else if (cha instanceof L1MonsterInstance) {
+				}
+				else if (cha instanceof L1MonsterInstance) {
 					L1CurseParalysis.curse(cha, 8000, 16000);
 				}
 			}
@@ -552,10 +535,8 @@ public class L1BuffUtil {
 		case WIND_SHACKLE:
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.sendPackets(new S_SkillIconWindShackle(pc.getId(),
-						_getBuffIconDuration));
-				pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(),
-						_getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
+				pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
 			}
 			break;
 		// 魔法相消术
@@ -566,10 +547,10 @@ public class L1BuffUtil {
 				if (npcId == 71092) { // 调查员
 					if (npc.getGfxId() == npc.getTempCharGfx()) {
 						npc.setTempCharGfx(1314);
-						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(),
-								1314, npc.getLawful(), npc.getStatus()));
+						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 1314, npc.getLawful(), npc.getStatus()));
 						return 0;
-					} else {
+					}
+					else {
 						return 0;
 					}
 				}
@@ -577,42 +558,37 @@ public class L1BuffUtil {
 					if (npc.getGfxId() == npc.getTempCharGfx()) {
 						npc.setCurrentHp(npc.getMaxHp());
 						npc.setTempCharGfx(2332);
-						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(),
-								2332, npc.getLawful(), npc.getStatus()));
+						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 2332, npc.getLawful(), npc.getStatus()));
 						npc.setName("$2103");
 						npc.setNameId("$2103");
-						npc.broadcastPacket(new S_ChangeName(npc.getId(),
-								"$2103"));
-					} else if (npc.getTempCharGfx() == 2332) {
+						npc.broadcastPacket(new S_ChangeName(npc.getId(), "$2103"));
+					}
+					else if (npc.getTempCharGfx() == 2332) {
 						npc.setCurrentHp(npc.getMaxHp());
 						npc.setTempCharGfx(2755);
-						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(),
-								2755, npc.getLawful(), npc.getStatus()));
+						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 2755, npc.getLawful(), npc.getStatus()));
 						npc.setName("$2488");
 						npc.setNameId("$2488");
-						npc.broadcastPacket(new S_ChangeName(npc.getId(),
-								"$2488"));
+						npc.broadcastPacket(new S_ChangeName(npc.getId(), "$2488"));
 					}
 				}
 				if (npcId == 81209) { // 罗伊
 					if (npc.getGfxId() == npc.getTempCharGfx()) {
 						npc.setTempCharGfx(4310);
-						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(),
-								4310, npc.getLawful(), npc.getStatus()));
+						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 4310, npc.getLawful(), npc.getStatus()));
 						return 0;
-					} else {
+					}
+					else {
 						return 0;
 					}
 				}
 				if (npcId == 81352) { // 欧姆民兵
 					if (npc.getGfxId() == npc.getTempCharGfx()) {
 						npc.setTempCharGfx(148);
-						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(),
-								148, npc.getLawful(), npc.getStatus()));
+						npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 148, npc.getLawful(), npc.getStatus()));
 						npc.setName("$6068");
 						npc.setNameId("$6068");
-						npc.broadcastPacket(new S_ChangeName(npc.getId(),
-								"$6068"));
+						npc.broadcastPacket(new S_ChangeName(npc.getId(), "$6068"));
 					}
 				}
 			}
@@ -680,10 +656,8 @@ public class L1BuffUtil {
 				pc.sendPackets(new S_CharVisualUpdate(pc));
 				pc.broadcastPacket(new S_CharVisualUpdate(pc));
 				if (pc.isPrivateShop()) {
-					pc.sendPackets(new S_DoActionShop(pc.getId(),
-							ActionCodes.ACTION_Shop, pc.getShopChat()));
-					pc.broadcastPacket(new S_DoActionShop(pc.getId(),
-							ActionCodes.ACTION_Shop, pc.getShopChat()));
+					pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, pc.getShopChat()));
+					pc.broadcastPacket(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, pc.getShopChat()));
 				}
 				if (_user instanceof L1PcInstance) {
 					L1PinkName.onAction(pc, _user);
@@ -730,7 +704,8 @@ public class L1BuffUtil {
 				L1SummonInstance summon = (L1SummonInstance) cha;
 				summon.broadcastPacket(new S_SkillSound(summon.getId(), 2245));
 				summon.returnToNature();
-			} else {
+			}
+			else {
 				if (_user instanceof L1PcInstance) {
 					_player.sendPackets(new S_ServerMessage(79));
 				}
@@ -746,7 +721,8 @@ public class L1BuffUtil {
 					pc.sendPackets(new S_ServerMessage(268, weapon.getLogName())); // \f1你的%0%s坏了。
 					pc.getInventory().receiveDamage(weapon, weaponDamage);
 				}
-			} else {
+			}
+			else {
 				((L1NpcInstance) cha).setWeaponBreaked(true);
 			}
 			break;
@@ -895,11 +871,14 @@ public class L1BuffUtil {
 				int attr = pc.getElfAttr();
 				if (attr == 1) {
 					pc.addEarth(50);
-				} else if (attr == 2) {
+				}
+				else if (attr == 2) {
 					pc.addFire(50);
-				} else if (attr == 4) {
+				}
+				else if (attr == 4) {
 					pc.addWater(50);
-				} else if (attr == 8) {
+				}
+				else if (attr == 8) {
 					pc.addWind(50);
 				}
 			}
@@ -1019,8 +998,7 @@ public class L1BuffUtil {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.setBraveSpeed(4);
-				pc.sendPackets(new S_SkillBrave(pc.getId(), 4,
-						_getBuffIconDuration));
+				pc.sendPackets(new S_SkillBrave(pc.getId(), 4, _getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 4, 0));
 			}
 			break;
@@ -1029,8 +1007,7 @@ public class L1BuffUtil {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.setBraveSpeed(6);
-				pc.sendPackets(new S_SkillBrave(pc.getId(), 6,
-						_getBuffIconDuration));
+				pc.sendPackets(new S_SkillBrave(pc.getId(), 6, _getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 6, 0));
 			}
 			break;
@@ -1108,18 +1085,23 @@ public class L1BuffUtil {
 				int weakAttr = npcTemp.get_weakAttr();
 				if ((weakAttr & 1) == 1) { // 地
 					cha.broadcastPacket(new S_SkillSound(cha.getId(), 2169));
-				} else if ((weakAttr & 2) == 2) { // 火
+				}
+				else if ((weakAttr & 2) == 2) { // 火
 					cha.broadcastPacket(new S_SkillSound(cha.getId(), 2166));
-				} else if ((weakAttr & 4) == 4) { // 水
+				}
+				else if ((weakAttr & 4) == 4) { // 水
 					cha.broadcastPacket(new S_SkillSound(cha.getId(), 2167));
-				} else if ((weakAttr & 8) == 8) { // 风
+				}
+				else if ((weakAttr & 8) == 8) { // 风
 					cha.broadcastPacket(new S_SkillSound(cha.getId(), 2168));
-				} else {
+				}
+				else {
 					if (_user instanceof L1PcInstance) {
 						_player.sendPackets(new S_ServerMessage(79));
 					}
 				}
-			} else {
+			}
+			else {
 				if (_user instanceof L1PcInstance) {
 					_player.sendPackets(new S_ServerMessage(79));
 				}
@@ -1133,10 +1115,10 @@ public class L1BuffUtil {
 				L1PcInstance pc = (L1PcInstance) cha;
 				if (pc.getMap().isEscapable() || pc.isGm()) {
 					L1Teleport.teleport(pc, 33051, 32337, (short) 4, 5, true);
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(276)); // \f1在此无法使用传送。
-					pc.sendPackets(new S_Paralysis(
-							S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
+					pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 				}
 			}
 			break;
@@ -1154,20 +1136,18 @@ public class L1BuffUtil {
 						if (!pc.isSummonMonster()) {
 							pc.setSummonMonster(true);
 						}
-					} else {
+					}
+					else {
 						/*
-						 * summons = new int[] { 81083, 81084, 81085, 81086,
-						 * 81087, 81088, 81089 };
+						 * summons = new int[] { 81083, 81084, 81085, 81086, 81087, 81088, 81089 };
 						 */
-						summons = new int[] { 81210, 81213, 81216, 81219,
-								81222, 81225, 81228 };
+						summons = new int[] { 81210, 81213, 81216, 81219, 81222, 81225, 81228 };
 						int summonid = 0;
 						// int summoncost = 6;
 						int summoncost = 8;
 						int levelRange = 32;
 						for (int i = 0; i < summons.length; i++) { // 该当ＬＶ范围检索
-							if ((level < levelRange)
-									|| (i == summons.length - 1)) {
+							if ((level < levelRange) || (i == summons.length - 1)) {
 								summonid = summons[i];
 								break;
 							}
@@ -1187,15 +1167,14 @@ public class L1BuffUtil {
 						int charisma = pcCha + 6 - petcost;
 						// int charisma = pc.getCha() + 6 - petcost;
 						int summoncount = charisma / summoncost;
-						L1Npc npcTemp = NpcTable.getInstance().getTemplate(
-								summonid);
+						L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
 						for (int i = 0; i < summoncount; i++) {
-							L1SummonInstance summon = new L1SummonInstance(
-									npcTemp, pc);
+							L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
 							summon.setPetcost(summoncost);
 						}
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(79));
 				}
 			}
@@ -1218,12 +1197,11 @@ public class L1BuffUtil {
 							int summonid = 0;
 							int summons[];
 							if (skillId == LESSER_ELEMENTAL) { // 召唤属性精灵[地,火,水,风]
-								summons = new int[]
-								          { 45306, 45303, 45304, 45305 };
-							} else {
+								summons = new int[] { 45306, 45303, 45304, 45305 };
+							}
+							else {
 								// 召唤强力属性精灵[地,火,水,风]
-								summons = new int[]
-								          { 81053, 81050, 81051, 81052 };
+								summons = new int[] { 81053, 81050, 81051, 81052 };
 							}
 							int npcattr = 1;
 							for (int i = 0; i < summons.length; i++) {
@@ -1240,16 +1218,16 @@ public class L1BuffUtil {
 								summonid = summons[k3];
 							}
 
-							L1Npc npcTemp = NpcTable.getInstance().getTemplate(
-									summonid);
-							L1SummonInstance summon = new L1SummonInstance(
-									npcTemp, pc);
+							L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
+							L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
 							summon.setPetcost(pc.getCha() + 7); // 精灵の他にはNPCを所属させられない
 						}
-					} else {
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(79));
 				}
 			}
@@ -1272,7 +1250,8 @@ public class L1BuffUtil {
 							charisma = 30;
 						}
 						charisma += 12;
-					} else if (_player.isWizard()) { // 法师
+					}
+					else if (_player.isWizard()) { // 法师
 						if (charisma > 36) { // max count = 7
 							charisma = 36;
 						}
@@ -1280,10 +1259,10 @@ public class L1BuffUtil {
 					}
 					charisma -= petcost;
 					if (charisma >= 6) { // 确保宠物的成本
-						L1SummonInstance summon = new L1SummonInstance(npc,
-								_user, false);
+						L1SummonInstance summon = new L1SummonInstance(npc, _user, false);
 						_target = summon; // 更换目标
-					} else {
+					}
+					else {
 						_player.sendPackets(new S_ServerMessage(319)); // \f1你不能拥有太多的怪物。
 					}
 				}
@@ -1305,7 +1284,8 @@ public class L1BuffUtil {
 						charisma = 30;
 					}
 					charisma += 12;
-				} else if (_player.isWizard()) { // 法师
+				}
+				else if (_player.isWizard()) { // 法师
 					if (charisma > 36) { // max count = 7
 						charisma = 36;
 					}
@@ -1313,10 +1293,10 @@ public class L1BuffUtil {
 				}
 				charisma -= petcost;
 				if (charisma >= 6) { // 确保宠物的成本
-					L1SummonInstance summon = new L1SummonInstance(npc, _user,
-							true);
+					L1SummonInstance summon = new L1SummonInstance(npc, _user, true);
 					_target = summon; // 更换目标
-				} else {
+				}
+				else {
 					_player.sendPackets(new S_ServerMessage(319)); // \f1你不能拥有太多的怪物。
 				}
 			}
@@ -1329,9 +1309,10 @@ public class L1BuffUtil {
 		case 10029:
 			if (_user instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) _user;
-				_user.broadcastPacket(new S_NpcChatPacket(npc, (cha.getName())+("! ")+("$3717"), (byte) 2)); // 龙的安息字串
-			} else {
-				_player.broadcastPacket(new S_ChatPacket(_player, (cha.getName())+("! ")+("$3717"), 0, (byte) 0)); // 龙的安息字串
+				_user.broadcastPacket(new S_NpcChatPacket(npc, (cha.getName()) + ("! ") + ("$3717"), (byte) 2)); // 龙的安息字串
+			}
+			else {
+				_player.broadcastPacket(new S_ChatPacket(_player, (cha.getName()) + ("! ") + ("$3717"), 0, (byte) 0)); // 龙的安息字串
 			}
 			break;
 		case 10057:
@@ -1351,15 +1332,7 @@ public class L1BuffUtil {
 
 	/** 不可取消 */
 	private static boolean isNotCancelable(int skillNum) {
-		return (skillNum == ENCHANT_WEAPON) || (skillNum == BLESSED_ARMOR)
-				|| (skillNum == ABSOLUTE_BARRIER)
-				|| (skillNum == ADVANCE_SPIRIT) || (skillNum == SHOCK_STUN)
-				|| (skillNum == SHADOW_FANG) || (skillNum == REDUCTION_ARMOR)
-				|| (skillNum == SOLID_CARRIAGE)
-				|| (skillNum == COUNTER_BARRIER)
-				|| (skillNum == AWAKEN_ANTHARAS)
-				|| (skillNum == AWAKEN_FAFURION)
-				|| (skillNum == AWAKEN_VALAKAS)
-				|| (skillNum == COOKING_WONDER_DRUG);
+		return (skillNum == ENCHANT_WEAPON) || (skillNum == BLESSED_ARMOR) || (skillNum == ABSOLUTE_BARRIER) || (skillNum == ADVANCE_SPIRIT) || (skillNum == SHOCK_STUN) || (skillNum == SHADOW_FANG) || (skillNum == REDUCTION_ARMOR) || (skillNum == SOLID_CARRIAGE)
+				|| (skillNum == COUNTER_BARRIER) || (skillNum == AWAKEN_ANTHARAS) || (skillNum == AWAKEN_FAFURION) || (skillNum == AWAKEN_VALAKAS) || (skillNum == COOKING_WONDER_DRUG);
 	}
 }

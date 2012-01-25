@@ -60,7 +60,8 @@ public class CharacterConfigTable {
 			pstm.setInt(2, length);
 			pstm.setBytes(3, data);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -85,7 +86,8 @@ public class CharacterConfigTable {
 			pstm.setBytes(2, data);
 			pstm.setInt(3, objectId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -106,7 +108,8 @@ public class CharacterConfigTable {
 			pstm = con.prepareStatement("DELETE FROM character_config WHERE object_id=?");
 			pstm.setInt(1, objectId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -132,7 +135,8 @@ public class CharacterConfigTable {
 			if (rs.next()) {
 				result = rs.getInt("cnt");
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

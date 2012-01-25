@@ -15,7 +15,7 @@
 package l1j.server.server;
 
 /**
- *	帐户已登录的异常
+ * 帐户已登录的异常
  */
 public class AccountAlreadyLoginException extends Exception {
 

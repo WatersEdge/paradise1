@@ -18,19 +18,23 @@ package l1j.server.server;
  * 密码
  */
 public class Cipher {
+
 	/* 静态私用变数 */
 	/**
 	 * 将乱数数值混淆用的混淆密码 (32位元,静态唯读) 该数值只有在Cipher初始化时才会被调用
 	 */
 	private final static int _1 = 0x9c30d539;
+
 	/**
 	 * 初始的解码数值
 	 */
 	private final static int _2 = 0x930fd7e2;
+
 	/**
 	 * 将乱数数值混淆用的混淆密码 (32位元,静态唯读) 该数值只有在Cipher初始化时才会被调用
 	 */
 	private final static int _3 = 0x7c72e993;
+
 	/**
 	 * 将封包数值混淆用的混淆密码 (32位元,静态唯读) 该数值只有在编码或解码时才会被调用
 	 */
@@ -41,19 +45,19 @@ public class Cipher {
 	 * 参考用的编码钥匙 (位元组阵列长度为8,相当于一个64位元的长整数)
 	 */
 	private final byte[] eb = new byte[8];
+
 	/**
 	 * 参考用的解码钥匙 (位元组阵列长度为8,相当于一个64位元的长整数)
 	 */
 	private final byte[] db = new byte[8];
+
 	/**
 	 * 参考用的封包钥匙 (位元组阵列长度为4,相当于一个32位元的整数)
 	 */
 	private final byte[] tb = new byte[4];
 
 	/**
-	 * 初始化流程: 1.建立新的钥匙暂存器(keys),将编码钥匙与混淆钥匙(_1)进行混淆并带入keys[0],将初始的解码数值带入key[1]
-	 * 2.将key[0]向右反转19个位元(0x13)并带入key[0] 3.将key[0]与key[1]与混淆钥匙(_3)进行混淆并带入key[1]
-	 * 4.将keys转换为64位元的位元组阵列
+	 * 初始化流程: 1.建立新的钥匙暂存器(keys),将编码钥匙与混淆钥匙(_1)进行混淆并带入keys[0],将初始的解码数值带入key[1] 2.将key[0]向右反转19个位元(0x13)并带入key[0] 3.将key[0]与key[1]与混淆钥匙(_3)进行混淆并带入key[1] 4.将keys转换为64位元的位元组阵列
 	 * 
 	 * @param key
 	 *            , 由乱数产生的编码钥匙
@@ -130,9 +134,7 @@ public class Cipher {
 			data[i] ^= ref[i];
 		}
 
-		int int32 = (((data[7] & 0xFF) << 24) | ((data[6] & 0xFF) << 16)
-				| ((data[5] & 0xFF) << 8) | (data[4] & 0xFF))
-				+ _4;
+		int int32 = (((data[7] & 0xFF) << 24) | ((data[6] & 0xFF) << 16) | ((data[5] & 0xFF) << 8) | (data[4] & 0xFF)) + _4;
 
 		for (int i = 0; i < tb.length; i++) {
 			data[i + 4] = (byte) (int32 >> (i * 8) & 0xff);

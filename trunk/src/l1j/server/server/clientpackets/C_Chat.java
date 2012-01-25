@@ -48,10 +48,7 @@ public class C_Chat extends ClientBasePacket {
 		L1PcInstance pc = clientthread.getActiveChar();
 		int chatType = readC();
 		String chatText = readS();
-		if (pc.hasSkillEffect(SILENCE
-			) || pc.hasSkillEffect(AREA_OF_SILENCE
-			) || pc.hasSkillEffect(STATUS_POISON_SILENCE
-			)) {
+		if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE) || pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
 			return;
 		}
 		if (pc.hasSkillEffect(1005)) { // 被魔封
@@ -83,15 +80,12 @@ public class C_Chat extends ClientBasePacket {
 			}
 
 			ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
-			S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-					Opcodes.S_OPCODE_NORMALCHAT, 0);
+			S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_NORMALCHAT, 0);
 			if (!pc.getExcludingList().contains(pc.getName())) {
 				pc.sendPackets(s_chatpacket);
 			}
-			for (L1PcInstance listner : L1World.getInstance()
-					.getRecognizePlayer(pc)) {
-				if (listner.getMapId() < 16384 || listner.getMapId() > 25088
-						|| listner.getInnKeyId() == pc.getInnKeyId()) // 旅馆内判断
+			for (L1PcInstance listner : L1World.getInstance().getRecognizePlayer(pc)) {
+				if (listner.getMapId() < 16384 || listner.getMapId() > 25088 || listner.getInnKeyId() == pc.getInnKeyId()) // 旅馆内判断
 					if (!listner.getExcludingList().contains(pc.getName()))
 						listner.sendPackets(s_chatpacket);
 			}
@@ -99,11 +93,8 @@ public class C_Chat extends ClientBasePacket {
 			for (L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1MonsterInstance) {
 					L1MonsterInstance mob = (L1MonsterInstance) obj;
-					if (mob.getNpcTemplate().is_doppel()
-							&& mob.getName().equals(pc.getName())
-							&& !mob.isDead()) {
-						mob.broadcastPacket(new S_NpcChatPacket(mob, chatText,
-								0));
+					if (mob.getNpcTemplate().is_doppel() && mob.getName().equals(pc.getName()) && !mob.isDead()) {
+						mob.broadcastPacket(new S_NpcChatPacket(mob, chatText, 0));
 					}
 				}
 			}
@@ -116,15 +107,12 @@ public class C_Chat extends ClientBasePacket {
 				return;
 			}
 			ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
-			S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-					Opcodes.S_OPCODE_NORMALCHAT, 2);
+			S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_NORMALCHAT, 2);
 			if (!pc.getExcludingList().contains(pc.getName())) {
 				pc.sendPackets(s_chatpacket);
 			}
-			for (L1PcInstance listner : L1World.getInstance().getVisiblePlayer(
-					pc, 50)) {
-				if (listner.getMapId() < 16384 || listner.getMapId() > 25088
-						|| listner.getInnKeyId() == pc.getInnKeyId()) // 旅馆内判断
+			for (L1PcInstance listner : L1World.getInstance().getVisiblePlayer(pc, 50)) {
+				if (listner.getMapId() < 16384 || listner.getMapId() > 25088 || listner.getInnKeyId() == pc.getInnKeyId()) // 旅馆内判断
 					if (!listner.getExcludingList().contains(pc.getName()))
 						listner.sendPackets(s_chatpacket);
 			}
@@ -133,13 +121,9 @@ public class C_Chat extends ClientBasePacket {
 			for (L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1MonsterInstance) {
 					L1MonsterInstance mob = (L1MonsterInstance) obj;
-					if (mob.getNpcTemplate().is_doppel()
-							&& mob.getName().equals(pc.getName())
-							&& !mob.isDead()) {
-						for (L1PcInstance listner : L1World.getInstance()
-								.getVisiblePlayer(mob, 50)) {
-							listner.sendPackets(new S_NpcChatPacket(mob,
-									chatText, 2));
+					if (mob.getNpcTemplate().is_doppel() && mob.getName().equals(pc.getName()) && !mob.isDead()) {
+						for (L1PcInstance listner : L1World.getInstance().getVisiblePlayer(mob, 50)) {
+							listner.sendPackets(new S_NpcChatPacket(mob, chatText, 2));
 						}
 					}
 				}
@@ -156,15 +140,9 @@ public class C_Chat extends ClientBasePacket {
 			if (pc.getClanid() != 0) { // 所属血盟
 				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 				int rank = pc.getClanRank();
-				if ((clan != null)
-						&& ((rank == L1Clan.CLAN_RANK_PUBLIC
-							) || (rank == L1Clan.CLAN_RANK_GUARDIAN
-							) || (rank == L1Clan.CLAN_RANK_PRINCE
-							))) {
-					ChatLogTable.getInstance().storeChat(pc, null, chatText,
-							chatType);
-					S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-							Opcodes.S_OPCODE_GLOBALCHAT, 4);
+				if ((clan != null) && ((rank == L1Clan.CLAN_RANK_PUBLIC) || (rank == L1Clan.CLAN_RANK_GUARDIAN) || (rank == L1Clan.CLAN_RANK_PRINCE))) {
+					ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
+					S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, 4);
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance listner : clanMembers) {
 						if (!listner.getExcludingList().contains(pc.getName())) {
@@ -179,10 +157,8 @@ public class C_Chat extends ClientBasePacket {
 		// 组队聊天
 		else if (chatType == 11) {
 			if (pc.isInParty()) { // 组队中
-				ChatLogTable.getInstance().storeChat(pc, null, chatText,
-						chatType);
-				S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-						Opcodes.S_OPCODE_GLOBALCHAT, 11);
+				ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
+				S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, 11);
 				L1PcInstance[] partyMembers = pc.getParty().getMembers();
 				for (L1PcInstance listner : partyMembers) {
 					if (!listner.getExcludingList().contains(pc.getName())) {
@@ -203,17 +179,13 @@ public class C_Chat extends ClientBasePacket {
 			if (pc.getClanid() != 0) { // 在血盟中
 				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 				int rank = pc.getClanRank();
-				if ((clan != null)
-						&& ((rank == L1Clan.CLAN_RANK_GUARDIAN) || (rank == L1Clan.CLAN_RANK_PRINCE))) {
-					ChatLogTable.getInstance().storeChat(pc, null, chatText,
-							chatType);
-					S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-							Opcodes.S_OPCODE_GLOBALCHAT, 13);
+				if ((clan != null) && ((rank == L1Clan.CLAN_RANK_GUARDIAN) || (rank == L1Clan.CLAN_RANK_PRINCE))) {
+					ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
+					S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, 13);
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance listner : clanMembers) {
 						int listnerRank = listner.getClanRank();
-						if (!listner.getExcludingList().contains(pc.getName())
-								&& ((listnerRank == L1Clan.CLAN_RANK_GUARDIAN) || (listnerRank == L1Clan.CLAN_RANK_PRINCE))) {
+						if (!listner.getExcludingList().contains(pc.getName()) && ((listnerRank == L1Clan.CLAN_RANK_GUARDIAN) || (listnerRank == L1Clan.CLAN_RANK_PRINCE))) {
 							listner.sendPackets(s_chatpacket);
 						}
 					}
@@ -224,10 +196,8 @@ public class C_Chat extends ClientBasePacket {
 		// 聊天组队
 		else if (chatType == 14) {
 			if (pc.isInChatParty()) { // 聊天组队
-				ChatLogTable.getInstance().storeChat(pc, null, chatText,
-						chatType);
-				S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText,
-						Opcodes.S_OPCODE_NORMALCHAT, 14);
+				ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
+				S_ChatPacket s_chatpacket = new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_NORMALCHAT, 14);
 				L1PcInstance[] partyMembers = pc.getChatParty().getMembers();
 				for (L1PcInstance listner : partyMembers) {
 					if (!listner.getExcludingList().contains(pc.getName())) {
@@ -245,41 +215,35 @@ public class C_Chat extends ClientBasePacket {
 	private void chatWorld(L1PcInstance pc, String chatText, int chatType) {
 		if (pc.isGm()) {
 			ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
-			L1World.getInstance().broadcastPacketToAll(
-					new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT,
-							chatType));
-		} else if (pc.getLevel() >= Config.GLOBAL_CHAT_LEVEL) {
+			L1World.getInstance().broadcastPacketToAll(new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, chatType));
+		}
+		else if (pc.getLevel() >= Config.GLOBAL_CHAT_LEVEL) {
 			if (L1World.getInstance().isWorldChatElabled()) {
 				if (pc.get_food() >= 6) {
 					pc.set_food(pc.get_food() - 5);
-					ChatLogTable.getInstance().storeChat(pc, null, chatText,
-							chatType);
-					pc.sendPackets(new S_PacketBox(S_PacketBox.FOOD, pc
-							.get_food()));
-					for (L1PcInstance listner : L1World.getInstance()
-							.getAllPlayers()) {
+					ChatLogTable.getInstance().storeChat(pc, null, chatText, chatType);
+					pc.sendPackets(new S_PacketBox(S_PacketBox.FOOD, pc.get_food()));
+					for (L1PcInstance listner : L1World.getInstance().getAllPlayers()) {
 						if (!listner.getExcludingList().contains(pc.getName())) {
 							if (listner.isShowTradeChat() && (chatType == 12)) {
-								listner.sendPackets(new S_ChatPacket(pc,
-										chatText, Opcodes.S_OPCODE_GLOBALCHAT,
-										chatType));
-							} else if (listner.isShowWorldChat()
-									&& (chatType == 3)) {
-								listner.sendPackets(new S_ChatPacket(pc,
-										chatText, Opcodes.S_OPCODE_GLOBALCHAT,
-										chatType));
+								listner.sendPackets(new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, chatType));
+							}
+							else if (listner.isShowWorldChat() && (chatType == 3)) {
+								listner.sendPackets(new S_ChatPacket(pc, chatText, Opcodes.S_OPCODE_GLOBALCHAT, chatType));
 							}
 						}
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(462)); // 你太过于饥饿以致于无法谈话。
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(510)); // 管理者有非常重要的事项公告，请见谅。
 			}
-		} else {
-			pc.sendPackets(new S_ServerMessage(195, String
-					.valueOf(Config.GLOBAL_CHAT_LEVEL))); // 等级 %0 以下的角色无法使用公频或买卖频道。
+		}
+		else {
+			pc.sendPackets(new S_ServerMessage(195, String.valueOf(Config.GLOBAL_CHAT_LEVEL))); // 等级 %0 以下的角色无法使用公频或买卖频道。
 		}
 	}
 

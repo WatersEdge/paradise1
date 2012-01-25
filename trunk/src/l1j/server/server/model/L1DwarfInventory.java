@@ -63,8 +63,7 @@ public class L1DwarfInventory extends L1Inventory {
 				L1ItemInstance item = new L1ItemInstance();
 				int objectId = rs.getInt("id");
 				item.setId(objectId);
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(
-						rs.getInt("item_id"));
+				L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
 				item.setEquipped(false);
@@ -95,7 +94,8 @@ public class L1DwarfInventory extends L1Inventory {
 				L1World.getInstance().storeObject(item);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -111,7 +111,8 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?, firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
+			pstm = con
+					.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?, firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
 			pstm.setInt(1, item.getId());
 			pstm.setString(2, _owner.getAccountName());
 			pstm.setInt(3, item.getItemId());
@@ -137,7 +138,8 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(23, item.getMpr());
 			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -157,7 +159,8 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(1, item.getCount());
 			pstm.setInt(2, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -175,7 +178,8 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm = con.prepareStatement("DELETE FROM character_warehouse WHERE id = ?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -185,8 +189,7 @@ public class L1DwarfInventory extends L1Inventory {
 		_items.remove(_items.indexOf(item));
 	}
 
-	public static void present(String account, int itemid, int enchant,
-			int count) throws Exception {
+	public static void present(String account, int itemid, int enchant, int count) throws Exception {
 
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
@@ -201,7 +204,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 			if (account.compareToIgnoreCase("*") == 0) {
 				pstm = con.prepareStatement("SELECT * FROM accounts");
-			} else {
+			}
+			else {
 				pstm = con.prepareStatement("SELECT * FROM accounts WHERE login=?");
 				pstm.setString(1, account);
 			}
@@ -214,7 +218,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 			present(accountList, itemid, enchant, count);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
 		} finally {
@@ -225,8 +230,7 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	public static void present(int minlvl, int maxlvl, int itemid, int enchant,
-			int count) throws Exception {
+	public static void present(int minlvl, int maxlvl, int itemid, int enchant, int count) throws Exception {
 
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
@@ -251,7 +255,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 			present(accountList, itemid, enchant, count);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
 		} finally {
@@ -262,13 +267,13 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	private static void present(List<String> accountList, int itemid,
-			int enchant, int count) throws Exception {
+	private static void present(List<String> accountList, int itemid, int enchant, int count) throws Exception {
 		L1Item itemtemp = ItemTable.getInstance().getTemplate(itemid);
 
 		if (ItemTable.getInstance().getTemplate(itemid) == null) {
 			throw new Exception("道具编号不存在。");
-		} else {
+		}
+		else {
 			Connection con = null;
 			PreparedStatement ps = null;
 
@@ -282,31 +287,9 @@ public class L1DwarfInventory extends L1Inventory {
 						item.setEnchantLevel(enchant);
 						item.setCount(count);
 
-						ps = con.prepareStatement("INSERT INTO character_warehouse SET "
-										+ "id = ?,"
-										+ "account_name = ?,"
-										+ "item_id = ?,"
-										+ "item_name = ?,"
-										+ "count = ?,"
-										+ "is_equipped=0,"
-										+ "enchantlvl = ?,"
-										+ "is_id = ?,"
-										+ "durability = ?,"
-										+ "charge_count = ?,"
-										+ "remaining_time = ?,"
-										+ "last_used = ?,"
-										+ "bless = ?,"
-										+ "attr_enchant_kind = ?,"
-										+ "attr_enchant_level = ?,"
-										+ "firemr = ?,"
-										+ "watermr = ?,"
-										+ "earthmr = ?,"
-										+ "windmr = ?,"
-										+ "addsp = ?,"
-										+ "addhp = ?,"
-										+ "addmp = ?,"
-										+ "hpr = ?,"
-										+ "mpr = ?," + "m_def = ?");
+						ps = con.prepareStatement("INSERT INTO character_warehouse SET " + "id = ?," + "account_name = ?," + "item_id = ?," + "item_name = ?," + "count = ?," + "is_equipped=0," + "enchantlvl = ?," + "is_id = ?," + "durability = ?," + "charge_count = ?,"
+								+ "remaining_time = ?," + "last_used = ?," + "bless = ?," + "attr_enchant_kind = ?," + "attr_enchant_level = ?," + "firemr = ?," + "watermr = ?," + "earthmr = ?," + "windmr = ?," + "addsp = ?," + "addhp = ?," + "addmp = ?," + "hpr = ?,"
+								+ "mpr = ?," + "m_def = ?");
 
 						ps.setInt(1, item.getId());
 						ps.setString(2, account);
@@ -333,7 +316,8 @@ public class L1DwarfInventory extends L1Inventory {
 						ps.setInt(23, item.getMpr());
 						ps.setInt(24, item.getM_Def());
 						ps.execute();
-					} else {
+					}
+					else {
 						L1ItemInstance item = null;
 						int createCount;
 
@@ -341,32 +325,9 @@ public class L1DwarfInventory extends L1Inventory {
 							item = ItemTable.getInstance().createItem(itemid);
 							item.setEnchantLevel(enchant);
 
-							ps = con.prepareStatement("INSERT INTO character_warehouse SET "
-											+ "id = ?,"
-											+ "account_name = ?,"
-											+ "item_id = ?,"
-											+ "item_name = ?,"
-											+ "count = ?,"
-											+ "is_equipped=0,"
-											+ "enchantlvl = ?,"
-											+ "is_id = ?,"
-											+ "durability = ?,"
-											+ "charge_count = ?,"
-											+ "remaining_time = ?,"
-											+ "last_used = ?,"
-											+ "bless = ?,"
-											+ "attr_enchant_kind = ?,"
-											+ "attr_enchant_level = ?,"
-											+ "firemr = ?,"
-											+ "watermr = ?,"
-											+ "earthmr = ?,"
-											+ "windmr = ?,"
-											+ "addsp = ?,"
-											+ "addhp = ?,"
-											+ "addmp = ?,"
-											+ "hpr = ?,"
-											+ "mpr = ?," 
-											+ "m_def = ?");
+							ps = con.prepareStatement("INSERT INTO character_warehouse SET " + "id = ?," + "account_name = ?," + "item_id = ?," + "item_name = ?," + "count = ?," + "is_equipped=0," + "enchantlvl = ?," + "is_id = ?," + "durability = ?," + "charge_count = ?,"
+									+ "remaining_time = ?," + "last_used = ?," + "bless = ?," + "attr_enchant_kind = ?," + "attr_enchant_level = ?," + "firemr = ?," + "watermr = ?," + "earthmr = ?," + "windmr = ?," + "addsp = ?," + "addhp = ?," + "addmp = ?," + "hpr = ?,"
+									+ "mpr = ?," + "m_def = ?");
 
 							ps.setInt(1, item.getId());
 							ps.setString(2, account);
@@ -399,10 +360,12 @@ public class L1DwarfInventory extends L1Inventory {
 
 				con.commit();
 				con.setAutoCommit(true);
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				try {
 					con.rollback();
-				} catch (SQLException ignore) {
+				}
+				catch (SQLException ignore) {
 				}
 
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

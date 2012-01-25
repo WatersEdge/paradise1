@@ -25,6 +25,7 @@ public class BinaryInputStream extends InputStream {
 
 	/**
 	 * 二进制输入流
+	 * 
 	 * @param in
 	 */
 	public BinaryInputStream(InputStream in) {

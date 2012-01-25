@@ -35,8 +35,7 @@ public class TelnetCommandExecutor {
 
 			TelnetCommand command = TelnetCommandList.get(name);
 			if (command == null) {
-				return new TelnetCommandResult(CMD_NOT_FOUND, cmd
-						+ " not found");
+				return new TelnetCommandResult(CMD_NOT_FOUND, cmd + " not found");
 			}
 
 			String args = "";
@@ -44,9 +43,9 @@ public class TelnetCommandExecutor {
 				args = cmd.substring(name.length() + 1);
 			}
 			return command.execute(args);
-		} catch (Exception e) {
-			return new TelnetCommandResult(CMD_INTERNAL_ERROR, e
-					.getLocalizedMessage());
+		}
+		catch (Exception e) {
+			return new TelnetCommandResult(CMD_INTERNAL_ERROR, e.getLocalizedMessage());
 		}
 	}
 }

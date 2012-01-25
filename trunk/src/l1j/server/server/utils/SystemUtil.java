@@ -25,7 +25,6 @@ public class SystemUtil {
 	 * @return 使用中的堆大小
 	 */
 	public static long getUsedMemoryMB() {
-		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime()
-				.freeMemory()) / 1024L / 1024L;
+		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024L / 1024L;
 	}
 }

@@ -63,14 +63,11 @@ public class L1BoardTopic {
 	 */
 	private String today() {
 		// 年
-		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0"
-				+ TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
+		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0" + TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
 		// 月
-		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0"
-				+ TimeInform.getMonth() : TimeInform.getMonth();
+		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0" + TimeInform.getMonth() : TimeInform.getMonth();
 		// 日
-		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0"
-				+ TimeInform.getDay() : TimeInform.getDay();
+		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0" + TimeInform.getDay() : TimeInform.getDay();
 		StringBuilder sb = new StringBuilder();
 		// 輸出 yy/MM/dd
 		sb.append(year).append("/").append(month).append("/").append(day);
@@ -93,8 +90,7 @@ public class L1BoardTopic {
 		_content = rs.getString("content");
 	}
 
-	public synchronized static L1BoardTopic create(String name, String title,
-			String content) {
+	public synchronized static L1BoardTopic create(String name, String title, String content) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		ResultSet rs = null;
@@ -116,7 +112,8 @@ public class L1BoardTopic {
 			pstm2.execute();
 
 			return topic;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -136,7 +133,8 @@ public class L1BoardTopic {
 			pstm = con.prepareStatement("DELETE FROM board WHERE id=?");
 			pstm.setInt(1, getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -156,7 +154,8 @@ public class L1BoardTopic {
 			if (rs.next()) {
 				return new L1BoardTopic(rs);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
@@ -164,13 +163,13 @@ public class L1BoardTopic {
 		return null;
 	}
 
-	private static PreparedStatement makeIndexStatement(Connection con, int id,
-			int limit) throws SQLException {
+	private static PreparedStatement makeIndexStatement(Connection con, int id, int limit) throws SQLException {
 		PreparedStatement result = null;
 		int offset = 1;
 		if (id == 0) {
 			result = con.prepareStatement("SELECT * FROM board ORDER BY id DESC LIMIT ?");
-		} else {
+		}
+		else {
 			result = con.prepareStatement("SELECT * FROM board WHERE id < ? ORDER BY id DESC LIMIT ?");
 			result.setInt(1, id);
 			offset++;
@@ -196,7 +195,8 @@ public class L1BoardTopic {
 				result.add(new L1BoardTopic(rs));
 			}
 			return result;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);

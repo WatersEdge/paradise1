@@ -13,7 +13,6 @@
 
 package l1j.server.server.templates;
 
-
 public class L1Drop {
 	int _mobId;
 

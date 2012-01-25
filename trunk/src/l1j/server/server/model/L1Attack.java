@@ -144,15 +144,13 @@ public class L1Attack {
 	}
 
 	/** STR命中补正 */
-	private static final int[] strHit = {
-			-2, -2, -2, -2, -2, -2, -2, // 1～7まで
+	private static final int[] strHit = { -2, -2, -2, -2, -2, -2, -2, // 1～7まで
 			-2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6, // 8～26まで
 			7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, // 27～44まで
 			13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 17, 17, 17 }; // 45～59まで
 
 	/** DEX命中补正 */
-	private static final int[] dexHit = {
-			-2, -2, -2, -2, -2, -2, -1, -1, 0, 0, // 1～10まで
+	private static final int[] dexHit = { -2, -2, -2, -2, -2, -2, -1, -1, 0, 0, // 1～10まで
 			1, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, // 11～30まで
 			17, 18, 19, 19, 19, 20, 20, 20, 21, 21, 21, 22, 22, 22, 23, // 31～45まで
 			23, 23, 24, 24, 24, 25, 25, 25, 26, 26, 26, 27, 27, 27, 28 }; // 46～60まで
@@ -230,14 +228,17 @@ public class L1Attack {
 	public void setActId(int actId) {
 		_attckActId = actId;
 	}
+
 	/** 设定动画ID */
 	public void setGfxId(int gfxId) {
 		_attckGrfxId = gfxId;
 	}
+
 	/** 取得动作ID */
 	public int getActId() {
 		return _attckActId;
 	}
+
 	/** 取得动画ID */
 	public int getGfxId() {
 		return _attckGrfxId;
@@ -258,7 +259,8 @@ public class L1Attack {
 			if (target instanceof L1PcInstance) {
 				_targetPc = (L1PcInstance) target;
 				_calcType = PC_PC;
-			} else if (target instanceof L1NpcInstance) {
+			}
+			else if (target instanceof L1NpcInstance) {
 				_targetNpc = (L1NpcInstance) target;
 				_calcType = PC_NPC;
 			}
@@ -268,10 +270,8 @@ public class L1Attack {
 				_weaponId = weapon.getItem().getItemId();
 				_weaponType = weapon.getItem().getType1();
 				_weaponType2 = weapon.getItem().getType();
-				_weaponAddHit = weapon.getItem().getHitModifier()
-						+ weapon.getHitByMagic();
-				_weaponAddDmg = weapon.getItem().getDmgModifier()
-						+ weapon.getDmgByMagic();
+				_weaponAddHit = weapon.getItem().getHitModifier() + weapon.getHitByMagic();
+				_weaponAddDmg = weapon.getItem().getDmgModifier() + weapon.getDmgByMagic();
 				_weaponSmall = weapon.getItem().getDmgSmall();
 				_weaponLarge = weapon.getItem().getDmgLarge();
 				_weaponRange = weapon.getItem().getRange();
@@ -286,27 +286,30 @@ public class L1Attack {
 						_weaponBless = _arrow.getItem().getBless();
 						_weaponMaterial = _arrow.getItem().getMaterial();
 					}
-				} else if (_weaponType == 62) { // 铁手甲
+				}
+				else if (_weaponType == 62) { // 铁手甲
 					_sting = _pc.getInventory().getSting();
 					if (_sting != null) { // 有飞刀
 						_weaponBless = _sting.getItem().getBless();
 						_weaponMaterial = _sting.getItem().getMaterial();
 					}
-				} else { // 近战类武器
-					_weaponEnchant = weapon.getEnchantLevel()
-							- weapon.get_durability(); // 计算武器损伤
+				}
+				else { // 近战类武器
+					_weaponEnchant = weapon.getEnchantLevel() - weapon.get_durability(); // 计算武器损伤
 					_statusDamage = strDmg[_pc.getStr()]; // 伤害用力量补正
 				}
 				_weaponDoubleDmgChance = weapon.getItem().getDoubleDmgChance();
 				_weaponAttrEnchantKind = weapon.getAttrEnchantKind();
 				_weaponAttrEnchantLevel = weapon.getAttrEnchantLevel();
 			}
-		} else if (attacker instanceof L1NpcInstance) {
+		}
+		else if (attacker instanceof L1NpcInstance) {
 			_npc = (L1NpcInstance) attacker;
 			if (target instanceof L1PcInstance) {
 				_targetPc = (L1PcInstance) target;
 				_calcType = NPC_PC;
-			} else if (target instanceof L1NpcInstance) {
+			}
+			else if (target instanceof L1NpcInstance) {
 				_targetNpc = (L1NpcInstance) target;
 				_calcType = NPC_NPC;
 			}
@@ -320,14 +323,13 @@ public class L1Attack {
 	/* ■■■■■■■■■■■■■■■■ 命中判定 ■■■■■■■■■■■■■■■■ */
 
 	/** 拥有这些状态的, 不会受到伤害(无敌) */
-	private static final int[] INVINCIBLE = {
-			ABSOLUTE_BARRIER,	// 绝对屏障
-			ICE_LANCE,			// 冰矛围篱
-			FREEZING_BLIZZARD,	// 冰雪飓风
-			FREEZING_BREATH,	// 寒冰喷吐
-			EARTH_BIND,			// 大地屏障
-			ICE_LANCE_COCKATRICE,//亚力安冰矛围篱
-			ICE_LANCE_BASILISK	// 邪恶蜥蜴冰矛围篱
+	private static final int[] INVINCIBLE = { ABSOLUTE_BARRIER, // 绝对屏障
+			ICE_LANCE, // 冰矛围篱
+			FREEZING_BLIZZARD, // 冰雪飓风
+			FREEZING_BREATH, // 寒冰喷吐
+			EARTH_BIND, // 大地屏障
+			ICE_LANCE_COCKATRICE,// 亚力安冰矛围篱
+			ICE_LANCE_BASILISK // 邪恶蜥蜴冰矛围篱
 	};
 
 	/** 检查命中 */
@@ -342,12 +344,12 @@ public class L1Attack {
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			if (_weaponRange != -1) {
-				if (_pc.getLocation()
-						.getTileLineDistance(_target.getLocation()) > _weaponRange + 1) { // BIGのモンスターに对应するため射程范围+1
+				if (_pc.getLocation().getTileLineDistance(_target.getLocation()) > _weaponRange + 1) { // BIGのモンスターに对应するため射程范围+1
 					_isHit = false; // 射程范围外
 					return _isHit;
 				}
-			} else {
+			}
+			else {
 				if (!_pc.getLocation().isInScreen(_target.getLocation())) {
 					_isHit = false; // 射程范围外
 					return _isHit;
@@ -355,21 +357,27 @@ public class L1Attack {
 			}
 			if ((_weaponType == 20) && (_weaponId != 190) && (_arrow == null)) {
 				_isHit = false; // 没有箭
-			} else if ((_weaponType == 62) && (_sting == null)) {
+			}
+			else if ((_weaponType == 62) && (_sting == null)) {
 				_isHit = false; // 没有飞刀
-			} else if ( _weaponRange != 1 && !_pc.glanceCheck(_targetX, _targetY)) {
+			}
+			else if (_weaponRange != 1 && !_pc.glanceCheck(_targetX, _targetY)) {
 				_isHit = false; // 两格以上武器 直线距离上有障碍物
-			} else if ((_weaponId == 247) || (_weaponId == 248)
-					|| (_weaponId == 249)) {
+			}
+			else if ((_weaponId == 247) || (_weaponId == 248) || (_weaponId == 249)) {
 				_isHit = false; // 试练之剑B～C 攻击无效
-			} else if (_calcType == PC_PC) {
+			}
+			else if (_calcType == PC_PC) {
 				_isHit = calcPcPcHit();
-			} else if (_calcType == PC_NPC) {
+			}
+			else if (_calcType == PC_NPC) {
 				_isHit = calcPcNpcHit();
 			}
-		} else if (_calcType == NPC_PC) {
+		}
+		else if (_calcType == NPC_PC) {
 			_isHit = calcNpcPcHit();
-		} else if (_calcType == NPC_NPC) {
+		}
+		else if (_calcType == NPC_NPC) {
 			_isHit = calcNpcNpcHit();
 		}
 		return _isHit;
@@ -397,15 +405,14 @@ public class L1Attack {
 		longHit += _pc.getBowHitModifierByArmor();
 
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理追加命中
-				|| _pc.hasSkillEffect(COOKING_2_3_S)
-				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S))
+				|| _pc.hasSkillEffect(COOKING_2_3_S) || _pc.hasSkillEffect(COOKING_3_0_N) || _pc.hasSkillEffect(COOKING_3_0_S))
 			longHit += 1;
 		return longHit;
 	}
 
 	/**
-	 * ●●●● PC对PC的命中判定 ●●●● <br><br>
+	 * ●●●● PC对PC的命中判定 ●●●● <br>
+	 * <br>
 	 * ＰＣへの命中率 ＝（PCのLv＋クラス补正＋STR补正＋DEX补正＋武器补正＋DAIの枚数/2＋魔法补正）×0.68－10<br>
 	 * これで算出された数值は自分が最大命中(95%)を与える事のできる相手侧PCのAC そこから相手侧PCのACが1良くなる每に自命中率から1引いていく<br>
 	 * 最小命中率5% 最大命中率95%
@@ -415,13 +422,15 @@ public class L1Attack {
 
 		if (_pc.getStr() > 59) {
 			_hitRate += strHit[58];
-		} else {
+		}
+		else {
 			_hitRate += strHit[_pc.getStr() - 1];
 		}
 
 		if (_pc.getDex() > 60) {
 			_hitRate += dexHit[59];
-		} else {
+		}
+		else {
 			_hitRate += dexHit[_pc.getDex() - 1];
 		}
 
@@ -435,9 +444,11 @@ public class L1Attack {
 		// 负重命中补正
 		if ((80 < _pc.getInventory().getWeight242()) && (121 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 1;
-		} else if ((122 <= _pc.getInventory().getWeight242()) && (160 >= _pc.getInventory().getWeight242())) {
+		}
+		else if ((122 <= _pc.getInventory().getWeight242()) && (160 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 3;
-		} else if ((161 <= _pc.getInventory().getWeight242()) && (200 >= _pc.getInventory().getWeight242())) {
+		}
+		else if ((161 <= _pc.getInventory().getWeight242()) && (200 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 5;
 		}
 
@@ -453,7 +464,8 @@ public class L1Attack {
 
 		if (_targetPc.getAc() >= 0) {
 			defenderDice = 10 - _targetPc.getAc();
-		} else if (_targetPc.getAc() < 0) {
+		}
+		else if (_targetPc.getAc() < 0) {
 			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
@@ -462,12 +474,15 @@ public class L1Attack {
 
 		if (attackerDice <= fumble) {
 			_hitRate = 0;
-		} else if (attackerDice >= critical) {
+		}
+		else if (attackerDice >= critical) {
 			_hitRate = 100;
-		} else {
+		}
+		else {
 			if (attackerDice > defenderDice) {
 				_hitRate = 100;
-			} else if (attackerDice <= defenderDice) {
+			}
+			else if (attackerDice <= defenderDice) {
 				_hitRate = 0;
 			}
 		}
@@ -491,7 +506,7 @@ public class L1Attack {
 
 	}
 
-	/** ●●●● PC 对 NPC 的命中判定  ●●●● */
+	/** ●●●● PC 对 NPC 的命中判定 ●●●● */
 	private boolean calcPcNpcHit() {
 		// ＮＰＣ的命中率
 		// ＝（PC的Lv＋クラス补正＋STR补正＋DEX补正＋武器补正＋DAIの枚数/2＋魔法补正）×5－{NPCのAC×（-5）}
@@ -499,13 +514,15 @@ public class L1Attack {
 
 		if (_pc.getStr() > 59) {
 			_hitRate += strHit[58];
-		} else {
+		}
+		else {
 			_hitRate += strHit[_pc.getStr() - 1];
 		}
 
 		if (_pc.getDex() > 60) {
 			_hitRate += dexHit[59];
-		} else {
+		}
+		else {
 			_hitRate += dexHit[_pc.getDex() - 1];
 		}
 
@@ -517,14 +534,13 @@ public class L1Attack {
 			_hitRate = calShortRageHit(_hitRate);
 
 		// 负重命中补正
-		if ((80 < _pc.getInventory().getWeight242())
-				&& (121 >= _pc.getInventory().getWeight242())) {
+		if ((80 < _pc.getInventory().getWeight242()) && (121 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 1;
-		} else if ((122 <= _pc.getInventory().getWeight242())
-				&& (160 >= _pc.getInventory().getWeight242())) {
+		}
+		else if ((122 <= _pc.getInventory().getWeight242()) && (160 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 3;
-		} else if ((161 <= _pc.getInventory().getWeight242())
-				&& (200 >= _pc.getInventory().getWeight242())) {
+		}
+		else if ((161 <= _pc.getInventory().getWeight242()) && (200 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 5;
 		}
 
@@ -541,12 +557,15 @@ public class L1Attack {
 
 		if (attackerDice <= fumble) {
 			_hitRate = 0;
-		} else if (attackerDice >= critical) {
+		}
+		else if (attackerDice >= critical) {
 			_hitRate = 100;
-		} else {
+		}
+		else {
 			if (attackerDice > defenderDice) {
 				_hitRate = 100;
-			} else if (attackerDice <= defenderDice) {
+			}
+			else if (attackerDice <= defenderDice) {
 				_hitRate = 0;
 			}
 		}
@@ -589,7 +608,8 @@ public class L1Attack {
 
 		if (_targetPc.getAc() >= 0) {
 			defenderDice = 10 - _targetPc.getAc();
-		} else if (_targetPc.getAc() < 0) {
+		}
+		else if (_targetPc.getAc() < 0) {
 			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
@@ -598,21 +618,22 @@ public class L1Attack {
 
 		if (attackerDice <= fumble) {
 			_hitRate = 0;
-		} else if (attackerDice >= critical) {
+		}
+		else if (attackerDice >= critical) {
 			_hitRate = 100;
-		} else {
+		}
+		else {
 			if (attackerDice > defenderDice) {
 				_hitRate = 100;
-			} else if (attackerDice <= defenderDice) {
+			}
+			else if (attackerDice <= defenderDice) {
 				_hitRate = 0;
 			}
 		}
 
-		if ((_npc instanceof L1PetInstance)
-				|| (_npc instanceof L1SummonInstance)) {
+		if ((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) {
 			// 目标在安区、攻击者在安区、NOPVP
-			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
-					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
 				_hitRate = 0;
 			}
 		}
@@ -624,10 +645,7 @@ public class L1Attack {
 		int rnd = Random.nextInt(100) + 1;
 
 		// NPC的攻击范围10以上的场合、2以上距离的场合视为弓攻击
-		if ((_npc.getAtkRanged() >= 10)
-				&& (_hitRate > rnd)
-				&& (_npc.getLocation().getTileLineDistance(
-						new Point(_targetX, _targetY)) >= 2)) {
+		if ((_npc.getAtkRanged() >= 10) && (_hitRate > rnd) && (_npc.getLocation().getTileLineDistance(new Point(_targetX, _targetY)) >= 2)) {
 			return calcErEvasion();
 		}
 		return _hitRate >= rnd;
@@ -656,7 +674,8 @@ public class L1Attack {
 
 		if (_targetNpc.getAc() >= 0) {
 			defenderDice = 10 - _targetNpc.getAc();
-		} else if (_targetNpc.getAc() < 0) {
+		}
+		else if (_targetNpc.getAc() < 0) {
 			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
@@ -665,17 +684,19 @@ public class L1Attack {
 
 		if (attackerDice <= fumble) {
 			_hitRate = 0;
-		} else if (attackerDice >= critical) {
+		}
+		else if (attackerDice >= critical) {
 			_hitRate = 100;
-		} else {
+		}
+		else {
 			if (attackerDice > defenderDice) {
 				_hitRate = 100;
-			} else if (attackerDice <= defenderDice) {
+			}
+			else if (attackerDice <= defenderDice) {
 				_hitRate = 0;
 			}
 		}
-		if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance))
-				&& ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
+		if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) && ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
 			// 目标在安区、攻击者在安区、NOPVP
 			if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
 				_hitRate = 0;
@@ -700,11 +721,14 @@ public class L1Attack {
 	public int calcDamage() {
 		if (_calcType == PC_PC) {
 			_damage = calcPcPcDamage();
-		} else if (_calcType == PC_NPC) {
+		}
+		else if (_calcType == PC_NPC) {
 			_damage = calcPcNpcDamage();
-		} else if (_calcType == NPC_PC) {
+		}
+		else if (_calcType == NPC_PC) {
 			_damage = calcNpcPcDamage();
-		} else if (_calcType == NPC_NPC) {
+		}
+		else if (_calcType == NPC_NPC) {
 			_damage = calcNpcNpcDamage();
 		}
 		return _damage;
@@ -718,25 +742,26 @@ public class L1Attack {
 			weaponDamage = weaponMaxDamage;
 
 		// 判断武器类型
-		boolean darkElfWeapon = false ;
+		boolean darkElfWeapon = false;
 		if (_pc.isDarkelf() && (_weaponType == 58)) { // 钢爪 (追加判断持有者为黑妖，避免与幻术师奇谷兽相冲)
-			darkElfWeapon = true ;
+			darkElfWeapon = true;
 			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 出现最大值的机率
 				weaponDamage = weaponMaxDamage;
 			}
 			if (weaponDamage == weaponMaxDamage) { // 出现最大值时 - 爪痕
 				_effectId = 2;
 			}
-		} else if (_weaponType == 20 || _weaponType == 62) {// 弓、铁手甲 不算武器伤害
+		}
+		else if (_weaponType == 20 || _weaponType == 62) {// 弓、铁手甲 不算武器伤害
 			weaponDamage = 0;
 		}
 
-		weaponDamage +=  _weaponAddDmg + _weaponEnchant ; // 加上武器(额外点数+祝福魔法武器)跟武卷数
+		weaponDamage += _weaponAddDmg + _weaponEnchant; // 加上武器(额外点数+祝福魔法武器)跟武卷数
 
 		if (_calcType == PC_NPC)
 			weaponDamage += calcMaterialBlessDmg(); // 银祝福武器加伤害
 		if (_weaponType == 54) {
-			darkElfWeapon = true ;
+			darkElfWeapon = true;
 			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 双刀双击
 				weaponDamage *= 2;
 				_effectId = 4;
@@ -744,8 +769,8 @@ public class L1Attack {
 		}
 		weaponDamage += calcAttrEnchantDmg(); // 属性强化伤害
 
-		if (darkElfWeapon && _pc.hasSkillEffect(DOUBLE_BRAKE)) 
-			if ((Random.nextInt(100) + 1) <= 33) 
+		if (darkElfWeapon && _pc.hasSkillEffect(DOUBLE_BRAKE))
+			if ((Random.nextInt(100) + 1) <= 33)
 				weaponDamage *= 2;
 
 		return weaponDamage;
@@ -760,32 +785,30 @@ public class L1Attack {
 			if (_arrow != null) {
 				add_dmg = _arrow.getItem().getDmgSmall();
 				if (_calcType == PC_NPC) {
-					if (_targetNpc.getNpcTemplate().get_size()
-							.equalsIgnoreCase("large"))
+					if (_targetNpc.getNpcTemplate().get_size().equalsIgnoreCase("large"))
 						add_dmg = _arrow.getItem().getDmgLarge();
 					if (_targetNpc.getNpcTemplate().is_hard())
 						add_dmg /= 2;
 				}
-			} else if (_weaponId == 190)  // 沙哈之弓
+			}
+			else if (_weaponId == 190) // 沙哈之弓
 				add_dmg = 15;
-		} else if (_weaponType == 62) { // 铁手甲
+		}
+		else if (_weaponType == 62) { // 铁手甲
 			add_dmg = _sting.getItem().getDmgSmall();
 			if (_calcType == PC_NPC)
-				if (_targetNpc.getNpcTemplate().get_size()
-						.equalsIgnoreCase("large"))
+				if (_targetNpc.getNpcTemplate().get_size().equalsIgnoreCase("large"))
 					add_dmg = _sting.getItem().getDmgLarge();
 		}
-		
-		if ( add_dmg > 0) 
+
+		if (add_dmg > 0)
 			longdmg += Random.nextInt(add_dmg) + 1;
 
 		// 防具增伤
 		longdmg += _pc.getDmgModifierByArmor();
 
 		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理
-				|| _pc.hasSkillEffect(COOKING_2_3_S)
-				|| _pc.hasSkillEffect(COOKING_3_0_N)
-				|| _pc.hasSkillEffect(COOKING_3_0_S))
+				|| _pc.hasSkillEffect(COOKING_2_3_S) || _pc.hasSkillEffect(COOKING_3_0_N) || _pc.hasSkillEffect(COOKING_3_0_S))
 			longdmg += 1;
 
 		return longdmg;
@@ -807,9 +830,7 @@ public class L1Attack {
 			shortdmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理
-				|| _pc.hasSkillEffect(COOKING_2_0_S)
-				|| _pc.hasSkillEffect(COOKING_3_2_N)
-				|| _pc.hasSkillEffect(COOKING_3_2_S))
+				|| _pc.hasSkillEffect(COOKING_2_0_S) || _pc.hasSkillEffect(COOKING_3_2_N) || _pc.hasSkillEffect(COOKING_3_2_S))
 			shortdmg += 1;
 
 		return shortdmg;
@@ -832,12 +853,8 @@ public class L1Attack {
 			dmg = calShortRageDamage(dmg);
 
 		// 巴风特与耀武类武器 (地裂魔法)
-		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290
-				|| _weaponId == 291 || _weaponId == 292 || _weaponId == 293
-				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
-				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
-				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
-				|| _weaponId == 303) {
+		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290 || _weaponId == 291 || _weaponId == 292 || _weaponId == 293 || _weaponId == 294 || _weaponId == 295 || _weaponId == 296 || _weaponId == 297 || _weaponId == 298 || _weaponId == 299 || _weaponId == 300
+				|| _weaponId == 301 || _weaponId == 302 || _weaponId == 303) {
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		}
 
@@ -858,14 +875,14 @@ public class L1Attack {
 
 		// 暴风之斧,酷寒之矛,玄冰弓
 		else if (_weaponId == 260 || _weaponId == 263 || _weaponId == 287) {
-			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
-					_weaponId);
+			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target, _weaponId);
 		}
 
 		// 大法师之杖 (疾病术)
 		else if (_weaponId == 261) {
 			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
-		} else {
+		}
+		else {
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
@@ -875,34 +892,15 @@ public class L1Attack {
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		// 特别的料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_0_S) || _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S) || _targetPc.hasSkillEffect(COOKING_1_3_S) || _targetPc.hasSkillEffect(COOKING_1_4_S) || _targetPc.hasSkillEffect(COOKING_1_5_S)
+				|| _targetPc.hasSkillEffect(COOKING_1_6_S) || _targetPc.hasSkillEffect(COOKING_2_0_S) || _targetPc.hasSkillEffect(COOKING_2_1_S) || _targetPc.hasSkillEffect(COOKING_2_2_S) || _targetPc.hasSkillEffect(COOKING_2_3_S) || _targetPc.hasSkillEffect(COOKING_2_4_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_5_S) || _targetPc.hasSkillEffect(COOKING_2_6_S) || _targetPc.hasSkillEffect(COOKING_3_0_S) || _targetPc.hasSkillEffect(COOKING_3_1_S) || _targetPc.hasSkillEffect(COOKING_3_2_S) || _targetPc.hasSkillEffect(COOKING_3_3_S)
+				|| _targetPc.hasSkillEffect(COOKING_3_4_S) || _targetPc.hasSkillEffect(COOKING_3_5_S) || _targetPc.hasSkillEffect(COOKING_3_6_S)) {
 			dmg -= 5;
 		}
 
 		// 特别的料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_7_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_7_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_7_S)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_7_S) || _targetPc.hasSkillEffect(COOKING_2_7_S) || _targetPc.hasSkillEffect(COOKING_3_7_S)) {
 			dmg -= 5;
 		}
 
@@ -916,8 +914,7 @@ public class L1Attack {
 		}
 
 		// 龙之护铠伤害减免
-		if (_targetPc.hasSkillEffect(DRAGON_SKIN)
-				|| _targetPc.hasSkillEffect(PATIENCE)) {
+		if (_targetPc.hasSkillEffect(DRAGON_SKIN) || _targetPc.hasSkillEffect(PATIENCE)) {
 			dmg -= 2;
 		}
 
@@ -944,9 +941,7 @@ public class L1Attack {
 			if (!_targetPc.hasSkillEffect(BONE_BREAK)) {
 				int change = Random.nextInt(100) + 1;
 				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
-					L1EffectSpawn.getInstance().spawnEffect(93001, 1700,
-							_targetPc.getX(), _targetPc.getY(),
-							_targetPc.getMapId());
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetPc.getX(), _targetPc.getY(), _targetPc.getMapId());
 					_targetPc.setSkillEffect(BONE_BREAK, 2 * 1000); // 发动后再次发动间隔
 																	// 2秒
 					_targetPc.setSkillEffect(BONE_BREAK_START, 700);
@@ -964,17 +959,15 @@ public class L1Attack {
 	/** ●●●● PC 对 NPC 的伤害 ●●●● */
 	private int calcPcNpcDamage() {
 		int weaponMaxDamage = 0;
-		if (_targetNpc.getNpcTemplate().get_size().equalsIgnoreCase("small")
-				&& (_weaponSmall > 0)) {
+		if (_targetNpc.getNpcTemplate().get_size().equalsIgnoreCase("small") && (_weaponSmall > 0)) {
 			weaponMaxDamage = _weaponSmall;
-		} else if (_targetNpc.getNpcTemplate().get_size()
-				.equalsIgnoreCase("large")
-				&& (_weaponLarge > 0)) {
+		}
+		else if (_targetNpc.getNpcTemplate().get_size().equalsIgnoreCase("large") && (_weaponLarge > 0)) {
 			weaponMaxDamage = _weaponLarge;
 		}
 
 		// 计算武器总伤害
-		int weaponTotalDamage = calcWeponDamage(weaponMaxDamage) ;
+		int weaponTotalDamage = calcWeponDamage(weaponMaxDamage);
 
 		if ((_weaponId == 262) && (Random.nextInt(100) + 1 <= 75)) { // 装备毁灭巨剑的成功确率(暂定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
@@ -988,12 +981,8 @@ public class L1Attack {
 			dmg = calShortRageDamage(dmg);
 
 		// 巴风特与耀武类武器 (地裂魔法)
-		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290
-				|| _weaponId == 291 || _weaponId == 292 || _weaponId == 293
-				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
-				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
-				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
-				|| _weaponId == 303) {
+		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290 || _weaponId == 291 || _weaponId == 292 || _weaponId == 293 || _weaponId == 294 || _weaponId == 295 || _weaponId == 296 || _weaponId == 297 || _weaponId == 298 || _weaponId == 299 || _weaponId == 300
+				|| _weaponId == 301 || _weaponId == 302 || _weaponId == 303) {
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		}
 
@@ -1014,14 +1003,14 @@ public class L1Attack {
 
 		// 暴风之斧,酷寒之矛,玄冰弓
 		else if ((_weaponId == 260) || (_weaponId == 263 || _weaponId == 287)) {
-			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
-					_weaponId);
+			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target, _weaponId);
 		}
 
 		// 大法师之杖 (疾病术)
 		else if (_weaponId == 261) {
 			L1WeaponSkill.giveArkMageDiseaseEffect(_pc, _target);
-		} else {
+		}
+		else {
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
@@ -1045,9 +1034,7 @@ public class L1Attack {
 			if (!_targetNpc.hasSkillEffect(BONE_BREAK)) {
 				int change = Random.nextInt(100) + 1;
 				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
-					L1EffectSpawn.getInstance().spawnEffect(93001, 1700,
-							_targetNpc.getX(), _targetNpc.getY(),
-							_targetNpc.getMapId());
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetNpc.getX(), _targetNpc.getY(), _targetNpc.getMapId());
 					_targetNpc.setSkillEffect(BONE_BREAK, 2 * 1000); // 发动后再次发动间隔
 																		// 2秒
 					_targetNpc.setSkillEffect(BONE_BREAK_START, 700);
@@ -1084,7 +1071,8 @@ public class L1Attack {
 		double dmg = 0D;
 		if (lvl < 10) {
 			dmg = Random.nextInt(lvl) + 10D + _npc.getStr() / 2 + 1;
-		} else {
+		}
+		else {
 			dmg = Random.nextInt(lvl) + _npc.getStr() / 2 + 1;
 		}
 
@@ -1113,34 +1101,15 @@ public class L1Attack {
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		// 特别的料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_0_S) || _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S) || _targetPc.hasSkillEffect(COOKING_1_3_S) || _targetPc.hasSkillEffect(COOKING_1_4_S) || _targetPc.hasSkillEffect(COOKING_1_5_S)
+				|| _targetPc.hasSkillEffect(COOKING_1_6_S) || _targetPc.hasSkillEffect(COOKING_2_0_S) || _targetPc.hasSkillEffect(COOKING_2_1_S) || _targetPc.hasSkillEffect(COOKING_2_2_S) || _targetPc.hasSkillEffect(COOKING_2_3_S) || _targetPc.hasSkillEffect(COOKING_2_4_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_5_S) || _targetPc.hasSkillEffect(COOKING_2_6_S) || _targetPc.hasSkillEffect(COOKING_3_0_S) || _targetPc.hasSkillEffect(COOKING_3_1_S) || _targetPc.hasSkillEffect(COOKING_3_2_S) || _targetPc.hasSkillEffect(COOKING_3_3_S)
+				|| _targetPc.hasSkillEffect(COOKING_3_4_S) || _targetPc.hasSkillEffect(COOKING_3_5_S) || _targetPc.hasSkillEffect(COOKING_3_6_S)) {
 			dmg -= 5;
 		}
 
 		// 特别的料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_7_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_7_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_7_S)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_7_S) || _targetPc.hasSkillEffect(COOKING_2_7_S) || _targetPc.hasSkillEffect(COOKING_3_7_S)) {
 			dmg -= 5;
 		}
 
@@ -1177,7 +1146,8 @@ public class L1Attack {
 		if (!isNowWar) {
 			if (_npc instanceof L1PetInstance) {
 				dmg /= 8;
-			} else if (_npc instanceof L1SummonInstance) {
+			}
+			else if (_npc instanceof L1SummonInstance) {
 				L1SummonInstance summon = (L1SummonInstance) _npc;
 				if (summon.isExsistMaster()) {
 					dmg /= 8;
@@ -1200,11 +1170,11 @@ public class L1Attack {
 		double dmg = 0;
 
 		if (_npc instanceof L1PetInstance) {
-			dmg = Random.nextInt(_npc.getNpcTemplate().get_level())
-					+ _npc.getStr() / 2 + 1;
+			dmg = Random.nextInt(_npc.getNpcTemplate().get_level()) + _npc.getStr() / 2 + 1;
 			dmg += (lvl / 16); // 宠物每LV16追加打击
 			dmg += ((L1PetInstance) _npc).getDamageByWeapon();
-		} else {
+		}
+		else {
 			dmg = Random.nextInt(lvl) + _npc.getStr() / 2 + 1;
 		}
 
@@ -1238,9 +1208,11 @@ public class L1Attack {
 				double tempDmg = dmg;
 				if (_pc.hasSkillEffect(FIRE_WEAPON)) { // 火焰武器
 					tempDmg -= 4;
-				} else if (_pc.hasSkillEffect(FIRE_BLESS)) { // 烈炎气息
+				}
+				else if (_pc.hasSkillEffect(FIRE_BLESS)) { // 烈炎气息
 					tempDmg -= 5;
-				} else if (_pc.hasSkillEffect(BURNING_WEAPON)) { // 烈炎武器
+				}
+				else if (_pc.hasSkillEffect(BURNING_WEAPON)) { // 烈炎武器
 					tempDmg -= 6;
 				}
 				if (_pc.hasSkillEffect(BERSERKERS)) { // 狂暴术
@@ -1256,16 +1228,17 @@ public class L1Attack {
 			// 弱点曝光 - 伤害加成
 			if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
 				dmg += 9;
-			} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
+			}
+			else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
 				dmg += 6;
-			} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
+			}
+			else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
 				dmg += 3;
 			}
 		}
 
 		// 屠宰者 & 弱点曝光LV3 - 伤害 *1.3
-		if (_pc.isFoeSlayer()
-				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+		if (_pc.isFoeSlayer() && _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
 			dmg *= 1.3;
 		}
 		if (_pc.hasSkillEffect(BURNING_SLASH)) { // 燃烧击砍
@@ -1296,25 +1269,20 @@ public class L1Attack {
 		int undead = _targetNpc.getNpcTemplate().get_undead();
 
 		// 银质,米索莉,黑色米索莉 武器对不死系怪物的随机伤害 (1-20)
-		if (((_weaponMaterial == 14) || (_weaponMaterial == 17) || (_weaponMaterial == 22))
-				&& ((undead == 1) || (undead == 3) || (undead == 5))) {
+		if (((_weaponMaterial == 14) || (_weaponMaterial == 17) || (_weaponMaterial == 22)) && ((undead == 1) || (undead == 3) || (undead == 5))) {
 			damage += Random.nextInt(20) + 1;
 		}
 
 		// 黑色米索莉・オリハルコン、かつ、恶魔系
-		else if (((_weaponMaterial == 17) || (_weaponMaterial == 22))
-				&& (undead == 2)) {
+		else if (((_weaponMaterial == 17) || (_weaponMaterial == 22)) && (undead == 2)) {
 			damage += Random.nextInt(3) + 1;
 		}
 
 		// 祝福武器、かつ、アンデッド系・恶魔系・ア不死系
-		if ((_weaponBless == 0)
-				&& ((undead == 1) || (undead == 2) || (undead == 3))) {
+		if ((_weaponBless == 0) && ((undead == 1) || (undead == 2) || (undead == 3))) {
 			damage += Random.nextInt(4) + 1;
 		}
-		if ((_pc.getWeapon() != null) && (_weaponType != 20)
-				&& (_weaponType != 62) && (weapon.getHolyDmgByMagic() != 0)
-				&& ((undead == 1) || (undead == 3))) {
+		if ((_pc.getWeapon() != null) && (_weaponType != 20) && (_weaponType != 62) && (weapon.getHolyDmgByMagic() != 0) && ((undead == 1) || (undead == 3))) {
 			damage += weapon.getHolyDmgByMagic();
 		}
 		return damage;
@@ -1326,9 +1294,11 @@ public class L1Attack {
 		int damage = 0;
 		if (_weaponAttrEnchantLevel == 1) { // 一段
 			damage = 1;
-		} else if (_weaponAttrEnchantLevel == 2) { // 二段
+		}
+		else if (_weaponAttrEnchantLevel == 2) { // 二段
 			damage = 3;
-		} else if (_weaponAttrEnchantLevel == 3) { // 三段
+		}
+		else if (_weaponAttrEnchantLevel == 3) { // 三段
 			damage = 5;
 		}
 
@@ -1337,14 +1307,18 @@ public class L1Attack {
 		if (_calcType == PC_PC) {
 			if (_weaponAttrEnchantKind == 1) { // 地
 				resist = _targetPc.getEarth();
-			} else if (_weaponAttrEnchantKind == 2) { // 火
+			}
+			else if (_weaponAttrEnchantKind == 2) { // 火
 				resist = _targetPc.getFire();
-			} else if (_weaponAttrEnchantKind == 4) { // 水
+			}
+			else if (_weaponAttrEnchantKind == 4) { // 水
 				resist = _targetPc.getWater();
-			} else if (_weaponAttrEnchantKind == 8) { // 风
+			}
+			else if (_weaponAttrEnchantKind == 8) { // 风
 				resist = _targetPc.getWind();
 			}
-		} else if (_calcType == PC_NPC) {
+		}
+		else if (_calcType == PC_NPC) {
 			int weakAttr = _targetNpc.getNpcTemplate().get_weakAttr();
 			if (((_weaponAttrEnchantKind == 1) && (weakAttr == 1)) // 地
 					|| ((_weaponAttrEnchantKind == 2) && (weakAttr == 2)) // 火
@@ -1357,7 +1331,8 @@ public class L1Attack {
 		int resistFloor = (int) (0.32 * Math.abs(resist));
 		if (resist >= 0) {
 			resistFloor *= 1;
-		} else {
+		}
+		else {
 			resistFloor *= -1;
 		}
 
@@ -1387,14 +1362,17 @@ public class L1Attack {
 				if (_npc.getNpcTemplate().get_poisonatk() == 1) { // 通常毒
 					// 3秒周期、伤害HP-5
 					L1DamagePoison.doInfection(attacker, target, 3000, 5);
-				} else if (_npc.getNpcTemplate().get_poisonatk() == 2) { // 沉默毒
+				}
+				else if (_npc.getNpcTemplate().get_poisonatk() == 2) { // 沉默毒
 					L1SilencePoison.doInfection(target);
-				} else if (_npc.getNpcTemplate().get_poisonatk() == 4) { // 麻痹毒
+				}
+				else if (_npc.getNpcTemplate().get_poisonatk() == 4) { // 麻痹毒
 					// 20秒后至45秒间麻痹
 					L1ParalysisPoison.doInfection(target, 20000, 45000);
 				}
 			}
-		} else if (_npc.getNpcTemplate().get_paralysisatk() != 0) { // 随着麻痹攻击
+		}
+		else if (_npc.getNpcTemplate().get_paralysisatk() != 0) { // 随着麻痹攻击
 		}
 	}
 
@@ -1411,12 +1389,14 @@ public class L1Attack {
 			if (_drainMana > Config.MANA_DRAIN_LIMIT_PER_SOM_ATTACK) {
 				_drainMana = Config.MANA_DRAIN_LIMIT_PER_SOM_ATTACK;
 			}
-		} else if (_weaponId == 259) { // 魔力短剑
+		}
+		else if (_weaponId == 259) { // 魔力短剑
 			if (_calcType == PC_PC) {
 				if (_targetPc.getMr() <= Random.nextInt(100) + 1) { // 确率取决于目标的MR
 					_drainMana = 1; // 吸收量固定为1
 				}
-			} else if (_calcType == PC_NPC) {
+			}
+			else if (_calcType == PC_NPC) {
 				if (_targetNpc.getMr() <= Random.nextInt(100) + 1) { // 确率取决于目标的MR
 					_drainMana = 1; // 吸收量固定为1
 				}
@@ -1434,12 +1414,14 @@ public class L1Attack {
 	public void addPcPoisonAttack(L1Character attacker, L1Character target) {
 		int chance = Random.nextInt(100) + 1;
 		if (((_weaponId == 13 // 死亡之指
-				) || (_weaponId == 44 // 古代黑暗妖精之剑
+				)
+				|| (_weaponId == 44 // 古代黑暗妖精之剑
 				) || ((_weaponId != 0) && _pc.hasSkillEffect(ENCHANT_VENOM))) // 附加剧毒
 				&& (chance <= 10)) {
 			// 通常毒、3秒周期、伤害HP-5
 			L1DamagePoison.doInfection(attacker, target, 3000, 5);
-		} else {
+		}
+		else {
 			// 魔法娃娃效果 - 中毒
 			if (L1MagicDoll.getEffectByDoll(attacker, (byte) 1) == 1) {
 				L1DamagePoison.doInfection(attacker, target, 3000, 5);
@@ -1450,22 +1432,20 @@ public class L1Attack {
 	/** ■■■■ 增加底比斯武器的付加攻击 ■■■■ */
 	public void addChaserAttack() {
 		if (5 > Random.nextInt(100) + 1) {
-			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267
-					|| _weaponId == 268 || _weaponId == 280 || _weaponId == 281) {
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skills.ATTR_EARTH, 7025);
+			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267 || _weaponId == 268 || _weaponId == 280 || _weaponId == 281) {
+				L1Chaser chaser = new L1Chaser(_pc, _target, L1Skills.ATTR_EARTH, 7025);
 				chaser.begin();
-			} else if (_weaponId == 276 || _weaponId == 277) { 
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skills.ATTR_WATER, 7179);
+			}
+			else if (_weaponId == 276 || _weaponId == 277) {
+				L1Chaser chaser = new L1Chaser(_pc, _target, L1Skills.ATTR_WATER, 7179);
 				chaser.begin();
-			} else if (_weaponId == 304 || _weaponId == 307 || _weaponId == 308) { 
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skills.ATTR_WATER, 8150);
+			}
+			else if (_weaponId == 304 || _weaponId == 307 || _weaponId == 308) {
+				L1Chaser chaser = new L1Chaser(_pc, _target, L1Skills.ATTR_WATER, 8150);
 				chaser.begin();
-			} else if (_weaponId == 305 || _weaponId == 306 || _weaponId == 309) { 
-				L1Chaser chaser = new L1Chaser(_pc, _target,
-						L1Skills.ATTR_WATER, 8152);
+			}
+			else if (_weaponId == 305 || _weaponId == 306 || _weaponId == 309) {
+				L1Chaser chaser = new L1Chaser(_pc, _target, L1Skills.ATTR_WATER, 8152);
 				chaser.begin();
 			}
 		}
@@ -1475,7 +1455,8 @@ public class L1Attack {
 	public void action() {
 		if (_calcType == PC_PC || _calcType == PC_NPC) {
 			actionPc();
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
 			actionNpc();
 		}
 	}
@@ -1490,13 +1471,15 @@ public class L1Attack {
 			if (_arrow != null) { // 弓 - 有箭
 				_pc.getInventory().removeItem(_arrow, 1); // 移除一支箭矢
 				_attckGrfxId = 66; // 箭
-			} else if (_weaponId == 190)  // 沙哈 - 无箭
+			}
+			else if (_weaponId == 190) // 沙哈 - 无箭
 				_attckGrfxId = 2349; // 魔法箭
 
-			if (_pc.getTempCharGfx() == 8719)  // 柑橘
+			if (_pc.getTempCharGfx() == 8719) // 柑橘
 				_attckGrfxId = 8721; // 橘子籽
 			isFly = true;
-		} else if ((_weaponType == 62) && (_sting != null)) { // 铁手甲 - 有飞刀
+		}
+		else if ((_weaponType == 62) && (_sting != null)) { // 铁手甲 - 有飞刀
 			_pc.getInventory().removeItem(_sting, 1); // 移除一个飞刀
 			_attckGrfxId = 2989; // 飞刀
 			isFly = true;
@@ -1511,19 +1494,17 @@ public class L1Attack {
 
 		if (isFly) { // 远距离攻击
 			data = new int[] { _attckActId, _damage, _attckGrfxId }; // 参数
-			_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, _targetX,
-					_targetY, data));
-			_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, _targetX,
-					_targetY, data));
-		} else { // 近距离攻击
+			_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, _targetX, _targetY, data));
+			_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, _targetX, _targetY, data));
+		}
+		else { // 近距离攻击
 			data = new int[] { _attckActId, _damage, _effectId }; // 参数
 			_pc.sendPackets(new S_AttackPacket(_pc, _targetId, data)); // 对自身送出
 			_pc.broadcastPacket(new S_AttackPacket(_pc, _targetId, data)); // 对非自身送出
 		}
 
 		if (_isHit) {
-			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-					_targetId, ActionCodes.ACTION_Damage), _pc);
+			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(_targetId, ActionCodes.ACTION_Damage), _pc);
 		}
 	}
 
@@ -1539,20 +1520,11 @@ public class L1Attack {
 
 		// 与目标距离2格以上
 		boolean isLongRange = false;
-		if (npcGfxid == 4521
-			|| npcGfxid == 4550
-			|| npcGfxid == 5062
-			|| npcGfxid == 5317
-			|| npcGfxid == 5324
-			|| npcGfxid == 5331
-			|| npcGfxid == 5338
-			|| npcGfxid == 5412
-			) {
-			isLongRange = (_npc.getLocation().getTileLineDistance(
-					new Point(_targetX, _targetY)) > 2);
-		} else {
-			isLongRange = (_npc.getLocation().getTileLineDistance(
-					new Point(_targetX, _targetY)) > 1);
+		if (npcGfxid == 4521 || npcGfxid == 4550 || npcGfxid == 5062 || npcGfxid == 5317 || npcGfxid == 5324 || npcGfxid == 5331 || npcGfxid == 5338 || npcGfxid == 5412) {
+			isLongRange = (_npc.getLocation().getTileLineDistance(new Point(_targetX, _targetY)) > 2);
+		}
+		else {
+			isLongRange = (_npc.getLocation().getTileLineDistance(new Point(_targetX, _targetY)) > 1);
 		}
 		bowActId = _npc.getPolyArrowGfx(); // 被变身后的远距图像
 		if (bowActId == 0) {
@@ -1561,17 +1533,20 @@ public class L1Attack {
 		if (getActId() == 0) {
 			if ((actId != 0) && ((Random.nextInt(100) + 1) <= 40)) {
 				dmg *= 1.2;
-			} else {
+			}
+			else {
 				if (!isLongRange || bowActId == 0) { // 近距离
 					actId = L1NpcDefaultAction.getInstance().getDefaultAttack(npcGfxid);
 					if (bowActId > 0) { // 远距离怪物，近距离时攻击力加成
 						dmg *= 1.2;
 					}
-				} else { // 远距离
+				}
+				else { // 远距离
 					actId = L1NpcDefaultAction.getInstance().getRangedAttack(npcGfxid);
 				}
 			}
-		} else {
+		}
+		else {
 			actId = getActId(); // 攻击动作由 mobskill控制
 		}
 		_damage = (int) dmg;
@@ -1584,26 +1559,25 @@ public class L1Attack {
 		if (isLongRange && (bowActId > 0)) {
 			data = new int[] { actId, _damage, bowActId }; // data = {actid,
 															// dmg, spellgfx}
-			_npc.broadcastPacket(new S_UseArrowSkill(_npc, _targetId, _targetX,
-					_targetY, data));
-		} else {
+			_npc.broadcastPacket(new S_UseArrowSkill(_npc, _targetId, _targetX, _targetY, data));
+		}
+		else {
 			if (getGfxId() > 0) {
 				data = new int[] { actId, _damage, getGfxId(), 6 }; // data =
 																	// {actid,
 																	// dmg,
 																	// spellgfx,
 																	// use_type}
-				_npc.broadcastPacket(new S_UseAttackSkill(_npc, _targetId,
-						_targetX, _targetY, data));
-			} else {
+				_npc.broadcastPacket(new S_UseAttackSkill(_npc, _targetId, _targetX, _targetY, data));
+			}
+			else {
 				data = new int[] { actId, _damage, 0 }; // data = {actid, dmg,
 														// effect}
 				_npc.broadcastPacket(new S_AttackPacket(_npc, _targetId, data)); // 对非自身送出
 			}
 		}
 		if (_isHit) {
-			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-					_targetId, ActionCodes.ACTION_Damage), _npc);
+			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(_targetId, ActionCodes.ACTION_Damage), _npc);
 		}
 	}
 
@@ -1612,7 +1586,8 @@ public class L1Attack {
 		if (_isHit) {
 			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				commitPc();
-			} else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {
+			}
+			else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {
 				commitNpc();
 			}
 		}
@@ -1636,14 +1611,16 @@ public class L1Attack {
 		String msg4 = "";
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // 攻击者为ＰＣ的场合
 			msg0 = "物攻 对";
-		} else if (_calcType == NPC_PC) { // 攻击者为ＮＰＣ的场合
+		}
+		else if (_calcType == NPC_PC) { // 攻击者为ＮＰＣ的场合
 			msg0 = _npc.getNameId() + "(物攻)：";
 		}
 
 		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // 目标为ＰＣ的场合
 			msg4 = _targetPc.getName();
 			msg2 = "，剩余 " + _targetPc.getCurrentHp() + "，命中	" + _hitRate + "%";
-		} else if (_calcType == PC_NPC) { // 目标为ＮＰＣ的场合
+		}
+		else if (_calcType == PC_NPC) { // 目标为ＮＰＣ的场合
 			msg4 = _targetNpc.getNameId();
 			msg2 = "，剩余 " + _targetNpc.getCurrentHp() + "，命中 " + _hitRate + "%";
 		}
@@ -1677,7 +1654,8 @@ public class L1Attack {
 			}
 			damagePcWeaponDurability(); // 武器有损坏。
 			_targetPc.receiveDamage(_pc, _damage, false);
-		} else if (_calcType == NPC_PC) {
+		}
+		else if (_calcType == NPC_PC) {
 			_targetPc.receiveDamage(_npc, _damage, false);
 		}
 	}
@@ -1700,7 +1678,8 @@ public class L1Attack {
 			}
 			damageNpcWeaponDurability(); // 武器有损坏。
 			_targetNpc.receiveDamage(_pc, _damage);
-		} else if (_calcType == NPC_NPC) {
+		}
+		else if (_calcType == NPC_NPC) {
 			_targetNpc.receiveDamage(_npc, _damage);
 		}
 	}
@@ -1713,28 +1692,26 @@ public class L1Attack {
 			_pc.setHeading(_pc.targetDirection(_targetX, _targetY)); // 设置面向
 			_pc.sendPackets(new S_AttackMissPacket(_pc, _targetId));
 			_pc.broadcastPacket(new S_AttackMissPacket(_pc, _targetId));
-			_pc.sendPackets(new S_DoActionGFX(_pc.getId(),
-					ActionCodes.ACTION_Damage));
-			_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(),
-					ActionCodes.ACTION_Damage));
-		} else if (_calcType == NPC_PC) {
+			_pc.sendPackets(new S_DoActionGFX(_pc.getId(), ActionCodes.ACTION_Damage));
+			_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(), ActionCodes.ACTION_Damage));
+		}
+		else if (_calcType == NPC_PC) {
 			int actId = 0;
 			_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 设置面向
 			if (getActId() > 0) {
 				actId = getActId();
-			} else {
+			}
+			else {
 				actId = ActionCodes.ACTION_Attack;
 			}
 			if (getGfxId() > 0) {
 				int[] data = { actId, 0, getGfxId(), 6 }; // data = {actId, dmg, getGfxId(), use_type}
-				_npc.broadcastPacket(new S_UseAttackSkill(_target,
-						_npc.getId(), _targetX, _targetY, data));
-			} else {
-				_npc.broadcastPacket(new S_AttackMissPacket(_npc, _targetId,
-						actId));
+				_npc.broadcastPacket(new S_UseAttackSkill(_target, _npc.getId(), _targetX, _targetY, data));
 			}
-			_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(),
-					ActionCodes.ACTION_Damage));
+			else {
+				_npc.broadcastPacket(new S_AttackMissPacket(_npc, _targetId, actId));
+			}
+			_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Damage));
 		}
 	}
 
@@ -1745,9 +1722,9 @@ public class L1Attack {
 			if ((_weaponType == 20) || (_weaponType == 62)) { // 单手弓？
 				isShortDistance = false;
 			}
-		} else if (_calcType == NPC_PC) {
-			boolean isLongRange = (_npc.getLocation().getTileLineDistance(
-					new Point(_targetX, _targetY)) > 1);
+		}
+		else if (_calcType == NPC_PC) {
+			boolean isLongRange = (_npc.getLocation().getTileLineDistance(new Point(_targetX, _targetY)) > 1);
 			int bowActId = _npc.getPolyArrowGfx();
 			if (bowActId == 0) {
 				bowActId = _npc.getNpcTemplate().getBowActId();
@@ -1768,7 +1745,8 @@ public class L1Attack {
 		}
 		if (_calcType == PC_PC) {
 			_pc.receiveDamage(_targetPc, damage, false);
-		} else if (_calcType == NPC_PC) {
+		}
+		else if (_calcType == NPC_PC) {
 			_npc.receiveDamage(_targetPc, damage);
 		}
 	}
@@ -1781,9 +1759,7 @@ public class L1Attack {
 		if (weapon != null) {
 			if (weapon.getItem().getType() == 3) { // 双手剑
 				// (BIG最大伤害+强化数+额外伤害)*2
-				damage = (weapon.getItem().getDmgLarge()
-						+ weapon.getEnchantLevel() + weapon.getItem()
-						.getDmgModifier()) * 2;
+				damage = (weapon.getItem().getDmgLarge() + weapon.getEnchantLevel() + weapon.getItem().getDmgModifier()) * 2;
 			}
 		}
 		return damage;
@@ -1797,15 +1773,11 @@ public class L1Attack {
 		int bchance = 3;
 
 		// 不攻击NPC、空手、不会损坏的武器、SOF中的场合什么都不做。
-		if ((_calcType != PC_NPC)
-				|| (_targetNpc.getNpcTemplate().is_hard() == false)
-				|| (_weaponType == 0) || (weapon.getItem().get_canbedmg() == 0)
-				|| _pc.hasSkillEffect(SOUL_OF_FLAME)) {
+		if ((_calcType != PC_NPC) || (_targetNpc.getNpcTemplate().is_hard() == false) || (_weaponType == 0) || (weapon.getItem().get_canbedmg() == 0) || _pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			return;
 		}
 		// 普通武器・诅咒武器
-		if (((_weaponBless == 1) || (_weaponBless == 2))
-				&& ((Random.nextInt(100) + 1) < chance)) {
+		if (((_weaponBless == 1) || (_weaponBless == 2)) && ((Random.nextInt(100) + 1) < chance)) {
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName())); // \f1你的%0%s坏了。
 			_pc.getInventory().receiveDamage(weapon);
 		}
@@ -1821,10 +1793,7 @@ public class L1Attack {
 	 */
 	private void damagePcWeaponDurability() {
 		// PvP以外、空手、弓、ガントトレット、对手未使用反弹攻击、SOF中的场合什么都不做
-		if ((_calcType != PC_PC) || (_weaponType == 0) || (_weaponType == 20)
-				|| (_weaponType == 62)
-				|| (_targetPc.hasSkillEffect(BOUNCE_ATTACK) == false)
-				|| _pc.hasSkillEffect(SOUL_OF_FLAME)) {
+		if ((_calcType != PC_PC) || (_weaponType == 0) || (_weaponType == 20) || (_weaponType == 62) || (_targetPc.hasSkillEffect(BOUNCE_ATTACK) == false) || _pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			return;
 		}
 
@@ -1846,38 +1815,37 @@ public class L1Attack {
 				if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) { // 目前阶段三
 					if (random > 30 && random <= 60) { // 阶段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
 					}
-				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) { // 目前阶段二
+				}
+				else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) { // 目前阶段二
 					if (random <= 30) { // 阶段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));
-					} else if (random >= 70) { // 阶段三
+					}
+					else if (random >= 70) { // 阶段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
 					}
-				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) { // 目前阶段一
+				}
+				else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) { // 目前阶段一
 					if (random <= 40) { // 阶段一
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 1));
-					} else if (random >= 70) { // 阶段二
+					}
+					else if (random >= 70) { // 阶段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));
 					}
-				} else {
+				}
+				else {
 					if (random <= 40) { // 阶段一
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1,
-								16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 1));
 					}
 				}

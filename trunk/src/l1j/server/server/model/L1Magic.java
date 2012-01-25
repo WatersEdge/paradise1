@@ -273,7 +273,7 @@ public class L1Magic {
 		else {
 			msg3 = "失败";
 		}
-   
+
 		// 0 4 1 3 2 攻击者 对 目标 施放魔法 成功/失败，机率：X%。
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4));
@@ -292,32 +292,9 @@ public class L1Magic {
 
 			// 安全区域无效果的魔法
 			if ((_pc.getZoneType() == 1) || (_targetPc.getZoneType() == 1)) { // 安全区
-				if ((skillId == WEAPON_BREAK
-					) || (skillId == SLOW
-					) || (skillId == CURSE_PARALYZE
-					) || (skillId == MANA_DRAIN
-					) || (skillId == DARKNESS
-					) || (skillId == WEAKNESS
-					) || (skillId == DISEASE
-					) || (skillId == DECAY_POTION
-					) || (skillId == MASS_SLOW
-					) || (skillId == ENTANGLE
-					) || (skillId == ERASE_MAGIC
-					) || (skillId == EARTH_BIND
-					) || (skillId == AREA_OF_SILENCE
-					) || (skillId == WIND_SHACKLE
-					) || (skillId == STRIKER_GALE
-					) || (skillId == SHOCK_STUN
-					) || (skillId == FOG_OF_SLEEPING
-					) || (skillId == ICE_LANCE
-					) || (skillId == FREEZING_BLIZZARD
-					) || (skillId == FREEZING_BREATH
-					) || (skillId == POLLUTE_WATER
-					) || (skillId == ELEMENTAL_FALL_DOWN
-					) || (skillId == RETURN_TO_NATURE
-					) || (skillId == ICE_LANCE_COCKATRICE
-					) || (skillId == ICE_LANCE_BASILISK
-					)) {
+				if ((skillId == WEAPON_BREAK) || (skillId == SLOW) || (skillId == CURSE_PARALYZE) || (skillId == MANA_DRAIN) || (skillId == DARKNESS) || (skillId == WEAKNESS) || (skillId == DISEASE) || (skillId == DECAY_POTION) || (skillId == MASS_SLOW) || (skillId == ENTANGLE)
+						|| (skillId == ERASE_MAGIC) || (skillId == EARTH_BIND) || (skillId == AREA_OF_SILENCE) || (skillId == WIND_SHACKLE) || (skillId == STRIKER_GALE) || (skillId == SHOCK_STUN) || (skillId == FOG_OF_SLEEPING) || (skillId == ICE_LANCE)
+						|| (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH) || (skillId == POLLUTE_WATER) || (skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE) || (skillId == ICE_LANCE_COCKATRICE) || (skillId == ICE_LANCE_BASILISK)) {
 					return false;
 				}
 			}
@@ -352,16 +329,7 @@ public class L1Magic {
 			}
 		}
 
-		if ((skillId == ELEMENTAL_FALL_DOWN
-			) || (skillId == RETURN_TO_NATURE
-			) || (skillId == ENTANGLE
-			) || (skillId == ERASE_MAGIC
-			) || (skillId == AREA_OF_SILENCE
-			) || (skillId == WIND_SHACKLE
-			) || (skillId == STRIKER_GALE
-			) || (skillId == POLLUTE_WATER
-			) || (skillId == EARTH_BIND
-			)) {
+		if ((skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE) || (skillId == ENTANGLE) || (skillId == ERASE_MAGIC) || (skillId == AREA_OF_SILENCE) || (skillId == WIND_SHACKLE) || (skillId == STRIKER_GALE) || (skillId == POLLUTE_WATER) || (skillId == EARTH_BIND)) {
 			// 成功率是 魔法固有系数 × LV差异 + 基本概率
 			probability = (int) (((l1skills.getProbabilityDice()) / 10D) * (attackLevel - defenseLevel)) + l1skills.getProbabilityValue();
 
@@ -485,14 +453,9 @@ public class L1Magic {
 				probability -= _targetPc.getRegistSleep();
 			}
 		}
-		else if ((skillId == ICE_LANCE
-				) || (skillId == FREEZING_BLIZZARD
-				) || (skillId == FREEZING_BREATH
-				) || (skillId == ICE_LANCE_COCKATRICE
-				) || (skillId == ICE_LANCE_BASILISK
-				)) {
+		else if ((skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH) || (skillId == ICE_LANCE_COCKATRICE) || (skillId == ICE_LANCE_BASILISK)) {
 			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
-				probability -= _targetPc.getRegistFreeze();	
+				probability -= _targetPc.getRegistFreeze();
 				// 检查无敌状态
 				for (int skillid : INVINCIBLE) {
 					if (_targetPc.hasSkillEffect(skillid)) {
@@ -512,20 +475,12 @@ public class L1Magic {
 	}
 
 	/** 拥有这些状态的, 不会受到伤害(无敌) */
-	private static final int[] INVINCIBLE = {
-		ABSOLUTE_BARRIER,
-		ICE_LANCE,
-		FREEZING_BLIZZARD,
-		FREEZING_BREATH,
-		EARTH_BIND,
-		ICE_LANCE_COCKATRICE,
-		ICE_LANCE_BASILISK
-	};
+	private static final int[] INVINCIBLE = { ABSOLUTE_BARRIER, ICE_LANCE, FREEZING_BLIZZARD, FREEZING_BREATH, EARTH_BIND, ICE_LANCE_COCKATRICE, ICE_LANCE_BASILISK };
 
 	/** ■■■■■■■■■■■■■■ 魔法伤害算出 ■■■■■■■■■■■■■■ */
 	public int calcMagicDamage(int skillId) {
 		int damage = 0;
-		
+
 		// 检查无敌状态
 		for (int skillid : INVINCIBLE) {
 			if (_target.hasSkillEffect(skillid)) {
@@ -622,10 +577,12 @@ public class L1Magic {
 		if (skillId == FINAL_BURN) {
 			if (_calcType == PC_PC) {
 				dmg = _pc.getCurrentMp();
-			} else {
+			}
+			else {
 				dmg = _npc.getCurrentMp();
 			}
-		} else {
+		}
+		else {
 			dmg = calcMagicDiceDamage(skillId);
 			dmg = (dmg * getLeverage()) / 10;
 		}
@@ -636,7 +593,8 @@ public class L1Magic {
 				_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
 				if (_calcType == PC_PC) {
 					dmg += _pc.getWis() * 5;
-				} else if (_calcType == NPC_PC) {
+				}
+				else if (_calcType == NPC_PC) {
 					dmg += _npc.getWis() * 5;
 				}
 			}
@@ -648,28 +606,15 @@ public class L1Magic {
 		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		// 料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S) || _targetPc.hasSkillEffect(COOKING_1_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S) || _targetPc.hasSkillEffect(COOKING_2_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S) || _targetPc.hasSkillEffect(COOKING_2_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S) || _targetPc.hasSkillEffect(COOKING_3_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S) || _targetPc.hasSkillEffect(COOKING_3_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S) || _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_0_S) || _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S) || _targetPc.hasSkillEffect(COOKING_1_3_S) || _targetPc.hasSkillEffect(COOKING_1_4_S) || _targetPc.hasSkillEffect(COOKING_1_5_S)
+				|| _targetPc.hasSkillEffect(COOKING_1_6_S) || _targetPc.hasSkillEffect(COOKING_2_0_S) || _targetPc.hasSkillEffect(COOKING_2_1_S) || _targetPc.hasSkillEffect(COOKING_2_2_S) || _targetPc.hasSkillEffect(COOKING_2_3_S) || _targetPc.hasSkillEffect(COOKING_2_4_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_5_S) || _targetPc.hasSkillEffect(COOKING_2_6_S) || _targetPc.hasSkillEffect(COOKING_3_0_S) || _targetPc.hasSkillEffect(COOKING_3_1_S) || _targetPc.hasSkillEffect(COOKING_3_2_S) || _targetPc.hasSkillEffect(COOKING_3_3_S)
+				|| _targetPc.hasSkillEffect(COOKING_3_4_S) || _targetPc.hasSkillEffect(COOKING_3_5_S) || _targetPc.hasSkillEffect(COOKING_3_6_S)) {
 			dmg -= 5;
 		}
 
 		// 特别的料理伤害减免
-		if (_targetPc.hasSkillEffect(COOKING_1_7_S
-			) || _targetPc.hasSkillEffect(COOKING_2_7_S
-			) || _targetPc.hasSkillEffect(COOKING_3_7_S
-			)) {
+		if (_targetPc.hasSkillEffect(COOKING_1_7_S) || _targetPc.hasSkillEffect(COOKING_2_7_S) || _targetPc.hasSkillEffect(COOKING_3_7_S)) {
 			dmg -= 5;
 		}
 
@@ -718,7 +663,8 @@ public class L1Magic {
 				if (nowDamage > 0) {
 					dmg = nowDamage / 5;
 				}
-			} else if (_calcType == NPC_PC) {
+			}
+			else if (_calcType == NPC_PC) {
 				nowDamage = _npc.getMaxHp() - _npc.getCurrentHp();
 				if (nowDamage > 0) {
 					dmg = nowDamage / 5;
@@ -728,21 +674,24 @@ public class L1Magic {
 
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			dmg = 0;
-		} else if (_targetPc.hasSkillEffect(ICE_LANCE)) {
+		}
+		else if (_targetPc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
-		} else if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		}
+		else if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			dmg = 0;
-		} else if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
+		}
+		else if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
 			dmg = 0;
-		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
+		}
+		else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			dmg = 0;
 		}
 
 		if (_calcType == NPC_PC) {
 			if ((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) {
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
-						|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
+				if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
 					dmg = 0;
 				}
 			}
@@ -762,8 +711,10 @@ public class L1Magic {
 			}
 			else if (_calcType == NPC_PC) {
 				int npcId = _npc.getNpcTemplate().get_npcId();
-				if ((npcId == 45681) || (npcId == 45682) || (npcId == 45683) || (npcId == 45684)) {}
-				else if (!_npc.getNpcTemplate().get_IsErase()) {}
+				if ((npcId == 45681) || (npcId == 45682) || (npcId == 45683) || (npcId == 45684)) {
+				}
+				else if (!_npc.getNpcTemplate().get_IsErase()) {
+				}
 				else {
 					if (_targetPc.getWis() >= Random.nextInt(100)) {
 						_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Damage));
@@ -790,7 +741,8 @@ public class L1Magic {
 		if (skillId == FINAL_BURN) {
 			if (_calcType == PC_NPC) {
 				dmg = _pc.getCurrentMp();
-			} else {
+			}
+			else {
 				dmg = _npc.getCurrentMp();
 			}
 		}
@@ -805,7 +757,8 @@ public class L1Magic {
 				_targetNpc.setCurrentMp(_targetNpc.getCurrentMp() - 5);
 				if (_calcType == PC_NPC) {
 					dmg += _pc.getWis() * 5;
-				} else if (_calcType == NPC_NPC) {
+				}
+				else if (_calcType == NPC_NPC) {
 					dmg += _npc.getWis() * 5;
 				}
 			}
@@ -819,7 +772,8 @@ public class L1Magic {
 				if (nowDamage > 0) {
 					dmg = nowDamage / 5;
 				}
-			} else if (_calcType == NPC_NPC) {
+			}
+			else if (_calcType == NPC_NPC) {
 				nowDamage = _npc.getMaxHp() - _npc.getCurrentHp();
 				if (nowDamage > 0) {
 					dmg = nowDamage / 5;
@@ -848,11 +802,14 @@ public class L1Magic {
 
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
-		} else if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		}
+		else if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			dmg = 0;
-		} else if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
+		}
+		else if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
 			dmg = 0;
-		} else if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		}
+		else if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
 			dmg = 0;
 		}
 
@@ -863,8 +820,7 @@ public class L1Magic {
 			}
 		}
 		if (_calcType == NPC_NPC) {
-			if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance))
-					&& ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
+			if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) && ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
 				// 目标在安区、攻击者在安区
 				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
 					dmg = 0;
@@ -1003,7 +959,8 @@ public class L1Magic {
 	}
 
 	/**
-	 * ●●●● 属性伤害减免 ●●●● <br><br>
+	 * ●●●● 属性伤害减免 ●●●● <br>
+	 * <br>
 	 * attr:0.无属性魔法,1.地魔法,2.火魔法,4.水魔法,8.风魔法,16.光魔法
 	 */
 	private double calcAttrResistance(int attr) {
@@ -1022,7 +979,8 @@ public class L1Magic {
 				resist = _targetPc.getWind();
 			}
 		}
-		else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {}
+		else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {
+		}
 
 		int resistFloor = (int) (0.32 * Math.abs(resist));
 		if (resist >= 0) {
@@ -1082,7 +1040,7 @@ public class L1Magic {
 			msg2 = "，剩余 " + _targetNpc.getCurrentHp();
 		}
 
-		msg3 = damage  + " 伤害";
+		msg3 = damage + " 伤害";
 
 		// 魔攻 对 目标 造成 X 伤害，剩余 Y。
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // 攻击者为ＰＣ的场合

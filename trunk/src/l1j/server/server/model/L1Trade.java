@@ -44,14 +44,13 @@ public class L1Trade {
 	}
 
 	public void TradeAddItem(L1PcInstance player, int itemid, int itemcount) {
-		L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance()
-				.findObject(player.getTradeID());
+		L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance().findObject(player.getTradeID());
 		L1ItemInstance l1iteminstance = player.getInventory().getItem(itemid);
 		itemcount = Math.abs(itemcount); // 确保物品数量为正
 		itemcount = Math.min(itemcount, l1iteminstance.getCount()); // 确保交易的物品小于身上所有
 		if ((l1iteminstance != null) && (trading_partner != null)) {
 			if (!l1iteminstance.isEquipped()) {
-				if(itemcount < 0 || itemcount > 2000000000 || (l1iteminstance.getCount() < 0) || l1iteminstance.getCount() < itemcount){
+				if (itemcount < 0 || itemcount > 2000000000 || (l1iteminstance.getCount() < 0) || l1iteminstance.getCount() < itemcount) {
 					return;
 				}
 				if ((l1iteminstance.getCount() < itemcount) || (0 > itemcount)) {
@@ -63,12 +62,9 @@ public class L1Trade {
 					trading_partner.setTradeID(0);
 					return;
 				}
-				player.getInventory().tradeItem(l1iteminstance, itemcount,
-						player.getTradeWindowInventory());
-				player.sendPackets(new S_TradeAddItem(l1iteminstance,
-						itemcount, 0));
-				trading_partner.sendPackets(new S_TradeAddItem(l1iteminstance,
-						itemcount, 1));
+				player.getInventory().tradeItem(l1iteminstance, itemcount, player.getTradeWindowInventory());
+				player.sendPackets(new S_TradeAddItem(l1iteminstance, itemcount, 0));
+				trading_partner.sendPackets(new S_TradeAddItem(l1iteminstance, itemcount, 1));
 			}
 		}
 	}
@@ -85,19 +81,14 @@ public class L1Trade {
 
 			for (cnt = 0; cnt < player_tradecount; cnt++) {
 				L1ItemInstance l1iteminstance1 = player_tradelist.get(0);
-				player.getTradeWindowInventory().tradeItem(l1iteminstance1,
-						l1iteminstance1.getCount(),
-						trading_partner.getInventory());
+				player.getTradeWindowInventory().tradeItem(l1iteminstance1, l1iteminstance1.getCount(), trading_partner.getInventory());
 				// 交易纪录
 				if (Config.writeTradeLog)
-					LogRecorder.writeTradeLog(player, trading_partner,
-							l1iteminstance1);
+					LogRecorder.writeTradeLog(player, trading_partner, l1iteminstance1);
 			}
 			for (cnt = 0; cnt < trading_partner_tradecount; cnt++) {
 				L1ItemInstance l1iteminstance2 = trading_partner_tradelist.get(0);
-				trading_partner.getTradeWindowInventory().tradeItem(
-						l1iteminstance2, l1iteminstance2.getCount(),
-						player.getInventory());
+				trading_partner.getTradeWindowInventory().tradeItem(l1iteminstance2, l1iteminstance2.getCount(), player.getInventory());
 			}
 
 			player.sendPackets(new S_TradeStatus(0));
@@ -123,15 +114,11 @@ public class L1Trade {
 
 			for (cnt = 0; cnt < player_tradecount; cnt++) {
 				L1ItemInstance l1iteminstance1 = player_tradelist.get(0);
-				player.getTradeWindowInventory().tradeItem(l1iteminstance1,
-						l1iteminstance1.getCount(), player.getInventory());
+				player.getTradeWindowInventory().tradeItem(l1iteminstance1, l1iteminstance1.getCount(), player.getInventory());
 			}
 			for (cnt = 0; cnt < trading_partner_tradecount; cnt++) {
-				L1ItemInstance l1iteminstance2 = trading_partner_tradelist
-						.get(0);
-				trading_partner.getTradeWindowInventory().tradeItem(
-						l1iteminstance2, l1iteminstance2.getCount(),
-						trading_partner.getInventory());
+				L1ItemInstance l1iteminstance2 = trading_partner_tradelist.get(0);
+				trading_partner.getTradeWindowInventory().tradeItem(l1iteminstance2, l1iteminstance2.getCount(), trading_partner.getInventory());
 			}
 
 			player.sendPackets(new S_TradeStatus(1));

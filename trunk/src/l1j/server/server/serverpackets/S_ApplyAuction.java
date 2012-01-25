@@ -36,6 +36,7 @@ public class S_ApplyAuction extends ServerBasePacket {
 
 	/**
 	 * 选取物品数量 (盟屋拍卖公告)
+	 * 
 	 * @param objectId
 	 * @param houseNumber
 	 */
@@ -62,7 +63,8 @@ public class S_ApplyAuction extends ServerBasePacket {
 				if (bidderId == 0) { // 无投标人
 					writeD(nowPrice); // 控制的初始价格
 					writeD(nowPrice); // 价格下限
-				} else { // 有竞标者
+				}
+				else { // 有竞标者
 					writeD(nowPrice + 1); // 控制的初始价格
 					writeD(nowPrice + 1); // 价格下限
 				}
@@ -71,7 +73,8 @@ public class S_ApplyAuction extends ServerBasePacket {
 				writeS("agapply"); // HTML
 				writeS("agapply " + houseNumber); // 命令
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

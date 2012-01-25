@@ -61,8 +61,7 @@ public class C_Amount extends ClientBasePacket {
 		String s = readS();
 
 		L1PcInstance pc = client.getActiveChar();
-		L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(
-				objectId);
+		L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(objectId);
 		if (npc == null) {
 			return;
 		}
@@ -73,7 +72,8 @@ public class C_Amount extends ClientBasePacket {
 			StringTokenizer stringtokenizer = new StringTokenizer(s);
 			s1 = stringtokenizer.nextToken();
 			s2 = stringtokenizer.nextToken();
-		} catch (NoSuchElementException e) {
+		}
+		catch (NoSuchElementException e) {
 			s1 = "";
 			s2 = "";
 		}
@@ -99,28 +99,26 @@ public class C_Amount extends ClientBasePacket {
 					boardTable.updateAuctionBoard(board);
 					if (nowBidderId != 0) {
 						// 将金币退还给投标者
-						L1PcInstance bidPc = (L1PcInstance) L1World
-								.getInstance().findObject(nowBidderId);
+						L1PcInstance bidPc = (L1PcInstance) L1World.getInstance().findObject(nowBidderId);
 						if (bidPc != null) { // 玩家在线上
-							bidPc.getInventory().storeItem(L1ItemId.ADENA,
-									nowPrice);
+							bidPc.getInventory().storeItem(L1ItemId.ADENA, nowPrice);
 							// 有人提出比您高的金额，因此无法给你购买权。%n因为您参与拍卖没有得标，所以还给你 %0金币。%n谢谢。%n%n
-							bidPc.sendPackets(new S_ServerMessage(525, String
-									.valueOf(nowPrice)));
-						} else { // 玩家离线中
-							L1ItemInstance item = ItemTable.getInstance()
-									.createItem(L1ItemId.ADENA);
+							bidPc.sendPackets(new S_ServerMessage(525, String.valueOf(nowPrice)));
+						}
+						else { // 玩家离线中
+							L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 							item.setCount(nowPrice);
-							CharactersItemStorage storage = CharactersItemStorage
-									.create();
+							CharactersItemStorage storage = CharactersItemStorage.create();
 							storage.storeItem(nowBidderId, item);
 						}
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 				}
 			}
-		} else if (s1.equalsIgnoreCase("agsell")) { // 出售盟屋
+		}
+		else if (s1.equalsIgnoreCase("agsell")) { // 出售盟屋
 			int houseId = Integer.valueOf(s2);
 			AuctionBoardTable boardTable = new AuctionBoardTable();
 			L1AuctionBoard board = new L1AuctionBoard();
@@ -148,11 +146,11 @@ public class C_Amount extends ClientBasePacket {
 				house.setPurchaseBasement(true); // 地下アジト未購入に設定
 				HouseTable.getInstance().updateHouse(house); // 更新到资料库中
 			}
-		} else {
+		}
+		else {
 			// 旅馆NPC
 			int npcId = npc.getNpcId();
-			if (npcId == 70070 || npcId == 70019 || npcId == 70075 || npcId == 70012
-					|| npcId == 70031 || npcId == 70084 || npcId == 70065 || npcId == 70054 || npcId == 70096) {
+			if (npcId == 70070 || npcId == 70019 || npcId == 70075 || npcId == 70012 || npcId == 70031 || npcId == 70084 || npcId == 70065 || npcId == 70054 || npcId == 70096) {
 
 				if (pc.getInventory().checkItem(L1ItemId.ADENA, (300 * amount))) { // 所需金币 = 钥匙价格(300) * 钥匙数量(amount)
 					L1Inn inn = InnTable.getInstance().getTemplate(npcId, pc.getInnRoomNumber());
@@ -190,7 +188,8 @@ public class C_Amount extends ClientBasePacket {
 							L1Inventory inventory;
 							if (pc.getInventory().checkAddItem(item, amount) == L1Inventory.OK) {
 								inventory = pc.getInventory();
-							} else {
+							}
+							else {
 								inventory = L1World.getInstance().getInventory(pc.getLocation());
 							}
 							inventory.storeItem(item);
@@ -198,7 +197,8 @@ public class C_Amount extends ClientBasePacket {
 							if (InnKeyTable.checkey(item)) {
 								InnKeyTable.DeleteKey(item);
 								InnKeyTable.StoreKey(item);
-							} else {
+							}
+							else {
 								InnKeyTable.StoreKey(item);
 							}
 
@@ -207,16 +207,17 @@ public class C_Amount extends ClientBasePacket {
 								itemName = (itemName + " (" + amount + ")");
 							}
 							pc.sendPackets(new S_ServerMessage(143, npc.getName(), itemName)); // \f1%0%s 给你 %1%o 。
-							String[] msg = {npc.getName()};
+							String[] msg = { npc.getName() };
 							pc.sendPackets(new S_NPCTalkReturn(npcId, "inn4", msg)); // 要一起使用房间的话，请把钥匙给其他人，往旁边的楼梯上去即可。
 						}
 					}
 				}
 				else {
-					String[] msg = {npc.getName()};
+					String[] msg = { npc.getName() };
 					pc.sendPackets(new S_NPCTalkReturn(npcId, "inn3", msg)); // 对不起，你手中的金币不够哦！
 				}
-			} else {
+			}
+			else {
 				L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
 				if (action != null) {
 					L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);

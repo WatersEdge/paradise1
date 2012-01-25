@@ -61,7 +61,8 @@ public class ArmorSetTable {
 			pstm = con.prepareStatement("SELECT * FROM armor_set union SELECT * FROM z_copy_armor_set");
 			rs = pstm.executeQuery();
 			fillTable(rs);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

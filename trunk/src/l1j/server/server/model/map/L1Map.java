@@ -36,24 +36,28 @@ public abstract class L1Map {
 	// TODO JavaDoc
 	/**
 	 * 取得起点X
+	 * 
 	 * @return
 	 */
 	public abstract int getX();
 
 	/**
 	 * 取得起点Y
+	 * 
 	 * @return
 	 */
 	public abstract int getY();
 
 	/**
 	 * 取得地图宽度 (终点X - 起点X)
+	 * 
 	 * @return
 	 */
 	public abstract int getWidth();
 
 	/**
 	 * 取得地图高度 (终点Y - 起点Y)
+	 * 
 	 * @return
 	 */
 	public abstract int getHeight();
@@ -61,9 +65,7 @@ public abstract class L1Map {
 	/**
 	 * 传回指定的坐标值。
 	 * 
-	 * 不推荐。这种方法是为兼容现有的代码。
-	 * L1Map用户通常需要知道什么是地图存储在不值。
-	 * 此外，编写代码，就值这不是存储而定。只有在特殊情况下，如调试，您可以使用此方法。
+	 * 不推荐。这种方法是为兼容现有的代码。 L1Map用户通常需要知道什么是地图存储在不值。 此外，编写代码，就值这不是存储而定。只有在特殊情况下，如调试，您可以使用此方法。
 	 * 
 	 * @param x
 	 *            坐标的X值
@@ -76,19 +78,13 @@ public abstract class L1Map {
 	/**
 	 * 传回指定的坐标值。
 	 * 
-	 * 不推荐。这种方法是为兼容现有的代码。
-	 * L1Map用户通常需要知道什么是地图存储在不值。
-	 * 此外，编写代码，就值这不是存储而定。只有在特殊情况下，如调试，您可以使用此方法。
+	 * 不推荐。这种方法是为兼容现有的代码。 L1Map用户通常需要知道什么是地图存储在不值。 此外，编写代码，就值这不是存储而定。只有在特殊情况下，如调试，您可以使用此方法。
 	 * 
 	 * @param x
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 坐标指定值
-	 * 			0 : 无法通过
-	 * 			15: 一般区域
-	 *			31: 安全区域
-	 *			47: 战斗区域
+	 * @return 坐标指定值 0 : 无法通过 15: 一般区域 31: 安全区域 47: 战斗区域
 	 */
 	public abstract int getOriginalTile(int x, int y);
 
@@ -117,7 +113,7 @@ public abstract class L1Map {
 	 * 
 	 * @param pt
 	 *            坐标 (Point)，其中包含的坐标
-	 * @return 可以通过 true	不能通过 false
+	 * @return 可以通过 true 不能通过 false
 	 */
 	public abstract boolean isPassable(Point pt);
 
@@ -128,7 +124,7 @@ public abstract class L1Map {
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 可以通过 true	不能通过 false
+	 * @return 可以通过 true 不能通过 false
 	 */
 	public abstract boolean isPassable(int x, int y);
 
@@ -137,7 +133,7 @@ public abstract class L1Map {
 	 * 
 	 * @param pt
 	 *            坐标 (Point)，其中包含的坐标
-	 * @return 可以通过 true	不能通过 false
+	 * @return 可以通过 true 不能通过 false
 	 */
 	public abstract boolean isPassable(Point pt, int heading);
 
@@ -148,7 +144,7 @@ public abstract class L1Map {
 	 *            坐标的X值
 	 * @param y
 	 *            坐标的Y值
-	 * @return 可以通过 true	不能通过 false
+	 * @return 可以通过 true 不能通过 false
 	 */
 	public abstract boolean isPassable(int x, int y, int heading);
 
@@ -158,7 +154,7 @@ public abstract class L1Map {
 	 * @param pt
 	 *            坐标 (Point)，其中包含的坐标
 	 * @param isPassable
-	 *            可以通过 true	不能通过 false
+	 *            可以通过 true 不能通过 false
 	 */
 	public abstract void setPassable(Point pt, boolean isPassable);
 
@@ -170,7 +166,7 @@ public abstract class L1Map {
 	 * @param y
 	 *            坐标的Y值
 	 * @param isPassable
-	 *            可以通过 true	不能通过 false
+	 *            可以通过 true 不能通过 false
 	 */
 	public abstract void setPassable(int x, int y, boolean isPassable);
 
@@ -364,9 +360,9 @@ public abstract class L1Map {
 	 *            坐标的Y值
 	 * @return 如果可钓鱼、true
 	 */
-    public abstract boolean isFishingZone(int x, int y);
+	public abstract boolean isFishingZone(int x, int y);
 
-    /**
+	/**
 	 * 传回指定坐标是否有一个门。
 	 * 
 	 * @param x
@@ -375,7 +371,7 @@ public abstract class L1Map {
 	 *            坐标的Y值
 	 * @return 如果有门true
 	 */
-    public abstract boolean isExistDoor(int x, int y);
+	public abstract boolean isExistDoor(int x, int y);
 
 	public static L1Map newNull() {
 		return _nullMap;

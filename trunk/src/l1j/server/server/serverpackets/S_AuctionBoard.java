@@ -118,8 +118,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -129,12 +128,12 @@ public class S_AuctionBoard extends ServerBasePacket {
 		writeD(board.getId());
 		writeH(count); // 记录数
 		for (int i = 0; i < count; ++i) {
-			writeD(id[i]);		// 盟屋编号
-			writeS(name[i]);	// 盟屋名称
-			writeH(area[i]);	// 盟屋面积
-			writeC(month[i]);	// 截止月
-			writeC(day[i]);		// 截止日
-			writeD(price[i]);	// 售屋价格
+			writeD(id[i]); // 盟屋编号
+			writeS(name[i]); // 盟屋名称
+			writeH(area[i]); // 盟屋面积
+			writeC(month[i]); // 截止月
+			writeC(day[i]); // 截止日
+			writeD(price[i]); // 售屋价格
 		}
 	}
 

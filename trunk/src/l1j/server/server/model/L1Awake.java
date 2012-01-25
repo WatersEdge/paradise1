@@ -130,9 +130,11 @@ public class L1Awake {
 		pc.setTempCharGfx(polyId);
 		pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
 		if (pc.isGmInvis()) { // GM隐身
-		} else if (pc.isInvisble()) { // 一般隐身
+		}
+		else if (pc.isInvisble()) { // 一般隐身
 			pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()), true);
-		} else {
+		}
+		else {
 			pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
 		}
 		pc.getInventory().takeoffEquip(polyId); // 是否将装备的武器强制解除。

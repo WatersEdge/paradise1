@@ -71,7 +71,8 @@ public class BuddyTable {
 					}
 
 					_buddys.put(buddy.getCharId(), buddy);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				} finally {
 					SQLUtil.close(buddysRS);
@@ -79,7 +80,8 @@ public class BuddyTable {
 				}
 			}
 			_log.config("加载 " + _buddys.size() + " 角色的好友列表");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(charIdRS);
@@ -121,7 +123,8 @@ public class BuddyTable {
 			pstm.setInt(2, objId);
 			pstm.setString(3, name);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -151,7 +154,8 @@ public class BuddyTable {
 			pstm.execute();
 
 			buddy.remove(buddyName);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

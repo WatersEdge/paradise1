@@ -165,7 +165,7 @@ public class L1PcInstance extends L1Character {
 	public static final int CLASSID_DARK_ELF_MALE = 2786;
 	/** 女黑暗精灵 */
 	public static final int CLASSID_DARK_ELF_FEMALE = 2796;
-	/** 男龙骑士*/
+	/** 男龙骑士 */
 	public static final int CLASSID_DRAGON_KNIGHT_MALE = 6658;
 	/** 女龙骑士 */
 	public static final int CLASSID_DRAGON_KNIGHT_FEMALE = 6661;
@@ -184,10 +184,12 @@ public class L1PcInstance extends L1Character {
 	private short _hpr = 0;
 	/** 真正的回血 */
 	private short _trueHpr = 0;
+
 	/** 取得回血 */
 	public short getHpr() {
-		return (short) _hpr ;
+		return (short) _hpr;
 	}
+
 	/** 增加回血 */
 	public void addHpr(int i) {
 		_trueHpr += i;
@@ -198,10 +200,12 @@ public class L1PcInstance extends L1Character {
 	private short _mpr = 0;
 	/** 真正的回魔 */
 	private short _trueMpr = 0;
+
 	/** 取得回魔 */
 	public short getMpr() {
 		return (short) _mpr;
 	}
+
 	/** 增加回魔 */
 	public void addMpr(int i) {
 		_trueMpr += i;
@@ -210,6 +214,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 原始 CON HPR */
 	public short _originalHpr = 0; // ● 原始CON HPR
+
 	/** 取得原始 CON HPR */
 	public short getOriginalHpr() {
 		return _originalHpr;
@@ -217,6 +222,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 原始 WIS MPR */
 	public short _originalMpr = 0; // ● 原始WIS MPR
+
 	/** 取得原始 WIS MPR */
 	public short getOriginalMpr() {
 		return _originalMpr;
@@ -271,8 +277,7 @@ public class L1PcInstance extends L1Character {
 		}
 		if (!_ItemMakeActiveByDoll && isExistItemMakeDoll) {
 			_itemMakeByDoll = new ItemMakeByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_itemMakeByDoll, INTERVAL_BY_DOLL,
-					INTERVAL_BY_DOLL);
+			_regenTimer.scheduleAtFixedRate(_itemMakeByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
 			_ItemMakeActiveByDoll = true;
 		}
 	}
@@ -295,8 +300,7 @@ public class L1PcInstance extends L1Character {
 		}
 		if (!_hpRegenActiveByDoll && isExistHprDoll) {
 			_hpRegenByDoll = new HpRegenerationByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_hpRegenByDoll, INTERVAL_BY_DOLL,
-					INTERVAL_BY_DOLL);
+			_regenTimer.scheduleAtFixedRate(_hpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
 			_hpRegenActiveByDoll = true;
 		}
 	}
@@ -433,7 +437,8 @@ public class L1PcInstance extends L1Character {
 
 		if (isPrivateShop()) { // 开个人商店中
 			perceivedFrom.sendPackets(new S_DoActionShop(getId(), ActionCodes.ACTION_Shop, getShopChat()));
-		} else if (isFishing()) { // 钓鱼中
+		}
+		else if (isFishing()) { // 钓鱼中
 			perceivedFrom.sendPackets(new S_Fishing(getId(), ActionCodes.ACTION_Fishing, getFishX(), getFishY()));
 		}
 
@@ -492,7 +497,8 @@ public class L1PcInstance extends L1Character {
 					sendPackets(new S_HPMeter((L1Character) visible));
 				}
 			}
-		} else { // 旅馆内判断
+		}
+		else { // 旅馆内判断
 			for (L1Object visible : L1World.getInstance().getVisiblePlayer(this)) {
 				if (!knownsObject(visible)) {
 					visible.onPerceive(this);
@@ -580,20 +586,25 @@ public class L1PcInstance extends L1Character {
 
 	/** 宠物竞速圈数 */
 	private int _lap = 1;
+
 	/** 设定宠物竞速圈数 */
 	public void setLap(int i) {
 		_lap = i;
 	}
+
 	/** 取得宠物竞速圈数 */
 	public int getLap() {
 		return _lap;
 	}
+
 	/** 检查宠物竞速圈数 */
 	private int _lapCheck = 0;
+
 	/** 设定检查宠物竞速圈数 */
 	public void setLapCheck(int i) {
 		_lapCheck = i;
 	}
+
 	/** 取得检查宠物竞速圈数 */
 	public int getLapCheck() {
 		return _lapCheck;
@@ -662,22 +673,27 @@ public class L1PcInstance extends L1Character {
 	public L1PcInventory getInventory() {
 		return _inventory;
 	}
+
 	/**  */
 	public L1DwarfInventory getDwarfInventory() {
 		return _dwarf;
 	}
+
 	/**  */
 	public L1DwarfForElfInventory getDwarfForElfInventory() {
 		return _dwarfForElf;
 	}
+
 	/** 取得交易窗口的库存 */
 	public L1Inventory getTradeWindowInventory() {
 		return _tradewindow;
 	}
+
 	/** GM隐身中 */
 	public boolean isGmInvis() {
 		return _gmInvis;
 	}
+
 	/** 设定GM隐身 */
 	public void setGmInvis(boolean flag) {
 		_gmInvis = flag;
@@ -687,19 +703,21 @@ public class L1PcInstance extends L1Character {
 	public int getCurrentWeapon() {
 		return _currentWeapon;
 	}
+
 	/** 设定当前武器 */
 	public void setCurrentWeapon(int i) {
 		_currentWeapon = i;
 	}
 
 	/**
-	 * 取得类型 <b>
-	 * 0:王族 1:骑士 2:精灵 3:法师 4:黑妖 5:龙骑 6:幻术
+	 * 取得类型 <b> 0:王族 1:骑士 2:精灵 3:法师 4:黑妖 5:龙骑 6:幻术
+	 * 
 	 * @return
 	 */
 	public int getType() {
 		return _type;
 	}
+
 	/** 设定类型 */
 	public void setType(int i) {
 		_type = i;
@@ -709,6 +727,7 @@ public class L1PcInstance extends L1Character {
 	public short getAccessLevel() {
 		return _accessLevel;
 	}
+
 	/** 设定账号等级 */
 	public void setAccessLevel(short i) {
 		_accessLevel = i;
@@ -718,11 +737,13 @@ public class L1PcInstance extends L1Character {
 	public int getClassId() {
 		return _classId;
 	}
+
 	/** 设定角色的ClassId */
 	public void setClassId(int i) {
 		_classId = i;
 		_classFeature = L1ClassFeature.newClassFeature(i);
 	}
+
 	/**  */
 	private L1ClassFeature _classFeature = null;
 
@@ -742,10 +763,12 @@ public class L1PcInstance extends L1Character {
 
 	/** PK次数 */
 	private int _PKcount;
+
 	/** 取得PK次数 */
 	public int get_PKcount() {
 		return _PKcount;
 	}
+
 	/** 设定PK次数 */
 	public void set_PKcount(int i) {
 		_PKcount = i;
@@ -753,10 +776,12 @@ public class L1PcInstance extends L1Character {
 
 	/** PK次数 (精灵用) */
 	private int _PkCountForElf;
+
 	/** 取得PK次数 (精灵用) */
 	public int getPkCountForElf() {
 		return _PkCountForElf;
 	}
+
 	/** 设定PK次数 (精灵用) */
 	public void setPkCountForElf(int i) {
 		_PkCountForElf = i;
@@ -764,10 +789,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 血盟 ID */
 	private int _clanid;
+
 	/** 取得血盟 ID */
 	public int getClanid() {
 		return _clanid;
 	}
+
 	/** 设定血盟 ID */
 	public void setClanid(int i) {
 		_clanid = i;
@@ -775,10 +802,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 血盟名称 */
 	private String clanname;
+
 	/** 取得血盟名称 */
 	public String getClanname() {
 		return clanname;
 	}
+
 	/** 设定血盟名称 */
 	public void setClanname(String s) {
 		clanname = s;
@@ -791,10 +820,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 血盟内的阶级(联盟君主、守护骑士、一般、见习) */
 	private int _clanRank;
+
 	/** 取得血盟内的阶级(联盟君主、守护骑士、一般、见习) */
 	public int getClanRank() {
 		return _clanRank;
 	}
+
 	/** 设定血盟内的阶级(联盟君主、守护骑士、一般、见习) */
 	public void setClanRank(int i) {
 		_clanRank = i;
@@ -802,13 +833,15 @@ public class L1PcInstance extends L1Character {
 
 	/** 角色生日 */
 	private Timestamp _birthday;
+
 	/** 取得角色生日 */
-	public Timestamp getBirthday() {	
+	public Timestamp getBirthday() {
 		return _birthday;
 	}
+
 	/** 取得简单的角色生日 */
-	public int getSimpleBirthday(){
-		if (_birthday !=null){
+	public int getSimpleBirthday() {
+		if (_birthday != null) {
 			SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
 			int BornTime = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
 			return BornTime;
@@ -816,22 +849,26 @@ public class L1PcInstance extends L1Character {
 		else {
 			return 0;
 		}
-	}	
+	}
+
 	/** 设定角色生日 */
 	public void setBirthday(Timestamp time) {
 		_birthday = time;
 	}
+
 	/**  */
-	public void setBirthday(){	
-		_birthday = new Timestamp(System.currentTimeMillis());	
+	public void setBirthday() {
+		_birthday = new Timestamp(System.currentTimeMillis());
 	}
 
 	/** 性别 */
 	private byte _sex; // ● 性别
+
 	/** 取得性别 */
 	public byte get_sex() {
 		return _sex;
 	}
+
 	/** 设定性别 */
 	public void set_sex(int i) {
 		_sex = (byte) i;
@@ -841,6 +878,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isGm() {
 		return _gm;
 	}
+
 	/** 设定GM */
 	public void setGm(boolean flag) {
 		_gm = flag;
@@ -850,6 +888,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isMonitor() {
 		return _monitor;
 	}
+
 	/** 设定管理者 */
 	public void setMonitor(boolean flag) {
 		_monitor = flag;
@@ -911,6 +950,7 @@ public class L1PcInstance extends L1Character {
 	public ClientThread getNetConnection() {
 		return _netConnection;
 	}
+
 	/** 设定网络连接状态 */
 	public void setNetConnection(ClientThread clientthread) {
 		_netConnection = clientthread;
@@ -920,22 +960,27 @@ public class L1PcInstance extends L1Character {
 	public boolean isInParty() {
 		return getParty() != null;
 	}
+
 	/** 取得组队 */
 	public L1Party getParty() {
 		return _party;
 	}
+
 	/** 设定组队 */
 	public void setParty(L1Party p) {
 		_party = p;
 	}
+
 	/** 在聊天组队 */
 	public boolean isInChatParty() {
 		return getChatParty() != null;
 	}
+
 	/** 取得聊天组队 */
 	public L1ChatParty getChatParty() {
 		return _chatParty;
 	}
+
 	/** 设定聊天组队 */
 	public void setChatParty(L1ChatParty cp) {
 		_chatParty = cp;
@@ -945,6 +990,7 @@ public class L1PcInstance extends L1Character {
 	public int getPartyID() {
 		return _partyID;
 	}
+
 	/** 设定组队ID */
 	public void setPartyID(int partyID) {
 		_partyID = partyID;
@@ -954,6 +1000,7 @@ public class L1PcInstance extends L1Character {
 	public int getTradeID() {
 		return _tradeID;
 	}
+
 	/** 设定交易ID */
 	public void setTradeID(int tradeID) {
 		_tradeID = tradeID;
@@ -963,6 +1010,7 @@ public class L1PcInstance extends L1Character {
 	public void setTradeOk(boolean tradeOk) {
 		_tradeOk = tradeOk;
 	}
+
 	/** 取得交易OK */
 	public boolean getTradeOk() {
 		return _tradeOk;
@@ -972,6 +1020,7 @@ public class L1PcInstance extends L1Character {
 	public int getTempID() {
 		return _tempID;
 	}
+
 	/** 设定临时ID */
 	public void setTempID(int tempID) {
 		_tempID = tempID;
@@ -981,6 +1030,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isTeleport() {
 		return _isTeleport;
 	}
+
 	/** 设定瞬移 */
 	public void setTeleport(boolean flag) {
 		_isTeleport = flag;
@@ -990,6 +1040,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isDrink() {
 		return _isDrink;
 	}
+
 	/** 设定醉酒状态 */
 	public void setDrink(boolean flag) {
 		_isDrink = flag;
@@ -999,6 +1050,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isGres() {
 		return _isGres;
 	}
+
 	/**  */
 	public void setGres(boolean flag) {
 		_isGres = flag;
@@ -1008,6 +1060,7 @@ public class L1PcInstance extends L1Character {
 	public boolean isPinkName() {
 		return _isPinkName;
 	}
+
 	/** 设定粉名 */
 	public void setPinkName(boolean flag) {
 		_isPinkName = flag;
@@ -1015,6 +1068,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 贩卖清单 */
 	private List<L1PrivateShopSellList> _sellList = Lists.newList();
+
 	/** 取得贩卖清单 */
 	public List<L1PrivateShopSellList> getSellList() {
 		return _sellList;
@@ -1022,6 +1076,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 购买清单 */
 	private List<L1PrivateShopBuyList> _buyList = Lists.newList();
+
 	/** 取得购买清单 */
 	public List<L1PrivateShopBuyList> getBuyList() {
 		return _buyList;
@@ -1029,10 +1084,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 商店聊天 */
 	private byte[] _shopChat;
-	/** 设定商店聊天  */
+
+	/** 设定商店聊天 */
 	public void setShopChat(byte[] chat) {
 		_shopChat = chat;
 	}
+
 	/** 取得商店聊天 */
 	public byte[] getShopChat() {
 		return _shopChat;
@@ -1048,6 +1105,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定商店模式
+	 * 
 	 * @param flag
 	 */
 	public void setPrivateShop(boolean flag) {
@@ -1056,14 +1114,19 @@ public class L1PcInstance extends L1Character {
 
 	/** 正在进行个人商店交易 */
 	private boolean _isTradingInPrivateShop = false;
+
 	/**
 	 * 正在进行个人商店交易
+	 * 
 	 * @return
 	 */
 	public boolean isTradingInPrivateShop() {
 		return _isTradingInPrivateShop;
 	}
-	/** 设定正在进行个人商店交易
+
+	/**
+	 * 设定正在进行个人商店交易
+	 * 
 	 * @param flag
 	 */
 	public void setTradingInPrivateShop(boolean flag) {
@@ -1082,6 +1145,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定出售物品种类数量
+	 * 
 	 * @param i
 	 */
 	public void setPartnersPrivateShopItemCount(int i) {
@@ -1093,14 +1157,18 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定封包加密管理
+	 * 
 	 * @param out
 	 */
 	public void setPacketOutput(PacketOutput out) {
 		_out = out;
 	}
 
-	/** 发送单体封包
-	 * @param serverbasepacket 封包
+	/**
+	 * 发送单体封包
+	 * 
+	 * @param serverbasepacket
+	 *            封包
 	 */
 	public void sendPackets(ServerBasePacket serverbasepacket) {
 		if (_out == null) {
@@ -1110,12 +1178,15 @@ public class L1PcInstance extends L1Character {
 		try {
 			_out.sendPacket(serverbasepacket);
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+		}
 	}
 
 	/**
 	 * 对该物件攻击的调用
-	 * @param attacker 攻击方
+	 * 
+	 * @param attacker
+	 *            攻击方
 	 */
 	@Override
 	public void onAction(L1PcInstance attacker) {
@@ -1124,8 +1195,11 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 对该物件攻击的调用
-	 * @param attacker 攻击方
-	 * @param skillId 技能ID
+	 * 
+	 * @param attacker
+	 *            攻击方
+	 * @param skillId
+	 *            技能ID
 	 */
 	@Override
 	public void onAction(L1PcInstance attacker, int skillId) {
@@ -1193,6 +1267,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 检查是否可以攻击
+	 * 
 	 * @param pc
 	 * @param target
 	 * @return
@@ -1241,6 +1316,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 在战争旗帜坐标內
+	 * 
 	 * @param pc
 	 * @param target
 	 * @return
@@ -1259,6 +1335,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定 宠物/召唤兽 攻击目标
+	 * 
 	 * @param target
 	 */
 	public void setPetTarget(L1Character target) {
@@ -1302,10 +1379,15 @@ public class L1PcInstance extends L1Character {
 		broadcastPacket(new S_OtherCharPacks(this));
 	}
 
-	/** 魔法具有属性傷害使用 (ここで魔法伤害轻减处理) attr:0.无属性魔法,1.地魔法,2.火魔法,3.水魔法,4.风魔法
-	 * @param attacker 攻击者
-	 * @param damage 伤害
-	 * @param attr 属性
+	/**
+	 * 魔法具有属性傷害使用 (ここで魔法伤害轻减处理) attr:0.无属性魔法,1.地魔法,2.火魔法,3.水魔法,4.风魔法
+	 * 
+	 * @param attacker
+	 *            攻击者
+	 * @param damage
+	 *            伤害
+	 * @param attr
+	 *            属性
 	 * */
 	public void receiveDamage(L1Character attacker, int damage, int attr) {
 		int player_mr = getMr();
@@ -1318,6 +1400,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 处理受到攻击MP减少
+	 * 
 	 * @param attacker
 	 * @param mpDamage
 	 */
@@ -1353,6 +1436,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 处理受到攻击HP减少
+	 * 
 	 * @param attacker
 	 * @param Damage
 	 * @param isMagicDamage
@@ -1370,7 +1454,7 @@ public class L1PcInstance extends L1Character {
 				double interval = (20D - (nowTime - _oldTime) / 100D) % 20D;
 
 				if (damage > 0) {
-					if (interval > 0) 
+					if (interval > 0)
 						damage *= (1D - interval / 30D);
 
 					if (damage < 1) {
@@ -1390,7 +1474,7 @@ public class L1PcInstance extends L1Character {
 					Iterator<L1Object> itr = L1World.getInstance().getVisibleObjects(attacker).iterator();
 					while (itr.hasNext()) {
 						L1Object object = itr.next();
-					/*for (L1Object object : L1World.getInstance().getVisibleObjects(attacker)) {*/
+						/* for (L1Object object : L1World.getInstance().getVisibleObjects(attacker)) { */
 						if (object instanceof L1GuardInstance) {
 							L1GuardInstance guard = (L1GuardInstance) object;
 							guard.setTarget(((L1PcInstance) attacker));
@@ -1429,7 +1513,8 @@ public class L1PcInstance extends L1Character {
 				if ((getZoneType() == 1) || (pet.getZoneType() == 1) || (checkNonPvP(this, pet))) {
 					damage = 0;
 				}
-			} else if (attacker instanceof L1SummonInstance) {
+			}
+			else if (attacker instanceof L1SummonInstance) {
 				L1SummonInstance summon = (L1SummonInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
 				if ((getZoneType() == 1) || (summon.getZoneType() == 1) || (checkNonPvP(this, summon))) {
@@ -1460,7 +1545,9 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 死亡处理
-	 * @param lastAttacker 攻击致死的攻击者
+	 * 
+	 * @param lastAttacker
+	 *            攻击致死的攻击者
 	 */
 	public void death(L1Character lastAttacker) {
 		synchronized (this) {
@@ -1495,7 +1582,8 @@ public class L1PcInstance extends L1Character {
 				try {
 					Thread.sleep(300);
 				}
-				catch (Exception e) {}
+				catch (Exception e) {
+				}
 			}
 
 			stopHpRegeneration();
@@ -1753,16 +1841,17 @@ public class L1PcInstance extends L1Character {
 			L1ItemInstance item = getInventory().CaoPenalty();
 
 			if (item != null) {
-				getInventory().tradeItem(item, item.isStackable() ? item.getCount() : 1,
-						L1World.getInstance().getInventory(getX(), getY(), getMapId()));
+				getInventory().tradeItem(item, item.isStackable() ? item.getCount() : 1, L1World.getInstance().getInventory(getX(), getY(), getMapId()));
 				sendPackets(new S_ServerMessage(638, item.getLogName())); // 您损失了 %0。
 			}
-			else {}
+			else {
+			}
 		}
 	}
 
 	/**
 	 * 是否在參加攻城战中
+	 * 
 	 * @return true:是 false:不是
 	 */
 	public boolean castleWarResult() {
@@ -1795,6 +1884,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 是否在参加血盟战争中
+	 * 
 	 * @param lastAttacker
 	 * @return true:是 false:不是
 	 */
@@ -1920,6 +2010,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 原始DEX ER补正 */
 	private int _originalEr = 0; // ● 原始DEX ER补正
+
 	/** 取得原始DEX ER补正 */
 	public int getOriginalEr() {
 		return _originalEr;
@@ -1975,6 +2066,7 @@ public class L1PcInstance extends L1Character {
 		}
 		return null;
 	}
+
 	/** 取得书签ID */
 	public L1BookMark getBookMark(int id) {
 		for (int i = 0; i < _bookmarks.size(); i++) {
@@ -1986,14 +2078,17 @@ public class L1PcInstance extends L1Character {
 		}
 		return null;
 	}
+
 	/** 取得书签大小 */
 	public int getBookMarkSize() {
 		return _bookmarks.size();
 	}
+
 	/** 增加书签 */
 	public void addBookMark(L1BookMark book) {
 		_bookmarks.add(book);
 	}
+
 	/** 删除书签 */
 	public void removeBookMark(L1BookMark book) {
 		_bookmarks.remove(book);
@@ -2001,6 +2096,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 取得使用的武器
+	 * 
 	 * @return
 	 */
 	public L1ItemInstance getWeapon() {
@@ -2009,6 +2105,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定使用的武器
+	 * 
 	 * @param weapon
 	 */
 	public void setWeapon(L1ItemInstance weapon) {
@@ -2022,59 +2119,65 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 是王族
+	 * 
 	 * @return
 	 */
 	public boolean isCrown() {
-		return ((getClassId() == CLASSID_PRINCE) ||
-				(getClassId() == CLASSID_PRINCESS));
+		return ((getClassId() == CLASSID_PRINCE) || (getClassId() == CLASSID_PRINCESS));
 	}
+
 	/**
 	 * 是骑士
+	 * 
 	 * @return
 	 */
 	public boolean isKnight() {
-		return ((getClassId() == CLASSID_KNIGHT_MALE) ||
-				(getClassId() == CLASSID_KNIGHT_FEMALE));
+		return ((getClassId() == CLASSID_KNIGHT_MALE) || (getClassId() == CLASSID_KNIGHT_FEMALE));
 	}
+
 	/**
 	 * 是精灵
+	 * 
 	 * @return
 	 */
 	public boolean isElf() {
-		return ((getClassId() == CLASSID_ELF_MALE) ||
-				(getClassId() == CLASSID_ELF_FEMALE));
+		return ((getClassId() == CLASSID_ELF_MALE) || (getClassId() == CLASSID_ELF_FEMALE));
 	}
+
 	/**
 	 * 是法师
+	 * 
 	 * @return
 	 */
 	public boolean isWizard() {
-		return ((getClassId() == CLASSID_WIZARD_MALE) ||
-				(getClassId() == CLASSID_WIZARD_FEMALE));
+		return ((getClassId() == CLASSID_WIZARD_MALE) || (getClassId() == CLASSID_WIZARD_FEMALE));
 	}
+
 	/**
 	 * 是黑暗精灵
+	 * 
 	 * @return
 	 */
 	public boolean isDarkelf() {
-		return ((getClassId() == CLASSID_DARK_ELF_MALE) ||
-				(getClassId() == CLASSID_DARK_ELF_FEMALE));
+		return ((getClassId() == CLASSID_DARK_ELF_MALE) || (getClassId() == CLASSID_DARK_ELF_FEMALE));
 	}
+
 	/**
 	 * 是龙骑士
+	 * 
 	 * @return
 	 */
 	public boolean isDragonKnight() {
-		return ((getClassId() == CLASSID_DRAGON_KNIGHT_MALE)
-				|| (getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
+		return ((getClassId() == CLASSID_DRAGON_KNIGHT_MALE) || (getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
 	}
+
 	/**
 	 * 是幻术师
+	 * 
 	 * @return
 	 */
 	public boolean isIllusionist() {
-		return ((getClassId() == CLASSID_ILLUSIONIST_MALE)
-				|| (getClassId() == CLASSID_ILLUSIONIST_FEMALE));
+		return ((getClassId() == CLASSID_ILLUSIONIST_MALE) || (getClassId() == CLASSID_ILLUSIONIST_FEMALE));
 	}
 
 	private static Logger _log = Logger.getLogger(L1PcInstance.class.getName());
@@ -2165,20 +2268,25 @@ public class L1PcInstance extends L1Character {
 
 	/** 账号名称 */
 	private String _accountName;
+
 	/** 取得账号名称 */
 	public String getAccountName() {
 		return _accountName;
 	}
+
 	/** 设定账号名称 */
 	public void setAccountName(String s) {
 		_accountName = s;
 	}
+
 	/** 基本MaxHp */
 	private short _baseMaxHp = 0; // ● ＭＡＸＨＰ基本（1～32767）
+
 	/** 取得基本MaxHp */
 	public short getBaseMaxHp() {
 		return _baseMaxHp;
 	}
+
 	/** 增加基本MaxHp */
 	public void addBaseMaxHp(short i) {
 		i += _baseMaxHp;
@@ -2194,10 +2302,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 基本MaxMp */
 	private short _baseMaxMp = 0; // ● ＭＡＸＭＰ基本（0～32767）
+
 	/** 取得基本MaxMp */
 	public short getBaseMaxMp() {
 		return _baseMaxMp;
 	}
+
 	/** 增加基本MaxMp */
 	public void addBaseMaxMp(short i) {
 		i += _baseMaxMp;
@@ -2213,6 +2323,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 基本Ac */
 	private int _baseAc = 0; // ● ＡＣ基本（-128～127）
+
 	/** 取得基本Ac */
 	public int getBaseAc() {
 		return _baseAc;
@@ -2220,17 +2331,21 @@ public class L1PcInstance extends L1Character {
 
 	/** 原始DEX ＡＣ补正 */
 	private int _originalAc = 0; // ● 原始DEX ＡＣ补正
+
 	/** 取得原始DEX ＡＣ补正 */
 	public int getOriginalAc() {
 
 		return _originalAc;
 	}
+
 	/** 基本的力量值 */
 	private short _baseStr = 0; // ● 基本ＳＴＲ（1～255）
+
 	/** 取得基本的力量值 */
 	public short getBaseStr() {
 		return _baseStr;
 	}
+
 	/** 增加基本的力量值 */
 	public void addBaseStr(short s) {
 		s += _baseStr;
@@ -2243,12 +2358,15 @@ public class L1PcInstance extends L1Character {
 		addStr((short) (s - _baseStr));
 		_baseStr = s;
 	}
+
 	/** 基本的体质值 */
 	private short _baseCon = 0; // ● 基本ＣＯＮ（1～255）
+
 	/** 取得基本的体质值 */
 	public short getBaseCon() {
 		return _baseCon;
 	}
+
 	/** 增加基本的体质值 */
 	public void addBaseCon(short i) {
 		i += _baseCon;
@@ -2261,12 +2379,15 @@ public class L1PcInstance extends L1Character {
 		addCon((short) (i - _baseCon));
 		_baseCon = i;
 	}
+
 	/** 基本的敏捷值 */
 	private short _baseDex = 0; // ● 基本ＤＥＸ（1～255）
+
 	/** 取得基本的敏捷值 */
 	public short getBaseDex() {
 		return _baseDex;
 	}
+
 	/** 增加基本的敏捷值 */
 	public void addBaseDex(short i) {
 		i += _baseDex;
@@ -2279,12 +2400,15 @@ public class L1PcInstance extends L1Character {
 		addDex((short) (i - _baseDex));
 		_baseDex = i;
 	}
+
 	/** 基本的魅力值 */
 	private short _baseCha = 0; // ● 基本ＣＨＡ（1～255）
+
 	/** 取得基本的魅力值 */
 	public short getBaseCha() {
 		return _baseCha;
 	}
+
 	/** 增加基本的魅力值 */
 	public void addBaseCha(short i) {
 		i += _baseCha;
@@ -2297,12 +2421,15 @@ public class L1PcInstance extends L1Character {
 		addCha((short) (i - _baseCha));
 		_baseCha = i;
 	}
+
 	/** 基本的智力值 */
 	private short _baseInt = 0; // ● 基本ＩＮＴ（1～255）
+
 	/** 取得基本的智力值 */
 	public short getBaseInt() {
 		return _baseInt;
 	}
+
 	/** 增加基本的智力值 */
 	public void addBaseInt(short i) {
 		i += _baseInt;
@@ -2315,12 +2442,15 @@ public class L1PcInstance extends L1Character {
 		addInt((short) (i - _baseInt));
 		_baseInt = i;
 	}
+
 	/** 基本的精神值 */
 	private short _baseWis = 0; // ● 基本ＷＩＳ（1～255）
+
 	/** 取得基本的精神值 */
 	public short getBaseWis() {
 		return _baseWis;
 	}
+
 	/** 增加基本的精神值 */
 	public void addBaseWis(short i) {
 		i += _baseWis;
@@ -2333,198 +2463,260 @@ public class L1PcInstance extends L1Character {
 		addWis((short) (i - _baseWis));
 		_baseWis = i;
 	}
+
 	/** 原始的力量值 */
 	private int _originalStr = 0; // ● 原始 STR
+
 	/** 取得原始的力量值 */
 	public int getOriginalStr() {
 		return _originalStr;
 	}
+
 	/** 设定原始的力量值 */
 	public void setOriginalStr(int i) {
 		_originalStr = i;
 	}
+
 	/** 原始的体质值 */
 	private int _originalCon = 0; // ● 原始 CON
+
 	/** 取得原始的体质值 */
 	public int getOriginalCon() {
 		return _originalCon;
 	}
+
 	/** 设定原始的体质值 */
 	public void setOriginalCon(int i) {
 		_originalCon = i;
 	}
+
 	/** 原始的敏捷值 */
 	private int _originalDex = 0; // ● 原始 DEX
+
 	/** 取得原始的敏捷值 */
 	public int getOriginalDex() {
 		return _originalDex;
 	}
+
 	/** 设定原始的敏捷值 */
 	public void setOriginalDex(int i) {
 		_originalDex = i;
 	}
+
 	/** 原始的魅力值 */
 	private int _originalCha = 0; // ● 原始 CHA
+
 	/** 取得原始的魅力值 */
 	public int getOriginalCha() {
 		return _originalCha;
 	}
+
 	/** 设定原始的魅力值 */
 	public void setOriginalCha(int i) {
 		_originalCha = i;
 	}
+
 	/** 原始的智力值 */
 	private int _originalInt = 0; // ● 原始 INT
+
 	/** 取得原始的智力值 */
 	public int getOriginalInt() {
 		return _originalInt;
 	}
+
 	/** 设定原始的智力值 */
 	public void setOriginalInt(int i) {
 		_originalInt = i;
 	}
+
 	/** 原始的精神值 */
 	private int _originalWis = 0; // ● 原始 WIS
+
 	/** 取得原始的精神值 */
 	public int getOriginalWis() {
 		return _originalWis;
 	}
+
 	/** 设定原始的精神值 */
 	public void setOriginalWis(int i) {
 		_originalWis = i;
 	}
+
 	/** 原始STR 伤害补正 */
 	private int _originalDmgup = 0; // ● 原始STR 伤害补正
+
 	/** 取得原始STR 伤害补正 */
 	public int getOriginalDmgup() {
 		return _originalDmgup;
 	}
+
 	/** 原始DEX 弓伤害补正 */
 	private int _originalBowDmgup = 0; // ● 原始DEX 弓伤害补正
+
 	/** 取得原始DEX 弓伤害补正 */
 	public int getOriginalBowDmgup() {
 		return _originalBowDmgup;
 	}
+
 	/** 原始STR 命中补正 */
 	private int _originalHitup = 0; // ● 原始STR 命中补正
+
 	/** 取得原始STR 命中补正 */
 	public int getOriginalHitup() {
 		return _originalHitup;
 	}
+
 	/** 原始DEX 命中补正 */
 	private int _originalBowHitup = 0; // ● 原始DEX 命中补正
+
 	/** 取得原始DEX 命中补正 */
 	public int getOriginalBowHitup() {
 		return _originalBowHitup;
 	}
+
 	/** 原始WIS 魔法防御 */
 	private int _originalMr = 0; // ● 原始WIS 魔法防御
+
 	/** 取得原始WIS 魔法防御 */
 	public int getOriginalMr() {
 		return _originalMr;
 	}
+
 	/** 原始INT 魔法命中 */
 	private int _originalMagicHit = 0; // ● 原始INT 魔法命中
+
 	/** 取得原始INT 魔法命中 */
 	public int getOriginalMagicHit() {
 		return _originalMagicHit;
 	}
+
 	/**  */
 	private int _originalMagicCritical = 0; // ● 原始INT 魔法クリティカル
+
 	/**  */
 	public int getOriginalMagicCritical() {
 		return _originalMagicCritical;
 	}
+
 	/** 原始INT 消费MP轻减 */
 	private int _originalMagicConsumeReduction = 0; // ● 原始INT 消费MP轻减
+
 	/** 取得原始INT 消费MP轻减 */
 	public int getOriginalMagicConsumeReduction() {
 		return _originalMagicConsumeReduction;
 	}
+
 	/** 原始INT的魔法伤害 */
 	private int _originalMagicDamage = 0;
+
 	/** 取得原始INT的魔法伤害 */
 	public int getOriginalMagicDamage() {
 		return _originalMagicDamage;
 	}
+
 	/** 原始CON HP上升值补正 */
 	private int _originalHpup = 0;
+
 	/** 取得原始CON HP上升值补正 */
 	public int getOriginalHpup() {
 		return _originalHpup;
 	}
+
 	/** 原始WIS MP上升值补正 */
 	private int _originalMpup = 0;
+
 	/** 取得原始WIS MP上升值补正 */
 	public int getOriginalMpup() {
 		return _originalMpup;
 	}
+
 	/** 基本伤害补正 */
 	private int _baseDmgup = 0; // ● 基本伤害补正（-128～127）
+
 	/** 取得基本伤害补正 */
 	public int getBaseDmgup() {
 		return _baseDmgup;
 	}
+
 	/** 弓类基本伤害补正 */
 	private int _baseBowDmgup = 0; // ● 弓类基本伤害补正（-128～127）
+
 	/** 取得弓类基本伤害补正 */
 	public int getBaseBowDmgup() {
 		return _baseBowDmgup;
 	}
+
 	/** 基本命中补正 */
 	private int _baseHitup = 0; // ● 基本命中补正（-128～127）
+
 	/** 取得基本命中补正 */
 	public int getBaseHitup() {
 		return _baseHitup;
 	}
+
 	/** 弓基本命中补正 */
 	private int _baseBowHitup = 0; // ● 弓基本命中补正（-128～127）
+
 	/** 取得弓基本命中补正 */
 	public int getBaseBowHitup() {
 		return _baseBowHitup;
 	}
+
 	/** 基本魔法防御 */
 	private int _baseMr = 0; // ● 基本魔法防御（0～）
+
 	/** 取得基本魔法防御 */
 	public int getBaseMr() {
 		return _baseMr;
 	}
+
 	/** 灵魂升华增加的HP */
 	private int _advenHp; // ● // アドバンスド スピリッツで增加しているＨＰ
+
 	/** 取得灵魂升华增加的HP */
 	public int getAdvenHp() {
 		return _advenHp;
 	}
+
 	/** 设定灵魂升华增加的HP */
 	public void setAdvenHp(int i) {
 		_advenHp = i;
 	}
+
 	/** 灵魂升华增加的MP */
 	private int _advenMp; // ● // アドバンスド スピリッツで增加しているＭＰ
+
 	/** 取得灵魂升华增加的MP */
 	public int getAdvenMp() {
 		return _advenMp;
 	}
+
 	/** 设定灵魂升华增加的MP */
 	public void setAdvenMp(int i) {
 		_advenMp = i;
 	}
+
 	/** 过去最高等级 */
 	private int _highLevel;
+
 	/** 取得过去最高等级 */
 	public int getHighLevel() {
 		return _highLevel;
 	}
+
 	/** 设定过去最高等级 */
 	public void setHighLevel(int i) {
 		_highLevel = i;
 	}
+
 	/** 奖励点分配状况 */
 	private int _bonusStats;
+
 	/** 取得奖励点分配状况 */
 	public int getBonusStats() {
 		return _bonusStats;
 	}
+
 	/** 设定奖励点分配状况 */
 	public void setBonusStats(int i) {
 		_bonusStats = i;
@@ -2532,6 +2724,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 万能药使用状况
+	 * 
 	 * @return
 	 */
 	private int _elixirStats;
@@ -2545,6 +2738,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定万能药使用状况
+	 * 
 	 * @param i
 	 */
 	public void setElixirStats(int i) {
@@ -2553,10 +2747,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 精灵属性 */
 	private int _elfAttr;
+
 	/** 取得精灵属性 */
 	public int getElfAttr() {
 		return _elfAttr;
 	}
+
 	/** 设定精灵属性 */
 	public void setElfAttr(int i) {
 		_elfAttr = i;
@@ -2564,10 +2760,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 恢复EXP */
 	private int _expRes; // ● EXP复旧
+
 	/** 取得恢复EXP */
 	public int getExpRes() {
 		return _expRes;
 	}
+
 	/** 设定恢复EXP */
 	public void setExpRes(int i) {
 		_expRes = i;
@@ -2575,30 +2773,38 @@ public class L1PcInstance extends L1Character {
 
 	/** 结婚伴侣ID */
 	private int _partnerId; // ● 结婚相手
+
 	/** 取得结婚伴侣ID */
 	public int getPartnerId() {
 		return _partnerId;
 	}
+
 	/** 设定结婚伴侣ID */
 	public void setPartnerId(int i) {
 		_partnerId = i;
 	}
+
 	/** 在线状态 */
 	private int _onlineStatus;
+
 	/** 取得在线状态 */
 	public int getOnlineStatus() {
 		return _onlineStatus;
 	}
+
 	/** 设定在线状态 */
 	public void setOnlineStatus(int i) {
 		_onlineStatus = i;
 	}
+
 	/** 所住村镇ID */
 	private int _homeTownId; // ● ホームタウン
+
 	/** 取得所住村镇ID */
 	public int getHomeTownId() {
 		return _homeTownId;
 	}
+
 	/** 设定所住村镇ID */
 	public void setHomeTownId(int i) {
 		_homeTownId = i;
@@ -2606,20 +2812,25 @@ public class L1PcInstance extends L1Character {
 
 	/** 贡献度 */
 	private int _contribution;
+
 	/** 取得贡献度 */
 	public int getContribution() {
 		return _contribution;
 	}
+
 	/** 设定贡献度 */
 	public void setContribution(int i) {
 		_contribution = i;
 	}
+
 	/** 村庄福利金 */
 	private int _pay; // 村庄福利金 此栏位由 HomeTownTimeController 处理 update
+
 	/** 取得村庄福利金 */
 	public int getPay() {
 		return _pay;
 	}
+
 	/** 设定村庄福利金 */
 	public void setPay(int i) {
 		_pay = i;
@@ -2627,10 +2838,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 地狱停留时间 (秒) */
 	private int _hellTime;
+
 	/** 取得地狱停留时间 (秒) */
 	public int getHellTime() {
 		return _hellTime;
 	}
+
 	/** 设定地狱停留时间 (秒) */
 	public void setHellTime(int i) {
 		_hellTime = i;
@@ -2638,10 +2851,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 角色封锁 */
 	private boolean _banned; // ● 冻结
+
 	/** 角色封锁中 */
 	public boolean isBanned() {
 		return _banned;
 	}
+
 	/** 设定角色封锁 */
 	public void setBanned(boolean flag) {
 		_banned = flag;
@@ -2653,7 +2868,9 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 加载指定PC资料
-	 * @param charName PC名称
+	 * 
+	 * @param charName
+	 *            PC名称
 	 * @return
 	 */
 	public static L1PcInstance load(String charName) {
@@ -2725,8 +2942,7 @@ public class L1PcInstance extends L1Character {
 		double originalWeightReduction = 0; // 原始状态的负重减轻
 		originalWeightReduction += 0.04 * (getOriginalStrWeightReduction() + getOriginalConWeightReduction());
 
-		double weightReduction = 1 + weightReductionByArmor
-				+ weightReductionByDoll + originalWeightReduction;
+		double weightReduction = 1 + weightReductionByArmor + weightReductionByDoll + originalWeightReduction;
 
 		maxWeight *= weightReduction;
 
@@ -2741,35 +2957,44 @@ public class L1PcInstance extends L1Character {
 	public boolean isRibrave() {
 		return hasSkillEffect(STATUS_RIBRAVE);
 	}
+
 	/** 三段加速 * 1.15 */
 	public boolean isThirdSpeed() {
 		return hasSkillEffect(STATUS_THIRD_SPEED);
 	}
-	/** 风之枷锁  攻速 / 2 */
+
+	/** 风之枷锁 攻速 / 2 */
 	public boolean isWindShackle() {
 		return hasSkillEffect(WIND_SHACKLE);
 	}
+
 	/** 隐身延迟计时器 */
 	private int invisDelayCounter = 0;
+
 	/** 隐身延迟中 */
 	public boolean isInvisDelay() {
 		return (invisDelayCounter > 0);
 	}
+
 	/** 隐身计时器监视器 */
 	private Object _invisTimerMonitor = new Object();
+
 	/** 增加隐身延迟计时器 */
 	public void addInvisDelayCounter(int counter) {
 		synchronized (_invisTimerMonitor) {
 			invisDelayCounter += counter;
 		}
 	}
+
 	/** 隐身延迟 */
 	private static final long DELAY_INVIS = 3000L;
+
 	/** 开始隐身计时器 */
 	public void beginInvisTimer() {
 		addInvisDelayCounter(1);
 		GeneralThreadPool.getInstance().pcSchedule(new L1PcInvisDelay(getId()), DELAY_INVIS);
 	}
+
 	/** 增加经验值 */
 	public synchronized void addExp(int exp) {
 		_exp += exp;
@@ -2780,6 +3005,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 增加贡献度
+	 * 
 	 * @param contribution
 	 */
 	public synchronized void addContribution(int contribution) {
@@ -2793,6 +3019,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 判断提升等级
+	 * 
 	 * @param gap
 	 */
 	private void levelUp(int gap) {
@@ -2844,12 +3071,7 @@ public class L1PcInstance extends L1Character {
 		}
 		// 奖励点数
 		if ((getLevel() >= 51) && (getLevel() - 50 > getBonusStats())) {
-			if ((getBaseStr()
-					+ getBaseDex()
-					+ getBaseCon()
-					+ getBaseInt()
-					+ getBaseWis()
-					+ getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+			if ((getBaseStr() + getBaseDex() + getBaseCon() + getBaseInt() + getBaseWis() + getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 				sendPackets(new S_bonusstats(getId(), 1));
 			}
 		}
@@ -2863,10 +3085,12 @@ public class L1PcInstance extends L1Character {
 				}
 				L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true);// 银骑士村
 			}
-		} else if (getLevel() >= 52) { // 指定等级
+		}
+		else if (getLevel() >= 52) { // 指定等级
 			if (getMapId() == 777) { // 原生魔族抛弃之地地面(影の神殿)
 				L1Teleport.teleport(this, 34043, 32184, (short) 4, 5, true); // 象牙塔门口前
-			} else if ((getMapId() == 778) || (getMapId() == 779)) { // 原生魔族抛弃之地海底(欲望洞窟)or不死魔族抛弃之地
+			}
+			else if ((getMapId() == 778) || (getMapId() == 779)) { // 原生魔族抛弃之地海底(欲望洞窟)or不死魔族抛弃之地
 				L1Teleport.teleport(this, 32608, 33178, (short) 4, 5, true); // WB
 			}
 		}
@@ -2877,6 +3101,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 等级下降
+	 * 
 	 * @param gap
 	 */
 	private void levelDown(int gap) {
@@ -2913,6 +3138,7 @@ public class L1PcInstance extends L1Character {
 		// 处理新手保护系统(遭遇的守护)状态资料的变动
 		checkNoviceType();
 	}
+
 	/**  */
 	public void beginGameTimeCarrier() {
 		new L1GameTimeCarrier(this).start();
@@ -2920,10 +3146,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 幽灵状态 */
 	private boolean _ghost = false;
+
 	/** 是幽灵状态 */
 	public boolean isGhost() {
 		return _ghost;
 	}
+
 	/** 设定幽灵状态 */
 	private void setGhost(boolean flag) {
 		_ghost = flag;
@@ -2957,6 +3185,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 幽灵状态传送
+	 * 
 	 * @param locx
 	 * @param locy
 	 * @param mapid
@@ -2968,6 +3197,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 幽灵状态传送
+	 * 
 	 * @param locx
 	 * @param locy
 	 * @param mapid
@@ -3072,7 +3302,8 @@ public class L1PcInstance extends L1Character {
 		if (!isGmInvis() && !isGhost() && !isInvisble()) {
 			broadcastPacket(new S_Poison(getId(), effectId));
 		}
-		if (isGmInvis() || isGhost()) {}
+		if (isGmInvis() || isGhost()) {
+		}
 		else if (isInvisble()) {
 			broadcastPacketForFindInvis(new S_Poison(getId(), effectId), true);
 		}
@@ -3104,14 +3335,17 @@ public class L1PcInstance extends L1Character {
 			_karma.add(i);
 		}
 	}
+
 	/** 取得友好度级别 */
 	public int getKarmaLevel() {
 		return _karma.getLevel();
 	}
+
 	/** 取得友好度的百分比 */
 	public int getKarmaPercent() {
 		return _karma.getPercent();
 	}
+
 	/** 最终PK时间 */
 	private Timestamp _lastPk;
 
@@ -3201,34 +3435,44 @@ public class L1PcInstance extends L1Character {
 	public int getMagicLevel() {
 		return getClassFeature().getMagicLevel(getLevel());
 	}
+
 	/**  */
 	private int _weightReduction = 0;
+
 	/**  */
 	public int getWeightReduction() {
 		return _weightReduction;
 	}
+
 	/**  */
 	public void addWeightReduction(int i) {
 		_weightReduction += i;
 	}
+
 	/** 原始STR 重量轻减 */
 	private int _originalStrWeightReduction = 0;
+
 	/** 取得原始STR 重量轻减 */
 	public int getOriginalStrWeightReduction() {
 		return _originalStrWeightReduction;
 	}
+
 	/** 原始CON 重量轻减 */
 	private int _originalConWeightReduction = 0;
+
 	/** 取得原始CON 重量轻减 */
 	public int getOriginalConWeightReduction() {
 		return _originalConWeightReduction;
 	}
+
 	/** 装备加速道具 */
 	private int _hasteItemEquipped = 0;
+
 	/** 取得装备加速道具 */
 	public int getHasteItemEquipped() {
 		return _hasteItemEquipped;
 	}
+
 	/** 增加装备加速道具 */
 	public void addHasteItemEquipped(int i) {
 		_hasteItemEquipped += i;
@@ -3258,10 +3502,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 防具的伤害减免 */
 	private int _damageReductionByArmor = 0;
+
 	/** 取得防具的伤害减免 */
 	public int getDamageReductionByArmor() {
 		return _damageReductionByArmor;
 	}
+
 	/** 增加防具的伤害减免 */
 	public void addDamageReductionByArmor(int i) {
 		_damageReductionByArmor += i;
@@ -3269,10 +3515,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 防具的命中率补正 */
 	private int _hitModifierByArmor = 0;
+
 	/** 取得防具的命中率补正 */
 	public int getHitModifierByArmor() {
 		return _hitModifierByArmor;
 	}
+
 	/** 增加防具的命中率补正 */
 	public void addHitModifierByArmor(int i) {
 		_hitModifierByArmor += i;
@@ -3280,10 +3528,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 防具的伤害补正 */
 	private int _dmgModifierByArmor = 0;
+
 	/** 取得防具的伤害补正 */
 	public int getDmgModifierByArmor() {
 		return _dmgModifierByArmor;
 	}
+
 	/** 增加防具的伤害补正 */
 	public void addDmgModifierByArmor(int i) {
 		_dmgModifierByArmor += i;
@@ -3291,10 +3541,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 防具对弓的命中率补正 */
 	private int _bowHitModifierByArmor = 0;
+
 	/** 取得防具对弓的命中率补正 */
 	public int getBowHitModifierByArmor() {
 		return _bowHitModifierByArmor;
 	}
+
 	/** 增加防具对弓的命中率补正 */
 	public void addBowHitModifierByArmor(int i) {
 		_bowHitModifierByArmor += i;
@@ -3302,70 +3554,90 @@ public class L1PcInstance extends L1Character {
 
 	/** 防具对损坏的弓的补正 */
 	private int _bowDmgModifierByArmor = 0;
+
 	/** 取得防具对损坏的弓的补正 */
 	public int getBowDmgModifierByArmor() {
 		return _bowDmgModifierByArmor;
 	}
+
 	/** 增加防具对损坏的弓的补正 */
 	public void addBowDmgModifierByArmor(int i) {
 		_bowDmgModifierByArmor += i;
 	}
+
 	/** G-RES有效 */
 	private boolean _gresValid;
+
 	/** 设定G-RES有效 */
 	private void setGresValid(boolean valid) {
 		_gresValid = valid;
 	}
+
 	/** 是G-RES有效 */
 	public boolean isGresValid() {
 		return _gresValid;
 	}
+
 	/** 钓鱼时间 */
 	private long _fishingTime = 0;
+
 	/** 取得钓鱼时间 */
 	public long getFishingTime() {
 		return _fishingTime;
 	}
+
 	/** 设定钓鱼时间 */
 	public void setFishingTime(long i) {
 		_fishingTime = i;
 	}
+
 	/** 钓鱼中 */
 	private boolean _isFishing = false;
+
 	/** 钓鱼中 */
 	public boolean isFishing() {
 		return _isFishing;
 	}
+
 	/** 设定钓鱼 */
 	public void setFishing(boolean flag) {
 		_isFishing = flag;
 	}
+
 	/** 准备好钓鱼 */
 	private boolean _isFishingReady = false;
+
 	/** 准备好钓鱼 */
 	public boolean isFishingReady() {
 		return _isFishingReady;
 	}
+
 	/** 设定准备好钓鱼 */
 	public void setFishingReady(boolean flag) {
 		_isFishingReady = flag;
 	}
+
 	/** 烹饪ID */
 	private int _cookingId = 0;
+
 	/** 取得烹饪ID */
 	public int getCookingId() {
 		return _cookingId;
 	}
+
 	/** 设定烹饪ID */
 	public void setCookingId(int i) {
 		_cookingId = i;
 	}
+
 	/** 点心ID */
 	private int _dessertId = 0;
+
 	/** 取得点心ID */
 	public int getDessertId() {
 		return _dessertId;
 	}
+
 	/** 设定点心ID */
 	public void setDessertId(int i) {
 		_dessertId = i;
@@ -4734,6 +5006,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 取得角色讯息拒绝名单
+	 * 
 	 * @return
 	 */
 	public L1ExcludingList getExcludingList() {
@@ -4775,6 +5048,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定传送目的地坐标X
+	 * 
 	 * @param i
 	 */
 	public void setTeleportX(int i) {
@@ -4793,6 +5067,7 @@ public class L1PcInstance extends L1Character {
 
 	/**
 	 * 设定传送目的地坐标Y
+	 * 
 	 * @param i
 	 */
 	public void setTeleportY(int i) {
@@ -4801,90 +5076,116 @@ public class L1PcInstance extends L1Character {
 
 	/** 传送目的地地图ID */
 	private short _teleportMapId = 0;
+
 	/** 取得传送目的地地图ID */
 	public short getTeleportMapId() {
 		return _teleportMapId;
 	}
+
 	/** 设定传送目的地地图ID */
 	public void setTeleportMapId(short i) {
 		_teleportMapId = i;
 	}
+
 	/** 传送目的地面向 */
 	private int _teleportHeading = 0;
+
 	/** 取得传送目的地面向 */
 	public int getTeleportHeading() {
 		return _teleportHeading;
 	}
+
 	/** 设定传送目的地面向 */
 	public void setTeleportHeading(int i) {
 		_teleportHeading = i;
 	}
+
 	/** 角色死亡时的临时GFX图像 */
 	private int _tempCharGfxAtDead;
+
 	/** 取得角色死亡时的临时GFX图像 */
 	public int getTempCharGfxAtDead() {
 		return _tempCharGfxAtDead;
 	}
+
 	/** 设定角色死亡时的临时GFX图像 */
 	public void setTempCharGfxAtDead(int i) {
 		_tempCharGfxAtDead = i;
 	}
+
 	/** 是可以密语 */
 	private boolean _isCanWhisper = true;
+
 	/** 是可以密语 */
 	public boolean isCanWhisper() {
 		return _isCanWhisper;
 	}
+
 	/** 设定可以密语 */
 	public void setCanWhisper(boolean flag) {
 		_isCanWhisper = flag;
 	}
+
 	/** 是显示交易聊天 */
 	private boolean _isShowTradeChat = true;
+
 	/** 是显示交易聊天 */
 	public boolean isShowTradeChat() {
 		return _isShowTradeChat;
 	}
+
 	/** 设定显示交易聊天 */
 	public void setShowTradeChat(boolean flag) {
 		_isShowTradeChat = flag;
 	}
+
 	/** 是显示血盟聊天 */
 	private boolean _isShowClanChat = true;
+
 	/** 是显示血盟聊天 */
 	public boolean isShowClanChat() {
 		return _isShowClanChat;
 	}
+
 	/** 设定显示血盟聊天 */
 	public void setShowClanChat(boolean flag) {
 		_isShowClanChat = flag;
 	}
+
 	/** 是显示组队聊天 */
 	private boolean _isShowPartyChat = true;
+
 	/** 是显示组队聊天 */
 	public boolean isShowPartyChat() {
 		return _isShowPartyChat;
 	}
+
 	/** 设定显示组队聊天 */
 	public void setShowPartyChat(boolean flag) {
 		_isShowPartyChat = flag;
 	}
+
 	/** 是显示世界聊天 */
 	private boolean _isShowWorldChat = true;
+
 	/** 是显示世界聊天 */
 	public boolean isShowWorldChat() {
 		return _isShowWorldChat;
 	}
+
 	/** 设定显示世界聊天 */
 	public void setShowWorldChat(boolean flag) {
 		_isShowWorldChat = flag;
 	}
+
 	/** 战斗ID */
 	private int _fightId;
+
 	/** 取得战斗ID */
 	public int getFightId() {
 		return _fightId;
 	}
+
 	/** 设定战斗ID */
 	public void setFightId(int i) {
 		_fightId = i;
@@ -4892,28 +5193,35 @@ public class L1PcInstance extends L1Character {
 
 	/** 钓鱼坐标X */
 	private int _fishX;
+
 	/** 取得钓鱼坐标X */
 	public int getFishX() {
 		return _fishX;
 	}
+
 	/** 设定钓鱼坐标X */
 	public void setFishX(int i) {
 		_fishX = i;
 	}
+
 	/** 钓鱼坐标Y */
 	private int _fishY;
+
 	/** 取得钓鱼坐标Y */
 	public int getFishY() {
 		return _fishY;
 	}
+
 	/** 设定钓鱼坐标Y */
 	public void setFishY(int i) {
 		_fishY = i;
 	}
+
 	/** 聊天数量 */
 	private byte _chatCount = 0;
 	/** 旧的聊天时间在Millis？ */
 	private long _oldChatTimeInMillis = 0L;
+
 	/** 检查聊天间隔 */
 	public void checkChatInterval() {
 		long nowChatTimeInMillis = System.currentTimeMillis();
@@ -4939,52 +5247,67 @@ public class L1PcInstance extends L1Character {
 			_chatCount++;
 		}
 	}
+
 	/** 呼叫血盟ID */
 	private int _callClanId;
+
 	/** 取得呼叫血盟ID */
 	public int getCallClanId() {
 		return _callClanId;
 	}
+
 	/** 设定呼叫血盟ID */
 	public void setCallClanId(int i) {
 		_callClanId = i;
 	}
+
 	/** 呼叫血盟名称 */
 	private int _callClanHeading;
+
 	/** 取得呼叫血盟名称 */
 	public int getCallClanHeading() {
 		return _callClanHeading;
 	}
+
 	/** 设定呼叫血盟名称 */
 	public void setCallClanHeading(int i) {
 		_callClanHeading = i;
 	}
+
 	/** 角色重新开始 */
 	private boolean _isInCharReset = false;
+
 	/** 角色重新开始 */
 	public boolean isInCharReset() {
 		return _isInCharReset;
 	}
+
 	/** 设定角色重新开始 */
 	public void setInCharReset(boolean flag) {
 		_isInCharReset = flag;
 	}
+
 	/** 临时等级 */
 	private int _tempLevel = 1;
+
 	/** 取得临时等级 */
 	public int getTempLevel() {
 		return _tempLevel;
 	}
+
 	/** 设定临时等级 */
 	public void setTempLevel(int i) {
 		_tempLevel = i;
 	}
+
 	/** 临时最高等级 */
 	private int _tempMaxLevel = 1;
+
 	/** 取得临时最高等级 */
 	public int getTempMaxLevel() {
 		return _tempMaxLevel;
 	}
+
 	/** 设定临时最高等级 */
 	public void setTempMaxLevel(int i) {
 		_tempMaxLevel = i;
@@ -4992,10 +5315,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 觉醒技能ID */
 	private int _awakeSkillId = 0;
+
 	/** 取得觉醒技能ID */
 	public int getAwakeSkillId() {
 		return _awakeSkillId;
 	}
+
 	/** 设定觉醒技能ID */
 	public void setAwakeSkillId(int i) {
 		_awakeSkillId = i;
@@ -5003,10 +5328,12 @@ public class L1PcInstance extends L1Character {
 
 	/** 判断是否无道具施法(召戒清单、变身清单) */
 	private boolean _isSummonMonster = false;
+
 	/** 设定判断是否无道具施法(召戒清单、变身清单) */
 	public void setSummonMonster(boolean SummonMonster) {
 		_isSummonMonster = SummonMonster;
 	}
+
 	/** 判断是否无道具施法(召戒清单、变身清单) */
 	public boolean isSummonMonster() {
 		return _isSummonMonster;
@@ -5014,18 +5341,22 @@ public class L1PcInstance extends L1Character {
 
 	/** 变身 */
 	private boolean _isShapeChange = false;
+
 	/** 设定变身 */
 	public void setShapeChange(boolean isShapeChange) {
 		_isShapeChange = isShapeChange;
 	}
+
 	/** 变身中 */
 	public boolean isShapeChange() {
 		return _isShapeChange;
 	}
+
 	/** 设定组队类型 */
 	public void setPartyType(int type) {
 		_partyType = type;
 	}
+
 	/** 取得组队类型 */
 	public int getPartyType() {
 		return _partyType;
@@ -5036,122 +5367,122 @@ public class L1PcInstance extends L1Character {
 	public void changeFightType(int oldType, int newType) {
 		// 消除既有的战斗特化状态
 		switch (oldType) {
-			case 1:
-				addAc(2);
-				addMr(-3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
-				break;
+		case 1:
+			addAc(2);
+			addMr(-3);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
+			break;
 
-			case 2:
-				addAc(4);
-				addMr(-6);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
-				break;
+		case 2:
+			addAc(4);
+			addMr(-6);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
+			break;
 
-			case 3:
-				addAc(6);
-				addMr(-9);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
-				break;
+		case 3:
+			addAc(6);
+			addMr(-9);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
+			break;
 
-			case -1:
-				addDmgup(-1);
-				addBowDmgup(-1);
-				addSp(-1);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
-				break;
+		case -1:
+			addDmgup(-1);
+			addBowDmgup(-1);
+			addSp(-1);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
+			break;
 
-			case -2:
-				addDmgup(-3);
-				addBowDmgup(-3);
-				addSp(-2);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
-				break;
+		case -2:
+			addDmgup(-3);
+			addBowDmgup(-3);
+			addSp(-2);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
+			break;
 
-			case -3:
-				addDmgup(-5);
-				addBowDmgup(-5);
-				addSp(-3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
-				break;
+		case -3:
+			addDmgup(-5);
+			addBowDmgup(-5);
+			addSp(-3);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
+			break;
 		}
 
 		// 增加新的战斗特化状态
 		switch (newType) {
-			case 1:
-				addAc(-2);
-				addMr(3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
-				break;
+		case 1:
+			addAc(-2);
+			addMr(3);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
+			break;
 
-			case 2:
-				addAc(-4);
-				addMr(6);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
-				break;
+		case 2:
+			addAc(-4);
+			addMr(6);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
+			break;
 
-			case 3:
-				addAc(-6);
-				addMr(9);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
-				break;
+		case 3:
+			addAc(-6);
+			addMr(9);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
+			break;
 
-			case -1:
-				addDmgup(1);
-				addBowDmgup(1);
-				addSp(1);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
-				break;
+		case -1:
+			addDmgup(1);
+			addBowDmgup(1);
+			addSp(1);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
+			break;
 
-			case -2:
-				addDmgup(3);
-				addBowDmgup(3);
-				addSp(2);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
-				break;
+		case -2:
+			addDmgup(3);
+			addBowDmgup(3);
+			addSp(2);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
+			break;
 
-			case -3:
-				addDmgup(5);
-				addBowDmgup(5);
-				addSp(3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
-				break;
+		case -3:
+			addDmgup(5);
+			addBowDmgup(5);
+			addSp(3);
+			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
+			break;
 		}
 	}
 

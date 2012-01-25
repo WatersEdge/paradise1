@@ -35,7 +35,6 @@ public class S_PetList extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-
 	public S_PetList(int npcObjId, L1PcInstance pc) {
 		buildPacket(npcObjId, pc);
 	}

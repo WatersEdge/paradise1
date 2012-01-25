@@ -29,6 +29,7 @@ public class S_DoActionGFX extends ServerBasePacket {
 
 	/**
 	 * 物件动作类型 (短时间)
+	 * 
 	 * @param objectId
 	 * @param actionId
 	 */

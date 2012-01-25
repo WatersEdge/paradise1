@@ -37,9 +37,7 @@ public class L1SKick implements L1CommandExecutor {
 		try {
 			L1PcInstance target = L1World.getInstance().getPlayer(arg);
 			if (target != null) {
-				pc.sendPackets(new S_SystemMessage((new StringBuilder())
-						.append(target.getName()).append("已被您强制踢除游戏。")
-						.toString()));
+				pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(target.getName()).append("已被您强制踢除游戏。").toString()));
 				// SKTへ移动させる
 				target.setX(33080);
 				target.setY(33392);
@@ -47,13 +45,14 @@ public class L1SKick implements L1CommandExecutor {
 				target.sendPackets(new S_Disconnect());
 				ClientThread targetClient = target.getNetConnection();
 				targetClient.kick();
-				_log.warning("GM的踢除指令使得(" + targetClient.getAccountName()
-						+ ":" + targetClient.getHostname() + ")的连线被强制中断。");
-			} else {
+				_log.warning("GM的踢除指令使得(" + targetClient.getAccountName() + ":" + targetClient.getHostname() + ")的连线被强制中断。");
+			}
+			else {
 				pc.sendPackets(new S_SystemMessage("指定的ID不存在。"));
 			}
-		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage("请输入: "+cmdName + " 玩家名称。"));
+		}
+		catch (Exception e) {
+			pc.sendPackets(new S_SystemMessage("请输入: " + cmdName + " 玩家名称。"));
 		}
 	}
 }

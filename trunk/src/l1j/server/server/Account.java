@@ -25,15 +25,24 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sun.misc.BASE64Encoder;
-
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
+import sun.misc.BASE64Encoder;
 
 /**
  * 帐号相关资讯
  */
 public class Account {
+
+	/** 纪录用 */
+	private static Logger _log = Logger.getLogger(Account.class.getName());
+
+	/**
+	 * 建构式
+	 */
+	private Account() {
+	}
+
 	/** 使用者帐号名称 */
 	private String _name;
 
@@ -70,15 +79,6 @@ public class Account {
 	/** 是否有角色在线上 */
 	private boolean _onlineStatus = false;
 
-	/** 纪录用 */
-	private static Logger _log = Logger.getLogger(Account.class.getName());
-
-	/**
-	 * 建构式
-	 */
-	private Account() {
-	}
-
 	/**
 	 * 将明文密码加密
 	 * 
@@ -90,8 +90,7 @@ public class Account {
 	 * @throws UnsupportedEncodingException
 	 *             文字编码不支援
 	 */
-	private static String encodePassword(final String rawPassword)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	private static String encodePassword(final String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		byte[] buf = rawPassword.getBytes("UTF-8");
 		buf = MessageDigest.getInstance("SHA").digest(buf);
 
@@ -111,8 +110,7 @@ public class Account {
 	 *            连结时的 dns 反查
 	 * @return Account
 	 */
-	public static Account create(final String name, final String rawPassword,
-			final String ip, final String host) {
+	public static Account create(final String name, final String rawPassword, final String ip, final String host) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -139,14 +137,17 @@ public class Account {
 			pstm.setInt(9, account._online ? 1 : 0);
 			pstm.setInt(10, account._onlineStatus ? 1 : 0);
 			pstm.execute();
-			_log.info("created new account for " + name);
+			_log.info("创建新账户: " + name);
 
 			return account;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -190,8 +191,9 @@ public class Account {
 			account._WarePassword = rs.getInt("warepassword");
 			account._onlineStatus = rs.getInt("OnlineStatus") == 0 ? false : true;
 
-			_log.fine("account exists");
-		} catch (SQLException e) {
+			_log.fine("账户已存在");
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -222,8 +224,9 @@ public class Account {
 			pstm.setString(3, account.getName());
 			pstm.execute();
 			account._lastActive = ts;
-			_log.fine("update lastactive for " + account.getName());
-		} catch (Exception e) {
+			_log.fine("更新最后一次登入时的日期与时间 " + account.getName());
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -249,8 +252,9 @@ public class Account {
 			pstm.setString(2, account.getName());
 			pstm.execute();
 			account._characterSlot = account.getCharacterSlot();
-			_log.fine("update characterslot for " + account.getName());
-		} catch (Exception e) {
+			_log.fine("更新资料库中角色数目 " + account.getName());
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -277,7 +281,8 @@ public class Account {
 			if (rs.next()) {
 				result = rs.getInt("cnt");
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -289,8 +294,10 @@ public class Account {
 
 	/**
 	 * @category 写入帐号是否在线上
-	 * @param account 玩家帐号
-	 * @param i isOnline?
+	 * @param account
+	 *            玩家帐号
+	 * @param i
+	 *            isOnline?
 	 */
 	public synchronized static void online(Account account, boolean i) {
 		Connection con = null;
@@ -303,7 +310,8 @@ public class Account {
 			pstm.setString(2, account.getName());
 			pstm.execute();
 			account.setOnline(i);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -312,8 +320,10 @@ public class Account {
 
 	/**
 	 * @category 写入是否有角色在线上
-	 * @param account 玩家帐号
-	 * @param i isOnline?
+	 * @param account
+	 *            玩家帐号
+	 * @param i
+	 *            isOnline?
 	 */
 	public synchronized static void OnlineStatus(Account account, boolean i) {
 		Connection con = null;
@@ -326,13 +336,14 @@ public class Account {
 			pstm.setString(2, account.getName());
 			pstm.execute();
 			account.setOnlineStatus(i);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
-	
+
 	/**
 	 * 归零所有帐号online=0, OnlineStatus=0
 	 */
@@ -344,7 +355,8 @@ public class Account {
 			String sqlstr = "UPDATE accounts SET online=0, OnlineStatus=0 WHERE online=1 OR OnlineStatus=1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -367,7 +379,8 @@ public class Account {
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -393,7 +406,8 @@ public class Account {
 				_password = null; // 认证成功后就将记忆体中的密码清除
 			}
 			return _isValid;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return false;
@@ -411,14 +425,14 @@ public class Account {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con
-					.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
+			pstm = con.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
 			pstm.setInt(1, newPassword);
 			pstm.setString(2, getName());
 			pstm.execute();
 
 			_WarePassword = newPassword;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -426,7 +440,7 @@ public class Account {
 	}
 
 	/**
-	 * 取得帐号使否有效 (True 为有效).
+	 * 取得帐号是否有效 (True 为有效).
 	 * 
 	 * @return boolean
 	 */
@@ -488,6 +502,7 @@ public class Account {
 
 	/**
 	 * 设定帐号是否在线上
+	 * 
 	 * @param i
 	 */
 	public synchronized void setOnline(boolean i) {
@@ -496,6 +511,7 @@ public class Account {
 
 	/**
 	 * 取得帐号是否在线上
+	 * 
 	 * @return
 	 */
 	public synchronized boolean isOnlined() {
@@ -504,6 +520,7 @@ public class Account {
 
 	/**
 	 * 设定是否有角色在线上
+	 * 
 	 * @param i
 	 */
 	public synchronized void setOnlineStatus(boolean i) {
@@ -512,12 +529,13 @@ public class Account {
 
 	/**
 	 * 取得是否有角色在线上
+	 * 
 	 * @return
 	 */
 	public synchronized boolean isOnlineStatus() {
 		return _onlineStatus;
 	}
-	
+
 	/**
 	 * 取得是否被禁止登入
 	 * 

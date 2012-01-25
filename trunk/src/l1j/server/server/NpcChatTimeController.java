@@ -30,6 +30,7 @@ import l1j.server.server.templates.L1NpcChat;
  * NPC聊天时间控制器
  */
 public class NpcChatTimeController implements Runnable {
+
 	private static Logger _log = Logger.getLogger(NpcChatTimeController.class.getName());
 
 	private static NpcChatTimeController _instance;
@@ -48,7 +49,8 @@ public class NpcChatTimeController implements Runnable {
 				checkNpcChatTime(); // 检查开始聊天时间
 				Thread.sleep(60000);
 			}
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 			_log.warning(e1.getMessage());
 		}
 	}

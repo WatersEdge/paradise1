@@ -474,12 +474,12 @@ public class Opcodes {
 	public static final int S_LETTER = 131;
 
 	/** 3.3C Client Packet (3.5C 未抓取) id非正确 */
-	public static final int C_OPCODE_RETURNTOLOGIN = 140;//要求回到选人画面
-	public static final int C_OPCODE_HIRESOLDIER = 141;//要求雇佣佣兵列表(购买)
+	public static final int C_OPCODE_RETURNTOLOGIN = 140;// 要求回到选人画面
+	public static final int C_OPCODE_HIRESOLDIER = 141;// 要求雇佣佣兵列表(购买)
 	public static final int C_OPCODE_CLAN = 142;// //要求血盟数据(例如盟标)**[未抓取]
-	public static final int C_OPCODE_CHANGEWARTIME = 144;//修正城堡总管全部功能
-	public static final int C_OPCODE_PUTSOLDIER = 145;//要求配置已雇用士兵
-	public static final int C_OPCODE_SELECTWARTIME = 146;//要求选择 变更攻城时间(but3.3C无使用)
-	public static final int C_OPCODE_PUTBOWSOLDIER = 147;//要求配置城墙上弓手
+	public static final int C_OPCODE_CHANGEWARTIME = 144;// 修正城堡总管全部功能
+	public static final int C_OPCODE_PUTSOLDIER = 145;// 要求配置已雇用士兵
+	public static final int C_OPCODE_SELECTWARTIME = 146;// 要求选择 变更攻城时间(but3.3C无使用)
+	public static final int C_OPCODE_PUTBOWSOLDIER = 147;// 要求配置城墙上弓手
 
 }

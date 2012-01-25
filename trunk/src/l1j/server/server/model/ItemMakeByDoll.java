@@ -43,8 +43,9 @@ public class ItemMakeByDoll extends TimerTask {
 			if (_pc.isDead()) {
 				return;
 			}
-			itemMake();			
-		} catch (Throwable e) {
+			itemMake();
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
@@ -52,7 +53,7 @@ public class ItemMakeByDoll extends TimerTask {
 	/** 创造道具 */
 	public void itemMake() {
 		L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemId(_pc));
-		if (temp!= null) {
+		if (temp != null) {
 			if (_pc.getInventory().checkAddItem(temp, 1) == L1Inventory.OK) {
 				L1ItemInstance item = _pc.getInventory().storeItem(temp.getItemId(), 1);
 				_pc.sendPackets(new S_ServerMessage(403, item.getItem().getName())); // 获得%0%o 。

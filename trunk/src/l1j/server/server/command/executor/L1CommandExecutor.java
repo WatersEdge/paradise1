@@ -21,8 +21,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * 
  * 处理命令类、このインターフェースメソッド以外に<br>
  * public static L1CommandExecutor getInstance()<br>
- * を实装しなければならない。
- * 通常、自クラスをインスタンス化して返すが、必要に应じてキャッシュされたインスタンスを返したり、他のクラスをインスタンス化して返すことができる。
+ * を实装しなければならない。 通常、自クラスをインスタンス化して返すが、必要に应じてキャッシュされたインスタンスを返したり、他のクラスをインスタンス化して返すことができる。
  */
 public interface L1CommandExecutor {
 	/**

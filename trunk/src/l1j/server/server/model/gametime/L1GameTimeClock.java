@@ -36,6 +36,7 @@ public class L1GameTimeClock {
 	private L1GameTime _previousTime = null;
 	/**  */
 	private List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
+
 	/** 更新时间 */
 	private class TimeUpdater implements Runnable {
 		@Override
@@ -54,10 +55,12 @@ public class L1GameTimeClock {
 			}
 		}
 	}
+
 	/** 改变 */
 	private boolean isFieldChanged(int field) {
 		return _previousTime.get(field) != _currentTime.get(field);
 	}
+
 	/** 通知改变 */
 	private void notifyChanged() {
 		if (isFieldChanged(Calendar.MONTH)) {
@@ -85,6 +88,7 @@ public class L1GameTimeClock {
 	private L1GameTimeClock() {
 		GeneralThreadPool.getInstance().execute(new TimeUpdater());
 	}
+
 	/** 初始化 */
 	public static void init() {
 		_instance = new L1GameTimeClock();
@@ -93,14 +97,17 @@ public class L1GameTimeClock {
 	public static L1GameTimeClock getInstance() {
 		return _instance;
 	}
+
 	/** 当前时间 */
 	public L1GameTime currentTime() {
 		return _currentTime;
 	}
+
 	/** 增加监听 */
 	public void addListener(L1GameTimeListener listener) {
 		_listeners.add(listener);
 	}
+
 	/** 删除监听 */
 	public void removeListener(L1GameTimeListener listener) {
 		_listeners.remove(listener);

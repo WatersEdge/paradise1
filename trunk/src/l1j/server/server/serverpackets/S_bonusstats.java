@@ -28,6 +28,7 @@ public class S_bonusstats extends ServerBasePacket {
 
 	/**
 	 * 选择奖励属性点视窗
+	 * 
 	 * @param i
 	 * @param j
 	 */

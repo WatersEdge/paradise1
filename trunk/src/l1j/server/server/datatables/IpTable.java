@@ -71,7 +71,8 @@ public class IpTable {
 			pstm.setString(1, ip);
 			pstm.execute();
 			_banip.add(ip);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -128,7 +129,8 @@ public class IpTable {
 
 			isInitialized = true;
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -155,7 +157,8 @@ public class IpTable {
 			pstm.setString(1, ip);
 			pstm.execute();
 			ret = _banip.remove(ip);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

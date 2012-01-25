@@ -26,7 +26,7 @@ public class LoginController {
 
 	private static LoginController _instance;
 
-	private Map<String, ClientThread> _accounts = Maps.newConcurrentMap();
+	private final Map<String, ClientThread> _accounts = Maps.newConcurrentMap();
 
 	/** 最大允许在线玩家 */
 	private int _maxAllowedOnlinePlayers;
@@ -41,17 +41,17 @@ public class LoginController {
 		return _instance;
 	}
 
-	/** 获得所有账户 */
+	/** 取得所有账户 */
 	public ClientThread[] getAllAccounts() {
 		return _accounts.values().toArray(new ClientThread[_accounts.size()]);
 	}
 
-	/** 获得在线玩家数量 */
+	/** 取得在线玩家数量 */
 	public int getOnlinePlayerCount() {
 		return _accounts.size();
 	}
 
-	/** 获得最大允许在线玩家 */
+	/** 取得最大允许在线玩家 */
 	public int getMaxAllowedOnlinePlayers() {
 		return _maxAllowedOnlinePlayers;
 	}
@@ -76,7 +76,8 @@ public class LoginController {
 
 				try {
 					Thread.sleep(1000);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 				}
 				client.kick();
 			}
@@ -84,15 +85,13 @@ public class LoginController {
 	}
 
 	/** 登陆 */
-	public synchronized void login(ClientThread client, Account account)
-			throws GameServerFullException, AccountAlreadyLoginException {
+	public synchronized void login(ClientThread client, Account account) throws GameServerFullException, AccountAlreadyLoginException {
 		if (!account.isValid()) {
 			// 密码验证未指定或不验证账户。
 			// 此代码只存在的错误检测。
 			throw new IllegalArgumentException("账户沒有通过验证");
 		}
-		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount())
-				&& !account.isGameMaster()) {
+		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount()) && !account.isGameMaster()) {
 			throw new GameServerFullException();
 		}
 		if (_accounts.containsKey(account.getName())) {

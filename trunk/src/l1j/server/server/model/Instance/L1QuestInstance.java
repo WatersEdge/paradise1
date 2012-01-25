@@ -42,9 +42,10 @@ public class L1QuestInstance extends L1NpcInstance {
 			return;
 		}
 		if ((npcId == 71075 // 疲惫的蜥蜴人战士
-			) || (npcId == 70957 // 罗伊
-			) || (npcId == 81209 // 罗伊
-			)) {
+				)
+				|| (npcId == 70957 // 罗伊
+				) || (npcId == 81209 // 罗伊
+				)) {
 			return;
 		}
 		else {

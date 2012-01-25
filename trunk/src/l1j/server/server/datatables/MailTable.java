@@ -76,7 +76,8 @@ public class MailTable {
 
 				_allMail.add(mail);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建邮件表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);
@@ -104,7 +105,8 @@ public class MailTable {
 
 				changeMailStatus(mailId);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -133,7 +135,8 @@ public class MailTable {
 
 				changeMailType(mailId, type);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -157,7 +160,8 @@ public class MailTable {
 			pstm.execute();
 
 			delMail(mailId);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -234,7 +238,8 @@ public class MailTable {
 			mail.setReadStatus(readStatus);
 
 			_allMail.add(mail);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm2);

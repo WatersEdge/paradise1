@@ -92,7 +92,8 @@ public class NpcActionTable {
 			System.out.print("╠》正在读取 NpcAction...");
 			_instance = new NpcActionTable();
 			System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "无法加载NpcAction", e);
 			System.exit(0);
 		}

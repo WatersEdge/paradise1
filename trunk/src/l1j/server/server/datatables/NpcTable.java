@@ -73,7 +73,8 @@ public class NpcTable {
 			String implFullName = "l1j.server.server.model.Instance." + implName + "Instance";
 			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -181,7 +182,8 @@ public class NpcTable {
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -226,7 +228,8 @@ public class NpcTable {
 		try {
 			Constructor<?> con = _constructorCache.get(template.getImpl());
 			return (L1NpcInstance) con.newInstance(new Object[] { template });
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -251,7 +254,8 @@ public class NpcTable {
 				String family = rs.getString("family");
 				result.put(family, id++);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

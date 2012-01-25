@@ -46,8 +46,7 @@ public class L1NpcChatTimer extends TimerTask {
 				return;
 			}
 
-			if (_npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE
-					|| _npc._destroyed) {
+			if (_npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE || _npc._destroyed) {
 				return;
 			}
 
@@ -84,15 +83,14 @@ public class L1NpcChatTimer extends TimerTask {
 				Thread.sleep(chatInterval);
 				chat(_npc, chatTiming, chatId5, isShout, isWorldChat);
 			}
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	private void chat(L1NpcInstance npc, int chatTiming, String chatId,
-			boolean isShout, boolean isWorldChat) {
-		if (chatTiming == L1NpcInstance.CHAT_TIMING_APPEARANCE && npc.
-				isDead()) {
+	private void chat(L1NpcInstance npc, int chatTiming, String chatId, boolean isShout, boolean isWorldChat) {
+		if (chatTiming == L1NpcInstance.CHAT_TIMING_APPEARANCE && npc.isDead()) {
 			return;
 		}
 		if (chatTiming == L1NpcInstance.CHAT_TIMING_DEAD && !npc.isDead()) {
@@ -104,7 +102,8 @@ public class L1NpcChatTimer extends TimerTask {
 
 		if (!isShout) {
 			npc.broadcastPacket(new S_NpcChatPacket(npc, chatId, 0));
-		} else {
+		}
+		else {
 			npc.wideBroadcastPacket(new S_NpcChatPacket(npc, chatId, 2));
 		}
 

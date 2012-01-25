@@ -31,7 +31,8 @@ public class S_Sound extends ServerBasePacket {
 	/**
 	 * 播放音效(sound文件夹中的WAV文件)。
 	 * 
-	 * @param sound 音效编号
+	 * @param sound
+	 *            音效编号
 	 */
 	public S_Sound(int sound) {
 		buildPacket(sound);

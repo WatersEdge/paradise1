@@ -40,8 +40,7 @@ public class L1NpcSetQuestAction extends L1NpcXmlAction {
 	}
 
 	@Override
-	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj,
-			byte[] args) {
+	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
 		pc.getQuest().set_step(_id, _step);
 		return null;
 	}

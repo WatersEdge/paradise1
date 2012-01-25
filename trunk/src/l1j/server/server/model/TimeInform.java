@@ -36,8 +36,10 @@ public class TimeInform {
 
 	/**
 	 * @return getYear 年
-	 * @param type 0:原始(可加减) 1:西元 2:民国
-	 * @param i = +|- years     
+	 * @param type
+	 *            0:原始(可加减) 1:西元 2:民国
+	 * @param i
+	 *            = +|- years
 	 */
 	public static String getYear(int type, int i) {
 		String year = null;
@@ -108,19 +110,13 @@ public class TimeInform {
 		String NowTime = null;
 		switch (type) {
 		case 1:
-			NowTime = TimeInform.getYear(type_year, 0) + "年 "
-					+ TimeInform.getMonth() + "月" + TimeInform.getDay() + "日 "
-					+ TimeInform.getDayOfWeek();
+			NowTime = TimeInform.getYear(type_year, 0) + "年 " + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日 " + TimeInform.getDayOfWeek();
 			break;
 		case 2:
-			NowTime = TimeInform.getHour() + "时" + TimeInform.getMinute() + "分"
-					+ TimeInform.getSecond() + "秒";
+			NowTime = TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
 			break;
 		case 3:
-			NowTime = TimeInform.getYear(type_year, 0) + "年"
-					+ TimeInform.getMonth() + "月" + TimeInform.getDay() + "日"
-					+ TimeInform.getHour() + "时" + TimeInform.getMinute() + "分"
-					+ TimeInform.getSecond() + "秒";
+			NowTime = TimeInform.getYear(type_year, 0) + "年" + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日" + TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
 		default:
 
 		}
@@ -164,8 +160,7 @@ public class TimeInform {
 	 */
 	public String getNowTime_Standard() {
 
-		String NowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(new Date());
+		String NowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
 		return NowTime;
 	}

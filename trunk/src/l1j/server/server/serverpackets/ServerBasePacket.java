@@ -76,7 +76,8 @@ public abstract class ServerBasePacket {
 			if (text != null) {
 				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 
@@ -88,7 +89,8 @@ public abstract class ServerBasePacket {
 			if (text != null) {
 				_bao.write(text);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

@@ -28,11 +28,12 @@ import l1j.server.server.utils.SQLUtil;
  * 
  */
 public class IdFactory {
+
 	private static Logger _log = Logger.getLogger(IdFactory.class.getName());
 
 	private int _curId;
 
-	private Object _monitor = new Object();
+	private final Object _monitor = new Object();
 
 	private static final int FIRST_ID = 0x10000000;
 
@@ -73,7 +74,8 @@ public class IdFactory {
 			}
 			_curId = id;
 			_log.info("目前的物件ID: " + _curId);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

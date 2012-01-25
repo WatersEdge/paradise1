@@ -535,13 +535,13 @@ public class L1SkillId {
 	/** 幻术士魔法 (镜像) */
 	public static final int MIRROR_IMAGE = 201;
 
-	/** 幻术士魔法 (混乱)*/
+	/** 幻术士魔法 (混乱) */
 	public static final int CONFUSION = 202;
 
-	/** 幻术士魔法 (暴击)*/
+	/** 幻术士魔法 (暴击) */
 	public static final int SMASH = 203;
 
-	/** 幻术士魔法 (幻觉：欧吉)*/
+	/** 幻术士魔法 (幻觉：欧吉) */
 	public static final int ILLUSION_OGRE = 204;
 
 	/** 幻术士魔法 (立方：燃烧) */
@@ -577,10 +577,10 @@ public class L1SkillId {
 	/** 幻术士魔法 (立方：冲击) */
 	public static final int CUBE_SHOCK = 215;
 
-	/** 幻术士魔法 (洞察)*/
+	/** 幻术士魔法 (洞察) */
 	public static final int INSIGHT = 216;
 
-	/** 幻术士魔法 (恐慌)*/
+	/** 幻术士魔法 (恐慌) */
 	public static final int PANIC = 217;
 
 	/** 幻术士魔法 (疼痛的欢愉) */
@@ -788,7 +788,6 @@ public class L1SkillId {
 	/** 可攻击火焰之影的力量 */
 	public static final int STATUS_CURSE_YAHEE = 1014;
 
-
 	// 相消无法消除的状态
 	/** 相消无法消除的状态开头 */
 	public static final int EFFECT_BEGIN = 4001;
@@ -922,9 +921,9 @@ public class L1SkillId {
 	public static final int BONE_BREAK_START = 5004;
 	/** 骷髅毁坏 (结束) **/
 	public static final int BONE_BREAK_END = 5005;
-	/** 混乱 (发动中)*/
+	/** 混乱 (发动中) */
 	public static final int CONFUSION_ING = 5006;
-	/** 夺命之雷 (发动)*/
+	/** 夺命之雷 (发动) */
 	public static final int THUNDER_GRAB_START = 5007;
 	/** 破坏之密药 */
 	public static final int SECRET_MEDICINE_OF_DESTRUCTION = 5008;

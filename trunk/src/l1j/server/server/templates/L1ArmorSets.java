@@ -218,7 +218,7 @@ public class L1ArmorSets {
 	public void setHitModifier(int i) {
 		_hitModifier = i;
 	}
-	
+
 	private int _dmgModifier;
 
 	public int getDmgModifier() {
@@ -228,7 +228,7 @@ public class L1ArmorSets {
 	public void setDmgModifier(int i) {
 		_dmgModifier = i;
 	}
-	
+
 	private int _bowHitModifier;
 
 	public int getBowHitModifier() {
@@ -238,7 +238,7 @@ public class L1ArmorSets {
 	public void setBowHitModifier(int i) {
 		_bowHitModifier = i;
 	}
-	
+
 	private int _bowDmgModifier;
 
 	public int getBowDmgModifier() {

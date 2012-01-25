@@ -43,9 +43,11 @@ public class S_OwnCharStatus extends ServerBasePacket {
 
 		if (pc.getLevel() < 1) {
 			writeC(1);
-		} else if (pc.getLevel() > 127) {
+		}
+		else if (pc.getLevel() > 127) {
 			writeC(127);
-		} else {
+		}
+		else {
 			writeC(pc.getLevel());
 		}
 

@@ -31,7 +31,7 @@ public class S_AttackPacket extends ServerBasePacket {
 	}
 
 	public S_AttackPacket(L1Character atk, int objid, int actid) {
-		int[] data = {actid, 0, 0};
+		int[] data = { actid, 0, 0 };
 		buildpacket(atk, objid, data);
 	}
 

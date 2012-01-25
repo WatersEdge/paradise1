@@ -31,12 +31,12 @@ public class S_DollPack extends ServerBasePacket {
 
 	/**
 	 * 物件封包 (门)
+	 * 
 	 * @param door
 	 */
 	public S_DollPack(L1DollInstance doll) {
 		/*
-		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting =
-		 * 4;
+		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting = 4;
 		 */
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(doll.getX());

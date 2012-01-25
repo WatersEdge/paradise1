@@ -25,12 +25,15 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * cmd 互动命令 处理程序
  */
 public class ConsoleProcess extends Thread {
+
 	/** 使用者输入 */
-	private Scanner UserInput = new Scanner(System.in);
+	private final Scanner UserInput = new Scanner(System.in);
+
 	/** 开机后是否开启此功能 */
 	private boolean onStarup = true;
+
 	/** 程序是否继续 */
-	private boolean stillrun = true;
+	private final boolean stillrun = true;
 
 	Runtime rt = Runtime.getRuntime();
 
@@ -57,13 +60,15 @@ public class ConsoleProcess extends Thread {
 		if (cmd.equalsIgnoreCase("chat")) { // cmd与游戏内对话功能
 			L1World.getInstance().broadcastPacketToAll(new S_SystemMessage("\\f3" + "[系统管理员]" + line));
 			System.out.println("[系统管理员]" + line);
-		} else if (cmd.equalsIgnoreCase("shutdown")) {
+		}
+		else if (cmd.equalsIgnoreCase("shutdown")) {
 			int sec = Integer.parseInt(line);
 			if (sec > 0)
 				GameServer.getInstance().shutdownWithCountdown(sec);
 			if (sec <= 0)
 				GameServer.getInstance().shutdown();
-		} else {
+		}
+		else {
 			System.out.println("错误, 没有指令.");
 			return;
 		}
@@ -83,7 +88,8 @@ public class ConsoleProcess extends Thread {
 		}
 		if (cmd.equalsIgnoreCase("lookup")) { // cmd查看游戏内对话功能
 			// TODO 开启另一个视窗并显示游戏内对话
-		} else {
+		}
+		else {
 			System.out.println("错误, 没有指令.");
 			return;
 		}

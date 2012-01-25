@@ -19,8 +19,7 @@ package l1j.server.server.utils;
  * 最低値lowと最大値highによって囲まれた、数値の範囲を指定するクラス。
  * </p>
  * <p>
- * <b>このクラスは同期化されない。</b> 複数のスレッドが同時にこのクラスのインスタンスにアクセスし、
- * 1つ以上のスレッドが範囲を変更する場合、外部的な同期化が必要である。
+ * <b>このクラスは同期化されない。</b> 複数のスレッドが同時にこのクラスのインスタンスにアクセスし、 1つ以上のスレッドが範囲を変更する場合、外部的な同期化が必要である。
  * </p>
  */
 public class IntRange {
@@ -80,14 +79,17 @@ public class IntRange {
 	public int randomValue() {
 		return Random.nextInt(getWidth() + 1) + _low;
 	}
+
 	/** 获得低的 */
 	public int getLow() {
 		return _low;
 	}
+
 	/** 获得高的 */
 	public int getHigh() {
 		return _high;
 	}
+
 	/** 获得宽度 */
 	public int getWidth() {
 		return _high - _low;

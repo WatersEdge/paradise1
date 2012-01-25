@@ -319,8 +319,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 		_delayInterval = _maxRespawnDelay - _minRespawnDelay;
 		_initSpawn = true;
 		// ホームポイントを持たせるか
-		if (Config.SPAWN_HOME_POINT && (Config.SPAWN_HOME_POINT_COUNT <= getAmount()) && (Config.SPAWN_HOME_POINT_DELAY >= getMinRespawnDelay())
-				&& isAreaSpawn()) {
+		if (Config.SPAWN_HOME_POINT && (Config.SPAWN_HOME_POINT_COUNT <= getAmount()) && (Config.SPAWN_HOME_POINT_DELAY >= getMinRespawnDelay()) && isAreaSpawn()) {
 			_spawnHomePoint = true;
 			_homePoint = Maps.newMap();
 		}
@@ -388,50 +387,50 @@ public class L1Spawn extends L1GameTimeAdapter {
 			mob.setRest(isRest());
 			while (tryCount <= 50) {
 				switch (getSpawnType()) {
-					case SPAWN_TYPE_PC_AROUND: // PC周辺に湧くタイプ
-						if (!_initSpawn) { // 初期配置では無条件に通常spawn
-							List<L1PcInstance> players = Lists.newList();
-							for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-								if (getMapId() == pc.getMapId()) {
-									players.add(pc);
-								}
-							}
-							if (players.size() > 0) {
-								L1PcInstance pc = players.get(Random.nextInt(players.size()));
-								L1Location loc = pc.getLocation().randomLocation(PC_AROUND_DISTANCE, false);
-								newlocx = loc.getX();
-								newlocy = loc.getY();
-								break;
+				case SPAWN_TYPE_PC_AROUND: // PC周辺に湧くタイプ
+					if (!_initSpawn) { // 初期配置では無条件に通常spawn
+						List<L1PcInstance> players = Lists.newList();
+						for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+							if (getMapId() == pc.getMapId()) {
+								players.add(pc);
 							}
 						}
-						// フロアにPCがいなければ通常の出現方法
-					default:
-						if (isAreaSpawn()) { // 座標が範囲指定されている場合
-							Point pt = null;
-							if (_spawnHomePoint && (null != (pt = _homePoint.get(spawnNumber)))) { // ホームポイントを元に再出現させる場合
-								L1Location loc = new L1Location(pt, getMapId()).randomLocation(Config.SPAWN_HOME_POINT_RANGE, false);
-								newlocx = loc.getX();
-								newlocy = loc.getY();
-							}
-							else {
-								int rangeX = getLocX2() - getLocX1();
-								int rangeY = getLocY2() - getLocY1();
-								newlocx = Random.nextInt(rangeX) + getLocX1();
-								newlocy = Random.nextInt(rangeY) + getLocY1();
-							}
-							if (tryCount > 49) { // 出現位置が決まらない時はlocx,locyの値
-								newlocx = getLocX();
-								newlocy = getLocY();
-							}
+						if (players.size() > 0) {
+							L1PcInstance pc = players.get(Random.nextInt(players.size()));
+							L1Location loc = pc.getLocation().randomLocation(PC_AROUND_DISTANCE, false);
+							newlocx = loc.getX();
+							newlocy = loc.getY();
+							break;
 						}
-						else if (isRandomSpawn()) { // 座標のランダム値が指定されている場合
-							newlocx = (getLocX() + (Random.nextInt(getRandomx()) - Random.nextInt(getRandomx())));
-							newlocy = (getLocY() + (Random.nextInt(getRandomy()) - Random.nextInt(getRandomy())));
+					}
+					// フロアにPCがいなければ通常の出現方法
+				default:
+					if (isAreaSpawn()) { // 座標が範囲指定されている場合
+						Point pt = null;
+						if (_spawnHomePoint && (null != (pt = _homePoint.get(spawnNumber)))) { // ホームポイントを元に再出現させる場合
+							L1Location loc = new L1Location(pt, getMapId()).randomLocation(Config.SPAWN_HOME_POINT_RANGE, false);
+							newlocx = loc.getX();
+							newlocy = loc.getY();
 						}
-						else { // どちらも指定されていない場合
+						else {
+							int rangeX = getLocX2() - getLocX1();
+							int rangeY = getLocY2() - getLocY1();
+							newlocx = Random.nextInt(rangeX) + getLocX1();
+							newlocy = Random.nextInt(rangeY) + getLocY1();
+						}
+						if (tryCount > 49) { // 出現位置が決まらない時はlocx,locyの値
 							newlocx = getLocX();
 							newlocy = getLocY();
 						}
+					}
+					else if (isRandomSpawn()) { // 座標のランダム値が指定されている場合
+						newlocx = (getLocX() + (Random.nextInt(getRandomx()) - Random.nextInt(getRandomx())));
+						newlocy = (getLocY() + (Random.nextInt(getRandomy()) - Random.nextInt(getRandomy())));
+					}
+					else { // どちらも指定されていない場合
+						newlocx = getLocX();
+						newlocy = getLocY();
+					}
 				}
 				mob.setX(newlocx);
 				mob.setHomeX(newlocx);
@@ -574,10 +573,8 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	public static void doCrystalCave(int npcId) {
-		int[] npcId2 =
-		{ 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150, 46151, 46152 };
-		int[] doorId =
-		{ 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009, 5010 };
+		int[] npcId2 = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150, 46151, 46152 };
+		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009, 5010 };
 
 		for (int i = 0; i < npcId2.length; i++) {
 			if (npcId == npcId2[i]) {

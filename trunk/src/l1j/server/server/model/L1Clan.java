@@ -22,6 +22,7 @@ import l1j.server.Config;
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.collections.Lists;
+
 /**
  * 血盟
  */
@@ -61,65 +62,78 @@ public class L1Clan {
 	public int getClanId() {
 		return _clanId;
 	}
+
 	/** 设置血盟ID */
 	public void setClanId(int clan_id) {
 		_clanId = clan_id;
 	}
+
 	/** 获得血盟名称 */
 	public String getClanName() {
 		return _clanName;
 	}
+
 	/** 设置血盟名称 */
 	public void setClanName(String clan_name) {
 		_clanName = clan_name;
 	}
+
 	/** 获得领导者的ID */
 	public int getLeaderId() {
 		return _leaderId;
 	}
+
 	/** 设置领导者的ID */
 	public void setLeaderId(int leader_id) {
 		_leaderId = leader_id;
 	}
+
 	/** 获得领导者的名称 */
 	public String getLeaderName() {
 		return _leaderName;
 	}
+
 	/** 设置领导者的名称 */
 	public void setLeaderName(String leader_name) {
 		_leaderName = leader_name;
 	}
+
 	/** 获得城堡ID */
 	public int getCastleId() {
 		return _castleId;
 	}
+
 	/** 设置城堡ID */
 	public void setCastleId(int hasCastle) {
 		_castleId = hasCastle;
 	}
+
 	/** 获得盟屋ID */
 	public int getHouseId() {
 		return _houseId;
 	}
+
 	/** 设置盟屋ID */
 	public void setHouseId(int hasHideout) {
 		_houseId = hasHideout;
 	}
+
 	/** 增加成员名称 */
 	public void addMemberName(String member_name) {
 		if (!membersNameList.contains(member_name)) {
 			membersNameList.add(member_name);
 		}
 	}
+
 	/** 删除成员名称 */
 	public void delMemberName(String member_name) {
 		if (membersNameList.contains(member_name)) {
 			membersNameList.remove(member_name);
 		}
 	}
+
 	/** 获得在线血盟成员 */
-	public L1PcInstance[] getOnlineClanMember()
-	{
+	public L1PcInstance[] getOnlineClanMember() {
 		List<L1PcInstance> onlineMembers = Lists.newList();
 		for (String name : membersNameList) {
 			L1PcInstance pc = L1World.getInstance().getPlayer(name);
@@ -129,6 +143,7 @@ public class L1Clan {
 		}
 		return onlineMembers.toArray(new L1PcInstance[onlineMembers.size()]);
 	}
+
 	/** 获得在线成员FP */
 	public String getOnlineMembersFP() { // FP means "For Pledge" (FP表示承诺)
 		String result = "";
@@ -140,6 +155,7 @@ public class L1Clan {
 		}
 		return result;
 	}
+
 	/** 获得所有成员FP */
 	public String getAllMembersFP() {
 		String result = "";
@@ -148,6 +164,7 @@ public class L1Clan {
 		}
 		return result;
 	}
+
 	/** 获得在线成员FP排名 */
 	public String getOnlineMembersFPWithRank() {
 		String result = "";
@@ -159,6 +176,7 @@ public class L1Clan {
 		}
 		return result;
 	}
+
 	/** 获得所有成员FP排名 */
 	public String getAllMembersFPWithRank() {
 		String result = "";
@@ -175,33 +193,35 @@ public class L1Clan {
 		}
 		return result;
 	}
+
 	/** 获得排名字符串 */
 	private String getRankString(L1PcInstance pc) {
 		String rank = "";
-		String[] msg = {
-				"[見習]", "[一般]", "[守護騎士]", "[血盟君主]",
-				"[见习]", "[一般]", "[守护骑士]", "[血盟君主]",
-				"[見習い]", "[一般]", "[ガーディアン]", "[血盟君主]"
-		};
+		String[] msg = { "[見習]", "[一般]", "[守護騎士]", "[血盟君主]", "[见习]", "[一般]", "[守护骑士]", "[血盟君主]", "[見習い]", "[一般]", "[ガーディアン]", "[血盟君主]" };
 		byte i = 0; // 预设：繁体
 		if (Config.CLIENT_LANGUAGE == 5) { // 简体
 			i = 4;
-		} else if (Config.CLIENT_LANGUAGE == 4) { // 日文
+		}
+		else if (Config.CLIENT_LANGUAGE == 4) { // 日文
 			i = 8;
 		}
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_PROBATION) {
 				rank = msg[0 + i];
-			} else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
 				rank = msg[1 + i];
-			} else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
 				rank = msg[2 + i];
-			} else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
 				rank = msg[3 + i];
-			} else {
+			}
+			else {
 				rank = "";
 			}
-			
+
 		}
 		return rank;
 	}
@@ -210,6 +230,7 @@ public class L1Clan {
 	public String[] getAllMembers() {
 		return membersNameList.toArray(new String[membersNameList.size()]);
 	}
+
 	/**  */
 	public L1DwarfForClanInventory getDwarfForClanInventory() {
 		return _dwarfForClan;
@@ -219,6 +240,7 @@ public class L1Clan {
 	public int getWarehouseUsingChar() {
 		return _warehouse;
 	}
+
 	/** 设定使用仓库的角色 */
 	public void setWarehouseUsingChar(int objid) {
 		_warehouse = objid;

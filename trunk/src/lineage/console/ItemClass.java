@@ -72,24 +72,30 @@ public class ItemClass {
 
 			_classList.put(new Integer(itemid), exe);
 
-		} catch (final ClassNotFoundException e) {
+		}
+		catch (final ClassNotFoundException e) {
 			String error = "道具Class档案 (" + className + ") 错误 (ItemId:" + itemid + ")";
 			_log.error(error);
 			DataError.isError(_log, error, e);
 
-		} catch (final IllegalArgumentException e) {
+		}
+		catch (final IllegalArgumentException e) {
 			_log.error(e.getLocalizedMessage(), e);
 
-		} catch (final IllegalAccessException e) {
+		}
+		catch (final IllegalAccessException e) {
 			_log.error(e.getLocalizedMessage(), e);
 
-		} catch (final InvocationTargetException e) {
+		}
+		catch (final InvocationTargetException e) {
 			_log.error(e.getLocalizedMessage(), e);
 
-		} catch (final SecurityException e) {
+		}
+		catch (final SecurityException e) {
 			_log.error(e.getLocalizedMessage(), e);
 
-		} catch (final NoSuchMethodException e) {
+		}
+		catch (final NoSuchMethodException e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -123,7 +129,8 @@ public class ItemClass {
 				exe.execute(data, pc, item);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -159,7 +166,8 @@ public class ItemClass {
 				exe.execute(data, pc, item);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -195,7 +203,8 @@ public class ItemClass {
 				exe.execute(data, pc, item);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}

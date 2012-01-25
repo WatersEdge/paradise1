@@ -27,6 +27,7 @@ public class S_SkillSound extends ServerBasePacket {
 
 	/**
 	 * 产生动画 (物件)
+	 * 
 	 * @param objid
 	 * @param gfxid
 	 * @param aid
@@ -37,6 +38,7 @@ public class S_SkillSound extends ServerBasePacket {
 
 	/**
 	 * 产生动画 (物件)
+	 * 
 	 * @param objid
 	 * @param gfxid
 	 */

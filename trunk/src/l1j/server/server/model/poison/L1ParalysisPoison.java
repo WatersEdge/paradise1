@@ -80,7 +80,8 @@ public class L1ParalysisPoison extends L1Poison {
 			try {
 				Thread.sleep(_time);
 			}
-			catch (InterruptedException e) {}
+			catch (InterruptedException e) {
+			}
 
 			_target.killSkillEffectTimer(STATUS_POISON_PARALYZED);
 			if (_target instanceof L1PcInstance) {

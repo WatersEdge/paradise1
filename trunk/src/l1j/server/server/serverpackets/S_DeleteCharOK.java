@@ -29,6 +29,7 @@ public class S_DeleteCharOK extends ServerBasePacket {
 
 	/**
 	 * 角色移除 (立即或非立即)
+	 * 
 	 * @param type
 	 */
 	public S_DeleteCharOK(int type) {

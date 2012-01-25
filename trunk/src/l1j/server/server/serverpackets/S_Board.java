@@ -31,6 +31,7 @@ public class S_Board extends ServerBasePacket {
 
 	/**
 	 * 布告栏列表 (对话视窗)
+	 * 
 	 * @param boardObjId
 	 */
 	public S_Board(int boardObjId) {
@@ -39,6 +40,7 @@ public class S_Board extends ServerBasePacket {
 
 	/**
 	 * 布告栏列表 (对话视窗)
+	 * 
 	 * @param boardObjId
 	 * @param number
 	 */
@@ -53,7 +55,8 @@ public class S_Board extends ServerBasePacket {
 		writeD(boardObjId);
 		if (number == 0) {
 			writeD(0x7FFFFFFF);
-		} else {
+		}
+		else {
 			writeD(number);
 		}
 		writeC(topics.size());

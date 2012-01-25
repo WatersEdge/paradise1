@@ -47,7 +47,8 @@ public class C_DropItem extends ClientBasePacket {
 		L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
-		} else if (pc.getMapId() >= 16384 && pc.getMapId() <= 25088) { // 旅馆内判断
+		}
+		else if (pc.getMapId() >= 16384 && pc.getMapId() <= 25088) { // 旅馆内判断
 			pc.sendPackets(new S_ServerMessage(539)); // \f1你无法将它放在这。
 			return;
 		}
@@ -90,8 +91,7 @@ public class C_DropItem extends ClientBasePacket {
 			}
 			if (item.getBless() >= 128) { // 封印的装备
 				// \f1%0%d是不可转移的…
-				pc.sendPackets(new S_ServerMessage(210, item.getItem()
-						.getName()));
+				pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 				return;
 			}
 
@@ -99,8 +99,7 @@ public class C_DropItem extends ClientBasePacket {
 			if (Config.writeDropLog)
 				LogRecorder.writeDropLog(pc, item);
 
-			pc.getInventory().tradeItem(item, count,
-					L1World.getInstance().getInventory(x, y, pc.getMapId()));
+			pc.getInventory().tradeItem(item, count, L1World.getInstance().getInventory(x, y, pc.getMapId()));
 			pc.turnOnOffLight();
 		}
 	}

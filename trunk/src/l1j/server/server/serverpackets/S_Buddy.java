@@ -30,6 +30,7 @@ public class S_Buddy extends ServerBasePacket {
 
 	/**
 	 * 好友清单
+	 * 
 	 * @param objId
 	 * @param buddy
 	 */

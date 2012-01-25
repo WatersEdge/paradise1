@@ -27,9 +27,13 @@ public class S_Strup extends ServerBasePacket {
 
 	/**
 	 * 魔法效果：力量提升
-	 * @param pc 使用者
-	 * @param type 增加值
-	 * @param time 时间
+	 * 
+	 * @param pc
+	 *            使用者
+	 * @param type
+	 *            增加值
+	 * @param time
+	 *            时间
 	 */
 	public S_Strup(L1PcInstance pc, int type, int time) {
 		writeC(Opcodes.S_OPCODE_STRUP);

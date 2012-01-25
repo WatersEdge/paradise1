@@ -28,8 +28,10 @@ public class S_Invis extends ServerBasePacket {
 
 	/**
 	 * 物件隐形或现形
+	 * 
 	 * @param objid
-	 * @param type 0:无 1:隐形
+	 * @param type
+	 *            0:无 1:隐形
 	 */
 	public S_Invis(int objid, int type) {
 		buildPacket(objid, type);

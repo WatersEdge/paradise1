@@ -43,51 +43,60 @@ public class C_DeleteChar extends ClientBasePacket {
 		String name = readS();
 
 		try {
-			L1PcInstance pc = CharacterTable.getInstance()
-					.restoreCharacter(name);
-			if (pc != null && pc.getLevel() >= 30
-					&& Config.DELETE_CHARACTER_AFTER_7DAYS) {
+			L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
+			if (pc != null && pc.getLevel() >= 30 && Config.DELETE_CHARACTER_AFTER_7DAYS) {
 				if (pc.getType() < 32) {
 					if (pc.isCrown()) {
 						pc.setType(32);
-					} else if (pc.isKnight()) {
+					}
+					else if (pc.isKnight()) {
 						pc.setType(33);
-					} else if (pc.isElf()) {
+					}
+					else if (pc.isElf()) {
 						pc.setType(34);
-					} else if (pc.isWizard()) {
+					}
+					else if (pc.isWizard()) {
 						pc.setType(35);
-					} else if (pc.isDarkelf()) {
+					}
+					else if (pc.isDarkelf()) {
 						pc.setType(36);
-					} else if (pc.isDragonKnight()) {
+					}
+					else if (pc.isDragonKnight()) {
 						pc.setType(37);
-					} else if (pc.isIllusionist()) {
+					}
+					else if (pc.isIllusionist()) {
 						pc.setType(38);
 					}
-					Timestamp deleteTime = new Timestamp(System
-							.currentTimeMillis() + 604800000); // 7日后
+					Timestamp deleteTime = new Timestamp(System.currentTimeMillis() + 604800000); // 7日后
 					pc.setDeleteTime(deleteTime);
 					pc.save(); // 储存到资料库中
-				} else {
+				}
+				else {
 					if (pc.isCrown()) {
 						pc.setType(0);
-					} else if (pc.isKnight()) {
+					}
+					else if (pc.isKnight()) {
 						pc.setType(1);
-					} else if (pc.isElf()) {
+					}
+					else if (pc.isElf()) {
 						pc.setType(2);
-					} else if (pc.isWizard()) {
+					}
+					else if (pc.isWizard()) {
 						pc.setType(3);
-					} else if (pc.isDarkelf()) {
+					}
+					else if (pc.isDarkelf()) {
 						pc.setType(4);
-					} else if (pc.isDragonKnight()) {
+					}
+					else if (pc.isDragonKnight()) {
 						pc.setType(5);
-					} else if (pc.isIllusionist()) {
+					}
+					else if (pc.isIllusionist()) {
 						pc.setType(6);
 					}
 					pc.setDeleteTime(null);
 					pc.save(); // 储存到资料库中
 				}
-				client.sendPacket(new S_DeleteCharOK(S_DeleteCharOK
-						.DELETE_CHAR_AFTER_7DAYS));
+				client.sendPacket(new S_DeleteCharOK(S_DeleteCharOK.DELETE_CHAR_AFTER_7DAYS));
 				return;
 			}
 
@@ -97,9 +106,9 @@ public class C_DeleteChar extends ClientBasePacket {
 					clan.delMemberName(name);
 				}
 			}
-			CharacterTable.getInstance().deleteCharacter(
-					client.getAccountName(), name);
-		} catch (Exception e) {
+			CharacterTable.getInstance().deleteCharacter(client.getAccountName(), name);
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			client.close();
 			return;

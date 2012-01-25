@@ -26,6 +26,7 @@ public class S_Liquor extends ServerBasePacket {
 
 	/**
 	 * 魔法效果:操作混乱 (醉酒状态)
+	 * 
 	 * @param objecId
 	 * @param type
 	 */

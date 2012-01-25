@@ -137,24 +137,20 @@ public class C_LoginToServer extends ClientBasePacket {
 			return;
 		}
 		if ((pc == null) || !login.equals(pc.getAccountName())) {
-			_log.info(
-					"无效的角色名称: 名称=" + charName + " 账号=" + login
-					+ " IP=" + client.getHostname());
+			_log.info("无效的角色名称: 名称=" + charName + " 账号=" + login + " IP=" + client.getHostname());
 			client.close();
 			return;
 		}
 
 		if (Config.LEVEL_DOWN_RANGE != 0) {
 			if (pc.getHighLevel() - pc.getLevel() >= Config.LEVEL_DOWN_RANGE) {
-				_log.info(
-						"登录请求超出了容忍的等级下降的角色: 名称=" + charName + " 账号="
-						+ login + " IP=" + client.getHostname());
+				_log.info("登录请求超出了容忍的等级下降的角色: 名称=" + charName + " 账号=" + login + " IP=" + client.getHostname());
 				client.kick();
 				return;
 			}
 		}
 
-		_log.info("角色登入到伺服器中: 名称=" + charName + " 账号=" + login+ " IP=" + client.getHostname());
+		_log.info("角色登入到伺服器中: 名称=" + charName + " 账号=" + login + " IP=" + client.getHostname());
 
 		int currentHpAtLoad = pc.getCurrentHp();
 		int currentMpAtLoad = pc.getCurrentMp();
@@ -172,15 +168,14 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.sendPackets(AbilityGrowth);
 
 		/*
-		 * S_Unknown1 s_unknown1 = new S_Unknown1(); pc.sendPackets(s_unknown1);
-		 * S_Unknown2 s_unknown2 = new S_Unknown2(); pc.sendPackets(s_unknown2);
+		 * S_Unknown1 s_unknown1 = new S_Unknown1(); pc.sendPackets(s_unknown1); S_Unknown2 s_unknown2 = new S_Unknown2(); pc.sendPackets(s_unknown2);
 		 */
 		pc.sendPackets(new S_LoginGame());
 		bookmarks(pc);
 
 		// Online = 1
-		//Account account = Account.load(pc.getAccountName());
-		//Account.online(account, true);
+		// Account account = Account.load(pc.getAccountName());
+		// Account.online(account, true);
 
 		// OnlineStatus = 1
 		Account.OnlineStatus(account, true);
@@ -219,7 +214,8 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.setY(loc[1]);
 						pc.setMap((short) loc[2]);
 					}
-				} else {
+				}
+				else {
 					// 有城堡就回到城堡
 					int[] loc = new int[3];
 					loc = L1CastleLocation.getGetBackLoc(castle_id);
@@ -270,7 +266,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
 			pc.setStatus(0);
-		} else {
+		}
+		else {
 			pc.setDead(true);
 			pc.setStatus(ActionCodes.ACTION_Die);
 		}
@@ -284,8 +281,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 
 		if ((pc.getLevel() >= 51) && (pc.getLevel() - 50 > pc.getBonusStats())) {
-			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon()
-					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon() + pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 				pc.sendPackets(new S_bonusstats(pc.getId(), 1));
 			}
 		}
@@ -322,7 +318,8 @@ public class C_LoginToServer extends ClientBasePacket {
 							break;
 						}
 					}
-				} else {
+				}
+				else {
 					pc.setClanid(0);
 					pc.setClanname("");
 					pc.setClanRank(0);
@@ -332,11 +329,9 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 
 		if (pc.getPartnerId() != 0) { // 结婚中
-			L1PcInstance partner = (L1PcInstance) L1World.getInstance()
-					.findObject(pc.getPartnerId());
+			L1PcInstance partner = (L1PcInstance) L1World.getInstance().findObject(pc.getPartnerId());
 			if ((partner != null) && (partner.getPartnerId() != 0)) {
-				if ((pc.getPartnerId() == partner.getId())
-						&& (partner.getPartnerId() == pc.getId())) {
+				if ((pc.getPartnerId() == partner.getId()) && (partner.getPartnerId() == pc.getId())) {
 					pc.sendPackets(new S_ServerMessage(548)); // 你的情人目前正在线上。
 					partner.sendPackets(new S_ServerMessage(549)); // 你的情人上线了!!
 				}
@@ -382,8 +377,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_teleport WHERE char_id=? ORDER BY name ASC");
+			pstm = con.prepareStatement("SELECT * FROM character_teleport WHERE char_id=? ORDER BY name ASC");
 			pstm.setInt(1, pc.getId());
 
 			rs = pstm.executeQuery();
@@ -395,12 +389,13 @@ public class C_LoginToServer extends ClientBasePacket {
 				bookmark.setLocX(rs.getInt("locx"));
 				bookmark.setLocY(rs.getInt("locy"));
 				bookmark.setMapId(rs.getShort("mapid"));
-				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(),bookmark.getMapId(), bookmark.getId());
+				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(), bookmark.getMapId(), bookmark.getId());
 				pc.addBookMark(bookmark);
 				pc.sendPackets(s_bookmarks);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -417,8 +412,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=?");
 			pstm.setInt(1, pc.getId());
 			rs = pstm.executeQuery();
 			int i = 0;
@@ -452,8 +446,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			int lv28 = 0;
 			while (rs.next()) {
 				int skillId = rs.getInt("skill_id");
-				L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-						skillId);
+				L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
 				if (l1skills.getSkillLevel() == 1) {
 					lv1 |= l1skills.getId();
 				}
@@ -538,19 +531,14 @@ public class C_LoginToServer extends ClientBasePacket {
 				if (l1skills.getSkillLevel() == 28) {
 					lv28 |= l1skills.getId();
 				}
-				i = lv1 + lv2 + lv3 + lv4 + lv5 + lv6 + lv7 + lv8 + lv9 + lv10
-						+ lv11 + lv12 + lv13 + lv14 + lv15 + lv16 + lv17 + lv18
-						+ lv19 + lv20 + lv21 + lv22 + lv23 + lv24 + lv25 + lv26
-						+ lv27 + lv28;
+				i = lv1 + lv2 + lv3 + lv4 + lv5 + lv6 + lv7 + lv8 + lv9 + lv10 + lv11 + lv12 + lv13 + lv14 + lv15 + lv16 + lv17 + lv18 + lv19 + lv20 + lv21 + lv22 + lv23 + lv24 + lv25 + lv26 + lv27 + lv28;
 				pc.setSkillMastery(skillId);
 			}
 			if (i > 0) {
-				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6,
-						lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15,
-						lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24,
-						lv25, lv26, lv27, lv28));
+				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15, lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24, lv25, lv26, lv27, lv28));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -565,8 +553,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			if (summon.getMaster().getId() == pc.getId()) {
 				summon.setMaster(pc);
 				pc.addPet(summon);
-				for (L1PcInstance visiblePc : L1World.getInstance()
-						.getVisiblePlayer(summon)) {
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
 				}
 			}
@@ -581,8 +568,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
 			pstm.setInt(1, pc.getId());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -592,33 +578,28 @@ public class C_LoginToServer extends ClientBasePacket {
 				switch (skillid) {
 				case SHAPE_CHANGE: // 变身
 					int poly_id = rs.getInt("poly_id");
-					L1PolyMorph.doPoly(pc, poly_id, remaining_time,
-							L1PolyMorph.MORPH_BY_LOGIN);
+					L1PolyMorph.doPoly(pc, poly_id, remaining_time, L1PolyMorph.MORPH_BY_LOGIN);
 					break;
 				case STATUS_BRAVE: // 勇敢药水
-					pc.sendPackets(new S_SkillBrave(pc.getId(), 1,
-							remaining_time));
+					pc.sendPackets(new S_SkillBrave(pc.getId(), 1, remaining_time));
 					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
 					pc.setBraveSpeed(1);
 					pc.setSkillEffect(skillid, remaining_time * 1000);
 					break;
 				case STATUS_ELFBRAVE: // 精灵饼干
-					pc.sendPackets(new S_SkillBrave(pc.getId(), 3,
-							remaining_time));
+					pc.sendPackets(new S_SkillBrave(pc.getId(), 3, remaining_time));
 					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
 					pc.setBraveSpeed(3);
 					pc.setSkillEffect(skillid, remaining_time * 1000);
 					break;
 				case STATUS_BRAVE2: // 超级加速
-					pc.sendPackets(new S_SkillBrave(pc.getId(), 5,
-							remaining_time));
+					pc.sendPackets(new S_SkillBrave(pc.getId(), 5, remaining_time));
 					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 5, 0));
 					pc.setBraveSpeed(5);
 					pc.setSkillEffect(skillid, remaining_time * 1000);
 					break;
 				case STATUS_HASTE: // 加速
-					pc.sendPackets(new S_SkillHaste(pc.getId(), 1,
-							remaining_time));
+					pc.sendPackets(new S_SkillHaste(pc.getId(), 1, remaining_time));
 					pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
 					pc.setMoveSpeed(1);
 					pc.setSkillEffect(skillid, remaining_time * 1000);
@@ -661,29 +642,23 @@ public class C_LoginToServer extends ClientBasePacket {
 					break;
 				default:
 					// 魔法料理
-					if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N))
-							|| ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S))
-							|| ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N))
-							|| ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
-							|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N))
-							|| ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
+					if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N)) || ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S)) || ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N)) || ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
+							|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N)) || ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
 						L1Cooking.eatCooking(pc, skillid, remaining_time);
 					}
 					// 生命之树果实、商城道具
-					else if (skillid == STATUS_RIBRAVE
-							|| (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END)
-							|| skillid == COOKING_WONDER_DRUG) {
+					else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END) || skillid == COOKING_WONDER_DRUG) {
 						;
-					} else {
+					}
+					else {
 						L1SkillUse l1skilluse = new L1SkillUse();
-						l1skilluse.handleCommands(clientthread.getActiveChar(),
-								skillid, pc.getId(), pc.getX(), pc.getY(),
-								null, remaining_time, L1SkillUse.TYPE_LOGIN);
+						l1skilluse.handleCommands(clientthread.getActiveChar(), skillid, pc.getId(), pc.getX(), pc.getY(), null, remaining_time, L1SkillUse.TYPE_LOGIN);
 					}
 					break;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

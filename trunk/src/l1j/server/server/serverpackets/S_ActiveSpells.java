@@ -41,10 +41,11 @@ public class S_ActiveSpells extends ServerBasePacket {
 
 		for (int i : activeSpells(pc)) {
 			if (i != 72) {
-				writeC(i); 
-	         } else {
-	        	 writeD((int) (System.currentTimeMillis() / 1000)); 
-	         }
+				writeC(i);
+			}
+			else {
+				writeD((int) (System.currentTimeMillis() / 1000));
+			}
 		}
 		writeByte(randBox);
 	}
@@ -52,7 +53,7 @@ public class S_ActiveSpells extends ServerBasePacket {
 	// 登入时给于角色状态剩余时间
 	private int[] activeSpells(L1PcInstance pc) {
 		int[] data = new int[104];
-		 // 生命之树果实
+		// 生命之树果实
 		if (pc.hasSkillEffect(STATUS_RIBRAVE)) {
 			data[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
 		}
@@ -101,14 +102,14 @@ public class S_ActiveSpells extends ServerBasePacket {
 				if (data[46] != 0) {
 					data[47] = i; // 体力上限+50，体力回复+4。
 				}
-			} 
+			}
 		}
 		// 附魔石
 		if (pc.getMagicStoneLevel() != 0) {
 			int skillId = pc.getMagicStoneLevel() + 3929; // skillId = 4013 ~ 4048
 			data[102] = pc.getSkillEffectTimeSec(skillId) / 32;
 			if (data[102] != 0) {
-				data[103] = pc.getMagicStoneLevel() ;
+				data[103] = pc.getMagicStoneLevel();
 			}
 		}
 		// 龙之魔眼
@@ -126,7 +127,8 @@ public class S_ActiveSpells extends ServerBasePacket {
 			if (data[76] != 0) {
 				data[77] = 45;
 			}
-		} else if (pc.hasSkillEffect(EFFECT_BLESS_OF_SAELL)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_BLESS_OF_SAELL)) {
 			data[76] = pc.getSkillEffectTimeSec(EFFECT_BLESS_OF_SAELL) / 32;
 			if (data[76] != 0) {
 				data[77] = 60;

@@ -37,11 +37,9 @@ public class L1Teleport {
 	public static final int CALL_CLAN = 3;
 
 	// 瞬移动画效果teleport(白), change position e(青), ad mass teleport e(赤), call clan(緑)
-	public static final int[] EFFECT_SPR =
-	{ 169, 2235, 2236, 2281 };
+	public static final int[] EFFECT_SPR = { 169, 2235, 2236, 2281 };
 
-	public static final int[] EFFECT_TIME =
-	{ 280, 440, 440, 1120 };
+	public static final int[] EFFECT_TIME = { 280, 440, 440, 1120 };
 
 	private L1Teleport() {
 	}
@@ -61,7 +59,7 @@ public class L1Teleport {
 
 	public static void teleport(L1PcInstance pc, int x, int y, short mapId, int head, boolean effectable, int skillType) {
 
-		//pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
+		// pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
 
 		// 查看效果
 		if (effectable && ((skillType >= 0) && (skillType <= EFFECT_SPR.length))) {
@@ -79,7 +77,8 @@ public class L1Teleport {
 			try {
 				Thread.sleep((int) (EFFECT_TIME[skillType] * 0.7));
 			}
-			catch (Exception e) {}
+			catch (Exception e) {
+			}
 		}
 
 		pc.setTeleportX(x);
@@ -106,44 +105,44 @@ public class L1Teleport {
 
 		// 确定目标面向的坐标。
 		switch (heading) {
-			case 1:
-				locX += distance;
-				locY -= distance;
-				break;
+		case 1:
+			locX += distance;
+			locY -= distance;
+			break;
 
-			case 2:
-				locX += distance;
-				break;
+		case 2:
+			locX += distance;
+			break;
 
-			case 3:
-				locX += distance;
-				locY += distance;
-				break;
+		case 3:
+			locX += distance;
+			locY += distance;
+			break;
 
-			case 4:
-				locY += distance;
-				break;
+		case 4:
+			locY += distance;
+			break;
 
-			case 5:
-				locX -= distance;
-				locY += distance;
-				break;
+		case 5:
+			locX -= distance;
+			locY += distance;
+			break;
 
-			case 6:
-				locX -= distance;
-				break;
+		case 6:
+			locX -= distance;
+			break;
 
-			case 7:
-				locX -= distance;
-				locY -= distance;
-				break;
+		case 7:
+			locX -= distance;
+			locY -= distance;
+			break;
 
-			case 0:
-				locY -= distance;
-				break;
+		case 0:
+			locY -= distance;
+			break;
 
-			default:
-				break;
+		default:
+			break;
 
 		}
 

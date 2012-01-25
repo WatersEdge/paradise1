@@ -147,8 +147,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
 				if (hascastle) { // 本城成员(城主)
 					htmlid = "gateokeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -158,8 +157,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
 				if (hascastle) { // 本城成员(城主)
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -180,8 +178,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -191,8 +188,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -203,8 +199,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -214,8 +209,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -226,8 +220,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -237,8 +230,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -249,8 +241,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -260,8 +251,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -271,8 +261,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				hascastle = checkHasCastle(player, L1CastleLocation.ADEN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
-					htmldata = new String[]
-					{ player.getName() };
+					htmldata = new String[] { player.getName() };
 				}
 				else {
 					htmlid = "gatekeeperop";
@@ -290,8 +279,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "ktguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60560) { // オーク近衛兵
 				for (L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -303,8 +291,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "orcguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60552) { // ウィンダウッド城近衛兵
 				for (L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -316,8 +303,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "wdguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60524) || // ギラン街入り口近衛兵(弓)
 					(npcid == 60525) || // ギラン街入り口近衛兵
@@ -331,8 +317,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "grguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 70857) { // ハイネ城ハイネ ガード
 				for (L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -344,8 +329,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "heguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60530) || // ドワーフ城ドワーフ ガード
 					(npcid == 60531)) {
@@ -358,8 +342,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "dcguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60533) || // アデン城 ガード
 					(npcid == 60534)) {
@@ -372,8 +355,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "adguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 81156) { // アデン偵察兵（ディアド要塞）
 				for (L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -385,8 +367,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "ktguard6";
-				htmldata = new String[]
-				{ getName(), clan_name, pri_name };
+				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 
 			// html表示パケット送信
@@ -457,7 +438,8 @@ public class L1GuardInstance extends L1NpcInstance {
 				setCurrentHp(newHp);
 			}
 		}
-		else if ((getCurrentHp() == 0) && !isDead()) {}
+		else if ((getCurrentHp() == 0) && !isDead()) {
+		}
 		else if (!isDead()) { // 念のため
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);

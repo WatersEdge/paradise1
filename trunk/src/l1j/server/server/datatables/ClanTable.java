@@ -75,7 +75,8 @@ public class ClanTable {
 					_clans.put(clan_id, clan);
 				}
 
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				SQLUtil.close(rs);
@@ -99,7 +100,8 @@ public class ClanTable {
 				while (rs.next()) {
 					clan.addMemberName(rs.getString(1));
 				}
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				SQLUtil.close(rs);
@@ -149,7 +151,8 @@ public class ClanTable {
 			pstm.setInt(5, clan.getCastleId());
 			pstm.setInt(6, clan.getHouseId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -166,7 +169,8 @@ public class ClanTable {
 		try {
 			// 将玩家资料保存至资料库
 			player.save();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return clan;
@@ -190,7 +194,8 @@ public class ClanTable {
 			pstm.setInt(5, clan.getHouseId());
 			pstm.setString(6, clan.getClanName());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -215,7 +220,8 @@ public class ClanTable {
 			pstm = con.prepareStatement("DELETE FROM clan_data WHERE clan_name=?");
 			pstm.setString(1, clan_name);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

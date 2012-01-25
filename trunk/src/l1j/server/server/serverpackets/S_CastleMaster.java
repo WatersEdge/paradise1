@@ -30,8 +30,11 @@ public class S_CastleMaster extends ServerBasePacket {
 
 	/**
 	 * 角色皇冠
-	 * @param type 城堡编号
-	 * @param objecId 角色的OBJID
+	 * 
+	 * @param type
+	 *            城堡编号
+	 * @param objecId
+	 *            角色的OBJID
 	 */
 	public S_CastleMaster(int type, int objecId) {
 		buildPacket(type, objecId);

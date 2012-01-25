@@ -20,7 +20,7 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 /**
- *	控制台日志格式化
+ * 控制台日志格式化
  */
 public class ConsoleLogFormatter extends Formatter {
 	/*
@@ -45,7 +45,8 @@ public class ConsoleLogFormatter extends Formatter {
 				pw.close();
 				output.append(sw.toString());
 				output.append("\r\n");
-			} catch (Exception ex) {
+			}
+			catch (Exception ex) {
 			}
 		}
 		return output.toString();

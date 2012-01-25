@@ -55,25 +55,31 @@ public class Beginner {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con
-					.prepareStatement("SELECT * FROM beginner WHERE activate IN(?,?)");
+			pstm1 = con.prepareStatement("SELECT * FROM beginner WHERE activate IN(?,?)");
 
 			pstm1.setString(1, "A");
 			if (pc.isCrown()) { // 王族
 				pstm1.setString(2, "P");
-			} else if (pc.isKnight()) { // 骑士
+			}
+			else if (pc.isKnight()) { // 骑士
 				pstm1.setString(2, "K");
-			} else if (pc.isElf()) { // 精灵
+			}
+			else if (pc.isElf()) { // 精灵
 				pstm1.setString(2, "E");
-			} else if (pc.isWizard()) { // 法师
+			}
+			else if (pc.isWizard()) { // 法师
 				pstm1.setString(2, "W");
-			} else if (pc.isDarkelf()) { // 黑暗精灵
+			}
+			else if (pc.isDarkelf()) { // 黑暗精灵
 				pstm1.setString(2, "D");
-			} else if (pc.isDragonKnight()) { // 龙骑士
+			}
+			else if (pc.isDragonKnight()) { // 龙骑士
 				pstm1.setString(2, "R");
-			} else if (pc.isIllusionist()) { // 幻术师
+			}
+			else if (pc.isIllusionist()) { // 幻术师
 				pstm1.setString(2, "I");
-			} else {
+			}
+			else {
 				pstm1.setString(2, "A");// 避免万一在没有指定情况下的错误发生(全职)
 			}
 			rs = pstm1.executeQuery();
@@ -81,8 +87,7 @@ public class Beginner {
 			while (rs.next()) {
 				PreparedStatement pstm2 = null;
 				try {
-					pstm2 = con
-							.prepareStatement("INSERT INTO character_items SET id=?, item_id=?, char_id=?, item_name=?, count=?, is_equipped=?, enchantlvl=?, is_id=?, durability=?, charge_count=?, remaining_time=?, last_used=?, bless=?");
+					pstm2 = con.prepareStatement("INSERT INTO character_items SET id=?, item_id=?, char_id=?, item_name=?, count=?, is_equipped=?, enchantlvl=?, is_id=?, durability=?, charge_count=?, remaining_time=?, last_used=?, bless=?");
 					pstm2.setInt(1, IdFactory.getInstance().nextId());
 					pstm2.setInt(2, rs.getInt("item_id"));
 					pstm2.setInt(3, pc.getId());
@@ -97,13 +102,15 @@ public class Beginner {
 					pstm2.setTimestamp(12, null);
 					pstm2.setInt(13, 1);
 					pstm2.execute();
-				} catch (SQLException e2) {
+				}
+				catch (SQLException e2) {
 					_log.log(Level.SEVERE, e2.getLocalizedMessage(), e2);
 				} finally {
 					SQLUtil.close(pstm2);
 				}
 			}
-		} catch (SQLException e1) {
+		}
+		catch (SQLException e1) {
 			_log.log(Level.SEVERE, e1.getLocalizedMessage(), e1);
 		} finally {
 			SQLUtil.close(rs);

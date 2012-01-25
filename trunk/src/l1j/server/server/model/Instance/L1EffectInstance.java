@@ -61,10 +61,11 @@ public class L1EffectInstance extends L1NpcInstance {
 			GeneralThreadPool.getInstance().schedule(new FwDamageTimer(this), 0);
 		}
 		else if ((npcId == 80149 // 立方：燃烧
-				) || (npcId == 80150 // 立方：地裂
+				)
+				|| (npcId == 80150 // 立方：地裂
 				) || (npcId == 80151 // 立方：冲击
 				) || (npcId == 80152) // 立方：和谐
-				) {
+		) {
 			GeneralThreadPool.getInstance().schedule(new CubeTimer(this), 0);
 		}
 		else if (npcId == 93002) { // 毒雾-中毒效果

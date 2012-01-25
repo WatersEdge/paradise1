@@ -42,7 +42,8 @@ public class MpRegenerationByDoll extends TimerTask {
 				return;
 			}
 			regenMp();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

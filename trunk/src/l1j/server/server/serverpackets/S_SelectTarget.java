@@ -30,6 +30,7 @@ public class S_SelectTarget extends ServerBasePacket {
 
 	/**
 	 * 选择一个目标
+	 * 
 	 * @param ObjectId
 	 */
 	public S_SelectTarget(int ObjectId) {

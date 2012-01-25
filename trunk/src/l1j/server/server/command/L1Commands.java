@@ -56,8 +56,7 @@ public class L1Commands {
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, "错误的指令", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -81,8 +80,7 @@ public class L1Commands {
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, "错误的指令", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

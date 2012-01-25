@@ -26,6 +26,7 @@ public class S_Trade extends ServerBasePacket {
 
 	/**
 	 * 交易封包
+	 * 
 	 * @param name
 	 */
 	public S_Trade(String name) {

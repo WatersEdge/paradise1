@@ -80,7 +80,8 @@ public class UBSpawnTable {
 
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			// problem with initializing spawn, go to next one
 			_log.warning("spawn couldnt 被初始化:" + e);
 		} finally {
@@ -116,7 +117,8 @@ public class UBSpawnTable {
 			if (rs.next()) {
 				n = rs.getInt(1);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

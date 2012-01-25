@@ -41,6 +41,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 
 	/**
 	 * 角色配置
+	 * 
 	 * @param objId
 	 */
 	public S_CharacterConfig(int objectId) {
@@ -55,15 +56,15 @@ public class S_CharacterConfig extends ServerBasePacket {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_config WHERE object_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_config WHERE object_id=?");
 			pstm.setInt(1, objectId);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				length = rs.getInt(2);
 				data = rs.getBytes(3);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

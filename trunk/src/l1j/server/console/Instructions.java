@@ -18,14 +18,21 @@ package l1j.server.console;
  * 
  */
 public class Instructions {
-	/** 删除等级以下的角色 */
+
+	/**
+	 * 删除等级以下的角色
+	 * 
+	 * @param level
+	 *            玩家等级
+	 */
 	public static void DeleteUnderLevel(int level) {
 		// TODO 移除角色的SQL指令
 	}
 
-	/** 马上执行资料库备份 */
+	/**
+	 * 马上执行资料库备份
+	 */
 	public static void DatabaseBackupNow() {
 		// TODO 资料库备份
-
 	}
 }

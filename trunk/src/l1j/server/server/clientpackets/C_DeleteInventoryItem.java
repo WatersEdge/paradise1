@@ -72,7 +72,7 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 		}
 		// 封印中的装备 - 无法删除
 		if (item.getBless() >= 128) {
-			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的… 
+			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 			return;
 		}
 

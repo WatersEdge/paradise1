@@ -26,6 +26,7 @@ public class S_Drawal extends ServerBasePacket {
 
 	/**
 	 * 城堡宝库 (要求取出资金)
+	 * 
 	 * @param objectId
 	 * @param count
 	 */

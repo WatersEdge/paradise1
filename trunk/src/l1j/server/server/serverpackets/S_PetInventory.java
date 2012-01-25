@@ -34,6 +34,7 @@ public class S_PetInventory extends ServerBasePacket {
 
 	/**
 	 * 物品名单 (宠物背包)
+	 * 
 	 * @param pet
 	 */
 	public S_PetInventory(L1PetInstance pet) {
@@ -50,17 +51,16 @@ public class S_PetInventory extends ServerBasePacket {
 				continue;
 			}
 			writeD(petItem.getId());
-			writeC(0x02); // 值:0x00  无、0x01:武器类、0x02:防具类、0x16:牙齿类 、0x33:药水类
+			writeC(0x02); // 值:0x00 无、0x01:武器类、0x02:防具类、0x16:牙齿类 、0x33:药水类
 			writeH(petItem.get_gfxid());
 			writeC(petItem.getBless());
 			writeD(petItem.getCount());
 
 			// 显示装备中的宠物装备
-			if (petItem.getItem().getType2() == 0 
-					&& petItem.getItem().getType() == 11
-					&& petItem.isEquipped()) {
+			if (petItem.getItem().getType2() == 0 && petItem.getItem().getType() == 11 && petItem.isEquipped()) {
 				writeC(petItem.isIdentified() ? 3 : 2);
-			} else {
+			}
+			else {
 				writeC(petItem.isIdentified() ? 1 : 0);
 			}
 			writeS(petItem.getViewName());

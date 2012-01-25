@@ -61,7 +61,8 @@ public class PolyTable {
 			pstm = con.prepareStatement("SELECT * FROM polymorphs union SELECT * FROM z_copy_polymorphs");
 			rs = pstm.executeQuery();
 			fillPolyTable(rs);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

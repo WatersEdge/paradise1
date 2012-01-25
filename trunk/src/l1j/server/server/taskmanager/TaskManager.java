@@ -40,9 +40,7 @@ public final class TaskManager {
 
 	private static TaskManager _instance;
 
-	protected static final String[] SQL_STATEMENTS =
-	{ "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks", "UPDATE global_tasks SET last_activation=? WHERE id=?",
-			"SELECT id FROM global_tasks WHERE task=?",
+	protected static final String[] SQL_STATEMENTS = { "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks", "UPDATE global_tasks SET last_activation=? WHERE id=?", "SELECT id FROM global_tasks WHERE task=?",
 			"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)" };
 
 	private final Map<Integer, Task> _tasks = Maps.newMap();
@@ -67,8 +65,7 @@ public final class TaskManager {
 			_type = type;
 			_id = rset.getInt("id");
 			_lastActivation = rset.getLong("last_activation");
-			_params = new String[]
-			{ rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
+			_params = new String[] { rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
 		}
 
 		@Override
@@ -88,8 +85,7 @@ public final class TaskManager {
 			}
 			catch (SQLException e) {
 				_log.warning("cannot updated the Global Task " + _id + ": " + e.getMessage());
-			}
-			finally {
+			} finally {
 				SQLUtil.close(pstm);
 				SQLUtil.close(con);
 			}
@@ -179,8 +175,7 @@ public final class TaskManager {
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, "error while loading Global Task table", e);
-		}
-		finally {
+		} finally {
 			if (null != rs) {
 				try {
 					rs.close();
@@ -244,8 +239,7 @@ public final class TaskManager {
 		}
 		catch (SQLException e) {
 			_log.warning("cannot add the unique task: " + e.getMessage());
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -277,8 +271,7 @@ public final class TaskManager {
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, "cannot add the task", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

@@ -35,11 +35,9 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  */
 public class C_MoveChar extends ClientBasePacket {
 
-	private static final byte HEADING_TABLE_X[] =
-	{ 0, 1, 1, 1, 0, -1, -1, -1 };
+	private static final byte HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
-	private static final byte HEADING_TABLE_Y[] =
-	{ -1, -1, 0, 1, 1, 1, 0, -1 };
+	private static final byte HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
@@ -99,7 +97,8 @@ public class C_MoveChar extends ClientBasePacket {
 
 		pc.getLocation().set(locx, locy);
 		pc.setHeading(heading);
-		if (pc.isGmInvis() || pc.isGhost()) {}
+		if (pc.isGmInvis() || pc.isGhost()) {
+		}
 		else if (pc.isInvisble()) {
 			pc.broadcastPacketForFindInvis(new S_MoveCharPacket(pc), true);
 		}

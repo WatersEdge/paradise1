@@ -59,7 +59,8 @@ public class WeaponSkillTable {
 			pstm = con.prepareStatement("SELECT * FROM weapon_skill union SELECT * FROM z_copy_weapon_skill");
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

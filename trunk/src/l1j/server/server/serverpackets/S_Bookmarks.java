@@ -26,6 +26,7 @@ public class S_Bookmarks extends ServerBasePacket {
 
 	/**
 	 * 角色坐标清单
+	 * 
 	 * @param name
 	 * @param map
 	 * @param id

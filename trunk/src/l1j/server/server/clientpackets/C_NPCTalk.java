@@ -53,7 +53,8 @@ public class C_NPCTalk extends ClientBasePacket {
 				return;
 			}
 			obj.onTalkAction(pc);
-		} else {
+		}
+		else {
 			_log.severe("不正确的NPC objid=" + objid);
 		}
 	}

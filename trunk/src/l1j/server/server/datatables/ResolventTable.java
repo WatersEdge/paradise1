@@ -64,7 +64,8 @@ public final class ResolventTable {
 			}
 
 			_log.config("resolvent " + _resolvent.size());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

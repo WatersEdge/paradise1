@@ -27,9 +27,7 @@ public class S_ServerVersion extends ServerBasePacket {
 	private static final int uptime = (int) (System.currentTimeMillis() / 1000);
 
 	/*
-	 * [来源:Server]<位址:17>{长度:32}(时间:1314150068749) 0000: 11 00 38 32 c7 a8 00 a7
-	 * c6 a8 00 ba 6e cf 77 ad ..82........n.w. 0010: cd a8 00 71 23 53 4e 00 00
-	 * 03 00 00 00 00 08 00 ...q#SN.........
+	 * [来源:Server]<位址:17>{长度:32}(时间:1314150068749) 0000: 11 00 38 32 c7 a8 00 a7 c6 a8 00 ba 6e cf 77 ad ..82........n.w. 0010: cd a8 00 71 23 53 4e 00 00 03 00 00 00 00 08 00 ...q#SN.........
 	 */
 	/**
 	 * 伺服器版本

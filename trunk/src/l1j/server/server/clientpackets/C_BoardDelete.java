@@ -57,15 +57,11 @@ public class C_BoardDelete extends ClientBasePacket {
 	}
 
 	private void logNotExist(int topicId) {
-		_log.warning(String
-				.format("Illegal board deletion request: Topic id <%d> does not exist.",
-						topicId));
+		_log.warning(String.format("Illegal board deletion request: Topic id <%d> does not exist.", topicId));
 	}
 
 	private void logIllegalDeletion(L1BoardTopic topic, String name) {
-		_log.warning(String
-				.format("Illegal board deletion request: Name <%s> expected but was <%s>.",
-						topic.getName(), name));
+		_log.warning(String.format("Illegal board deletion request: Name <%s> expected but was <%s>.", topic.getName(), name));
 	}
 
 	@Override

@@ -82,8 +82,7 @@ public class L1ItemDelay {
 		 * @param delayTiem
 		 *            延迟时间 (毫秒)
 		 */
-		public ItemDelayTimer(final L1Character cha, final int id,
-				final int delayTime) {
+		public ItemDelayTimer(final L1Character cha, final int id, final int delayTime) {
 			this._cha = cha;
 			this._delayId = id;
 			this._delayTime = delayTime;
@@ -131,18 +130,17 @@ public class L1ItemDelay {
 	 * @param delayTime
 	 *            延迟时间 (毫秒)
 	 */
-	public static void onItemUse(final L1PcInstance pc, int delayId,
-			int delayTime) {
+	public static void onItemUse(final L1PcInstance pc, int delayId, int delayTime) {
 		try {
 			if ((delayId != 0) && (delayTime != 0)) {
-				final ItemDelayTimer timer = new ItemDelayTimer(pc, delayId,
-						delayTime);
+				final ItemDelayTimer timer = new ItemDelayTimer(pc, delayId, delayTime);
 
 				pc.addItemDelay(delayId, timer);
 				GeneralThreadPool.getInstance().schedule(timer, delayTime);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -155,15 +153,15 @@ public class L1ItemDelay {
 	 * @param item
 	 *            物件
 	 */
-	public static void onItemUse(final ClientThread client,
-			final L1ItemInstance item) {
+	public static void onItemUse(final ClientThread client, final L1ItemInstance item) {
 		try {
 			final L1PcInstance pc = client.getActiveChar();
 			if (pc != null) {
 				onItemUse(pc, item);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -176,8 +174,7 @@ public class L1ItemDelay {
 	 * @param item
 	 *            物件
 	 */
-	public static void onItemUse(final L1PcInstance pc,
-			final L1ItemInstance item) {
+	public static void onItemUse(final L1PcInstance pc, final L1ItemInstance item) {
 		try {
 			int delayId = 0;
 			int delayTime = 0;
@@ -209,14 +206,14 @@ public class L1ItemDelay {
 			}
 
 			if ((delayId != 0) && (delayTime != 0)) {
-				final ItemDelayTimer timer = new ItemDelayTimer(pc, delayId,
-						delayTime);
+				final ItemDelayTimer timer = new ItemDelayTimer(pc, delayId, delayTime);
 
 				pc.addItemDelay(delayId, timer);
 				GeneralThreadPool.getInstance().schedule(timer, delayTime);
 			}
 
-		} catch (final Exception e) {
+		}
+		catch (final Exception e) {
 			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
@@ -241,8 +238,7 @@ public class L1ItemDelay {
 
 		@Override
 		public void run() {
-			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK,
-					true));
+			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 		}
 	}
 

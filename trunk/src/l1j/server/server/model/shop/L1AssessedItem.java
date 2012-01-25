@@ -37,12 +37,11 @@ public class L1AssessedItem {
 
 			int price = 0;
 			if (ticket != null) {
-				price = (int) (assessedPrice
-						* ticket.get_allotment_percentage() * ticket
-						.get_victory());
+				price = (int) (assessedPrice * ticket.get_allotment_percentage() * ticket.get_victory());
 			}
 			_assessedPrice = price;
-		} else {
+		}
+		else {
 			_assessedPrice = assessedPrice;
 		}
 	}

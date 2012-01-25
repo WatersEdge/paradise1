@@ -39,9 +39,7 @@ public class L1HateList {
 
 	public L1HateList() {
 		/*
-		 * ConcurrentHashMapを利用するより、 全てのメソッドを同期する方がメモリ使用量、速度共に優れていた。
-		 * 但し、今後このクラスの利用方法が変わった場合、 例えば多くのスレッドから同時に読み出しがかかるようになった場合は、
-		 * ConcurrentHashMap使用 可能是更好的。
+		 * ConcurrentHashMapを利用するより、 全てのメソッドを同期する方がメモリ使用量、速度共に優れていた。 但し、今後このクラスの利用方法が変わった場合、 例えば多くのスレッドから同時に読み出しがかかるようになった場合は、 ConcurrentHashMap使用 可能是更好的。
 		 */
 		_hateMap = Maps.newMap();
 	}

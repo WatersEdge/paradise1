@@ -30,9 +30,13 @@ public class S_TrueTarget extends ServerBasePacket {
 
 	/**
 	 * 法术效果-精准目标
-	 * @param targetId 目标OBJID
-	 * @param objectId 使用者OBJID
-	 * @param message 附加讯息
+	 * 
+	 * @param targetId
+	 *            目标OBJID
+	 * @param objectId
+	 *            使用者OBJID
+	 * @param message
+	 *            附加讯息
 	 */
 	public S_TrueTarget(int targetId, int objectId, String message) {
 		buildPacket(targetId, objectId, message);

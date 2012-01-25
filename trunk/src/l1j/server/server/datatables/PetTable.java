@@ -80,7 +80,8 @@ public class PetTable {
 
 				_pets.put(new Integer(itemobjid), pet);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -109,8 +110,7 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=?");
+			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=?");
 			pstm.setInt(1, l1pet.get_itemobjid());
 			pstm.setInt(2, l1pet.get_objid());
 			pstm.setInt(3, l1pet.get_npcid());
@@ -122,7 +122,8 @@ public class PetTable {
 			pstm.setInt(9, l1pet.get_lawful());
 			pstm.setInt(10, l1pet.get_food());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -137,8 +138,7 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE pets SET objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
+			pstm = con.prepareStatement("UPDATE pets SET objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=? WHERE item_obj_id=?");
 			pstm.setInt(1, pet.get_objid());
 			pstm.setInt(2, pet.get_npcid());
 			pstm.setString(3, pet.get_name());
@@ -150,7 +150,8 @@ public class PetTable {
 			pstm.setInt(9, pet.get_food());
 			pstm.setInt(10, pet.get_itemobjid());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -164,12 +165,12 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE pets SET food=? WHERE item_obj_id=?");
+			pstm = con.prepareStatement("UPDATE pets SET food=? WHERE item_obj_id=?");
 			pstm.setInt(1, pet.get_food());
 			pstm.setInt(2, pet.get_itemobjid());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -185,7 +186,8 @@ public class PetTable {
 			pstm = con.prepareStatement("DELETE FROM pets WHERE item_obj_id=?");
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -210,11 +212,9 @@ public class PetTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			/*
-			 * 同じ名前を探す。MySQLはデフォルトでcase insensitiveなため
-			 * 本来LOWERは必要ないが、binaryに変更された場合に備えて。
+			 * 同じ名前を探す。MySQLはデフォルトでcase insensitiveなため 本来LOWERは必要ないが、binaryに変更された場合に備えて。
 			 */
-			pstm = con
-					.prepareStatement("SELECT item_obj_id FROM pets WHERE LOWER(name)=?");
+			pstm = con.prepareStatement("SELECT item_obj_id FROM pets WHERE LOWER(name)=?");
 			pstm.setString(1, nameLower);
 			rs = pstm.executeQuery();
 			if (!rs.next()) { // 不一样的名字
@@ -223,7 +223,8 @@ public class PetTable {
 			if (PetTypeTable.getInstance().isNameDefault(nameLower)) { // デフォルトの名前なら重複していないとみなす
 				return false;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -236,8 +237,7 @@ public class PetTable {
 	/**
 	 * 经过 C_NPCAction 获得 pet
 	 */
-	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv,
-			int lvExp) {
+	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv, int lvExp) {
 		L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
 		L1Pet l1pet = new L1Pet();
 		l1pet.set_itemobjid(itemobjid);
@@ -266,8 +266,7 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=?");
+			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?,food=?");
 			pstm.setInt(1, l1pet.get_itemobjid());
 			pstm.setInt(2, l1pet.get_objid());
 			pstm.setInt(3, l1pet.get_npcid());
@@ -279,7 +278,8 @@ public class PetTable {
 			pstm.setInt(9, l1pet.get_lawful());
 			pstm.setInt(10, l1pet.get_food());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {

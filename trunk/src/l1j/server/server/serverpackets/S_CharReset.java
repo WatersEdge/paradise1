@@ -27,8 +27,7 @@ public class S_CharReset extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/**
-	 * 重置升级能力更新 [Server] opcode = 43 0000: 2b /02/ 01 2d/ 0f 00/ 04 00/ 0a 00
-	 * /0c 0c 0c 0c 12 09 +..-............
+	 * 重置升级能力更新 [Server] opcode = 43 0000: 2b /02/ 01 2d/ 0f 00/ 04 00/ 0a 00 /0c 0c 0c 0c 12 09 +..-............
 	 */
 	public S_CharReset(L1PcInstance pc, int lv, int hp, int mp, int ac, int str, int intel, int wis, int dex, int con, int cha) {
 		writeC(Opcodes.S_OPCODE_CHARRESET);
@@ -53,8 +52,7 @@ public class S_CharReset extends ServerBasePacket {
 	}
 
 	/**
-	 * 45及腰精進入崇志 [Server] opcode = 43 0000: 2b 01 0f 00 04 00 0a 2d 56法進入崇志
-	 * [Server] opcode = 43 0000: 2b 01 0c 00 06 00 0a 38
+	 * 45及腰精進入崇志 [Server] opcode = 43 0000: 2b 01 0f 00 04 00 0a 2d 56法進入崇志 [Server] opcode = 43 0000: 2b 01 0c 00 06 00 0a 38
 	 */
 	public S_CharReset(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARRESET);

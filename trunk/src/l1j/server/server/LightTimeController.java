@@ -43,7 +43,8 @@ public class LightTimeController implements Runnable {
 				checkLightTime();
 				Thread.sleep(60000);
 			}
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 		}
 	}
 
@@ -51,15 +52,15 @@ public class LightTimeController implements Runnable {
 	private void checkLightTime() {
 		int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		int nowTime = serverTime % 86400;
-		if ((nowTime >= ((5 * 3600) + 3300))
-				&& (nowTime < ((17 * 3600) + 3300))) { // 5:55~17:55
+		if ((nowTime >= ((5 * 3600) + 3300)) && (nowTime < ((17 * 3600) + 3300))) { // 5:55~17:55
 			if (isSpawn) {
 				isSpawn = false;
 				for (L1Object object : L1World.getInstance().getObject()) {
 					if (object instanceof L1FieldObjectInstance) {
 						L1FieldObjectInstance npc = (L1FieldObjectInstance) object;
 						if (((npc.getNpcTemplate().get_npcId() == 81177 // 火窟(小)
-								) || (npc.getNpcTemplate().get_npcId() == 81178 // 火窟(中)
+								)
+								|| (npc.getNpcTemplate().get_npcId() == 81178 // 火窟(中)
 								) || (npc.getNpcTemplate().get_npcId() == 81179 // 火窟(小底座阴影)
 								) || (npc.getNpcTemplate().get_npcId() == 81180 // 火窟(大)
 								) || (npc.getNpcTemplate().get_npcId() == 81181 // 火窟(小脚)
@@ -70,8 +71,8 @@ public class LightTimeController implements Runnable {
 					}
 				}
 			}
-		} else if (((nowTime >= ((17 * 3600) + 3300)) && (nowTime <= 24 * 3600))
-				|| ((nowTime >= 0 * 3600) && (nowTime < ((5 * 3600) + 3300)))) { // 17:55~24:00,0:00~5:55
+		}
+		else if (((nowTime >= ((17 * 3600) + 3300)) && (nowTime <= 24 * 3600)) || ((nowTime >= 0 * 3600) && (nowTime < ((5 * 3600) + 3300)))) { // 17:55~24:00,0:00~5:55
 			if (!isSpawn) {
 				isSpawn = true;
 				LightSpawnTable.getInstance();

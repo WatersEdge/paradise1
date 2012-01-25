@@ -30,7 +30,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 	public Object clone() {
 		try {
 			return super.clone();
-		} catch (CloneNotSupportedException e) {
+		}
+		catch (CloneNotSupportedException e) {
 			// throw (new InternalError(e.getMessage()));
 			return null;
 		}

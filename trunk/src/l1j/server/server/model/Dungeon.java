@@ -50,8 +50,7 @@ public class Dungeon {
 	private static Map<String, NewDungeon> _dungeonMap = Maps.newMap();
 
 	private enum DungeonType {
-		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI,
-		TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
+		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI, TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
 	}
 
 	public static Dungeon getInstance() {
@@ -107,7 +106,7 @@ public class Dungeon {
 					dungeonType = DungeonType.SHIP_FOR_GLUDIN;
 				}
 				else if ((((srcX == 32540) || (srcX == 32542) || (srcX == 32543) || (srcX == 32544) || (srcX == 32545)) && (srcY == 32728) && (srcMapId == 4 // AdenMainland->AdenMainlandShiptoTalkingIsland
-				))
+						))
 						|| (((srcX == 32734) || (srcX == 32735) || (srcX == 32736) || (srcX == 32737)) && (srcY == 32794) && (srcMapId == 6))) { // AdenMainlandShiptoTalkingIsland->AdenMainland
 					dungeonType = DungeonType.SHIP_FOR_TI;
 				}
@@ -141,8 +140,7 @@ public class Dungeon {
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -187,33 +185,37 @@ public class Dungeon {
 				teleportable = true;
 			}
 			else {
-				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL
-						|| dungeonType == DungeonType.WINDAWOOD_HOTEL || dungeonType == DungeonType.SILVER_KNIGHT_HOTEL
-						|| dungeonType == DungeonType.HEINE_HOTEL || dungeonType == DungeonType.GIRAN_HOTEL
-						|| dungeonType == DungeonType.OREN_HOTEL) {
+				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL || dungeonType == DungeonType.WINDAWOOD_HOTEL || dungeonType == DungeonType.SILVER_KNIGHT_HOTEL || dungeonType == DungeonType.HEINE_HOTEL
+						|| dungeonType == DungeonType.GIRAN_HOTEL || dungeonType == DungeonType.OREN_HOTEL) {
 					int npcid = 0;
 					int[] data = null;
 					if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL) {
 						npcid = 70012; // 说话之岛 - 瑟琳娜
-						data = new int[] {32745, 32803, 16384, 32743, 32808, 16896};
-					} else if (dungeonType == DungeonType.GLUDIO_HOTEL) {
+						data = new int[] { 32745, 32803, 16384, 32743, 32808, 16896 };
+					}
+					else if (dungeonType == DungeonType.GLUDIO_HOTEL) {
 						npcid = 70019; // 古鲁丁 - 罗利雅
-						data = new int[] {32743, 32803, 17408, 32744, 32807, 17920};
-					} else if (dungeonType == DungeonType.GIRAN_HOTEL) {
+						data = new int[] { 32743, 32803, 17408, 32744, 32807, 17920 };
+					}
+					else if (dungeonType == DungeonType.GIRAN_HOTEL) {
 						npcid = 70031; // 奇岩 - 玛理
-						data = new int[] {32744, 32803, 18432, 32744, 32807, 18944};
-					} else if (dungeonType == DungeonType.OREN_HOTEL) {
+						data = new int[] { 32744, 32803, 18432, 32744, 32807, 18944 };
+					}
+					else if (dungeonType == DungeonType.OREN_HOTEL) {
 						npcid = 70065; // 欧瑞 - 小安安
-						data = new int[] {32744, 32803, 19456, 32744, 32807, 19968};
-					} else if (dungeonType == DungeonType.WINDAWOOD_HOTEL) {
+						data = new int[] { 32744, 32803, 19456, 32744, 32807, 19968 };
+					}
+					else if (dungeonType == DungeonType.WINDAWOOD_HOTEL) {
 						npcid = 70070; // 风木 - 维莱莎
-						data = new int[] {32744, 32803, 20480, 32744, 32807, 20992};
-					} else if (dungeonType == DungeonType.SILVER_KNIGHT_HOTEL) {
+						data = new int[] { 32744, 32803, 20480, 32744, 32807, 20992 };
+					}
+					else if (dungeonType == DungeonType.SILVER_KNIGHT_HOTEL) {
 						npcid = 70075; // 银骑士 - 米兰德
-						data = new int[] {32744, 32803, 21504, 32744, 32807, 22016};
-					} else if (dungeonType == DungeonType.HEINE_HOTEL) {
+						data = new int[] { 32744, 32803, 21504, 32744, 32807, 22016 };
+					}
+					else if (dungeonType == DungeonType.HEINE_HOTEL) {
 						npcid = 70084; // 海音 - 伊莉
-						data = new int[] {32744, 32803, 22528, 32744, 32807, 23040};
+						data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
 					}
 
 					int type = checkInnKey(pc, npcid);
@@ -224,7 +226,8 @@ public class Dungeon {
 						newMap = (short) data[2];
 						heading = 6;
 						teleportable = true;
-					} else if (type == 2) { // 会议室
+					}
+					else if (type == 2) { // 会议室
 						newX = data[3];
 						newY = data[4];
 						newMap = (short) data[5];
@@ -235,23 +238,17 @@ public class Dungeon {
 				else if (((nowtime >= 15 * 360) && (nowtime < 25 * 360 // 1.30~2.30
 						))
 						|| ((nowtime >= 45 * 360) && (nowtime < 55 * 360 // 4.30~5.30
-						))
-						|| ((nowtime >= 75 * 360) && (nowtime < 85 * 360 // 7.30~8.30
-						))
-						|| ((nowtime >= 105 * 360) && (nowtime < 115 * 360 // 10.30~11.30
-						)) || ((nowtime >= 135 * 360) && (nowtime < 145 * 360))
-						|| ((nowtime >= 165 * 360) && (nowtime < 175 * 360))
-						|| ((nowtime >= 195 * 360) && (nowtime < 205 * 360)) || ((nowtime >= 225 * 360) && (nowtime < 235 * 360))) {
+						)) || ((nowtime >= 75 * 360) && (nowtime < 85 * 360 // 7.30~8.30
+						)) || ((nowtime >= 105 * 360) && (nowtime < 115 * 360 // 10.30~11.30
+						)) || ((nowtime >= 135 * 360) && (nowtime < 145 * 360)) || ((nowtime >= 165 * 360) && (nowtime < 175 * 360)) || ((nowtime >= 195 * 360) && (nowtime < 205 * 360)) || ((nowtime >= 225 * 360) && (nowtime < 235 * 360))) {
 					if ((pc.getInventory().checkItem(40299, 1) && (dungeonType == DungeonType.SHIP_FOR_GLUDIN)) // TalkingIslandShiptoAdenMainland
 							|| (pc.getInventory().checkItem(40301, 1) && (dungeonType == DungeonType.SHIP_FOR_HEINE)) // AdenMainlandShiptoForgottenIsland
 							|| (pc.getInventory().checkItem(40302, 1) && (dungeonType == DungeonType.SHIP_FOR_PI))) { // ShipPirateislandtoHiddendock
 						teleportable = true;
 					}
 				}
-				else if (((nowtime >= 0) && (nowtime < 360)) || ((nowtime >= 30 * 360) && (nowtime < 40 * 360))
-						|| ((nowtime >= 60 * 360) && (nowtime < 70 * 360)) || ((nowtime >= 90 * 360) && (nowtime < 100 * 360))
-						|| ((nowtime >= 120 * 360) && (nowtime < 130 * 360)) || ((nowtime >= 150 * 360) && (nowtime < 160 * 360))
-						|| ((nowtime >= 180 * 360) && (nowtime < 190 * 360)) || ((nowtime >= 210 * 360) && (nowtime < 220 * 360))) {
+				else if (((nowtime >= 0) && (nowtime < 360)) || ((nowtime >= 30 * 360) && (nowtime < 40 * 360)) || ((nowtime >= 60 * 360) && (nowtime < 70 * 360)) || ((nowtime >= 90 * 360) && (nowtime < 100 * 360)) || ((nowtime >= 120 * 360) && (nowtime < 130 * 360))
+						|| ((nowtime >= 150 * 360) && (nowtime < 160 * 360)) || ((nowtime >= 180 * 360) && (nowtime < 190 * 360)) || ((nowtime >= 210 * 360) && (nowtime < 220 * 360))) {
 					if ((pc.getInventory().checkItem(40298, 1) && (dungeonType == DungeonType.SHIP_FOR_TI)) // AdenMainlandShiptoTalkingIsland
 							|| (pc.getInventory().checkItem(40300, 1) && (dungeonType == DungeonType.SHIP_FOR_FI)) // ForgottenIslandShiptoAdenMainland
 							|| (pc.getInventory().checkItem(40303, 1) && (dungeonType == DungeonType.SHIP_FOR_HIDDENDOCK))) { // ShipHiddendocktoPirateisland
@@ -286,7 +283,7 @@ public class Dungeon {
 							Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用时间未到
 								pc.setInnKeyId(item.getKeyId()); // 登入此钥匙
-								return item.checkRoomOrHall()? 2 : 1; // 1:房间 2:会议室
+								return item.checkRoomOrHall() ? 2 : 1; // 1:房间 2:会议室
 							}
 						}
 					}

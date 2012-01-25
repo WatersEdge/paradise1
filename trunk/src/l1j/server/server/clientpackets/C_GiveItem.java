@@ -111,8 +111,7 @@ public class C_GiveItem extends ClientBasePacket {
 		target.turnOnOffLight();
 		pc.turnOnOffLight();
 
-		L1PetType petType = PetTypeTable.getInstance().get(
-				target.getNpcTemplate().get_npcId());
+		L1PetType petType = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
 		if ((petType == null) || target.isDead()) {
 			return;
 		}
@@ -132,8 +131,7 @@ public class C_GiveItem extends ClientBasePacket {
 				eatFood(pc, target, item, count);
 			}
 			// 宠物装备类
-			else if ((item.getItem().getType() == 11)
-					&& (petType.canUseEquipment())) { // 判断是否可用宠物装备
+			else if ((item.getItem().getType() == 11) && (petType.canUseEquipment())) { // 判断是否可用宠物装备
 				usePetWeaponArmor(target, item);
 			}
 		}
@@ -166,11 +164,13 @@ public class C_GiveItem extends ClientBasePacket {
 						isFull = true;
 						pet.set_food(100);
 						foodCount++;
-					} else {
+					}
+					else {
 						pet.set_food(food);
 						foodCount++;
 					}
-				} else {
+				}
+				else {
 					break;
 				}
 			}
@@ -189,11 +189,11 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 		L1PetInstance pet = (L1PetInstance) target;
-		L1PetItem petItem = PetItemTable.getInstance().getTemplate(
-				item.getItemId());
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
 		if (petItem.getUseType() == 1) { // 牙齿
 			pet.usePetWeapon(pet, item);
-		} else if (petItem.getUseType() == 0) { // 盔甲
+		}
+		else if (petItem.getUseType() == 0) { // 盔甲
 			pet.usePetArmor(pet, item);
 		}
 	}
@@ -215,8 +215,7 @@ public class C_GiveItem extends ClientBasePacket {
 
 	/** 驯服宠物 */
 	private void tamePet(L1PcInstance pc, L1NpcInstance target) {
-		if ((target instanceof L1PetInstance)
-				|| (target instanceof L1SummonInstance)) {
+		if ((target instanceof L1PetInstance) || (target instanceof L1SummonInstance)) {
 			return;
 		}
 
@@ -227,15 +226,20 @@ public class C_GiveItem extends ClientBasePacket {
 		int charisma = pc.getCha();
 		if (pc.isCrown()) { // 王族
 			charisma += 6;
-		} else if (pc.isElf()) { // 妖精
+		}
+		else if (pc.isElf()) { // 妖精
 			charisma += 12;
-		} else if (pc.isWizard()) { // 法师
+		}
+		else if (pc.isWizard()) { // 法师
 			charisma += 6;
-		} else if (pc.isDarkelf()) { // 黑暗妖精
+		}
+		else if (pc.isDarkelf()) { // 黑暗妖精
 			charisma += 6;
-		} else if (pc.isDragonKnight()) { // 龙骑士
+		}
+		else if (pc.isDragonKnight()) { // 龙骑士
 			charisma += 6;
-		} else if (pc.isIllusionist()) { // 幻术师
+		}
+		else if (pc.isIllusionist()) { // 幻术师
 			charisma += 6;
 		}
 		charisma -= petcost;
@@ -248,7 +252,8 @@ public class C_GiveItem extends ClientBasePacket {
 					new L1PetInstance(target, pc, petamu.getId());
 					pc.sendPackets(new S_ItemName(petamu));
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(324)); // 驯养失败。
 			}
 		}
@@ -287,7 +292,8 @@ public class C_GiveItem extends ClientBasePacket {
 					&& (Random.nextInt(16) == 15)) {
 				isSuccess = true;
 			}
-		} else {
+		}
+		else {
 			if (npc.getMaxHp() / 3 > npc.getCurrentHp()) {
 				isSuccess = true;
 			}

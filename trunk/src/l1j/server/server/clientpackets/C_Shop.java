@@ -51,7 +51,8 @@ public class C_Shop extends ClientBasePacket {
 		int mapId = pc.getMapId();
 		// 可以开设个人商店的地图
 		if ((mapId != 340 // 古鲁丁商店村
-				) && (mapId != 350 // 奇岩商店村
+				)
+				&& (mapId != 350 // 奇岩商店村
 				) && (mapId != 360 // 欧瑞商店村
 				) && (mapId != 370 // 银骑士商店村
 				)) {
@@ -122,8 +123,7 @@ public class C_Shop extends ClientBasePacket {
 				}
 
 				// 防止异常堆叠交易
-				if ((checkItem.getCount() > 1)
-						&& (!checkItem.getItem().isStackable())) {
+				if ((checkItem.getCount() > 1) && (!checkItem.getItem().isStackable())) {
 					pc.sendPackets(new S_SystemMessage("此物品非堆叠，但异常堆叠无法交易。"));
 					return;
 				}
@@ -158,27 +158,22 @@ public class C_Shop extends ClientBasePacket {
 				sellList.clear();
 				buyList.clear();
 				pc.setPrivateShop(false);
-				pc.sendPackets(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
-				pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
+				pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 				return;
 			}
 			byte[] chat = readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
-			pc.sendPackets(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
-			pc.broadcastPacket(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
-		} else if (type == 1) { // 终了
+			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
+			pc.broadcastPacket(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
+		}
+		else if (type == 1) { // 终了
 			sellList.clear();
 			buyList.clear();
 			pc.setPrivateShop(false);
-			pc.sendPackets(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
-			pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
+			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 		}
 	}
 

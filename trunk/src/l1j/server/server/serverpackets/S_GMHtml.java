@@ -23,6 +23,7 @@ public class S_GMHtml extends ServerBasePacket {
 
 	/**
 	 * 显示指定HTML
+	 * 
 	 * @param _objid
 	 * @param html
 	 */

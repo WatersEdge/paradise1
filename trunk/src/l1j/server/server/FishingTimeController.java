@@ -29,11 +29,12 @@ import l1j.server.server.utils.Random;
 import l1j.server.server.utils.collections.Lists;
 
 /**
- *	钓鱼控制器
+ * 钓鱼控制器
  */
 public class FishingTimeController implements Runnable {
 
 	private static FishingTimeController _instance;
+
 	/** 钓鱼清单 */
 	private final List<L1PcInstance> _fishingList = Lists.newList();
 
@@ -51,7 +52,8 @@ public class FishingTimeController implements Runnable {
 				Thread.sleep(300);
 				fishing();
 			}
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 		}
 	}
 
@@ -79,9 +81,7 @@ public class FishingTimeController implements Runnable {
 				L1PcInstance pc = _fishingList.get(i);
 				if (pc.isFishing()) { // 钓鱼中
 					long time = pc.getFishingTime();
-					if ((currentTime <= (time + 500))
-							&& (currentTime >= (time - 500))
-							&& !pc.isFishingReady()) {
+					if ((currentTime <= (time + 500)) && (currentTime >= (time - 500)) && !pc.isFishingReady()) {
 						pc.setFishingReady(true);
 						finishFishing(pc);
 					}
@@ -96,24 +96,16 @@ public class FishingTimeController implements Runnable {
 		boolean finish = false;
 
 		// 钓到的物品
-		int[] fish = {
-				41296, 41297, 41298, 41299, // 鲷鱼`鲑鱼`鳕鱼`虎斑带鱼
+		int[] fish = { 41296, 41297, 41298, 41299, // 鲷鱼`鲑鱼`鳕鱼`虎斑带鱼
 				41300, 41301, 41302, 41303, // 鲔鱼`发红光的鱼`发绿光的鱼`发蓝光的鱼
 				41304, 41305, 41306, 41307, // 发白光的鱼`破碎的耳环`破碎的戒指`破碎的项练
 				21051, 21052, 21053, 21054, // 泡水的头具`泡水的斗篷`泡水的盔甲`泡水的手套
 				21055, 21056, 21140, 21141, // 泡水的靴子`泡水的盾牌`泡水的帽子`泡水的头巾
-				41252, 46001, 47104			// 珍奇的乌龟`河豚`闪烁的鳞片
-				};
+				41252, 46001, 47104 // 珍奇的乌龟`河豚`闪烁的鳞片
+		};
 
 		// 钓到物品的几率
-		int[] random = {
-				20, 40, 60, 80,
-				100, 110, 120, 130,
-				140, 145, 150, 155,
-				160, 165, 170, 175,
-				180, 185, 190, 195,
-				198, 201, 204
-				};
+		int[] random = { 20, 40, 60, 80, 100, 110, 120, 130, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 198, 201, 204 };
 		for (int i = 0; i < fish.length; i++) {
 			if (random[i] > chance) {
 				successFishing(pc, fish[i]);
@@ -139,13 +131,15 @@ public class FishingTimeController implements Runnable {
 			item.setCount(1);
 			if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
 				pc.getInventory().storeItem(item);
-			} else { // 负重过重，结束钓鱼
+			}
+			else { // 负重过重，结束钓鱼
 				stopFishing(pc);
 				item.startItemOwnerTimer(pc);
 				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
 				return;
 			}
-		} else { // 结束钓鱼
+		}
+		else { // 结束钓鱼
 			pc.sendPackets(new S_ServerMessage(1517)); // 没有钓到鱼。
 			stopFishing(pc);
 			return;
@@ -167,7 +161,8 @@ public class FishingTimeController implements Runnable {
 			long fishTime = System.currentTimeMillis() + 10000 + Random.nextInt(5) * 1000;
 			pc.setFishingTime(fishTime);
 			pc.setFishingReady(false);
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(1137)); // 钓鱼需要有饵。
 			stopFishing(pc);
 		}

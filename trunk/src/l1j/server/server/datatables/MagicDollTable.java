@@ -73,7 +73,8 @@ public class MagicDollTable {
 
 				_dolls.put(new Integer(itemId), doll);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

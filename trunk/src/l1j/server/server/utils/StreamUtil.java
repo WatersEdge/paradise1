@@ -28,6 +28,7 @@ public class StreamUtil {
 
 	/**
 	 * 关闭此流并释放与此流关联的所有系统资源。如果已经关闭该流，则调用此方法无效。
+	 * 
 	 * @param closeables
 	 */
 	public static void close(Closeable... closeables) {
@@ -36,7 +37,8 @@ public class StreamUtil {
 				if (c != null) {
 					c.close();
 				}
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}

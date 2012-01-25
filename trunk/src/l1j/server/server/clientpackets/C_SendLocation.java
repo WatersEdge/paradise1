@@ -41,9 +41,8 @@ public class C_SendLocation extends ClientBasePacket {
 		if (type == 0x0d) {
 			return;
 			/*
-			 * 视窗内:0d 01 xx // xx 就是值会变动，不知原因。
-			 * 视窗外:0d 00 xx // xx 就是值会变动，不知原因。
-			*/
+			 * 视窗内:0d 01 xx // xx 就是值会变动，不知原因。 视窗外:0d 00 xx // xx 就是值会变动，不知原因。
+			 */
 		}
 
 		if (type == 0x0b) {
@@ -63,38 +62,39 @@ public class C_SendLocation extends ClientBasePacket {
 				target.sendPackets(new S_SendLocation(type, sender, mapId, x, y, msgId));
 				pc.sendPackets(new S_ServerMessage(1783, name)); // 已发送座标位置给%0。
 			}
-		} else if (type == 0x06) {
+		}
+		else if (type == 0x06) {
 			@SuppressWarnings("unused")
 			int objectId = readD();
 			int gate = readD();
-			int dragonGate[] = {
-					81273, // 龙之门扉 (安塔瑞斯副本)
+			int dragonGate[] = { 81273, // 龙之门扉 (安塔瑞斯副本)
 					81274, // 龙之门扉 (法利昂副本)
 					81275, // 龙之门扉 (林德拜尔副本)
-					81276	// 龙之门扉 (巴拉卡斯副本)
-					};
+					81276 // 龙之门扉 (巴拉卡斯副本)
+			};
 			L1PcInstance pc = client.getActiveChar();
 			if (gate >= 0 && gate <= 3) {
 				Calendar nowTime = Calendar.getInstance();
 				if (nowTime.get(Calendar.HOUR_OF_DAY) >= 8 && nowTime.get(Calendar.HOUR_OF_DAY) < 12) {
 					pc.sendPackets(new S_ServerMessage(1643)); // 每日上午 8 点到 12 点为止，暂时无法使用龙之钥匙。
-				} else {
+				}
+				else {
 					boolean limit = true;
 					switch (gate) {
-						case 0:
-							for (int i = 0; i < 6; i++) {
-								if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
-									limit = false;
-								}
+					case 0:
+						for (int i = 0; i < 6; i++) {
+							if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
+								limit = false;
 							}
-							break;
-						case 1:
-							for (int i = 6; i < 12; i++) {
-								if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
-									limit = false;
-								}
+						}
+						break;
+					case 1:
+						for (int i = 6; i < 12; i++) {
+							if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
+								limit = false;
 							}
-							break;
+						}
+						break;
 					}
 					if (!limit) { // 未达上限可开设龙门
 						if (!pc.getInventory().consumeItem(47010, 1)) {

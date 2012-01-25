@@ -28,6 +28,7 @@ public class S_HPMeter extends ServerBasePacket {
 
 	/**
 	 * 物件血条
+	 * 
 	 * @param objId
 	 * @param hpRatio
 	 */
@@ -37,6 +38,7 @@ public class S_HPMeter extends ServerBasePacket {
 
 	/**
 	 * 物件血条
+	 * 
 	 * @param cha
 	 */
 	public S_HPMeter(L1Character cha) {

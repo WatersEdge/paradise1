@@ -48,13 +48,10 @@ public class C_AuthLogin extends ClientBasePacket {
 		_log.finest("请求登陆的账户 : " + accountName);
 
 		if (!Config.ALLOW_2PC) {
-			for (ClientThread tempClient : LoginController.getInstance()
-					.getAllAccounts()) {
+			for (ClientThread tempClient : LoginController.getInstance().getAllAccounts()) {
 				if (ip.equalsIgnoreCase(tempClient.getIp())) {
-					_log.info("拒绝 2P 登入。账号="
-							+ accountName + " IP=" + host);
-					client.sendPacket(new S_LoginResult(
-							S_LoginResult.REASON_USER_OR_PASS_WRONG));
+					_log.info("拒绝 2P 登入。账号=" + accountName + " IP=" + host);
+					client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 					return;
 				}
 			}
@@ -64,24 +61,22 @@ public class C_AuthLogin extends ClientBasePacket {
 		if (account == null) {
 			if (Config.AUTO_CREATE_ACCOUNTS) {
 				account = Account.create(accountName, password, ip, host);
-			} else {
+			}
+			else {
 				_log.warning("用户账号丢失 " + accountName);
 			}
 		}
 		if (account == null || !account.validatePassword(password)) {
-			client.sendPacket(new S_LoginResult(
-					S_LoginResult.REASON_USER_OR_PASS_WRONG));
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
 		if (account.isOnlined()) {
-			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_ACCOUNT_ALREADY_EXISTS));//原码 REASON_ACCOUNT_IN_USE
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_ACCOUNT_ALREADY_EXISTS));// 原码 REASON_ACCOUNT_IN_USE
 			return;
 		}
 		if (account.isBanned()) { // BAN账户
-			_log.info("禁止登入的帐号尝试登入。账号=" + accountName + " IP="
-					+ host);
-			client.sendPacket(new S_LoginResult(
-					S_LoginResult.REASON_USER_OR_PASS_WRONG));
+			_log.info("禁止登入的帐号尝试登入。账号=" + accountName + " IP=" + host);
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
 
@@ -92,15 +87,15 @@ public class C_AuthLogin extends ClientBasePacket {
 			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_LOGIN_OK));
 			client.sendPacket(new S_CommonNews());
 			Account.online(account, true);
-		} catch (GameServerFullException e) {
+		}
+		catch (GameServerFullException e) {
 			client.kick();
-			_log.info("线上人数已经饱和，切断 (" + client.getHostname()
-					+ ") 的连线。");
+			_log.info("线上人数已经饱和，切断 (" + client.getHostname() + ") 的连线。");
 			return;
-		} catch (AccountAlreadyLoginException e) {
+		}
+		catch (AccountAlreadyLoginException e) {
 			client.kick();
-			_log.info("同个帐号已经登入，切断 (" + client.getHostname()
-					+ ") 的连线。");
+			_log.info("同个帐号已经登入，切断 (" + client.getHostname() + ") 的连线。");
 			return;
 		}
 	}

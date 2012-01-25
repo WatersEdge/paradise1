@@ -39,9 +39,11 @@ public class C_ChangeHeading extends ClientBasePacket {
 		_log.finest("改变面向 : " + pc.getHeading());
 
 		if (pc.isGmInvis() || pc.isGhost()) {
-		} else if (pc.isInvisble()) {
+		}
+		else if (pc.isInvisble()) {
 			pc.broadcastPacketForFindInvis(new S_ChangeHeading(pc), true);
-		} else {
+		}
+		else {
 			pc.broadcastPacket(new S_ChangeHeading(pc));
 		}
 	}

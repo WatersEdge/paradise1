@@ -42,15 +42,15 @@ public class L1Party {
 		if (pc == null) {
 			throw new NullPointerException();
 		}
-		if (((_membersList.size() == Config.MAX_PT) && !_leader.isGm())
-				|| _membersList.contains(pc)) {
+		if (((_membersList.size() == Config.MAX_PT) && !_leader.isGm()) || _membersList.contains(pc)) {
 			return;
 		}
 
 		if (_membersList.isEmpty()) {
 			// 最初のPTメンバーであればリーダーにする
 			setLeader(pc);
-		} else {
+		}
+		else {
 			createMiniHp(pc);
 		}
 
@@ -118,10 +118,8 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) {
-			member.sendPackets(new S_HPMeter(pc.getId(), 100
-					* pc.getCurrentHp() / pc.getMaxHp()));
-			pc.sendPackets(new S_HPMeter(member.getId(), 100
-					* member.getCurrentHp() / member.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
+			pc.sendPackets(new S_HPMeter(member.getId(), 100 * member.getCurrentHp() / member.getMaxHp()));
 		}
 	}
 
@@ -141,8 +139,7 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) { // パーティーメンバー分更新
-			member.sendPackets(new S_HPMeter(pc.getId(), 100
-					* pc.getCurrentHp() / pc.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
 		}
 	}
 
@@ -169,7 +166,8 @@ public class L1Party {
 		if (isLeader(pc) || (getNumOfMembers() == 2)) {
 			// 有组队领导者的场合
 			breakup();
-		} else {
+		}
+		else {
 			removeMember(pc);
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
@@ -177,12 +175,8 @@ public class L1Party {
 			sendLeftMessage(pc, pc);
 			// 没有组队领导者的场合
 			/*
-			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
-			 * removeMember(pc); L1PcInstance leader = getLeader();
-			 * removeMember(leader); sendLeftMessage(pc, pc);
-			 * sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる
-			 * removeMember(pc); for (L1PcInstance member : members) {
-			 * sendLeftMessage(member, pc); } sendLeftMessage(pc, pc); }
+			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ removeMember(pc); L1PcInstance leader = getLeader(); removeMember(leader); sendLeftMessage(pc, pc); sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる removeMember(pc); for (L1PcInstance member :
+			 * members) { sendLeftMessage(member, pc); } sendLeftMessage(pc, pc); }
 			 */
 		}
 	}
@@ -192,7 +186,8 @@ public class L1Party {
 		if (getNumOfMembers() == 2) {
 			// パーティーメンバーが自分とリーダーのみ
 			breakup();
-		} else {
+		}
+		else {
 			removeMember(pc);
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
@@ -210,7 +205,8 @@ public class L1Party {
 			// 发送给队长的封包
 			if (pc.getId() == member.getId()) {
 				pc.sendPackets(new S_Party(0x68, pc));
-			} else { // 其他成员封包
+			}
+			else { // 其他成员封包
 				member.sendPackets(new S_Party(0x69, pc));
 			}
 			member.sendPackets(new S_Party(0x6e, member));

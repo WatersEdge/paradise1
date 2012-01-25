@@ -25,6 +25,7 @@ public class S_Message_YN extends ServerBasePacket {
 
 	/**
 	 * 选项 (Yes/No)
+	 * 
 	 * @param type
 	 * @param msg1
 	 */
@@ -34,6 +35,7 @@ public class S_Message_YN extends ServerBasePacket {
 
 	/**
 	 * 选项 (Yes/No)
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2
@@ -44,6 +46,7 @@ public class S_Message_YN extends ServerBasePacket {
 
 	/**
 	 * 选项 (Yes/No)
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2
@@ -53,16 +56,17 @@ public class S_Message_YN extends ServerBasePacket {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
-	private void buildPacket(int type, String msg1, String msg2, String msg3,
-			int check) {
+	private void buildPacket(int type, String msg1, String msg2, String msg3, int check) {
 		writeC(Opcodes.S_OPCODE_YES_NO);
 		writeH(type);
 		if (check == 1) {
 			writeS(msg1);
-		} else if (check == 2) {
+		}
+		else if (check == 2) {
 			writeS(msg1);
 			writeS(msg2);
-		} else if (check == 3) {
+		}
+		else if (check == 3) {
 			writeS(msg1);
 			writeS(msg2);
 			writeS(msg3);

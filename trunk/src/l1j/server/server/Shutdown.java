@@ -22,32 +22,38 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * 
  * 这个类提供了关闭并重新启动服务器的功能 <br>
  * 它关闭所有打开的clientconnections，并保存所有数据。
+ * 
  * @version $Revision: 1.2 $ $Date: 2004/11/18 15:43:30 $
  * 
  */
 public class Shutdown extends Thread {
+
 	private static Logger _log = Logger.getLogger(Shutdown.class.getName());
+
 	private static Shutdown _instance;
+
 	/** 计数器实例 */
 	private static Shutdown _counterInstance = null;
+
 	/** 秒关机 */
 	private int secondsShut;
+
 	/** 关机状态 */
 	private int shutdownMode;
+
 	/** 终止一个进程 */
 	public static final int SIGTERM = 0;
+
 	/** GM关机 */
 	public static final int GM_SHUTDOWN = 1;
+
 	/** GM重新启动 */
 	public static final int GM_RESTART = 2;
+
 	/** 中断 */
 	public static final int ABORT = 3;
-	private static String[] _modeText = {
-		"【经由‘黑盒子’ 关闭伺服器】",
-		"【‘游戏管理员’执行 关闭伺服器 动作】",
-		"【‘游戏管理员’执行 重启伺服器 动作】",
-		"【中断动作】"
-		};
+
+	private static String[] _modeText = { "【经由‘黑盒子’ 关闭伺服器】", "【‘游戏管理员’执行 关闭伺服器 动作】", "【‘游戏管理员’执行 重启伺服器 动作】", "【中断动作】" };
 
 	/**
 	 * 默认constucter是只用于内部创建关机-hook <br>
@@ -75,14 +81,14 @@ public class Shutdown extends Thread {
 		secondsShut = seconds;
 		if (restart) {
 			shutdownMode = GM_RESTART;
-		} else {
+		}
+		else {
 			shutdownMode = GM_SHUTDOWN;
 		}
 	}
 
 	/**
-	 * 关机-hook的实例被创建，得到关机-hook的实例
-	 * 第一次调用此功能，但它已被registrered externaly。
+	 * 关机-hook的实例被创建，得到关机-hook的实例 第一次调用此功能，但它已被registrered externaly。
 	 * 
 	 * @return 例如关机，关闭hook被用作
 	 */
@@ -96,17 +102,13 @@ public class Shutdown extends Thread {
 	/**
 	 * 这个函数被调用，当一个新的线程启动
 	 * 
-	 * 如果此线程的getInstance线程，那么这就是关机
-	 * hook，我们保存所有数据，并断开所有客户端。
+	 * 如果此线程的getInstance线程，那么这就是关机 hook，我们保存所有数据，并断开所有客户端。
 	 * 
 	 * 这个线头后，服务器将完全退出
 	 * 
-	 * 如果不是这样的getInstance线程，那么这是一个倒计时线程。
-	 * 我们开始倒计时，当我们完成它，它不中止，
-	 * 我们告诉我们为什么调用exit关机钩，然后调用exit
+	 * 如果不是这样的getInstance线程，那么这是一个倒计时线程。 我们开始倒计时，当我们完成它，它不中止， 我们告诉我们为什么调用exit关机钩，然后调用exit
 	 * 
-	 * 当服务器的退出状态是1，startServer.sh / startserver.bat来启动
-	 * 将重新启动服务器。
+	 * 当服务器的退出状态是1，startServer.sh / startserver.bat来启动 将重新启动服务器。
 	 * 
 	 */
 	@Override
@@ -116,16 +118,13 @@ public class Shutdown extends Thread {
 			// logging doesnt work here :(
 			saveData();
 			// server will quit, when this function ends.
-		} else {
+		}
+		else {
 			// gm shutdown: send warnings and then call exit to start shutdown
 			// sequence
 			countdown();
 			// last point where logging is operational :(
-			_log.warning(
-					"‘游戏管理员’ 关闭伺服器 倒数。"
-					+ _modeText[shutdownMode]
-					+ " NOW！"
-					);
+			_log.warning("‘游戏管理员’ 关闭伺服器 倒数。" + _modeText[shutdownMode] + " NOW！");
 			switch (shutdownMode) {
 			case GM_SHUTDOWN:
 				_instance.setMode(GM_SHUTDOWN);
@@ -151,25 +150,10 @@ public class Shutdown extends Thread {
 	 * @param restart
 	 *            如果服务器关机后重新启动
 	 */
-	public void startShutdown(L1PcInstance activeChar, int seconds,
-			boolean restart) {
+	public void startShutdown(L1PcInstance activeChar, int seconds, boolean restart) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning(
-				"‘游戏管理员’: "
-				+ activeChar.getId()
-				+ " 使用关机指令。"
-				+ _modeText[shutdownMode]
-				+ " 在 "
-				+ seconds
-				+ " 秒！"
-				);
-		_an.announceToAll(
-				"伺服器 是 "
-				+ _modeText[shutdownMode]
-				+ " 在 "
-				+ seconds
-				+ " 秒！"
-				);
+		_log.warning("‘游戏管理员’: " + activeChar.getId() + " 使用关机指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
+		_an.announceToAll("伺服器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -189,11 +173,7 @@ public class Shutdown extends Thread {
 	 */
 	public void abort(L1PcInstance activeChar) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning(
-				"‘游戏管理员’: "
-				+ activeChar.getName()
-				+ " 使用指令中断之前的行为。"
-				);
+		_log.warning("‘游戏管理员’: " + activeChar.getName() + " 使用指令中断之前的行为。");
 		_an.announceToAll("伺服器【中断关机】 并维持正常运作！");
 
 		if (_counterInstance != null) {
@@ -284,7 +264,8 @@ public class Shutdown extends Thread {
 					break;
 				}
 			}
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			// this will never happen
 			// 这绝不会发生
 		}
@@ -308,28 +289,25 @@ public class Shutdown extends Thread {
 			break;
 
 		}
-		_an.announceToAll("伺服器目前是" + _modeText[shutdownMode]
-				+ " NOW! bye bye");
+		_an.announceToAll("伺服器目前是" + _modeText[shutdownMode] + " NOW! bye bye");
 
 		// we cannt abort shutdown anymore, so i removed the "if"
 		GameServer.getInstance().disconnectAllCharacters();
 
-		System.err
-				.println("【资料储存完毕，强制玩家全部离线】");
+		System.err.println("【资料储存完毕，强制玩家全部离线】");
 		try {
 			int delay = 500;
 			Thread.sleep(delay);
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			// never happens :p
 		}
 	}
 
 	public void startTelnetShutdown(String IP, int seconds, boolean restart) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用关闭指令。"
-				+ _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
-		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 "
-				+ seconds + " 秒！");
+		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
+		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -341,15 +319,15 @@ public class Shutdown extends Thread {
 	/**
 	 * 此功能将中止正在运行的倒计时
 	 * 
-	 * @param IP <br> <br>
+	 * @param IP
+	 * <br>
+	 * <br>
 	 *            IP 发出关机指令
 	 */
 	public void Telnetabort(String IP) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用中断关闭指令。"
-				+ _modeText[shutdownMode] + " 已停止！");
-		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode]
-				+ " 并维持正常运作！");
+		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[shutdownMode] + " 已停止！");
+		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode] + " 并维持正常运作！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
