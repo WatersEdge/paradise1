@@ -20,12 +20,12 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_2_7_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_2_7_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_S;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -114,36 +114,6 @@ public class CalcExp {
 		int partyHateExp = 0;
 		int partyHateLawful = 0;
 		int ownHateExp = 0;
-		double tattoo_m_exp_125 = 1.25; // 1.25倍经验肩章 (经验倍率)
-		double tattoo_m_exp_150 = 1.50; // 1.50倍经验肩章 (经验倍率)
-		double tattoo_m_exp_175 = 1.75; // 1.75倍经验肩章 (经验倍率)
-
-		// 1.25倍经验肩章
-		if ((l1pcinstance.getInventory().checkEquipped(200036)) // [1小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
-		) {
-			exp = (int) (exp * tattoo_m_exp_125);
-		}
-
-		// 1.5倍经验肩章
-		if ((l1pcinstance.getInventory().checkEquipped(200040)) // [1小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
-		) {
-			exp = (int) (exp * tattoo_m_exp_150);
-		}
-
-		// 1.75倍经验肩章
-		if ((l1pcinstance.getInventory().checkEquipped(200044)) // [1小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
-				|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
-		) {
-			exp = (int) (exp * tattoo_m_exp_175);
-		}
 
 		if (acquisitorList.size() != hateList.size()) {
 			return;
@@ -264,35 +234,7 @@ public class CalcExp {
 					}
 				}
 
-				// 1.25倍经验肩章
-				if ((l1pcinstance.getInventory().checkEquipped(200036)) // [1小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
-				) {
-					party_exp = (int) (party_exp * tattoo_m_exp_125 * (1 + pt_bonus + pri_bonus));
-				}
-
-				// 1.5倍经验肩章
-				else if ((l1pcinstance.getInventory().checkEquipped(200040)) // [1小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
-				) {
-					party_exp = (int) (party_exp * tattoo_m_exp_150 * (1 + pt_bonus + pri_bonus));
-				}
-
-				// 1.75倍经验肩章
-				else if ((l1pcinstance.getInventory().checkEquipped(200044)) // [1小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
-						|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
-				) {
-					party_exp = (int) (party_exp * tattoo_m_exp_175 * (1 + pt_bonus + pri_bonus));
-				}
-				else {
-					party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
-				}
+				party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
 
 				// 计算自己和召唤物宠物的 Hate
 				if (party_level > 0) {
@@ -472,6 +414,7 @@ public class CalcExp {
 		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel()); // 目前等级可获得的经验值
 		double foodBonus = 1.0; // 魔法料理经验加成
 		double expBonus = 1.0; // 战斗药水经验加成
+		double tattoo = 1.0; // 辅助装备经验加成
 
 		// 魔法料理经验加成
 		if (pc.hasSkillEffect(COOKING_1_7_N) || pc.hasSkillEffect(COOKING_1_7_S)) {
@@ -488,27 +431,55 @@ public class CalcExp {
 		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
 			expBonus = 1.2;
 		}
-		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
 			expBonus = 2.5;
 		}
-		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
 			expBonus = 2.75;
 		}
-		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
 			expBonus = 3.0;
 		}
-		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
 			expBonus = 3.25;
 		}
-		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
 			expBonus = 3.5;
+		}
+
+		// 1.25倍经验肩章
+		if ((pc.getInventory().checkEquipped(200036)) // [1小时]
+				|| (pc.getInventory().checkEquipped(200037)) // [3小时]
+				|| (pc.getInventory().checkEquipped(200038)) // [12小时]
+				|| (pc.getInventory().checkEquipped(200039)) // [24小时]
+		) {
+			tattoo = 1.25;
+		}
+
+		// 1.5倍经验肩章
+		if ((pc.getInventory().checkEquipped(200040)) // [1小时]
+				|| (pc.getInventory().checkEquipped(200041)) // [3小时]
+				|| (pc.getInventory().checkEquipped(200042)) // [12小时]
+				|| (pc.getInventory().checkEquipped(200043)) // [24小时]
+		) {
+			tattoo = 1.50;
+		}
+
+		// 1.75倍经验肩章
+		if ((pc.getInventory().checkEquipped(200044)) // [1小时]
+				|| (pc.getInventory().checkEquipped(200045)) // [3小时]
+				|| (pc.getInventory().checkEquipped(200046)) // [12小时]
+				|| (pc.getInventory().checkEquipped(200047)) // [24小时]
+		) {
+			tattoo = 1.75;
 		}
 
 		int add_exp = (int) (exp // 基本经验值
 				* exppenalty // 目前等级可获得的经验值
 				* Config.RATE_XP // 经验值倍率
 				* foodBonus // 魔法料理经验加成
-		* expBonus // 战斗药水经验加成
+				* expBonus // 战斗药水经验加成
+		* tattoo // 辅助装备经验加成
 		);
 		pc.addExp(add_exp); // 为PC增加经验值
 	}
