@@ -18,7 +18,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +56,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pc.setAccountName(rs.getString("account_name"));
 			pc.setId(rs.getInt("objid"));
 			pc.setName(rs.getString("char_name"));
-			pc.setBirthday((Timestamp) rs.getTimestamp("birthday"));
+			pc.setBirthday(rs.getTimestamp("birthday"));
 			pc.setHighLevel(rs.getInt("HighLevel"));
 			pc.setExp(rs.getInt("Exp"));
 			pc.addBaseMaxHp(rs.getShort("MaxHp"));
@@ -183,7 +182,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.setInt(++i, pc.getSimpleBirthday());
 			pstm.setInt(++i, pc.getLevel());
 			pstm.setInt(++i, pc.getHighLevel());
-			pstm.setInt(++i, pc.getExp());
+			pstm.setLong(++i, pc.getExp());
 			pstm.setInt(++i, pc.getBaseMaxHp());
 			int hp = pc.getCurrentHp();
 			if (hp < 1) {
@@ -313,7 +312,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 					.prepareStatement("UPDATE characters SET level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?,Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?,Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?,PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=? WHERE objid=?");
 			pstm.setInt(++i, pc.getLevel());
 			pstm.setInt(++i, pc.getHighLevel());
-			pstm.setInt(++i, pc.getExp());
+			pstm.setLong(++i, pc.getExp());
 			pstm.setInt(++i, pc.getBaseMaxHp());
 			int hp = pc.getCurrentHp();
 			if (hp < 1) {

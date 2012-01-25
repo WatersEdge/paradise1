@@ -404,6 +404,8 @@ public final class Config {
 
 	public static int LV99_EXP;
 
+	public static int LV100_EXP;
+
 	// -----------------------------------------------------------------------------
 	// 游戏战斗特化相关 /** Fights Settings */
 	// -----------------------------------------------------------------------------
@@ -743,6 +745,7 @@ public final class Config {
 			LV97_EXP = Integer.parseInt(charSettings.getProperty("Lv97Exp", "4194304"));
 			LV98_EXP = Integer.parseInt(charSettings.getProperty("Lv98Exp", "8388608"));
 			LV99_EXP = Integer.parseInt(charSettings.getProperty("Lv99Exp", "16777216"));
+			LV100_EXP = Integer.parseInt(charSettings.getProperty("Lv100Exp", "16777216"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -1205,6 +1208,9 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("Lv99Exp")) {
 			LV99_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv100Exp")) {
+			LV100_EXP = Integer.parseInt(pValue);
 		}
 
 		// record.properties

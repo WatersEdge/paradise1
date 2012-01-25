@@ -68,7 +68,7 @@ public class CalcExp {
 	/**
 	 * 最高经验值
 	 */
-	public static final int MAX_EXP = ExpTable.getExpByLevel(100) - 1;
+	public static final long MAX_EXP = ExpTable.getExpByLevel(101) - 1;
 
 	/**
 	 * 取得序列版本UID
@@ -92,12 +92,12 @@ public class CalcExp {
 	 * @param exp
 	 *            经验值
 	 */
-	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, int exp) {
+	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, long exp) {
 
 		int i = 0;
 		double party_level = 0;
 		double dist = 0;
-		int member_exp = 0;
+		long member_exp = 0;
 		int member_lawful = 0;
 		L1Object l1object = L1World.getInstance().findObject(targetid);
 		L1NpcInstance npc = (L1NpcInstance) l1object;
@@ -105,15 +105,15 @@ public class CalcExp {
 		// 取得累积的 hate
 		L1Character acquisitor;
 		int hate = 0;
-		int acquire_exp = 0;
+		long acquire_exp = 0;
 		int acquire_lawful = 0;
-		int party_exp = 0;
+		long party_exp = 0;
 		int party_lawful = 0;
-		int totalHateExp = 0;
+		long totalHateExp = 0;
 		int totalHateLawful = 0;
-		int partyHateExp = 0;
+		long partyHateExp = 0;
 		int partyHateLawful = 0;
-		int ownHateExp = 0;
+		long ownHateExp = 0;
 
 		if (acquisitorList.size() != hateList.size()) {
 			return;
@@ -234,13 +234,13 @@ public class CalcExp {
 					}
 				}
 
-				party_exp = (int) (party_exp * (1 + pt_bonus + pri_bonus));
+				party_exp = (long) (party_exp * (1 + pt_bonus + pri_bonus));
 
 				// 计算自己和召唤物宠物的 Hate
 				if (party_level > 0) {
 					dist = ((l1pcinstance.getLevel() * l1pcinstance.getLevel()) / party_level);
 				}
-				member_exp = (int) (party_exp * dist);
+				member_exp = (long) (party_exp * dist);
 				member_lawful = (int) (party_lawful * dist);
 
 				ownHateExp = 0;
@@ -407,7 +407,7 @@ public class CalcExp {
 	 * @param lawful
 	 *            正义值
 	 */
-	private static void AddExp(L1PcInstance pc, int exp, int lawful) {
+	private static void AddExp(L1PcInstance pc, long exp, int lawful) {
 
 		int add_lawful = (int) (lawful * Config.RATE_LA) * -1; // 计算可取得的正义值
 		pc.addLawful(add_lawful); // 为PC增加正义值
@@ -474,7 +474,7 @@ public class CalcExp {
 			tattoo = 1.75;
 		}
 
-		int add_exp = (int) (exp // 基本经验值
+		long add_exp = (long) (exp // 基本经验值
 				* exppenalty // 目前等级可获得的经验值
 				* Config.RATE_XP // 经验值倍率
 				* foodBonus // 魔法料理经验加成
@@ -492,7 +492,7 @@ public class CalcExp {
 	 * @param exp
 	 *            经验值
 	 */
-	private static void AddExpPet(L1PetInstance pet, int exp) {
+	private static void AddExpPet(L1PetInstance pet, long exp) {
 
 		// 宠物主人
 		L1PcInstance pc = (L1PcInstance) pet.getMaster();
@@ -504,7 +504,7 @@ public class CalcExp {
 		int levelBefore = pet.getLevel();
 
 		// 宠物经验值
-		int totalExp = (int) (exp * Config.RATE_XP + pet.getExp());
+		long totalExp = (long) (exp * Config.RATE_XP + pet.getExp());
 
 		// 宠物最高等级
 		final int maxLevel = 51;
@@ -537,7 +537,7 @@ public class CalcExp {
 				_log.warning("L1Pet == null");
 				return;
 			}
-			petTemplate.set_exp(pet.getExp()); // 经验值
+			petTemplate.set_exp((int) pet.getExp()); // 经验值
 			petTemplate.set_level(pet.getLevel()); // 等级
 			petTemplate.set_hp(pet.getMaxHp()); // HP
 			petTemplate.set_mp(pet.getMaxMp()); // MP

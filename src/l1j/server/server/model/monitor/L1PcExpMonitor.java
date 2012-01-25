@@ -26,7 +26,7 @@ public class L1PcExpMonitor extends L1PcMonitor {
 
 	private int _old_lawful;
 
-	private int _old_exp;
+	private long _old_exp;
 
 	private int _old_karma;
 

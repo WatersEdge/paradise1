@@ -51,7 +51,7 @@ public class S_OwnCharStatus extends ServerBasePacket {
 			writeC(pc.getLevel());
 		}
 
-		writeD(pc.getExp());
+		writeExp(pc.getExp());
 		writeC(pc.getStr());
 		writeC(pc.getInt());
 		writeC(pc.getWis());

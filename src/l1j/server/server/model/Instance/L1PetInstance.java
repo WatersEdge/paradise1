@@ -337,7 +337,7 @@ public class L1PetInstance extends L1NpcInstance {
 		l1pet.set_level(getLevel());
 		l1pet.set_hp(getMaxHp());
 		l1pet.set_mp(getMaxMp());
-		l1pet.set_exp(getExp());
+		l1pet.set_exp((int) getExp());
 		l1pet.set_food(get_food());
 
 		PetTable.getInstance().storeNewPet(this, getId(), new_itemobjid);
@@ -530,7 +530,7 @@ public class L1PetInstance extends L1NpcInstance {
 			L1Pet l1pet = PetTable.getInstance().getTemplate(_itemObjId);
 			// XXX ペットに话しかけるたびにDBに书き迂む必要はない
 			if (l1pet != null) {
-				l1pet.set_exp(getExp());
+				l1pet.set_exp((int) getExp());
 				l1pet.set_level(getLevel());
 				l1pet.set_hp(getMaxHp());
 				l1pet.set_mp(getMaxMp());
@@ -773,7 +773,7 @@ public class L1PetInstance extends L1NpcInstance {
 	/** 目前宠物状态 */
 	private int _currentPetStatus;
 	/** 宠物主人 */
-	private L1PcInstance _petMaster;
+	private final L1PcInstance _petMaster;
 	/** 道具的唯一ID */
 	private int _itemObjId;
 	/** 类型 */

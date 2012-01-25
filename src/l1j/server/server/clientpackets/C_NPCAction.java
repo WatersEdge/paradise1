@@ -4165,7 +4165,7 @@ public class C_NPCAction extends ClientBasePacket {
 			int petNpcId = 0;
 			int petItemId = 0; // 40314 低等宠物项圈
 			int upLv = 0; // 等级
-			int lvExp = 0; // LV.upLv 经验值
+			long lvExp = 0; // LV.upLv 经验值
 			String msg = "";
 			if (s.equalsIgnoreCase("buy 1")) {
 				petNpcId = 45042; // 杜宾狗

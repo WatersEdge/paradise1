@@ -46,7 +46,7 @@ public class S_PetPack extends ServerBasePacket {
 		writeC(pet.getHeading());
 		writeC(pet.getChaLightSize()); // (Bright) - 0~15
 		writeC(pet.getMoveSpeed()); // 速度 - 0:normal, 1:fast, 2:slow
-		writeD(pet.getExp());
+		writeExp(pet.getExp());
 		writeH(pet.getTempLawful());
 		writeS(pet.getName());
 		writeS(pet.getTitle());

@@ -583,7 +583,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 		if (pc != null) {
 			ArrayList<L1Character> targetList = _hateList.toTargetArrayList();
 			ArrayList<Integer> hateList = _hateList.toHateArrayList();
-			int exp = getExp();
+			long exp = getExp();
 			CalcExp.calcExp(pc, getId(), targetList, hateList, exp);
 			// 死亡した场合はドロップとカルマも分配、死亡せず变身した场合はEXPのみ
 			if (isDead()) {
@@ -614,7 +614,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 					pc = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 				}
 				if (pc != null) {
-					int exp = getExp();
+					long exp = getExp();
 					CalcExp.calcExp(pc, getId(), targetList, hateList, exp);
 					// 死亡した场合はドロップとカルマも分配、死亡せず变身した场合はEXPのみ
 					if (isDead()) {
@@ -976,7 +976,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				Thread.sleep(10500);
 				L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(_transformId);
 				npc.setId(IdFactory.getInstance().nextId());
-				npc.setMap((short) _m);
+				npc.setMap(_m);
 				npc.setHomeX(_x);
 				npc.setHomeY(_y);
 				npc.setHeading(_h);

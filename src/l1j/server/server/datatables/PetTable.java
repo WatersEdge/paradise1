@@ -237,7 +237,7 @@ public class PetTable {
 	/**
 	 * 经过 C_NPCAction 获得 pet
 	 */
-	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv, int lvExp) {
+	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv, long lvExp) {
 		L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
 		L1Pet l1pet = new L1Pet();
 		l1pet.set_itemobjid(itemobjid);
@@ -257,7 +257,7 @@ public class PetTable {
 		}
 		l1pet.set_hp(randomhp);
 		l1pet.set_mp(randommp);
-		l1pet.set_exp(lvExp); // upLv EXP
+		l1pet.set_exp((int) lvExp); // upLv EXP
 		l1pet.set_lawful(0);
 		l1pet.set_food(50);
 		_pets.put(new Integer(itemobjid), l1pet);

@@ -15,7 +15,6 @@
 package l1j.server.server.serverpackets;
 
 import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
-
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
@@ -81,7 +80,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 		// writeC(addbyte);
 		writeC(pc.getOwnLightSize());
 		writeC(pc.getMoveSpeed());
-		writeD(pc.getExp());
+		writeExp(pc.getExp());
 		writeH(pc.getLawful());
 		writeS(pc.getName());
 		writeS(pc.getTitle());

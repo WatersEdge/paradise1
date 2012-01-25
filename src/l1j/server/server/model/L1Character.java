@@ -819,14 +819,14 @@ public class L1Character extends L1Object {
 	/**
 	 * 经验值
 	 */
-	private int _exp;
+	private long _exp;
 
 	/**
 	 * 取得角色的经验值。
 	 * 
 	 * @return 经验值。
 	 */
-	public int getExp() {
+	public long getExp() {
 		return _exp;
 	}
 
@@ -836,7 +836,7 @@ public class L1Character extends L1Object {
 	 * @param exp
 	 *            经验值。
 	 */
-	public void setExp(int exp) {
+	public void setExp(long exp) {
 		_exp = exp;
 	}
 
