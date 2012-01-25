@@ -253,7 +253,7 @@ public class ItemTable {
 		L1EtcItem item = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("select * from etcitem union select * from z_copy_etcitem");
+			pstm = con.prepareStatement("SELECT * FROM etcitem");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -324,7 +324,7 @@ public class ItemTable {
 		L1Weapon weapon = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("select * from weapon union select * from z_copy_weapon");
+			pstm = con.prepareStatement("SELECT * FROM weapon");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -413,7 +413,7 @@ public class ItemTable {
 		L1Armor armor = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("select * from armor union select * from z_copy_armor");
+			pstm = con.prepareStatement("SELECT * FROM armor");
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
