@@ -50,7 +50,7 @@ public class S_NPCPack extends ServerBasePacket {
 		writeC(npc.getHeading());
 		writeC(npc.getChaLightSize());
 		writeC(npc.getMoveSpeed());
-		writeD(npc.getExp());
+		writeExp(npc.getExp());
 		writeH(npc.getTempLawful());
 		writeS(npc.getNameId());
 		if (npc instanceof L1FieldObjectInstance) { // SICの壁字、看板など

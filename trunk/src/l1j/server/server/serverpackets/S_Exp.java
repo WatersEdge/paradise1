@@ -33,7 +33,7 @@ public class S_Exp extends ServerBasePacket {
 	public S_Exp(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_EXP);
 		writeC(pc.getLevel());
-		writeD(pc.getExp());
+		writeExp(pc.getExp());
 
 		// writeC(Opcodes.S_OPCODE_EXP);
 		// writeC(0x39);// level

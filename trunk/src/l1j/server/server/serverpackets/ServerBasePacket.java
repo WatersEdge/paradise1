@@ -71,6 +71,13 @@ public abstract class ServerBasePacket {
 		_bao.write((int) (value >> 56 & 0xff));
 	}
 
+	protected void writeExp(final long value) {
+		this._bao.write((int) (value & 0xff));
+		this._bao.write((int) (value >> 8 & 0xff));
+		this._bao.write((int) (value >> 16 & 0xff));
+		this._bao.write((int) (value >> 24 & 0xff));
+	}
+
 	protected void writeS(String text) {
 		try {
 			if (text != null) {

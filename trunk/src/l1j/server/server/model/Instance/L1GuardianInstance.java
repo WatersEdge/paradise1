@@ -53,9 +53,9 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
 
-	private L1GuardianInstance _npc = this;
+	private final L1GuardianInstance _npc = this;
 	/** NPC道具重置时间 */
-	private int GDROPITEM_TIME = Config.GDROPITEM_TIME;
+	private final int GDROPITEM_TIME = Config.GDROPITEM_TIME;
 
 	/**
 	 * @param template
@@ -468,7 +468,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 			if (player != null) {
 				List<L1Character> targetList = _hateList.toTargetArrayList();
 				List<Integer> hateList = _hateList.toHateArrayList();
-				int exp = getExp();
+				long exp = getExp();
 				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
 
 				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();

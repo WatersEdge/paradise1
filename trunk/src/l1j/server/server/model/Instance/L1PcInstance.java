@@ -187,7 +187,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得回血 */
 	public short getHpr() {
-		return (short) _hpr;
+		return _hpr;
 	}
 
 	/** 增加回血 */
@@ -203,7 +203,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得回魔 */
 	public short getMpr() {
-		return (short) _mpr;
+		return _mpr;
 	}
 
 	/** 增加回魔 */
@@ -558,7 +558,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 技能清单 */
-	private List<Integer> skillList = Lists.newList();
+	private final List<Integer> skillList = Lists.newList();
 
 	/** 设定学习技能 */
 	public void setSkillMastery(int skillid) {
@@ -752,12 +752,12 @@ public class L1PcInstance extends L1Character {
 	}
 
 	@Override
-	public synchronized int getExp() {
+	public synchronized long getExp() {
 		return _exp;
 	}
 
 	@Override
-	public synchronized void setExp(int i) {
+	public synchronized void setExp(long i) {
 		_exp = i;
 	}
 
@@ -1067,7 +1067,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 贩卖清单 */
-	private List<L1PrivateShopSellList> _sellList = Lists.newList();
+	private final List<L1PrivateShopSellList> _sellList = Lists.newList();
 
 	/** 取得贩卖清单 */
 	public List<L1PrivateShopSellList> getSellList() {
@@ -1075,7 +1075,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 购买清单 */
-	private List<L1PrivateShopBuyList> _buyList = Lists.newList();
+	private final List<L1PrivateShopBuyList> _buyList = Lists.newList();
 
 	/** 取得购买清单 */
 	public List<L1PrivateShopBuyList> getBuyList() {
@@ -1450,7 +1450,7 @@ public class L1PcInstance extends L1Character {
 			}
 
 			if (isMagicDamage == true) { // 连续魔法伤害による轻减
-				double nowTime = (double) System.currentTimeMillis();
+				double nowTime = System.currentTimeMillis();
 				double interval = (20D - (nowTime - _oldTime) / 100D) % 20D;
 
 				if (damage > 0) {
@@ -1942,25 +1942,25 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void resExp() {
 		int oldLevel = getLevel();
-		int needExp = ExpTable.getNeedExpNextLevel(oldLevel);
-		int exp = 0;
+		long needExp = ExpTable.getNeedExpNextLevel(oldLevel);
+		long exp = 0;
 		if (oldLevel < 45) {
-			exp = (int) (needExp * 0.05);
+			exp = (long) (needExp * 0.05);
 		}
 		else if (oldLevel == 45) {
-			exp = (int) (needExp * 0.045);
+			exp = (long) (needExp * 0.045);
 		}
 		else if (oldLevel == 46) {
-			exp = (int) (needExp * 0.04);
+			exp = (long) (needExp * 0.04);
 		}
 		else if (oldLevel == 47) {
-			exp = (int) (needExp * 0.035);
+			exp = (long) (needExp * 0.035);
 		}
 		else if (oldLevel == 48) {
-			exp = (int) (needExp * 0.03);
+			exp = (long) (needExp * 0.03);
 		}
 		else if (oldLevel >= 49) {
-			exp = (int) (needExp * 0.025);
+			exp = (long) (needExp * 0.025);
 		}
 
 		if (exp == 0) {
@@ -1974,28 +1974,28 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void deathPenalty() {
 		int oldLevel = getLevel();
-		int needExp = ExpTable.getNeedExpNextLevel(oldLevel);
-		int exp = 0;
+		long needExp = ExpTable.getNeedExpNextLevel(oldLevel);
+		long exp = 0;
 		if ((oldLevel >= 1) && (oldLevel < 11)) {
 			exp = 0;
 		}
 		else if ((oldLevel >= 11) && (oldLevel < 45)) {
-			exp = (int) (needExp * 0.1);
+			exp = (long) (needExp * 0.1);
 		}
 		else if (oldLevel == 45) {
-			exp = (int) (needExp * 0.09);
+			exp = (long) (needExp * 0.09);
 		}
 		else if (oldLevel == 46) {
-			exp = (int) (needExp * 0.08);
+			exp = (long) (needExp * 0.08);
 		}
 		else if (oldLevel == 47) {
-			exp = (int) (needExp * 0.07);
+			exp = (long) (needExp * 0.07);
 		}
 		else if (oldLevel == 48) {
-			exp = (int) (needExp * 0.06);
+			exp = (long) (needExp * 0.06);
 		}
 		else if (oldLevel >= 49) {
-			exp = (int) (needExp * 0.05);
+			exp = (long) (needExp * 0.05);
 		}
 
 		if (exp == 0) {
@@ -2188,7 +2188,7 @@ public class L1PcInstance extends L1Character {
 	/**  */
 	private int _type;
 	/**  */
-	private int _exp;
+	private long _exp;
 	/**  */
 	private final L1Karma _karma = new L1Karma();
 	/**  */
@@ -2234,7 +2234,7 @@ public class L1PcInstance extends L1Character {
 	/**  */
 	private final List<L1BookMark> _bookmarks;
 	/**  */
-	private L1Quest _quest;
+	private final L1Quest _quest;
 	/**  */
 	private MpRegeneration _mpRegen;
 	/**  */
@@ -2262,7 +2262,7 @@ public class L1PcInstance extends L1Character {
 	/**  */
 	private boolean _ItemMakeActiveByDoll;
 	/**  */
-	private L1EquipmentSlot _equipSlot;
+	private final L1EquipmentSlot _equipSlot;
 	/**  */
 	private L1PcDeleteTimer _pcDeleteTimer;
 
@@ -2977,7 +2977,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 隐身计时器监视器 */
-	private Object _invisTimerMonitor = new Object();
+	private final Object _invisTimerMonitor = new Object();
 
 	/** 增加隐身延迟计时器 */
 	public void addInvisDelayCounter(int counter) {
@@ -2996,7 +2996,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 增加经验值 */
-	public synchronized void addExp(int exp) {
+	public synchronized void addExp(long exp) {
 		_exp += exp;
 		if (_exp > ExpTable.MAX_EXP) {
 			_exp = ExpTable.MAX_EXP;
