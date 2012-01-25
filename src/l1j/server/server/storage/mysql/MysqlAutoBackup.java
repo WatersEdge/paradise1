@@ -68,28 +68,26 @@ public class MysqlAutoBackup extends TimerTask {
 		try {
 			System.out.println("(MYSQL is backing now...)");
 			/**
-			 * mysqldump --user=[Username] --password=[password] [databasename]
-			 * > [backupfile.sql]
+			 * mysqldump --user=[Username] --password=[password] [databasename] > [backupfile.sql]
 			 */
 			StringBuilder exeText = new StringBuilder("mysqldump --user=");
 			exeText.append(Username + " --password=");
 			exeText.append(Passwords + " ");
 			exeText.append(Database + " --opt --skip-extended-insert --skip-quick");
 			exeText.append(GzipCmd + " > ");
-			exeText.append(dir.getAbsolutePath()
-					+ new SimpleDateFormat("\\yyyy-MM-dd-kkmm")
-							.format(new Date()) + FilenameEx);
+			exeText.append(dir.getAbsolutePath() + new SimpleDateFormat("\\yyyy-MM-dd-kkmm").format(new Date()) + FilenameEx);
 			try {
 				Runtime rt = Runtime.getRuntime();
 				rt.exec("cmd /c " + exeText.toString());
 			} finally {
-				System.out.println("(MYSQL is backed over.)" + "\n"
-						+ L1Message.waitingforuser); // 等待玩家连线
+				System.out.println("(MYSQL is backed over.)" + "\n" + L1Message.waitingforuser); // 等待玩家连线
 			}
-		} catch (IOException ioe) {
+		}
+		catch (IOException ioe) {
 			ioe.printStackTrace();
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -41,7 +41,6 @@ public class L1V2Map extends L1Map {
 	private boolean _isUsableItem;
 	private boolean _isUsableSkill;
 
-
 	/**
 	 * Mobなどの通行不可能になるオブジェクトがタイル上に存在するかを示すビットフラグ
 	 */
@@ -55,11 +54,8 @@ public class L1V2Map extends L1Map {
 		return _map[offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
 	}
 
-	public L1V2Map(int id, byte map[], int xLoc, int yLoc, int width,
-			int height, boolean underwater, boolean markable,
-			boolean teleportable, boolean escapable, boolean useResurrection,
-			boolean usePainwand, boolean enabledDeathPenalty, boolean takePets,
-			boolean recallPets, boolean usableItem, boolean usableSkill) {
+	public L1V2Map(int id, byte map[], int xLoc, int yLoc, int width, int height, boolean underwater, boolean markable, boolean teleportable, boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
+			boolean usableItem, boolean usableSkill) {
 		_id = id;
 		_map = map;
 		_xLoc = xLoc;
@@ -143,35 +139,43 @@ public class L1V2Map extends L1Map {
 			tile = accessOriginalTile(x, y - 1);
 			newX = x;
 			newY = y - 1;
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			tile = accessOriginalTile(x + 1, y - 1);
 			newX = x + 1;
 			newY = y - 1;
-		} else if (heading == 2) {
+		}
+		else if (heading == 2) {
 			tile = accessOriginalTile(x + 1, y);
 			newX = x + 1;
 			newY = y;
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			tile = accessOriginalTile(x + 1, y + 1);
 			newX = x + 1;
 			newY = y + 1;
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			tile = accessOriginalTile(x, y + 1);
 			newX = x;
 			newY = y + 1;
-		} else if (heading == 5) {
+		}
+		else if (heading == 5) {
 			tile = accessOriginalTile(x - 1, y + 1);
 			newX = x - 1;
 			newY = y + 1;
-		} else if (heading == 6) {
+		}
+		else if (heading == 6) {
 			tile = accessOriginalTile(x - 1, y);
 			newX = x - 1;
 			newY = y;
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			tile = accessOriginalTile(x - 1, y - 1);
 			newX = x - 1;
 			newY = y - 1;
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -199,8 +203,7 @@ public class L1V2Map extends L1Map {
 
 	@Override
 	public boolean isInMap(int x, int y) {
-		return (_xLoc <= x && x < _xLoc + _width && _yLoc <= y && y < _yLoc
-				+ _height);
+		return (_xLoc <= x && x < _xLoc + _width && _yLoc <= y && y < _yLoc + _height);
 	}
 
 	@Override
@@ -240,21 +243,29 @@ public class L1V2Map extends L1Map {
 		int tile;
 		if (heading == 0) {
 			tile = accessOriginalTile(x, y - 1);
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			tile = accessOriginalTile(x + 1, y - 1);
-		} else if (heading == 2) {
+		}
+		else if (heading == 2) {
 			tile = accessOriginalTile(x + 1, y);
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			tile = accessOriginalTile(x + 1, y + 1);
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			tile = accessOriginalTile(x, y + 1);
-		} else if (heading == 5) {
+		}
+		else if (heading == 5) {
 			tile = accessOriginalTile(x - 1, y + 1);
-		} else if (heading == 6) {
+		}
+		else if (heading == 6) {
 			tile = accessOriginalTile(x - 1, y);
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			tile = accessOriginalTile(x - 1, y - 1);
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -286,7 +297,8 @@ public class L1V2Map extends L1Map {
 	public void setPassable(int x, int y, boolean isPassable) {
 		if (isPassable) {
 			_map[offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
-		} else {
+		}
+		else {
 			_map[offset(x, y)] |= BITFLAG_IS_IMPASSABLE;
 		}
 	}
@@ -349,7 +361,7 @@ public class L1V2Map extends L1Map {
 	@Override
 	public boolean isFishingZone(int x, int y) {
 		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
-    }
+	}
 
 	@Override
 	public boolean isExistDoor(int x, int y) {
@@ -367,17 +379,17 @@ public class L1V2Map extends L1Map {
 				if (x == door.getX() && y == door.getY()) {
 					return true;
 				}
-			} else { // 2マス分以上の幅があるドア
+			}
+			else { // 2マス分以上の幅があるドア
 				if (door.getDirection() == 0) { // ／向き
-					for (int doorX = leftEdgeLocation;
-							doorX <= rightEdgeLocation; doorX++) {
+					for (int doorX = leftEdgeLocation; doorX <= rightEdgeLocation; doorX++) {
 						if (x == doorX && y == door.getY()) {
 							return true;
 						}
 					}
-				} else { // ＼向き
-					for (int doorY = leftEdgeLocation;
-							doorY <= rightEdgeLocation; doorY++) {
+				}
+				else { // ＼向き
+					for (int doorY = leftEdgeLocation; doorY <= rightEdgeLocation; doorY++) {
 						if (x == door.getX() && y == doorY) {
 							return true;
 						}

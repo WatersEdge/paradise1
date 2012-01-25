@@ -65,47 +65,46 @@ public class L1SummonInstance extends L1NpcInstance {
 	@Override
 	public boolean noTarget() {
 		switch (_currentPetStatus) {
-			case 3: // 休息
+		case 3: // 休息
+			return true;
+		case 4: // 散开
+			if ((_master != null) && (_master.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_master.getLocation()) < 5)) {
+				_dir = targetReverseDirection(_master.getX(), _master.getY());
+				_dir = checkObject(getX(), getY(), getMapId(), _dir);
+				setDirectionMove(_dir);
+				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+			}
+			else {
+				_currentPetStatus = 3;
 				return true;
-			case 4: // 散开
-				if ((_master != null)
-						&& (_master.getMapId() == getMapId())
-						&& (getLocation()
-								.getTileLineDistance(_master.getLocation()) < 5)) {
-					_dir = targetReverseDirection(_master.getX(), _master.getY());
-					_dir = checkObject(getX(), getY(), getMapId(), _dir);
+			}
+			return false;
+		case 5:
+			if ((Math.abs(getHomeX() - getX()) > 1) || (Math.abs(getHomeY() - getY()) > 1)) {
+				_dir = moveDirection(getHomeX(), getHomeY());
+				if (_dir == -1) {
+					setHomeX(getX());
+					setHomeY(getY());
+				}
+				else {
 					setDirectionMove(_dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-				} else {
-					_currentPetStatus = 3;
-					return true;
 				}
-				return false;
-			case 5:
-				if ((Math.abs(getHomeX() - getX()) > 1)
-						|| (Math.abs(getHomeY() - getY()) > 1)) {
-					_dir = moveDirection(getHomeX(), getHomeY());
-					if (_dir == -1) {
-						setHomeX(getX());
-						setHomeY(getY());
-					} else {
-						setDirectionMove(_dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-					}
+			}
+			return false;
+		default:
+			if ((_master != null) && (_master.getMapId() == getMapId())) {
+				if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
+					_dir = moveDirection(_master.getX(), _master.getY());
+					setDirectionMove(_dir);
+					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
-				return false;
-			default:
-				if ((_master != null) && (_master.getMapId() == getMapId())) {
-					if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-						_dir = moveDirection(_master.getX(), _master.getY());
-						setDirectionMove(_dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-					}
-				} else {
-					_currentPetStatus = 3;
-					return true;
-				}
-				return false;
+			}
+			else {
+				_currentPetStatus = 3;
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -119,7 +118,8 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (_tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
 				liberate();
-			} else {
+			}
+			else {
 				// サモンの解散
 				Death(null);
 			}
@@ -131,8 +131,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		super(template);
 		setId(IdFactory.getInstance().nextId());
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(
-				new SummonTimer(), SUMMON_TIME);
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
 		setMaster(master);
 		setX(master.getX() + Random.nextInt(5) - 2);
@@ -153,8 +152,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	// 造尸术处理
-	public L1SummonInstance(L1NpcInstance target, L1Character master,
-			boolean isCreateZombie) {
+	public L1SummonInstance(L1NpcInstance target, L1Character master, boolean isCreateZombie) {
 		super(null);
 		setId(IdFactory.getInstance().nextId());
 
@@ -165,32 +163,38 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (pc.isWizard()) {
 				if ((level >= 24) && (level <= 31)) {
 					npcId = 81183; // 人形僵尸
-				} else if ((level >= 32) && (level <= 39)) {
+				}
+				else if ((level >= 32) && (level <= 39)) {
 					npcId = 81184;
-				} else if ((level >= 40) && (level <= 43)) {
+				}
+				else if ((level >= 40) && (level <= 43)) {
 					npcId = 81185;
-				} else if ((level >= 44) && (level <= 47)) {
+				}
+				else if ((level >= 44) && (level <= 47)) {
 					npcId = 81186;
-				} else if ((level >= 48) && (level <= 51)) {
+				}
+				else if ((level >= 48) && (level <= 51)) {
 					npcId = 81187;
-				} else if (level >= 52) {
+				}
+				else if (level >= 52) {
 					npcId = 81188;
 				}
-			} else if (pc.isElf()) {
+			}
+			else if (pc.isElf()) {
 				if (level >= 48) {
 					npcId = 81183;
 				}
 			}
 			L1Npc template = NpcTable.getInstance().getTemplate(npcId).clone();
 			setting_template(template);
-		} else { // テイミングモンスター
+		}
+		else { // テイミングモンスター
 			setting_template(target.getNpcTemplate());
 			setCurrentHpDirect(target.getCurrentHp());
 			setCurrentMpDirect(target.getCurrentMp());
 		}
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(
-				new SummonTimer(), SUMMON_TIME);
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
 		setMaster(master);
 		setX(target.getX());
@@ -200,8 +204,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		setLightSize(target.getLightSize());
 		setPetcost(6);
 
-		if ((target instanceof L1MonsterInstance)
-				&& !((L1MonsterInstance) target).is_storeDroped()) {
+		if ((target instanceof L1MonsterInstance) && !((L1MonsterInstance) target).is_storeDroped()) {
 			DropTable.getInstance().setDrop(target, target.getInventory());
 		}
 		setInventory(target.getInventory());
@@ -247,7 +250,8 @@ public class L1SummonInstance extends L1NpcInstance {
 				if ((getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					damage = 0;
 				}
-			} else if (attacker instanceof L1SummonInstance) {
+			}
+			else if (attacker instanceof L1SummonInstance) {
 				L1SummonInstance summon = (L1SummonInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
 				if ((getZoneType() == 1) || (summon.getZoneType() == 1)) {
@@ -258,10 +262,12 @@ public class L1SummonInstance extends L1NpcInstance {
 			int newHp = getCurrentHp() - damage;
 			if (newHp <= 0) {
 				Death(attacker);
-			} else {
+			}
+			else {
 				setCurrentHp(newHp);
 			}
-		} else if (!isDead()) // 念のため
+		}
+		else if (!isDead()) // 念のため
 		{
 			System.out.println("警告：サモンのＨＰ减少处理が正しく行われていない个所があります。※もしくは最初からＨＰ０");
 			Death(attacker);
@@ -282,24 +288,21 @@ public class L1SummonInstance extends L1NpcInstance {
 			for (L1ItemInstance item : items) {
 				if (_master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(
-							143, getName(), item.getLogName()));
-				} else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(
-							getX(), getY(), getMapId());
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+				}
+				else { // 持てないので足元に落とす
+					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
 
 			if (_tamed) {
-				broadcastPacket(new S_DoActionGFX(getId(),
-						ActionCodes.ACTION_Die));
+				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
 				startDeleteTimer();
-			} else {
+			}
+			else {
 				deleteMe();
 			}
 		}
@@ -315,20 +318,18 @@ public class L1SummonInstance extends L1NpcInstance {
 			for (L1ItemInstance item : items) {
 				if (_master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(
-							143, getName(), item.getLogName()));
-				} else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(
-							getX(), getY(), getMapId());
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+				}
+				else { // 持てないので足元に落とす
+					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
 			deleteMe();
-		} else {
+		}
+		else {
 			liberate();
 		}
 	}
@@ -342,12 +343,12 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (!_tamed && !_isReturnToNature) {
 			broadcastPacket(new S_SkillSound(getId(), 169));
 		}
-		//if (_master.getPetList().isEmpty()) {
-			L1PcInstance pc = (L1PcInstance) _master;
-			if (pc instanceof L1PcInstance) {
-				pc.sendPackets(new S_PetCtrlMenu(_master, this, false));// 关闭宠物控制图形介面
-			}
-		//}
+		// if (_master.getPetList().isEmpty()) {
+		L1PcInstance pc = (L1PcInstance) _master;
+		if (pc instanceof L1PcInstance) {
+			pc.sendPackets(new S_PetCtrlMenu(_master, this, false));// 关闭宠物控制图形介面
+		}
+		// }
 		_master.getPetList().remove(getId());
 		super.deleteMe();
 
@@ -384,8 +385,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	public void setTarget(L1Character target) {
-		if ((target != null)
-				&& ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5))) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -394,8 +394,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	public void setMasterTarget(L1Character target) {
-		if ((target != null)
-				&& ((_currentPetStatus == 1) || (_currentPetStatus == 5))) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -423,8 +422,7 @@ public class L1SummonInstance extends L1NpcInstance {
 			// テレポート处理中
 			return;
 		}
-		if (((getZoneType() == 1) || (attacker.getZoneType() == 1))
-				&& isExsistMaster()) {
+		if (((getZoneType() == 1) || (attacker.getZoneType() == 1)) && isExsistMaster()) {
 			// 攻击される侧がセーフティーゾーン
 			// 攻击モーション送信
 			L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
@@ -465,7 +463,8 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (_tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
 				liberate();
-			} else {
+			}
+			else {
 				// サモンの解散
 				Death(null);
 			}
@@ -476,13 +475,15 @@ public class L1SummonInstance extends L1NpcInstance {
 					L1SummonInstance summon = (L1SummonInstance) petObject;
 					petMaster.sendPackets(new S_SummonPack(summon, petMaster));
 					return;
-				} else if (petObject instanceof L1PetInstance) {
+				}
+				else if (petObject instanceof L1PetInstance) {
 					L1PetInstance pet = (L1PetInstance) petObject;
 					petMaster.sendPackets(new S_PetPack(pet, petMaster));
 					return;
 				}
 			}
-		} else {
+		}
+		else {
 			// 同じ主人のペットの状态をすべて更新
 			Object[] petList = _master.getPetList().values().toArray();
 			for (Object petObject : petList) {
@@ -490,19 +491,18 @@ public class L1SummonInstance extends L1NpcInstance {
 					// サモンモンスター
 					L1SummonInstance summon = (L1SummonInstance) petObject;
 					summon.set_currentPetStatus(status);
-				} else if (petObject instanceof L1PetInstance) { // ペット
+				}
+				else if (petObject instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petObject;
-					if ((player != null)
-							&& (player.getLevel() >= pet.getLevel()) && pet.get_food() > 0) {
+					if ((player != null) && (player.getLevel() >= pet.getLevel()) && pet.get_food() > 0) {
 						pet.setCurrentPetStatus(status);
-					} else {
+					}
+					else {
 						if (!pet.isDead()) {
-							L1PetType type = PetTypeTable.getInstance().get(
-									pet.getNpcTemplate().get_npcId());
+							L1PetType type = PetTypeTable.getInstance().get(pet.getNpcTemplate().get_npcId());
 							int id = type.getDefyMessageId();
 							if (id != 0) {
-								pet.broadcastPacket(new S_NpcChatPacket(pet, "$" + id,
-										0));
+								pet.broadcastPacket(new S_NpcChatPacket(pet, "$" + id, 0));
 							}
 						}
 					}
@@ -541,8 +541,8 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (getCurrentHp() != getMaxHp()) {
 				useItem(USEITEM_HEAL, 100);
 			}
-		} else if (Arrays
-				.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
+		}
+		else if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
 			useItem(USEITEM_HASTE, 100);
 		}
 	}
@@ -551,15 +551,20 @@ public class L1SummonInstance extends L1NpcInstance {
 		int status = 0;
 		if (action.equalsIgnoreCase("aggressive")) { // 攻击态势
 			status = 1;
-		} else if (action.equalsIgnoreCase("defensive")) { // 防御态势
+		}
+		else if (action.equalsIgnoreCase("defensive")) { // 防御态势
 			status = 2;
-		} else if (action.equalsIgnoreCase("stay")) { // 休憩
+		}
+		else if (action.equalsIgnoreCase("stay")) { // 休憩
 			status = 3;
-		} else if (action.equalsIgnoreCase("extend")) { // 配备
+		}
+		else if (action.equalsIgnoreCase("extend")) { // 配备
 			status = 4;
-		} else if (action.equalsIgnoreCase("alert")) { // 警戒
+		}
+		else if (action.equalsIgnoreCase("alert")) { // 警戒
 			status = 5;
-		} else if (action.equalsIgnoreCase("dismiss")) { // 解散
+		}
+		else if (action.equalsIgnoreCase("dismiss")) { // 解散
 			status = 6;
 		}
 		return status;
@@ -606,7 +611,8 @@ public class L1SummonInstance extends L1NpcInstance {
 
 		if (_currentPetStatus == 3) {
 			allTargetClear();
-		} else {
+		}
+		else {
 			if (!isAiRunning()) {
 				startAI();
 			}

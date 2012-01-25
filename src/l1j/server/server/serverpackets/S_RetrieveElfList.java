@@ -27,6 +27,7 @@ public class S_RetrieveElfList extends ServerBasePacket {
 
 	/**
 	 * 物品名单 (精灵仓库)
+	 * 
 	 * @param objid
 	 * @param pc
 	 */
@@ -38,8 +39,7 @@ public class S_RetrieveElfList extends ServerBasePacket {
 				writeD(objid);
 				writeH(size);
 				writeC(9); // 精灵仓库
-				for (Object itemObject : pc.getDwarfForElfInventory()
-						.getItems()) {
+				for (Object itemObject : pc.getDwarfForElfInventory().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0);
@@ -49,10 +49,12 @@ public class S_RetrieveElfList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}

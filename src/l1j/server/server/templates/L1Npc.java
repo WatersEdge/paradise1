@@ -27,7 +27,8 @@ public class L1Npc extends L1Object implements Cloneable {
 	public L1Npc clone() {
 		try {
 			return (L1Npc) (super.clone());
-		} catch (CloneNotSupportedException e) {
+		}
+		catch (CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
 	}
@@ -202,7 +203,7 @@ public class L1Npc extends L1Object implements Cloneable {
 	}
 
 	public void set_weakAttr(int i) {
-		_weakAttr= i;
+		_weakAttr = i;
 	}
 
 	private int _ranged;
@@ -636,7 +637,7 @@ public class L1Npc extends L1Object implements Cloneable {
 	}
 
 	private boolean _amountFixed;
-	
+
 	/**
 	 * mapidsテーブルで設定されたモンスター量倍率の影響を受けるかどうかを返す。
 	 * 

@@ -27,14 +27,15 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  * 提供用于访问DB数据库的各种接口。
  */
 public class L1DatabaseFactory {
+
+	/** 纪录用 */
+	private static Logger _log = Logger.getLogger(L1DatabaseFactory.class.getName());
+
 	/** 资料库的实例 */
 	private static L1DatabaseFactory _instance;
 
 	/** 资料库连结的来源 */
 	private ComboPooledDataSource _source;
-
-	/** 纪录用 */
-	private static Logger _log = Logger.getLogger(L1DatabaseFactory.class.getName());
 
 	/* 连结资料库相关的资讯 */
 	/** 资料库连结的驱动程式 */
@@ -52,12 +53,12 @@ public class L1DatabaseFactory {
 	/**
 	 * 设定资料库登入的相关资讯
 	 * 
-	 * @param driver 
+	 * @param driver
 	 *            资料库连结的驱动程式
 	 * @param url
 	 *            资料库连结的位址
 	 * @param user
-	 *            登入资料库的使用者名称 
+	 *            登入资料库的使用者名称
 	 * @param password
 	 *            登入资料库的密码
 	 */
@@ -84,11 +85,13 @@ public class L1DatabaseFactory {
 
 			// 测试连接
 			_source.getConnection().close();
-		} catch (SQLException x) {
+		}
+		catch (SQLException x) {
 			_log.fine("数据库连接失败");
 			// 重新抛出异常
 			throw x;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.fine("数据库连接失败");
 			throw new SQLException("无法初始化DB连接:" + e);
 		}
@@ -100,12 +103,14 @@ public class L1DatabaseFactory {
 	public void shutdown() {
 		try {
 			_source.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.INFO, "", e);
 		}
 		try {
 			_source = null;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.INFO, "", e);
 		}
 	}
@@ -135,7 +140,8 @@ public class L1DatabaseFactory {
 		while (con == null) {
 			try {
 				con = _source.getConnection();
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				_log.warning("L1DatabaseFactory: getConnection() failed, trying again " + e);
 			}
 		}

@@ -63,7 +63,8 @@ public class L1Chaser extends TimerTask {
 				stop();
 				return;
 			}
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
@@ -71,8 +72,7 @@ public class L1Chaser extends TimerTask {
 	public void begin() {
 		// 效果时间持续8秒、事实上，在考虑每4秒技能效果处理时间只出现一次
 		// 设置0.9秒的启动时间
-		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 0,
-				1000);
+		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 0, 1000);
 	}
 
 	public void stop() {
@@ -85,45 +85,40 @@ public class L1Chaser extends TimerTask {
 		double damage = getDamage(_pc, _cha);
 		if (_cha.getCurrentHp() - (int) damage <= 0 && _cha.getCurrentHp() != 1) {
 			damage = _cha.getCurrentHp() - 1;
-		} else if (_cha.getCurrentHp() == 1) {
+		}
+		else if (_cha.getCurrentHp() == 1) {
 			damage = 0;
 		}
-		S_EffectLocation packet = new S_EffectLocation(_cha.getX(),
-				_cha.getY(), _gfxid);
+		S_EffectLocation packet = new S_EffectLocation(_cha.getX(), _cha.getY(), _gfxid);
 		if (_pc.getWeapon() == null) { // 修正空手会出错的问题
 			damage = 0;
-		} else if (_pc.getWeapon().getItem().getItemId() == 265
-				|| _pc.getWeapon().getItem().getItemId() == 266
-				|| _pc.getWeapon().getItem().getItemId() == 267
-				|| _pc.getWeapon().getItem().getItemId() == 268) {
+		}
+		else if (_pc.getWeapon().getItem().getItemId() == 265 || _pc.getWeapon().getItem().getItemId() == 266 || _pc.getWeapon().getItem().getItemId() == 267 || _pc.getWeapon().getItem().getItemId() == 268) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
-		} else if (_pc.getWeapon().getItem().getItemId() == 276
-				|| _pc.getWeapon().getItem().getItemId() == 277) {
+		}
+		else if (_pc.getWeapon().getItem().getItemId() == 276 || _pc.getWeapon().getItem().getItemId() == 277) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
-		} else if (_pc.getWeapon().getItem().getItemId() == 304
-				|| _pc.getWeapon().getItem().getItemId() == 307
-				|| _pc.getWeapon().getItem().getItemId() == 308) {
+		}
+		else if (_pc.getWeapon().getItem().getItemId() == 304 || _pc.getWeapon().getItem().getItemId() == 307 || _pc.getWeapon().getItem().getItemId() == 308) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8150);
-		} else if (_pc.getWeapon().getItem().getItemId() == 305
-				|| _pc.getWeapon().getItem().getItemId() == 306
-				|| _pc.getWeapon().getItem().getItemId() == 309) {
+		}
+		else if (_pc.getWeapon().getItem().getItemId() == 305 || _pc.getWeapon().getItem().getItemId() == 306 || _pc.getWeapon().getItem().getItemId() == 309) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8152);
-		} else { // 更换为其他武器 附加特效伤害归零
+		}
+		else { // 更换为其他武器 附加特效伤害归零
 			damage = 0;
 		}
 		_pc.sendPackets(packet);
 		_pc.broadcastPacket(packet);
 		if (_cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) _cha;
-			pc.sendPackets(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Damage));
-			pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Damage));
+			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
+			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 			pc.receiveDamage(_pc, damage, false);
-		} else if (_cha instanceof L1NpcInstance) {
+		}
+		else if (_cha instanceof L1NpcInstance) {
 			L1NpcInstance npc = (L1NpcInstance) _cha;
-			npc.broadcastPacket(new S_DoActionGFX(npc.getId(),
-					ActionCodes.ACTION_Damage));
+			npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Damage));
 			npc.receiveDamage(_pc, (int) damage);
 		}
 	}
@@ -140,19 +135,21 @@ public class L1Chaser extends TimerTask {
 		double coefficientB = 0;
 		if (intel > 18) {
 			coefficientB = (intel + 2.0) / intel;
-		} else if (intel <= 12) {
+		}
+		else if (intel <= 12) {
 			coefficientB = 12.0 * 0.065;
-		} else {
+		}
+		else {
 			coefficientB = intel * 0.065;
 		}
 		double coefficientC = 0;
 		if (intel <= 12) {
 			coefficientC = 12;
-		} else {
+		}
+		else {
 			coefficientC = intel;
 		}
-		dmg = (Random.nextInt(6) + 1 + 7) * coefficientA * coefficientB / 10.5
-				* coefficientC * 2.0;
+		dmg = (Random.nextInt(6) + 1 + 7) * coefficientA * coefficientB / 10.5 * coefficientC * 2.0;
 		dmg = L1WeaponSkill.calcDamageReduction(pc, cha, dmg, _attr);
 		if (cha.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2.0;

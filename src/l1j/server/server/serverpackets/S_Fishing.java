@@ -21,7 +21,7 @@ import l1j.server.server.Opcodes;
 
 /**
  * 物件动作种类 (短时间)<BR>
- * 		- 钓鱼
+ * - 钓鱼
  */
 public class S_Fishing extends ServerBasePacket {
 
@@ -35,7 +35,8 @@ public class S_Fishing extends ServerBasePacket {
 
 	/**
 	 * 物件动作种类 (短时间)<BR>
-	 * 		- 钓鱼
+	 * - 钓鱼
+	 * 
 	 * @param objectId
 	 * @param motionNum
 	 * @param x

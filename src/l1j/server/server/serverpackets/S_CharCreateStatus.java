@@ -32,6 +32,7 @@ public class S_CharCreateStatus extends ServerBasePacket {
 
 	/**
 	 * 角色创造例外
+	 * 
 	 * @param reason
 	 */
 	public S_CharCreateStatus(int reason) {

@@ -70,9 +70,11 @@ public class TrapTable {
 
 				_traps.put(trap.getId(), trap);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -110,7 +112,8 @@ public class TrapTable {
 		public String getString(String name) {
 			try {
 				return _rs.getString(name);
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 			}
 			return "";
 		}
@@ -119,7 +122,8 @@ public class TrapTable {
 		public int getInt(String name) {
 			try {
 				return _rs.getInt(name);
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 
 			}
 			return 0;
@@ -129,7 +133,8 @@ public class TrapTable {
 		public boolean getBoolean(String name) {
 			try {
 				return _rs.getBoolean(name);
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 			}
 			return false;
 		}

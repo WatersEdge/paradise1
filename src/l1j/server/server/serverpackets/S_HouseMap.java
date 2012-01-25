@@ -30,6 +30,7 @@ public class S_HouseMap extends ServerBasePacket {
 
 	/**
 	 * 血盟小屋地图 (地点)
+	 * 
 	 * @param objectId
 	 * @param house_number
 	 */

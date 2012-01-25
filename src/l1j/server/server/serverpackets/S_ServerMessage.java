@@ -43,6 +43,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 */
 	public S_ServerMessage(int type) {
@@ -51,6 +52,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 * @param msg1
 	 */
@@ -60,6 +62,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2
@@ -70,6 +73,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2
@@ -81,6 +85,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2
@@ -93,6 +98,7 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	/**
 	 * 服务器讯息
+	 * 
 	 * @param type
 	 * @param msg1
 	 * @param msg2

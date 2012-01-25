@@ -32,6 +32,7 @@ public class S_MoveCharPacket extends ServerBasePacket {
 
 	/**
 	 * 物件移动
+	 * 
 	 * @param cha
 	 */
 	public S_MoveCharPacket(L1Character cha) {

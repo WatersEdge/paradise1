@@ -35,8 +35,11 @@ public class Effect {
 
 	/**
 	 * 道具使用效果
-	 * @param pc 使用者
-	 * @param item 道具
+	 * 
+	 * @param pc
+	 *            使用者
+	 * @param item
+	 *            道具
 	 */
 	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
 		boolean isMagicStone = false;
@@ -51,96 +54,97 @@ public class Effect {
 		int skillId = 0;
 		int time = 0;
 		int gfxid = 0;
-		switch(itemId) {
-			case L1ItemId.POTION_OF_EXP_150: // 150%神力药水
-			case L1ItemId.POTION_OF_EXP_175: // 175%神力药水
-			case L1ItemId.POTION_OF_EXP_200: // 200%神力药水
-			case L1ItemId.POTION_OF_EXP_225: // 225%神力药水
-			case L1ItemId.POTION_OF_EXP_250: // 250%神力药水
-				skillId = itemId - 42999;
-				time = 900;
-				gfxid = itemId - 39699;
-				deleteRepeatedSkills(pc, skillId); // 与战斗药水等相冲
-				pc.sendPackets(new S_ServerMessage(1292)); // 狩猎的经验值将会增加。
-				break;
-			case L1ItemId.BLESS_OF_MAZU: // 妈祖祝福平安符
-				skillId = EFFECT_BLESS_OF_MAZU;
-				time = 2400;
-				gfxid = 7321;
-				deleteRepeatedSkills(pc, skillId); // 与妖精属性魔法相冲！
-				break;
-			case L1ItemId.POTION_OF_BATTLE: // 战斗药水
-				skillId = EFFECT_POTION_OF_BATTLE;
-				time = 3600;
-				gfxid = 7013;
-				deleteRepeatedSkills(pc, skillId); // 与神力药水等相冲
-				break;
-			case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 体力增强卷轴
-			case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增强卷轴
-			case L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE: // 强化战斗卷轴
-				skillId = itemId - 42999;
-				time = 3600;
-				gfxid = itemId - 40014;
-				deleteRepeatedSkills(pc, skillId);
-				break;
-			case 47017: // 地龙之魔眼
-			case 47018: // 水龙之魔眼
-			case 47019: // 风龙之魔眼
-			case 47020: // 火龙之魔眼
-			case 47021: // 诞生之魔眼
-			case 47022: // 形象之魔眼
-			case 47023: // 生命之魔眼
-				skillId = itemId - 42968;
+		switch (itemId) {
+		case L1ItemId.POTION_OF_EXP_150: // 150%神力药水
+		case L1ItemId.POTION_OF_EXP_175: // 175%神力药水
+		case L1ItemId.POTION_OF_EXP_200: // 200%神力药水
+		case L1ItemId.POTION_OF_EXP_225: // 225%神力药水
+		case L1ItemId.POTION_OF_EXP_250: // 250%神力药水
+			skillId = itemId - 42999;
+			time = 900;
+			gfxid = itemId - 39699;
+			deleteRepeatedSkills(pc, skillId); // 与战斗药水等相冲
+			pc.sendPackets(new S_ServerMessage(1292)); // 狩猎的经验值将会增加。
+			break;
+		case L1ItemId.BLESS_OF_MAZU: // 妈祖祝福平安符
+			skillId = EFFECT_BLESS_OF_MAZU;
+			time = 2400;
+			gfxid = 7321;
+			deleteRepeatedSkills(pc, skillId); // 与妖精属性魔法相冲！
+			break;
+		case L1ItemId.POTION_OF_BATTLE: // 战斗药水
+			skillId = EFFECT_POTION_OF_BATTLE;
+			time = 3600;
+			gfxid = 7013;
+			deleteRepeatedSkills(pc, skillId); // 与神力药水等相冲
+			break;
+		case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 体力增强卷轴
+		case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增强卷轴
+		case L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE: // 强化战斗卷轴
+			skillId = itemId - 42999;
+			time = 3600;
+			gfxid = itemId - 40014;
+			deleteRepeatedSkills(pc, skillId);
+			break;
+		case 47017: // 地龙之魔眼
+		case 47018: // 水龙之魔眼
+		case 47019: // 风龙之魔眼
+		case 47020: // 火龙之魔眼
+		case 47021: // 诞生之魔眼
+		case 47022: // 形象之魔眼
+		case 47023: // 生命之魔眼
+			skillId = itemId - 42968;
+			time = 600;
+			gfxid = itemId - 39346; // gfxid = 7671 ~ 7676、7678
+			if (itemId == 47023) {
+				gfxid = 7678;
+			}
+			deteleItem = false;
+			deleteRepeatedSkills(pc, skillId);
+			break;
+		default:
+			if (itemId >= 47064 && itemId <= 47072) { // 附魔石(近战)
+				skillId = itemId - 43051;
+				gfxid = itemId - 38125;
 				time = 600;
-				gfxid = itemId - 39346; // gfxid = 7671 ~ 7676、7678
-				if (itemId == 47023) {
-					gfxid = 7678;
-				}
-				deteleItem = false;
-				deleteRepeatedSkills(pc, skillId);
-				break;
-			default:
-				if (itemId >= 47064 && itemId <= 47072) { // 附魔石(近战)
-					skillId = itemId - 43051;
-					gfxid = itemId - 38125;
-					time = 600;
-					isMagicStone = true;
-					deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
-					skillId = itemId - 43052;
-					gfxid = itemId - 38126;
-					time = 600;
-					isMagicStone = true;
-					deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
-					skillId = itemId - 43053;
-					gfxid = itemId - 38127;
-					time = 600;
-					isMagicStone = true;
-					deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
-					skillId = itemId - 43054;
-					gfxid = itemId - 38128;
-					time = 600;
-					isMagicStone = true;
-					deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
-				}
-				else {
-					pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
-					return;
-				}
-				break;
+				isMagicStone = true;
+				deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+			}
+			else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
+				skillId = itemId - 43052;
+				gfxid = itemId - 38126;
+				time = 600;
+				isMagicStone = true;
+				deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+			}
+			else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
+				skillId = itemId - 43053;
+				gfxid = itemId - 38127;
+				time = 600;
+				isMagicStone = true;
+				deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+			}
+			else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
+				skillId = itemId - 43054;
+				gfxid = itemId - 38128;
+				time = 600;
+				isMagicStone = true;
+				deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+			}
+			else {
+				pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
+				return;
+			}
+			break;
 		}
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 
 		if (isMagicStone) {
 			magicStoneEffect(pc, skillId, time);
-			
-		} else {
+
+		}
+		else {
 			useEffect(pc, skillId, time);
 			if (deteleItem) { // 删除道具
 				pc.getInventory().removeItem(item, 1);
@@ -150,13 +154,17 @@ public class Effect {
 
 	/**
 	 * 使用效果
-	 * @param pc 使用者
-	 * @param skillId 技能ID
-	 * @param time 时间
+	 * 
+	 * @param pc
+	 *            使用者
+	 * @param skillId
+	 *            技能ID
+	 * @param time
+	 *            时间
 	 */
 	public static void useEffect(L1PcInstance pc, int skillId, int time) {
 		if (!pc.hasSkillEffect(skillId)) {
-			switch(skillId) {
+			switch (skillId) {
 			case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
 				pc.addHitup(3); // 攻击成功 +3
 				pc.addDmgup(3); // 额外攻击点数 +3
@@ -238,37 +246,25 @@ public class Effect {
 
 	/**
 	 * 设定不可重复的魔法状态
+	 * 
 	 * @param pc
 	 * @param skillId
 	 */
 	public static void deleteRepeatedSkills(L1PcInstance pc, int skillId) {
-		final int[][] repeatedSkills =
-		{
+		final int[][] repeatedSkills = {
 				// 经验加成状态
-				{ EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, EFFECT_POTION_OF_EXP_200,
-					EFFECT_POTION_OF_EXP_225, EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE },
+				{ EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225, EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE },
 				// 体力增强卷轴、魔力增强卷轴、强化战斗卷
 				{ EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP, EFFECT_ENCHANTING_BATTLE },
 				// 火焰武器、风之神射、烈炎气息、暴风之眼、烈炎武器、暴风神射、妈祖的祝福
 				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT, EFFECT_BLESS_OF_MAZU },
 				// 1 ~ 9 阶附魔石(近战)(远攻)(恢复)(防御)
-				{ EFFECT_MAGIC_STONE_A_1, EFFECT_MAGIC_STONE_A_2, EFFECT_MAGIC_STONE_A_3,
-					EFFECT_MAGIC_STONE_A_4, EFFECT_MAGIC_STONE_A_5, EFFECT_MAGIC_STONE_A_6,
-					EFFECT_MAGIC_STONE_A_7, EFFECT_MAGIC_STONE_A_8, EFFECT_MAGIC_STONE_A_9,
-					EFFECT_MAGIC_STONE_B_1, EFFECT_MAGIC_STONE_B_2, EFFECT_MAGIC_STONE_B_3,
-					EFFECT_MAGIC_STONE_B_4, EFFECT_MAGIC_STONE_B_5, EFFECT_MAGIC_STONE_B_6,
-					EFFECT_MAGIC_STONE_B_7, EFFECT_MAGIC_STONE_B_8, EFFECT_MAGIC_STONE_B_9,
-					EFFECT_MAGIC_STONE_C_1, EFFECT_MAGIC_STONE_C_2, EFFECT_MAGIC_STONE_C_3,
-					EFFECT_MAGIC_STONE_C_4, EFFECT_MAGIC_STONE_C_5, EFFECT_MAGIC_STONE_C_6,
-					EFFECT_MAGIC_STONE_C_7, EFFECT_MAGIC_STONE_C_8, EFFECT_MAGIC_STONE_C_9,
-					EFFECT_MAGIC_STONE_D_1, EFFECT_MAGIC_STONE_D_2, EFFECT_MAGIC_STONE_D_3,
-					EFFECT_MAGIC_STONE_D_4, EFFECT_MAGIC_STONE_D_5, EFFECT_MAGIC_STONE_D_6,
-					EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9 },
+				{ EFFECT_MAGIC_STONE_A_1, EFFECT_MAGIC_STONE_A_2, EFFECT_MAGIC_STONE_A_3, EFFECT_MAGIC_STONE_A_4, EFFECT_MAGIC_STONE_A_5, EFFECT_MAGIC_STONE_A_6, EFFECT_MAGIC_STONE_A_7, EFFECT_MAGIC_STONE_A_8, EFFECT_MAGIC_STONE_A_9, EFFECT_MAGIC_STONE_B_1,
+						EFFECT_MAGIC_STONE_B_2, EFFECT_MAGIC_STONE_B_3, EFFECT_MAGIC_STONE_B_4, EFFECT_MAGIC_STONE_B_5, EFFECT_MAGIC_STONE_B_6, EFFECT_MAGIC_STONE_B_7, EFFECT_MAGIC_STONE_B_8, EFFECT_MAGIC_STONE_B_9, EFFECT_MAGIC_STONE_C_1, EFFECT_MAGIC_STONE_C_2,
+						EFFECT_MAGIC_STONE_C_3, EFFECT_MAGIC_STONE_C_4, EFFECT_MAGIC_STONE_C_5, EFFECT_MAGIC_STONE_C_6, EFFECT_MAGIC_STONE_C_7, EFFECT_MAGIC_STONE_C_8, EFFECT_MAGIC_STONE_C_9, EFFECT_MAGIC_STONE_D_1, EFFECT_MAGIC_STONE_D_2, EFFECT_MAGIC_STONE_D_3,
+						EFFECT_MAGIC_STONE_D_4, EFFECT_MAGIC_STONE_D_5, EFFECT_MAGIC_STONE_D_6, EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9 },
 				// 魔眼
-				{EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR,
-					EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE,
-					EFFECT_MAGIC_EYE_OF_LIFE}
-		};
+				{ EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR, EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE, EFFECT_MAGIC_EYE_OF_LIFE } };
 
 		for (int[] skills : repeatedSkills) {
 			for (int id : skills) {
@@ -281,6 +277,7 @@ public class Effect {
 
 	/**
 	 * 将重复的状态删除
+	 * 
 	 * @param pc
 	 * @param _skillId
 	 * @param repeat_skill
@@ -295,6 +292,7 @@ public class Effect {
 
 	/**
 	 * 附魔石效果
+	 * 
 	 * @param pc
 	 * @param skillId
 	 * @param time
@@ -302,7 +300,7 @@ public class Effect {
 	public static void magicStoneEffect(L1PcInstance pc, int skillId, int time) {
 		byte type = 0;
 		if (!pc.hasSkillEffect(skillId)) {
-			switch(skillId) {
+			switch (skillId) {
 			case EFFECT_MAGIC_STONE_A_1:
 				pc.addMaxHp(10);
 				type = 84;
@@ -444,7 +442,7 @@ public class Effect {
 			case EFFECT_MAGIC_STONE_C_9:
 				pc.addMaxMp(50);
 				pc.addMpr(5);
-				pc.addInt((byte)1);
+				pc.addInt((byte) 1);
 				pc.addSp(1);
 				pc.sendPackets(new S_SPMR(pc));
 				pc.sendPackets(new S_OwnCharStatus2(pc));
@@ -518,7 +516,7 @@ public class Effect {
 				pc.sendPackets(new S_SPMR(pc));
 				pc.sendPackets(new S_OwnCharAttrDef(pc));
 				pc.sendPackets(new S_OwnCharStatus2(pc));
-				
+
 			}
 		}
 		pc.setMagicStoneLevel(type);

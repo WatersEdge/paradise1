@@ -95,11 +95,8 @@ public class MpRegeneration extends TimerTask {
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
 			baseMpr += 3;
 		}
-		if ((_pc.getMapId() == 16384) || (_pc.getMapId() == 16896) || (_pc.getMapId() == 17408) || (_pc.getMapId() == 17920)
-				|| (_pc.getMapId() == 18432) || (_pc.getMapId() == 18944) || (_pc.getMapId() == 19968) || (_pc.getMapId() == 19456)
-				|| (_pc.getMapId() == 20480) || (_pc.getMapId() == 20992) || (_pc.getMapId() == 21504) || (_pc.getMapId() == 22016)
-				|| (_pc.getMapId() == 22528) || (_pc.getMapId() == 23040) || (_pc.getMapId() == 23552) || (_pc.getMapId() == 24064)
-				|| (_pc.getMapId() == 24576) || (_pc.getMapId() == 25088)) { // 旅馆
+		if ((_pc.getMapId() == 16384) || (_pc.getMapId() == 16896) || (_pc.getMapId() == 17408) || (_pc.getMapId() == 17920) || (_pc.getMapId() == 18432) || (_pc.getMapId() == 18944) || (_pc.getMapId() == 19968) || (_pc.getMapId() == 19456) || (_pc.getMapId() == 20480)
+				|| (_pc.getMapId() == 20992) || (_pc.getMapId() == 21504) || (_pc.getMapId() == 22016) || (_pc.getMapId() == 22528) || (_pc.getMapId() == 23040) || (_pc.getMapId() == 23552) || (_pc.getMapId() == 24064) || (_pc.getMapId() == 24576) || (_pc.getMapId() == 25088)) { // 旅馆
 			baseMpr += 3;
 		}
 		if ((_pc.getLocation().isInScreen(new Point(33055, 32336)) && (_pc.getMapId() == 4) && _pc.isElf())) {
@@ -108,8 +105,7 @@ public class MpRegeneration extends TimerTask {
 		if (_pc.hasSkillEffect(COOKING_1_2_N) || _pc.hasSkillEffect(COOKING_1_2_S)) {
 			baseMpr += 3;
 		}
-		if (_pc.hasSkillEffect(COOKING_2_4_N) || _pc.hasSkillEffect(COOKING_2_4_S) || _pc.hasSkillEffect(COOKING_3_5_N)
-				|| _pc.hasSkillEffect(COOKING_3_5_S)) {
+		if (_pc.hasSkillEffect(COOKING_2_4_N) || _pc.hasSkillEffect(COOKING_2_4_S) || _pc.hasSkillEffect(COOKING_3_5_N) || _pc.hasSkillEffect(COOKING_3_5_S)) {
 			baseMpr += 2;
 		}
 		if (_pc.getOriginalMpr() > 0) { // 原始的WIS MPR補正

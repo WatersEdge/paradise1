@@ -28,6 +28,7 @@ public class Point {
 
 	/**
 	 * 坐标点
+	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -38,6 +39,7 @@ public class Point {
 
 	/**
 	 * 坐标点
+	 * 
 	 * @param pt
 	 */
 	public Point(Point pt) {
@@ -47,6 +49,7 @@ public class Point {
 
 	/**
 	 * 取得X坐标点
+	 * 
 	 * @return
 	 */
 	public int getX() {
@@ -55,6 +58,7 @@ public class Point {
 
 	/**
 	 * 设定X坐标点
+	 * 
 	 * @param x
 	 */
 	public void setX(int x) {
@@ -63,6 +67,7 @@ public class Point {
 
 	/**
 	 * 取得Y坐标点
+	 * 
 	 * @return
 	 */
 	public int getY() {
@@ -71,6 +76,7 @@ public class Point {
 
 	/**
 	 * 设定Y坐标点
+	 * 
 	 * @param y
 	 */
 	public void setY(int y) {
@@ -79,7 +85,9 @@ public class Point {
 
 	/**
 	 * 设定坐标点
-	 * @param pt 坐标点
+	 * 
+	 * @param pt
+	 *            坐标点
 	 */
 	public void set(Point pt) {
 		_x = pt._x;
@@ -88,8 +96,11 @@ public class Point {
 
 	/**
 	 * 设定坐标点
-	 * @param x 坐标点X
-	 * @param y 坐标点Y
+	 * 
+	 * @param x
+	 *            坐标点X
+	 * @param y
+	 *            坐标点Y
 	 */
 	public void set(int x, int y) {
 		_x = x;
@@ -143,8 +154,7 @@ public class Point {
 	 * @return 直线距离值。
 	 */
 	public int getTileLineDistance(Point pt) {
-		return Math.max(Math.abs(pt.getX() - getX()),
-				Math.abs(pt.getY() - getY()));
+		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
 	}
 
 	/**
@@ -159,8 +169,7 @@ public class Point {
 	}
 
 	/**
-	 * 指定された座標が画面内に見えるかを返す プレイヤーの座標を(0,0)とすれば見える範囲の座標は
-	 * 左上(2,-15)右上(15,-2)左下(-15,2)右下(-2,15)となる。 チャット欄に隠れて見えない部分も画面内に含まれる。
+	 * 指定された座標が画面内に見えるかを返す プレイヤーの座標を(0,0)とすれば見える範囲の座標は 左上(2,-15)右上(15,-2)左下(-15,2)右下(-2,15)となる。 チャット欄に隠れて見えない部分も画面内に含まれる。
 	 * 
 	 * @param pt
 	 *            坐标保存的Point对象
@@ -171,16 +180,17 @@ public class Point {
 
 		if (dist > 19) { // 当tile距离 > 19 的时候，判定为不在画面内(false)
 			return false;
-		} else if (dist <= 18) { // 当tile距离 <= 18 的时候，判定为位于同一个画面内(true)
+		}
+		else if (dist <= 18) { // 当tile距离 <= 18 的时候，判定为位于同一个画面内(true)
 			return true;
-		} else {
+		}
+		else {
 			// 左右の画面外部分を除外
 			// プレイヤーの座標を(18, 18)とした場合に(0, 0)にあたる座標からの距離で判断
 			// Point pointZero = new Point(this.getX() - 18, this.getY() - 18);
 			// int dist2 = pointZero.getTileDistance(pt);
 			// 显示区的坐标系统 (18, 18)
-			int dist2 = Math.abs(pt.getX() - (getX() - 18))
-					+ Math.abs(pt.getY() - (getY() - 18));
+			int dist2 = Math.abs(pt.getX() - (getX() - 18)) + Math.abs(pt.getY() - (getY() - 18));
 			if ((19 <= dist2) && (dist2 <= 52)) {
 				return true;
 			}

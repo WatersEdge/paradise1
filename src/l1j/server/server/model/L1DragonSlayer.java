@@ -113,7 +113,8 @@ public class L1DragonSlayer {
 			if (!getPortalNumber()[i]) {
 				if (i < 6) { // 前6个安塔瑞斯
 					_checkDragonPortal[0] = true;
-				} else { // 后6个法利昂
+				}
+				else { // 后6个法利昂
 					_checkDragonPortal[1] = true;
 				}
 			}
@@ -207,7 +208,8 @@ public class L1DragonSlayer {
 		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_1RD) {
 			if (portalNum >= 6 && portalNum <= 11) {
 				sendMessage(portalNum, 1661, null); // 法利昂：可怜啊！他们就是和你一样，注定要当我的祭品！
-			} else {
+			}
+			else {
 				sendMessage(portalNum, 1573, null); // 安塔瑞斯：你这顽固的家伙！你又激起我的愤怒了！
 			}
 			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_2RD);
@@ -221,7 +223,8 @@ public class L1DragonSlayer {
 		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_2RD_4) {
 			if (portalNum >= 6 && portalNum <= 11) {
 				sendMessage(portalNum, 1665, null); // 巫女莎尔：法利昂的力量好像削弱了不少！ 勇士们啊，再接再厉吧！
-			} else {
+			}
+			else {
 				sendMessage(portalNum, 1577, null); // 卡瑞：呜啊！你有听到那些冤魂的惨叫声吗！受死吧！！
 			}
 			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_3RD);
@@ -266,148 +269,152 @@ public class L1DragonSlayer {
 			short mapId = (short) (1005 + _num);
 			int[] msg = { 1570, 1571, 1572, 1574, 1575, 1576, 1578, 1579, 1581 };
 			if (_num >= 6 && _num <= 11) {
-				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669};
+				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669 };
 			}
 			switch (_status) {
-				// 阶段一
-				case STATUS_DRAGONSLAYER_READY_1RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_2RD);
-					sendMessage(_num, msg[0], null); // 安塔瑞斯：到底是谁把我吵醒了？
-					// 法利昂：竟敢闯入我的领域...勇气可嘉啊...
-					DragonSlayerTimer timer_1rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_2RD, 10000);
-					timer_1rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_READY_2RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_3RD);
-					sendMessage(_num, msg[1], null); // 卡瑞：安塔瑞斯！我不停追逐你，结果追到这黑暗的地方来！
-					// 巫女莎尔：你这卑劣的法利昂！你会付出欺骗我的代价！
-					DragonSlayerTimer timer_2rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_3RD, 10000);
-					timer_2rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_READY_3RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_4RD);
-					sendMessage(_num, msg[2], null); // 安塔瑞斯：真可怜，就让我把你解决掉，受死吧！卡瑞！
-					// 法利昂：虽然在解除封印时你帮了很大的忙...但现在我不会再仁慈了！！
-					DragonSlayerTimer timer_3rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_4RD, 10000);
-					timer_3rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_READY_4RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_1RD);
-					// 召唤龙
-					if (_num >= 0 && _num <= 5) {
-						spawn(97006, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段一
-					} else {
-						spawn(97044, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段一
+			// 阶段一
+			case STATUS_DRAGONSLAYER_READY_1RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_2RD);
+				sendMessage(_num, msg[0], null); // 安塔瑞斯：到底是谁把我吵醒了？
+				// 法利昂：竟敢闯入我的领域...勇气可嘉啊...
+				DragonSlayerTimer timer_1rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_2RD, 10000);
+				timer_1rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_READY_2RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_3RD);
+				sendMessage(_num, msg[1], null); // 卡瑞：安塔瑞斯！我不停追逐你，结果追到这黑暗的地方来！
+				// 巫女莎尔：你这卑劣的法利昂！你会付出欺骗我的代价！
+				DragonSlayerTimer timer_2rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_3RD, 10000);
+				timer_2rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_READY_3RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_4RD);
+				sendMessage(_num, msg[2], null); // 安塔瑞斯：真可怜，就让我把你解决掉，受死吧！卡瑞！
+				// 法利昂：虽然在解除封印时你帮了很大的忙...但现在我不会再仁慈了！！
+				DragonSlayerTimer timer_3rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_4RD, 10000);
+				timer_3rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_READY_4RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_1RD);
+				// 召唤龙
+				if (_num >= 0 && _num <= 5) {
+					spawn(97006, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段一
+				}
+				else {
+					spawn(97044, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段一
+				}
+				break;
+			// 阶段二
+			case STATUS_DRAGONSLAYER_START_2RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_1);
+				sendMessage(_num, msg[3], null); // 卡瑞：勇士们！亚丁的命运就掌握在你们的武器上了， 能够让安塔瑞斯窒息的人就是你们了！
+				// 巫女莎尔：勇士们！请消灭邪恶的法利昂，解除伊娃王国的血之诅咒吧！
+				DragonSlayerTimer timer_4rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_1, 10000);
+				timer_4rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_START_2RD_1:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_2);
+				sendMessage(_num, msg[4], null); // 安塔瑞斯：像这种虾兵蟹将也想要赢我！噗哈哈哈…
+				// 法利昂：你们只够格当我的玩具！！
+				DragonSlayerTimer timer_5rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_2, 30000);
+				timer_5rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_START_2RD_2:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_3);
+				sendMessage(_num, msg[5], null); // 安塔瑞斯：我今天又可以饱餐一顿了？你们的血激起我的斗志。
+				// 法利昂：刻骨的恐惧到底是什么，就让你们尝一下吧！
+				DragonSlayerTimer timer_6rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_3, 10000);
+				timer_6rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_START_2RD_3:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_4);
+				// 召唤龙
+				if (_num >= 0 && _num <= 5) {
+					spawn(97007, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段二
+				}
+				else {
+					spawn(97045, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段二
+				}
+				break;
+			// 阶段三
+			case STATUS_DRAGONSLAYER_START_3RD:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_1);
+				sendMessage(_num, msg[6], null); // 安塔瑞斯：你竟然敢对付我...我看你们是不想活了？
+				// 法利昂：我要让你们知道你们所谓的希望，只不过是妄想！
+				DragonSlayerTimer timer_7rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_1, 40000);
+				timer_7rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_START_3RD_1:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_2);
+				sendMessage(_num, msg[7], null); // 安塔瑞斯：我的愤怒值已经冲上天了，我的父亲格兰肯将会赐我力量。
+				// 法利昂：你们会后悔跟了莎尔！ 可笑的愚民…
+				DragonSlayerTimer timer_8rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_2, 10000);
+				timer_8rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_START_3RD_2:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_3);
+				// 召唤龙
+				if (_num >= 0 && _num <= 5) {
+					spawn(97008, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段三
+				}
+				else {
+					spawn(97046, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段三
+				}
+				break;
+			case STATUS_DRAGONSLAYER_END_1:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_2);
+				sendMessage(_num, msg[8], null); // 卡瑞：喔... 顶尖的勇士们！你们经历了多少的失败才有今天的成就，你们击败了安塔瑞斯！
+													// 我终于复仇了呜哈哈哈！！ 谢谢你们，你们是最顶尖的战士！
+				if (checkHiddenDragonValleyStstus() == STATUS_NONE) { // 准备开启隐匿的巨龙谷入口
+					setHiddenDragonValleyStstus(STATUS_READY_SPAWN);
+					DragonSlayerTimer timer_9rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_2, 10000);
+					timer_9rd.begin();
+				}
+				else { // 直接结束
+					if (getDragonSlayerStatus()[_num] != STATUS_DRAGONSLAYER_END_5) {
+						setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
+						DragonSlayerTimer timer = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
+						timer.begin();
 					}
-					break;
-				// 阶段二
-				case STATUS_DRAGONSLAYER_START_2RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_1);
-					sendMessage(_num, msg[3], null); // 卡瑞：勇士们！亚丁的命运就掌握在你们的武器上了， 能够让安塔瑞斯窒息的人就是你们了！
-					// 巫女莎尔：勇士们！请消灭邪恶的法利昂，解除伊娃王国的血之诅咒吧！
-					DragonSlayerTimer timer_4rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_1, 10000);
-					timer_4rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_START_2RD_1:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_2);
-					sendMessage(_num, msg[4], null); // 安塔瑞斯：像这种虾兵蟹将也想要赢我！噗哈哈哈…
-					// 法利昂：你们只够格当我的玩具！！
-					DragonSlayerTimer timer_5rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_2, 30000);
-					timer_5rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_START_2RD_2:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_3);
-					sendMessage(_num, msg[5], null); // 安塔瑞斯：我今天又可以饱餐一顿了？你们的血激起我的斗志。
-					// 法利昂：刻骨的恐惧到底是什么，就让你们尝一下吧！
-					DragonSlayerTimer timer_6rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_3, 10000);
-					timer_6rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_START_2RD_3:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_4);
-					// 召唤龙
-					if (_num >= 0 && _num <= 5) {
-						spawn(97007, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段二
-					} else {
-						spawn(97045, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段二
-					}
-					break;
-				// 阶段三
-				case STATUS_DRAGONSLAYER_START_3RD:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_1);
-					sendMessage(_num, msg[6], null); // 安塔瑞斯：你竟然敢对付我...我看你们是不想活了？
-					// 法利昂：我要让你们知道你们所谓的希望，只不过是妄想！
-					DragonSlayerTimer timer_7rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_1, 40000);
-					timer_7rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_START_3RD_1:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_2);
-					sendMessage(_num, msg[7], null); // 安塔瑞斯：我的愤怒值已经冲上天了，我的父亲格兰肯将会赐我力量。
-					// 法利昂：你们会后悔跟了莎尔！ 可笑的愚民…
-					DragonSlayerTimer timer_8rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_2, 10000);
-					timer_8rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_START_3RD_2:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_3);
-					// 召唤龙
-					if (_num >= 0 && _num <= 5) {
-						spawn(97008, _num, 32783, 32693, mapId, 10, 0); // 地龙 - 阶段三
-					} else {
-						spawn(97046, _num, 32955, 32839, mapId, 10, 0); // 水龙 - 阶段三
-					}
-					break;
-				case STATUS_DRAGONSLAYER_END_1:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_2);
-					sendMessage(_num, msg[8], null); // 卡瑞：喔... 顶尖的勇士们！你们经历了多少的失败才有今天的成就，你们击败了安塔瑞斯！
-													//我终于复仇了呜哈哈哈！！ 谢谢你们，你们是最顶尖的战士！
-					if (checkHiddenDragonValleyStstus() == STATUS_NONE) { // 准备开启隐匿的巨龙谷入口
-						setHiddenDragonValleyStstus(STATUS_READY_SPAWN);
-						DragonSlayerTimer timer_9rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_2, 10000);
-						timer_9rd.begin();
-					} else { // 直接结束
-						if (getDragonSlayerStatus()[_num] != STATUS_DRAGONSLAYER_END_5) {
-							setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
-							DragonSlayerTimer timer = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
-							timer.begin();
-						}
-					}
-					break;
-				case STATUS_DRAGONSLAYER_END_2:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_3);
-					sendMessage(_num, 1582, null); // 侏儒的呼唤：威顿村庄出现了通往隐匿的巨龙谷入口。
-					if (checkHiddenDragonValleyStstus() == STATUS_READY_SPAWN) { // 开启隐匿的巨龙谷入口
-						setHiddenDragonValleyStstus(STATUS_SPAWN);
-						spawn(81277, -1, 33726, 32506, (short) 4, 0, 86400000); // 24小时
-					}
-					DragonSlayerTimer timer_10rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_3, 5000);
-					timer_10rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_END_3:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_4);
-					sendMessage(_num, 1583, null); // 侏儒的呼唤：威顿村庄通往隐匿的巨龙谷入口已经开启了。
-					DragonSlayerTimer timer_11rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_4, 5000);
-					timer_11rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_END_4:
-					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
-					sendMessage(_num, 1584, null); // 侏儒的呼唤：快离开这里吧，门就快要关了。
-					DragonSlayerTimer timer_12rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
-					timer_12rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_END_5:
-					// 删除龙之门扉
-					if (portalPack()[_num] != null) {
-						portalPack()[_num].setStatus(ActionCodes.ACTION_Die);
-						portalPack()[_num].broadcastPacket(new S_DoActionGFX(portalPack()[_num].getId(), ActionCodes.ACTION_Die));
-						portalPack()[_num].deleteMe();
-					}
-					// 龙之门扉重置
-					resetDragonSlayer(_num);
-					DragonSlayerTimer timer_13rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END, 300000); // 下次可重新开启同编号龙门的等候时间
-					timer_13rd.begin();
-					break;
-				case STATUS_DRAGONSLAYER_END:
-					setPortalNumber(_num, false);
-					break;
+				}
+				break;
+			case STATUS_DRAGONSLAYER_END_2:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_3);
+				sendMessage(_num, 1582, null); // 侏儒的呼唤：威顿村庄出现了通往隐匿的巨龙谷入口。
+				if (checkHiddenDragonValleyStstus() == STATUS_READY_SPAWN) { // 开启隐匿的巨龙谷入口
+					setHiddenDragonValleyStstus(STATUS_SPAWN);
+					spawn(81277, -1, 33726, 32506, (short) 4, 0, 86400000); // 24小时
+				}
+				DragonSlayerTimer timer_10rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_3, 5000);
+				timer_10rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_END_3:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_4);
+				sendMessage(_num, 1583, null); // 侏儒的呼唤：威顿村庄通往隐匿的巨龙谷入口已经开启了。
+				DragonSlayerTimer timer_11rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_4, 5000);
+				timer_11rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_END_4:
+				setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
+				sendMessage(_num, 1584, null); // 侏儒的呼唤：快离开这里吧，门就快要关了。
+				DragonSlayerTimer timer_12rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
+				timer_12rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_END_5:
+				// 删除龙之门扉
+				if (portalPack()[_num] != null) {
+					portalPack()[_num].setStatus(ActionCodes.ACTION_Die);
+					portalPack()[_num].broadcastPacket(new S_DoActionGFX(portalPack()[_num].getId(), ActionCodes.ACTION_Die));
+					portalPack()[_num].deleteMe();
+				}
+				// 龙之门扉重置
+				resetDragonSlayer(_num);
+				DragonSlayerTimer timer_13rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END, 300000); // 下次可重新开启同编号龙门的等候时间
+				timer_13rd.begin();
+				break;
+			case STATUS_DRAGONSLAYER_END:
+				setPortalNumber(_num, false);
+				break;
 			}
 			cancel();
 		}
@@ -423,15 +430,10 @@ public class L1DragonSlayer {
 		short mapId = (short) (1005 + portalNum);
 		L1PcInstance[] temp = getPlayersArray(portalNum);
 		for (L1PcInstance element : temp) {
-			if ((element.getMapId() == mapId)
-					&& (element.getX() >= 32740 && element.getX() <= 32827)
-					&& (element.getY() >= 32652 && element.getY() <= 32727)
-					&& (portalNum >= 0 && portalNum <= 5)) { // 安塔瑞斯栖息地
+			if ((element.getMapId() == mapId) && (element.getX() >= 32740 && element.getX() <= 32827) && (element.getY() >= 32652 && element.getY() <= 32727) && (portalNum >= 0 && portalNum <= 5)) { // 安塔瑞斯栖息地
 				element.sendPackets(new S_ServerMessage(type, msg));
-			} else if ((element.getMapId() == mapId)
-					&& (element.getX() >= 32921 && element.getX() <= 33009)
-					&& (element.getY() >= 32799 && element.getY() <= 32869)
-					&& (portalNum >= 6 && portalNum <= 11)) { // 法利昂栖息地
+			}
+			else if ((element.getMapId() == mapId) && (element.getX() >= 32921 && element.getX() <= 33009) && (element.getY() >= 32799 && element.getY() <= 32869) && (portalNum >= 6 && portalNum <= 11)) { // 法利昂栖息地
 				element.sendPackets(new S_ServerMessage(type, msg));
 			}
 		}
@@ -448,7 +450,8 @@ public class L1DragonSlayer {
 				if (pc != null) {
 					if (pc.isDead()) {
 						reStartPlayer(pc);
-					} else {
+					}
+					else {
 						// 传送至威顿村
 						pc.setPortalNumber(-1);
 						L1Teleport.teleport(pc, 33710, 32521, (short) 4, pc.getHeading(), true);
@@ -463,8 +466,7 @@ public class L1DragonSlayer {
 			// 删除副本内的怪物
 			else if (obj instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) obj;
-				if ((npc.getMaster() == null)
-						&& (npc.getNpcTemplate().get_npcId() < 81301 && npc.getNpcTemplate().get_npcId() > 81306)) {
+				if ((npc.getMaster() == null) && (npc.getNpcTemplate().get_npcId() < 81301 && npc.getNpcTemplate().get_npcId() > 81306)) {
 					npc.deleteMe();
 				}
 			}
@@ -509,8 +511,7 @@ public class L1DragonSlayer {
 	}
 
 	// 召唤用
-	public void spawn(int npcId, int portalNumber, int X, int Y, short mapId, int randomRange,
-			int timeMillisToDelete) {
+	public void spawn(int npcId, int portalNumber, int X, int Y, short mapId, int randomRange, int timeMillisToDelete) {
 		try {
 			L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(npcId);
 			npc.setId(IdFactory.getInstance().nextId());
@@ -519,14 +520,14 @@ public class L1DragonSlayer {
 			if (randomRange == 0) {
 				npc.setX(X);
 				npc.setY(Y);
-			} else {
+			}
+			else {
 				int tryCount = 0;
 				do {
 					tryCount++;
 					npc.setX(X + Random.nextInt(randomRange) - Random.nextInt(randomRange));
 					npc.setY(Y + Random.nextInt(randomRange) - Random.nextInt(randomRange));
-					if (npc.getMap().isInMap(npc.getLocation())
-							&& npc.getMap().isPassable(npc.getLocation())) {
+					if (npc.getMap().isInMap(npc.getLocation()) && npc.getMap().isPassable(npc.getLocation())) {
 						break;
 					}
 					Thread.sleep(1);
@@ -546,10 +547,8 @@ public class L1DragonSlayer {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
-					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
-					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
+			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552 || npc.getGfxId() == 7554 || npc.getGfxId() == 7585 || npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558 || npc.getGfxId() == 7864 || npc.getGfxId() == 7869
+					|| npc.getGfxId() == 7870) {
 				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
 				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
 					npc.onPerceive(pc);
@@ -560,13 +559,13 @@ public class L1DragonSlayer {
 
 			npc.turnOnOffLight();
 			npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 喊话开始
-			
+
 			if (0 < timeMillisToDelete) {
-				L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc,
-						timeMillisToDelete);
+				L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc, timeMillisToDelete);
 				timer.begin();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

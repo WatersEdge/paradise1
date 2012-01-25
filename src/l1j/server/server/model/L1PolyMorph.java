@@ -153,9 +153,7 @@ public class L1PolyMorph {
 
 	private int _causeFlg;
 
-	public L1PolyMorph(int id, String name, int polyId, int minLevel,
-			int weaponEquipFlg, int armorEquipFlg, boolean canUseSkill,
-			int causeFlg) {
+	public L1PolyMorph(int id, String name, int polyId, int minLevel, int weaponEquipFlg, int armorEquipFlg, boolean canUseSkill, int causeFlg) {
 		_id = id;
 		_name = name;
 		_polyId = polyId;
@@ -205,35 +203,35 @@ public class L1PolyMorph {
 		L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
 		if ((poly != null) || s.equals("none")) {
 			if (s.equals("none")) {
-				if ((pc.getTempCharGfx() == 6034)
-						|| (pc.getTempCharGfx() == 6035)) {
-				} else {
+				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
+				}
+				else {
 					pc.removeSkillEffect(SHAPE_CHANGE);
 					pc.sendPackets(new S_CloseList(pc.getId()));
 				}
-			} else if ((pc.getLevel() >= poly.getMinLevel()) || pc.isGm()) {
-				if ((pc.getTempCharGfx() == 6034)
-						|| (pc.getTempCharGfx() == 6035)) {
+			}
+			else if ((pc.getLevel() >= poly.getMinLevel()) || pc.isGm()) {
+				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
 					pc.sendPackets(new S_ServerMessage(181)); // \f1无法变成你指定的怪物。
-				} else {
+				}
+				else {
 					doPoly(pc, poly.getPolyId(), 7200, MORPH_BY_ITEMMAGIC);
 					pc.sendPackets(new S_CloseList(pc.getId()));
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(181)); // // \f1无法变成你指定的怪物。
 			}
 		}
 	}
 
 	// 变身
-	public static void doPoly(L1Character cha, int polyId, int timeSecs,
-			int cause) {
+	public static void doPoly(L1Character cha, int polyId, int timeSecs, int cause) {
 		doPoly(cha, polyId, timeSecs, cause, true);
 	}
 
 	// 变身
-	public static void doPoly(L1Character cha, int polyId, int timeSecs,
-			int cause, boolean cantPolyMessage) {
+	public static void doPoly(L1Character cha, int polyId, int timeSecs, int cause, boolean cantPolyMessage) {
 		if ((cha == null) || cha.isDead()) {
 			return;
 		}
@@ -242,7 +240,8 @@ public class L1PolyMorph {
 			if (pc.getMapId() == 5124 || pc.getMapId() == 5300 || pc.getMapId() == 5301) { // 钓鱼池
 				if (cantPolyMessage) {
 					pc.sendPackets(new S_ServerMessage(1170)); // 这里不可以变身。
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(79));
 				}
 				return;
@@ -250,7 +249,8 @@ public class L1PolyMorph {
 			if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035) || !isMatchCause(polyId, cause)) {
 				if (cantPolyMessage) {
 					pc.sendPackets(new S_ServerMessage(181)); // \f1无法变成你指定的怪物。
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(79));
 				}
 				return;
@@ -266,15 +266,18 @@ public class L1PolyMorph {
 				pc.setTempCharGfx(polyId);
 				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
 				if (pc.isGmInvis()) { // GM隐身
-				} else if (pc.isInvisble()) { // 一般隐身
+				}
+				else if (pc.isInvisble()) { // 一般隐身
 					pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()), true);
-				} else {
+				}
+				else {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
 				}
 				pc.getInventory().takeoffEquip(polyId); // 是否将装备的武器强制解除。
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
-		} else if (cha instanceof L1MonsterInstance) { // 怪物变身
+		}
+		else if (cha instanceof L1MonsterInstance) { // 怪物变身
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.killSkillEffectTimer(SHAPE_CHANGE);
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
@@ -285,10 +288,12 @@ public class L1PolyMorph {
 				if (npcStatus == 20) { // 弓类
 					mob.setPolyAtkRanged(10);
 					mob.setPolyArrowGfx(66);
-				} else if (npcStatus == 24 || polyId == 95 || polyId == 146) { // 矛类、夏洛伯、杨果里恩
+				}
+				else if (npcStatus == 24 || polyId == 95 || polyId == 146) { // 矛类、夏洛伯、杨果里恩
 					mob.setPolyAtkRanged(2);
 					mob.setPolyArrowGfx(0);
-				} else {
+				}
+				else {
 					mob.setPolyAtkRanged(1);
 					mob.setPolyArrowGfx(0);
 				}
@@ -309,7 +314,8 @@ public class L1PolyMorph {
 				pc.sendPackets(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
 				pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
 			}
-		} else if (cha instanceof L1MonsterInstance) {
+		}
+		else if (cha instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			int gfxId = mob.getGfxId();
 			mob.setTempCharGfx(0);

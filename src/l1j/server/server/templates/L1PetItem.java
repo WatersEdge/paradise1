@@ -148,7 +148,7 @@ public class L1PetItem {
 		_addMr = i;
 	}
 
-	// 使用类型 - 牙齿? 1  防具? 0
+	// 使用类型 - 牙齿? 1 防具? 0
 	private int _useType;
 
 	public int getUseType() {

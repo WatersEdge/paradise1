@@ -49,7 +49,8 @@ public class L1PartyRefresh extends TimerTask {
 				return;
 			}
 			fresh();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_pc.stopRefreshParty();
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}

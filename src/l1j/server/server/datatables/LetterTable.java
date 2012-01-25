@@ -92,7 +92,8 @@ public class LetterTable {
 			pstm2.setBytes(7, subject);
 			pstm2.setBytes(8, content);
 			pstm2.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -115,7 +116,8 @@ public class LetterTable {
 			pstm = con.prepareStatement("DELETE FROM letter WHERE item_object_id=?");
 			pstm.setInt(1, itemObjectId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

@@ -34,6 +34,7 @@ public class S_FollowerPack extends ServerBasePacket {
 
 	/**
 	 * 物件封包 - 跟随者
+	 * 
 	 * @param follower
 	 * @param pc
 	 */

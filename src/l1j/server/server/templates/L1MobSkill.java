@@ -44,7 +44,8 @@ public class L1MobSkill implements Cloneable {
 	public L1MobSkill clone() {
 		try {
 			return (L1MobSkill) (super.clone());
-		} catch (CloneNotSupportedException e) {
+		}
+		catch (CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
 	}
@@ -81,10 +82,12 @@ public class L1MobSkill implements Cloneable {
 
 	/** MobID */
 	private int mobid;
+
 	/** 获得MobID */
 	public int get_mobid() {
 		return mobid;
 	}
+
 	/** 设置MobID */
 	public void set_mobid(int i) {
 		mobid = i;
@@ -92,10 +95,12 @@ public class L1MobSkill implements Cloneable {
 
 	/** Mob名称 */
 	private String mobName;
+
 	/** 获得Mob名称 */
 	public String getMobName() {
 		return mobName;
 	}
+
 	/** 设置Mob名称 */
 	public void setMobName(String s) {
 		mobName = s;
@@ -105,6 +110,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能类型 0→不采取行动、1→物理攻击、2→魔法攻击、3→サモン
 	 */
 	private int type[];
+
 	/** 获得技能类型 */
 	public int getType(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -112,6 +118,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return type[idx];
 	}
+
 	/** 设置技能类型 */
 	public void setType(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -124,6 +131,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能范围设定
 	 */
 	int skillArea[];
+
 	/** 获得技能范围设定 */
 	public int getSkillArea(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -131,6 +139,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return skillArea[idx];
 	}
+
 	/** 设置技能范围设定 */
 	public void setSkillArea(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -143,6 +152,7 @@ public class L1MobSkill implements Cloneable {
 	 * 魔力消耗判断
 	 */
 	int mpConsume[];
+
 	/** 获得魔力消耗判断 */
 	public int getMpConsume(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -150,6 +160,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return mpConsume[idx];
 	}
+
 	/** 设置魔力消耗判断 */
 	public void setMpConsume(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -162,6 +173,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能发动条件：随机发动概率（0%～100%）
 	 */
 	private int triRnd[];
+
 	/** 获得随机发动概率（0%～100%） */
 	public int getTriggerRandom(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -169,6 +181,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return triRnd[idx];
 	}
+
 	/** 设置随机发动概率（0%～100%） */
 	public void setTriggerRandom(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -181,6 +194,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能发动条件：HP%以下发动
 	 */
 	int triHp[];
+
 	/** 获得HP%以下发动 */
 	public int getTriggerHp(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -188,6 +202,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return triHp[idx];
 	}
+
 	/** 设置HP%以下发动 */
 	public void setTriggerHp(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -200,6 +215,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能发动条件：同族のHP%以下发动
 	 */
 	int triCompanionHp[];
+
 	/** 获得同族のHP%以下发动 */
 	public int getTriggerCompanionHp(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -207,6 +223,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return triCompanionHp[idx];
 	}
+
 	/** 设置同族のHP%以下发动 */
 	public void setTriggerCompanionHp(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -216,10 +233,10 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/**
-	 * 技能发动条件：triRange<0の場合、対象との距離がabs(triRange)以下のとき発動
-	 * triRange>0の場合、対象との距離がtriRange以上のとき発動
+	 * 技能发动条件：triRange<0の場合、対象との距離がabs(triRange)以下のとき発動 triRange>0の場合、対象との距離がtriRange以上のとき発動
 	 */
 	int triRange[];
+
 	/** 获得技能触发范围 */
 	public int getTriggerRange(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -227,6 +244,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return triRange[idx];
 	}
+
 	/** 设置技能触发范围 */
 	public void setTriggerRange(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -239,8 +257,7 @@ public class L1MobSkill implements Cloneable {
 	public boolean isTriggerDistance(int idx, int distance) {
 		int triggerRange = getTriggerRange(idx);
 
-		if ((triggerRange < 0 && distance <= Math.abs(triggerRange))
-				|| (triggerRange > 0 && distance >= triggerRange)) {
+		if ((triggerRange < 0 && distance <= Math.abs(triggerRange)) || (triggerRange > 0 && distance >= triggerRange)) {
 			return true;
 		}
 		return false;
@@ -258,6 +275,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return triCount[idx];
 	}
+
 	/** 设置技能触发次数 */
 	public void setTriggerCount(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -270,6 +288,7 @@ public class L1MobSkill implements Cloneable {
 	 * 技能发动时、改变目标
 	 */
 	int changeTarget[];
+
 	/** 获得技能发动时、改变目标 */
 	public int getChangeTarget(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -277,6 +296,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return changeTarget[idx];
 	}
+
 	/** 设置技能发动时、改变目标 */
 	public void setChangeTarget(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -289,6 +309,7 @@ public class L1MobSkill implements Cloneable {
 	 * rangeまでの距離ならば攻撃可能、物理攻撃をするならば近接攻撃の場合でも1以上を設定
 	 */
 	int range[];
+
 	/** 获得范围攻击的距离 */
 	public int getRange(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -296,7 +317,8 @@ public class L1MobSkill implements Cloneable {
 		}
 		return range[idx];
 	}
-	/** 设置获得范围攻击的距离  */
+
+	/** 设置获得范围攻击的距离 */
 	public void setRange(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
 			return;
@@ -305,11 +327,10 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/**
-	 * 范围攻击的宽度、单体攻击设定0、范围攻击设定1以上
-	 * WidthとHeightの設定は攻撃者からみて横幅をWidth、奥行きをHeightとする。
-	 * Widthは+-あるので、1を指定すれば、ターゲットを中心として左右1までが対象となる。
+	 * 范围攻击的宽度、单体攻击设定0、范围攻击设定1以上 WidthとHeightの設定は攻撃者からみて横幅をWidth、奥行きをHeightとする。 Widthは+-あるので、1を指定すれば、ターゲットを中心として左右1までが対象となる。
 	 */
 	int areaWidth[];
+
 	/** 获得范围攻击的宽度 */
 	public int getAreaWidth(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -317,6 +338,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return areaWidth[idx];
 	}
+
 	/** 设置范围攻击的宽度 */
 	public void setAreaWidth(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -329,6 +351,7 @@ public class L1MobSkill implements Cloneable {
 	 * 范围攻击的高度、单体攻击设定0、范围攻击设定1以上
 	 */
 	int areaHeight[];
+
 	/** 获得范围攻击的高度 */
 	public int getAreaHeight(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -336,6 +359,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return areaHeight[idx];
 	}
+
 	/** 设置范围攻击的高度 */
 	public void setAreaHeight(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -348,6 +372,7 @@ public class L1MobSkill implements Cloneable {
 	 * 伤害倍率、1/10で表す。物理攻击、魔法攻击共同有效
 	 */
 	int leverage[];
+
 	/** 获得伤害倍率 */
 	public int getLeverage(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -355,6 +380,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return leverage[idx];
 	}
+
 	/** 设置伤害倍率 */
 	public void setLeverage(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -367,6 +393,7 @@ public class L1MobSkill implements Cloneable {
 	 * 魔法使用场合、SkillId指定
 	 */
 	int skillId[];
+
 	/** 获得技能ID */
 	public int getSkillId(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -374,6 +401,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return skillId[idx];
 	}
+
 	/** 设置技能ID */
 	public void setSkillId(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -386,6 +414,7 @@ public class L1MobSkill implements Cloneable {
 	 * 物理攻击的动画
 	 */
 	int gfxid[];
+
 	/**  */
 	public int getGfxid(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -393,6 +422,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return gfxid[idx];
 	}
+
 	/**  */
 	public void setGfxid(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -405,6 +435,7 @@ public class L1MobSkill implements Cloneable {
 	 * 物理攻击动作ID
 	 */
 	int actid[];
+
 	/**  */
 	public int getActid(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -412,6 +443,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return actid[idx];
 	}
+
 	/**  */
 	public void setActid(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -424,6 +456,7 @@ public class L1MobSkill implements Cloneable {
 	 * 召唤怪のNPCID
 	 */
 	int summon[];
+
 	/**  */
 	public int getSummon(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -431,6 +464,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return summon[idx];
 	}
+
 	/**  */
 	public void setSummon(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -443,6 +477,7 @@ public class L1MobSkill implements Cloneable {
 	 * 召唤怪的最低数量
 	 */
 	int summonMin[];
+
 	/**  */
 	public int getSummonMin(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -450,6 +485,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return summonMin[idx];
 	}
+
 	/**  */
 	public void setSummonMin(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -462,6 +498,7 @@ public class L1MobSkill implements Cloneable {
 	 * 召唤怪的最高数量
 	 */
 	int summonMax[];
+
 	/**  */
 	public int getSummonMax(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -469,6 +506,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return summonMax[idx];
 	}
+
 	/**  */
 	public void setSummonMax(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -481,6 +519,7 @@ public class L1MobSkill implements Cloneable {
 	 * 强制变身ID
 	 */
 	int polyId[];
+
 	/**  */
 	public int getPolyId(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
@@ -488,6 +527,7 @@ public class L1MobSkill implements Cloneable {
 		}
 		return polyId[idx];
 	}
+
 	/** 设置强制变身ID */
 	public void setPolyId(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {

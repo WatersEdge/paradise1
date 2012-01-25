@@ -26,7 +26,9 @@ public class S_TradeStatus extends ServerBasePacket {
 
 	/**
 	 * 交易状态
-	 * @param type 0:交易完成 1:交易取消
+	 * 
+	 * @param type
+	 *            0:交易完成 1:交易取消
 	 */
 	public S_TradeStatus(int type) {
 		writeC(Opcodes.S_OPCODE_TRADESTATUS);

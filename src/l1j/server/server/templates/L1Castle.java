@@ -57,10 +57,10 @@ public class L1Castle {
 	private int _publicMoney;
 
 	public int getPublicMoney() {
-		if(_publicMoney < 0)
+		if (_publicMoney < 0)
 			return 0;
 		else
-		    return _publicMoney;
+			return _publicMoney;
 	}
 
 	public void setPublicMoney(int i) {

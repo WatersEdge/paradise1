@@ -74,7 +74,8 @@ public class RaceTicketTable {
 				_tickets.put(new Integer(itemobjid), ticket);
 			}
 			_maxRoundNumber = temp;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -102,7 +103,8 @@ public class RaceTicketTable {
 			pstm.setInt(4, ticket.get_victory());
 			pstm.setInt(5, ticket.get_runner_num());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -124,7 +126,8 @@ public class RaceTicketTable {
 			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -140,7 +143,8 @@ public class RaceTicketTable {
 			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
 			pstm.setInt(1, round);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -166,7 +170,8 @@ public class RaceTicketTable {
 			pstm.setInt(3, round);
 			pstm.setInt(4, num);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

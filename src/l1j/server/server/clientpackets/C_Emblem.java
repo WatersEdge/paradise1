@@ -34,8 +34,7 @@ public class C_Emblem extends ClientBasePacket {
 	private static final String C_EMBLEM = "[C] C_Emblem";
 	private static Logger _log = Logger.getLogger(C_Emblem.class.getName());
 
-	public C_Emblem(byte abyte0[], ClientThread clientthread)
-			throws Exception {
+	public C_Emblem(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
@@ -48,7 +47,8 @@ public class C_Emblem extends ClientBasePacket {
 				for (short cnt = 0; cnt < 384; cnt++) {
 					fos.write(readC());
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				throw e;
 			} finally {
@@ -59,8 +59,7 @@ public class C_Emblem extends ClientBasePacket {
 			}
 			player.sendPackets(new S_Emblem(player.getClanid()));
 			// player.broadcastPacket(new S_Emblem(player.getClanid()));
-			L1World.getInstance().broadcastPacketToAll(
-					new S_Emblem(player.getClanid()));
+			L1World.getInstance().broadcastPacketToAll(new S_Emblem(player.getClanid()));
 		}
 	}
 

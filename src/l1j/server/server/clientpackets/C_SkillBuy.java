@@ -41,20 +41,15 @@ public class C_SkillBuy extends ClientBasePacket {
 		/*
 		 * int type = player.get_type(); int lvl = player.get_level();
 		 * 
-		 * switch(type) { case 0: // 君主 if(lvl >= 10) { player.sendPackets(new
-		 * S_SkillBuy(i, player)); } break;
+		 * switch(type) { case 0: // 君主 if(lvl >= 10) { player.sendPackets(new S_SkillBuy(i, player)); } break;
 		 * 
-		 * case 1: // ナイト if(lvl >= 50) { player.sendPackets(new S_SkillBuy(i,
-		 * player)); } break;
+		 * case 1: // ナイト if(lvl >= 50) { player.sendPackets(new S_SkillBuy(i, player)); } break;
 		 * 
-		 * case 2: // エルフ if(lvl >= 8) { player.sendPackets(new S_SkillBuy(i,
-		 * player)); } break;
+		 * case 2: // エルフ if(lvl >= 8) { player.sendPackets(new S_SkillBuy(i, player)); } break;
 		 * 
-		 * case 3: // WIZ if(lvl >= 4) { player.sendPackets(new S_SkillBuy(i,
-		 * player)); } break;
+		 * case 3: // WIZ if(lvl >= 4) { player.sendPackets(new S_SkillBuy(i, player)); } break;
 		 * 
-		 * case 4: //DE if(lvl >= 12) { player.sendPackets(new S_SkillBuy(i,
-		 * player)); } break;
+		 * case 4: //DE if(lvl >= 12) { player.sendPackets(new S_SkillBuy(i, player)); } break;
 		 * 
 		 * default: break; }
 		 */

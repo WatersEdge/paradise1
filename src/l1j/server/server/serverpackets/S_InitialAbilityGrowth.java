@@ -102,8 +102,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[5] = Int - Initial[5];
 		}
 
-		buildPacket(pc, growth[0], growth[1], growth[2], growth[3], growth[4],
-				growth[5]);
+		buildPacket(pc, growth[0], growth[1], growth[2], growth[3], growth[4], growth[5]);
 	}
 
 	/**
@@ -123,8 +122,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 	 * @param Int
 	 *            智力
 	 */
-	private void buildPacket(L1PcInstance pc, int Str, int Dex, int Con,
-			int Wis, int Cha, int Int) {
+	private void buildPacket(L1PcInstance pc, int Str, int Dex, int Con, int Wis, int Cha, int Int) {
 		int write1 = (Int * 16) + Str;
 		int write2 = (Dex * 16) + Wis;
 		int write3 = (Cha * 16) + Con;

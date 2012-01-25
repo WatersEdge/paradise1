@@ -39,11 +39,13 @@ public class TelnetServer {
 					Socket sock = _sock.accept();
 					new TelnetConnection(sock);
 				}
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 			}
 			try {
 				_sock.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 			}
 		}
 	}

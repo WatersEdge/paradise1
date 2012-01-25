@@ -59,34 +59,34 @@ public class C_BanClan extends ClientBasePacket {
 						tempPc.setClanRank(0);
 						tempPc.save(); // 储存玩家的资料到资料库中
 						clan.delMemberName(tempPc.getName());
-						tempPc.sendPackets(new S_ServerMessage(238, pc
-								.getClanname())); // 你被 %0 血盟驱逐了。
-						pc.sendPackets(new S_ServerMessage(240, tempPc
-								.getName())); // %0%o 被你从你的血盟驱逐了。
-					} else {
+						tempPc.sendPackets(new S_ServerMessage(238, pc.getClanname())); // 你被 %0 血盟驱逐了。
+						pc.sendPackets(new S_ServerMessage(240, tempPc.getName())); // %0%o 被你从你的血盟驱逐了。
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(109, s)); // 没有叫%0的人。
 					}
-				} else { // 玩家离线中
+				}
+				else { // 玩家离线中
 					try {
-						L1PcInstance restorePc = CharacterTable.getInstance()
-								.restoreCharacter(s);
-						if (restorePc != null
-								&& restorePc.getClanid() == pc.getClanid()) { // 确定同血盟
+						L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(s);
+						if (restorePc != null && restorePc.getClanid() == pc.getClanid()) { // 确定同血盟
 							restorePc.setClanid(0);
 							restorePc.setClanname("");
 							restorePc.setClanRank(0);
 							restorePc.save(); // 储存玩家的资料到资料库中
 							clan.delMemberName(restorePc.getName());
-							pc.sendPackets(new S_ServerMessage(240, restorePc
-									.getName())); // %0%o 被你从你的血盟驱逐了。
-						} else {
+							pc.sendPackets(new S_ServerMessage(240, restorePc.getName())); // %0%o 被你从你的血盟驱逐了。
+						}
+						else {
 							pc.sendPackets(new S_ServerMessage(109, s)); // %0%o 被你从你的血盟驱逐了。
 						}
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
 			}
 		}

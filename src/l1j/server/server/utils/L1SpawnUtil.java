@@ -40,13 +40,16 @@ public class L1SpawnUtil {
 	/**
 	 * 依PC位置召唤指定NPC
 	 * 
-	 * @param pc 召唤者
-	 * @param npcId NPC编号
-	 * @param randomRange 召唤距离 (不为0 NPC召唤与PC将有距离 否则将重叠)
-	 * @param timeMillisToDelete 存在时间(秒) 小于等于0不限制
+	 * @param pc
+	 *            召唤者
+	 * @param npcId
+	 *            NPC编号
+	 * @param randomRange
+	 *            召唤距离 (不为0 NPC召唤与PC将有距离 否则将重叠)
+	 * @param timeMillisToDelete
+	 *            存在时间(秒) 小于等于0不限制
 	 */
-	public static void spawn(L1PcInstance pc, int npcId, int randomRange,
-			int timeMillisToDelete) {
+	public static void spawn(L1PcInstance pc, int npcId, int randomRange, int timeMillisToDelete) {
 		try {
 			L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(npcId);
 			npc.setId(IdFactory.getInstance().nextId());
@@ -54,14 +57,14 @@ public class L1SpawnUtil {
 			if (randomRange == 0) {
 				npc.getLocation().set(pc.getLocation());
 				npc.getLocation().forward(pc.getHeading());
-			} else {
+			}
+			else {
 				int tryCount = 0;
 				do {
 					tryCount++;
 					npc.setX(pc.getX() + Random.nextInt(randomRange) - Random.nextInt(randomRange));
 					npc.setY(pc.getY() + Random.nextInt(randomRange) - Random.nextInt(randomRange));
-					if (npc.getMap().isInMap(npc.getLocation())
-							&& npc.getMap().isPassable(npc.getLocation())) {
+					if (npc.getMap().isInMap(npc.getLocation()) && npc.getMap().isPassable(npc.getLocation())) {
 						break;
 					}
 					Thread.sleep(1);
@@ -88,7 +91,8 @@ public class L1SpawnUtil {
 						break;
 					}
 				}
-			} else if (npc.getNpcId() == 81274) {
+			}
+			else if (npc.getNpcId() == 81274) {
 				for (int i = 6; i < 12; i++) {
 					if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
 						L1DragonSlayer.getInstance().setPortalNumber(i, true);
@@ -103,24 +107,16 @@ public class L1SpawnUtil {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getTempCharGfx() == 7548
-					|| npc.getTempCharGfx() == 7550
-					|| npc.getTempCharGfx() == 7552
-					|| npc.getTempCharGfx() == 7554
-					|| npc.getTempCharGfx() == 7585
-					|| npc.getTempCharGfx() == 7591) {
+			if (npc.getTempCharGfx() == 7548 || npc.getTempCharGfx() == 7550 || npc.getTempCharGfx() == 7552 || npc.getTempCharGfx() == 7554 || npc.getTempCharGfx() == 7585 || npc.getTempCharGfx() == 7591) {
 				npc.broadcastPacket(new S_NPCPack(npc));
 				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk));
-			} else if (npc.getTempCharGfx() == 7539
-					|| npc.getTempCharGfx() == 7557
-					|| npc.getTempCharGfx() == 7558
-					|| npc.getTempCharGfx() == 7864
-					|| npc.getTempCharGfx() == 7869
-					|| npc.getTempCharGfx() == 7870) {
+			}
+			else if (npc.getTempCharGfx() == 7539 || npc.getTempCharGfx() == 7557 || npc.getTempCharGfx() == 7558 || npc.getTempCharGfx() == 7864 || npc.getTempCharGfx() == 7869 || npc.getTempCharGfx() == 7870) {
 				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
 					if (npc.getTempCharGfx() == 7539) {
 						_pc.sendPackets(new S_ServerMessage(1570));
-					} else if (npc.getTempCharGfx() == 7864) {
+					}
+					else if (npc.getTempCharGfx() == 7864) {
 						_pc.sendPackets(new S_ServerMessage(1657));
 					}
 					npc.onPerceive(_pc);
@@ -128,7 +124,8 @@ public class L1SpawnUtil {
 					_pc.sendPackets(gfx);
 				}
 				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
-			} else if (npc.getTempCharGfx() == 145) { // 史巴托
+			}
+			else if (npc.getTempCharGfx() == 145) { // 史巴托
 				npc.setStatus(11);
 				npc.broadcastPacket(new S_NPCPack(npc));
 				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Appear));
@@ -139,11 +136,11 @@ public class L1SpawnUtil {
 			npc.turnOnOffLight();
 			npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 			if (0 < timeMillisToDelete) {
-				L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc,
-						timeMillisToDelete);
+				L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc, timeMillisToDelete);
 				timer.begin();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

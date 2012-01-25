@@ -26,6 +26,7 @@ public class S_RemoveObject extends ServerBasePacket {
 
 	/**
 	 * 物件刪除
+	 * 
 	 * @param obj
 	 */
 	public S_RemoveObject(L1Object obj) {

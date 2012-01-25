@@ -48,16 +48,19 @@ public class C_CreateClan extends ClientBasePacket {
 				if (pc.getInventory().checkItem(L1ItemId.ADENA, 30000)) { // 身上有金币3万
 					L1Clan clan = ClanTable.getInstance().createClan(pc, s); // 建立血盟
 					if (clan != null) {
-						pc.sendPackets(new S_ServerMessage(84, s)); // 创立\f1%0  血盟。
+						pc.sendPackets(new S_ServerMessage(84, s)); // 创立\f1%0 血盟。
 						pc.getInventory().consumeItem(L1ItemId.ADENA, 30000);
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(86)); // \f1已经创立血盟。
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(85)); // \f1王子和公主才可创立血盟。
 		}
 	}

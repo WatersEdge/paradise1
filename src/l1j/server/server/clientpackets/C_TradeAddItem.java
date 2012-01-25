@@ -43,11 +43,11 @@ public class C_TradeAddItem extends ClientBasePacket {
 		L1Trade trade = new L1Trade();
 		L1ItemInstance item = pc.getInventory().getItem(itemid);
 		if (!item.getItem().isTradable()) {
-			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的… 
+			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 			return;
 		}
 		if (item.getBless() >= 128) { // 封印的装备
-			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的… 
+			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 			return;
 		}
 		// 使用中的宠物项链 - 无法交易
@@ -68,8 +68,7 @@ public class C_TradeAddItem extends ClientBasePacket {
 			}
 		}
 
-		L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance()
-				.findObject(pc.getTradeID());
+		L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance().findObject(pc.getTradeID());
 		if (tradingPartner == null) {
 			return;
 		}

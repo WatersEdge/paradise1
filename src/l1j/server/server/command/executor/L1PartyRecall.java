@@ -48,14 +48,17 @@ public class L1PartyRecall implements L1CommandExecutor {
 					try {
 						L1Teleport.teleport(pc2, x, y, map, 5, true);
 						pc2.sendPackets(new S_SystemMessage("您被传唤到GM身边。"));
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						_log.log(Level.SEVERE, "", e);
 					}
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_SystemMessage("请输入要召唤的角色名称。"));
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_SystemMessage("不在线上。"));
 		}
 	}

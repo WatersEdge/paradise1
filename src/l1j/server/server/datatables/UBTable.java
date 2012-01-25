@@ -86,7 +86,8 @@ public class UBTable {
 
 				_ub.put(ub.getUbId(), ub);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("ubsettings couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs);
@@ -104,7 +105,8 @@ public class UBTable {
 					ub.addManager(rs.getInt("ub_manager_npc_id"));
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("ub_managers couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs);
@@ -122,7 +124,8 @@ public class UBTable {
 					ub.addUbTime(rs.getInt("ub_time"));
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("ub_times couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
@@ -168,7 +171,8 @@ public class UBTable {
 			if (rs.next()) {
 				n = rs.getInt(1);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

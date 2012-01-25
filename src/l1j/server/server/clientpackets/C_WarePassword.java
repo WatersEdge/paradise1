@@ -71,14 +71,17 @@ public class C_WarePassword extends ClientBasePacket {
 					// [342::你不能使用旧的密码当作新的密码。请再次输入密码。]
 					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$342));
 					return;
-				} else if (pass2 > 0) {
+				}
+				else if (pass2 > 0) {
 					account.changeWarePassword(pass2);
 					pc.sendPackets(new S_SystemMessage("仓库密码变更完成，请牢记您的新密码。"));
-				} else {
+				}
+				else {
 					account.changeWarePassword(0);
 					pc.sendPackets(new S_SystemMessage("仓库密码取消完成。"));
 				}
-			} else {
+			}
+			else {
 				// 送出密码错误的提示讯息[835:密码错误。]
 				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$835));
 			}
@@ -99,8 +102,7 @@ public class C_WarePassword extends ClientBasePacket {
 								case 60028:// 仓库-艾尔(妖森)
 									// 密码吻合 输出仓库视窗
 									if (pc.isElf()) // 判断是否为妖精
-										pc.sendPackets(new S_RetrieveElfList(
-												objid, pc));
+										pc.sendPackets(new S_RetrieveElfList(objid, pc));
 									break;
 								default:
 									// 密码吻合 输出仓库视窗
@@ -109,7 +111,8 @@ public class C_WarePassword extends ClientBasePacket {
 								}
 							}
 						}
-					} else if (type == 2) {
+					}
+					else if (type == 2) {
 						if (pc.getClanid() == 0) {
 							// \f1若想使用血盟仓库，必须加入血盟。
 							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$208));
@@ -121,8 +124,7 @@ public class C_WarePassword extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$728));
 							return;
 						}
-						if ((rank != L1Clan.CLAN_RANK_PRINCE)
-								&& pc.getTitle().equalsIgnoreCase("")) {
+						if ((rank != L1Clan.CLAN_RANK_PRINCE) && pc.getTitle().equalsIgnoreCase("")) {
 							// 只有收到称谓的人才能使用血盟仓库。
 							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$728));
 							return;
@@ -131,7 +133,8 @@ public class C_WarePassword extends ClientBasePacket {
 
 					}
 				}
-			} else {
+			}
+			else {
 				// 送出密码错误的提示讯息
 				pc.sendPackets(new S_ServerMessage(835)); // 密码错误。
 			}

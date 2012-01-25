@@ -19,9 +19,7 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
- * 屬於PacketBox的封包 只是抓出來另外寫
- * GameStart	進入賽跑的畫面
- * GameEnd		離開賽跑的畫面
+ * 屬於PacketBox的封包 只是抓出來另外寫 GameStart 進入賽跑的畫面 GameEnd 離開賽跑的畫面
  */
 public class S_Race extends ServerBasePacket {
 	private static final String S_RACE = "[S] S_Race";
@@ -36,20 +34,20 @@ public class S_Race extends ServerBasePacket {
 	public static final int GameOver = 0x45;
 	public static final int GameEnd = 0x46;
 
-	//GameStart// CountDown// GameOver// GameEnd
+	// GameStart// CountDown// GameOver// GameEnd
 	public S_Race(int type) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(type);
 		if (type == GameStart) {
-			writeC(0x05); //倒數5秒
+			writeC(0x05); // 倒數5秒
 		}
 	}
 
 	public S_Race(FastTable<L1PcInstance> playerList, L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(PlayerInfo);
-		writeH(playerList.size()); //參賽者人數
-		writeH(playerList.indexOf(pc)); //名次
+		writeH(playerList.size()); // 參賽者人數
+		writeH(playerList.indexOf(pc)); // 名次
 		for (L1PcInstance player : playerList) {
 			if (player == null) {
 				continue;
@@ -61,8 +59,8 @@ public class S_Race extends ServerBasePacket {
 	public S_Race(int maxLap, int lap) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(Lap);
-		writeH(maxLap); //最大圈數
-		writeH(lap); //目前圈數
+		writeH(maxLap); // 最大圈數
+		writeH(lap); // 目前圈數
 	}
 
 	public S_Race(String winnerName, int time) {

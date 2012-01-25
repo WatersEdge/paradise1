@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
  * 
  */
 public class L1NpcShowHtmlAction extends L1NpcXmlAction {
-	
+
 	private final String _htmlId;
 
 	private final String[] _args;

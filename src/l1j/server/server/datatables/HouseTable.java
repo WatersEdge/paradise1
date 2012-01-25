@@ -78,7 +78,8 @@ public class HouseTable {
 				house.setTaxDeadline(timestampToCalendar((Timestamp) rs.getObject(8)));
 				_house.put(house.getHouseId(), house);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -125,7 +126,8 @@ public class HouseTable {
 			pstm.setString(7, fm);
 			pstm.setInt(8, house.getHouseId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -153,7 +155,8 @@ public class HouseTable {
 				int houseId = rs.getInt("house_id");
 				houseIdList.add(Integer.valueOf(houseId));
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

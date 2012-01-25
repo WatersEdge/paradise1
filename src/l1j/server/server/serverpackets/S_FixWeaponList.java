@@ -33,7 +33,9 @@ public class S_FixWeaponList extends ServerBasePacket {
 
 	/**
 	 * 损坏武器清单
-	 * @param pc 该角色
+	 * 
+	 * @param pc
+	 *            该角色
 	 */
 	public S_FixWeaponList(L1PcInstance pc) {
 		buildPacket(pc);
@@ -49,11 +51,11 @@ public class S_FixWeaponList extends ServerBasePacket {
 
 			// Find Weapon
 			switch (item.getItem().getType2()) {
-				case 1:
-					if (item.get_durability() > 0) {
-						weaponList.add(item);
-					}
-					break;
+			case 1:
+				if (item.get_durability() > 0) {
+					weaponList.add(item);
+				}
+				break;
 			}
 		}
 

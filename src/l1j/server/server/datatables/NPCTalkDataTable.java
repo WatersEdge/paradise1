@@ -68,7 +68,8 @@ public class NPCTalkDataTable {
 				_datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
 			}
 			_log.config("NPC说话动作列表 " + _datatable.size() + "件");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("创建NPC说话表时出现错误 " + e);
 		} finally {
 			SQLUtil.close(rs);

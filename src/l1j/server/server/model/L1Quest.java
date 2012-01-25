@@ -133,8 +133,7 @@ public class L1Quest {
 			}
 			catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-			finally {
+			} finally {
 				SQLUtil.close(rs);
 				SQLUtil.close(pstm);
 				SQLUtil.close(con);
@@ -176,8 +175,7 @@ public class L1Quest {
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 

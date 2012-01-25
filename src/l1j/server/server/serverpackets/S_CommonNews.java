@@ -44,6 +44,7 @@ public class S_CommonNews extends ServerBasePacket {
 
 	/**
 	 * 公告视窗 (点击登入后)
+	 * 
 	 * @param s
 	 */
 	public S_CommonNews(String s) {
@@ -78,10 +79,10 @@ public class S_CommonNews extends ServerBasePacket {
 				else {
 					_announcements.add(" ");
 				}
-			}
-			while (true);
+			} while (true);
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+		}
 	}
 
 	@Override

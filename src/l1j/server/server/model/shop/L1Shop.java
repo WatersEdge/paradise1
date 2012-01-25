@@ -51,12 +51,14 @@ public class L1Shop {
 
 	/**
 	 * 商店
+	 * 
 	 * @param npcId
-	 * @param sellingItems 销售项目
-	 * @param purchasingItems 购买项目
+	 * @param sellingItems
+	 *            销售项目
+	 * @param purchasingItems
+	 *            购买项目
 	 */
-	public L1Shop(int npcId, List<L1ShopItem> sellingItems,
-			List<L1ShopItem> purchasingItems) {
+	public L1Shop(int npcId, List<L1ShopItem> sellingItems, List<L1ShopItem> purchasingItems) {
 		if ((sellingItems == null) || (purchasingItems == null)) {
 			throw new NullPointerException();
 		}
@@ -101,6 +103,7 @@ public class L1Shop {
 
 	/**
 	 * 获得购买道具
+	 * 
 	 * @param itemId
 	 */
 	private L1ShopItem getPurchasingItem(int itemId) {
@@ -114,6 +117,7 @@ public class L1Shop {
 
 	/**
 	 * 评估道具
+	 * 
 	 * @param item
 	 */
 	public L1AssessedItem assessItem(L1ItemInstance item) {
@@ -126,6 +130,7 @@ public class L1Shop {
 
 	/**
 	 * 获得评估价格
+	 * 
 	 * @param item
 	 */
 	private int getAssessedPrice(L1ShopItem item) {
@@ -189,7 +194,8 @@ public class L1Shop {
 				if (!pc.getInventory().checkItem(temp.getItemId())) {
 					totalCount += 1;
 				}
-			} else {
+			}
+			else {
 				totalCount += 1;
 			}
 		}
@@ -214,15 +220,13 @@ public class L1Shop {
 		int castleTax = calc.calcCastleTaxPrice(price);
 		int nationalTax = calc.calcNationalTaxPrice(price);
 		// アデン城・ディアド城の場合は国税なし
-		if ((castleId == L1CastleLocation.ADEN_CASTLE_ID)
-				|| (castleId == L1CastleLocation.DIAD_CASTLE_ID)) {
+		if ((castleId == L1CastleLocation.ADEN_CASTLE_ID) || (castleId == L1CastleLocation.DIAD_CASTLE_ID)) {
 			castleTax += nationalTax;
 			nationalTax = 0;
 		}
 
 		if ((castleId != 0) && (castleTax > 0)) {
-			L1Castle castle = CastleTable.getInstance()
-					.getCastleTable(castleId);
+			L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
 
 			synchronized (castle) {
 				int money = castle.getPublicMoney();
@@ -234,8 +238,7 @@ public class L1Shop {
 			}
 
 			if (nationalTax > 0) {
-				L1Castle aden = CastleTable.getInstance().getCastleTable(
-						L1CastleLocation.ADEN_CASTLE_ID);
+				L1Castle aden = CastleTable.getInstance().getCastleTable(L1CastleLocation.ADEN_CASTLE_ID);
 				synchronized (aden) {
 					int money = aden.getPublicMoney();
 					if (2000000000 > money) {
@@ -264,8 +267,7 @@ public class L1Shop {
 			return;
 		}
 
-		L1Castle castle = CastleTable.getInstance().getCastleTable(
-				L1CastleLocation.DIAD_CASTLE_ID);
+		L1Castle castle = CastleTable.getInstance().getCastleTable(L1CastleLocation.DIAD_CASTLE_ID);
 		synchronized (castle) {
 			int money = castle.getPublicMoney();
 			if (2000000000 > money) {
@@ -303,8 +305,9 @@ public class L1Shop {
 
 	/**
 	 * 销售交易
-	 * @param inv 
-	 * @param orderList 
+	 * 
+	 * @param inv
+	 * @param orderList
 	 */
 	private void sellItems(L1PcInventory inv, L1ShopBuyOrderList orderList) {
 		if (!inv.consumeItem(L1ItemId.ADENA, orderList.getTotalPriceTaxIncluded())) {
@@ -316,23 +319,16 @@ public class L1Shop {
 			L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 			if (item.getItemId() == 40309) { // Race Tickets(食人妖精竞赛票)
 				item.setItem(order.getItem().getItem());
-				L1BugBearRace.getInstance().setAllBet(
-						L1BugBearRace.getInstance().getAllBet()
-								+ (amount * order.getItem().getPrice()));
-				String[] runNum = item.getItem().getIdentifiedNameId()
-						.split("-");
+				L1BugBearRace.getInstance().setAllBet(L1BugBearRace.getInstance().getAllBet() + (amount * order.getItem().getPrice()));
+				String[] runNum = item.getItem().getIdentifiedNameId().split("-");
 				int trueNum = 0;
 				for (int i = 0; i < 5; i++) {
-					if (L1BugBearRace.getInstance().getRunner(i).getNpcId() - 91350 == (Integer
-							.parseInt(runNum[runNum.length - 1]) - 1)) {
+					if (L1BugBearRace.getInstance().getRunner(i).getNpcId() - 91350 == (Integer.parseInt(runNum[runNum.length - 1]) - 1)) {
 						trueNum = i;
 						break;
 					}
 				}
-				L1BugBearRace.getInstance().setBetCount(
-						trueNum,
-						L1BugBearRace.getInstance().getBetCount(trueNum)
-								+ amount);
+				L1BugBearRace.getInstance().setBetCount(trueNum, L1BugBearRace.getInstance().getBetCount(trueNum) + amount);
 			}
 			item.setCount(amount);
 			item.setIdentified(true);
@@ -342,17 +338,23 @@ public class L1Shop {
 				int chance = Random.nextInt(100) + 1; // 几率
 				if (chance <= 15) {
 					item.setEnchantLevel(-2); // -2装备
-				} else if ((chance >= 16) && (chance <= 30)) { // 15%几率
+				}
+				else if ((chance >= 16) && (chance <= 30)) { // 15%几率
 					item.setEnchantLevel(-1);
-				} else if ((chance >= 31) && (chance <= 70)) { // 40%几率
+				}
+				else if ((chance >= 31) && (chance <= 70)) { // 40%几率
 					item.setEnchantLevel(0);
-				} else if ((chance >= 71) && (chance <= 87)) { // 17%几率
+				}
+				else if ((chance >= 71) && (chance <= 87)) { // 17%几率
 					item.setEnchantLevel(Random.nextInt(2) + 1);
-				} else if ((chance >= 88) && (chance <= 97)) { // 10%几率
+				}
+				else if ((chance >= 88) && (chance <= 97)) { // 10%几率
 					item.setEnchantLevel(Random.nextInt(3) + 3);
-				} else if ((chance >= 98) && (chance <= 99)) { // 2%几率
+				}
+				else if ((chance >= 98) && (chance <= 99)) { // 2%几率
 					item.setEnchantLevel(6);
-				} else if (chance == 100) {
+				}
+				else if (chance == 100) {
 					item.setEnchantLevel(7); // +7装备
 				}
 			}
@@ -386,8 +388,7 @@ public class L1Shop {
 		L1PcInventory inv = orderList.getPc().getInventory();
 		int totalPrice = 0;
 		for (L1ShopSellOrder order : orderList.getList()) {
-			int count = inv.removeItem(order.getItem().getTargetId(),
-					order.getCount());
+			int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
 			totalPrice += order.getItem().getAssessedPrice() * count;
 		}
 

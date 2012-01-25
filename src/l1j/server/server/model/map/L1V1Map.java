@@ -69,8 +69,7 @@ public class L1V1Map extends L1Map {
 
 	}
 
-	public L1V1Map(int mapId, byte map[][], int worldTopLeftX, int worldTopLeftY, boolean underwater, boolean markable, boolean teleportable,
-			boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
+	public L1V1Map(int mapId, byte map[][], int worldTopLeftX, int worldTopLeftY, boolean underwater, boolean markable, boolean teleportable, boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
 			boolean usableItem, boolean usableSkill) {
 		_mapId = mapId;
 		_map = map;

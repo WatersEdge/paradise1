@@ -30,6 +30,7 @@ public class S_SellHouse extends ServerBasePacket {
 
 	/**
 	 * 选取物品数量 (卖出盟屋)
+	 * 
 	 * @param objectId
 	 * @param houseNumber
 	 */

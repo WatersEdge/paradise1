@@ -120,8 +120,7 @@ public class L1UltimateBattle {
 	 */
 	private void sendRoundMessage(int curRound) {
 		// XXX - 此ID错误
-		final int MSGID_ROUND_TABLE[] =
-		{ 893, 894, 895, 896 };
+		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
 
 		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
 	}
@@ -304,8 +303,7 @@ public class L1UltimateBattle {
 		 * @throws InterruptedException
 		 */
 		private void waitForNextRound(int curRound) throws InterruptedException {
-			final int WAIT_TIME_TABLE[] =
-			{ 6, 6, 2, 18 };
+			final int WAIT_TIME_TABLE[] = { 6, 6, 2, 18 };
 
 			int wait = WAIT_TIME_TABLE[curRound - 1];
 			for (int i = 0; i < wait; i++) {
@@ -664,22 +662,14 @@ public class L1UltimateBattle {
 	 * @return 能参加true,不能false
 	 */
 	public boolean canPcEnter(L1PcInstance pc) {
-		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[]
-		{ pc.getName(), _ubId, _minLevel, _maxLevel });
+		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[] { pc.getName(), _ubId, _minLevel, _maxLevel });
 		// 什么级别可以参加
 		if (!IntRange.includes(pc.getLevel(), _minLevel, _maxLevel)) {
 			return false;
 		}
 
 		// 可以参加的玩家类别
-		if (!((pc.isCrown() && _enterRoyal)
-				|| (pc.isKnight() && _enterKnight)
-				|| (pc.isWizard() && _enterMage)
-				|| (pc.isElf() && _enterElf)
-				|| (pc.isDarkelf() && _enterDarkelf)
-				|| (pc.isDragonKnight() && _enterDragonKnight)
-				|| (pc.isIllusionist() && _enterIllusionist))
-				) {
+		if (!((pc.isCrown() && _enterRoyal) || (pc.isKnight() && _enterKnight) || (pc.isWizard() && _enterMage) || (pc.isElf() && _enterElf) || (pc.isDarkelf() && _enterDarkelf) || (pc.isDragonKnight() && _enterDragonKnight) || (pc.isIllusionist() && _enterIllusionist))) {
 			return false;
 		}
 
@@ -735,8 +725,7 @@ public class L1UltimateBattle {
 		String mpr = String.valueOf(_mpr);
 		String summon = _location.getMap().isTakePets() ? "可能" : "不可能";
 		String summon2 = _location.getMap().isRecallPets() ? "可能" : "不可能";
-		_ubInfo = new String[]
-		{ nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
+		_ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
 		return _ubInfo;
 	}
 }

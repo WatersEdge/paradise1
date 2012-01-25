@@ -28,6 +28,7 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param cha
 	 * @param prices
 	 * @param objid

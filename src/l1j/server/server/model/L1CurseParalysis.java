@@ -71,7 +71,8 @@ public class L1CurseParalysis extends L1Paralysis {
 			try {
 				Thread.sleep(_time);
 			}
-			catch (InterruptedException e) {}
+			catch (InterruptedException e) {
+			}
 
 			_target.killSkillEffectTimer(STATUS_CURSE_PARALYZED);
 			if (_target instanceof L1PcInstance) {

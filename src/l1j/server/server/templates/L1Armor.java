@@ -26,10 +26,12 @@ public class L1Armor extends L1Item {
 
 	/** 物理防御 */
 	private int _ac = 0;
+
 	/** 设定物理防御 */
 	public void set_ac(int i) {
 		this._ac = i;
 	}
+
 	@Override
 	public int get_ac() {
 		return _ac;
@@ -37,10 +39,12 @@ public class L1Armor extends L1Item {
 
 	/** 伤害减免 */
 	private int _damageReduction = 0;
+
 	/** 设定伤害减免 */
 	public void setDamageReduction(int i) {
 		_damageReduction = i;
 	}
+
 	@Override
 	public int getDamageReduction() {
 		return _damageReduction;
@@ -48,10 +52,12 @@ public class L1Armor extends L1Item {
 
 	/** 负重轻减 */
 	private int _weightReduction = 0;
-	/** 设定负重轻减  */
+
+	/** 设定负重轻减 */
 	public void setWeightReduction(int i) {
 		_weightReduction = i;
 	}
+
 	@Override
 	public int getWeightReduction() {
 		return _weightReduction;
@@ -59,10 +65,12 @@ public class L1Armor extends L1Item {
 
 	/** 装备的命中率修正 */
 	private int _hitModifierByArmor = 0;
+
 	/** 设定装备的命中率修正 */
 	public void setHitModifierByArmor(int i) {
 		_hitModifierByArmor = i;
 	}
+
 	@Override
 	public int getHitModifierByArmor() {
 		return _hitModifierByArmor;
@@ -70,10 +78,12 @@ public class L1Armor extends L1Item {
 
 	/** 装备的伤害修正 */
 	private int _dmgModifierByArmor = 0;
+
 	/** 设定装备的伤害修正 */
 	public void setDmgModifierByArmor(int i) {
 		_dmgModifierByArmor = i;
 	}
+
 	@Override
 	public int getDmgModifierByArmor() {
 		return _dmgModifierByArmor;
@@ -81,10 +91,12 @@ public class L1Armor extends L1Item {
 
 	/** 弓类装备的命中率修正 */
 	private int _bowHitModifierByArmor = 0;
+
 	/** 设定弓类装备的命中率修正 */
 	public void setBowHitModifierByArmor(int i) {
 		_bowHitModifierByArmor = i;
 	}
+
 	@Override
 	public int getBowHitModifierByArmor() {
 		return _bowHitModifierByArmor;
@@ -92,10 +104,12 @@ public class L1Armor extends L1Item {
 
 	/** 弓类装备的伤害修正 */
 	private int _bowDmgModifierByArmor = 0;
+
 	/** 设定弓类装备的伤害修正 */
 	public void setBowDmgModifierByArmor(int i) {
 		_bowDmgModifierByArmor = i;
 	}
+
 	@Override
 	public int getBowDmgModifierByArmor() {
 		return _bowDmgModifierByArmor;
@@ -103,6 +117,7 @@ public class L1Armor extends L1Item {
 
 	/** 水属性防御 */
 	private int _defense_water = 0;
+
 	/** 设定水属性防御 */
 	public void set_defense_water(int i) {
 		_defense_water = i;
@@ -115,6 +130,7 @@ public class L1Armor extends L1Item {
 
 	/** 风属性防御 */
 	private int _defense_wind = 0;
+
 	/** 设定风属性防御 */
 	public void set_defense_wind(int i) {
 		_defense_wind = i;
@@ -127,6 +143,7 @@ public class L1Armor extends L1Item {
 
 	/** 火属性防御 */
 	private int _defense_fire = 0;
+
 	/** 设定火属性防御 */
 	public void set_defense_fire(int i) {
 		_defense_fire = i;
@@ -139,6 +156,7 @@ public class L1Armor extends L1Item {
 
 	/** 地属性防御 */
 	private int _defense_earth = 0;
+
 	/** 设定地属性防御 */
 	public void set_defense_earth(int i) {
 		_defense_earth = i;
@@ -151,6 +169,7 @@ public class L1Armor extends L1Item {
 
 	/** 昏迷耐性 */
 	private int _regist_stun = 0;
+
 	/** 设定昏迷耐性 */
 	public void set_regist_stun(int i) {
 		_regist_stun = i;
@@ -163,6 +182,7 @@ public class L1Armor extends L1Item {
 
 	/** 石化耐性 */
 	private int _regist_stone = 0;
+
 	/** 设定石化耐性 */
 	public void set_regist_stone(int i) {
 		_regist_stone = i;
@@ -175,6 +195,7 @@ public class L1Armor extends L1Item {
 
 	/** 睡眠耐性 */
 	private int _regist_sleep = 0;
+
 	/** 设定睡眠耐性 */
 	public void set_regist_sleep(int i) {
 		_regist_sleep = i;
@@ -187,6 +208,7 @@ public class L1Armor extends L1Item {
 
 	/** 寒冰耐性 */
 	private int _regist_freeze = 0;
+
 	/** 设定寒冰耐性 */
 	public void set_regist_freeze(int i) {
 		_regist_freeze = i;
@@ -199,6 +221,7 @@ public class L1Armor extends L1Item {
 
 	/** 支撑耐性 */
 	private int _regist_sustain = 0;
+
 	/** 设定支撑耐性 */
 	public void set_regist_sustain(int i) {
 		_regist_sustain = i;
@@ -211,6 +234,7 @@ public class L1Armor extends L1Item {
 
 	/** 暗闇耐性 */
 	private int _regist_blind = 0;
+
 	/** 设定暗闇耐性 */
 	public void set_regist_blind(int i) {
 		_regist_blind = i;
@@ -223,6 +247,7 @@ public class L1Armor extends L1Item {
 
 	/** 饰品级别 */
 	private int _grade = 0;
+
 	/** 设定饰品级别 */
 	public void setGrade(int i) {
 		_grade = i;

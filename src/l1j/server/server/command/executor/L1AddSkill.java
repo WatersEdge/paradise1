@@ -83,8 +83,7 @@ public class L1AddSkill implements L1CommandExecutor {
 
 			// 精灵
 			else if (pc.isElf()) {
-				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 3, 255, 255, 255, 255, 0, 0, 0, 0, 0,
-						0));
+				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 3, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 48; cnt++) // LV1~6魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得

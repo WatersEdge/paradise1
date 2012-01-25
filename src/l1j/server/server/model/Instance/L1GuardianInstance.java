@@ -73,10 +73,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 		L1PcInstance targetPlayer = null;
 
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			if ((pc.getCurrentHp() <= 0)
-					|| pc.isDead()
-					|| pc.isGm()
-					|| pc.isGhost()) {
+			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
 				continue;
 			}
 			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) { // 检查隐身
@@ -84,7 +81,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 					targetPlayer = pc;
 					wideBroadcastPacket(new S_NpcChatPacket(this, "$804", 2)); // 人类，如果你重视你的生命现在就快离开这神圣的地方。
 					break;
-				} else if (pc.isElf() && pc.isWantedForElf()) {
+				}
+				else if (pc.isElf() && pc.isWantedForElf()) {
 					targetPlayer = pc;
 					wideBroadcastPacket(new S_NpcChatPacket(this, "$815", 1)); // 若杀害同族，必须以自己的生命赎罪。
 					break;
@@ -136,9 +134,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 			try {
 				if (GDROPITEM_TIME > 0 && !isDropitems()) {
 					if (npcId == 70848) { // 安特
-						if (!_inventory.checkItem(40505)
-								&& !_inventory.checkItem(40506)
-								&& !_inventory.checkItem(40507)) {
+						if (!_inventory.checkItem(40505) && !_inventory.checkItem(40506) && !_inventory.checkItem(40507)) {
 							_inventory.storeItem(40506, 1);
 							_inventory.storeItem(40507, 66);
 							_inventory.storeItem(40505, 8);
@@ -152,10 +148,12 @@ public class L1GuardianInstance extends L1NpcInstance {
 					setDropItems(true);
 					giveDropItems(true);
 					doGDropItem(GDROPITEM_TIME);
-				} else {
+				}
+				else {
 					giveDropItems(false);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.log(Level.SEVERE, "资料载入错误", e);
 			}
 		}
@@ -173,21 +171,14 @@ public class L1GuardianInstance extends L1NpcInstance {
 					String npcName = getNpcTemplate().get_name();
 					String itemName = "";
 					int itemCount = 0;
-					L1Item item40499 = ItemTable.getInstance().getTemplate(
-							40499);
-					L1Item item40503 = ItemTable.getInstance().getTemplate(
-							40503);
-					L1Item item40505 = ItemTable.getInstance().getTemplate(
-							40505);
-					L1Item item40506 = ItemTable.getInstance().getTemplate(
-							40506);
-					L1Item item40507 = ItemTable.getInstance().getTemplate(
-							40507);
-					L1Item item40519 = ItemTable.getInstance().getTemplate(
-							40519);
+					L1Item item40499 = ItemTable.getInstance().getTemplate(40499);
+					L1Item item40503 = ItemTable.getInstance().getTemplate(40503);
+					L1Item item40505 = ItemTable.getInstance().getTemplate(40505);
+					L1Item item40506 = ItemTable.getInstance().getTemplate(40506);
+					L1Item item40507 = ItemTable.getInstance().getTemplate(40507);
+					L1Item item40519 = ItemTable.getInstance().getTemplate(40519);
 					if (npcId == 70848) { // 安特
-						if (_inventory.checkItem(40499)
-								&& !_inventory.checkItem(40505)) { // 蘑菇汁 换 安特之树皮
+						if (_inventory.checkItem(40499) && !_inventory.checkItem(40505)) { // 蘑菇汁 换 安特之树皮
 							itemName = item40505.getName();
 							itemCount = _inventory.countItems(40499);
 							if (itemCount > 1) {
@@ -195,8 +186,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 							}
 							_inventory.consumeItem(40499, itemCount);
 							pc.getInventory().storeItem(40505, itemCount);
-							pc.sendPackets(new S_ServerMessage(
-									L1SystemMessageId.$143, npcName, itemName));
+							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
 							if (!isDropitems()) {
 								doGDropItem(3);
 							}
@@ -207,58 +197,52 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName = item40505.getName();
 								_inventory.consumeItem(40505, 1);
 								pc.getInventory().storeItem(40505, 1);
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$143, npcName,
-										itemName));
-							} else {
-								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
 							}
-						} else if (_inventory.checkItem(40507)
-								&& !_inventory.checkItem(40505)) { // 安特之树枝
+							else {
+								itemName = item40499.getName();
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+							}
+						}
+						else if (_inventory.checkItem(40507) && !_inventory.checkItem(40505)) { // 安特之树枝
 							chance = Random.nextInt(100) + 1;
 							if (chance <= 40 && chance >= 25) {
 								itemName = item40507.getName();
 								itemName += " (6)";
 								_inventory.consumeItem(40507, 6);
 								pc.getInventory().storeItem(40507, 6);
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$143, npcName,
-										itemName));
-							} else {
-								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
 							}
-						} else if (_inventory.checkItem(40506)
-								&& !_inventory.checkItem(40507)) { // 安特的水果
+							else {
+								itemName = item40499.getName();
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+							}
+						}
+						else if (_inventory.checkItem(40506) && !_inventory.checkItem(40507)) { // 安特的水果
 							chance = Random.nextInt(100) + 1;
 							if (chance <= 90 && chance >= 85) {
 								itemName = item40506.getName();
 								_inventory.consumeItem(40506, 1);
 								pc.getInventory().storeItem(40506, 1);
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$143, npcName,
-										itemName));
-							} else {
-								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
 							}
-						} else {
+							else {
+								itemName = item40499.getName();
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+							}
+						}
+						else {
 							if (!forDropitems()) {
 								setDropItems(false);
 								doGDropItem(GDROPITEM_TIME);
 							}
 							chance = Random.nextInt(100) + 1;
 							if (chance <= 80 && chance >= 40) {
-								broadcastPacket(new S_NpcChatPacket(_npc,
-										"$822", 0));
-							} else {
+								broadcastPacket(new S_NpcChatPacket(_npc, "$822", 0));
+							}
+							else {
 								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
 							}
 						}
 					}
@@ -270,19 +254,17 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName += " (5)";
 								_inventory.consumeItem(40519, 5);
 								pc.getInventory().storeItem(40519, 5);
-								pc.sendPackets(new S_ServerMessage(
-										L1SystemMessageId.$143, npcName,
-										itemName));
+								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
 							}
-						} else {
+						}
+						else {
 							if (!forDropitems()) {
 								setDropItems(false);
 								doGDropItem(GDROPITEM_TIME);
 							}
 							chance = Random.nextInt(100) + 1;
 							if (chance <= 80 && chance >= 40) {
-								broadcastPacket(new S_NpcChatPacket(_npc,
-										"$824", 0));
+								broadcastPacket(new S_NpcChatPacket(_npc, "$824", 0));
 							}
 						}
 					}
@@ -295,15 +277,15 @@ public class L1GuardianInstance extends L1NpcInstance {
 							}
 							_inventory.consumeItem(40507, itemCount);
 							pc.getInventory().storeItem(40503, itemCount);
-							pc.sendPackets(new S_ServerMessage(
-									L1SystemMessageId.$143, npcName, itemName));
-						} else {
+							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+						}
+						else {
 							itemName = item40507.getName();
-							pc.sendPackets(new S_ServerMessage(
-									L1SystemMessageId.$337, itemName)); // \\f1%0不足%s。
+							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName)); // \\f1%0不足%s。
 						}
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, "发生错误", e);
 				}
 				attack.calcDamage();
@@ -313,7 +295,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 			}
 			attack.action();
 			attack.commit();
-		} else if ((getCurrentHp() > 0) && !isDead()) {
+		}
+		else if ((getCurrentHp() > 0) && !isDead()) {
 			L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
@@ -329,8 +312,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance player) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		L1Object object = L1World.getInstance().findObject(getId());
 		L1NpcInstance target = (L1NpcInstance) object;
 
@@ -342,19 +324,26 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 			if ((pcx == npcx) && (pcy < npcy)) {
 				setHeading(0);
-			} else if ((pcx > npcx) && (pcy < npcy)) {
+			}
+			else if ((pcx > npcx) && (pcy < npcy)) {
 				setHeading(1);
-			} else if ((pcx > npcx) && (pcy == npcy)) {
+			}
+			else if ((pcx > npcx) && (pcy == npcy)) {
 				setHeading(2);
-			} else if ((pcx > npcx) && (pcy > npcy)) {
+			}
+			else if ((pcx > npcx) && (pcy > npcy)) {
 				setHeading(3);
-			} else if ((pcx == npcx) && (pcy > npcy)) {
+			}
+			else if ((pcx == npcx) && (pcy > npcy)) {
 				setHeading(4);
-			} else if ((pcx < npcx) && (pcy > npcy)) {
+			}
+			else if ((pcx < npcx) && (pcy > npcy)) {
 				setHeading(5);
-			} else if ((pcx < npcx) && (pcy == npcy)) {
+			}
+			else if ((pcx < npcx) && (pcy == npcy)) {
 				setHeading(6);
-			} else if ((pcx < npcx) && (pcy < npcy)) {
+			}
+			else if ((pcx < npcx) && (pcy < npcy)) {
 				setHeading(7);
 			}
 			broadcastPacket(new S_ChangeHeading(this));
@@ -362,7 +351,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 			// html表示パケット送信
 			if (player.getLawful() < -1000) { // プレイヤーがカオティック
 				player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 			}
 
@@ -384,7 +374,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 			L1PcInstance pc = (L1PcInstance) attacker;
 			if ((pc.getType() == 2) && // 素手ならダメージなし
 					(pc.getCurrentWeapon() == 0)) {
-			} else {
+			}
+			else {
 				if ((getCurrentHp() > 0) && !isDead()) {
 					if (damage >= 0) {
 						setHate(attacker, damage);
@@ -411,7 +402,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 					if (newHp > 0) {
 						setCurrentHp(newHp);
 					}
-				} else if (!isDead()) { // 念のため
+				}
+				else if (!isDead()) { // 念のため
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
 					_lastattacker = attacker;
@@ -461,18 +453,17 @@ public class L1GuardianInstance extends L1NpcInstance {
 			setStatus(ActionCodes.ACTION_Die);
 			int targetobjid = getId();
 			getMap().setPassable(getLocation(), true);
-			broadcastPacket(new S_DoActionGFX(targetobjid,
-					ActionCodes.ACTION_Die));
+			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
 
 			L1PcInstance player = null;
 			if (lastAttacker instanceof L1PcInstance) {
 				player = (L1PcInstance) lastAttacker;
-			} else if (lastAttacker instanceof L1PetInstance) {
-				player = (L1PcInstance) ((L1PetInstance) lastAttacker)
-						.getMaster();
-			} else if (lastAttacker instanceof L1SummonInstance) {
-				player = (L1PcInstance) ((L1SummonInstance) lastAttacker)
-						.getMaster();
+			}
+			else if (lastAttacker instanceof L1PetInstance) {
+				player = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
+			}
+			else if (lastAttacker instanceof L1SummonInstance) {
+				player = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 			}
 			if (player != null) {
 				List<L1Character> targetList = _hateList.toTargetArrayList();
@@ -480,13 +471,12 @@ public class L1GuardianInstance extends L1NpcInstance {
 				int exp = getExp();
 				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
 
-				List<L1Character> dropTargetList = _dropHateList
-						.toTargetArrayList();
+				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
 				List<Integer> dropHateList = _dropHateList.toHateArrayList();
 				try {
-					DropTable.getInstance().dropShare(_npc, dropTargetList,
-							dropHateList);
-				} catch (Exception e) {
+					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 				// カルマは止めを刺したプレイヤーに設定。ペットorサモンで倒した場合も入る。

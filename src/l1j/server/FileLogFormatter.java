@@ -21,6 +21,7 @@ import java.util.logging.LogRecord;
  * 文件日志格式化
  */
 public class FileLogFormatter extends Formatter {
+
 	private static final String CRLF = "\r\n";
 
 	private static final String _ = "\t";

@@ -27,9 +27,12 @@ public class S_MapID extends ServerBasePacket {
 	/**
 	 * 更新角色所在的地图
 	 * 
-	 * @param pc 更新角色
-	 * @param mapid 地图编号
-	 * @param isUnderwater 是否在水中
+	 * @param pc
+	 *            更新角色
+	 * @param mapid
+	 *            地图编号
+	 * @param isUnderwater
+	 *            是否在水中
 	 */
 	public S_MapID(int mapid, boolean isUnderwater) {
 		writeC(Opcodes.S_OPCODE_MAPID);

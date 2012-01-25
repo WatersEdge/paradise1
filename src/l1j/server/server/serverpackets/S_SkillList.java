@@ -27,9 +27,7 @@ public class S_SkillList extends ServerBasePacket {
 	private static final String S_SKILL_LIST = "[S] S_SkillList";
 
 	/*
-	 * [Length:40] S -> C 0000 4C 20 FF FF 37 00 00 00 00 00 00 00 00 00 00 00 L
-	 * ..7........... 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-	 * ................ 0020 00 00 00 2E EF 67 33 87 .....g3.
+	 * [Length:40] S -> C 0000 4C 20 FF FF 37 00 00 00 00 00 00 00 00 00 00 00 L ..7........... 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................ 0020 00 00 00 2E EF 67 33 87 .....g3.
 	 */
 	public S_SkillList(boolean Insert, L1Skills... skills) {
 		if (Insert)

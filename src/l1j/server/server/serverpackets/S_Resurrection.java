@@ -27,8 +27,11 @@ public class S_Resurrection extends ServerBasePacket {
 
 	/**
 	 * 将死亡的对象复活
-	 * @param target 被复活的角色
-	 * @param use 使用复活的角色
+	 * 
+	 * @param target
+	 *            被复活的角色
+	 * @param use
+	 *            使用复活的角色
 	 * @param type
 	 */
 	public S_Resurrection(L1PcInstance target, L1PcInstance use, int type) {

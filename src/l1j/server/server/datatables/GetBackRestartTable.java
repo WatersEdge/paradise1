@@ -63,7 +63,8 @@ public class GetBackRestartTable {
 
 				_getbackrestart.put(new Integer(area), gbr);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

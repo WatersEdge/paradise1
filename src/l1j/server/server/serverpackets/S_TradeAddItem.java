@@ -29,6 +29,7 @@ public class S_TradeAddItem extends ServerBasePacket {
 
 	/**
 	 * 增加交易物品
+	 * 
 	 * @param item
 	 * @param count
 	 * @param type
@@ -43,13 +44,14 @@ public class S_TradeAddItem extends ServerBasePacket {
 		if (!item.isIdentified()) {
 			writeC(3);
 			writeC(0);
-		} else {
+		}
+		else {
 			writeC(item.getBless());
 			byte[] status = item.getStatusBytes();
-		      writeC(status.length);
-		      for (byte b : status) {
-		    	  writeC(b);
-		      }
+			writeC(status.length);
+			for (byte b : status) {
+				writeC(b);
+			}
 		}
 	}
 

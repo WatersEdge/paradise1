@@ -31,6 +31,7 @@ import l1j.server.server.templates.L1Npc;
 public class L1DragonPortalInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @param template
 	 */
@@ -56,15 +57,18 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 			mapId = (short) (1005 + portalNumber); // 地图判断
 			if (L1DragonSlayer.getInstance().getPlayersCount(portalNumber) >= 32) {
 				player.sendPackets(new S_ServerMessage(1536)); // 参与人员已额满，目前无法再入场。
-			} else if (L1DragonSlayer.getInstance().getDragonSlayerStatus()[portalNumber] >= 5) {
+			}
+			else if (L1DragonSlayer.getInstance().getDragonSlayerStatus()[portalNumber] >= 5) {
 				player.sendPackets(new S_ServerMessage(1537)); // 攻略已经开始，目前无法入场。
-			} else {
+			}
+			else {
 				if (portalNumber >= 0 && portalNumber <= 5) { // 安塔瑞斯副本
 					if (player.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS)) {
 						player.sendPackets(new S_ServerMessage(1626)); // 龙之血痕已穿透全身，在血痕的气味消失之前，无法再进入龙之门扉。
 						return;
 					}
-				} else if (portalNumber >= 6 && portalNumber <= 11) { // 法利昂副本
+				}
+				else if (portalNumber >= 6 && portalNumber <= 11) { // 法利昂副本
 					if (player.hasSkillEffect(EFFECT_BLOODSTAIN_OF_FAFURION)) {
 						player.sendPackets(new S_ServerMessage(1626)); // 龙之血痕已穿透全身，在血痕的气味消失之前，无法再进入龙之门扉。
 						return;
@@ -100,16 +104,19 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 			int playerLv = player.getLevel();// 角色等级
 			if (playerLv >= 30 && playerLv <= 51) {
 				htmlid = "dsecret1";
-			} else if (playerLv >= 52) {
+			}
+			else if (playerLv >= 52) {
 				htmlid = "dsecret2";
-			} else {
+			}
+			else {
 				htmlid = "dsecret3";
 			}
 		}
 
 		if (htmlid != null) {
 			player.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
-		} else {
+		}
+		else {
 			player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 		}
 	}

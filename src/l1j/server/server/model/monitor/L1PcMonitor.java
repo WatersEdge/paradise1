@@ -20,16 +20,12 @@ import l1j.server.server.model.Instance.L1PcInstance;
 /**
  * L1PcInstanceの定期処理、監視処理等を行う為の共通的な処理を実装した抽象クラス
  * 
- * 各タスク処理は{@link #run()}ではなく{@link #execTask(L1PcInstance)}にて実装する。
- * PCがログアウトするなどしてサーバ上に存在しなくなった場合、run()メソッドでは即座にリターンする。
- * その場合、タスクが定期実行スケジューリングされていたら、ログアウト処理等でスケジューリングを停止する必要がある。
- * 停止しなければタスクは止まらず、永遠に定期実行されることになる。
- * 定期実行でなく単発アクションの場合はそのような制御は不要。
+ * 各タスク処理は{@link #run()}ではなく{@link #execTask(L1PcInstance)}にて実装する。 PCがログアウトするなどしてサーバ上に存在しなくなった場合、run()メソッドでは即座にリターンする。 その場合、タスクが定期実行スケジューリングされていたら、ログアウト処理等でスケジューリングを停止する必要がある。 停止しなければタスクは止まらず、永遠に定期実行されることになる。 定期実行でなく単発アクションの場合はそのような制御は不要。
  * 
  * L1PcInstanceの参照を直接持つことは望ましくない。
  * 
  * @author frefre
- *
+ * 
  */
 public abstract class L1PcMonitor implements Runnable {
 
@@ -38,7 +34,9 @@ public abstract class L1PcMonitor implements Runnable {
 
 	/**
 	 * 指定されたパラメータでL1PcInstanceに対するモニターを作成する。
-	 * @param oId {@link L1PcInstance#getId()}で取得できるオブジェクトID
+	 * 
+	 * @param oId
+	 *            {@link L1PcInstance#getId()}で取得できるオブジェクトID
 	 */
 	public L1PcMonitor(int oId) {
 		_id = oId;
@@ -55,7 +53,9 @@ public abstract class L1PcMonitor implements Runnable {
 
 	/**
 	 * 处理运行时的任务
-	 * @param pc 被监控的PC
+	 * 
+	 * @param pc
+	 *            被监控的PC
 	 */
 	public abstract void execTask(L1PcInstance pc);
 }

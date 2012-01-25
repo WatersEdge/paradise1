@@ -30,6 +30,7 @@ public class S_ChangeName extends ServerBasePacket {
 
 	/**
 	 * 改变物件名称
+	 * 
 	 * @param objectId
 	 * @param name
 	 */

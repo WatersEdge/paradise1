@@ -81,7 +81,8 @@ public class BinaryOutputStream extends OutputStream {
 			if (text != null) {
 				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		}
 
 		_bao.write(0);
@@ -92,7 +93,8 @@ public class BinaryOutputStream extends OutputStream {
 			if (text != null) {
 				_bao.write(text);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		}
 	}
 

@@ -16,7 +16,8 @@ package l1j.server;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import l1j.server.server.utils.Internationalization.*;
+
+import l1j.server.server.utils.Internationalization.messages;
 
 /**
  * 国际化的英文是Internationalization 因为单字中总共有18个字母，简称I18N， 目的是让应用程式可以应地区不同而显示不同的讯息。
@@ -24,13 +25,15 @@ import l1j.server.server.utils.Internationalization.*;
 public class L1Message {
 
 	private static L1Message _instance;
+
 	ResourceBundle resource;
 
 	private L1Message() {
 		try {
 			resource = ResourceBundle.getBundle(messages.class.getName());
 			initLocaleMessage();
-		} catch (MissingResourceException mre) {
+		}
+		catch (MissingResourceException mre) {
 			mre.printStackTrace();
 		}
 	}
@@ -42,7 +45,9 @@ public class L1Message {
 		return _instance;
 	}
 
-	/** 简短化变数名词 */
+	/**
+	 * 简短化变数名词
+	 */
 	public void initLocaleMessage() {
 		memoryUse = resource.getString("l1j.server.memoryUse");
 		memory = resource.getString("l1j.server.memory");
@@ -72,7 +77,9 @@ public class L1Message {
 		initialfinished = resource.getString("l1j.server.server.GameServer.initialfinished");
 	}
 
-	/** static 变数 */
+	/**
+	 * static 变数
+	 */
 	public static String memoryUse;
 	public static String onGroundItem;
 	public static String secondsDelete;

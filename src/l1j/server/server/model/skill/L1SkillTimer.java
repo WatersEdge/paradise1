@@ -188,11 +188,14 @@ class L1SkillStop {
 				int attr = pc.getElfAttr();
 				if (attr == 1) {
 					cha.addEarth(-50);
-				} else if (attr == 2) {
+				}
+				else if (attr == 2) {
 					cha.addFire(-50);
-				} else if (attr == 4) {
+				}
+				else if (attr == 4) {
 					cha.addWater(-50);
-				} else if (attr == 8) {
+				}
+				else if (attr == 8) {
 					cha.addWind(-50);
 				}
 				pc.sendPackets(new S_OwnCharAttrDef(pc));
@@ -202,20 +205,20 @@ class L1SkillStop {
 			int attr = cha.getAddAttrKind();
 			int i = 50;
 			switch (attr) {
-				case 1:
-					cha.addEarth(i);
-					break;
-				case 2:
-					cha.addFire(i);
-					break;
-				case 4:
-					cha.addWater(i);
-					break;
-				case 8:
-					cha.addWind(i);
-					break;
-				default:
-					break;
+			case 1:
+				cha.addEarth(i);
+				break;
+			case 2:
+				cha.addFire(i);
+				break;
+			case 4:
+				cha.addWater(i);
+				break;
+			case 8:
+				cha.addWind(i);
+				break;
+			default:
+				break;
 			}
 			cha.setAddAttrKind(0);
 			if (cha instanceof L1PcInstance) {
@@ -398,7 +401,8 @@ class L1SkillStop {
 			cha.addAc(-12);
 		}
 		else if ((skillId == ICE_LANCE // 冰矛围篱
-				) || (skillId == FREEZING_BLIZZARD // 冰雪飓风
+				)
+				|| (skillId == FREEZING_BLIZZARD // 冰雪飓风
 				) || (skillId == FREEZING_BREATH // 寒冰喷吐
 				) || (skillId == ICE_LANCE_COCKATRICE // 亚力安冰矛围篱
 				) || (skillId == ICE_LANCE_BASILISK // 邪恶蜥蜴冰矛围篱
@@ -432,7 +436,8 @@ class L1SkillStop {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));
-			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+			}
+			else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
 				L1NpcInstance npc = (L1NpcInstance) cha;
 				npc.setParalyzed(false);
 			}
@@ -442,7 +447,8 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, true));
 				pc.setSkillEffect(BONE_BREAK_END, 1 * 1000);
-			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+			}
+			else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
 				L1NpcInstance npc = (L1NpcInstance) cha;
 				npc.setParalyzed(true);
 				npc.setSkillEffect(BONE_BREAK_END, 1 * 1000);
@@ -452,7 +458,8 @@ class L1SkillStop {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));
-			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+			}
+			else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
 				L1NpcInstance npc = (L1NpcInstance) cha;
 				npc.setParalyzed(false);
 			}
@@ -494,7 +501,8 @@ class L1SkillStop {
 			}
 		}
 		else if ((skillId == SLOW // 缓速
-				) || (skillId == ENTANGLE // 地面障碍
+				)
+				|| (skillId == ENTANGLE // 地面障碍
 				) || (skillId == MASS_SLOW // 集体缓速术
 				)) {
 			if (cha instanceof L1PcInstance) {
@@ -565,9 +573,7 @@ class L1SkillStop {
 		}
 
 		// ****** 项目关系
-		else if ((skillId == STATUS_BRAVE)
-				|| (skillId == STATUS_ELFBRAVE)
-				|| (skillId == STATUS_BRAVE2)) { // 二段加速
+		else if ((skillId == STATUS_BRAVE) || (skillId == STATUS_ELFBRAVE) || (skillId == STATUS_BRAVE2)) { // 二段加速
 			cha.setBraveSpeed(0);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
@@ -583,10 +589,9 @@ class L1SkillStop {
 			}
 		}
 		/** 生命之树果实 */
-		/*else if (skillId == STATUS_RIBRAVE) { // 生命之树果实
-			// XXX 生命之树果实状态消除方法不明
-			cha.setBraveSpeed(0);
-		}*/
+		/*
+		 * else if (skillId == STATUS_RIBRAVE) { // 生命之树果实 // XXX 生命之树果实状态消除方法不明 cha.setBraveSpeed(0); }
+		 */
 		else if (skillId == STATUS_HASTE) { // 一段加速
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
@@ -630,13 +635,13 @@ class L1SkillStop {
 				pc.setCurrentHp(pc.getCurrentHp() + healHp);
 				pc.sendPackets(new S_SkillSound(pc.getId(), 2187)); // 特效
 				pc.broadcastPacket(new S_SkillSound(pc.getId(), 2187));
-				//pc.sendPackets(new S_SkillIconGFX(75, 8));
+				// pc.sendPackets(new S_SkillIconGFX(75, 8));
 				pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
 				if ((pc.getInventory().checkEquipped(21119)) // 法利昂的力量
 						|| (pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
 						|| (pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
 						|| (pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
-						) {
+				) {
 					pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
 				}
 			}
@@ -653,9 +658,9 @@ class L1SkillStop {
 						pc.getInventory().storeItem(item);
 					}
 					else { // 如果身上道具满则掉落地面上
-						L1World.getInstance().getInventory(pc.getX(), pc.getY(),pc.getMapId()).storeItem(item);
+						L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
 					}
-					pc.sendPackets(new S_ServerMessage(403,item.getLogName())); // 获得%0%o 。
+					pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
 				}
 			}
 			if (pc.getInventory().checkEquipped(20380) && !pc.isDead()) { // 检查是否装备南瓜魔法帽
@@ -888,7 +893,7 @@ class L1SkillStop {
 				pc.addMpr(-2);
 			}
 		}
-		// ****** 
+		// ******
 		else if (skillId == EFFECT_BLESS_OF_MAZU) { // 妈祖的祝福
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
@@ -1266,7 +1271,7 @@ class L1SkillStop {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addMaxMp(-50);
 				pc.addMpr(-5);
-				pc.addInt((byte)-1);
+				pc.addInt((byte) -1);
 				pc.addSp(-1);
 				pc.sendPackets(new S_SPMR(pc));
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));

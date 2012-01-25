@@ -53,9 +53,7 @@ public class C_Propose extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(661)); // \f1结婚对象性别必须和您不同。
 					return;
 				}
-				if ((pc.getX() >= 33974) && (pc.getX() <= 33976) && (pc.getY() >= 33362) && (pc.getY() <= 33365) && (pc.getMapId() == 4)
-						&& (target.getX() >= 33974) && (target.getX() <= 33976) && (target.getY() >= 33362) && (target.getY() <= 33365)
-						&& (target.getMapId() == 4)) {
+				if ((pc.getX() >= 33974) && (pc.getX() <= 33976) && (pc.getY() >= 33362) && (pc.getY() <= 33365) && (pc.getMapId() == 4) && (target.getX() >= 33974) && (target.getX() <= 33976) && (target.getY() >= 33362) && (target.getY() <= 33365) && (target.getMapId() == 4)) {
 					target.setTempID(pc.getId()); // 暂时储存对象的角色ID
 					target.sendPackets(new S_Message_YN(654, pc.getName())); // %0 向你(你)求婚，你(你)答应吗?
 				}

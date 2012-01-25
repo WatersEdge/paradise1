@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import l1j.server.Config;
 import l1j.server.server.GameServer;
 import l1j.server.telnet.TelnetServer;
 
@@ -31,8 +30,10 @@ import l1j.server.telnet.TelnetServer;
  * l1j 伺服器启动
  */
 public class Server {
+
 	/** 纪录用 */
 	private static Logger _log = Logger.getLogger(Server.class.getName());
+
 	/** 纪录档的路径 */
 	private static final String LOG_PROP = "./config/log.properties";
 
@@ -51,13 +52,15 @@ public class Server {
 			InputStream is = new BufferedInputStream(new FileInputStream(LOG_PROP));
 			LogManager.getLogManager().readConfiguration(is);
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			_log.log(Level.SEVERE, "无法加载 " + LOG_PROP + " File.", e);
 			System.exit(0);
 		}
 		try {
 			Config.load();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			System.exit(0);
 		}

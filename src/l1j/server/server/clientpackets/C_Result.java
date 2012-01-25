@@ -71,29 +71,29 @@ public class C_Result extends ClientBasePacket {
 				L1NpcInstance targetNpc = (L1NpcInstance) findObject;
 				npcId = targetNpc.getNpcTemplate().get_npcId();
 				npcImpl = targetNpc.getNpcTemplate().getImpl();
-			} else if (findObject instanceof L1PcInstance) {
+			}
+			else if (findObject instanceof L1PcInstance) {
 				isPrivateShop = true;
 			}
 		}
 
-		if ((resultType == 0) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 买道具
+		if ((resultType == 0) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 买道具
 			L1Shop shop = ShopTable.getInstance().get(npcId);
 			L1ShopBuyOrderList orderList = shop.newBuyOrderList();
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
 			shop.sellItems(pc, orderList);
-		} else if ((resultType == 1) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 卖道具
+		}
+		else if ((resultType == 1) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 卖道具
 			L1Shop shop = ShopTable.getInstance().get(npcId);
 			L1ShopSellOrderList orderList = shop.newSellOrderList(pc);
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
 			shop.buyItems(orderList);
-		} else if ((resultType == 2) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 自己的仓库
+		}
+		else if ((resultType == 2) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 自己的仓库
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
@@ -122,8 +122,7 @@ public class C_Result extends ClientBasePacket {
 						break;
 					}
 				}
-				if (pc.getDwarfInventory().checkAddItemToWarehouse(item, count,
-						L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
+				if (pc.getDwarfInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
 					pc.sendPackets(new S_ServerMessage(75)); // \f1没有多余的空间可以储存。
 					break;
 				}
@@ -135,8 +134,8 @@ public class C_Result extends ClientBasePacket {
 
 			// 强制储存一次身上道具, 避免角色背包内的物品未正常写入导致物品复制的问题
 			pc.saveInventory();
-		} else if ((resultType == 3) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 从仓库取出东西
+		}
+		else if ((resultType == 3) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 从仓库取出东西
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
@@ -146,39 +145,37 @@ public class C_Result extends ClientBasePacket {
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) // 检查重量与容量
 				{
 					if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
-						pc.getDwarfInventory().tradeItem(item, count,
-								pc.getInventory());
-					} else {
+						pc.getDwarfInventory().tradeItem(item, count, pc.getInventory());
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 						break;
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(270)); // \f1当你负担过重时不能交易。
 					break;
 				}
 			}
-		} else if ((resultType == 4) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 储存道具到仓库
+		}
+		else if ((resultType == 4) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 储存道具到仓库
 			int objectId, count;
 			if (pc.getClanid() != 0) { // 有血盟
 				for (int i = 0; i < size; i++) {
 					tradable = true;
 					objectId = readD();
 					count = readD();
-					L1Clan clan = L1World.getInstance().getClan(
-							pc.getClanname());
+					L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 					L1Object object = pc.getInventory().getItem(objectId);
 					L1ItemInstance item = (L1ItemInstance) object;
 					if (clan != null) {
 						if (!item.getItem().isTradable()) {
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(210, item
-									.getItem().getName())); // \f1%0%d是不可转移的…
+							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 						}
 						if (item.getBless() >= 128) { // 被封印的装备
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(210, item
-									.getItem().getName())); // \f1%0%d是不可转移的…
+							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 						}
 						for (L1NpcInstance petNpc : pc.getPetList().values()) {
 							if (petNpc instanceof L1PetInstance) {
@@ -186,8 +183,7 @@ public class C_Result extends ClientBasePacket {
 								if (item.getId() == pet.getItemObjId()) {
 									tradable = false;
 									// \f1%0%d是不可转移的…
-									pc.sendPackets(new S_ServerMessage(210,
-											item.getItem().getName()));
+									pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 									break;
 								}
 							}
@@ -200,15 +196,12 @@ public class C_Result extends ClientBasePacket {
 
 							}
 						}
-						if (clan.getDwarfForClanInventory()
-								.checkAddItemToWarehouse(item, count,
-										L1Inventory.WAREHOUSE_TYPE_CLAN) == L1Inventory.SIZE_OVER) {
+						if (clan.getDwarfForClanInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_CLAN) == L1Inventory.SIZE_OVER) {
 							pc.sendPackets(new S_ServerMessage(75)); // \f1没有多余的空间可以储存。
 							break;
 						}
 						if (tradable) {
-							pc.getInventory().tradeItem(objectId, count,
-									clan.getDwarfForClanInventory());
+							pc.getInventory().tradeItem(objectId, count, clan.getDwarfForClanInventory());
 							pc.turnOnOffLight();
 						}
 					}
@@ -216,11 +209,12 @@ public class C_Result extends ClientBasePacket {
 
 				// 强制储存一次身上道具, 避免角色背包内的物品未正常写入导致物品复制的问题
 				pc.saveInventory();
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(208)); // \f1若想使用血盟仓库，必须加入血盟。
 			}
-		} else if ((resultType == 5) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 从克莱因仓库中取出道具
+		}
+		else if ((resultType == 5) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 从克莱因仓库中取出道具
 			int objectId, count;
 			L1ItemInstance item;
 
@@ -232,28 +226,28 @@ public class C_Result extends ClientBasePacket {
 					item = clan.getDwarfForClanInventory().getItem(objectId);
 					if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量确认及びメッセージ送信
 						if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
-							clan.getDwarfForClanInventory().tradeItem(item,
-									count, pc.getInventory());
-						} else {
+							clan.getDwarfForClanInventory().tradeItem(item, count, pc.getInventory());
+						}
+						else {
 							pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 							break;
 						}
-					} else {
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(270)); // \f1当你负担过重时不能交易。
 						break;
 					}
 				}
 				clan.setWarehouseUsingChar(0); // 解除使用仓库
 			}
-		} else if ((resultType == 5) && (size == 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン仓库から取り出し中にCancel、または、ESCキー
+		}
+		else if ((resultType == 5) && (size == 0) && npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン仓库から取り出し中にCancel、または、ESCキー
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				clan.setWarehouseUsingChar(0); // クラン仓库のロックを解除
 			}
-		} else if ((resultType == 8) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)
-				&& pc.isElf()) { // 存精灵仓库
+		}
+		else if ((resultType == 8) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5) && pc.isElf()) { // 存精灵仓库
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
@@ -263,8 +257,7 @@ public class C_Result extends ClientBasePacket {
 				L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
 					tradable = false;
-					pc.sendPackets(new S_ServerMessage(210, item.getItem()
-							.getName())); // \f1%0%d是不可转移的…
+					pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 				}
 				for (L1NpcInstance petNpc : pc.getPetList().values()) {
 					if (petNpc instanceof L1PetInstance) {
@@ -272,8 +265,7 @@ public class C_Result extends ClientBasePacket {
 						if (item.getId() == pet.getItemObjId()) {
 							tradable = false;
 							// \f1%0%d是不可转移的…
-							pc.sendPackets(new S_ServerMessage(210, item
-									.getItem().getName()));
+							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 							break;
 						}
 					}
@@ -285,23 +277,20 @@ public class C_Result extends ClientBasePacket {
 						break;
 					}
 				}
-				if (pc.getDwarfForElfInventory().checkAddItemToWarehouse(item,
-						count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
+				if (pc.getDwarfForElfInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
 					pc.sendPackets(new S_ServerMessage(75)); // \f1没有多余的空间可以储存。
 					break;
 				}
 				if (tradable) {
-					pc.getInventory().tradeItem(objectId, count,
-							pc.getDwarfForElfInventory());
+					pc.getInventory().tradeItem(objectId, count, pc.getDwarfForElfInventory());
 					pc.turnOnOffLight();
 				}
 			}
 
 			// 强制储存一次身上道具, 避免角色背包内的物品未正常写入导致物品复制的问题
 			pc.saveInventory();
-		} else if ((resultType == 9) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)
-				&& pc.isElf()) { // 从精灵仓库取出
+		}
+		else if ((resultType == 9) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5) && pc.isElf()) { // 从精灵仓库取出
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
@@ -310,18 +299,20 @@ public class C_Result extends ClientBasePacket {
 				item = pc.getDwarfForElfInventory().getItem(objectId);
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量确认及びメッセージ送信
 					if (pc.getInventory().consumeItem(40494, 2)) { // 纯粹的米索莉块
-						pc.getDwarfForElfInventory().tradeItem(item, count,
-								pc.getInventory());
-					} else {
+						pc.getDwarfForElfInventory().tradeItem(item, count, pc.getInventory());
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(337, "$767")); // \f1%0不足%s。
 						break;
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(270)); // \f1当你负担过重时不能交易。
 					break;
 				}
 			}
-		} else if ((resultType == 0) && (size != 0) && isPrivateShop) { // 从个人商店购买道具
+		}
+		else if ((resultType == 0) && (size != 0) && isPrivateShop) { // 从个人商店购买道具
 			if (findObject == null) {
 				return;
 			}
@@ -383,32 +374,29 @@ public class C_Result extends ClientBasePacket {
 						}
 						price = count * sellPrice;
 						if (pc.getInventory().checkItem(L1ItemId.ADENA, price)) {
-							L1ItemInstance adena = pc.getInventory()
-									.findItemId(L1ItemId.ADENA);
+							L1ItemInstance adena = pc.getInventory().findItemId(L1ItemId.ADENA);
 							if ((targetPc != null) && (adena != null)) {
-								if (targetPc.getInventory().tradeItem(item,
-										count, pc.getInventory()) == null) {
+								if (targetPc.getInventory().tradeItem(item, count, pc.getInventory()) == null) {
 									targetPc.setTradingInPrivateShop(false);
 									return;
 								}
-								pc.getInventory().tradeItem(adena, price,
-										targetPc.getInventory());
-								String message = item.getItem().getName()
-										+ " (" + String.valueOf(count) + ")";
+								pc.getInventory().tradeItem(adena, price, targetPc.getInventory());
+								String message = item.getItem().getName() + " (" + String.valueOf(count) + ")";
 								targetPc.sendPackets(new S_ServerMessage(877, // 将 %1%o 卖给 %0。
 										pc.getName(), message));
 								pssl.setSellCount(count + sellCount);
 								sellList.set(order, pssl);
-								if (pssl.getSellCount() == pssl
-										.getSellTotalCount()) { // 卖る予定の个数を卖った
+								if (pssl.getSellCount() == pssl.getSellTotalCount()) { // 卖る予定の个数を卖った
 									isRemoveFromList[order] = true;
 								}
 							}
-						} else {
+						}
+						else {
 							pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 							break;
 						}
-					} else {
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(270)); // \f1当你负担过重时不能交易。
 						break;
 					}
@@ -421,7 +409,8 @@ public class C_Result extends ClientBasePacket {
 				}
 				targetPc.setTradingInPrivateShop(false);
 			}
-		} else if ((resultType == 1) && (size != 0) && isPrivateShop) { // 个人商店出售道具
+		}
+		else if ((resultType == 1) && (size != 0) && isPrivateShop) { // 个人商店出售道具
 			int count;
 			int order;
 			List<L1PrivateShopBuyList> buyList;
@@ -462,10 +451,10 @@ public class C_Result extends ClientBasePacket {
 					// pc.sendPackets(new S_ServerMessage(905)); // 无法贩卖装备中的道具。
 					continue;
 				}
-	            if (item.getBless() >= 128) { // 被封印的装备
-	                // pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
-	                continue;
-	             }
+				if (item.getBless() >= 128) { // 被封印的装备
+					// pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
+					continue;
+				}
 
 				if (targetPc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量确认及びメッセージ送信
 					for (int j = 0; j < count; j++) { // 检查溢出
@@ -475,26 +464,24 @@ public class C_Result extends ClientBasePacket {
 							return;
 						}
 					}
-					if (targetPc.getInventory().checkItem(L1ItemId.ADENA,
-							count * buyPrice)) {
-						L1ItemInstance adena = targetPc.getInventory()
-								.findItemId(L1ItemId.ADENA);
+					if (targetPc.getInventory().checkItem(L1ItemId.ADENA, count * buyPrice)) {
+						L1ItemInstance adena = targetPc.getInventory().findItemId(L1ItemId.ADENA);
 						if (adena != null) {
-							targetPc.getInventory().tradeItem(adena,
-									count * buyPrice, pc.getInventory());
-							pc.getInventory().tradeItem(item, count,
-									targetPc.getInventory());
+							targetPc.getInventory().tradeItem(adena, count * buyPrice, pc.getInventory());
+							pc.getInventory().tradeItem(item, count, targetPc.getInventory());
 							psbl.setBuyCount(count + buyCount);
 							buyList.set(order, psbl);
 							if (psbl.getBuyCount() == psbl.getBuyTotalCount()) { // 买う予定の个数を买った
 								isRemoveFromList[order] = true;
 							}
 						}
-					} else {
+					}
+					else {
 						targetPc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
 						break;
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(271)); // \f1对方携带的物品过重，无法交易。
 					break;
 				}
@@ -506,8 +493,8 @@ public class C_Result extends ClientBasePacket {
 				}
 			}
 			targetPc.setTradingInPrivateShop(false);
-		} else if ((resultType == 12) && (size != 0)
-				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 领取宠物
+		}
+		else if ((resultType == 12) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 领取宠物
 			int petCost, petCount, divisor, itemObjectId, itemCount = 0;
 			boolean chackAdena = true;
 
@@ -521,21 +508,26 @@ public class C_Result extends ClientBasePacket {
 				if (itemCount == 0) {
 					continue;
 				}
-				for (L1NpcInstance petNpc : pc.getPetList().values()) 
+				for (L1NpcInstance petNpc : pc.getPetList().values())
 					petCost += petNpc.getPetcost();
 
 				int charisma = pc.getCha();
 				if (pc.isCrown()) { // 王族
 					charisma += 6;
-				} else if (pc.isElf()) { // 妖精
+				}
+				else if (pc.isElf()) { // 妖精
 					charisma += 12;
-				} else if (pc.isWizard()) { // 法师
+				}
+				else if (pc.isWizard()) { // 法师
 					charisma += 6;
-				} else if (pc.isDarkelf()) { // 黑暗妖精
+				}
+				else if (pc.isDarkelf()) { // 黑暗妖精
 					charisma += 6;
-				} else if (pc.isDragonKnight()) { // 龙骑士
+				}
+				else if (pc.isDragonKnight()) { // 龙骑士
 					charisma += 6;
-				} else if (pc.isIllusionist()) { // 幻术师
+				}
+				else if (pc.isIllusionist()) { // 幻术师
 					charisma += 6;
 				}
 
@@ -547,12 +539,14 @@ public class C_Result extends ClientBasePacket {
 					npcId = l1pet.get_npcid();
 					charisma -= petCost;
 					if ((npcId == 45313 // 老虎
-							) || (npcId == 45710 // 真．虎男
+							)
+							|| (npcId == 45710 // 真．虎男
 							) || (npcId == 45711 // 高丽幼犬
 							) || (npcId == 45712 // 高丽犬
 							)) {
 						divisor = 12;
-					} else {
+					}
+					else {
 						divisor = 6;
 					}
 					petCount = charisma / divisor;

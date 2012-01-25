@@ -67,12 +67,14 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeD(pc.getId());
 		if (pc.isDead()) {
 			writeH(pc.getTempCharGfxAtDead());
-		} else {
+		}
+		else {
 			writeH(pc.getTempCharGfx());
 		}
 		if (pc.isDead()) {
 			writeC(pc.getStatus());
-		} else {
+		}
+		else {
 			writeC(pc.getCurrentWeapon());
 		}
 		writeC(pc.getHeading());
@@ -91,12 +93,14 @@ public class S_OwnCharPack extends ServerBasePacket {
 		if (pc.isInParty()) // 组队中
 		{
 			writeC(100 * pc.getCurrentHp() / pc.getMaxHp());
-		} else {
+		}
+		else {
 			writeC(0xFF);
 		}
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
 			writeC(0x08); // 3段加速
-		} else {
+		}
+		else {
 			writeC(0);
 		}
 		writeC(0); // PC = 0, Mon = Lv

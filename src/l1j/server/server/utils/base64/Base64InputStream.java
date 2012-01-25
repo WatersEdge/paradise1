@@ -57,7 +57,8 @@ public class Base64InputStream extends InputStream {
 			if (b == -1) {
 				if (i != 0) {
 					throw new IOException("Bad base64 stream");
-				} else {
+				}
+				else {
 					buffer = new int[0];
 					eof = true;
 					return;
@@ -66,7 +67,8 @@ public class Base64InputStream extends InputStream {
 			char c = (char) b;
 			if (Base64.Shared.chars.indexOf(c) != -1 || c == Base64.Shared.pad) {
 				four[i++] = c;
-			} else if (c != '\r' && c != '\n') {
+			}
+			else if (c != '\r' && c != '\n') {
 				throw new IOException("Bad base64 stream");
 			}
 		} while (i < 4);
@@ -76,7 +78,8 @@ public class Base64InputStream extends InputStream {
 				if (padded) {
 					throw new IOException("Bad base64 stream");
 				}
-			} else {
+			}
+			else {
 				if (!padded) {
 					padded = true;
 				}
@@ -90,17 +93,18 @@ public class Base64InputStream extends InputStream {
 			eof = true;
 			if (four[2] == Base64.Shared.pad) {
 				l = 1;
-			} else {
+			}
+			else {
 				l = 2;
 			}
-		} else {
+		}
+		else {
 			l = 3;
 		}
 		int aux = 0;
 		for (i = 0; i < 4; i++) {
 			if (four[i] != Base64.Shared.pad) {
-				aux = aux
-						| (Base64.Shared.chars.indexOf(four[i]) << (6 * (3 - i)));
+				aux = aux | (Base64.Shared.chars.indexOf(four[i]) << (6 * (3 - i)));
 			}
 		}
 		buffer = new int[l];

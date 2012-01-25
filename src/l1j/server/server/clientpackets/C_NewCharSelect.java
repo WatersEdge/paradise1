@@ -43,7 +43,8 @@ public class C_NewCharSelect extends ClientBasePacket {
 				pc.logout();
 				client.setActiveChar(null);
 			}
-		} else {
+		}
+		else {
 			_log.fine("从帐户断开请求 : " + client.getAccountName());
 		}
 	}

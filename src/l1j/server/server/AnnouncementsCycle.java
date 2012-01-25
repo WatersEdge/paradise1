@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javolution.util.FastList;
-
 import l1j.server.Config;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -36,10 +35,15 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * 循环公告
  */
 public class AnnouncementsCycle {
+
 	private int round = 0;
+
 	private String line = null;
-	private boolean firstboot = true;;
-	private StringBuffer sb = new StringBuffer();
+
+	private boolean firstboot = true;
+
+	private final StringBuffer sb = new StringBuffer();
+
 	private static AnnouncementsCycle _instance;
 
 	/** 缓冲读取 */
@@ -52,7 +56,7 @@ public class AnnouncementsCycle {
 	private static long lastmodify = dir.lastModified();
 
 	/** 在公告首显示公告修改时间 */
-	private boolean AnnounceTimeDisplay = Config.Announcements_Cycle_Modify_Time;
+	private final boolean AnnounceTimeDisplay = Config.Announcements_Cycle_Modify_Time;
 
 	/** 容器 */
 	List<String> list = new FastList<String>();
@@ -78,22 +82,25 @@ public class AnnouncementsCycle {
 				list.clear(); // 清空容器
 				buf = new BufferedReader(new InputStreamReader(new FileInputStream(dir)));
 				while ((line = buf.readLine()) != null) {
-					if (line.startsWith("#")||line.isEmpty()) // 略过注解
+					if (line.startsWith("#") || line.isEmpty()) // 略过注解
 						continue;
 					sb.delete(0, sb.length()); // 清空 buffer [未来扩充用]
 					list.add(line);
 				}
 				lastmodify = dir.lastModified(); // 回存修改时间
-			} else {
+			}
+			else {
 				// 档案没修改过，不做任何事。
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				buf.close();
 				firstboot = false;
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -125,7 +132,7 @@ public class AnnouncementsCycle {
 			// 启用修改时间显示 - 〈yyyy.MM.dd〉
 			if (AnnounceTimeDisplay) {
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
-				ShowAnnouncementsCycle("〈"+ formatter.format(new Date(lastmodify)) + "〉");
+				ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
 			}
 			Iterator<String> iterator = list.listIterator();
 			if (iterator.hasNext()) {

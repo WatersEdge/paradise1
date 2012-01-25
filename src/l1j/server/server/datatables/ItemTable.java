@@ -296,9 +296,11 @@ public class ItemTable {
 				ItemClass.getInstance().addList(item_id, class_name, 0);
 				result.put(new Integer(item.getItemId()), item);
 			}
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(item.getName()).append("(" + item.getItemId() + ")").append("无法加载。").toString());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -382,9 +384,11 @@ public class ItemTable {
 				ItemClass.getInstance().addList(item_id, class_name, 1);
 				result.put(new Integer(weapon.getItemId()), weapon);
 			}
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(weapon.getName()).append("(" + weapon.getItemId() + ")").append("无法加载。").toString());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -480,9 +484,11 @@ public class ItemTable {
 				ItemClass.getInstance().addList(item_id, class_name, 2);
 				result.put(new Integer(armor.getItemId()), armor);
 			}
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName()).append("(" + armor.getItemId() + ")").append("无法加载。").toString());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -31,8 +31,7 @@ public class L1DoorGfx {
 	private final int _rightEdgeOffset;
 	private final int _leftEdgeOffset;
 
-	private L1DoorGfx(int gfxId, int direction, int rightEdgeOffset,
-			int leftEdgeOffset) {
+	private L1DoorGfx(int gfxId, int direction, int rightEdgeOffset, int leftEdgeOffset) {
 		_gfxId = gfxId;
 		_direction = direction;
 		_rightEdgeOffset = rightEdgeOffset;
@@ -68,8 +67,7 @@ public class L1DoorGfx {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM door_gfxs WHERE gfxid = ?");
+			pstm = con.prepareStatement("SELECT * FROM door_gfxs WHERE gfxid = ?");
 			pstm.setInt(1, gfxId);
 			rs = pstm.executeQuery();
 			if (!rs.next()) {
@@ -81,7 +79,8 @@ public class L1DoorGfx {
 			int lEdge = rs.getInt("left_edge_offset");
 			return new L1DoorGfx(id, dir, rEdge, lEdge);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

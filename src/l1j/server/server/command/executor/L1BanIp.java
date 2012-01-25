@@ -44,7 +44,8 @@ public class L1BanIp implements L1CommandExecutor {
 			try {
 				s2 = stringtokenizer.nextToken();
 			}
-			catch (Exception e) {}
+			catch (Exception e) {
+			}
 
 			IpTable iptable = IpTable.getInstance();
 			boolean isBanned = iptable.isBannedIp(s1);

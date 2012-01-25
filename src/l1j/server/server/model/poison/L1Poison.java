@@ -45,7 +45,7 @@ public abstract class L1Poison {
 				|| player.getInventory().checkEquipped(21117) // 安塔瑞斯的泉源
 				|| player.getInventory().checkEquipped(21118) // 安塔瑞斯的霸气
 				|| player.hasSkillEffect(104)) // 黑暗妖精魔法(毒性抵抗)
-			{
+		{
 			return false;
 		}
 		return true;

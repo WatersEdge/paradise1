@@ -78,7 +78,8 @@ public final class DropItemTable {
 			}
 
 			_log.config("drop_item " + _dropItem.size());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

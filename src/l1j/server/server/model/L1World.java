@@ -260,8 +260,7 @@ public class L1World {
 		int map = object.getMapId();
 		L1Location location = object.getLocation();
 		List<L1Object> result = Lists.newList();
-		int headingRotate[] =
-		{ 6, 7, 0, 1, 2, 3, 4, 5 };
+		int headingRotate[] = { 6, 7, 0, 1, 2, 3, 4, 5 };
 		double cosSita = Math.cos(headingRotate[heading] * Math.PI / 4);
 		double sinSita = Math.sin(headingRotate[heading] * Math.PI / 4);
 

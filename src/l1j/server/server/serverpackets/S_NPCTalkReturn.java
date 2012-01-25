@@ -29,6 +29,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param npc
 	 * @param objid
 	 * @param action
@@ -40,9 +41,11 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 		if (action == 1) {
 			htmlid = npc.getNormalAction();
-		} else if (action == 2) {
+		}
+		else if (action == 2) {
 			htmlid = npc.getCaoticAction();
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException();
 		}
 
@@ -51,6 +54,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param npc
 	 * @param objid
 	 * @param action
@@ -61,6 +65,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param objid
 	 * @param htmlid
 	 * @param data
@@ -71,6 +76,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param objid
 	 * @param htmlid
 	 */
@@ -80,6 +86,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	/**
 	 * NPC对话视窗
+	 * 
 	 * @param objid
 	 * @param html
 	 */
@@ -98,7 +105,8 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 			for (String datum : data) {
 				writeS(datum);
 			}
-		} else {
+		}
+		else {
 			writeH(0x00);
 			writeH(0x00);
 		}

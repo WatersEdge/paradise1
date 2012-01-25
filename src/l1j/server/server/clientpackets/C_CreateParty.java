@@ -48,9 +48,7 @@ public class C_CreateParty extends ClientBasePacket {
 				}
 
 				// 邀请组队时，对象不再荧幕内或是7步内
-				if ((!pc.getLocation().isInScreen(targetPc.getLocation())
-						|| (pc.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))
-						) {
+				if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))) {
 					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952)); // 距离太远以致于无法邀请至队伍。
 					return;
 				}
@@ -71,10 +69,12 @@ public class C_CreateParty extends ClientBasePacket {
 							targetPc.sendPackets(new S_Message_YN(954, pc.getName())); // 玩家 %0%s 邀请您加入自动分配队伍？(Y/N)
 							break;
 						}
-					} else {
+					}
+					else {
 						pc.sendPackets(new S_ServerMessage(416)); // 只有领导者才能邀请其他的成员。
 					}
-				} else {
+				}
+				else {
 					pc.setPartyType(type);
 					targetPc.setPartyID(pc.getId());
 					switch (type) {
@@ -87,7 +87,8 @@ public class C_CreateParty extends ClientBasePacket {
 					}
 				}
 			}
-		} else if (type == 2) { // 聊天组队
+		}
+		else if (type == 2) { // 聊天组队
 			String name = readS();
 			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
@@ -99,9 +100,7 @@ public class C_CreateParty extends ClientBasePacket {
 			}
 
 			// 邀请组队时，对象不再荧幕内或是7步内
-			if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc
-					.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))
-					) {
+			if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))) {
 				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952)); // 距离太远以致于无法邀请至队伍。
 				return;
 			}
@@ -114,10 +113,12 @@ public class C_CreateParty extends ClientBasePacket {
 				if (pc.getChatParty().isLeader(pc)) {
 					targetPc.setPartyID(pc.getId());
 					targetPc.sendPackets(new S_Message_YN(951, pc.getName())); // 您要接受玩家 %0%s 提出的队伍对话邀请吗？(Y/N)
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(416)); // 只有领导者才能邀请其他的成员。
 				}
-			} else {
+			}
+			else {
 				targetPc.setPartyID(pc.getId());
 				targetPc.sendPackets(new S_Message_YN(951, pc.getName())); // 您要接受玩家 %0%s 提出的队伍对话邀请吗？(Y/N)
 			}
@@ -137,15 +138,12 @@ public class C_CreateParty extends ClientBasePacket {
 			L1Object obj = L1World.getInstance().findObject(targetId);
 
 			// 判断目标是否合理
-			if ((obj == null) || (pc.getId() == obj.getId())
-					|| !(obj instanceof L1PcInstance)) {
+			if ((obj == null) || (pc.getId() == obj.getId()) || !(obj instanceof L1PcInstance)) {
 				return;
 			}
 
 			// 邀请组队时，对象不再荧幕内或是7步内
-			if ((!pc.getLocation().isInScreen(obj.getLocation()) || (pc
-					.getLocation().getTileLineDistance(obj.getLocation()) > 7))
-					) {
+			if ((!pc.getLocation().isInScreen(obj.getLocation()) || (pc.getLocation().getTileLineDistance(obj.getLocation()) > 7))) {
 				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$1695)); // 距离太远以致于无法邀请至队伍。
 				return;
 			}

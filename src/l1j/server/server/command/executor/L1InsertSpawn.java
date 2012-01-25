@@ -56,15 +56,16 @@ public class L1InsertSpawn implements L1CommandExecutor {
 					return;
 				}
 				SpawnTable.storeSpawn(pc, template);
-			} else if (type.equalsIgnoreCase("npc")) {
+			}
+			else if (type.equalsIgnoreCase("npc")) {
 				NpcSpawnTable.getInstance().storeSpawn(pc, template);
 			}
 			L1SpawnUtil.spawn(pc, npcId, 0, 0);
-			msg = new StringBuilder().append(template.get_name())
-					.append(" (" + npcId + ") ").append("新增到资料库中。").toString();
-		} catch (Exception e) {
+			msg = new StringBuilder().append(template.get_name()).append(" (" + npcId + ") ").append("新增到资料库中。").toString();
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "", e);
-			msg = "请输入 : "+ cmdName + " mob|npc NPCID 。";
+			msg = "请输入 : " + cmdName + " mob|npc NPCID 。";
 		} finally {
 			if (msg != null) {
 				pc.sendPackets(new S_SystemMessage(msg));

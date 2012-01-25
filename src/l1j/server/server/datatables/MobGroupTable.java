@@ -74,7 +74,8 @@ public class MobGroupTable {
 				_mobGroupIndex.put(mobGroupId, mobGroup);
 			}
 			_log.config("MOB集团名单 " + _mobGroupIndex.size() + "件");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "创建mobgroup表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

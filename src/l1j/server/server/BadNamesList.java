@@ -30,11 +30,13 @@ import l1j.server.server.utils.collections.Lists;
  * 禁止使用名字清单
  */
 public class BadNamesList {
+
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(BadNamesList.class.getName());
 
 	private static BadNamesList _instance;
 
-	private List<String> _nameList = Lists.newList();
+	private final List<String> _nameList = Lists.newList();
 
 	public static BadNamesList getInstance() {
 		if (_instance == null) {
@@ -63,9 +65,11 @@ public class BadNamesList {
 			}
 
 			_log.config("加载 " + _nameList.size() + " bad names");
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			_log.warning("badnames.txt 数据文件夹丢失.");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.warning("error while loading bad names list : " + e);
 		} finally {
 			StreamUtil.close(lnr);

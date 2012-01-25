@@ -53,7 +53,7 @@ public class Random {
 
 	/** 随机位元 */
 	public static byte nextByte() {
-		return (byte)nextInt(256);
+		return (byte) nextInt(256);
 	}
 
 	/** 随机长整数 */

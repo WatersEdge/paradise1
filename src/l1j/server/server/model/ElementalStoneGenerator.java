@@ -116,8 +116,7 @@ public class ElementalStoneGenerator implements Runnable {
 	@Override
 	public void run() {
 		try {
-			L1Map map = L1WorldMap.getInstance().getMap(
-					(short) ELVEN_FOREST_MAPID);
+			L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
 			while (true) {
 				removeItemsPickedUp();
 
@@ -135,7 +134,8 @@ public class ElementalStoneGenerator implements Runnable {
 				}
 				Thread.sleep(SLEEP_TIME * 1000); // maxまで设置终了后一定时间は再设置しない
 			}
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

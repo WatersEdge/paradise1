@@ -94,7 +94,8 @@ public class DropTable {
 				}
 				dropList.add(drop);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

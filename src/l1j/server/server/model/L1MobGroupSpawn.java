@@ -53,8 +53,7 @@ public class L1MobGroupSpawn {
 		return _instance;
 	}
 
-	public void doSpawn(L1NpcInstance leader, int groupId,
-			boolean isRespawnScreen, boolean isInitSpawn) {
+	public void doSpawn(L1NpcInstance leader, int groupId, boolean isRespawnScreen, boolean isInitSpawn) {
 
 		L1MobGroup mobGroup = MobGroupTable.getInstance().getTemplate(groupId);
 		if (mobGroup == null) {
@@ -129,15 +128,15 @@ public class L1MobGroupSpawn {
 			}
 			mob.turnOnOffLight();
 			mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return mob;
 	}
 
 	private boolean canSpawn(L1NpcInstance mob) {
-		if (mob.getMap().isInMap(mob.getLocation())
-				&& mob.getMap().isPassable(mob.getLocation())) {
+		if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
 			if (_isRespawnScreen) {
 				return true;
 			}

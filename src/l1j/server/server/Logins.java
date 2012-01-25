@@ -18,25 +18,28 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import l1j.server.Config;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * 登陆
  */
 public class Logins {
+
 	private static Logger _log = Logger.getLogger(Logins.class.getName());
 
 	/** 登陆有效 */
-	public static boolean loginValid(String account, String password,
-			String ip, String host) throws IOException {
+	public static boolean loginValid(String account, String password, String ip, String host) throws IOException {
 		boolean flag1 = false;
 		_log.info("连接从 : " + account);
 
@@ -52,8 +55,7 @@ public class Logins {
 			abyte2 = null;
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT password FROM accounts WHERE login=? LIMIT 1");
+			pstm = con.prepareStatement("SELECT password FROM accounts WHERE login=? LIMIT 1");
 			pstm.setString(1, account);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
@@ -67,8 +69,7 @@ public class Logins {
 			if (abyte2 == null) {
 				if (Config.AUTO_CREATE_ACCOUNTS) {
 					con = L1DatabaseFactory.getInstance().getConnection();
-					pstm = con
-							.prepareStatement("INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?");
+					pstm = con.prepareStatement("INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?");
 					pstm.setString(1, account);
 					pstm.setString(2, new BASE64Encoder().encode(abyte1));
 					pstm.setLong(3, 0L);
@@ -76,9 +77,10 @@ public class Logins {
 					pstm.setString(5, ip);
 					pstm.setString(6, host);
 					pstm.execute();
-					_log.info("创建新账户 " + account);
+					_log.info("创建新账户: " + account);
 					return true;
-				} else {
+				}
+				else {
 					_log.warning("为用户帐户丢失 " + account);
 					return false;
 				}
@@ -97,15 +99,19 @@ public class Logins {
 					}
 					i++;
 				} while (true);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.warning("无法检查密码:" + e);
 				flag1 = false;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

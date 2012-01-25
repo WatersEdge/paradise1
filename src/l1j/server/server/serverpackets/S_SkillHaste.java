@@ -26,12 +26,16 @@ public class S_SkillHaste extends ServerBasePacket {
 
 	/**
 	 * 魔法或物品产生的加速效果
-	 * @param i 对象的objid
-	 * @param j 效果 <br>
-	 * 0:正常<br>
-	 * 1:加速<br>
-	 * 2:减速<br>
-	 * @param k 时间
+	 * 
+	 * @param i
+	 *            对象的objid
+	 * @param j
+	 *            效果 <br>
+	 *            0:正常<br>
+	 *            1:加速<br>
+	 *            2:减速<br>
+	 * @param k
+	 *            时间
 	 */
 	public S_SkillHaste(int i, int j, int k) {
 		writeC(Opcodes.S_OPCODE_SKILLHASTE);

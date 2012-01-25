@@ -291,7 +291,8 @@ public class L1Character extends L1Object {
 				if (pc.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 					pc.sendPackets(packet);
 				}
-			} else {
+			}
+			else {
 				if (!pc.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 					pc.sendPackets(packet);
 				}
@@ -447,7 +448,8 @@ public class L1Character extends L1Object {
 			if (getLocation().getTileDistance(new Point(x, y)) > range) {
 				return false;
 			}
-		} else { // 近身武器
+		}
+		else { // 近身武器
 			if (getLocation().getTileLineDistance(new Point(x, y)) > range) {
 				return false;
 			}
@@ -500,7 +502,8 @@ public class L1Character extends L1Object {
 				killSkillEffectTimer(skillId);
 				addSkillEffect(skillId, timeMillis);
 			}
-		} else {
+		}
+		else {
 			addSkillEffect(skillId, timeMillis);
 		}
 	}
@@ -679,7 +682,8 @@ public class L1Character extends L1Object {
 				pc.sendPackets(new S_PetCtrlMenu(cha, npc, type));
 				// 处理宠物控制图形介面
 			}
-		} else if (npc instanceof L1SummonInstance) {
+		}
+		else if (npc instanceof L1SummonInstance) {
 			L1SummonInstance summon = (L1SummonInstance) npc;
 			L1Character cha = summon.getMaster();
 			if (cha instanceof L1PcInstance) {
@@ -803,9 +807,11 @@ public class L1Character extends L1Object {
 	public int getZoneType() {
 		if (getMap().isSafetyZone(getLocation())) {
 			return 1;
-		} else if (getMap().isCombatZone(getLocation())) {
+		}
+		else if (getMap().isCombatZone(getLocation())) {
 			return -1;
-		} else { // 正常区
+		}
+		else { // 正常区
 			return 0;
 		}
 	}
@@ -1252,9 +1258,11 @@ public class L1Character extends L1Object {
 		_trueWind += i;
 		if (_trueWind >= 127) {
 			_wind = 127;
-		} else if (_trueWind <= -128) {
+		}
+		else if (_trueWind <= -128) {
 			_wind = -128;
-		} else {
+		}
+		else {
 			_wind = _trueWind;
 		}
 	}
@@ -1283,9 +1291,11 @@ public class L1Character extends L1Object {
 		_trueWater += i;
 		if (_trueWater >= 127) {
 			_water = 127;
-		} else if (_trueWater <= -128) {
+		}
+		else if (_trueWater <= -128) {
 			_water = -128;
-		} else {
+		}
+		else {
 			_water = _trueWater;
 		}
 	}
@@ -1313,9 +1323,11 @@ public class L1Character extends L1Object {
 		_trueFire += i;
 		if (_trueFire >= 127) {
 			_fire = 127;
-		} else if (_trueFire <= -128) {
+		}
+		else if (_trueFire <= -128) {
 			_fire = -128;
-		} else {
+		}
+		else {
 			_fire = _trueFire;
 		}
 	}
@@ -1343,9 +1355,11 @@ public class L1Character extends L1Object {
 		_trueEarth += i;
 		if (_trueEarth >= 127) {
 			_earth = 127;
-		} else if (_trueEarth <= -128) {
+		}
+		else if (_trueEarth <= -128) {
 			_earth = -128;
-		} else {
+		}
+		else {
 			_earth = _trueEarth;
 		}
 	}
@@ -1392,9 +1406,11 @@ public class L1Character extends L1Object {
 		_trueRegistStun += i;
 		if (_trueRegistStun > 127) {
 			_registStun = 127;
-		} else if (_trueRegistStun < -128) {
+		}
+		else if (_trueRegistStun < -128) {
 			_registStun = -128;
-		} else {
+		}
+		else {
 			_registStun = _trueRegistStun;
 		}
 	}
@@ -1422,9 +1438,11 @@ public class L1Character extends L1Object {
 		_trueRegistStone += i;
 		if (_trueRegistStone > 127) {
 			_registStone = 127;
-		} else if (_trueRegistStone < -128) {
+		}
+		else if (_trueRegistStone < -128) {
 			_registStone = -128;
-		} else {
+		}
+		else {
 			_registStone = _trueRegistStone;
 		}
 	}
@@ -1453,9 +1471,11 @@ public class L1Character extends L1Object {
 		_trueRegistSleep += i;
 		if (_trueRegistSleep > 127) {
 			_registSleep = 127;
-		} else if (_trueRegistSleep < -128) {
+		}
+		else if (_trueRegistSleep < -128) {
 			_registSleep = -128;
-		} else {
+		}
+		else {
 			_registSleep = _trueRegistSleep;
 		}
 	}
@@ -1484,9 +1504,11 @@ public class L1Character extends L1Object {
 		_trueRegistFreeze += i;
 		if (_trueRegistFreeze > 127) {
 			_registFreeze = 127;
-		} else if (_trueRegistFreeze < -128) {
+		}
+		else if (_trueRegistFreeze < -128) {
 			_registFreeze = -128;
-		} else {
+		}
+		else {
 			_registFreeze = _trueRegistFreeze;
 		}
 	}
@@ -1515,9 +1537,11 @@ public class L1Character extends L1Object {
 		_trueRegistSustain += i;
 		if (_trueRegistSustain > 127) {
 			_registSustain = 127;
-		} else if (_trueRegistSustain < -128) {
+		}
+		else if (_trueRegistSustain < -128) {
 			_registSustain = -128;
-		} else {
+		}
+		else {
 			_registSustain = _trueRegistSustain;
 		}
 	}
@@ -1546,9 +1570,11 @@ public class L1Character extends L1Object {
 		_trueRegistBlind += i;
 		if (_trueRegistBlind > 127) {
 			_registBlind = 127;
-		} else if (_trueRegistBlind < -128) {
+		}
+		else if (_trueRegistBlind < -128) {
 			_registBlind = -128;
-		} else {
+		}
+		else {
 			_registBlind = _trueRegistBlind;
 		}
 	}
@@ -1577,9 +1603,11 @@ public class L1Character extends L1Object {
 		_trueDmgup += i;
 		if (_trueDmgup >= 127) {
 			_dmgup = 127;
-		} else if (_trueDmgup <= -128) {
+		}
+		else if (_trueDmgup <= -128) {
 			_dmgup = -128;
-		} else {
+		}
+		else {
 			_dmgup = _trueDmgup;
 		}
 	}
@@ -1608,9 +1636,11 @@ public class L1Character extends L1Object {
 		_trueBowDmgup += i;
 		if (_trueBowDmgup >= 127) {
 			_bowDmgup = 127;
-		} else if (_trueBowDmgup <= -128) {
+		}
+		else if (_trueBowDmgup <= -128) {
 			_bowDmgup = -128;
-		} else {
+		}
+		else {
 			_bowDmgup = _trueBowDmgup;
 		}
 	}
@@ -1639,9 +1669,11 @@ public class L1Character extends L1Object {
 		_trueHitup += i;
 		if (_trueHitup >= 127) {
 			_hitup = 127;
-		} else if (_trueHitup <= -128) {
+		}
+		else if (_trueHitup <= -128) {
 			_hitup = -128;
-		} else {
+		}
+		else {
 			_hitup = _trueHitup;
 		}
 	}
@@ -1670,9 +1702,11 @@ public class L1Character extends L1Object {
 		_trueBowHitup += i;
 		if (_trueBowHitup >= 127) {
 			_bowHitup = 127;
-		} else if (_trueBowHitup <= -128) {
+		}
+		else if (_trueBowHitup <= -128) {
 			_bowHitup = -128;
-		} else {
+		}
+		else {
 			_bowHitup = _trueBowHitup;
 		}
 	}
@@ -1693,7 +1727,8 @@ public class L1Character extends L1Object {
 	public int getMr() {
 		if (hasSkillEffect(153) == true) {
 			return _mr / 4;
-		} else {
+		}
+		else {
 			return _mr;
 		}
 	} // 当你使用
@@ -1712,7 +1747,8 @@ public class L1Character extends L1Object {
 		_trueMr += i;
 		if (_trueMr <= 0) {
 			_mr = 0;
-		} else {
+		}
+		else {
 			_mr = _trueMr;
 		}
 	}
@@ -1826,7 +1862,8 @@ public class L1Character extends L1Object {
 		_lawful += i;
 		if (_lawful > 32767) {
 			_lawful = 32767;
-		} else if (_lawful < -32768) {
+		}
+		else if (_lawful < -32768) {
 			_lawful = -32768;
 		}
 	}
@@ -2067,7 +2104,8 @@ public class L1Character extends L1Object {
 		_trueMr = i;
 		if (_trueMr <= 0) {
 			_mr = 0;
-		} else {
+		}
+		else {
 			_mr = _trueMr;
 		}
 	}
@@ -2226,7 +2264,8 @@ public class L1Character extends L1Object {
 		_dodge += i;
 		if (_dodge >= 10) {
 			_dodge = 10;
-		} else if (_dodge <= 0) {
+		}
+		else if (_dodge <= 0) {
 			_dodge = 0;
 		}
 	}
@@ -2250,7 +2289,8 @@ public class L1Character extends L1Object {
 		_nDodge += i;
 		if (_nDodge >= 10) {
 			_nDodge = 10;
-		} else if (_nDodge <= 0) {
+		}
+		else if (_nDodge <= 0) {
 			_nDodge = 0;
 		}
 	}
@@ -2378,7 +2418,8 @@ public class L1Character extends L1Object {
 			if ((npcId >= 46068) && (npcId <= 46091) // 原生魔族
 					&& (cha.getTempCharGfx() == 6035)) {
 				return true;
-			} else if ((npcId >= 46092) && (npcId <= 46106) // 不死魔族
+			}
+			else if ((npcId >= 46092) && (npcId <= 46106) // 不死魔族
 					&& (cha.getTempCharGfx() == 6034)) {
 				return true;
 			}

@@ -34,10 +34,12 @@ public class L1Weapon extends L1Item {
 	public int getRange() {
 		return _range;
 	}
+
 	/** 设定射程范围 */
 	public void setRange(int i) {
 		_range = i;
 	}
+
 	/** 命中率修正 */
 	private int _hitModifier = 0;
 
@@ -45,10 +47,12 @@ public class L1Weapon extends L1Item {
 	public int getHitModifier() {
 		return _hitModifier;
 	}
+
 	/** 设定命中率修正 */
 	public void setHitModifier(int i) {
 		_hitModifier = i;
 	}
+
 	/** 伤害修正 */
 	private int _dmgModifier = 0;
 
@@ -56,10 +60,12 @@ public class L1Weapon extends L1Item {
 	public int getDmgModifier() {
 		return _dmgModifier;
 	}
+
 	/** 设定伤害修正 */
 	public void setDmgModifier(int i) {
 		_dmgModifier = i;
 	}
+
 	/** DB、双倍伤害发动几率 */
 	private int _doubleDmgChance;
 
@@ -67,10 +73,12 @@ public class L1Weapon extends L1Item {
 	public int getDoubleDmgChance() {
 		return _doubleDmgChance;
 	}
+
 	/** 设定DB、双倍伤害发动几率 */
 	public void setDoubleDmgChance(int i) {
 		_doubleDmgChance = i;
 	}
+
 	/** 魔法攻击的伤害修正 */
 	private int _magicDmgModifier = 0;
 
@@ -78,10 +86,12 @@ public class L1Weapon extends L1Item {
 	public int getMagicDmgModifier() {
 		return _magicDmgModifier;
 	}
+
 	/** 设定魔法攻击的伤害修正 */
 	public void setMagicDmgModifier(int i) {
 		_magicDmgModifier = i;
 	}
+
 	/** 有无损伤 */
 	private int _canbedmg = 0;
 
@@ -89,6 +99,7 @@ public class L1Weapon extends L1Item {
 	public int get_canbedmg() {
 		return _canbedmg;
 	}
+
 	/** 设定有无损伤 */
 	public void set_canbedmg(int i) {
 		_canbedmg = i;
@@ -99,15 +110,15 @@ public class L1Weapon extends L1Item {
 		int weapon_type = getType();
 
 		boolean bool = (weapon_type == 3 // 巨剑
-						|| weapon_type == 4 // 弓
-						|| weapon_type == 5 // 长矛
-						|| weapon_type == 11 // 钢爪
-						|| weapon_type == 12 // 双刀
-						|| weapon_type == 15 // 双手斧
-						|| weapon_type == 16 // 双手魔杖
-						|| weapon_type == 18 // 锁链剑
-						|| weapon_type == 19 // 不明
-						);
+				|| weapon_type == 4 // 弓
+				|| weapon_type == 5 // 长矛
+				|| weapon_type == 11 // 钢爪
+				|| weapon_type == 12 // 双刀
+				|| weapon_type == 15 // 双手斧
+				|| weapon_type == 16 // 双手魔杖
+				|| weapon_type == 18 // 锁链剑
+		|| weapon_type == 19 // 不明
+		);
 
 		return bool;
 	}

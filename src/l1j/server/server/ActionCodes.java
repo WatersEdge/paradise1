@@ -16,12 +16,13 @@
 package l1j.server.server;
 
 /**
- *	动作代码
+ * 动作代码
  */
 public class ActionCodes {
 
 	public ActionCodes() {
 	}
+
 	/** 出现动作 */
 	public static final int ACTION_Appear = 4;
 	/** 隐藏动作 */
@@ -102,21 +103,21 @@ public class ActionCodes {
 	public static final int ACTION_SpellDirectionExtra = 31;
 	/** 塔裂痕动作1 */
 	public static final int ACTION_TowerCrack1 = 32;
-	/** 塔裂痕动作 2*/
+	/** 塔裂痕动作 2 */
 	public static final int ACTION_TowerCrack2 = 33;
-	/** 塔裂痕动作 3*/
+	/** 塔裂痕动作 3 */
 	public static final int ACTION_TowerCrack3 = 34;
 	/** 塔死亡动作 */
 	public static final int ACTION_TowerDie = 35;
 	/** 门损坏动作1 */
 	public static final int ACTION_DoorAction1 = 32;
-	/** 门损坏动作 2*/
+	/** 门损坏动作 2 */
 	public static final int ACTION_DoorAction2 = 33;
-	/** 门损坏动作 3*/
+	/** 门损坏动作 3 */
 	public static final int ACTION_DoorAction3 = 34;
-	/** 门损坏动作 4*/
+	/** 门损坏动作 4 */
 	public static final int ACTION_DoorAction4 = 35;
-	/** 门损坏动作 5*/
+	/** 门损坏动作 5 */
 	public static final int ACTION_DoorAction5 = 36;
 	/** 门死亡动作 */
 	public static final int ACTION_DoorDie = 37;

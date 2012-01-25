@@ -26,6 +26,7 @@ public class S_PinkName extends ServerBasePacket {
 
 	/**
 	 * 角色名称变紫色
+	 * 
 	 * @param objecId
 	 * @param time
 	 */

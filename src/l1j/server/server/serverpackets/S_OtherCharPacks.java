@@ -23,7 +23,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 // ServerBasePacket, S_OtherCharPacks
 
 /**
- * 物件封包  - 其他角色
+ * 物件封包 - 其他角色
  */
 public class S_OtherCharPacks extends ServerBasePacket {
 
@@ -94,14 +94,14 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		writeS(null); // 主人名称？
 		writeC(0); // ？
 		/*
-		 * if(pc.is_isInParty()) // 组队中 { writeC(100 * pc.get_currentHp() /
-		 * pc.get_maxHp()); } else { writeC(0xFF); }
+		 * if(pc.is_isInParty()) // 组队中 { writeC(100 * pc.get_currentHp() / pc.get_maxHp()); } else { writeC(0xFF); }
 		 */
 
 		writeC(0xFF);
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
 			writeC(0x08); // 3段加速
-		} else {
+		}
+		else {
 			writeC(0);
 		}
 		writeC(0); // PC = 0, Mon = Lv

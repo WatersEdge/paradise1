@@ -26,6 +26,7 @@ public class S_MoveNpcPacket extends ServerBasePacket {
 
 	/***
 	 * 物件移动
+	 * 
 	 * @param npc
 	 * @param x
 	 * @param y

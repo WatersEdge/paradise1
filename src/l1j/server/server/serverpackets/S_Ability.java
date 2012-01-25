@@ -30,6 +30,7 @@ public class S_Ability extends ServerBasePacket {
 
 	/**
 	 * 戒指
+	 * 
 	 * @param type
 	 * @param equipped
 	 */

@@ -30,6 +30,7 @@ public class S_ChatPacket extends ServerBasePacket {
 
 	/**
 	 * 聊天频道
+	 * 
 	 * @param pc
 	 * @param chat
 	 * @param opcode

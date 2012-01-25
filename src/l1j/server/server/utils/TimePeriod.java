@@ -31,8 +31,11 @@ public class TimePeriod {
 
 	/**
 	 * 时间周期
-	 * @param timeStart 开始时间
-	 * @param timeEnd 结束时间
+	 * 
+	 * @param timeStart
+	 *            开始时间
+	 * @param timeEnd
+	 *            结束时间
 	 */
 	public TimePeriod(Time timeStart, Time timeEnd) {
 		if (timeStart.equals(timeEnd)) {
@@ -42,17 +45,17 @@ public class TimePeriod {
 		_timeStart = timeStart;
 		_timeEnd = timeEnd;
 	}
+
 	/**  */
 	private boolean includes(L1GameTime time, Time timeStart, Time timeEnd) {
 		Time when = time.toTime();
 		return (timeStart.compareTo(when) <= 0) && (0 < timeEnd.compareTo(when));
 	}
+
 	/**  */
 	public boolean includes(L1GameTime time) {
 		/*
-		 * 分かりづらいロジック・・・ timeStart after timeEndのとき(例:18:00~06:00)
-		 * timeEnd~timeStart(06:00~18:00)の範囲内でなければ、
-		 * timeStart~timeEnd(18:00~06:00)の範囲内と見なせる
+		 * 分かりづらいロジック・・・ timeStart after timeEndのとき(例:18:00~06:00) timeEnd~timeStart(06:00~18:00)の範囲内でなければ、 timeStart~timeEnd(18:00~06:00)の範囲内と見なせる
 		 */
 		return _timeStart.after(_timeEnd) ? !includes(time, _timeEnd, _timeStart) : includes(time, _timeStart, _timeEnd);
 	}

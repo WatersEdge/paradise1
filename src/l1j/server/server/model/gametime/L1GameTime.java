@@ -32,6 +32,7 @@ public class L1GameTime {
 	private final int _time;
 	/** 日期 */
 	private final Calendar _calendar;
+
 	/** 构造日期 */
 	private Calendar makeCalendar(int time) {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -57,8 +58,8 @@ public class L1GameTime {
 
 	/** 伺服器重启 */
 	public L1GameTime() {
-        this((int) System.currentTimeMillis());
-    }
+		this((int) System.currentTimeMillis());
+	}
 
 	public static L1GameTime fromSystemCurrentTime() {
 		return L1GameTime.valueOf(System.currentTimeMillis());
@@ -93,8 +94,7 @@ public class L1GameTime {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat f = new SimpleDateFormat(
-				"yyyy.MM.dd G 'at' HH:mm:ss z");
+		SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
 		f.setTimeZone(_calendar.getTimeZone());
 		return f.format(_calendar.getTime()) + "(" + getSeconds() + ")";
 	}

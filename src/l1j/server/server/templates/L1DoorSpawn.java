@@ -25,8 +25,7 @@ public class L1DoorSpawn {
 	private final int _keeper;
 	private final boolean _isOpening;
 
-	public L1DoorSpawn(int id, L1DoorGfx gfx, int x, int y, int mapId, int hp,
-			int keeper, boolean isOpening) {
+	public L1DoorSpawn(int id, L1DoorGfx gfx, int x, int y, int mapId, int hp, int keeper, boolean isOpening) {
 		super();
 		_id = id;
 		_gfx = gfx;
@@ -98,7 +97,8 @@ public class L1DoorSpawn {
 				result.add(spawn);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

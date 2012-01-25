@@ -39,17 +39,18 @@ public class L1ItemCheck {
 
 		if ((findWeapon() || findArmor()) && itemCount != 1) {
 			isCheat = true;
-		} else if (findEtcItem()) {
+		}
+		else if (findEtcItem()) {
 			// 不可堆叠的道具却堆叠，就视为作弊
 			if (!isStackable && itemCount != 1) {
 				isCheat = true;
 				// 金币大于20亿以及金币负值则为作弊
-			} else if (itemId == 40308
-					&& (itemCount > 2000000000 || itemCount < 0)) {
+			}
+			else if (itemId == 40308 && (itemCount > 2000000000 || itemCount < 0)) {
 				isCheat = true;
 				// 可堆叠道具(金币除外)堆叠超过十万个以及堆叠负值设定为作弊
-			} else if (isStackable && itemId != 40308
-					&& (itemCount > 100000 || itemCount < 0)) {
+			}
+			else if (isStackable && itemId != 40308 && (itemCount > 100000 || itemCount < 0)) {
 				isCheat = true;
 			}
 		}
@@ -76,7 +77,8 @@ public class L1ItemCheck {
 					inWeapon = true;
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
@@ -98,7 +100,8 @@ public class L1ItemCheck {
 					inArmor = true;
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
@@ -121,7 +124,8 @@ public class L1ItemCheck {
 					isStackable = rs.getInt("stackable") == 1 ? true : false;
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}

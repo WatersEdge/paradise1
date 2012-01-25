@@ -29,10 +29,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
-import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
-import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.Getback;
+import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DollInstance;
@@ -48,41 +47,39 @@ import l1j.server.server.serverpackets.ServerBasePacket;
 import l1j.server.server.utils.StreamUtil;
 import l1j.server.server.utils.SystemUtil;
 
-// Referenced classes of package l1j.server.server:
-// PacketHandler, Logins, IpTable, LoginController,
-// ClanTable, IdFactory
-//
-
 /**
  * 客户端线程
  */
 public class ClientThread implements Runnable, PacketOutput {
 
+	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(ClientThread.class.getName());
 
 	private InputStream _in;
 
 	private OutputStream _out;
+
 	/** 处理程序 */
 	private PacketHandler _handler;
+
 	/** 账号 */
 	private Account _account;
 
 	private L1PcInstance _activeChar;
 
 	private String _ip;
+
 	/** 主机名 */
 	private String _hostname;
+
 	/** CSocket类 */
 	private Socket _csocket;
+
 	/** 登录状态 */
 	private int _loginStatus = 0;
 
-	private static final byte[] FIRST_PACKET = { // 3.5C Taiwan Server 
-		    (byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f, 
-		    (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08, 
-		    (byte) 0x00 
-    };
+	private static final byte[] FIRST_PACKET = { // 3.5C Taiwan Server
+	(byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f, (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08, (byte) 0x00 };
 
 	/**
 	 * for Test
@@ -95,7 +92,8 @@ public class ClientThread implements Runnable, PacketOutput {
 		_ip = socket.getInetAddress().getHostAddress();
 		if (Config.HOSTNAME_LOOKUPS) {
 			_hostname = socket.getInetAddress().getHostName();
-		} else {
+		}
+		else {
 			_hostname = _ip;
 		}
 		_in = socket.getInputStream();
@@ -105,12 +103,12 @@ public class ClientThread implements Runnable, PacketOutput {
 		_handler = new PacketHandler(this);
 	}
 
-	/** 得到 IP */
+	/** 取得 IP */
 	public String getIp() {
 		return _ip;
 	}
 
-	/** 得到主机名 */
+	/** 取得主机名 */
 	public String getHostname() {
 		return _hostname;
 	}
@@ -150,7 +148,8 @@ public class ClientThread implements Runnable, PacketOutput {
 			}
 
 			return _cipher.decrypt(data);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw e;
 		}
 	}
@@ -168,19 +167,18 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 		try {
 			// 自动储存角色资料
-			if (Config.AUTOSAVE_INTERVAL * 1000 < System.currentTimeMillis()
-					- _lastSavedTime) {
+			if (Config.AUTOSAVE_INTERVAL * 1000 < System.currentTimeMillis() - _lastSavedTime) {
 				_activeChar.save();
 				_lastSavedTime = System.currentTimeMillis();
 			}
 
 			// 自动储存身上道具资料
-			if (Config.AUTOSAVE_INTERVAL_INVENTORY * 1000 < System
-					.currentTimeMillis() - _lastSavedTime_inventory) {
+			if (Config.AUTOSAVE_INTERVAL_INVENTORY * 1000 < System.currentTimeMillis() - _lastSavedTime_inventory) {
 				_activeChar.saveInventory();
 				_lastSavedTime_inventory = System.currentTimeMillis();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.warning("客户端自动保存失败。");
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
@@ -194,10 +192,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		System.out.println("等待客户端连接...");
 
 		/*
-		 * TODO: 翻译 クライアントからのパケットをある程度制限する。 理由：不正の误检出が多発する恐れがあるため
-		 * ex1.サーバに过负荷が挂かっている场合、负荷が落ちたときにクライアントパケットを一气に处理し、结果的に不正扱いとなる。
-		 * ex2.サーバ侧のネットワーク（下り）にラグがある场合、クライアントパケットが一气に流れ迂み、结果的に不正扱いとなる。
-		 * ex3.クライアント侧のネットワーク（上り）にラグがある场合、以下同样。
+		 * TODO: 翻译 クライアントからのパケットをある程度制限する。 理由：不正の误检出が多発する恐れがあるため ex1.サーバに过负荷が挂かっている场合、负荷が落ちたときにクライアントパケットを一气に处理し、结果的に不正扱いとなる。 ex2.サーバ侧のネットワーク（下り）にラグがある场合、クライアントパケットが一气に流れ迂み、结果的に不正扱いとなる。 ex3.クライアント侧のネットワーク（上り）にラグがある场合、以下同样。
 		 * 
 		 * 无制限にする前に不正检出方法を见直す必要がある。
 		 */
@@ -206,8 +201,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		GeneralThreadPool.getInstance().execute(movePacket);
 		GeneralThreadPool.getInstance().execute(hcPacket);
 
-		ClientThreadObserver observer = new ClientThreadObserver(
-				Config.AUTOMATIC_KICK * 60 * 1000); // 自动断线的时间（单位:毫秒）
+		ClientThreadObserver observer = new ClientThreadObserver(Config.AUTOMATIC_KICK * 60 * 1000); // 自动断线的时间（单位:毫秒）
 
 		// 是否启用自动踢人
 		if (Config.AUTOMATIC_KICK > 0) {
@@ -239,7 +233,8 @@ public class ClientThread implements Runnable, PacketOutput {
 				byte data[] = null;
 				try {
 					data = readPacket();
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					break;
 				}
 				// _log.finest("[C]\n" + new
@@ -248,8 +243,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				int opcode = data[0] & 0xFF;
 
 				// 处理多重登入
-				if (opcode == Opcodes.C_OPCODE_COMMONCLICK
-						|| opcode == Opcodes.C_OPCODE_CHANGECHAR) {
+				if (opcode == Opcodes.C_OPCODE_COMMONCLICK || opcode == Opcodes.C_OPCODE_CHANGECHAR) {
 					_loginStatus = 1;
 				}
 				if (opcode == Opcodes.C_OPCODE_LOGINTOSERVER) {
@@ -257,8 +251,7 @@ public class ClientThread implements Runnable, PacketOutput {
 						continue;
 					}
 				}
-				if (opcode == Opcodes.C_OPCODE_LOGINTOSERVEROK
-						|| opcode == Opcodes.C_OPCODE_RETURNTOLOGIN) {
+				if (opcode == Opcodes.C_OPCODE_LOGINTOSERVEROK || opcode == Opcodes.C_OPCODE_RETURNTOLOGIN) {
 					_loginStatus = 0;
 				}
 
@@ -279,19 +272,20 @@ public class ClientThread implements Runnable, PacketOutput {
 
 				// 要处理的 OPCODE
 				// 切换角色、丢道具到地上、删除身上道具
-				if (opcode == Opcodes.C_OPCODE_CHANGECHAR
-						|| opcode == Opcodes.C_OPCODE_DROPITEM
-						|| opcode == Opcodes.C_OPCODE_DELETEINVENTORYITEM) {
+				if (opcode == Opcodes.C_OPCODE_CHANGECHAR || opcode == Opcodes.C_OPCODE_DROPITEM || opcode == Opcodes.C_OPCODE_DELETEINVENTORYITEM) {
 					_handler.handlePacket(data, _activeChar);
-				} else if (opcode == Opcodes.C_OPCODE_MOVECHAR) {
+				}
+				else if (opcode == Opcodes.C_OPCODE_MOVECHAR) {
 					// 为了确保即时的移动，将移动的封包独立出来处理
 					movePacket.requestWork(data);
-				} else {
+				}
+				else {
 					// 处理其他数据的传递
 					hcPacket.requestWork(data);
 				}
 			}
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			try {
@@ -313,7 +307,8 @@ public class ClientThread implements Runnable, PacketOutput {
 				sendPacket(new S_Disconnect());
 
 				StreamUtil.close(_out, _in);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				LoginController.getInstance().logout(this);
@@ -323,8 +318,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		_log.fine("Server thread[C] stopped");
 		if (_kick < 1) {
 			_log.info("(" + getAccountName() + ":" + _hostname + ")连线终止。");
-			System.out.println("使用了 " + SystemUtil.getUsedMemoryMB()
-					+ " MB 的记忆体");
+			System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + " MB 的记忆体");
 			System.out.println("等待客户端连接...");
 			if (getAccount() != null) {
 				Account.online(getAccount(), false);
@@ -350,7 +344,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	class HcPacket implements Runnable {
 		private final Queue<byte[]> _queue;
 
-		private PacketHandler _handler;
+		private final PacketHandler _handler;
 
 		public HcPacket() {
 			_queue = new ConcurrentLinkedQueue<byte[]>();
@@ -374,12 +368,15 @@ public class ClientThread implements Runnable, PacketOutput {
 				if (data != null) {
 					try {
 						_handler.handlePacket(data, _activeChar);
-					} catch (Exception e) {
 					}
-				} else {
+					catch (Exception e) {
+					}
+				}
+				else {
 					try {
 						Thread.sleep(10);
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 					}
 				}
 			}
@@ -400,8 +397,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 
 		public void start() {
-			_observerTimer.scheduleAtFixedRate(ClientThreadObserver.this, 0,
-					_disconnectTimeMillis);
+			_observerTimer.scheduleAtFixedRate(ClientThreadObserver.this, 0, _disconnectTimeMillis);
 		}
 
 		@Override
@@ -425,7 +421,8 @@ public class ClientThread implements Runnable, PacketOutput {
 					cancel();
 					return;
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				cancel();
 			}
@@ -451,7 +448,8 @@ public class ClientThread implements Runnable, PacketOutput {
 				_out.write(length >> 8 & 0xff);
 				_out.write(data);
 				_out.flush();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 			}
 		}
 	}
@@ -461,12 +459,12 @@ public class ClientThread implements Runnable, PacketOutput {
 		_csocket.close();
 	}
 
-	/** 设置主动角色 */
+	/** 设置在线角色 */
 	public void setActiveChar(L1PcInstance pc) {
 		_activeChar = pc;
 	}
 
-	/** 获得主动角色 */
+	/** 取得在线角色 */
 	public L1PcInstance getActiveChar() {
 		return _activeChar;
 	}
@@ -476,12 +474,12 @@ public class ClientThread implements Runnable, PacketOutput {
 		_account = account;
 	}
 
-	/** 获得账号 */
+	/** 取得账号 */
 	public Account getAccount() {
 		return _account;
 	}
 
-	/** 获得帐号名称 */
+	/** 取得帐号名称 */
 	public String getAccountName() {
 		if (_account == null) {
 			return null;
@@ -501,9 +499,11 @@ public class ClientThread implements Runnable, PacketOutput {
 				pc.setMap((short) loc[2]);
 				pc.setCurrentHp(pc.getLevel());
 				pc.set_food(40);
-			} catch (InterruptedException ie) {
+			}
+			catch (InterruptedException ie) {
 				ie.printStackTrace();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -516,8 +516,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		// 终止决斗
 		if (pc.getFightId() != 0) {
-			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance()
-					.findObject(pc.getFightId());
+			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
 			pc.setFightId(0);
 			if (fightPc != null) {
 				fightPc.setFightId(0);
@@ -545,10 +544,10 @@ public class ClientThread implements Runnable, PacketOutput {
 				pet.dropItem();
 				pc.getPetList().remove(pet.getId());
 				pet.deleteMe();
-			} else if (petNpc instanceof L1SummonInstance) {
+			}
+			else if (petNpc instanceof L1SummonInstance) {
 				L1SummonInstance summon = (L1SummonInstance) petNpc;
-				for (L1PcInstance visiblePc : L1World.getInstance()
-						.getVisiblePlayer(summon)) {
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc, false));
 				}
 			}
@@ -561,9 +560,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		// 重新建立跟随者
 		for (L1FollowerInstance follower : pc.getFollowerList().values()) {
 			follower.setParalyzed(true);
-			follower.spawn(follower.getNpcTemplate().get_npcId(),
-					follower.getX(), follower.getY(), follower.getHeading(),
-					follower.getMapId());
+			follower.spawn(follower.getNpcTemplate().get_npcId(), follower.getX(), follower.getY(), follower.getHeading(), follower.getMapId());
 			follower.deleteMe();
 		}
 
@@ -585,8 +582,8 @@ public class ClientThread implements Runnable, PacketOutput {
 		pc.setOnlineStatus(0);
 
 		// 设定帐号为下线
-		//Account account = Account.load(pc.getAccountName());
-		//Account.online(account, false);
+		// Account account = Account.load(pc.getAccountName());
+		// Account.online(account, false);
 
 		// 设定帐号的角色为下线
 		Account account = Account.load(pc.getAccountName());
@@ -595,7 +592,8 @@ public class ClientThread implements Runnable, PacketOutput {
 		try {
 			pc.save();
 			pc.saveInventory();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

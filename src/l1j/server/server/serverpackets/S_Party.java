@@ -74,7 +74,8 @@ public class S_Party extends ServerBasePacket {
 		double maxhp = 0.0d;
 		if (pc.getParty() == null) {
 			return;
-		} else {
+		}
+		else {
 			writeC(Opcodes.S_OPCODE_PACKETBOX);
 			writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
 			nowhp = leader.getCurrentHp();
@@ -138,7 +139,8 @@ public class S_Party extends ServerBasePacket {
 		L1PcInstance member[] = pc.getParty().getMembers();
 		if (pc.getParty() == null) {
 			return;
-		} else {
+		}
+		else {
 			writeC(Opcodes.S_OPCODE_PACKETBOX);
 			writeC(S_PacketBox.PATRY_MEMBERS);
 			writeC(member.length);

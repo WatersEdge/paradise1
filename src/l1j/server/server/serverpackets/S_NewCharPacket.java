@@ -31,6 +31,7 @@ public class S_NewCharPacket extends ServerBasePacket {
 
 	/**
 	 * 创造新角色
+	 * 
 	 * @param pc
 	 */
 	public S_NewCharPacket(L1PcInstance pc) {

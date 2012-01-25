@@ -67,8 +67,7 @@ public class S_NPCPack extends ServerBasePacket {
 		}
 
 		/**
-		 * シシニテ - 0:mob,item(atk pointer), 1:poisoned(), 2:invisable(), 4:pc,
-		 * 8:cursed(), 16:brave(), 32:??, 64:??(??), 128:invisable but name
+		 * シシニテ - 0:mob,item(atk pointer), 1:poisoned(), 2:invisable(), 4:pc, 8:cursed(), 16:brave(), 32:??, 64:??(??), 128:invisable but name
 		 */
 		int status = 0;
 		if (npc.getPoison() != null) { // 毒状態
@@ -90,12 +89,10 @@ public class S_NPCPack extends ServerBasePacket {
 		writeD(0); // 0以外にするとC_27が飛ぶ
 		writeS(null);
 		writeS(null); // マスター名？
-		if (npc.getTempCharGfx() == 1024 || npc.getTempCharGfx() == 2363
-				|| npc.getTempCharGfx() == 6697 || npc.getTempCharGfx() == 8180
-				 || npc.getTempCharGfx() == 1204 || npc.getTempCharGfx() == 2353
-				 || npc.getTempCharGfx() == 3631 || npc.getTempCharGfx() == 2544) { // 飛行系怪物
+		if (npc.getTempCharGfx() == 1024 || npc.getTempCharGfx() == 2363 || npc.getTempCharGfx() == 6697 || npc.getTempCharGfx() == 8180 || npc.getTempCharGfx() == 1204 || npc.getTempCharGfx() == 2353 || npc.getTempCharGfx() == 3631 || npc.getTempCharGfx() == 2544) { // 飛行系怪物
 			writeC(npc.getHiddenStatus() == HIDDEN_STATUS_FLY ? 2 : 1); // 判斷是否飛天中
-		} else {
+		}
+		else {
 			writeC(0);
 		}
 		writeC(0xFF); // HP

@@ -59,8 +59,7 @@ public class L1ShopItem {
 	public void setName(int num) {
 		int trueNum = L1BugBearRace.getInstance().getRunner(num).getNpcId() - 91350 + 1;
 		_item = (L1Item) _item.clone();
-		String temp = "" + _item.getIdentifiedNameId() + " "
-				+ L1BugBearRace.getInstance().getRound() + "-" + trueNum;
+		String temp = "" + _item.getIdentifiedNameId() + " " + L1BugBearRace.getInstance().getRound() + "-" + trueNum;
 		_item.setName(temp);
 		_item.setUnidentifiedNameId(temp);
 		_item.setIdentifiedNameId(temp);

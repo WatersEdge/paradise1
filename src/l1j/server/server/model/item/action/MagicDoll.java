@@ -33,6 +33,7 @@ public class MagicDoll {
 
 	/**
 	 * 使用魔法娃娃
+	 * 
 	 * @param pc
 	 * @param itemId
 	 * @param itemObjectId
@@ -69,7 +70,8 @@ public class MagicDoll {
 				pc.sendPackets(new S_SkillIconGFX(56, 1800));
 				pc.sendPackets(new S_OwnCharStatus(pc));
 				pc.getInventory().consumeItem(41246, 50);
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_SkillSound(doll.getId(), 5936));
 				pc.broadcastPacket(new S_SkillSound(doll.getId(), 5936));
 				doll.deleteDoll();

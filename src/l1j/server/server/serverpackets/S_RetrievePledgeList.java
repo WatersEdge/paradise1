@@ -29,6 +29,7 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 
 	/**
 	 * 物品名单 (血盟仓库)
+	 * 
 	 * @param objid
 	 * @param pc
 	 */
@@ -38,8 +39,7 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 			return;
 		}
 
-		if (clan.getWarehouseUsingChar() != 0
-				&& clan.getWarehouseUsingChar() != pc.getId()) // 本血盟其他人在使用
+		if (clan.getWarehouseUsingChar() != 0 && clan.getWarehouseUsingChar() != pc.getId()) // 本血盟其他人在使用
 		{
 			pc.sendPackets(new S_ServerMessage(209)); // \f1血盟成员在使用仓库。请稍后再使用。
 			return;
@@ -53,8 +53,7 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 				writeD(objid);
 				writeH(size);
 				writeC(5); // 血盟仓库
-				for (Object itemObject : clan.getDwarfForClanInventory()
-						.getItems()) {
+				for (Object itemObject : clan.getDwarfForClanInventory().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0);
@@ -65,10 +64,12 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 					writeS(item.getViewName());
 				}
 				writeH(0x001e); // 金币30
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}

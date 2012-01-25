@@ -31,6 +31,7 @@ public class S_WarTime extends ServerBasePacket {
 
 	/**
 	 * 攻城时间设定
+	 * 
 	 * @param cal
 	 */
 	public S_WarTime(Calendar cal) {

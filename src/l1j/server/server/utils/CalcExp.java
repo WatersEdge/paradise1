@@ -72,6 +72,7 @@ public class CalcExp {
 
 	/**
 	 * 取得序列版本UID
+	 * 
 	 * @return
 	 */
 	public static long getSerialversionuid() {
@@ -80,11 +81,16 @@ public class CalcExp {
 
 	/**
 	 * 计算取得的经验值
-	 * @param l1pcinstance PC
-	 * @param targetid 目标ID
-	 * @param acquisitorList 累计列表
+	 * 
+	 * @param l1pcinstance
+	 *            PC
+	 * @param targetid
+	 *            目标ID
+	 * @param acquisitorList
+	 *            累计列表
 	 * @param hateList
-	 * @param exp 经验值
+	 * @param exp
+	 *            经验值
 	 */
 	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, int exp) {
 
@@ -117,7 +123,7 @@ public class CalcExp {
 				|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
-				) {
+		) {
 			exp = (int) (exp * tattoo_m_exp_125);
 		}
 
@@ -126,7 +132,7 @@ public class CalcExp {
 				|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
-				) {
+		) {
 			exp = (int) (exp * tattoo_m_exp_150);
 		}
 
@@ -135,7 +141,7 @@ public class CalcExp {
 				|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
 				|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
-				) {
+		) {
 			exp = (int) (exp * tattoo_m_exp_175);
 		}
 
@@ -162,10 +168,9 @@ public class CalcExp {
 
 		if ((l1object != null) && !(npc instanceof L1PetInstance) && !(npc instanceof L1SummonInstance)) {
 			// int exp = npc.get_exp();
-			/*if (!L1World.getInstance().isProcessingContributionTotal() && (l1pcinstance.getHomeTownId() > 0)) {
-				int contribution = npc.getLevel() / 10;
-				l1pcinstance.addContribution(contribution);
-			}*/ // 取消由打怪获得村庄贡献度，改由制作村庄福利品获得贡献度 for 3.3C
+			/*
+			 * if (!L1World.getInstance().isProcessingContributionTotal() && (l1pcinstance.getHomeTownId() > 0)) { int contribution = npc.getLevel() / 10; l1pcinstance.addContribution(contribution); }
+			 */// 取消由打怪获得村庄贡献度，改由制作村庄福利品获得贡献度 for 3.3C
 			int lawful = npc.getLawful();
 
 			if (l1pcinstance.isInParty()) { // 组队中
@@ -227,7 +232,8 @@ public class CalcExp {
 						else if (l1pcinstance.getParty().isMember(master)) {
 							partyHateExp += hate;
 						}
-						else {}
+						else {
+						}
 					}
 				}
 				if (totalHateExp > 0) {
@@ -263,7 +269,7 @@ public class CalcExp {
 						|| (l1pcinstance.getInventory().checkEquipped(200037)) // [3小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200038)) // [12小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200039)) // [24小时]
-						) {
+				) {
 					party_exp = (int) (party_exp * tattoo_m_exp_125 * (1 + pt_bonus + pri_bonus));
 				}
 
@@ -272,7 +278,7 @@ public class CalcExp {
 						|| (l1pcinstance.getInventory().checkEquipped(200041)) // [3小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200042)) // [12小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200043)) // [24小时]
-						) {
+				) {
 					party_exp = (int) (party_exp * tattoo_m_exp_150 * (1 + pt_bonus + pri_bonus));
 				}
 
@@ -281,7 +287,7 @@ public class CalcExp {
 						|| (l1pcinstance.getInventory().checkEquipped(200045)) // [3小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200046)) // [12小时]
 						|| (l1pcinstance.getInventory().checkEquipped(200047)) // [24小时]
-						) {
+				) {
 					party_exp = (int) (party_exp * tattoo_m_exp_175 * (1 + pt_bonus + pri_bonus));
 				}
 				else {
@@ -344,11 +350,12 @@ public class CalcExp {
 								AddExpPet(pet, acquire_exp);
 							}
 						}
-						else if (acquisitor instanceof L1SummonInstance) {}
+						else if (acquisitor instanceof L1SummonInstance) {
+						}
 					}
 				}
 				else { // 没有参加攻击
-						//只分配自己的
+						// 只分配自己的
 					AddExp(l1pcinstance, member_exp, member_lawful);
 				}
 
@@ -410,7 +417,8 @@ public class CalcExp {
 										AddExpPet(pet, acquire_exp);
 									}
 								}
-								else if (acquisitor instanceof L1SummonInstance) {}
+								else if (acquisitor instanceof L1SummonInstance) {
+								}
 							}
 						}
 						else { // 没有参加攻击
@@ -440,7 +448,8 @@ public class CalcExp {
 						L1PetInstance pet = (L1PetInstance) acquisitor;
 						AddExpPet(pet, acquire_exp);
 					}
-					else if (acquisitor instanceof L1SummonInstance) {}
+					else if (acquisitor instanceof L1SummonInstance) {
+					}
 				}
 			}
 		}
@@ -448,17 +457,21 @@ public class CalcExp {
 
 	/**
 	 * 增加经验值
-	 * @param pc 角色
-	 * @param exp 经验值
-	 * @param lawful 正义值
+	 * 
+	 * @param pc
+	 *            角色
+	 * @param exp
+	 *            经验值
+	 * @param lawful
+	 *            正义值
 	 */
 	private static void AddExp(L1PcInstance pc, int exp, int lawful) {
 
-		int add_lawful = (int) (lawful * Config.RATE_LA) * -1;		// 计算可取得的正义值
+		int add_lawful = (int) (lawful * Config.RATE_LA) * -1; // 计算可取得的正义值
 		pc.addLawful(add_lawful); // 为PC增加正义值
 		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel()); // 目前等级可获得的经验值
-		double foodBonus = 1.0;	// 魔法料理经验加成
-		double expBonus = 1.0;	// 战斗药水经验加成
+		double foodBonus = 1.0; // 魔法料理经验加成
+		double expBonus = 1.0; // 战斗药水经验加成
 
 		// 魔法料理经验加成
 		if (pc.hasSkillEffect(COOKING_1_7_N) || pc.hasSkillEffect(COOKING_1_7_S)) {
@@ -474,31 +487,39 @@ public class CalcExp {
 		// 战斗药水、神力药水经验加成
 		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
 			expBonus = 1.2;
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
 			expBonus = 2.5;
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
 			expBonus = 2.75;
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
 			expBonus = 3.0;
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
 			expBonus = 3.25;
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
+		}
+		else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
 			expBonus = 3.5;
 		}
 
-		int add_exp = (int) (exp	// 基本经验值
-				* exppenalty		// 目前等级可获得的经验值
-				* Config.RATE_XP	// 经验值倍率
-				* foodBonus			// 魔法料理经验加成
-				* expBonus			// 战斗药水经验加成
-				);
+		int add_exp = (int) (exp // 基本经验值
+				* exppenalty // 目前等级可获得的经验值
+				* Config.RATE_XP // 经验值倍率
+				* foodBonus // 魔法料理经验加成
+		* expBonus // 战斗药水经验加成
+		);
 		pc.addExp(add_exp); // 为PC增加经验值
 	}
 
 	/**
 	 * 增加宠物经验
-	 * @param pet 宠物
-	 * @param exp 经验值
+	 * 
+	 * @param pet
+	 *            宠物
+	 * @param exp
+	 *            经验值
 	 */
 	private static void AddExpPet(L1PetInstance pet, int exp) {
 

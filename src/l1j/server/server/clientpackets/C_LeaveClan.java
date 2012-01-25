@@ -79,7 +79,8 @@ public class C_LeaveClan extends ClientBasePacket {
 						online_pc.broadcastPacket(new S_CharTitle(online_pc.getId(), ""));
 						online_pc.save(); // 储存玩家资料到资料库中
 						online_pc.sendPackets(new S_ServerMessage(269, player_name, clan_name)); // %1血盟的盟主%0%s解散了血盟。
-					} else { // 非线上的血盟成员
+					}
+					else { // 非线上的血盟成员
 						try {
 							L1PcInstance offline_pc = CharacterTable.getInstance().restoreCharacter(clan_member_name[i]);
 							offline_pc.setClanid(0);
@@ -87,7 +88,8 @@ public class C_LeaveClan extends ClientBasePacket {
 							offline_pc.setClanRank(0);
 							offline_pc.setTitle("");
 							offline_pc.save(); // 储存玩家资料到资料库中
-						} catch (Exception e) {
+						}
+						catch (Exception e) {
 							_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 						}
 					}
@@ -96,13 +98,14 @@ public class C_LeaveClan extends ClientBasePacket {
 				File file = new File("emblem/" + emblem_file);
 				file.delete();
 				ClanTable.getInstance().deleteClan(clan_name);
-			} else { // 除了联盟主之外
+			}
+			else { // 除了联盟主之外
 				L1PcInstance clanMember[] = clan.getOnlineClanMember();
 				for (i = 0; i < clanMember.length; i++) {
 					clanMember[i].sendPackets(new S_ServerMessage(178, player_name, clan_name)); // \f1%0%s退出 %1 血盟了。
 				}
 				if (clan.getWarehouseUsingChar() // 血盟成员使用血盟仓库中
-						== player.getId()) {
+				== player.getId()) {
 					clan.setWarehouseUsingChar(0); // 移除使用血盟仓库的成员
 				}
 				player.setClanid(0);
@@ -114,7 +117,8 @@ public class C_LeaveClan extends ClientBasePacket {
 				player.save(); // 储存玩家资料到资料库中
 				clan.delMemberName(player_name);
 			}
-		} else {
+		}
+		else {
 			player.setClanid(0);
 			player.setClanname("");
 			player.setClanRank(0);

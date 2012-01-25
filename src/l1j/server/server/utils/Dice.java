@@ -24,7 +24,9 @@ public class Dice {
 
 	/**
 	 * 取回随机值
-	 * @param faces 基础值
+	 * 
+	 * @param faces
+	 *            基础值
 	 */
 	public Dice(int faces) {
 		_faces = faces;
@@ -32,6 +34,7 @@ public class Dice {
 
 	/**
 	 * 取回基础值
+	 * 
 	 * @return faces 基础值
 	 */
 	public int getFaces() {
@@ -40,6 +43,7 @@ public class Dice {
 
 	/**
 	 * 单次随机值
+	 * 
 	 * @return
 	 */
 	public int roll() {
@@ -48,12 +52,14 @@ public class Dice {
 
 	/**
 	 * 多次随机值
-	 * @param count 计算次数
+	 * 
+	 * @param count
+	 *            计算次数
 	 * @return 多次随机值总和
 	 */
 	public int roll(int count) {
 		int n = 0;
-		for(int i = 0; i < count; i++) {
+		for (int i = 0; i < count; i++) {
 			n += roll();
 		}
 		return n;

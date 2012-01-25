@@ -29,7 +29,8 @@ public class SQLUtil {
 			if (con != null) {
 				con.close();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			return e;
 		}
 		return null;
@@ -40,7 +41,8 @@ public class SQLUtil {
 			if (ps != null) {
 				ps.close();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			return e;
 		}
 		return null;
@@ -51,7 +53,8 @@ public class SQLUtil {
 			if (rs != null) {
 				rs.close();
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			return e;
 		}
 		return null;

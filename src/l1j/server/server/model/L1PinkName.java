@@ -34,6 +34,7 @@ public class L1PinkName {
 
 		/** 攻击者 */
 		private L1PcInstance _attacker = null;
+
 		/** 粉名计时器 */
 		public PinkNameTimer(L1PcInstance attacker) {
 			_attacker = attacker;
@@ -95,17 +96,10 @@ public class L1PinkName {
 		}
 
 		// pc, attacker全是蓝名
-		if ((pc.getLawful() >= 0)
-				&& !pc.isPinkName()
-				&& (attacker.getLawful() >= 0)
-				&& !attacker.isPinkName()
-				) {
+		if ((pc.getLawful() >= 0) && !pc.isPinkName() && (attacker.getLawful() >= 0) && !attacker.isPinkName()) {
 
 			// 两方都在这个区域、不是在战争时期的旗内
-			if ((pc.getZoneType() == 0)
-					&& (attacker.getZoneType() == 0)
-					&& (isNowWar == false)
-					) {
+			if ((pc.getZoneType() == 0) && (attacker.getZoneType() == 0) && (isNowWar == false)) {
 				attacker.setPinkName(true);
 				attacker.sendPackets(new S_PinkName(attacker.getId(), 180));
 				if (!attacker.isGmInvis()) {

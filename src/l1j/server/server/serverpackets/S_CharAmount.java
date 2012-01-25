@@ -28,7 +28,9 @@ public class S_CharAmount extends ServerBasePacket {
 
 	/**
 	 * 角色列表
-	 * @param value 已创建的角色数量
+	 * 
+	 * @param value
+	 *            已创建的角色数量
 	 * @param client
 	 */
 	public S_CharAmount(int value, ClientThread client) {

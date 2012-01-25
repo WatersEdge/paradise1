@@ -27,6 +27,7 @@ public class TimerPool {
 
 	/**
 	 * 定时器池
+	 * 
 	 * @param numOfTimers
 	 */
 	public TimerPool(int numOfTimers) {
@@ -39,6 +40,7 @@ public class TimerPool {
 
 	/**
 	 * 取得定时器池
+	 * 
 	 * @return
 	 */
 	public synchronized Timer getTimer() {

@@ -46,26 +46,19 @@ public class C_CreateChar extends ClientBasePacket {
 
 	private static final String C_CREATE_CHAR = "[C] C_CreateChar";
 
-	private static final int[] ORIGINAL_STR = new int[]
-	{ 13, 16, 11, 8, 12, 13, 11 };
+	private static final int[] ORIGINAL_STR = new int[] { 13, 16, 11, 8, 12, 13, 11 };
 
-	private static final int[] ORIGINAL_DEX = new int[]
-	{ 10, 12, 12, 7, 15, 11, 10 };
+	private static final int[] ORIGINAL_DEX = new int[] { 10, 12, 12, 7, 15, 11, 10 };
 
-	private static final int[] ORIGINAL_CON = new int[]
-	{ 10, 14, 12, 12, 8, 14, 12 };
+	private static final int[] ORIGINAL_CON = new int[] { 10, 14, 12, 12, 8, 14, 12 };
 
-	private static final int[] ORIGINAL_WIS = new int[]
-	{ 11, 9, 12, 12, 10, 12, 12 };
+	private static final int[] ORIGINAL_WIS = new int[] { 11, 9, 12, 12, 10, 12, 12 };
 
-	private static final int[] ORIGINAL_CHA = new int[]
-	{ 13, 12, 9, 8, 9, 8, 8 };
+	private static final int[] ORIGINAL_CHA = new int[] { 13, 12, 9, 8, 9, 8, 8 };
 
-	private static final int[] ORIGINAL_INT = new int[]
-	{ 10, 8, 12, 12, 11, 11, 12 };
+	private static final int[] ORIGINAL_INT = new int[] { 10, 8, 12, 12, 11, 11, 12 };
 
-	private static final int[] ORIGINAL_AMOUNT = new int[]
-	{ 8, 4, 7, 16, 10, 6, 10 };
+	private static final int[] ORIGINAL_AMOUNT = new int[] { 8, 4, 7, 16, 10, 6, 10 };
 
 	private static final String CLIENT_LANGUAGE_CODE = Config.CLIENT_LANGUAGE_CODE;
 
@@ -125,11 +118,9 @@ public class C_CreateChar extends ClientBasePacket {
 		int originalInt = ORIGINAL_INT[pc.getType()];
 		int originalAmount = ORIGINAL_AMOUNT[pc.getType()];
 
-		if (((pc.getBaseStr() < originalStr) || (pc.getBaseDex() < originalDex) || (pc.getBaseCon() < originalCon) || (pc.getBaseWis() < originalWis)
-				|| (pc.getBaseCha() < originalCha) || (pc.getBaseInt() < originalInt))
-				|| ((pc.getBaseStr() > originalStr + originalAmount) || (pc.getBaseDex() > originalDex + originalAmount)
-						|| (pc.getBaseCon() > originalCon + originalAmount) || (pc.getBaseWis() > originalWis + originalAmount)
-						|| (pc.getBaseCha() > originalCha + originalAmount) || (pc.getBaseInt() > originalInt + originalAmount))) {
+		if (((pc.getBaseStr() < originalStr) || (pc.getBaseDex() < originalDex) || (pc.getBaseCon() < originalCon) || (pc.getBaseWis() < originalWis) || (pc.getBaseCha() < originalCha) || (pc.getBaseInt() < originalInt))
+				|| ((pc.getBaseStr() > originalStr + originalAmount) || (pc.getBaseDex() > originalDex + originalAmount) || (pc.getBaseCon() > originalCon + originalAmount) || (pc.getBaseWis() > originalWis + originalAmount) || (pc.getBaseCha() > originalCha + originalAmount) || (pc
+						.getBaseInt() > originalInt + originalAmount))) {
 			isStatusError = true;
 		}
 
@@ -149,37 +140,28 @@ public class C_CreateChar extends ClientBasePacket {
 	}
 
 	/** 男classId */
-	private static final int[] MALE_LIST = new int[]
-	{ 0, 61, 138, 734, 2786, 6658, 6671 };
+	private static final int[] MALE_LIST = new int[] { 0, 61, 138, 734, 2786, 6658, 6671 };
 	/** 女classId */
-	private static final int[] FEMALE_LIST = new int[]
-	{ 1, 48, 37, 1186, 2796, 6661, 6650 };
+	private static final int[] FEMALE_LIST = new int[] { 1, 48, 37, 1186, 2796, 6661, 6650 };
 
 	/*
-	 * private static final int[] LOCX_LIST = new int[] { 32734, 32734, 32734,
-	 * 32734, 32734, 32734, 32734 }; private static final int[] LOCY_LIST = new
-	 * int[] { 32798, 32798, 32798, 32798, 32798, 32798, 32798 }; private static
-	 * final short[] MAPID_LIST = new short[] { 8013, 8013, 8013, 8013, 8013,
-	 * 8013, 8013 };
-	 */	
-	/*private static final int[] LOCX_LIST = new int[]
-	{ 32780, 32714, 32714, 32780, 32714, 32714, 32714 };
+	 * private static final int[] LOCX_LIST = new int[] { 32734, 32734, 32734, 32734, 32734, 32734, 32734 }; private static final int[] LOCY_LIST = new int[] { 32798, 32798, 32798, 32798, 32798, 32798, 32798 }; private static final short[] MAPID_LIST = new short[] { 8013, 8013,
+	 * 8013, 8013, 8013, 8013, 8013 };
+	 */
+	/*
+	 * private static final int[] LOCX_LIST = new int[] { 32780, 32714, 32714, 32780, 32714, 32714, 32714 };
+	 * 
+	 * private static final int[] LOCY_LIST = new int[] { 32781, 32877, 32877, 32781, 32877, 32877, 32877 };
+	 * 
+	 * private static final short[] MAPID_LIST = new short[] { 68, 69, 69, 68, 69, 69, 69 };
+	 */
 
-	private static final int[] LOCY_LIST = new int[]
-	{ 32781, 32877, 32877, 32781, 32877, 32877, 32877 };
+	// 台版 3.3C
+	private static final int[] LOCX_LIST = new int[] { 32691, 32691, 32691, 32691, 32691, 32691, 32691 };
 
-	private static final short[] MAPID_LIST = new short[]
-	{ 68, 69, 69, 68, 69, 69, 69 };*/
+	private static final int[] LOCY_LIST = new int[] { 32864, 32864, 32864, 32864, 32864, 32864, 32864 };
 
-	//台版 3.3C
-	private static final int[] LOCX_LIST = new int[]
-	{ 32691, 32691, 32691, 32691, 32691, 32691, 32691 };
-
-	private static final int[] LOCY_LIST = new int[]
-	{ 32864, 32864, 32864, 32864, 32864, 32864, 32864 };
-
-	private static final short[] MAPID_LIST = new short[]
-	{ 2005, 2005, 2005, 2005, 2005, 2005, 2005 };
+	private static final short[] MAPID_LIST = new short[] { 2005, 2005, 2005, 2005, 2005, 2005, 2005 };
 
 	private static void initNewChar(ClientThread client, L1PcInstance pc) throws IOException, Exception {
 
@@ -261,8 +243,7 @@ public class C_CreateChar extends ClientBasePacket {
 				break;
 			}
 			i++;
-		}
-		while (true);
+		} while (true);
 		return flag;
 	}
 

@@ -41,7 +41,7 @@ import l1j.server.server.serverpackets.S_BlueMessage;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 /**
- *	定时自动重启伺服器
+ * 定时自动重启伺服器
  */
 @SuppressWarnings("unused")
 public class L1GameReStart {
@@ -58,7 +58,7 @@ public class L1GameReStart {
 
 	private static int willRestartTime;
 
-	public  int _remnant;
+	public int _remnant;
 
 	private class TimeUpdaterRestar implements Runnable {
 
@@ -70,21 +70,21 @@ public class L1GameReStart {
 				int remnant = GetRestartTime() * 60;
 				System.out.println("╠》正在载入 自动重开设定...完成!\t" + GetRestartTime() + " 分钟后");
 				while (remnant > 0) {
-					for (int i = remnant ; i >= 0 ; i --) {
+					for (int i = remnant; i >= 0; i--) {
 						SetRemnant(i);
 						willRestartTime = i;
 
 						// (五分钟内 一分钟一次)
 						if (i % 60 == 0 && i <= 300 && i != 0) {
 							// \f3伺服器将会在 %0 分钟后重新启动。请至安全区准备退出。
-							L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\f3伺服器将会在 " + i/60 + " 分钟后重新启动。请至安全区准备退出"));
-							System.out.println("伺服器将于 " + i/60 + " 分钟后重新启动");
+							L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\f3伺服器将会在 " + i / 60 + " 分钟后重新启动。请至安全区准备退出"));
+							System.out.println("伺服器将于 " + i / 60 + " 分钟后重新启动");
 						}
 
 						// (30秒内 一秒一次)
 						else if (i <= 30 && i != 0) {
 							// \f3服务器在 %0秒后关闭。请离开游戏。
-							L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(72,"" + i + ""));
+							L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(72, "" + i + ""));
 							System.out.println("伺服器将于 " + i + " 秒后重新启动");
 						}
 
@@ -99,7 +99,8 @@ public class L1GameReStart {
 
 						try {
 							Thread.sleep(1000); // 暂停1秒
-						} catch (InterruptedException e) {
+						}
+						catch (InterruptedException e) {
 							_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 						}
 
@@ -107,76 +108,76 @@ public class L1GameReStart {
 						if (Config.HOURLY_CHIME) {
 							if (GetNowTime.GetNowHour() == 0 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
 								BroadCastToAll("\\fR现在时间凌晨12点，长时间在线的玩家注意保护眼睛哦。");
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨12点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨12点"));
 							}
 							if (GetNowTime.GetNowHour() == 1 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨1点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨1点"));
 							}
 							if (GetNowTime.GetNowHour() == 2 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨2点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨2点"));
 							}
 							if (GetNowTime.GetNowHour() == 3 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨3点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨3点"));
 							}
 							if (GetNowTime.GetNowHour() == 4 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨4点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨4点"));
 							}
 							if (GetNowTime.GetNowHour() == 5 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间凌晨5点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨5点"));
 							}
 							if (GetNowTime.GetNowHour() == 6 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间早上6点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间早上6点"));
 							}
 							if (GetNowTime.GetNowHour() == 7 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间早上7点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间早上7点"));
 							}
 							if (GetNowTime.GetNowHour() == 8 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间上午8点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间上午8点"));
 							}
 							if (GetNowTime.GetNowHour() == 9 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间上午9点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间上午9点"));
 							}
 							if (GetNowTime.GetNowHour() == 10 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间上午10点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间上午10点"));
 							}
 							if (GetNowTime.GetNowHour() == 11 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间上午11点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间上午11点"));
 							}
 							if (GetNowTime.GetNowHour() == 12 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间中午12点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间中午12点"));
 							}
 							if (GetNowTime.GetNowHour() == 13 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午1点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午1点"));
 							}
 							if (GetNowTime.GetNowHour() == 14 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午2点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午2点"));
 							}
 							if (GetNowTime.GetNowHour() == 15 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午3点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午3点"));
 							}
 							if (GetNowTime.GetNowHour() == 16 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午4点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午4点"));
 							}
 							if (GetNowTime.GetNowHour() == 17 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午5点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午5点"));
 							}
 							if (GetNowTime.GetNowHour() == 18 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午6点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午6点"));
 							}
 							if (GetNowTime.GetNowHour() == 19 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间下午7点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间下午7点"));
 							}
 							if (GetNowTime.GetNowHour() == 20 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间晚上8点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间晚上8点"));
 							}
 							if (GetNowTime.GetNowHour() == 21 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间晚上9点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间晚上9点"));
 							}
 							if (GetNowTime.GetNowHour() == 22 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间晚上10点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间晚上10点"));
 							}
 							if (GetNowTime.GetNowHour() == 23 && GetNowTime.GetNowMinute() == 0 && GetNowTime.GetNowSecond() == 0) {
-								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166,"\\fR现在时间晚上11点"));
+								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间晚上11点"));
 							}
 						}
 					}
@@ -208,7 +209,7 @@ public class L1GameReStart {
 	}
 
 	private void BroadCastToAll(String string) {
-		Collection <L1PcInstance> allpc = L1World.getInstance().getAllPlayers();
+		Collection<L1PcInstance> allpc = L1World.getInstance().getAllPlayers();
 		for (L1PcInstance pc : allpc)
 			pc.sendPackets(new S_SystemMessage(string));
 	}

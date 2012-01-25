@@ -52,7 +52,8 @@ public class S_SkillBuy extends ServerBasePacket {
 					writeD(k);
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -63,7 +64,8 @@ public class S_SkillBuy extends ServerBasePacket {
 		case 0: // 君主
 			if (pc.getLevel() > 20 || pc.isGm()) {
 				RC = 16;
-			} else if (pc.getLevel() > 10) {
+			}
+			else if (pc.getLevel() > 10) {
 				RC = 8;
 			}
 			break;
@@ -77,9 +79,11 @@ public class S_SkillBuy extends ServerBasePacket {
 		case 2: // 精灵
 			if (pc.getLevel() >= 24 || pc.isGm()) {
 				RC = 23;
-			} else if (pc.getLevel() >= 16) {
+			}
+			else if (pc.getLevel() >= 16) {
 				RC = 16;
-			} else if (pc.getLevel() >= 8) {
+			}
+			else if (pc.getLevel() >= 8) {
 				RC = 8;
 			}
 			break;
@@ -87,9 +91,11 @@ public class S_SkillBuy extends ServerBasePacket {
 		case 3: // 法师
 			if (pc.getLevel() >= 12 || pc.isGm()) {
 				RC = 23;
-			} else if (pc.getLevel() >= 8) {
+			}
+			else if (pc.getLevel() >= 8) {
 				RC = 16;
-			} else if (pc.getLevel() >= 4) {
+			}
+			else if (pc.getLevel() >= 4) {
 				RC = 8;
 			}
 			break;
@@ -97,7 +103,8 @@ public class S_SkillBuy extends ServerBasePacket {
 		case 4: // 黑暗精灵
 			if (pc.getLevel() >= 24 || pc.isGm()) {
 				RC = 16;
-			} else if (pc.getLevel() >= 12) {
+			}
+			else if (pc.getLevel() >= 12) {
 				RC = 8;
 			}
 			break;

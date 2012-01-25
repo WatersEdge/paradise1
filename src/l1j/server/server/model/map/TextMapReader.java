@@ -69,11 +69,9 @@ public class TextMapReader extends MapReader {
 	 * @return byte[][]
 	 * @throws IOException
 	 */
-	public byte[][] read(final int mapId, final int xSize, final int ySize)
-			throws IOException {
+	public byte[][] read(final int mapId, final int xSize, final int ySize) throws IOException {
 		byte[][] map = new byte[xSize][ySize];
-		LineNumberReader in = new LineNumberReader(new BufferedReader(
-				new FileReader(MAP_DIR + mapId + ".txt")));
+		LineNumberReader in = new LineNumberReader(new BufferedReader(new FileReader(MAP_DIR + mapId + ".txt")));
 
 		int y = 0;
 		String line;
@@ -112,20 +110,9 @@ public class TextMapReader extends MapReader {
 			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			if (mapId == id) {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
-						xSize, ySize), info[MAPINFO_START_X],
-						info[MAPINFO_START_Y], MapsTable.getInstance()
-								.isUnderwater(mapId), MapsTable.getInstance()
-								.isMarkable(mapId), MapsTable.getInstance()
-								.isTeleportable(mapId), MapsTable.getInstance()
-								.isEscapable(mapId), MapsTable.getInstance()
-								.isUseResurrection(mapId), MapsTable
-								.getInstance().isUsePainwand(mapId), MapsTable
-								.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), MapsTable
-								.getInstance().isRecallPets(mapId), MapsTable
-								.getInstance().isUsableItem(mapId), MapsTable
-								.getInstance().isUsableSkill(mapId));
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
+						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
+						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
 				return map;
 			}
 		}
@@ -148,23 +135,13 @@ public class TextMapReader extends MapReader {
 			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			try {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
-						xSize, ySize), info[MAPINFO_START_X],
-						info[MAPINFO_START_Y], MapsTable.getInstance()
-								.isUnderwater(mapId), MapsTable.getInstance()
-								.isMarkable(mapId), MapsTable.getInstance()
-								.isTeleportable(mapId), MapsTable.getInstance()
-								.isEscapable(mapId), MapsTable.getInstance()
-								.isUseResurrection(mapId), MapsTable
-								.getInstance().isUsePainwand(mapId), MapsTable
-								.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), MapsTable
-								.getInstance().isRecallPets(mapId), MapsTable
-								.getInstance().isUsableItem(mapId), MapsTable
-								.getInstance().isUsableSkill(mapId));
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
+						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
+						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
 
 				maps.put(mapId, map);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
@@ -193,7 +170,8 @@ public class TextMapReader extends MapReader {
 			try {
 				String idStr = FileUtil.getNameWithoutExtension(mapFile);
 				id = Integer.parseInt(idStr);
-			} catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e) {
 				continue;
 			}
 			ids.add(id);
@@ -586,31 +564,10 @@ public class TextMapReader extends MapReader {
 			{ 1014, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
 			{ 1015, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
 			{ 1016, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
-			{ 2000, 32704, 32959, 32704, 33023 },
-			{ 2001, 32640, 32959, 32704, 32959 },
-			{ 2002, 32704, 32959, 32704, 32959 },
-			{ 2003, 32704, 32959, 32704, 32959 },
-			{ 2004, 32704, 32895, 32768, 32895 },
-			{ 2005, 32512, 32831, 32704, 33023 },
-			{ 4301, 32704, 32959, 32768, 33023 },
-			{ 4831, 32704, 32831, 32768, 32959 },
-			{ 4941, 32768, 32895, 32704, 32831 },
-			{ 5001, 32704, 32831, 32704, 32831 },
-			{ 5002, 32704, 32831, 32704, 32831 },
-			{ 5003, 32704, 32831, 32704, 32831 },
-			{ 5004, 32704, 32831, 32704, 32831 },
-			{ 5005, 32704, 32831, 32704, 32831 },
-			{ 5006, 32704, 32831, 32704, 32831 },
-			{ 5007, 32704, 32831, 32704, 32831 },
-			{ 5008, 32704, 32831, 32704, 32831 },
-			{ 5009, 32704, 32831, 32704, 32831 },
-			{ 5010, 32704, 32831, 32704, 32831 },
-			{ 5011, 32704, 32831, 32704, 32831 },
-			{ 5012, 32704, 32831, 32704, 32831 },
-			{ 5013, 32704, 32831, 32704, 32831 },
-			{ 5014, 32704, 32831, 32704, 32831 },
-			{ 5015, 32704, 32831, 32704, 32831 },
-			{ 5016, 32704, 32831, 32704, 32831 },
+			{ 2000, 32704, 32959, 32704, 33023 }, { 2001, 32640, 32959, 32704, 32959 }, { 2002, 32704, 32959, 32704, 32959 }, { 2003, 32704, 32959, 32704, 32959 }, { 2004, 32704, 32895, 32768, 32895 }, { 2005, 32512, 32831, 32704, 33023 }, { 4301, 32704, 32959, 32768, 33023 },
+			{ 4831, 32704, 32831, 32768, 32959 }, { 4941, 32768, 32895, 32704, 32831 }, { 5001, 32704, 32831, 32704, 32831 }, { 5002, 32704, 32831, 32704, 32831 }, { 5003, 32704, 32831, 32704, 32831 }, { 5004, 32704, 32831, 32704, 32831 }, { 5005, 32704, 32831, 32704, 32831 },
+			{ 5006, 32704, 32831, 32704, 32831 }, { 5007, 32704, 32831, 32704, 32831 }, { 5008, 32704, 32831, 32704, 32831 }, { 5009, 32704, 32831, 32704, 32831 }, { 5010, 32704, 32831, 32704, 32831 }, { 5011, 32704, 32831, 32704, 32831 }, { 5012, 32704, 32831, 32704, 32831 },
+			{ 5013, 32704, 32831, 32704, 32831 }, { 5014, 32704, 32831, 32704, 32831 }, { 5015, 32704, 32831, 32704, 32831 }, { 5016, 32704, 32831, 32704, 32831 },
 			{ 5017, 32704, 32831, 32704, 32831 },
 			{ 5018, 32704, 32831, 32704, 32831 },
 			{ 5019, 32704, 32831, 32704, 32831 },
@@ -757,18 +714,8 @@ public class TextMapReader extends MapReader {
 			{ 6321, 32640, 32959, 32576, 32895 }, // 罗马世界
 			{ 6322, 32640, 32959, 32576, 32895 }, // 罗马世界
 			{ 6323, 32640, 32959, 32576, 32895 }, // 罗马世界
-			{ 6801, 32640, 33023, 32576, 32895 },
-			{ 6901, 32512, 32831, 32704, 33023 },
-			{ 7000, 32640, 32959, 32576, 32895 },
-			{ 7001, 32576, 33023, 32640, 33087 },
-			{ 7002, 32512, 32767, 32512, 32767 },
-			{ 7003, 32512, 32767, 32512, 32767 },
-			{ 7004, 32512, 32767, 32512, 32767 },
-			{ 7005, 32512, 32767, 32512, 32767 },
-			{ 7006, 32512, 32767, 32512, 32767 },
-			{ 7007, 32704, 32895, 32768, 32959 },
-			{ 7008, 32704, 32895, 32768, 32959 },
-			{ 7009, 32704, 32895, 32768, 32959 },
+			{ 6801, 32640, 33023, 32576, 32895 }, { 6901, 32512, 32831, 32704, 33023 }, { 7000, 32640, 32959, 32576, 32895 }, { 7001, 32576, 33023, 32640, 33087 }, { 7002, 32512, 32767, 32512, 32767 }, { 7003, 32512, 32767, 32512, 32767 }, { 7004, 32512, 32767, 32512, 32767 },
+			{ 7005, 32512, 32767, 32512, 32767 }, { 7006, 32512, 32767, 32512, 32767 }, { 7007, 32704, 32895, 32768, 32959 }, { 7008, 32704, 32895, 32768, 32959 }, { 7009, 32704, 32895, 32768, 32959 },
 			{ 7010, 32704, 32895, 32768, 32959 },
 			{ 7011, 32704, 32895, 32768, 32959 },
 			{ 7051, 32640, 32959, 32576, 32895 },
@@ -791,22 +738,7 @@ public class TextMapReader extends MapReader {
 			{ 9997, 32640, 32959, 32576, 32895 }, // 台版地图 - 隐藏之谷
 			{ 9998, 32640, 32959, 32576, 32895 }, // 台版地图 - 隐藏之谷
 			{ 9999, 32640, 32959, 32576, 32895 }, // 台版地图 - 隐藏之谷
-			{ 16384, 32704, 32767, 32768, 32831 },
-			{ 16896, 32704, 32767, 32768, 32831 },
-			{ 17408, 32704, 32767, 32768, 32831 },
-			{ 17920, 32704, 32767, 32768, 32831 },
-			{ 18432, 32704, 32767, 32768, 32831 },
-			{ 18944, 32704, 32767, 32768, 32831 },
-			{ 19456, 32704, 32767, 32768, 32831 },
-			{ 19968, 32704, 32767, 32768, 32831 },
-			{ 20480, 32704, 32767, 32768, 32831 },
-			{ 20992, 32704, 32767, 32768, 32831 },
-			{ 21504, 32704, 32767, 32768, 32831 },
-			{ 22016, 32704, 32767, 32768, 32831 },
-			{ 22528, 32704, 32767, 32768, 32831 },
-			{ 23040, 32704, 32767, 32768, 32831 },
-			{ 23552, 32704, 32767, 32768, 32831 },
-			{ 24064, 32704, 32767, 32768, 32831 },
-			{ 24576, 32704, 32767, 32768, 32831 },
-			{ 25088, 32704, 32767, 32768, 32831 } };
+			{ 16384, 32704, 32767, 32768, 32831 }, { 16896, 32704, 32767, 32768, 32831 }, { 17408, 32704, 32767, 32768, 32831 }, { 17920, 32704, 32767, 32768, 32831 }, { 18432, 32704, 32767, 32768, 32831 }, { 18944, 32704, 32767, 32768, 32831 },
+			{ 19456, 32704, 32767, 32768, 32831 }, { 19968, 32704, 32767, 32768, 32831 }, { 20480, 32704, 32767, 32768, 32831 }, { 20992, 32704, 32767, 32768, 32831 }, { 21504, 32704, 32767, 32768, 32831 }, { 22016, 32704, 32767, 32768, 32831 },
+			{ 22528, 32704, 32767, 32768, 32831 }, { 23040, 32704, 32767, 32768, 32831 }, { 23552, 32704, 32767, 32768, 32831 }, { 24064, 32704, 32767, 32768, 32831 }, { 24576, 32704, 32767, 32768, 32831 }, { 25088, 32704, 32767, 32768, 32831 } };
 }

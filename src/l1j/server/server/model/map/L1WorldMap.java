@@ -49,10 +49,12 @@ public class L1WorldMap {
 			if (_maps == null) {
 				throw new RuntimeException("地图档案读取失败...");
 			}
-		} catch (FileNotFoundException e) {  
-			System.out.println("提示: 地图档案缺失，请检查330_maps.zip是否尚未解压缩。"); 
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("提示: 地图档案缺失，请检查330_maps.zip是否尚未解压缩。");
 			System.exit(0);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			// 没有回报
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			System.exit(0);

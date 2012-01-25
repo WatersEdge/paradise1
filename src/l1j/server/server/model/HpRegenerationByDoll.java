@@ -42,7 +42,8 @@ public class HpRegenerationByDoll extends TimerTask {
 				return;
 			}
 			regenHp();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

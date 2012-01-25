@@ -39,13 +39,16 @@ public class S_Poison extends ServerBasePacket {
 		if (type == 0) { // 通常
 			writeC(0);
 			writeC(0);
-		} else if (type == 1) { // 绿色
+		}
+		else if (type == 1) { // 绿色
 			writeC(1);
 			writeC(0);
-		} else if (type == 2) { // 灰色
+		}
+		else if (type == 2) { // 灰色
 			writeC(0);
 			writeC(1);
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("非法参数。type = " + type);
 		}
 	}

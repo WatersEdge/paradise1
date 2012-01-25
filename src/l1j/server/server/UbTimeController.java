@@ -20,9 +20,10 @@ import l1j.server.server.datatables.UBTable;
 import l1j.server.server.model.L1UltimateBattle;
 
 /**
- *	无限大战时间控制器
+ * 无限大战时间控制器
  */
 public class UbTimeController implements Runnable {
+
 	private static Logger _log = Logger.getLogger(UbTimeController.class.getName());
 
 	private static UbTimeController _instance;
@@ -41,7 +42,8 @@ public class UbTimeController implements Runnable {
 				checkUbTime(); // 开始检查无限大战的时间
 				Thread.sleep(15000);
 			}
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 			_log.warning(e1.getMessage());
 		}
 	}

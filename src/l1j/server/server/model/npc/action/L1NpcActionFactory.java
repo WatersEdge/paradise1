@@ -33,8 +33,7 @@ public class L1NpcActionFactory {
 	private static Map<String, Constructor<? extends L1NpcXmlAction>> _actions = Maps.newMap();
 
 	private static Constructor<? extends L1NpcXmlAction> loadConstructor(Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
-		return c.getConstructor(new Class[]
-		{ Element.class });
+		return c.getConstructor(new Class[] { Element.class });
 	}
 
 	static {

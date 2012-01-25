@@ -42,12 +42,12 @@ public class L1GameTimeCarrier extends TimerTask {
 				return;
 			}
 
-			int serverTime = L1GameTimeClock.getInstance().currentTime()
-					.getSeconds();
+			int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 			if (serverTime % 300 == 0) {
 				_pc.sendPackets(new S_GameTime(serverTime));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			// ignore（忽略）
 		}
 	}

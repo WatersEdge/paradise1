@@ -88,13 +88,7 @@ public class L1Cooking {
 	/** 使用料理道具 */
 	public static void useCookingItem(L1PcInstance pc, L1ItemInstance item) {
 		int itemId = item.getItem().getItemId();
-		if ((itemId == 41284
-			) || (itemId == 41292
-			) || (itemId == 49056
-			) || (itemId == 49064
-			) || (itemId == 49251
-			) || (itemId == 49259
-			)) { // 增加经验值的料理
+		if ((itemId == 41284) || (itemId == 41292) || (itemId == 49056) || (itemId == 49064) || (itemId == 49251) || (itemId == 49259)) { // 增加经验值的料理
 			if (pc.get_food() != 225) {
 				pc.sendPackets(new S_ServerMessage(74, item.getNumberedName(1))); // \f1%0%o 无法使用。
 				return;
@@ -102,12 +96,7 @@ public class L1Cooking {
 		}
 
 		// 料理 LV1、特别的料理 LV1、料理 LV2、特别的料理 LV2、料理 LV3、特别的料理 LV3 - 不可重复
-		if (((itemId >= 41277) && (itemId <= 41283))
-				|| ((itemId >= 41285) && (itemId <= 41291))
-				|| ((itemId >= 49049) && (itemId <= 49055))
-				|| ((itemId >= 49057) && (itemId <= 49063))
-				|| ((itemId >= 49244) && (itemId <= 49250))
-				|| ((itemId >= 49252) && (itemId <= 49258))) {
+		if (((itemId >= 41277) && (itemId <= 41283)) || ((itemId >= 41285) && (itemId <= 41291)) || ((itemId >= 49049) && (itemId <= 49055)) || ((itemId >= 49057) && (itemId <= 49063)) || ((itemId >= 49244) && (itemId <= 49250)) || ((itemId >= 49252) && (itemId <= 49258))) {
 			int cookingId = pc.getCookingId();
 			if (cookingId != 0) {
 				pc.removeSkillEffect(cookingId);
@@ -481,22 +470,11 @@ public class L1Cooking {
 		}
 		pc.sendPackets(new S_PacketBox(53, cookingType, time));
 		pc.setSkillEffect(cookingId, time * 1000);
-		if (((cookingId >= COOKING_1_0_N) && (cookingId <= COOKING_1_6_N))
-				|| ((cookingId >= COOKING_1_0_S) && (cookingId <= COOKING_1_6_S))
-				|| ((cookingId >= COOKING_2_0_N) && (cookingId <= COOKING_2_6_N))
-				|| ((cookingId >= COOKING_2_0_S) && (cookingId <= COOKING_2_6_S))
-				|| ((cookingId >= COOKING_3_0_N) && (cookingId <= COOKING_3_6_N))
-				|| ((cookingId >= COOKING_3_0_S) && (cookingId <= COOKING_3_6_S))
-				) {
+		if (((cookingId >= COOKING_1_0_N) && (cookingId <= COOKING_1_6_N)) || ((cookingId >= COOKING_1_0_S) && (cookingId <= COOKING_1_6_S)) || ((cookingId >= COOKING_2_0_N) && (cookingId <= COOKING_2_6_N)) || ((cookingId >= COOKING_2_0_S) && (cookingId <= COOKING_2_6_S))
+				|| ((cookingId >= COOKING_3_0_N) && (cookingId <= COOKING_3_6_N)) || ((cookingId >= COOKING_3_0_S) && (cookingId <= COOKING_3_6_S))) {
 			pc.setCookingId(cookingId);
 		}
-		else if ((cookingId == COOKING_1_7_N)
-				|| (cookingId == COOKING_1_7_S)
-				|| (cookingId == COOKING_2_7_N)
-				|| (cookingId == COOKING_2_7_S)
-				|| (cookingId == COOKING_3_7_N)
-				|| (cookingId == COOKING_3_7_S)
-				) {
+		else if ((cookingId == COOKING_1_7_N) || (cookingId == COOKING_1_7_S) || (cookingId == COOKING_2_7_N) || (cookingId == COOKING_2_7_S) || (cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) {
 			pc.setDessertId(cookingId);
 		}
 

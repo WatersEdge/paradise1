@@ -43,7 +43,7 @@ public class C_Title extends ClientBasePacket {
 		String title = readS();
 
 		if (charName.isEmpty() || title.isEmpty()) {
-			// \f1请以如下的格式输入。: "/title \f0角色名称 角色封号\f1" 
+			// \f1请以如下的格式输入。: "/title \f0角色名称 角色封号\f1"
 			pc.sendPackets(new S_ServerMessage(196));
 			return;
 		}
@@ -65,7 +65,8 @@ public class C_Title extends ClientBasePacket {
 					return;
 				}
 				changeTitle(pc, title);
-			} else { // 他人
+			}
+			else { // 他人
 				if (pc.getClanid() != target.getClanid()) {
 					// \f1除了王族以外的人，不能够授与头衔给其他人。
 					pc.sendPackets(new S_ServerMessage(199));
@@ -81,12 +82,12 @@ public class C_Title extends ClientBasePacket {
 				if (clan != null) {
 					for (L1PcInstance clanPc : clan.getOnlineClanMember()) {
 						// \f1%0%s 赋予%1 '%2'的封号。
-						clanPc.sendPackets(new S_ServerMessage(203, pc
-								.getName(), charName, title));
+						clanPc.sendPackets(new S_ServerMessage(203, pc.getName(), charName, title));
 					}
 				}
 			}
-		} else {
+		}
+		else {
 			if (pc.getId() == target.getId()) { // 自身
 				if (pc.getClanid() != 0 && !Config.CHANGE_TITLE_BY_ONESELF) {
 					// \f1王子或公主才可给血盟员封号。
@@ -99,12 +100,12 @@ public class C_Title extends ClientBasePacket {
 					return;
 				}
 				changeTitle(pc, title);
-			} else { // 他人
+			}
+			else { // 他人
 				if (pc.isCrown()) { // 连合に所属した君主
 					if (pc.getClanid() == target.getClanid()) {
 						// \f1%0%d不是你的血盟成员。
-						pc.sendPackets(new S_ServerMessage(201, pc
-								.getClanname()));
+						pc.sendPackets(new S_ServerMessage(201, pc.getClanname()));
 						return;
 					}
 				}
@@ -119,7 +120,8 @@ public class C_Title extends ClientBasePacket {
 		pc.broadcastPacket(new S_CharTitle(objectId, title));
 		try {
 			pc.save(); // 储存玩家的资料到资料库中
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

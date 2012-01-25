@@ -32,6 +32,7 @@ public class S_WhoCharinfo extends ServerBasePacket {
 
 	/**
 	 * 伺服器讯息(行数/行数,附加字串)
+	 * 
 	 * @param pc
 	 */
 	public S_WhoCharinfo(L1PcInstance pc) {
@@ -41,9 +42,11 @@ public class S_WhoCharinfo extends ServerBasePacket {
 		int lawful = pc.getLawful();
 		if (lawful < 0) {
 			lawfulness = "(Chaotic)"; // 邪恶者
-		} else if (lawful >= 0 && lawful < 500) {
+		}
+		else if (lawful >= 0 && lawful < 500) {
 			lawfulness = "(Neutral)"; // 中立者
-		} else if (lawful >= 500) {
+		}
+		else if (lawful >= 500) {
 			lawfulness = "(Lawful)"; // 正义者
 		}
 

@@ -26,6 +26,7 @@ public class S_CharTitle extends ServerBasePacket {
 
 	/**
 	 * 角色封号
+	 * 
 	 * @param objid
 	 * @param title
 	 */

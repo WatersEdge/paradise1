@@ -30,6 +30,7 @@ import l1j.server.server.templates.L1House;
  * 控制盟屋税时间
  */
 public class HouseTaxTimeController implements Runnable {
+
 	private static HouseTaxTimeController _instance;
 
 	public static HouseTaxTimeController getInstance() {
@@ -46,11 +47,14 @@ public class HouseTaxTimeController implements Runnable {
 				checkTaxDeadline();
 				Thread.sleep(600000);
 			}
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 		}
 	}
 
-	/** 获得现实时间 */
+	/**
+	 * 取得现实时间
+	 */
 	public Calendar getRealTime() {
 		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
 		Calendar cal = Calendar.getInstance(tz);

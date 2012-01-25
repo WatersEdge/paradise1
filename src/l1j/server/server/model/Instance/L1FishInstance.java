@@ -59,7 +59,8 @@ public class L1FishInstance extends L1NpcInstance {
 				_fish.setHeading(Random.nextInt(8)); // 随机面向
 				_fish.broadcastPacket(new S_ChangeHeading(_fish)); // 更新面向
 				_fish.broadcastPacket(new S_DoActionGFX(_fish.getId(), 0)); // 动作
-			} else {
+			}
+			else {
 				cancel();
 			}
 		}

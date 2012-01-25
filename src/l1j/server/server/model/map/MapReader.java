@@ -26,7 +26,7 @@ import l1j.server.Config;
 public abstract class MapReader {
 	/**
 	 * 取得所有地图与编号的 Mapping (abstract 方法).
-	 *
+	 * 
 	 * @return Map
 	 * @throws IOException
 	 */
@@ -34,7 +34,7 @@ public abstract class MapReader {
 
 	/**
 	 * 从快取地图中读取特定编号的地图 (abstract 方法).
-	 *
+	 * 
 	 * @param id
 	 *            地图编号
 	 * @return L1Map
@@ -44,7 +44,7 @@ public abstract class MapReader {
 
 	/**
 	 * 依照设定档中的设定来选择读取地图的方法(使用V2MapReader 或 快取地图).
-	 *
+	 * 
 	 * @return MapReader
 	 */
 	public static MapReader getDefaultReader() {

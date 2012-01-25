@@ -34,15 +34,8 @@ public class S_WhoStationery extends ServerBasePacket {
 		int RKC = pc.get_PKcount();
 		int time = L1GameReStart.getWillRestartTime();
 
-		final String S_WhoCharinfo =
-			"经验倍率:" + EXP + " 倍\r\n" +
-			"负重倍率:" + RWL + " 倍\r\n" +
-			"掉宝倍率:" + RDI + " 倍\r\n" +
-			"金币倍率:" + RDA + " 倍\r\n" +
-			"正义倍率:" + RLA + " 倍\r\n" +
-			"友好倍率:" + RKA + " 倍\r\n" +
-			"总PK次数:" + RKC + " 次\r\n" +
-			"距离重启时间剩余:" + (time / 60) / 60 + "小时" + (time / 60) % 60 + "分钟";
+		final String S_WhoCharinfo = "经验倍率:" + EXP + " 倍\r\n" + "负重倍率:" + RWL + " 倍\r\n" + "掉宝倍率:" + RDI + " 倍\r\n" + "金币倍率:" + RDA + " 倍\r\n" + "正义倍率:" + RLA + " 倍\r\n" + "友好倍率:" + RKA + " 倍\r\n" + "总PK次数:" + RKC + " 次\r\n" + "距离重启时间剩余:" + (time / 60) / 60 + "小时" + (time / 60)
+				% 60 + "分钟";
 
 		// 当前的 年、月、日 (范例:12/01/10)
 		SimpleDateFormat setDateFormat = new SimpleDateFormat("yy/MM/dd");

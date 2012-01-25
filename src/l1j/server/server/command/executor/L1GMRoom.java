@@ -35,7 +35,8 @@ public class L1GMRoom implements L1CommandExecutor {
 			try {
 				i = Integer.parseInt(arg);
 			}
-			catch (NumberFormatException e) {}
+			catch (NumberFormatException e) {
+			}
 
 			if (i == 1) {
 				L1Teleport.teleport(pc, 32737, 32796, (short) 99, 5, false);

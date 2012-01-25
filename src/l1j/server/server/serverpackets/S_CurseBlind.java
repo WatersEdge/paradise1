@@ -30,7 +30,9 @@ public class S_CurseBlind extends ServerBasePacket {
 
 	/**
 	 * 法术效果:暗盲咒术
-	 * @param type 0:OFF 1:自己 2:周边物件可见
+	 * 
+	 * @param type
+	 *            0:OFF 1:自己 2:周边物件可见
 	 */
 	public S_CurseBlind(int type) {
 		buildPacket(type);

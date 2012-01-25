@@ -78,14 +78,16 @@ public class L1PcInventory extends L1Inventory {
 			double maxWeight = _owner.getMaxWeight();
 			if (weight > maxWeight) {
 				weight242 = 242;
-			} else {
+			}
+			else {
 				double wpTemp = (weight * 100 / maxWeight) * 242.00 / 100.00;
 				DecimalFormat df = new DecimalFormat("00.##");
 				df.format(wpTemp);
 				wpTemp = Math.round(wpTemp);
 				weight242 = (int) (wpTemp);
 			}
-		} else { // 如果负重率为0体重始终为0
+		}
+		else { // 如果负重率为0体重始终为0
 			weight242 = 0;
 		}
 		return weight242;
@@ -102,17 +104,14 @@ public class L1PcInventory extends L1Inventory {
 		if (item == null) {
 			return -1;
 		}
-		if (getSize() > MAX_SIZE
-				|| (getSize() == MAX_SIZE && (!item.isStackable() || !checkItem(item
-						.getItem().getItemId())))) { // 容量确认
+		if (getSize() > MAX_SIZE || (getSize() == MAX_SIZE && (!item.isStackable() || !checkItem(item.getItem().getItemId())))) { // 容量确认
 			if (message) {
 				sendOverMessage(263); // \f1一个角色最多可携带180个道具。
 			}
 			return SIZE_OVER;
 		}
 
-		int weight = getWeight() + item.getItem().getWeight() * count / 1000
-				+ 1;
+		int weight = getWeight() + item.getItem().getWeight() * count / 1000 + 1;
 		if (weight < 0 || (item.getItem().getWeight() * count / 1000) < 0) {
 			if (message) {
 				sendOverMessage(82); // 此物品太重了，所以你无法携带。
@@ -129,9 +128,7 @@ public class L1PcInventory extends L1Inventory {
 		L1ItemInstance itemExist = findItemId(item.getItemId());
 		if (itemExist != null && (itemExist.getCount() + count) > MAX_AMOUNT) {
 			if (message) {
-				getOwner().sendPackets(
-						new S_ServerMessage(166, "所持有的金币",
-								"超过了2,000,000,000上限。")); // \f1%0%s %4%1%3 %2。
+				getOwner().sendPackets(new S_ServerMessage(166, "所持有的金币", "超过了2,000,000,000上限。")); // \f1%0%s %4%1%3 %2。
 			}
 			return AMOUNT_OVER;
 		}
@@ -161,21 +158,17 @@ public class L1PcInventory extends L1Inventory {
 					item.setEquipped(false);
 					setEquipped(item, true, true, false);
 				}
-				if (item.getItem().getType2() == 0
-						&& item.getItem().getType() == 2) { // light系列道具
+				if (item.getItem().getType2() == 0 && item.getItem().getType() == 2) { // light系列道具
 					item.setRemainingTime(item.getItem().getLightFuel());
 				}
 				/**
 				 * 玩家身上的食人妖精RaceTicket 显示场次、及选手编号
 				 */
 				if (item.getItemId() == 40309) {
-					L1RaceTicket ticket = RaceTicketTable.getInstance()
-							.getTemplate(item.getId());
+					L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(item.getId());
 					if (ticket != null) {
 						L1Item temp = (L1Item) item.getItem().clone();
-						String buf = temp.getIdentifiedNameId() + " "
-								+ ticket.get_round() + "-"
-								+ ticket.get_runner_num();
+						String buf = temp.getIdentifiedNameId() + " " + ticket.get_round() + "-" + ticket.get_runner_num();
 						temp.setName(buf);
 						temp.setUnidentifiedNameId(buf);
 						temp.setIdentifiedNameId(buf);
@@ -184,7 +177,8 @@ public class L1PcInventory extends L1Inventory {
 				}
 				L1World.getInstance().storeObject(item);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -194,13 +188,13 @@ public class L1PcInventory extends L1Inventory {
 	public void insertItem(L1ItemInstance item) {
 		_owner.sendPackets(new S_AddItem(item));
 		if (item.getItem().getWeight() != 0) {
-			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight242()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT, getWeight242()));
 		}
 		try {
 			CharactersItemStorage storage = CharactersItemStorage.create();
 			storage.storeItem(_owner.getId(), item);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -240,7 +234,7 @@ public class L1PcInventory extends L1Inventory {
 	public static final int COL_MPR = 8;
 
 	public static final int COL_ADDSP = 16;
-	
+
 	public static final int COL_M_DEF = 32;
 
 	public static final int COL_EARTHMR = 64;
@@ -292,8 +286,7 @@ public class L1PcInventory extends L1Inventory {
 		if (column >= COL_ITEMID) { // 其他道具的情况(如 当开打一个信封)
 			_owner.sendPackets(new S_ItemStatus(item));
 			_owner.sendPackets(new S_ItemColor(item));
-			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight242()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT, getWeight242()));
 			column -= COL_ITEMID;
 		}
 		if (column >= COL_DELAY_EFFECT) { // 延迟效果
@@ -306,13 +299,13 @@ public class L1PcInventory extends L1Inventory {
 			if (weight != item.getLastWeight()) {
 				item.setLastWeight(weight);
 				_owner.sendPackets(new S_ItemStatus(item));
-			} else {
+			}
+			else {
 				_owner.sendPackets(new S_ItemName(item));
 			}
 			if (item.getItem().getWeight() != 0) {
 				// XXX 发送242阶段的重量变化
-				_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-						getWeight242()));
+				_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT, getWeight242()));
 			}
 			column -= COL_COUNT;
 		}
@@ -398,7 +391,8 @@ public class L1PcInventory extends L1Inventory {
 				storage.updateItemDurability(item);
 				column -= COL_DURABILITY;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -451,7 +445,8 @@ public class L1PcInventory extends L1Inventory {
 				storage.updateaddHp(item);
 				column -= COL_ADDHP;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -463,7 +458,8 @@ public class L1PcInventory extends L1Inventory {
 			CharactersItemStorage storage = CharactersItemStorage.create();
 
 			storage.deleteItem(item);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		if (item.isEquipped()) {
@@ -472,8 +468,7 @@ public class L1PcInventory extends L1Inventory {
 		_owner.sendPackets(new S_DeleteInventoryItem(item));
 		_items.remove(item);
 		if (item.getItem().getWeight() != 0) {
-			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight242()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT, getWeight242()));
 		}
 	}
 
@@ -483,20 +478,17 @@ public class L1PcInventory extends L1Inventory {
 	}
 
 	/** 设定特定的道具装备上 */
-	public void setEquipped(L1ItemInstance item, boolean equipped,
-			boolean loaded, boolean changeWeapon) {
+	public void setEquipped(L1ItemInstance item, boolean equipped, boolean loaded, boolean changeWeapon) {
 		if (item.isEquipped() != equipped) { // 处理设定值不同的情况
 			L1Item temp = item.getItem();
 			if (equipped) { // 装着
 				item.setEquipped(true);
 				_owner.getEquipSlot().set(item);
-			} else { // 脱着
+			}
+			else { // 脱着
 				if (!loaded) {
 					// 脱下隐身斗篷 炎魔的血光斗篷解除隐身状态
-					if (temp.getItemId() == 20077
-							|| temp.getItemId() == 20062
-							|| temp.getItemId() == 120077
-							) {
+					if (temp.getItemId() == 20077 || temp.getItemId() == 20062 || temp.getItemId() == 120077) {
 						if (_owner.isInvisble()) {
 							_owner.delInvis();
 							return;
@@ -533,7 +525,7 @@ public class L1PcInventory extends L1Inventory {
 		return false;
 	}
 
-	/** 检查特定的道具全部装备上（用于套装的验证）*/
+	/** 检查特定的道具全部装备上（用于套装的验证） */
 	public boolean checkEquipped(int[] ids) {
 		for (int id : ids) {
 			if (!checkEquipped(id)) {
@@ -548,8 +540,7 @@ public class L1PcInventory extends L1Inventory {
 		int equipeCount = 0;
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.getItem().getType2() == type2
-					&& item.getItem().getType() == type && item.isEquipped()) {
+			if (item.getItem().getType2() == type2 && item.getItem().getType() == type && item.isEquipped()) {
 				equipeCount++;
 			}
 		}
@@ -561,8 +552,7 @@ public class L1PcInventory extends L1Inventory {
 		L1ItemInstance equipeitem = null;
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.getItem().getType2() == type2
-					&& item.getItem().getType() == type && item.isEquipped()) {
+			if (item.getItem().getType2() == type2 && item.getItem().getType() == type && item.isEquipped()) {
 				equipeitem = item;
 				break;
 			}
@@ -576,8 +566,7 @@ public class L1PcInventory extends L1Inventory {
 		int equipeCount = 0;
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.getItem().getType2() == 2 && item.getItem().getType() == 9
-					&& item.isEquipped()) {
+			if (item.getItem().getType2() == 2 && item.getItem().getType() == 9 && item.isEquipped()) {
 				equipeItem[equipeCount] = item;
 				equipeCount++;
 				if (equipeCount == 2) {
@@ -617,8 +606,7 @@ public class L1PcInventory extends L1Inventory {
 		// ヘルムからガーダーまでチェックする
 		for (int type = 0; type <= 13; type++) {
 			// 装备していて、装备不可の场合は外す
-			if (getTypeEquipped(2, type) != 0
-					&& !L1PolyMorph.isEquipableArmor(polyid, type)) {
+			if (getTypeEquipped(2, type) != 0 && !L1PolyMorph.isEquipableArmor(polyid, type)) {
 				if (type == 9) { // 戒指的场合、两手分外す
 					armor = getItemEquipped(2, type);
 					if (armor != null) {
@@ -628,7 +616,8 @@ public class L1PcInventory extends L1Inventory {
 					if (armor != null) {
 						setEquipped(armor, false, false, false);
 					}
-				} else {
+				}
+				else {
 					armor = getItemEquipped(2, type);
 					if (armor != null) {
 						setEquipped(armor, false, false, false);
@@ -662,7 +651,8 @@ public class L1PcInventory extends L1Inventory {
 			bullet = findItemId(priorityId);
 			if (bullet != null) {
 				return bullet;
-			} else // なくなっていた场合は优先を消す
+			}
+			else // なくなっていた场合は优先を消す
 			{
 				if (type == 0) {
 					_arrowId = 0;
@@ -676,8 +666,7 @@ public class L1PcInventory extends L1Inventory {
 		for (Object itemObject : _items) // 弹を探す
 		{
 			bullet = (L1ItemInstance) itemObject;
-			if (bullet.getItem().getType() == type
-					&& bullet.getItem().getType2() == 0) {
+			if (bullet.getItem().getType() == type && bullet.getItem().getType2() == 0) {
 				if (type == 0) {
 					_arrowId = bullet.getItem().getItemId(); // 保持优先
 				}

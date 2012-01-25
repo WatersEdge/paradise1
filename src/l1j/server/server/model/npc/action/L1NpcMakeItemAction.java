@@ -87,8 +87,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		for (L1ObjectAmount<Integer> material : _materials) {
 			if (!pc.getInventory().checkItemNotEquipped(material.getObject(), material.getAmount() * amount)) {
 				L1Item temp = ItemTable.getInstance().getTemplate(material.getObject());
-				pc.sendPackets(new S_ServerMessage(337, temp.getName() + "("
-						+ ((material.getAmount() * amount) - pc.getInventory().countItems(temp.getItemId())) + ")")); // \f1%0が不足しています。
+				pc.sendPackets(new S_ServerMessage(337, temp.getName() + "(" + ((material.getAmount() * amount) - pc.getInventory().countItems(temp.getItemId())) + ")")); // \f1%0が不足しています。
 				isEnoughMaterials = false;
 			}
 		}

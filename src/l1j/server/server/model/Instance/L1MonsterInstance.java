@@ -93,7 +93,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				setTempLawful(getNpcTemplate().get_lawful());
 				setGfxId(getNpcTemplate().get_gfxid());
 				setTempCharGfx(getNpcTemplate().get_gfxid());
-			} else if (!isDoppel && (_target instanceof L1PcInstance)) { // 未变形
+			}
+			else if (!isDoppel && (_target instanceof L1PcInstance)) { // 未变形
 				setSleepTime(300);
 				L1PcInstance targetPc = (L1PcInstance) _target;
 				isDoppel = true;
@@ -106,27 +107,24 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 				if (targetPc.getClassId() != 6671) { // 非幻术师拿剑
 					setStatus(4);
-				} else { // 幻术师拿斧头
+				}
+				else { // 幻术师拿斧头
 					setStatus(11);
 				}
 			}
 			// 移动、攻击速度
-			setPassispeed(SprTable.getInstance().getMoveSpeed(getTempCharGfx(),
-					getStatus()));
-			setAtkspeed(SprTable.getInstance().getAttackSpeed(getTempCharGfx(),
-					getStatus() + 1));
+			setPassispeed(SprTable.getInstance().getMoveSpeed(getTempCharGfx(), getStatus()));
+			setAtkspeed(SprTable.getInstance().getAttackSpeed(getTempCharGfx(), getStatus() + 1));
 			// 变形
 			if (updateObject) {
-				for (L1PcInstance pc : L1World.getInstance()
-						.getRecognizePlayer(this)) {
+				for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 					if (!isChangeShape) {
-						pc.sendPackets(new S_ChangeName(getId(),
-								getNpcTemplate().get_nameid()));
-					} else {
+						pc.sendPackets(new S_ChangeName(getId(), getNpcTemplate().get_nameid()));
+					}
+					else {
 						pc.sendPackets(new S_ChangeName(getId(), getNameId()));
 					}
-					pc.sendPackets(new S_NpcChangeShape(getId(), getGfxId(),
-							getTempLawful(), getStatus()));
+					pc.sendPackets(new S_NpcChangeShape(getId(), getGfxId(), getTempLawful(), getStatus()));
 				}
 			}
 		}
@@ -142,7 +140,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				perceivedFrom.sendPackets(new S_SkillBrave(getId(), 1, 600000));
 				setBraveSpeed(1);
 			}
-		} else {
+		}
+		else {
 			// 水龙 阶段一、二 死亡隐形
 			if (getGfxId() != 7864 && getGfxId() != 7869) {
 				perceivedFrom.sendPackets(new S_NPCPack(this));
@@ -151,8 +150,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 	}
 
 	// 寻找目标
-	public static int[][] _classGfxId = { { 0, 1 }, { 48, 61 }, { 37, 138 },
-			{ 734, 1186 }, { 2786, 2796 } };
+	public static int[][] _classGfxId = { { 0, 1 }, { 48, 61 }, { 37, 138 }, { 734, 1186 }, { 2786, 2796 } };
 
 	@Override
 	public void searchTarget() {
@@ -160,26 +158,26 @@ public class L1MonsterInstance extends L1NpcInstance {
 		L1PcInstance lastTarget = null;
 		L1PcInstance targetPlayer = null;
 
-		if (_target != null && _target instanceof L1PcInstance ) {
+		if (_target != null && _target instanceof L1PcInstance) {
 			lastTarget = (L1PcInstance) _target;
 			tagertClear();
 		}
 
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 
-			if ( pc == lastTarget || (pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm()
-					|| pc.isMonitor() || pc.isGhost()) {
+			if (pc == lastTarget || (pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isMonitor() || pc.isGhost()) {
 				continue;
 			}
 
 			// 斗技场内は变身／未变身に限らず全てアクティブ
 			int mapId = getMapId();
 			if ((mapId == 88 // 奇岩竞技场
-				) || (mapId == 98 // 威顿竞技场
-				) || (mapId == 92 // 古鲁丁竞技场
-				) || (mapId == 91 // 说话之岛竞技场
-				) || (mapId == 95 // 银骑士竞技场
-				)) {
+					)
+					|| (mapId == 98 // 威顿竞技场
+					) || (mapId == 92 // 古鲁丁竞技场
+					) || (mapId == 91 // 说话之岛竞技场
+					) || (mapId == 95 // 银骑士竞技场
+					)) {
 				if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) { // 检查隐身
 					targetPlayer = pc;
 					break;
@@ -187,8 +185,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 
 			if (getNpcId() == 45600) { // 克特
-				if (pc.isCrown() || pc.isDarkelf()
-						|| (pc.getTempCharGfx() != pc.getClassId())) { // 未变身的君主、黑暗精灵
+				if (pc.isCrown() || pc.isDarkelf() || (pc.getTempCharGfx() != pc.getClassId())) { // 未变身的君主、黑暗精灵
 					targetPlayer = pc;
 					break;
 				}
@@ -197,25 +194,16 @@ public class L1MonsterInstance extends L1NpcInstance {
 			// 如果你满足任一条件、友好と见なされ先制攻击されない。
 			// ・モンスターのカルマがマイナス值（バルログ侧モンスター）でPCのカルマレベルが1以上（バルログ友好）
 			// ・モンスターのカルマがプラス值（ヤヒ侧モンスター）でPCのカルマレベルが-1以下（ヤヒ友好）
-			if (((getNpcTemplate().getKarma() < 0) && (pc.getKarmaLevel() >= 1))
-					|| ((getNpcTemplate().getKarma() > 0) && (pc
-							.getKarmaLevel() <= -1))) {
+			if (((getNpcTemplate().getKarma() < 0) && (pc.getKarmaLevel() >= 1)) || ((getNpcTemplate().getKarma() > 0) && (pc.getKarmaLevel() <= -1))) {
 				continue;
 			}
 			// 见弃てられた者たちの地 カルマクエストの变身中は、各阵営のモンスターから先制攻击されない
-			if (((pc.getTempCharGfx() == 6034) && (getNpcTemplate().getKarma() < 0))
-					|| ((pc.getTempCharGfx() == 6035) && (getNpcTemplate()
-							.getKarma() > 0))
-					|| ((pc.getTempCharGfx() == 6035) && (getNpcTemplate()
-							.get_npcId() == 46070))
-					|| ((pc.getTempCharGfx() == 6035) && (getNpcTemplate()
-							.get_npcId() == 46072))) {
+			if (((pc.getTempCharGfx() == 6034) && (getNpcTemplate().getKarma() < 0)) || ((pc.getTempCharGfx() == 6035) && (getNpcTemplate().getKarma() > 0)) || ((pc.getTempCharGfx() == 6035) && (getNpcTemplate().get_npcId() == 46070))
+					|| ((pc.getTempCharGfx() == 6035) && (getNpcTemplate().get_npcId() == 46072))) {
 				continue;
 			}
 
-			if (!getNpcTemplate().is_agro() && !getNpcTemplate().is_agrososc()
-					&& (getNpcTemplate().is_agrogfxid1() < 0)
-					&& (getNpcTemplate().is_agrogfxid2() < 0)) { // 完全なノンアクティブモンスター
+			if (!getNpcTemplate().is_agro() && !getNpcTemplate().is_agrososc() && (getNpcTemplate().is_agrogfxid1() < 0) && (getNpcTemplate().is_agrogfxid2() < 0)) { // 完全なノンアクティブモンスター
 				if (pc.getLawful() < -1000) { // プレイヤーがカオティック
 					targetPlayer = pc;
 					break;
@@ -229,38 +217,31 @@ public class L1MonsterInstance extends L1NpcInstance {
 						targetPlayer = pc;
 						break;
 					}
-				} else if (getNpcTemplate().is_agro()) { // アクティブモンスター
+				}
+				else if (getNpcTemplate().is_agro()) { // アクティブモンスター
 					targetPlayer = pc;
 					break;
 				}
 
 				// 特定のクラスorグラフィックＩＤにアクティブ
-				if ((getNpcTemplate().is_agrogfxid1() >= 0)
-						&& (getNpcTemplate().is_agrogfxid1() <= 4)) { // クラス指定
-					if ((_classGfxId[getNpcTemplate().is_agrogfxid1()][0] == pc
-							.getTempCharGfx())
-							|| (_classGfxId[getNpcTemplate().is_agrogfxid1()][1] == pc
-									.getTempCharGfx())) {
+				if ((getNpcTemplate().is_agrogfxid1() >= 0) && (getNpcTemplate().is_agrogfxid1() <= 4)) { // クラス指定
+					if ((_classGfxId[getNpcTemplate().is_agrogfxid1()][0] == pc.getTempCharGfx()) || (_classGfxId[getNpcTemplate().is_agrogfxid1()][1] == pc.getTempCharGfx())) {
 						targetPlayer = pc;
 						break;
 					}
-				} else if (pc.getTempCharGfx() == getNpcTemplate()
-						.is_agrogfxid1()) { // グラフィックＩＤ指定
+				}
+				else if (pc.getTempCharGfx() == getNpcTemplate().is_agrogfxid1()) { // グラフィックＩＤ指定
 					targetPlayer = pc;
 					break;
 				}
 
-				if ((getNpcTemplate().is_agrogfxid2() >= 0)
-						&& (getNpcTemplate().is_agrogfxid2() <= 4)) { // クラス指定
-					if ((_classGfxId[getNpcTemplate().is_agrogfxid2()][0] == pc
-							.getTempCharGfx())
-							|| (_classGfxId[getNpcTemplate().is_agrogfxid2()][1] == pc
-									.getTempCharGfx())) {
+				if ((getNpcTemplate().is_agrogfxid2() >= 0) && (getNpcTemplate().is_agrogfxid2() <= 4)) { // クラス指定
+					if ((_classGfxId[getNpcTemplate().is_agrogfxid2()][0] == pc.getTempCharGfx()) || (_classGfxId[getNpcTemplate().is_agrogfxid2()][1] == pc.getTempCharGfx())) {
 						targetPlayer = pc;
 						break;
 					}
-				} else if (pc.getTempCharGfx() == getNpcTemplate()
-						.is_agrogfxid2()) { // グラフィックＩＤ指定
+				}
+				else if (pc.getTempCharGfx() == getNpcTemplate().is_agrogfxid2()) { // グラフィックＩＤ指定
 					targetPlayer = pc;
 					break;
 				}
@@ -304,13 +285,13 @@ public class L1MonsterInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance pc) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 
 		// html表示パケット送信
 		if (pc.getLawful() < -1000) { // プレイヤーがカオティック
 			pc.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 		}
 	}
@@ -345,8 +326,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			onNpcAI();
 
 			if (attacker instanceof L1PcInstance) { // 仲间意识をもつモンスターのターゲットに设定
-				serchLink((L1PcInstance) attacker, getNpcTemplate()
-						.get_family());
+				serchLink((L1PcInstance) attacker, getNpcTemplate().get_family());
 			}
 
 			int newMp = getCurrentMp() - mpDamage;
@@ -365,8 +345,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 	@Override
 	public void receiveDamage(L1Character attacker, int damage) { // 攻击でＨＰを减らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
-			if ((getHiddenStatus() == HIDDEN_STATUS_SINK)
-					|| (getHiddenStatus() == HIDDEN_STATUS_FLY)) {
+			if ((getHiddenStatus() == HIDDEN_STATUS_SINK) || (getHiddenStatus() == HIDDEN_STATUS_FLY)) {
 				return;
 			}
 			if (damage >= 0) {
@@ -381,15 +360,11 @@ public class L1MonsterInstance extends L1NpcInstance {
 			onNpcAI();
 
 			if (attacker instanceof L1PcInstance) { // 仲间意识をもつモンスターのターゲットに设定
-				serchLink((L1PcInstance) attacker, getNpcTemplate()
-						.get_family());
+				serchLink((L1PcInstance) attacker, getNpcTemplate().get_family());
 			}
 
 			// 血痕相克伤害增加 1.5倍
-			if ((getNpcTemplate().get_npcId() == 97044
-					|| getNpcTemplate().get_npcId() == 97045 || getNpcTemplate()
-					.get_npcId() == 97046)
-					&& (attacker.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS))) { // 有安塔瑞斯的血痕时对法利昂增伤
+			if ((getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045 || getNpcTemplate().get_npcId() == 97046) && (attacker.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS))) { // 有安塔瑞斯的血痕时对法利昂增伤
 				damage *= 1.5;
 			}
 
@@ -399,13 +374,13 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 
 			// 打怪才显示血条
-			if ( L1World.getInstance().getPlayer(attacker.getName()) != null )
+			if (L1World.getInstance().getPlayer(attacker.getName()) != null)
 				pc = L1World.getInstance().getPlayer(attacker.getName());
 			else {
 				L1NpcInstance pet = (L1NpcInstance) L1World.getInstance().findObject(attacker.getId());
 				pc = L1World.getInstance().getPlayer(pet.getMaster().getName());
 			}
-			if ( pc.getParty() != null )
+			if (pc.getParty() != null)
 				pc_party = pc.getParty().getMembers();
 
 			int newHp = getCurrentHp() - damage;
@@ -414,8 +389,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 				// 打怪才显示血条
 				pc.sendPackets(new S_HPMeter(this.getId(), 0xFF)); // 关闭血条
-				if ( pc.getParty() != null ) {
-					for ( int i = 0; i < pc_party.length; i++ ) {
+				if (pc.getParty() != null) {
+					for (int i = 0; i < pc_party.length; i++) {
 						pc_party[i].sendPackets(new S_HPMeter(this.getId(), 0xFF));
 					}
 				}
@@ -423,22 +398,18 @@ public class L1MonsterInstance extends L1NpcInstance {
 				// 变身しないモンスター
 				if (transformId == -1) {
 					if (getPortalNumber() != -1) {
-						if (getNpcTemplate().get_npcId() == 97006
-								|| getNpcTemplate().get_npcId() == 97044) {
+						if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97044) {
 							// 准备阶段二
-							L1DragonSlayer.getInstance().startDragonSlayer2rd(
-									getPortalNumber());
-						} else if (getNpcTemplate().get_npcId() == 97007
-								|| getNpcTemplate().get_npcId() == 97045) {
+							L1DragonSlayer.getInstance().startDragonSlayer2rd(getPortalNumber());
+						}
+						else if (getNpcTemplate().get_npcId() == 97007 || getNpcTemplate().get_npcId() == 97045) {
 							// 准备阶段三
-							L1DragonSlayer.getInstance().startDragonSlayer3rd(
-									getPortalNumber());
-						} else if (getNpcTemplate().get_npcId() == 97008
-								|| getNpcTemplate().get_npcId() == 97046) {
+							L1DragonSlayer.getInstance().startDragonSlayer3rd(getPortalNumber());
+						}
+						else if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
 							bloodstain();
 							// 结束屠龙副本
-							L1DragonSlayer.getInstance().endDragonSlayer(
-									getPortalNumber());
+							L1DragonSlayer.getInstance().endDragonSlayer(getPortalNumber());
 						}
 					}
 					setCurrentHpDirect(0);
@@ -448,15 +419,12 @@ public class L1MonsterInstance extends L1NpcInstance {
 					Death death = new Death(attacker);
 					GeneralThreadPool.getInstance().execute(death);
 					// Death(attacker);
-					if (getPortalNumber() == -1
-							&& (getNpcTemplate().get_npcId() == 97006
-									|| getNpcTemplate().get_npcId() == 97007
-									|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate()
-									.get_npcId() == 97045)) {
+					if (getPortalNumber() == -1 && (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 || getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045)) {
 						doNextDragonStep(attacker, getNpcTemplate().get_npcId());
 					}
-				} else { // 变身するモンスター
-							// distributeExpDropKarma(attacker);
+				}
+				else { // 变身するモンスター
+						// distributeExpDropKarma(attacker);
 					transform(transformId);
 				}
 			}
@@ -466,12 +434,12 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 				// 打怪才显示血条
 				pc.sendPackets(new S_HPMeter(this));
-				if ( pc.getParty() != null ) {
-					for ( int i = 0; i < pc_party.length; i++ ) {
+				if (pc.getParty() != null) {
+					for (int i = 0; i < pc_party.length; i++) {
 						pc_party[i].sendPackets(new S_HPMeter(this));
 					}
 				}
-				if ( cancel_broadcast != null ) {
+				if (cancel_broadcast != null) {
 					cancel_broadcast.cancel();
 					cancel_broadcast = null;
 				}
@@ -482,35 +450,30 @@ public class L1MonsterInstance extends L1NpcInstance {
 				@Override
 				public void run() {
 					pc.sendPackets(new S_HPMeter(broadcastMonster.getId(), 0xFF)); // 关闭血条
-					if ( pc.getParty() != null ) {
-						for ( int i = 0; i < pc_party.length; i++ ) {
+					if (pc.getParty() != null) {
+						for (int i = 0; i < pc_party.length; i++) {
 							pc_party[i].sendPackets(new S_HPMeter(broadcastMonster.getId(), 0xFF));
 						}
 					}
 					cancel_broadcast.cancel();
 				}
 			}, 10000); // 10秒没继续打怪就关闭血条
-		} else if (!isDead()) { // 念のため
+		}
+		else if (!isDead()) { // 念のため
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);
 			Death death = new Death(attacker);
 			GeneralThreadPool.getInstance().execute(death);
 			// Death(attacker);
-			if (getPortalNumber() == -1
-					&& (getNpcTemplate().get_npcId() == 97006
-							|| getNpcTemplate().get_npcId() == 97007
-							|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate()
-							.get_npcId() == 97045)) {
+			if (getPortalNumber() == -1 && (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 || getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045)) {
 				doNextDragonStep(attacker, getNpcTemplate().get_npcId());
 			}
 		}
 	}
 
 	private static void openDoorWhenNpcDied(L1NpcInstance npc) {
-		int[] npcId = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150,
-				46151, 46152 };
-		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009,
-				5010 };
+		int[] npcId = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150, 46151, 46152 };
+		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009, 5010 };
 
 		for (int i = 0; i < npcId.length; i++) {
 			if (npc.getNpcTemplate().get_npcId() == npcId[i]) {
@@ -537,12 +500,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 	 * @param pc
 	 */
 	/*
-	 * private void recall(L1PcInstance pc) { if (getMapId() != pc.getMapId()) {
-	 * return; } if (getLocation().getTileLineDistance(pc.getLocation()) > 4) {
-	 * for (int count = 0; count < 10; count++) { L1Location newLoc =
-	 * getLocation().randomLocation(3, 4, false); if (glanceCheck(newLoc.getX(),
-	 * newLoc.getY())) { L1Teleport.teleport(pc, newLoc.getX(), newLoc.getY(),
-	 * getMapId(), 5, true); break; } } } }
+	 * private void recall(L1PcInstance pc) { if (getMapId() != pc.getMapId()) { return; } if (getLocation().getTileLineDistance(pc.getLocation()) > 4) { for (int count = 0; count < 10; count++) { L1Location newLoc = getLocation().randomLocation(3, 4, false); if
+	 * (glanceCheck(newLoc.getX(), newLoc.getY())) { L1Teleport.teleport(pc, newLoc.getX(), newLoc.getY(), getMapId(), 5, true); break; } } } }
 	 */
 
 	@Override
@@ -613,9 +572,11 @@ public class L1MonsterInstance extends L1NpcInstance {
 		L1PcInstance pc = null;
 		if (lastAttacker instanceof L1PcInstance) {
 			pc = (L1PcInstance) lastAttacker;
-		} else if (lastAttacker instanceof L1PetInstance) {
+		}
+		else if (lastAttacker instanceof L1PetInstance) {
 			pc = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
-		} else if (lastAttacker instanceof L1SummonInstance) {
+		}
+		else if (lastAttacker instanceof L1SummonInstance) {
 			pc = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 		}
 
@@ -629,7 +590,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				distributeDrop();
 				giveKarma(pc);
 			}
-		} else if (lastAttacker instanceof L1EffectInstance) { // FWが倒した场合
+		}
+		else if (lastAttacker instanceof L1EffectInstance) { // FWが倒した场合
 			ArrayList<L1Character> targetList = _hateList.toTargetArrayList();
 			ArrayList<Integer> hateList = _hateList.toHateArrayList();
 			// ヘイトリストにキャラクターが存在する
@@ -644,12 +606,12 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 				if (lastAttacker instanceof L1PcInstance) {
 					pc = (L1PcInstance) lastAttacker;
-				} else if (lastAttacker instanceof L1PetInstance) {
-					pc = (L1PcInstance) ((L1PetInstance) lastAttacker)
-							.getMaster();
-				} else if (lastAttacker instanceof L1SummonInstance) {
-					pc = (L1PcInstance) ((L1SummonInstance) lastAttacker)
-							.getMaster();
+				}
+				else if (lastAttacker instanceof L1PetInstance) {
+					pc = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
+				}
+				else if (lastAttacker instanceof L1SummonInstance) {
+					pc = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 				}
 				if (pc != null) {
 					int exp = getExp();
@@ -665,17 +627,16 @@ public class L1MonsterInstance extends L1NpcInstance {
 	}
 
 	private void distributeDrop() {
-		ArrayList<L1Character> dropTargetList = _dropHateList
-				.toTargetArrayList();
+		ArrayList<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
 		ArrayList<Integer> dropHateList = _dropHateList.toHateArrayList();
 		try {
 			int npcId = getNpcTemplate().get_npcId();
 			if ((npcId != 45640) // 梦幻岛 独角兽
 					|| ((npcId == 45640) && (getTempCharGfx() == 2332))) {
-				DropTable.getInstance().dropShare(L1MonsterInstance.this,
-						dropTargetList, dropHateList);
+				DropTable.getInstance().dropShare(L1MonsterInstance.this, dropTargetList, dropHateList);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -703,10 +664,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 			if (ub != null) {
 				for (L1PcInstance pc : ub.getMembersArray()) {
 					if ((pc != null) && !pc.isDead() && !pc.isGhost()) {
-						L1ItemInstance item = pc.getInventory().storeItem(
-								41402, getUbSealCount()); // 勇者的勋章
-						pc.sendPackets(new S_ServerMessage(403, item
-								.getLogName())); // 获得%0%o 。
+						L1ItemInstance item = pc.getInventory().storeItem(41402, getUbSealCount()); // 勇者的勋章
+						pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
 					}
 				}
 			}
@@ -753,25 +712,25 @@ public class L1MonsterInstance extends L1NpcInstance {
 				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
-					broadcastPacket(new S_DoActionGFX(getId(),
-							ActionCodes.ACTION_Hide));
+					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
 					setStatus(11);
 					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
 			}
-		} else if (npcid == 45682) { // 安塔瑞斯
+		}
+		else if (npcid == 45682) { // 安塔瑞斯
 			if (getMaxHp() / 3 > getCurrentHp()) {
 				int rnd = Random.nextInt(50);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
-					broadcastPacket(new S_DoActionGFX(getId(),
-							ActionCodes.ACTION_AntharasHide));
+					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_AntharasHide));
 					setStatus(20);
 					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
 			}
-		} else if ((npcid == 45067) // 弱化哈维 (新手村庄)
+		}
+		else if ((npcid == 45067) // 弱化哈维 (新手村庄)
 				|| (npcid == 45264) // 哈维 (普通)
 				|| (npcid == 45452) // 哈维 (遗忘之岛)
 				|| (npcid == 45090) // 弱化格利芬 (新手村庄)
@@ -782,29 +741,28 @@ public class L1MonsterInstance extends L1NpcInstance {
 				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
-					broadcastPacket(new S_DoActionGFX(getId(),
-							ActionCodes.ACTION_Moveup));
+					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Moveup));
 				}
 			}
-		} else if (npcid == 45681) { // 林德拜尔
+		}
+		else if (npcid == 45681) { // 林德拜尔
 			if (getMaxHp() / 3 > getCurrentHp()) {
 				int rnd = Random.nextInt(50);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
-					broadcastPacket(new S_DoActionGFX(getId(),
-							ActionCodes.ACTION_Moveup));
+					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Moveup));
 				}
 			}
-		} else if ((npcid == 46107) // 底比斯 曼陀罗草(白)
+		}
+		else if ((npcid == 46107) // 底比斯 曼陀罗草(白)
 				|| (npcid == 46108)) { // 底比斯 曼陀罗草(黑)
 			if (getMaxHp() / 4 > getCurrentHp()) {
 				int rnd = Random.nextInt(10);
 				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
-					broadcastPacket(new S_DoActionGFX(getId(),
-							ActionCodes.ACTION_Hide));
+					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
 					setStatus(11);
 					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
@@ -826,7 +784,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(11);
 			}
-		} else if ((npcid == 45045) // 弱化石头高仑
+		}
+		else if ((npcid == 45045) // 弱化石头高仑
 				|| (npcid == 45126) // 石头高仑 (普通)
 				|| (npcid == 45134) // 石头高仑 (SC)
 				|| (npcid == 45281)) { // 奇岩 石头高仑
@@ -835,23 +794,27 @@ public class L1MonsterInstance extends L1NpcInstance {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(4);
 			}
-		} else if ((npcid == 45067) // 弱化哈维 (新手村庄)
+		}
+		else if ((npcid == 45067) // 弱化哈维 (新手村庄)
 				|| (npcid == 45264) // 哈维 (普通)
 				|| (npcid == 45452) // 哈维 (遗忘之岛)
 				|| (npcid == 45090) // 弱化格利芬 (新手村庄)
 				|| (npcid == 45321) // 格利芬 (普通)
 				|| (npcid == 45445)) { // 格利芬 (遗忘之岛)
 			setHiddenStatus(HIDDEN_STATUS_FLY);
-		} else if (npcid == 45681) { // 林德拜尔
+		}
+		else if (npcid == 45681) { // 林德拜尔
 			setHiddenStatus(HIDDEN_STATUS_FLY);
-		} else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
+		}
+		else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
 				|| (npcid == 46108)) { // 底比斯 曼陀罗草 (黑)
 			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(11);
 			}
-		} else if ((npcid >= 46125) && (npcid <= 46128)) {
+		}
+		else if ((npcid >= 46125) && (npcid <= 46128)) {
 			setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
 			setStatus(4);
 		}
@@ -867,18 +830,21 @@ public class L1MonsterInstance extends L1NpcInstance {
 					|| (npcid == 45455)) { // 残暴的史巴托
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(11);
-			} else if ((npcid == 45045) // 弱化石头高仑
+			}
+			else if ((npcid == 45045) // 弱化石头高仑
 					|| (npcid == 45126) // 石头高仑 (普通)
 					|| (npcid == 45134) // 石头高仑 (SC)
 					|| (npcid == 45281)) { // 奇岩 石头高仑
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(4);
-			} else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
+			}
+			else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
 					|| (npcid == 46108)) { // 底比斯 曼陀罗草 (黑)
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(11);
 			}
-		} else if (leader.getHiddenStatus() == HIDDEN_STATUS_FLY) {
+		}
+		else if (leader.getHiddenStatus() == HIDDEN_STATUS_FLY) {
 			if ((npcid == 45067) // 弱化哈维 (新手村庄)
 					|| (npcid == 45264) // 哈维 (普通)
 					|| (npcid == 45452) // 哈维 (遗忘之岛)
@@ -887,11 +853,13 @@ public class L1MonsterInstance extends L1NpcInstance {
 					|| (npcid == 45445)) { // 格利芬 (遗忘之岛)
 				setHiddenStatus(HIDDEN_STATUS_FLY);
 				setStatus(4);
-			} else if (npcid == 45681) { // 林德拜尔
+			}
+			else if (npcid == 45681) { // 林德拜尔
 				setHiddenStatus(HIDDEN_STATUS_FLY);
 				setStatus(11);
 			}
-		} else if ((npcid >= 46125) && (npcid <= 46128)) {
+		}
+		else if ((npcid >= 46125) && (npcid <= 46128)) {
 			setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
 			setStatus(4);
 		}
@@ -924,7 +892,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				pc.sendPackets(new S_ServerMessage(1580)); // 安塔瑞斯：黑暗的诅咒将会降临到你们身上！席琳，
 															// 我的母亲，请让我安息吧...
 				L1BuffUtil.bloodstain(pc, (byte) 0, 4320, true);
-			} else if (getNpcTemplate().get_npcId() == 97046) { // 法利昂 第三阶段
+			}
+			else if (getNpcTemplate().get_npcId() == 97046) { // 法利昂 第三阶段
 				pc.sendPackets(new S_ServerMessage(1668)); // 法利昂：莎尔...你这个家伙...怎么...对得起我的母亲...席琳啊...请拿走...我的生命吧...
 				L1BuffUtil.bloodstain(pc, (byte) 1, 4320, true);
 			}
@@ -934,18 +903,16 @@ public class L1MonsterInstance extends L1NpcInstance {
 	/** 下一阶段的龙 */
 	private void doNextDragonStep(L1Character attacker, int npcid) {
 		if (!isNextDragonStepRunning()) {
-			int[] dragonId = {
-					97006, // 安塔瑞斯 第一阶段
+			int[] dragonId = { 97006, // 安塔瑞斯 第一阶段
 					97007, // 安塔瑞斯 第二阶段
 					97044, // 法利昂 第一阶段
-					97045  // 法利昂 第二阶段
-					};
-			int[] nextStepId = {
-					97007, // 安塔瑞斯 第二阶段
+					97045 // 法利昂 第二阶段
+			};
+			int[] nextStepId = { 97007, // 安塔瑞斯 第二阶段
 					97008, // 安塔瑞斯 第三阶段
 					97045, // 法利昂 第二阶段
-					97046  // 法利昂 第三阶段
-					};
+					97046 // 法利昂 第三阶段
+			};
 			int nextSpawnId = 0;
 			for (int i = 0; i < dragonId.length; i++) {
 				if (npcid == dragonId[i]) {
@@ -957,13 +924,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 				L1PcInstance _pc = null;
 				if (attacker instanceof L1PcInstance) {
 					_pc = (L1PcInstance) attacker;
-				} else if (attacker instanceof L1PetInstance) {
+				}
+				else if (attacker instanceof L1PetInstance) {
 					L1PetInstance pet = (L1PetInstance) attacker;
 					L1Character cha = pet.getMaster();
 					if (cha instanceof L1PcInstance) {
 						_pc = (L1PcInstance) cha;
 					}
-				} else if (attacker instanceof L1SummonInstance) {
+				}
+				else if (attacker instanceof L1SummonInstance) {
 					L1SummonInstance summon = (L1SummonInstance) attacker;
 					L1Character cha = summon.getMaster();
 					if (cha instanceof L1PcInstance) {
@@ -971,8 +940,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 					}
 				}
 				if (_pc != null) {
-					NextDragonStep nextDragonStep = new NextDragonStep(_pc,
-							this, nextSpawnId);
+					NextDragonStep nextDragonStep = new NextDragonStep(_pc, this, nextSpawnId);
 					GeneralThreadPool.getInstance().execute(nextDragonStep);
 				}
 			}
@@ -990,8 +958,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 		short _m;
 		L1Location _loc = new L1Location();
 
-		public NextDragonStep(L1PcInstance pc, L1MonsterInstance mob,
-				int transformId) {
+		public NextDragonStep(L1PcInstance pc, L1MonsterInstance mob, int transformId) {
 			_pc = pc;
 			_mob = mob;
 			_transformId = transformId;
@@ -1007,8 +974,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			setNextDragonStepRunning(true);
 			try {
 				Thread.sleep(10500);
-				L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(
-						_transformId);
+				L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(_transformId);
 				npc.setId(IdFactory.getInstance().nextId());
 				npc.setMap((short) _m);
 				npc.setHomeX(_x);
@@ -1019,15 +985,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 				npc.setPortalNumber(getPortalNumber());
 
 				broadcastPacket(new S_NPCPack(npc));
-				broadcastPacket(new S_DoActionGFX(npc.getId(),
-						ActionCodes.ACTION_Hide));
+				broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Hide));
 
 				L1World.getInstance().storeObject(npc);
 				L1World.getInstance().addVisibleObject(npc);
 				npc.turnOnOffLight();
 				npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 				setNextDragonStepRunning(false);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 			}
 		}
 	}

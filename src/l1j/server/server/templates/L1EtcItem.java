@@ -47,6 +47,7 @@ public class L1EtcItem extends L1Item {
 	public void set_stackable(boolean stackable) {
 		_stackable = stackable;
 	}
+
 	@Override
 	public boolean isStackable() {
 		return _stackable;
@@ -56,6 +57,7 @@ public class L1EtcItem extends L1Item {
 	public void set_locx(int locx) {
 		_locx = locx;
 	}
+
 	@Override
 	public int get_locx() {
 		return _locx;
@@ -65,6 +67,7 @@ public class L1EtcItem extends L1Item {
 	public void set_locy(int locy) {
 		_locy = locy;
 	}
+
 	@Override
 	public int get_locy() {
 		return _locy;
@@ -74,6 +77,7 @@ public class L1EtcItem extends L1Item {
 	public void set_mapid(short mapid) {
 		_mapid = mapid;
 	}
+
 	@Override
 	public short get_mapid() {
 		return _mapid;
@@ -83,6 +87,7 @@ public class L1EtcItem extends L1Item {
 	public void set_delayid(int delay_id) {
 		_delay_id = delay_id;
 	}
+
 	@Override
 	public int get_delayid() {
 		return _delay_id;
@@ -92,6 +97,7 @@ public class L1EtcItem extends L1Item {
 	public void set_delaytime(int delay_time) {
 		_delay_time = delay_time;
 	}
+
 	@Override
 	public int get_delaytime() {
 		return _delay_time;
@@ -101,6 +107,7 @@ public class L1EtcItem extends L1Item {
 	public void set_delayEffect(int delay_effect) {
 		_delay_effect = delay_effect;
 	}
+
 	/** 取得延迟效果 */
 	public int get_delayEffect() {
 		return _delay_effect;
@@ -110,6 +117,7 @@ public class L1EtcItem extends L1Item {
 	public void setMaxChargeCount(int i) {
 		_maxChargeCount = i;
 	}
+
 	@Override
 	public int getMaxChargeCount() {
 		return _maxChargeCount;
@@ -119,6 +127,7 @@ public class L1EtcItem extends L1Item {
 	public void setCanSeal(boolean flag) {
 		_isCanSeal = flag;
 	}
+
 	@Override
 	public boolean isCanSeal() {
 		return _isCanSeal;

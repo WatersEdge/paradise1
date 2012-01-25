@@ -23,6 +23,7 @@ public class S_DoActionShop extends ServerBasePacket {
 
 	/**
 	 * 物件动作种类 (短时间) - 个人商店
+	 * 
 	 * @param object
 	 * @param gfxid
 	 * @param message

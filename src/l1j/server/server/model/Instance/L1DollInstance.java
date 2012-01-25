@@ -44,17 +44,18 @@ public class L1DollInstance extends L1NpcInstance {
 	// 如果没有目标处理
 	@Override
 	public boolean noTarget() {
-		if ((_master != null) && !_master.isDead()
-				&& (_master.getMapId() == getMapId())) {
+		if ((_master != null) && !_master.isDead() && (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				int dir = moveDirection(_master.getX(), _master.getY());
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-			} else {
+			}
+			else {
 				// 魔法娃娃 - 特殊动作
 				dollAction();
 			}
-		} else {
+		}
+		else {
 			_isDelete = true;
 			deleteDoll();
 			return true;
@@ -171,12 +172,11 @@ public class L1DollInstance extends L1NpcInstance {
 		run = Random.nextInt(100) + 1;
 		if (run <= 10) {
 			int actionCode = ActionCodes.ACTION_Aggress; // 67
-			if (run <= 5) 
+			if (run <= 5)
 				actionCode = ActionCodes.ACTION_Think; // 66
 
 			broadcastPacket(new S_DoActionGFX(getId(), actionCode));
-			setSleepTime(calcSleepTime(SprTable.getInstance().getSprSpeed(getTempCharGfx(),
-							actionCode), MOVE_SPEED)); //
+			setSleepTime(calcSleepTime(SprTable.getInstance().getSprSpeed(getTempCharGfx(), actionCode), MOVE_SPEED)); //
 		}
 	}
 }

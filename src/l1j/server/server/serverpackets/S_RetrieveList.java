@@ -35,7 +35,7 @@ public class S_RetrieveList extends ServerBasePacket {
 				for (Object itemObject : pc.getDwarfInventory().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
-					writeC(0); // 道具:0 武器:1  防具:2...
+					writeC(0); // 道具:0 武器:1 防具:2...
 					writeH(item.get_gfxid());
 					writeC(item.getBless());
 					writeD(item.getCount());
@@ -43,15 +43,16 @@ public class S_RetrieveList extends ServerBasePacket {
 					writeS(item.getViewName());
 				}
 				writeH(0x001e); // 金币30
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
 			}
 			// クライアントに適当なメッセージ見つからなかったので非表示
 			/*
-			 * else { l1pcinstance.sendPackets(new
-			 * S_SystemMessage("何もお預かりしていません。")); }
+			 * else { l1pcinstance.sendPackets(new S_SystemMessage("何もお預かりしていません。")); }
 			 */
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 		}
 	}

@@ -87,19 +87,26 @@ public class LightSpawnTable {
 					L1World.getInstance().addVisibleObject(field);
 				}
 			} while (true);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (SecurityException e) {
+		}
+		catch (SecurityException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (InstantiationException e) {
+		}
+		catch (InstantiationException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (IllegalAccessException e) {
+		}
+		catch (IllegalAccessException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (InvocationTargetException e) {
+		}
+		catch (InvocationTargetException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

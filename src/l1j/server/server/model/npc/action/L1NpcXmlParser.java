@@ -55,7 +55,8 @@ public class L1NpcXmlParser {
 		try {
 			result = Integer.valueOf(element.getAttribute(name));
 		}
-		catch (NumberFormatException e) {}
+		catch (NumberFormatException e) {
+		}
 		return result;
 	}
 

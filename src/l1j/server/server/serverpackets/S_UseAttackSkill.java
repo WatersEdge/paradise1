@@ -92,7 +92,7 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		}
 		else {
 			int seq = 0;
-			synchronized (this){
+			synchronized (this) {
 				seq = _sequentialNumber.incrementAndGet();
 			}
 			_byte[13] = (byte) (seq & 0xff);

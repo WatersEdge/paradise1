@@ -44,7 +44,8 @@ public class L1SpawnCmd implements L1CommandExecutor {
 		int npcid = 0;
 		try {
 			npcid = Integer.parseInt(nameId);
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameId);
 		}
 		return npcid;
@@ -73,14 +74,16 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			for (int i = 0; i < count; i++) {
 				L1SpawnUtil.spawn(pc, npcid, randomrange, 0);
 			}
-			String msg = String.format("%s(%d) (%d) 召唤了。 (范围:%d)", npc
-					.get_name(), npcid, count, randomrange);
+			String msg = String.format("%s(%d) (%d) 召唤了。 (范围:%d)", npc.get_name(), npcid, count, randomrange);
 			pc.sendPackets(new S_SystemMessage(msg));
-		} catch (NoSuchElementException e) {
+		}
+		catch (NoSuchElementException e) {
 			sendErrorMessage(pc, cmdName);
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			sendErrorMessage(pc, cmdName);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(cmdName + " 内部错误。"));
 		}

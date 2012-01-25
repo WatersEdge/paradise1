@@ -133,7 +133,8 @@ public final class MapsTable {
 			}
 
 			_log.config("Maps " + _maps.size());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

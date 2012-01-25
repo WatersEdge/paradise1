@@ -36,11 +36,9 @@ public class ByteArrayUtil {
 		int j = 0;
 		for (int k = 0; k < _byteArray.length; k++) {
 			if (j % 16 == 0) {
-				stringbuffer.append((new StringBuilder()).append(fillHex(k, 4))
-						.append(": ").toString());
+				stringbuffer.append((new StringBuilder()).append(fillHex(k, 4)).append(": ").toString());
 			}
-			stringbuffer.append((new StringBuilder()).append(
-					fillHex(_byteArray[k] & 0xff, 2)).append(" ").toString());
+			stringbuffer.append((new StringBuilder()).append(fillHex(_byteArray[k] & 0xff, 2)).append(" ").toString());
 			if (++j != 16) {
 				continue;
 			}
@@ -50,7 +48,8 @@ public class ByteArrayUtil {
 				byte byte0 = _byteArray[i1++];
 				if (byte0 > 31 && byte0 < 128) {
 					stringbuffer.append((char) byte0);
-				} else {
+				}
+				else {
 					stringbuffer.append('.');
 				}
 			}
@@ -70,7 +69,8 @@ public class ByteArrayUtil {
 				byte byte1 = _byteArray[k1++];
 				if (byte1 > 31 && byte1 < 128) {
 					stringbuffer.append((char) byte1);
-				} else {
+				}
+				else {
 					stringbuffer.append('.');
 				}
 			}

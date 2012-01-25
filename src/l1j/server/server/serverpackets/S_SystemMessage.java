@@ -28,8 +28,7 @@ public class S_SystemMessage extends ServerBasePacket {
 	private final String _msg;
 
 	/**
-	 * クライアントにデータの存在しないオリジナルのメッセージを表示する。
-	 * メッセージにnameid($xxx)が含まれている場合はオーバーロードされたもう一方を使用する。
+	 * クライアントにデータの存在しないオリジナルのメッセージを表示する。 メッセージにnameid($xxx)が含まれている場合はオーバーロードされたもう一方を使用する。
 	 * 
 	 * @param msg
 	 *            - 要显示的文字信息

@@ -21,9 +21,11 @@ import java.util.logging.LogRecord;
  * 错误筛选
  */
 public class ErrorFilter implements Filter {
+
 	public ErrorFilter() {
 	}
 
+	@Override
 	public boolean isLoggable(LogRecord record) {
 		return record.getThrown() != null;
 	}

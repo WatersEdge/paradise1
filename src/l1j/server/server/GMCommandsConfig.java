@@ -118,10 +118,8 @@ public class GMCommandsConfig {
 
 	public static Map<String, List<L1ItemSetItem>> ITEM_SETS = Maps.newMap();
 
-	private static Document loadXml(String file)
-			throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
+	private static Document loadXml(String file) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		return builder.parse(file);
 	}
 
@@ -130,13 +128,13 @@ public class GMCommandsConfig {
 			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
 			NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName()
-						.toLowerCase());
+				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
 				if (loader != null) {
 					loader.load((Element) nodes.item(i));
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "读取 GMCommands.xml 失败", e);
 		}
 	}

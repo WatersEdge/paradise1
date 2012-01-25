@@ -241,10 +241,11 @@ public class L1TowerInstance extends L1NpcInstance {
 
 	public boolean isSubTower() {
 		return ((getNpcTemplate().get_npcId() == 81190 // 守护塔:伊娃
-				) || (getNpcTemplate().get_npcId() == 81191 // 守护塔:帕格里奥
+				)
+				|| (getNpcTemplate().get_npcId() == 81191 // 守护塔:帕格里奥
 				) || (getNpcTemplate().get_npcId() == 81192 // 守护塔:马普勒
 				) || (getNpcTemplate().get_npcId() == 81193 // 守护塔:沙哈
-				));
+		));
 	}
 
 }

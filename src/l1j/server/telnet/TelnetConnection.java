@@ -51,10 +51,8 @@ public class TelnetConnection {
 
 				String cmd = null;
 				while (null != (cmd = in.readLine())) {
-					TelnetCommandResult result = TelnetCommandExecutor
-							.getInstance().execute(cmd);
-					out.write(result.getCode() + " " + result.getCodeMessage()
-							+ "\r\n");
+					TelnetCommandResult result = TelnetCommandExecutor.getInstance().execute(cmd);
+					out.write(result.getCode() + " " + result.getCodeMessage() + "\r\n");
 					out.write(result.getResult() + "\r\n");
 					out.flush();
 					// // for debug
@@ -62,13 +60,15 @@ public class TelnetConnection {
 					// result.getCodeMessage());
 					// System.out.println(result.getResult());
 				}
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				StreamUtil.close(isr, in);
 				StreamUtil.close(osw, out);
 			}
 			try {
 				_socket.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 			}
 		}
 	}

@@ -27,9 +27,13 @@ public class S_Dexup extends ServerBasePacket {
 
 	/**
 	 * 魔法效果:敏捷提升
-	 * @param pc 原始值
-	 * @param type 增加值
-	 * @param time 时间
+	 * 
+	 * @param pc
+	 *            原始值
+	 * @param type
+	 *            增加值
+	 * @param time
+	 *            时间
 	 */
 	public S_Dexup(L1PcInstance pc, int type, int time) {
 		writeC(Opcodes.S_OPCODE_DEXUP);

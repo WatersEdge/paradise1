@@ -25,11 +25,16 @@ import java.util.logging.Logger;
 import l1j.server.server.utils.IntRange;
 
 /**
- * 伺服器配置
+ * 伺服器配置器
  */
 public final class Config {
+
+	private Config() {
+	}
+
 	/** 提示信息 */
 	private static final Logger _log = Logger.getLogger(Config.class.getName());
+
 	/** 调试/侦错模式 */
 	public static final boolean DEBUG = false;
 
@@ -67,8 +72,7 @@ public final class Config {
 	/** 客户端编码 */
 	public static String CLIENT_LANGUAGE_CODE;
 	/** 编码的清单 */
-	public static String[] LANGUAGE_CODE_ARRAY =
-	{ "UTF8", "EUCKR", "UTF8", "BIG5", "SJIS", "GBK" };
+	public static String[] LANGUAGE_CODE_ARRAY = { "UTF8", "EUCKR", "UTF8", "BIG5", "SJIS", "GBK" };
 	/** DNS 反向验证 */
 	public static boolean HOSTNAME_LOOKUPS;
 	/** 客户端无动作时自动断线时间 */
@@ -127,7 +131,7 @@ public final class Config {
 	public static boolean Announcements_Cycle_Modify_Time;
 
 	// -----------------------------------------------------------------------------
-	// 游戏倍率相关  /** Rates Settings */
+	// 游戏倍率相关 /** Rates Settings */
 	// -----------------------------------------------------------------------------
 	/** 经验值倍率 */
 	public static double RATE_XP;
@@ -170,9 +174,9 @@ public final class Config {
 	/** 封印的历史书 */
 	public static int CREATE_CHANCE_HISTORY_BOOK;
 	/** 附魔石类型 */
-	public static int MAGIC_STONE_TYPE; // 附魔石类型
+	public static int MAGIC_STONE_TYPE;
 	/** 附魔石阶级 */
-	public static int MAGIC_STONE_LEVEL; // 附魔石阶级
+	public static int MAGIC_STONE_LEVEL;
 
 	// -----------------------------------------------------------------------------
 	// 游戏进阶相关 /** AltSettings Settings */
@@ -233,7 +237,7 @@ public final class Config {
 	public static int ALT_WAR_INTERVAL;
 	/** 攻城日的间隔单位 */
 	public static int ALT_WAR_INTERVAL_UNIT;
-	/**  */
+	/** 城堡纳税倍率 */
 	public static int ALT_RATE_OF_DUTY;
 	/** 范围性怪物刷新 */
 	public static boolean SPAWN_HOME_POINT;
@@ -279,17 +283,17 @@ public final class Config {
 	public static int KNIGHT_MAX_HP;
 	/** 骑士 MP 上限 */
 	public static int KNIGHT_MAX_MP;
-	/** 妖精 HP 上限 */
+	/** 精灵 HP 上限 */
 	public static int ELF_MAX_HP;
-	/** 妖精 MP 上限 */
+	/** 精灵 MP 上限 */
 	public static int ELF_MAX_MP;
 	/** 法师 HP 上限 */
 	public static int WIZARD_MAX_HP;
 	/** 法师 MP 上限 */
 	public static int WIZARD_MAX_MP;
-	/** 黑妖 HP 上限 */
+	/** 黑暗精灵 HP 上限 */
 	public static int DARKELF_MAX_HP;
-	/** 黑妖 MP 上限 */
+	/** 黑暗精灵 MP 上限 */
 	public static int DARKELF_MAX_MP;
 	/** 龙骑士 HP 上限 */
 	public static int DRAGONKNIGHT_MAX_HP;
@@ -411,7 +415,7 @@ public final class Config {
 	public static int NOVICE_MAX_LEVEL;
 	/** 启动新手保护机制 */
 	public static int NOVICE_PROTECTION_LEVEL_RANGE;
-	
+
 	// -----------------------------------------------------------------------------
 	// 游戏记录相关 /** Record Settings */
 	// -----------------------------------------------------------------------------
@@ -467,19 +471,19 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	// 设定档路径 /** Configuration files */
 	// -----------------------------------------------------------------------------
-	/** 伺服器设定档 */
+	/** 伺服器设定档路径 */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
-	/** 倍率设定档 */
+	/** 倍率设定档路径 */
 	public static final String RATES_CONFIG_FILE = "./config/rates.properties";
-	/** 进阶设定档 */
+	/** 进阶设定档路径 */
 	public static final String ALT_SETTINGS_FILE = "./config/altsettings.properties";
-	/** 角色设定档 */
+	/** 角色设定档路径 */
 	public static final String CHAR_SETTINGS_CONFIG_FILE = "./config/charsettings.properties";
-	/** 战斗特化设定档 */
+	/** 战斗特化设定档路径 */
 	public static final String FIGHT_SETTINGS_CONFIG_FILE = "./config/fights.properties";
-	/** 纪录设定档 */
+	/** 纪录设定档路径 */
 	public static final String RECORD_SETTINGS_CONFIG_FILE = "./config/record.properties";
-	/** 其他设定档 */
+	/** 其他设定档路径 */
 	public static final String OTHER_SETTINGS_CONFIG_FILE = "./config/othersettings.properties";
 
 	// -----------------------------------------------------------------------------
@@ -487,7 +491,7 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	/** 吸收每个 NPC 的 MP 上限 */
 	public static final int MANA_DRAIN_LIMIT_PER_NPC = 40;
-	/** 每一次攻击吸收的 MP 上限(玛那、钢铁玛那）*/
+	/** 每一次攻击吸收的 MP 上限(玛那、钢铁玛那） */
 	public static final int MANA_DRAIN_LIMIT_PER_SOM_ATTACK = 9;
 
 	/**
@@ -615,7 +619,7 @@ public final class Config {
 			ALT_TALKINGSCROLLQUEST = Boolean.parseBoolean(altSettings.getProperty("TalkingScrollQuest", "false"));
 			ALT_WHO_COMMAND = Boolean.parseBoolean(altSettings.getProperty("WhoCommand", "false"));
 			ALT_REVIVAL_POTION = Boolean.parseBoolean(altSettings.getProperty("RevivalPotion", "false"));
-			GDROPITEM_TIME = Integer.parseInt(altSettings.getProperty("GDropItemTime", "10")); 
+			GDROPITEM_TIME = Integer.parseInt(altSettings.getProperty("GDropItemTime", "10"));
 
 			String strWar;
 			strWar = altSettings.getProperty("WarTime", "2h");
@@ -786,8 +790,8 @@ public final class Config {
 			writeDropLog = Boolean.parseBoolean(recordSettings.getProperty("writeDropLog", "false"));
 			MysqlAutoBackup = Integer.parseInt(recordSettings.getProperty("MysqlAutoBackup", "false"));
 			CompressGzip = Boolean.parseBoolean(recordSettings.getProperty("CompressGzip", "false"));
-			
-		}catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + RECORD_SETTINGS_CONFIG_FILE);
 		}
@@ -800,19 +804,13 @@ public final class Config {
 			otherSettings.load(is);
 			is.close();
 
-			LvUpHpMpFull = Boolean.parseBoolean(otherSettings.getProperty(
-					"LvUpHpMpFull", "false"));
-			REST_TIME = Integer.parseInt(otherSettings.getProperty(
-					"RestartTime", "240"));
-			HOURLY_CHIME = Boolean.parseBoolean(otherSettings.getProperty(
-					"HourlyChime", "false"));
+			LvUpHpMpFull = Boolean.parseBoolean(otherSettings.getProperty("LvUpHpMpFull", "false"));
+			REST_TIME = Integer.parseInt(otherSettings.getProperty("RestartTime", "240"));
+			HOURLY_CHIME = Boolean.parseBoolean(otherSettings.getProperty("HourlyChime", "false"));
 			// 能力值上限调整原创 by 阿傑
-			BONUS_STATS1 = Integer.parseInt(otherSettings.getProperty(
-					"BONUS_STATS1", "35"));
-			BONUS_STATS2 = Integer.parseInt(otherSettings.getProperty(
-					"BONUS_STATS2", "5"));
-			BONUS_STATS3 = Integer.parseInt(otherSettings.getProperty(
-					"BONUS_STATS3", "35"));
+			BONUS_STATS1 = Integer.parseInt(otherSettings.getProperty("BONUS_STATS1", "35"));
+			BONUS_STATS2 = Integer.parseInt(otherSettings.getProperty("BONUS_STATS2", "5"));
+			BONUS_STATS3 = Integer.parseInt(otherSettings.getProperty("BONUS_STATS3", "35"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -833,7 +831,12 @@ public final class Config {
 		}
 	}
 
-	/** 设置参数值 */
+	/**
+	 * 设置参数值
+	 * 
+	 * @param pName
+	 * @param pValue
+	 */
 	public static boolean setParameterValue(String pName, String pValue) {
 		// server.properties
 		if (pName.equalsIgnoreCase("GameserverHostname")) {
@@ -885,7 +888,7 @@ public final class Config {
 			ILLEGAL_SPEEDUP_PUNISHMENT = Integer.parseInt(pValue);
 		}
 		else if (pName.equalsIgnoreCase("AnnounceTimeDisplay")) {
-		    Announcements_Cycle_Modify_Time = Boolean.parseBoolean(pValue);
+			Announcements_Cycle_Modify_Time = Boolean.parseBoolean(pValue);
 		}
 		// rates.properties
 		else if (pName.equalsIgnoreCase("RateXp")) {
@@ -1006,8 +1009,8 @@ public final class Config {
 		else if (pName.equalsIgnoreCase("DefaultCharacterSlot")) {
 			DEFAULT_CHARACTER_SLOT = Integer.valueOf(pValue);
 		}
-	    else if (pName.equalsIgnoreCase("GDropItemTime")) { 
-				GDROPITEM_TIME = Integer.parseInt(pValue);
+		else if (pName.equalsIgnoreCase("GDropItemTime")) {
+			GDROPITEM_TIME = Integer.parseInt(pValue);
 		}
 
 		// charsettings.properties
@@ -1203,7 +1206,8 @@ public final class Config {
 		else if (pName.equalsIgnoreCase("Lv99Exp")) {
 			LV99_EXP = Integer.parseInt(pValue);
 		}
-		//record.properties
+
+		// record.properties
 		else if (pName.equalsIgnoreCase("LoggingWeaponEnchant")) {
 			LOGGING_WEAPON_ENCHANT = Byte.parseByte(pValue);
 		}
@@ -1230,8 +1234,5 @@ public final class Config {
 			return false;
 		}
 		return true;
-	}
-
-	private Config() {
 	}
 }

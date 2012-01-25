@@ -27,6 +27,7 @@ public class S_Lawful extends ServerBasePacket {
 
 	/**
 	 * 正义值更新
+	 * 
 	 * @param objid
 	 * @param lawful
 	 */

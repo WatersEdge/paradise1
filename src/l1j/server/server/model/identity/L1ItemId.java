@@ -19,7 +19,7 @@ package l1j.server.server.model.identity;
  */
 public class L1ItemId {
 
-    //一段加速类道具
+	// 一段加速类道具
 	/** 自我加速药水ン */
 	public static final int POTION_OF_HASTE_SELF = 40013;
 
@@ -32,7 +32,7 @@ public class L1ItemId {
 	/** 受祝福的 强化 自我加速药水 */
 	public static final int B_POTION_OF_GREATER_HASTE_SELF = 140018;
 
-    //二段加速类道具
+	// 二段加速类道具
 	/** 勇敢药水 */
 	public static final int POTION_OF_EMOTION_BRAVERY = 40014;
 
@@ -56,18 +56,18 @@ public class L1ItemId {
 
 	/** 受祝福的精灵饼干 */
 	public static final int B_ELVEN_WAFER = 140068;
-	
+
 	/** 福利森林药水 */
 	public static final int W_POTION_OF_FOREST = 49304;
 
 	/** 生命之树果实 */
 	public static final int FORBIDDEN_FRUIT = 49158;
 
-    //三段加速类道具
+	// 三段加速类道具
 	/** 巧克力蛋糕 */
 	public static final int CHOCOLATE_CAKE = 49138;
 
-    //治愈类道具
+	// 治愈类道具
 	/** 治愈药水 */
 	public static final int POTION_OF_HEALING = 40010;
 
@@ -101,7 +101,7 @@ public class L1ItemId {
 	/** 万圣节南瓜派 */
 	public static final int HALLOWEEN_PUMPKIN_PIE = 400000;
 
-    //药水类道具
+	// 药水类道具
 	/** 蓝色药水 */
 	public static final int POTION_OF_MANA = 40015;
 
@@ -126,7 +126,7 @@ public class L1ItemId {
 	/** 黑色药水 */
 	public static final int POTION_OF_BLINDNESS = 40025;
 
-    //卷轴类道具
+	// 卷轴类道具
 	/** 对盔甲施法的卷轴 */
 	public static final int SCROLL_OF_ENCHANT_ARMOR = 40074;
 
@@ -148,7 +148,7 @@ public class L1ItemId {
 	/** 试炼卷轴 */
 	public static final int SCROLL_OF_ENCHANT_QUEST_WEAPON = 40660;
 
-    //其他类道具
+	// 其他类道具
 	/** 150%神力药水 */
 	public static final int POTION_OF_EXP_150 = 47000;
 

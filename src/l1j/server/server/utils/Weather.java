@@ -26,8 +26,7 @@ public class Weather {
 	/**
 	 * @宣告
 	 */
-	private static int[] WeatherId =
-	{ 0, 1, 2, 3, 16, 17, 18, 19 };
+	private static int[] WeatherId = { 0, 1, 2, 3, 16, 17, 18, 19 };
 
 	/**
 	 * @天气 0<无雪雨> 1<小雪>、2<中雪> 3<大雪> 16<停止下雨> 17<小雨> 18<中雨> 19<大雨>

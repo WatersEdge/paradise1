@@ -31,6 +31,7 @@ public class S_Teleport extends ServerBasePacket {
 
 	/**
 	 * 传送术或瞬移卷-传送锁定
+	 * 
 	 * @param pc
 	 */
 	public S_Teleport(L1PcInstance pc) {

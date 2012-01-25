@@ -44,7 +44,7 @@ public class C_Attack extends ClientBasePacket {
 
 		L1PcInstance pc = client.getActiveChar();
 
-		if (pc.isGhost() || pc.isDead() || pc.isTeleport()|| pc.isParalyzed() || pc.isSleeped()) {
+		if (pc.isGhost() || pc.isDead() || pc.isTeleport() || pc.isParalyzed() || pc.isSleeped()) {
 			return;
 		}
 
@@ -69,8 +69,7 @@ public class C_Attack extends ClientBasePacket {
 
 		if (target instanceof L1Character) {
 			// 如果目标距离玩家太远(外挂)
-			if ((target.getMapId() != pc.getMapId())
-					|| (pc.getLocation().getLineDistance(target.getLocation()) > 20D)) {
+			if ((target.getMapId() != pc.getMapId()) || (pc.getLocation().getLineDistance(target.getLocation()) > 20D)) {
 				return;
 			}
 		}
@@ -78,8 +77,7 @@ public class C_Attack extends ClientBasePacket {
 		if (target instanceof L1NpcInstance) {
 			int hiddenStatus = ((L1NpcInstance) target).getHiddenStatus();
 			// 如果目标躲到土里面，或是飞起來了
-			if ((hiddenStatus == L1NpcInstance.HIDDEN_STATUS_SINK)
-					|| (hiddenStatus == L1NpcInstance.HIDDEN_STATUS_FLY)) {
+			if ((hiddenStatus == L1NpcInstance.HIDDEN_STATUS_SINK) || (hiddenStatus == L1NpcInstance.HIDDEN_STATUS_FLY)) {
 				return;
 			}
 		}
@@ -87,8 +85,7 @@ public class C_Attack extends ClientBasePacket {
 		// 是否要检查攻击的间隔
 		if (Config.CHECK_ATTACK_INTERVAL) {
 			int result;
-			result = pc.getAcceleratorChecker().checkInterval(
-					AcceleratorChecker.ACT_TYPE.ATTACK);
+			result = pc.getAcceleratorChecker().checkInterval(AcceleratorChecker.ACT_TYPE.ATTACK);
 			if (result == AcceleratorChecker.R_DISPOSED) {
 				return;
 			}
@@ -105,10 +102,10 @@ public class C_Attack extends ClientBasePacket {
 
 		pc.setRegenState(REGENSTATE_ATTACK);
 
-		if ((target != null)
-				&& !((L1Character) target).isDead()) {
+		if ((target != null) && !((L1Character) target).isDead()) {
 			target.onAction(pc);
-		} else { // 目标为空或死亡
+		}
+		else { // 目标为空或死亡
 			L1Character cha = new L1Character();
 			cha.setId(targetId);
 			cha.setX(x);

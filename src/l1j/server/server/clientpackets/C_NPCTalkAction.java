@@ -51,7 +51,8 @@ public class C_NPCTalkAction extends ClientBasePacket {
 		try {
 			L1NpcInstance npc = (L1NpcInstance) obj;
 			npc.onFinalAction(activeChar, action);
-		} catch (ClassCastException e) {
+		}
+		catch (ClassCastException e) {
 		}
 	}
 

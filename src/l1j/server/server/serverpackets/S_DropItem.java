@@ -65,7 +65,8 @@ public class S_DropItem extends ServerBasePacket {
 		if (item.getCount() > 1) {
 			if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅馆钥匙
 				writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
-			} else {
+			}
+			else {
 				writeS(itemName + " (" + item.getCount() + ")");
 			}
 		}

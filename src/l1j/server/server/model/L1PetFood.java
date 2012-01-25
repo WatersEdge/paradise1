@@ -49,13 +49,13 @@ public class L1PetFood extends TimerTask {
 				_pet.setCurrentPetStatus(3);
 
 				// 非常饿时提醒主人
-				L1PetType type = PetTypeTable.getInstance().get(
-						_pet.getNpcTemplate().get_npcId());
+				L1PetType type = PetTypeTable.getInstance().get(_pet.getNpcTemplate().get_npcId());
 				int id = type.getDefyMessageId();
 				if (id != 0) {
 					_pet.broadcastPacket(new S_NpcChatPacket(_pet, "$" + id, 0));
 				}
-			} else {
+			}
+			else {
 				_pet.set_food(_food);
 			}
 			if (_l1pet != null) {
@@ -63,7 +63,8 @@ public class L1PetFood extends TimerTask {
 				_l1pet.set_food(_pet.get_food());
 				PetTable.getInstance().storePetFood(_l1pet);
 			}
-		} else {
+		}
+		else {
 			cancel();
 		}
 	}

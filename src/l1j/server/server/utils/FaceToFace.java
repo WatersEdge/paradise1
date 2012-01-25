@@ -33,6 +33,7 @@ public class FaceToFace {
 
 	/**
 	 * 面向物件判断
+	 * 
 	 * @param pc
 	 */
 	public static L1PcInstance faceToFace(L1PcInstance pc) {

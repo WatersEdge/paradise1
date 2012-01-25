@@ -102,7 +102,8 @@ public class AcceleratorChecker {
 				return R_DISPOSED;
 			}
 			result = R_DETECTED;
-		} else if (interval >= rightInterval) {
+		}
+		else if (interval >= rightInterval) {
 			_justiceCount++;
 			if (_justiceCount >= JUSTICE_COUNT_LIMIT) {
 				_injusticeCount = 0;
@@ -122,22 +123,25 @@ public class AcceleratorChecker {
 
 	/**
 	 * 加速检测处罚
-	 * @param punishmaent 处罚模式
+	 * 
+	 * @param punishmaent
+	 *            处罚模式
 	 */
 	private void doPunishment(int punishmaent) {
 		if (!_pc.isGm()) { // 如果不是GM才执行处罚
-			int x = _pc.getX() ,y = _pc.getY() ,mapid = _pc.getMapId(); // 记录坐标
+			int x = _pc.getX(), y = _pc.getY(), mapid = _pc.getMapId(); // 记录坐标
 			switch (punishmaent) {
 			case 0: // 剔除
 				_pc.sendPackets(new S_ServerMessage(945));
 				_pc.sendPackets(new S_Disconnect());
-				_log.info(String.format("因为检测到%s正在使用加速器，强制切断其连线。",_pc.getName()));
+				_log.info(String.format("因为检测到%s正在使用加速器，强制切断其连线。", _pc.getName()));
 				break;
 			case 1: // 锁定人物10秒
 				_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
 				try {
 					Thread.sleep(10000); // 暂停十秒
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					System.out.println(e.getLocalizedMessage());
 				}
 				_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, false));
@@ -147,7 +151,8 @@ public class AcceleratorChecker {
 				_pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了地域，10秒后传回。"));
 				try {
 					Thread.sleep(10000); // 暂停十秒
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					System.out.println(e.getLocalizedMessage());
 				}
 				L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
@@ -157,13 +162,15 @@ public class AcceleratorChecker {
 				_pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了GM房，30秒后传回。"));
 				try {
 					Thread.sleep(30000); // 暂停30秒
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					System.out.println(e.getLocalizedMessage());
 				}
 				L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
 				break;
 			}
-		} else {
+		}
+		else {
 			// GM不需要断线
 			_pc.sendPackets(new S_SystemMessage("游戏管理员在游戏中使用加速器检测中。"));
 			_injusticeCount = 0;
@@ -188,20 +195,16 @@ public class AcceleratorChecker {
 		// 动作判断
 		switch (type) {
 		case ATTACK:
-			interval = SprTable.getInstance().getAttackSpeed(
-					_pc.getTempCharGfx(), _pc.getCurrentWeapon() + 1);
+			interval = SprTable.getInstance().getAttackSpeed(_pc.getTempCharGfx(), _pc.getCurrentWeapon() + 1);
 			break;
 		case MOVE:
-			interval = SprTable.getInstance().getMoveSpeed(
-					_pc.getTempCharGfx(), _pc.getCurrentWeapon());
+			interval = SprTable.getInstance().getMoveSpeed(_pc.getTempCharGfx(), _pc.getCurrentWeapon());
 			break;
 		case SPELL_DIR:
-			interval = SprTable.getInstance().getDirSpellSpeed(
-					_pc.getTempCharGfx());
+			interval = SprTable.getInstance().getDirSpellSpeed(_pc.getTempCharGfx());
 			break;
 		case SPELL_NODIR:
-			interval = SprTable.getInstance().getNodirSpellSpeed(
-					_pc.getTempCharGfx());
+			interval = SprTable.getInstance().getNodirSpellSpeed(_pc.getTempCharGfx());
 			break;
 		default:
 			return 0;

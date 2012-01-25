@@ -114,8 +114,7 @@ public class Getback {
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, "不能获取Getback数据", e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -182,20 +181,20 @@ public class Getback {
 	private static int[] ReadGetbackInfo(Getback getback, int nPosition) {
 		int[] loc = new int[3];
 		switch (nPosition) {
-			case 0:
-				loc[0] = getback._getbackX1;
-				loc[1] = getback._getbackY1;
-				break;
+		case 0:
+			loc[0] = getback._getbackX1;
+			loc[1] = getback._getbackY1;
+			break;
 
-			case 1:
-				loc[0] = getback._getbackX2;
-				loc[1] = getback._getbackY2;
-				break;
+		case 1:
+			loc[0] = getback._getbackX2;
+			loc[1] = getback._getbackY2;
+			break;
 
-			case 2:
-				loc[0] = getback._getbackX3;
-				loc[1] = getback._getbackY3;
-				break;
+		case 2:
+			loc[0] = getback._getbackX3;
+			loc[1] = getback._getbackY3;
+			break;
 		}
 		loc[2] = getback._getbackMapId;
 

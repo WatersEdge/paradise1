@@ -55,184 +55,184 @@ public class C_SkillBuyOK extends ClientBasePacket {
 		for (int i = 0; i < count; i++) {
 			sid[i] = readD();
 			switch (sid[i]) {
-				// Lv1魔法
-				case 0:
-					level1 += 1;
-					level1_cost += 100;
-					break;
-				case 1:
-					level1 += 2;
-					level1_cost += 100;
-					break;
-				case 2:
-					level1 += 4;
-					level1_cost += 100;
-					break;
-				case 3:
-					level1 += 8;
-					level1_cost += 100;
-					break;
-				case 4:
-					level1 += 16;
-					level1_cost += 100;
-					break;
-				case 5:
-					level1 += 32;
-					level1_cost += 100;
-					break;
-				case 6:
-					level1 += 64;
-					level1_cost += 100;
-					break;
-				case 7:
-					level1 += 128;
-					level1_cost += 100;
-					break;
+			// Lv1魔法
+			case 0:
+				level1 += 1;
+				level1_cost += 100;
+				break;
+			case 1:
+				level1 += 2;
+				level1_cost += 100;
+				break;
+			case 2:
+				level1 += 4;
+				level1_cost += 100;
+				break;
+			case 3:
+				level1 += 8;
+				level1_cost += 100;
+				break;
+			case 4:
+				level1 += 16;
+				level1_cost += 100;
+				break;
+			case 5:
+				level1 += 32;
+				level1_cost += 100;
+				break;
+			case 6:
+				level1 += 64;
+				level1_cost += 100;
+				break;
+			case 7:
+				level1 += 128;
+				level1_cost += 100;
+				break;
 
-				// Lv2魔法
-				case 8:
-					level2 += 1;
-					level2_cost += 400;
-					break;
-				case 9:
-					level2 += 2;
-					level2_cost += 400;
-					break;
-				case 10:
-					level2 += 4;
-					level2_cost += 400;
-					break;
-				case 11:
-					level2 += 8;
-					level2_cost += 400;
-					break;
-				case 12:
-					level2 += 16;
-					level2_cost += 400;
-					break;
-				case 13:
-					level2 += 32;
-					level2_cost += 400;
-					break;
-				case 14:
-					level2 += 64;
-					level2_cost += 400;
-					break;
-				case 15:
-					level2 += 128;
-					level2_cost += 400;
-					break;
+			// Lv2魔法
+			case 8:
+				level2 += 1;
+				level2_cost += 400;
+				break;
+			case 9:
+				level2 += 2;
+				level2_cost += 400;
+				break;
+			case 10:
+				level2 += 4;
+				level2_cost += 400;
+				break;
+			case 11:
+				level2 += 8;
+				level2_cost += 400;
+				break;
+			case 12:
+				level2 += 16;
+				level2_cost += 400;
+				break;
+			case 13:
+				level2 += 32;
+				level2_cost += 400;
+				break;
+			case 14:
+				level2 += 64;
+				level2_cost += 400;
+				break;
+			case 15:
+				level2 += 128;
+				level2_cost += 400;
+				break;
 
-				// Lv3魔法
-				case 16:
-					level3 += 1;
-					level3_cost += 900;
-					break;
-				case 17:
-					level3 += 2;
-					level3_cost += 900;
-					break;
-				case 18:
-					level3 += 4;
-					level3_cost += 900;
-					break;
-				case 19:
-					level3 += 8;
-					level3_cost += 900;
-					break;
-				case 20:
-					level3 += 16;
-					level3_cost += 900;
-					break;
-				case 21:
-					level3 += 32;
-					level3_cost += 900;
-					break;
-				case 22:
-					level3 += 64;
-					level3_cost += 900;
-					break;
-				case 23:
-					level3 += 128;
-					level3_cost += 900;
-					break;
+			// Lv3魔法
+			case 16:
+				level3 += 1;
+				level3_cost += 900;
+				break;
+			case 17:
+				level3 += 2;
+				level3_cost += 900;
+				break;
+			case 18:
+				level3 += 4;
+				level3_cost += 900;
+				break;
+			case 19:
+				level3 += 8;
+				level3_cost += 900;
+				break;
+			case 20:
+				level3 += 16;
+				level3_cost += 900;
+				break;
+			case 21:
+				level3 += 32;
+				level3_cost += 900;
+				break;
+			case 22:
+				level3 += 64;
+				level3_cost += 900;
+				break;
+			case 23:
+				level3 += 128;
+				level3_cost += 900;
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 
 		if (!pc.isGm()) {
 			switch (pc.getType()) {
-				case 0: // 君主
-					if (pc.getLevel() < 10) {
-						level1 = 0;
-						level1_cost = 0;
-					}
-					if (pc.getLevel() < 20) {
-						level2 = 0;
-						level2_cost = 0;
-					}
-					level3 = 0;
-					level3_cost = 0;
-					break;
-
-				case 1: // 骑士
-					if (pc.getLevel() < 50) {
-						level1 = 0;
-						level1_cost = 0;
-					}
+			case 0: // 君主
+				if (pc.getLevel() < 10) {
+					level1 = 0;
+					level1_cost = 0;
+				}
+				if (pc.getLevel() < 20) {
 					level2 = 0;
 					level2_cost = 0;
+				}
+				level3 = 0;
+				level3_cost = 0;
+				break;
+
+			case 1: // 骑士
+				if (pc.getLevel() < 50) {
+					level1 = 0;
+					level1_cost = 0;
+				}
+				level2 = 0;
+				level2_cost = 0;
+				level3 = 0;
+				level3_cost = 0;
+				break;
+
+			case 2: // 精灵
+				if (pc.getLevel() < 8) {
+					level1 = 0;
+					level1_cost = 0;
+				}
+				if (pc.getLevel() < 16) {
+					level2 = 0;
+					level2_cost = 0;
+				}
+				if (pc.getLevel() < 24) {
 					level3 = 0;
 					level3_cost = 0;
-					break;
+				}
+				break;
 
-				case 2: // 精灵
-					if (pc.getLevel() < 8) {
-						level1 = 0;
-						level1_cost = 0;
-					}
-					if (pc.getLevel() < 16) {
-						level2 = 0;
-						level2_cost = 0;
-					}
-					if (pc.getLevel() < 24) {
-						level3 = 0;
-						level3_cost = 0;
-					}
-					break;
-
-				case 3: // 法师(WIZ)
-					if (pc.getLevel() < 4) {
-						level1 = 0;
-						level1_cost = 0;
-					}
-					if (pc.getLevel() < 8) {
-						level2 = 0;
-						level2_cost = 0;
-					}
-					if (pc.getLevel() < 12) {
-						level3 = 0;
-						level3_cost = 0;
-					}
-					break;
-
-				case 4: // 黑暗精灵(DE)
-					if (pc.getLevel() < 12) {
-						level1 = 0;
-						level1_cost = 0;
-					}
-					if (pc.getLevel() < 24) {
-						level2 = 0;
-						level2_cost = 0;
-					}
+			case 3: // 法师(WIZ)
+				if (pc.getLevel() < 4) {
+					level1 = 0;
+					level1_cost = 0;
+				}
+				if (pc.getLevel() < 8) {
+					level2 = 0;
+					level2_cost = 0;
+				}
+				if (pc.getLevel() < 12) {
 					level3 = 0;
 					level3_cost = 0;
-					break;
+				}
+				break;
 
-				default:
-					break;
+			case 4: // 黑暗精灵(DE)
+				if (pc.getLevel() < 12) {
+					level1 = 0;
+					level1_cost = 0;
+				}
+				if (pc.getLevel() < 24) {
+					level2 = 0;
+					level2_cost = 0;
+				}
+				level3 = 0;
+				level3_cost = 0;
+				break;
+
+			default:
+				break;
 			}
 		}
 

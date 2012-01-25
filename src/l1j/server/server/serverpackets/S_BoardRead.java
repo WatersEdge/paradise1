@@ -28,6 +28,7 @@ public class S_BoardRead extends ServerBasePacket {
 
 	/**
 	 * 布告栏内容 (讯息阅读)
+	 * 
 	 * @param number
 	 */
 	public S_BoardRead(int number) {

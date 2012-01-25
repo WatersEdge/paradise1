@@ -116,8 +116,7 @@ public class L1Location extends Point {
 	}
 
 	/**
-	 * 对于这个Location、返回随机移动范围的Location。
-	 * 对于随机传送、城堡区域、藏身处のLocation将不返回。
+	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
 	 * 
 	 * @param max
 	 *            随机范围的最大值
@@ -130,8 +129,7 @@ public class L1Location extends Point {
 	}
 
 	/**
-	 * 对于这个Location、返回随机移动范围的Location。
-	 * 对于随机传送、城堡区域、藏身处のLocation将不返回。
+	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
 	 * 
 	 * @param min
 	 *            随机范围的最小值(0包含自身的坐标)
@@ -146,8 +144,7 @@ public class L1Location extends Point {
 	}
 
 	/**
-	 * 对于参数的Location、返回随机移动范围的Location。
-	 * 对于随机传送、城堡区域、藏身处のLocation将不返回。
+	 * 对于参数的Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
 	 * 
 	 * @param baseLocation
 	 *            随机范围中的Location

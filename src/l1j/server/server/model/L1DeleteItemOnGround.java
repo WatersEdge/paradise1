@@ -50,23 +50,21 @@ public class L1DeleteItemOnGround {
 			for (;;) {
 				try {
 					Thread.sleep(time);
-				} catch (Exception exception) {
+				}
+				catch (Exception exception) {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
-				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, L1Message.onGroundItem,
-								L1Message.secondsDelete + "。"));
+				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage(166, L1Message.onGroundItem, L1Message.secondsDelete + "。"));
 				try {
 					Thread.sleep(10000);
-				} catch (Exception exception) {
+				}
+				catch (Exception exception) {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
 				deleteItem();
-				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, L1Message.onGroundItem,
-								L1Message.deleted + "。"));
+				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage(166, L1Message.onGroundItem, L1Message.deleted + "。"));
 			}
 		}
 	}
@@ -95,17 +93,13 @@ public class L1DeleteItemOnGround {
 			if (item.getItem().getItemId() == 40515) { // 元素石
 				continue;
 			}
-			if (L1HouseLocation.isInHouse(item.getX(), item.getY(),
-					item.getMapId())) { // 藏身点(アジト内)
+			if (L1HouseLocation.isInHouse(item.getX(), item.getY(), item.getMapId())) { // 藏身点(アジト内)
 				continue;
 			}
 
-			List<L1PcInstance> players = L1World.getInstance()
-					.getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
+			List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
 			if (players.isEmpty()) { // 删除人物指定范围内的道具
-				L1Inventory groundInventory = L1World
-						.getInstance()
-						.getInventory(item.getX(), item.getY(), item.getMapId());
+				L1Inventory groundInventory = L1World.getInstance().getInventory(item.getX(), item.getY(), item.getMapId());
 				groundInventory.removeItem(item);
 				numOfDeleted++;
 			}

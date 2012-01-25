@@ -42,7 +42,8 @@ public class Base64 {
 		byte[] encoded = encode(bytes);
 		try {
 			return new String(encoded, "ASCII");
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 	}
@@ -57,18 +58,19 @@ public class Base64 {
 	 * @return 编码后的字串
 	 * @throws RuntimeException
 	 */
-	public static String encode(String str, String charset)
-			throws RuntimeException {
+	public static String encode(String str, String charset) throws RuntimeException {
 		byte[] bytes;
 		try {
 			bytes = str.getBytes(charset);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 		byte[] encoded = encode(bytes);
 		try {
 			return new String(encoded, "ASCII");
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 	}
@@ -85,7 +87,8 @@ public class Base64 {
 		byte[] bytes;
 		try {
 			bytes = str.getBytes("ASCII");
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
@@ -102,18 +105,19 @@ public class Base64 {
 	 * @return 解码后的字串
 	 * @throws RuntimeException
 	 */
-	public static String decode(String str, String charset)
-			throws RuntimeException {
+	public static String decode(String str, String charset) throws RuntimeException {
 		byte[] bytes;
 		try {
 			bytes = str.getBytes("ASCII");
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("ASCII is not supported!", e);
 		}
 		byte[] decoded = decode(bytes);
 		try {
 			return new String(decoded, charset);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("Unsupported charset: " + charset, e);
 		}
 	}
@@ -139,23 +143,25 @@ public class Base64 {
 	 * @return 编码后的位元组
 	 * @throws RuntimeException
 	 */
-	public static byte[] encode(byte[] bytes, int wrapAt)
-			throws RuntimeException {
+	public static byte[] encode(byte[] bytes, int wrapAt) throws RuntimeException {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			encode(inputStream, outputStream, wrapAt);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException("Unexpected I/O error", e);
 		} finally {
 			try {
 				inputStream.close();
-			} catch (Throwable t) {
+			}
+			catch (Throwable t) {
 
 			}
 			try {
 				outputStream.close();
-			} catch (Throwable t) {
+			}
+			catch (Throwable t) {
 
 			}
 		}
@@ -175,17 +181,20 @@ public class Base64 {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			decode(inputStream, outputStream);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException("Unexpected I/O error", e);
 		} finally {
 			try {
 				inputStream.close();
-			} catch (Throwable t) {
+			}
+			catch (Throwable t) {
 
 			}
 			try {
 				outputStream.close();
-			} catch (Throwable t) {
+			}
+			catch (Throwable t) {
 
 			}
 		}
@@ -194,29 +203,28 @@ public class Base64 {
 
 	/**
 	 * <b> 将来源串流编码后，输出到目标串流
-	 * @param inputStream 来源串流
-	 * @param outputStream 目标串流
+	 * 
+	 * @param inputStream
+	 *            来源串流
+	 * @param outputStream
+	 *            目标串流
 	 * @throws IOException
 	 */
-	public static void encode(InputStream inputStream, OutputStream outputStream)
-			throws IOException {
+	public static void encode(InputStream inputStream, OutputStream outputStream) throws IOException {
 		encode(inputStream, outputStream, 0);
 	}
 
-	public static void encode(InputStream inputStream,
-			OutputStream outputStream, int wrapAt) throws IOException {
+	public static void encode(InputStream inputStream, OutputStream outputStream, int wrapAt) throws IOException {
 		Base64OutputStream aux = new Base64OutputStream(outputStream, wrapAt);
 		copy(inputStream, aux);
 		aux.commit();
 	}
 
-	public static void decode(InputStream inputStream, OutputStream outputStream)
-			throws IOException {
+	public static void decode(InputStream inputStream, OutputStream outputStream) throws IOException {
 		copy(new Base64InputStream(inputStream), outputStream);
 	}
 
-	public static void encode(File source, File target, int wrapAt)
-			throws IOException {
+	public static void encode(File source, File target, int wrapAt) throws IOException {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		try {
@@ -227,14 +235,16 @@ public class Base64 {
 			if (outputStream != null) {
 				try {
 					outputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
 			if (inputStream != null) {
 				try {
 					inputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
@@ -252,14 +262,16 @@ public class Base64 {
 			if (outputStream != null) {
 				try {
 					outputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
 			if (inputStream != null) {
 				try {
 					inputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
@@ -268,8 +280,11 @@ public class Base64 {
 
 	/**
 	 * <b> 将来源串流解码后，输出到目标串流
-	 * @param inputStream 来源串流
-	 * @param outputStream 目标串流
+	 * 
+	 * @param inputStream
+	 *            来源串流
+	 * @param outputStream
+	 *            目标串流
 	 * @throws IOException
 	 */
 	public static void decode(File source, File target) throws IOException {
@@ -283,22 +298,23 @@ public class Base64 {
 			if (outputStream != null) {
 				try {
 					outputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
 			if (inputStream != null) {
 				try {
 					inputStream.close();
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 
 				}
 			}
 		}
 	}
 
-	private static void copy(InputStream inputStream, OutputStream outputStream)
-			throws IOException {
+	private static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
 		// 1KB buffer
 		byte[] b = new byte[1024];
 		int len;

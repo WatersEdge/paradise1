@@ -1,7 +1,7 @@
 package l1j.server.server.model.identity;
 
 /**
- * <h1> magicdoll.tbl 字串编号 (52)
+ * <h1>magicdoll.tbl 字串编号 (52)
  */
 public class L1MagicDollId {
 	/** 魔法娃娃：小思克巴 */

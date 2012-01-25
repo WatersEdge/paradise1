@@ -41,11 +41,9 @@ public class C_CharReset extends ClientBasePacket {
 	private static Logger _log = Logger.getLogger(C_CharReset.class.getName());
 
 	/**
-	 * //配置完初期点数 按确定 127.0.0.1 Request Work ID : 120 0000: 78 01 0d 0a 0b 0a 12
-	 * 0d
+	 * //配置完初期点数 按确定 127.0.0.1 Request Work ID : 120 0000: 78 01 0d 0a 0b 0a 12 0d
 	 * 
-	 * //提升10及 127.0.0.1 Request Work ID : 120 0000: 78 02 07 00 //提升1及
-	 * 127.0.0.1 Request Work ID : 120 0000: 78 02 00 04
+	 * //提升10及 127.0.0.1 Request Work ID : 120 0000: 78 02 07 00 //提升1及 127.0.0.1 Request Work ID : 120 0000: 78 02 00 04
 	 * 
 	 * //提升完等级 127.0.0.1 Request Work ID : 120 0000: 78 02 08 00 x...
 	 * 
@@ -108,24 +106,24 @@ public class C_CharReset extends ClientBasePacket {
 			}
 			else if (type2 == 0x08) {
 				switch (readC()) {
-					case 1:
-						pc.addBaseStr((byte) 1);
-						break;
-					case 2:
-						pc.addBaseInt((byte) 1);
-						break;
-					case 3:
-						pc.addBaseWis((byte) 1);
-						break;
-					case 4:
-						pc.addBaseDex((byte) 1);
-						break;
-					case 5:
-						pc.addBaseCon((byte) 1);
-						break;
-					case 6:
-						pc.addBaseCha((byte) 1);
-						break;
+				case 1:
+					pc.addBaseStr((byte) 1);
+					break;
+				case 2:
+					pc.addBaseInt((byte) 1);
+					break;
+				case 3:
+					pc.addBaseWis((byte) 1);
+					break;
+				case 4:
+					pc.addBaseDex((byte) 1);
+					break;
+				case 5:
+					pc.addBaseCon((byte) 1);
+					break;
+				case 6:
+					pc.addBaseCha((byte) 1);
+					break;
 				}
 				if (pc.getElixirStats() > 0) {
 					pc.sendPackets(new S_CharReset(pc.getElixirStats()));
@@ -203,8 +201,7 @@ public class C_CharReset extends ClientBasePacket {
 			pc.addBaseMaxMp(randomMp);
 		}
 		int newAc = CalcStat.calcAc(pc.getTempLevel(), pc.getBaseDex());
-		pc.sendPackets(new S_CharReset(pc, pc.getTempLevel(), pc.getBaseMaxHp(), pc.getBaseMaxMp(), newAc, pc.getBaseStr(), pc.getBaseInt(), pc
-				.getBaseWis(), pc.getBaseDex(), pc.getBaseCon(), pc.getBaseCha()));
+		pc.sendPackets(new S_CharReset(pc, pc.getTempLevel(), pc.getBaseMaxHp(), pc.getBaseMaxMp(), newAc, pc.getBaseStr(), pc.getBaseInt(), pc.getBaseWis(), pc.getBaseDex(), pc.getBaseCon(), pc.getBaseCha()));
 	}
 
 	@Override

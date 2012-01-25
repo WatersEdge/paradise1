@@ -86,7 +86,8 @@ public class InnTable {
 
 				inn._inn.put(Integer.valueOf(roomNumber), l1inn);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -115,7 +116,8 @@ public class InnTable {
 			pstm.setInt(5, inn.getInnNpcId());
 			pstm.setInt(6, inn.getRoomNumber());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

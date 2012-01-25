@@ -27,23 +27,18 @@ import l1j.server.server.types.Point;
  */
 public class L1HouseLocation {
 
-	private static final int[] TELEPORT_LOC_MAPID =
-	{ 4, 4, 4, 350, };
+	private static final int[] TELEPORT_LOC_MAPID = { 4, 4, 4, 350, };
 
-	private static final Point[] TELEPORT_LOC_GIRAN =
-	{ new Point(33419, 32810), new Point(33343, 32723), // 倉庫、ペット保管所
+	private static final Point[] TELEPORT_LOC_GIRAN = { new Point(33419, 32810), new Point(33343, 32723), // 倉庫、ペット保管所
 			new Point(33553, 32712), new Point(32702, 32842), }; // 贖罪の使者、ギラン市場
 
-	private static final Point[] TELEPORT_LOC_HEINE =
-	{ new Point(33604, 33236), new Point(33649, 33413), // 倉庫、ペット保管所
+	private static final Point[] TELEPORT_LOC_HEINE = { new Point(33604, 33236), new Point(33649, 33413), // 倉庫、ペット保管所
 			new Point(33553, 32712), new Point(32702, 32842), }; // 贖罪の使者、ギラン市場
 
-	private static final Point[] TELEPORT_LOC_ADEN =
-	{ new Point(33966, 33253), new Point(33921, 33177), // 倉庫、ペット保管所
+	private static final Point[] TELEPORT_LOC_ADEN = { new Point(33966, 33253), new Point(33921, 33177), // 倉庫、ペット保管所
 			new Point(33553, 32712), new Point(32702, 32842), }; // 贖罪の使者、ギラン市場
 
-	private static final Point[] TELEPORT_LOC_GLUDIN =
-	{ new Point(32628, 32807), new Point(32623, 32729), // 倉庫、ペット保管所
+	private static final Point[] TELEPORT_LOC_GLUDIN = { new Point(32628, 32807), new Point(32623, 32729), // 倉庫、ペット保管所
 			new Point(33553, 32712), new Point(32702, 32842), }; // 贖罪の使者、ギラン市場
 
 	// アジトID一覧
@@ -62,8 +57,7 @@ public class L1HouseLocation {
 	public static boolean isInHouseLoc(int houseId, int locx, int locy, short mapid) {
 		boolean ret = false;
 		if (houseId == 262145) { // ギランアジト1
-			if (((locx >= 33368) && (locx <= 33375) && (locy >= 32651) && (locy <= 32654) && (mapid == 4))
-					|| ((locx >= 33373) && (locx <= 33375) && (locy >= 32655) && (locy <= 32657) && (mapid == 4)) || (mapid == 5068)) {
+			if (((locx >= 33368) && (locx <= 33375) && (locy >= 32651) && (locy <= 32654) && (mapid == 4)) || ((locx >= 33373) && (locx <= 33375) && (locy >= 32655) && (locy <= 32657) && (mapid == 4)) || (mapid == 5068)) {
 				ret = true;
 			}
 		}
@@ -83,8 +77,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262149) { // ギランアジト5
-			if (((locx >= 33439) && (locx <= 33445) && (locy >= 32665) && (locy <= 32667) && (mapid == 4))
-					|| ((locx >= 33442) && (locx <= 33445) && (locy >= 32668) && (locy <= 32672) && (mapid == 4)) || (mapid == 5072)) {
+			if (((locx >= 33439) && (locx <= 33445) && (locy >= 32665) && (locy <= 32667) && (mapid == 4)) || ((locx >= 33442) && (locx <= 33445) && (locy >= 32668) && (locy <= 32672) && (mapid == 4)) || (mapid == 5072)) {
 				ret = true;
 			}
 		}
@@ -99,14 +92,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262152) { // ギランアジト8
-			if (((locx >= 33471) && (locx <= 33477) && (locy >= 32678) && (locy <= 32680) && (mapid == 4))
-					|| ((locx >= 33474) && (locx <= 33477) && (locy >= 32681) && (locy <= 32685) && (mapid == 4)) || (mapid == 5075)) {
+			if (((locx >= 33471) && (locx <= 33477) && (locy >= 32678) && (locy <= 32680) && (mapid == 4)) || ((locx >= 33474) && (locx <= 33477) && (locy >= 32681) && (locy <= 32685) && (mapid == 4)) || (mapid == 5075)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262153) { // ギランアジト9
-			if (((locx >= 33453) && (locx <= 33460) && (locy >= 32694) && (locy <= 32697) && (mapid == 4))
-					|| ((locx >= 33458) && (locx <= 33460) && (locy >= 32698) && (locy <= 32700) && (mapid == 4)) || (mapid == 5076)) {
+			if (((locx >= 33453) && (locx <= 33460) && (locy >= 32694) && (locy <= 32697) && (mapid == 4)) || ((locx >= 33458) && (locx <= 33460) && (locy >= 32698) && (locy <= 32700) && (mapid == 4)) || (mapid == 5076)) {
 				ret = true;
 			}
 		}
@@ -116,14 +107,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262155) { // ギランアジト11
-			if (((locx >= 33409) && (locx <= 33415) && (locy >= 32674) && (locy <= 32676) && (mapid == 4))
-					|| ((locx >= 33412) && (locx <= 33415) && (locy >= 32677) && (locy <= 32681) && (mapid == 4)) || (mapid == 5078)) {
+			if (((locx >= 33409) && (locx <= 33415) && (locy >= 32674) && (locy <= 32676) && (mapid == 4)) || ((locx >= 33412) && (locx <= 33415) && (locy >= 32677) && (locy <= 32681) && (mapid == 4)) || (mapid == 5078)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262156) { // ギランアジト12
-			if (((locx >= 33414) && (locx <= 33421) && (locy >= 32703) && (locy <= 32706) && (mapid == 4))
-					|| ((locx >= 33419) && (locx <= 33421) && (locy >= 32707) && (locy <= 32709) && (mapid == 4)) || (mapid == 5079)) {
+			if (((locx >= 33414) && (locx <= 33421) && (locy >= 32703) && (locy <= 32706) && (mapid == 4)) || ((locx >= 33419) && (locx <= 33421) && (locy >= 32707) && (locy <= 32709) && (mapid == 4)) || (mapid == 5079)) {
 				ret = true;
 			}
 		}
@@ -138,14 +127,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262159) { // ギランアジト15
-			if (((locx >= 33360) && (locx <= 33366) && (locy >= 32669) && (locy <= 32671) && (mapid == 4))
-					|| ((locx >= 33363) && (locx <= 33366) && (locy >= 32672) && (locy <= 32676) && (mapid == 4)) || (mapid == 5082)) {
+			if (((locx >= 33360) && (locx <= 33366) && (locy >= 32669) && (locy <= 32671) && (mapid == 4)) || ((locx >= 33363) && (locx <= 33366) && (locy >= 32672) && (locy <= 32676) && (mapid == 4)) || (mapid == 5082)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262160) { // ギランアジト16
-			if (((locx >= 33341) && (locx <= 33347) && (locy >= 32660) && (locy <= 32662) && (mapid == 4))
-					|| ((locx >= 33344) && (locx <= 33347) && (locy >= 32663) && (locy <= 32667) && (mapid == 4)) || (mapid == 5083)) {
+			if (((locx >= 33341) && (locx <= 33347) && (locy >= 32660) && (locy <= 32662) && (mapid == 4)) || ((locx >= 33344) && (locx <= 33347) && (locy >= 32663) && (locy <= 32667) && (mapid == 4)) || (mapid == 5083)) {
 				ret = true;
 			}
 		}
@@ -160,14 +147,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262163) { // ギランアジト19
-			if (((locx >= 33349) && (locx <= 33356) && (locy >= 32728) && (locy <= 32731) && (mapid == 4))
-					|| ((locx >= 33354) && (locx <= 33356) && (locy >= 32732) && (locy <= 32734) && (mapid == 4)) || (mapid == 5086)) {
+			if (((locx >= 33349) && (locx <= 33356) && (locy >= 32728) && (locy <= 32731) && (mapid == 4)) || ((locx >= 33354) && (locx <= 33356) && (locy >= 32732) && (locy <= 32734) && (mapid == 4)) || (mapid == 5086)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262164) { // ギランアジト20
-			if (((locx >= 33366) && (locx <= 33372) && (locy >= 32713) && (locy <= 32715) && (mapid == 4))
-					|| ((locx >= 33369) && (locx <= 33372) && (locy >= 32716) && (locy <= 32720) && (mapid == 4)) || (mapid == 5087)) {
+			if (((locx >= 33366) && (locx <= 33372) && (locy >= 32713) && (locy <= 32715) && (mapid == 4)) || ((locx >= 33369) && (locx <= 33372) && (locy >= 32716) && (locy <= 32720) && (mapid == 4)) || (mapid == 5087)) {
 				ret = true;
 			}
 		}
@@ -182,8 +167,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262167) { // ギランアジト23
-			if (((locx >= 33424) && (locx <= 33430) && (locy >= 32717) && (locy <= 32719) && (mapid == 4))
-					|| ((locx >= 33427) && (locx <= 33430) && (locy >= 32720) && (locy <= 32724) && (mapid == 4)) || (mapid == 5090)) {
+			if (((locx >= 33424) && (locx <= 33430) && (locy >= 32717) && (locy <= 32719) && (mapid == 4)) || ((locx >= 33427) && (locx <= 33430) && (locy >= 32720) && (locy <= 32724) && (mapid == 4)) || (mapid == 5090)) {
 				ret = true;
 			}
 		}
@@ -203,8 +187,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262171) { // ギランアジト27
-			if (((locx >= 33351) && (locx <= 33357) && (locy >= 32774) && (locy <= 32776) && (mapid == 4))
-					|| ((locx >= 33354) && (locx <= 33357) && (locy >= 32777) && (locy <= 32781) && (mapid == 4)) || (mapid == 5094)) {
+			if (((locx >= 33351) && (locx <= 33357) && (locy >= 32774) && (locy <= 32776) && (mapid == 4)) || ((locx >= 33354) && (locx <= 33357) && (locy >= 32777) && (locy <= 32781) && (mapid == 4)) || (mapid == 5094)) {
 				ret = true;
 			}
 		}
@@ -214,8 +197,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262173) { // ギランアジト29
-			if (((locx >= 33366) && (locx <= 33373) && (locy >= 32786) && (locy <= 32789) && (mapid == 4))
-					|| ((locx >= 33371) && (locx <= 33373) && (locy >= 32790) && (locy <= 32792) && (mapid == 4)) || (mapid == 5096)) {
+			if (((locx >= 33366) && (locx <= 33373) && (locy >= 32786) && (locy <= 32789) && (mapid == 4)) || ((locx >= 33371) && (locx <= 33373) && (locy >= 32790) && (locy <= 32792) && (mapid == 4)) || (mapid == 5096)) {
 				ret = true;
 			}
 		}
@@ -225,14 +207,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262175) { // ギランアジト31
-			if (((locx >= 33397) && (locx <= 33404) && (locy >= 32788) && (locy <= 32791) && (mapid == 4))
-					|| ((locx >= 33402) && (locx <= 33404) && (locy >= 32792) && (locy <= 32794) && (mapid == 4)) || (mapid == 5098)) {
+			if (((locx >= 33397) && (locx <= 33404) && (locy >= 32788) && (locy <= 32791) && (mapid == 4)) || ((locx >= 33402) && (locx <= 33404) && (locy >= 32792) && (locy <= 32794) && (mapid == 4)) || (mapid == 5098)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262176) { // ギランアジト32
-			if (((locx >= 33479) && (locx <= 33486) && (locy >= 32788) && (locy <= 32791) && (mapid == 4))
-					|| ((locx >= 33484) && (locx <= 33486) && (locy >= 32792) && (locy <= 32794) && (mapid == 4)) || (mapid == 5099)) {
+			if (((locx >= 33479) && (locx <= 33486) && (locy >= 32788) && (locy <= 32791) && (mapid == 4)) || ((locx >= 33484) && (locx <= 33486) && (locy >= 32792) && (locy <= 32794) && (mapid == 4)) || (mapid == 5099)) {
 				ret = true;
 			}
 		}
@@ -257,14 +237,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262181) { // ギランアジト37
-			if (((locx >= 33397) && (locx <= 33403) && (locy >= 32821) && (locy <= 32823) && (mapid == 4))
-					|| ((locx >= 33400) && (locx <= 33403) && (locy >= 32824) && (locy <= 32828) && (mapid == 4)) || (mapid == 5104)) {
+			if (((locx >= 33397) && (locx <= 33403) && (locy >= 32821) && (locy <= 32823) && (mapid == 4)) || ((locx >= 33400) && (locx <= 33403) && (locy >= 32824) && (locy <= 32828) && (mapid == 4)) || (mapid == 5104)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262182) { // ギランアジト38
-			if (((locx >= 33431) && (locx <= 33438) && (locy >= 32838) && (locy <= 32841) && (mapid == 4))
-					|| ((locx >= 33436) && (locx <= 33438) && (locy >= 32842) && (locy <= 32844) && (mapid == 4)) || (mapid == 5105)) {
+			if (((locx >= 33431) && (locx <= 33438) && (locy >= 32838) && (locy <= 32841) && (mapid == 4)) || ((locx >= 33436) && (locx <= 33438) && (locy >= 32842) && (locy <= 32844) && (mapid == 4)) || (mapid == 5105)) {
 				ret = true;
 			}
 		}
@@ -274,14 +252,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262184) { // ギランアジト40
-			if (((locx >= 33385) && (locx <= 33392) && (locy >= 32845) && (locy <= 32848) && (mapid == 4))
-					|| ((locx >= 33390) && (locx <= 33392) && (locy >= 32849) && (locy <= 32851) && (mapid == 4)) || (mapid == 5107)) {
+			if (((locx >= 33385) && (locx <= 33392) && (locy >= 32845) && (locy <= 32848) && (mapid == 4)) || ((locx >= 33390) && (locx <= 33392) && (locy >= 32849) && (locy <= 32851) && (mapid == 4)) || (mapid == 5107)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 262185) { // ギランアジト41
-			if (((locx >= 33399) && (locx <= 33405) && (locy >= 32859) && (locy <= 32861) && (mapid == 4))
-					|| ((locx >= 33402) && (locx <= 33405) && (locy >= 32862) && (locy <= 32866) && (mapid == 4)) || (mapid == 5108)) {
+			if (((locx >= 33399) && (locx <= 33405) && (locy >= 32859) && (locy <= 32861) && (mapid == 4)) || ((locx >= 33402) && (locx <= 33405) && (locy >= 32862) && (locy <= 32866) && (mapid == 4)) || (mapid == 5108)) {
 				ret = true;
 			}
 		}
@@ -301,14 +277,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 262189) { // ギランアジト45
-			if (((locx >= 33443) && (locx <= 33449) && (locy >= 32869) && (locy <= 32871) && (mapid == 4))
-					|| ((locx >= 33446) && (locx <= 33449) && (locy >= 32872) && (locy <= 32876) && (mapid == 4)) || (mapid == 5112)) {
+			if (((locx >= 33443) && (locx <= 33449) && (locy >= 32869) && (locy <= 32871) && (mapid == 4)) || ((locx >= 33446) && (locx <= 33449) && (locy >= 32872) && (locy <= 32876) && (mapid == 4)) || (mapid == 5112)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327681) { // ハイネアジト1
-			if (((locx >= 33599) && (locx <= 33601) && (locy >= 33213) && (locy <= 33214) && (mapid == 4))
-					|| ((locx >= 33602) && (locx <= 33610) && (locy >= 33213) && (locy <= 33218) && (mapid == 4)) || (mapid == 5113)) {
+			if (((locx >= 33599) && (locx <= 33601) && (locy >= 33213) && (locy <= 33214) && (mapid == 4)) || ((locx >= 33602) && (locx <= 33610) && (locy >= 33213) && (locy <= 33218) && (mapid == 4)) || (mapid == 5113)) {
 				ret = true;
 			}
 		}
@@ -318,14 +292,12 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 327683) { // ハイネアジト3
-			if (((locx >= 33626) && (locx <= 33627) && (locy >= 33225) && (locy <= 33227) && (mapid == 4))
-					|| ((locx >= 33628) && (locx <= 33632) && (locy >= 33221) && (locy <= 33230) && (mapid == 4)) || (mapid == 5115)) {
+			if (((locx >= 33626) && (locx <= 33627) && (locy >= 33225) && (locy <= 33227) && (mapid == 4)) || ((locx >= 33628) && (locx <= 33632) && (locy >= 33221) && (locy <= 33230) && (mapid == 4)) || (mapid == 5115)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327684) { // ハイネアジト4
-			if (((locx >= 33628) && (locx <= 33636) && (locy >= 33241) && (locy <= 33244) && (mapid == 4))
-					|| ((locx >= 33632) && (locx <= 33635) && (locy >= 33245) && (locy <= 33250) && (mapid == 4))
+			if (((locx >= 33628) && (locx <= 33636) && (locy >= 33241) && (locy <= 33244) && (mapid == 4)) || ((locx >= 33632) && (locx <= 33635) && (locy >= 33245) && (locy <= 33250) && (mapid == 4))
 					|| ((locx >= 33634) && (locx <= 33634) && (locy >= 33251) && (locy <= 33252) && (mapid == 4)) || (mapid == 5116)) {
 				ret = true;
 			}
@@ -336,40 +308,34 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 327686) { // ハイネアジト6
-			if (((locx >= 33570) && (locx <= 33580) && (locy >= 33228) && (locy <= 33232) && (mapid == 4))
-					|| ((locx >= 33574) && (locx <= 33576) && (locy >= 33233) && (locy <= 33234) && (mapid == 4)) || (mapid == 5118)) {
+			if (((locx >= 33570) && (locx <= 33580) && (locy >= 33228) && (locy <= 33232) && (mapid == 4)) || ((locx >= 33574) && (locx <= 33576) && (locy >= 33233) && (locy <= 33234) && (mapid == 4)) || (mapid == 5118)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327687) { // ハイネアジト7
-			if (((locx >= 33583) && (locx <= 33588) && (locy >= 33305) && (locy <= 33314) && (mapid == 4))
-					|| ((locx >= 33587) && (locx <= 33588) && (locy >= 33315) && (locy <= 33316) && (mapid == 4)) || (mapid == 5119)) {
+			if (((locx >= 33583) && (locx <= 33588) && (locy >= 33305) && (locy <= 33314) && (mapid == 4)) || ((locx >= 33587) && (locx <= 33588) && (locy >= 33315) && (locy <= 33316) && (mapid == 4)) || (mapid == 5119)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327688) { // ハイネアジト8
-			if (((locx >= 33577) && (locx <= 33578) && (locy >= 33337) && (locy <= 33337) && (mapid == 4))
-					|| ((locx >= 33579) && (locx <= 33588) && (locy >= 33335) && (locy <= 33339) && (mapid == 4))
+			if (((locx >= 33577) && (locx <= 33578) && (locy >= 33337) && (locy <= 33337) && (mapid == 4)) || ((locx >= 33579) && (locx <= 33588) && (locy >= 33335) && (locy <= 33339) && (mapid == 4))
 					|| ((locx >= 33585) && (locx <= 33588) && (locy >= 33340) && (locy <= 33343) && (mapid == 4)) || (mapid == 5120)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327689) { // ハイネアジト9
-			if (((locx >= 33615) && (locx <= 33623) && (locy >= 33374) && (locy <= 33377) && (mapid == 4))
-					|| ((locx >= 33619) && (locx <= 33622) && (locy >= 33378) && (locy <= 33383) && (mapid == 4))
+			if (((locx >= 33615) && (locx <= 33623) && (locy >= 33374) && (locy <= 33377) && (mapid == 4)) || ((locx >= 33619) && (locx <= 33622) && (locy >= 33378) && (locy <= 33383) && (mapid == 4))
 					|| ((locx >= 33621) && (locx <= 33621) && (locy >= 33384) && (locy <= 33385) && (mapid == 4)) || (mapid == 5121)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327690) { // ハイネアジト10
-			if (((locx >= 33624) && (locx <= 33625) && (locy >= 33397) && (locy <= 33399) && (mapid == 4))
-					|| ((locx >= 33626) && (locx <= 33630) && (locy >= 33393) && (locy <= 33403) && (mapid == 4)) || (mapid == 5122)) {
+			if (((locx >= 33624) && (locx <= 33625) && (locy >= 33397) && (locy <= 33399) && (mapid == 4)) || ((locx >= 33626) && (locx <= 33630) && (locy >= 33393) && (locy <= 33403) && (mapid == 4)) || (mapid == 5122)) {
 				ret = true;
 			}
 		}
 		else if (houseId == 327691) { // ハイネアジト11
-			if (((locx >= 33621) && (locx <= 33622) && (locy >= 33444) && (locy <= 33444) && (mapid == 4))
-					|| ((locx >= 33622) && (locx <= 33632) && (locy >= 33442) && (locy <= 33446) && (mapid == 4))
+			if (((locx >= 33621) && (locx <= 33622) && (locy >= 33444) && (locy <= 33444) && (mapid == 4)) || ((locx >= 33622) && (locx <= 33632) && (locy >= 33442) && (locy <= 33446) && (mapid == 4))
 					|| ((locx >= 33629) && (locx <= 33632) && (locy >= 33447) && (locy <= 33450) && (mapid == 4)) || (mapid == 5123)) {
 				ret = true;
 			}
@@ -380,8 +346,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 524290) { // グルーディンアジト2
-			if (((locx >= 32548) && (locx <= 32556) && (locy >= 32705) && (locy <= 32716) && (mapid == 4))
-					|| ((locx >= 32547) && (locx <= 32547) && (locy >= 32710) && (locy <= 32716) && (mapid == 4))) {
+			if (((locx >= 32548) && (locx <= 32556) && (locy >= 32705) && (locy <= 32716) && (mapid == 4)) || ((locx >= 32547) && (locx <= 32547) && (locy >= 32710) && (locy <= 32716) && (mapid == 4))) {
 				ret = true;
 			}
 		}
@@ -396,8 +361,7 @@ public class L1HouseLocation {
 			}
 		}
 		else if (houseId == 524293) { // グルーディンアジト5
-			if (((locx >= 32535) && (locx <= 32543) && (locy >= 32807) && (locy <= 32818) && (mapid == 4))
-					|| ((locx >= 32534) && (locx <= 32534) && (locy >= 32812) && (locy <= 32818) && (mapid == 4))) {
+			if (((locx >= 32535) && (locx <= 32543) && (locy >= 32807) && (locy <= 32818) && (mapid == 4)) || ((locx >= 32534) && (locx <= 32534) && (locy >= 32812) && (locy <= 32818) && (mapid == 4))) {
 				ret = true;
 			}
 		}

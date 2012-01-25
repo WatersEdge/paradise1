@@ -49,7 +49,7 @@ public class L1CastleLocation {
 	public static final int DIAD_CASTLE_ID = 8;
 
 	// →↑がX轴、→↓がY轴
-	// 肯特城  Update to 3.3C
+	// 肯特城 Update to 3.3C
 	private static final int KENT_TOWER_X = 33139;
 
 	private static final int KENT_TOWER_Y = 32768;
@@ -68,7 +68,7 @@ public class L1CastleLocation {
 
 	private static final short KENT_INNER_CASTLE_MAP = 15;
 
-	// 妖魔城堡  Update to 3.3C
+	// 妖魔城堡 Update to 3.3C
 	private static final int OT_TOWER_X = 32798;
 
 	private static final int OT_TOWER_Y = 32291;
@@ -85,7 +85,7 @@ public class L1CastleLocation {
 
 	private static final short OT_MAP = 4;
 
-	// 风木城  Update to 3.3C
+	// 风木城 Update to 3.3C
 	private static final int WW_TOWER_X = 32623;
 
 	private static final int WW_TOWER_Y = 33379;
@@ -517,44 +517,44 @@ public class L1CastleLocation {
 		int town_id = L1TownLocation.getTownIdByNpcid(npcid);
 
 		switch (town_id) {
-			case L1TownLocation.TOWNID_KENT:
-			case L1TownLocation.TOWNID_GLUDIO:
-				castle_id = KENT_CASTLE_ID; // 肯特城
-				break;
+		case L1TownLocation.TOWNID_KENT:
+		case L1TownLocation.TOWNID_GLUDIO:
+			castle_id = KENT_CASTLE_ID; // 肯特城
+			break;
 
-			case L1TownLocation.TOWNID_ORCISH_FOREST:
-				castle_id = OT_CASTLE_ID; // オークの森
-				break;
+		case L1TownLocation.TOWNID_ORCISH_FOREST:
+			castle_id = OT_CASTLE_ID; // オークの森
+			break;
 
-			case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
-			case L1TownLocation.TOWNID_WINDAWOOD:
-				castle_id = WW_CASTLE_ID; // ウィンダウッド城
-				break;
+		case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
+		case L1TownLocation.TOWNID_WINDAWOOD:
+			castle_id = WW_CASTLE_ID; // ウィンダウッド城
+			break;
 
-			case L1TownLocation.TOWNID_TALKING_ISLAND:
-			case L1TownLocation.TOWNID_GIRAN:
-				castle_id = GIRAN_CASTLE_ID; // ギラン城
-				break;
+		case L1TownLocation.TOWNID_TALKING_ISLAND:
+		case L1TownLocation.TOWNID_GIRAN:
+			castle_id = GIRAN_CASTLE_ID; // ギラン城
+			break;
 
-			case L1TownLocation.TOWNID_HEINE:
-				castle_id = HEINE_CASTLE_ID; // 海音城
-				break;
+		case L1TownLocation.TOWNID_HEINE:
+			castle_id = HEINE_CASTLE_ID; // 海音城
+			break;
 
-			case L1TownLocation.TOWNID_WERLDAN:
-			case L1TownLocation.TOWNID_OREN:
-				castle_id = DOWA_CASTLE_ID; // 侏儒城
-				break;
+		case L1TownLocation.TOWNID_WERLDAN:
+		case L1TownLocation.TOWNID_OREN:
+			castle_id = DOWA_CASTLE_ID; // 侏儒城
+			break;
 
-			case L1TownLocation.TOWNID_ADEN:
-				castle_id = ADEN_CASTLE_ID; // 亚丁城
-				break;
+		case L1TownLocation.TOWNID_ADEN:
+			castle_id = ADEN_CASTLE_ID; // 亚丁城
+			break;
 
-			case L1TownLocation.TOWNID_OUM_DUNGEON:
-				castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
-				break;
+		case L1TownLocation.TOWNID_OUM_DUNGEON:
+			castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
+			break;
 
-			default:
-				break;
+		default:
+			break;
 		}
 		return castle_id;
 	}

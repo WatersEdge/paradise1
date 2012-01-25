@@ -68,15 +68,15 @@ public class HpRegeneration extends TimerTask {
 					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
 					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
 					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
-					) {
-				if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) {  // 没有法利昂的治愈结界
+			) {
+				if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) { // 没有法利昂的治愈结界
 					_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
 				}
 			}
 
 			// 装备南瓜魔法帽获得万圣节南瓜派
 			if (_pc.getInventory().checkEquipped(20380)) { // 检查是否装备南瓜魔法帽
-				if (!_pc.hasSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN) && !_pc.isDead()) {  // 如果没有南瓜魔法帽效果
+				if (!_pc.hasSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN) && !_pc.isDead()) { // 如果没有南瓜魔法帽效果
 					_pc.setSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN, 5 * 60 * 1000); // 加上效果并开始倒计时5分钟
 				}
 			}
@@ -84,12 +84,7 @@ public class HpRegeneration extends TimerTask {
 			// 免登出可点完奖励点
 			if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
 				if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
-					if ((_pc.getBaseStr()
-							+ _pc.getBaseDex()
-							+ _pc.getBaseCon()
-							+ _pc.getBaseInt()
-							+ _pc.getBaseWis()
-							+ _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+					if ((_pc.getBaseStr() + _pc.getBaseDex() + _pc.getBaseCon() + _pc.getBaseInt() + _pc.getBaseWis() + _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 						_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
 					}
 				}
@@ -104,15 +99,15 @@ public class HpRegeneration extends TimerTask {
 					regenHp();
 				}
 			}
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
 	/** 更新级别 */
 	public void updateLevel() {
-		final int lvlTable[] =
-		new int[] { 30, 25, 20, 16, 14, 12, 11, 10, 9, 3, 2 };
+		final int lvlTable[] = new int[] { 30, 25, 20, 16, 14, 12, 11, 10, 9, 3, 2 };
 
 		int regenLvl = Math.min(10, _pc.getLevel());
 		if (30 <= _pc.getLevel() && _pc.isKnight()) {
@@ -149,35 +144,23 @@ public class HpRegeneration extends TimerTask {
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
 			bonus += 5;
 		}
-		if (_pc.getMapId() == 16384 || _pc.getMapId() == 16896
-				|| _pc.getMapId() == 17408 || _pc.getMapId() == 17920
-				|| _pc.getMapId() == 18432 || _pc.getMapId() == 18944
-				|| _pc.getMapId() == 19968 || _pc.getMapId() == 19456
-				|| _pc.getMapId() == 20480 || _pc.getMapId() == 20992
-				|| _pc.getMapId() == 21504 || _pc.getMapId() == 22016
-				|| _pc.getMapId() == 22528 || _pc.getMapId() == 23040
-				|| _pc.getMapId() == 23552 || _pc.getMapId() == 24064
-				|| _pc.getMapId() == 24576 || _pc.getMapId() == 25088) { // 宿屋
+		if (_pc.getMapId() == 16384 || _pc.getMapId() == 16896 || _pc.getMapId() == 17408 || _pc.getMapId() == 17920 || _pc.getMapId() == 18432 || _pc.getMapId() == 18944 || _pc.getMapId() == 19968 || _pc.getMapId() == 19456 || _pc.getMapId() == 20480 || _pc.getMapId() == 20992
+				|| _pc.getMapId() == 21504 || _pc.getMapId() == 22016 || _pc.getMapId() == 22528 || _pc.getMapId() == 23040 || _pc.getMapId() == 23552 || _pc.getMapId() == 24064 || _pc.getMapId() == 24576 || _pc.getMapId() == 25088) { // 宿屋
 			bonus += 5;
 		}
 		// 妖精森林大树下
-		if ((_pc.getLocation().isInScreen(new Point(33055,32336))
-				&& _pc.getMapId() == 4 && _pc.isElf())) {
+		if ((_pc.getLocation().isInScreen(new Point(33055, 32336)) && _pc.getMapId() == 4 && _pc.isElf())) {
 			bonus += 5;
 		}
- 		if (_pc.hasSkillEffect(COOKING_1_5_N)
-				|| _pc.hasSkillEffect(COOKING_1_5_S)) {
+		if (_pc.hasSkillEffect(COOKING_1_5_N) || _pc.hasSkillEffect(COOKING_1_5_S)) {
 			bonus += 3;
 		}
- 		if (_pc.hasSkillEffect(COOKING_2_4_N)
-				|| _pc.hasSkillEffect(COOKING_2_4_S)
-				|| _pc.hasSkillEffect(COOKING_3_6_N)
-				|| _pc.hasSkillEffect(COOKING_3_6_S)) {
+		if (_pc.hasSkillEffect(COOKING_2_4_N) || _pc.hasSkillEffect(COOKING_2_4_S) || _pc.hasSkillEffect(COOKING_3_6_N) || _pc.hasSkillEffect(COOKING_3_6_S)) {
 			bonus += 2;
 		}
- 		if (_pc.getOriginalHpr() > 0) { // 原始CON HPR补正
- 			bonus += _pc.getOriginalHpr();
- 		}
+		if (_pc.getOriginalHpr() > 0) { // 原始CON HPR补正
+			bonus += _pc.getOriginalHpr();
+		}
 
 		boolean inLifeStream = false;
 		if (isPlayerInLifeStream(_pc)) {
@@ -187,8 +170,7 @@ public class HpRegeneration extends TimerTask {
 		}
 
 		// 检查饥饿与负重
-		if (_pc.get_food() < 3 || isOverWeight(_pc)
-				|| _pc.hasSkillEffect(BERSERKERS)) { // 狂暴术
+		if (_pc.get_food() < 3 || isOverWeight(_pc) || _pc.hasSkillEffect(BERSERKERS)) { // 狂暴术
 			bonus = 0;
 			// 由于装备ＨＰＲ增加饱食度、负重减轻、 减少饱食度、重量に関係なく効果が残る
 			if (equipHpr > 0) {
@@ -209,7 +191,8 @@ public class HpRegeneration extends TimerTask {
 			if (newHp < 1) {
 				if (_pc.isGm()) {
 					newHp = 1;
-				} else {
+				}
+				else {
 					_pc.death(null); // 如果HP为零将死于窒息。
 				}
 			}
@@ -220,7 +203,8 @@ public class HpRegeneration extends TimerTask {
 			if (newHp < 1) {
 				if (_pc.isGm()) {
 					newHp = 1;
-				} else {
+				}
+				else {
 					_pc.death(null); // 如果HP为零将死亡。
 				}
 			}
@@ -231,7 +215,8 @@ public class HpRegeneration extends TimerTask {
 			if (newHp < 1) {
 				if (_pc.isGm()) {
 					newHp = 1;
-				} else {
+				}
+				else {
 					_pc.death(null); // 如果HP为零将死亡。
 				}
 			}
@@ -264,8 +249,7 @@ public class HpRegeneration extends TimerTask {
 	private boolean isOverWeight(L1PcInstance pc) {
 		// 体能激发状态、能量激发状态
 		// 装备巨蚁女皇的金翅膀、不被视为超重。
-		if (pc.hasSkillEffect(EXOTIC_VITALIZE)
-				|| pc.hasSkillEffect(ADDITIONAL_FIRE)) {
+		if (pc.hasSkillEffect(EXOTIC_VITALIZE) || pc.hasSkillEffect(ADDITIONAL_FIRE)) {
 			return false;
 		}
 		if (pc.getInventory().checkEquipped(20049)) { // 巨蚁女皇的金翅膀
@@ -294,8 +278,7 @@ public class HpRegeneration extends TimerTask {
 				continue;
 			}
 			L1EffectInstance effect = (L1EffectInstance) object;
-			if (effect.getNpcId() == 81169 && effect.getLocation()
-					.getTileLineDistance(pc.getLocation()) < 4) {
+			if (effect.getNpcId() == 81169 && effect.getLocation().getTileLineDistance(pc.getLocation()) < 4) {
 				return true;
 			}
 		}

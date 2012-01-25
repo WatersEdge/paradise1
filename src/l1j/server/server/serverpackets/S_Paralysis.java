@@ -44,45 +44,57 @@ public class S_Paralysis extends ServerBasePacket {
 		{
 			if (flag == true) {
 				writeC(2);
-			} else {
+			}
+			else {
 				writeC(3);
 			}
-		} else if (type == TYPE_PARALYSIS2) // 你的身体完全麻痹了。
+		}
+		else if (type == TYPE_PARALYSIS2) // 你的身体完全麻痹了。
 		{
 			if (flag == true) {
 				writeC(4);
-			} else {
+			}
+			else {
 				writeC(5);
 			}
-		} else if (type == TYPE_TELEPORT_UNLOCK) // 解除传送锁定
+		}
+		else if (type == TYPE_TELEPORT_UNLOCK) // 解除传送锁定
 		{
 			writeC(7);
-		} else if (type == TYPE_SLEEP) // 你开始沉睡。
+		}
+		else if (type == TYPE_SLEEP) // 你开始沉睡。
 		{
 			if (flag == true) {
 				writeC(10);
-			} else {
+			}
+			else {
 				writeC(11);
 			}
-		} else if (type == TYPE_FREEZE) // 被冻结了。
+		}
+		else if (type == TYPE_FREEZE) // 被冻结了。
 		{
 			if (flag == true) {
 				writeC(12);
-			} else {
+			}
+			else {
 				writeC(13);
 			}
-		} else if (type == TYPE_STUN) // 处于昏迷状态。
+		}
+		else if (type == TYPE_STUN) // 处于昏迷状态。
 		{
 			if (flag == true) {
 				writeC(22);
-			} else {
+			}
+			else {
 				writeC(23);
 			}
-		} else if (type == TYPE_BIND) // 双脚受困无法移动。
+		}
+		else if (type == TYPE_BIND) // 双脚受困无法移动。
 		{
 			if (flag == true) {
 				writeC(24);
-			} else {
+			}
+			else {
 				writeC(25);
 			}
 		}
