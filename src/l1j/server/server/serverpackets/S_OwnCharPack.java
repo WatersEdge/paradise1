@@ -80,7 +80,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 		// writeC(addbyte);
 		writeC(pc.getOwnLightSize());
 		writeC(pc.getMoveSpeed());
-		writeExp(pc.getExp());
+		writeD((int) pc.getExp());
 		writeH(pc.getLawful());
 		writeS(pc.getName());
 		writeS(pc.getTitle());

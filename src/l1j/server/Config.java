@@ -406,6 +406,26 @@ public final class Config {
 
 	public static int LV100_EXP;
 
+	public static int LV101_EXP;
+
+	public static int LV102_EXP;
+
+	public static int LV103_EXP;
+
+	public static int LV104_EXP;
+
+	public static int LV105_EXP;
+
+	public static int LV106_EXP;
+
+	public static int LV107_EXP;
+
+	public static int LV108_EXP;
+
+	public static int LV109_EXP;
+
+	public static int LV110_EXP;
+
 	// -----------------------------------------------------------------------------
 	// 游戏战斗特化相关 /** Fights Settings */
 	// -----------------------------------------------------------------------------
@@ -746,6 +766,16 @@ public final class Config {
 			LV98_EXP = Integer.parseInt(charSettings.getProperty("Lv98Exp", "8388608"));
 			LV99_EXP = Integer.parseInt(charSettings.getProperty("Lv99Exp", "16777216"));
 			LV100_EXP = Integer.parseInt(charSettings.getProperty("Lv100Exp", "16777216"));
+			LV101_EXP = Integer.parseInt(charSettings.getProperty("Lv101Exp", "65536"));
+			LV102_EXP = Integer.parseInt(charSettings.getProperty("Lv102Exp", "131072"));
+			LV103_EXP = Integer.parseInt(charSettings.getProperty("Lv103Exp", "262144"));
+			LV104_EXP = Integer.parseInt(charSettings.getProperty("Lv104Exp", "524288"));
+			LV105_EXP = Integer.parseInt(charSettings.getProperty("Lv105Exp", "1048576"));
+			LV106_EXP = Integer.parseInt(charSettings.getProperty("Lv106Exp", "2097152"));
+			LV107_EXP = Integer.parseInt(charSettings.getProperty("Lv107Exp", "4194304"));
+			LV108_EXP = Integer.parseInt(charSettings.getProperty("Lv108Exp", "8388608"));
+			LV109_EXP = Integer.parseInt(charSettings.getProperty("Lv109Exp", "16777216"));
+			LV110_EXP = Integer.parseInt(charSettings.getProperty("Lv110Exp", "16777216"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -1211,6 +1241,36 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("Lv100Exp")) {
 			LV100_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv101Exp")) {
+			LV101_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv102Exp")) {
+			LV102_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv103Exp")) {
+			LV103_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv104Exp")) {
+			LV104_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv105Exp")) {
+			LV105_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv106Exp")) {
+			LV106_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv107Exp")) {
+			LV107_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv108Exp")) {
+			LV108_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv109Exp")) {
+			LV109_EXP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Lv110Exp")) {
+			LV110_EXP = Integer.parseInt(pValue);
 		}
 
 		// record.properties
