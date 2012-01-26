@@ -22,7 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 开始加载器
+ */
 public class StartLoader {
+
 	private static String JAVA_INI = "./config/java.properties";
 
 	private static String BIN_FILE = "l1jserver.jar";
@@ -72,7 +76,8 @@ public class StartLoader {
 					try {
 						l1jProcess.destroy();
 					}
-					catch (Exception e) {}
+					catch (Exception e) {
+					}
 				}
 			}
 		});
@@ -112,8 +117,8 @@ public class StartLoader {
 						System.out.println(echo);
 					}
 				}
-				catch (Exception e) {}
-				finally {
+				catch (Exception e) {
+				} finally {
 					br.close();
 				}
 
