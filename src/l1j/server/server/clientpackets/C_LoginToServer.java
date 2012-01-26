@@ -26,12 +26,11 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.MIRROR_IMAGE;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
@@ -41,6 +40,7 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.UNCANNY_DODGE;
 
 import java.io.FileNotFoundException;
@@ -97,7 +97,6 @@ import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_War;
 import l1j.server.server.serverpackets.S_Weather;
-import l1j.server.server.serverpackets.S_bonusstats;
 import l1j.server.server.templates.L1BookMark;
 import l1j.server.server.templates.L1GetBackRestart;
 import l1j.server.server.templates.L1Skills;
@@ -280,12 +279,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.sendPackets(new S_SystemMessage("现在是隐身状态。"));
 		}
 
-		if ((pc.getLevel() >= 51) && (pc.getLevel() - 50 > pc.getBonusStats())) {
-			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon() + pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
-				pc.sendPackets(new S_bonusstats(pc.getId(), 1));
-			}
-		}
-
+		// 快捷键与血条位置统一管理
 		if (Config.CHARACTER_CONFIG_IN_SERVER_SIDE) {
 			pc.sendPackets(new S_CharacterConfig(pc.getId()));
 		}
