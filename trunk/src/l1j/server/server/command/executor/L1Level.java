@@ -37,8 +37,8 @@ public class L1Level implements L1CommandExecutor {
 			if (level == pc.getLevel()) {
 				return;
 			}
-			if (!IntRange.includes(level, 1, 100)) {
-				pc.sendPackets(new S_SystemMessage("请在1-100范围內指定"));
+			if (!IntRange.includes(level, 1, 110)) {
+				pc.sendPackets(new S_SystemMessage("请在1-110范围內指定"));
 				return;
 			}
 			pc.setExp(ExpTable.getExpByLevel(level));
