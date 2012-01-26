@@ -58,7 +58,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pc.setName(rs.getString("char_name"));
 			pc.setBirthday(rs.getTimestamp("birthday"));
 			pc.setHighLevel(rs.getInt("HighLevel"));
-			pc.setExp(rs.getInt("Exp"));
+			pc.setExp(rs.getLong("Exp"));
 			pc.addBaseMaxHp(rs.getShort("MaxHp"));
 			short currentHp = rs.getShort("CurHp");
 			if (currentHp < 1) {
