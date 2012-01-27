@@ -6990,25 +6990,225 @@ public class L1DescId {
 	public static final int $8099 = 8099;
 	/** 阿拉丁 */
 	public static final int $8100 = 8100;
-	/**  */
+	/** 贪吃的蚂蚁 */
 	public static final int $8101 = 8101;
-	/**  */
+	/** 伊娃的祝福 */
 	public static final int $8102 = 8102;
-	/**  */
+	/** 殷海萨的祝福 */
 	public static final int $8103 = 8103;
-	/**  */
+	/** 大喇叭 */
 	public static final int $8104 = 8104;
-	/**  */
+	/** 众神之光 */
 	public static final int $8105 = 8105;
-	/**  */
+	/** 冰之女皇头饰 */
 	public static final int $8106 = 8106;
-	/**  */
+	/** 艾莉丝头饰 */
 	public static final int $8107 = 8107;
-	/**  */
+	/** 赛尼斯头饰 */
 	public static final int $8108 = 8108;
-	/**  */
+	/** 蕾雅头饰 */
 	public static final int $8109 = 8109;
-	/**  */
+	/** 坚韧药水[赠送] */
 	public static final int $8110 = 8110;
+	/** 瞬移[冒险洞窟2F]推荐lv20[赠送] */
+	public static final int $8111 = 8111;
+	/** 瞬移[古鲁丁地监6F]推荐lv30[赠送] */
+	public static final int $8112 = 8112;
+	/** 瞬移[妖森地监2F]推荐lv20[赠送] */
+	public static final int $8113 = 8113;
+	/** 瞬移[龙之谷地监3F]推荐lv40[赠送] */
+	public static final int $8114 = 8114;
+	/** 瞬移[象牙塔5F]推荐lv35[赠送] */
+	public static final int $8115 = 8115;
+	/** 瞬移[奇岩地监3F]推荐lv30[赠送] */
+	public static final int $8116 = 8116;
+	/** 瞬移[蚂蚁洞穴]推荐lv15[赠送] */
+	public static final int $8117 = 8117;
+	/** 药水组合包[赠送] */
+	public static final int $8118 = 8118;
+	/** 卷轴组合包[赠送] */
+	public static final int $8119 = 8119;
+	/** 道具兑换券 */
+	public static final int $8120 = 8120;
+	/** 对盔甲施法的卷轴[活动] */
+	public static final int $8121 = 8121;
+	/** 防武卷补给箱[活动] */
+	public static final int $8122 = 8122;
+	/** 受祝福的防武卷补给箱[活动] */
+	public static final int $8123 = 8123;
+	/** 魔法娃娃租赁商 */
+	public static final int $8124 = 8124;
+	/** 幻象思克巴魔法娃娃 */
+	public static final int $8125 = 8125;
+	/** 幻象食人妖精魔法娃娃 */
+	public static final int $8126 = 8126;
+	/** 幻象狼人魔法娃娃 */
+	public static final int $8127 = 8127;
+	/** 天堂嘉年华传送师 */
+	public static final int $8128 = 8128;
+	/** 占星术的咒符 鼠人 */
+	public static final int $8129 = 8129;
+	/** 占星术的咒符 老虎 */
+	public static final int $8130 = 8130;
+	/** 占星术的咒符 变形怪首领 */
+	public static final int $8131 = 8131;
+	/** 神秘的项链I */
+	public static final int $8132 = 8132;
+	/** 神秘的项链II */
+	public static final int $8133 = 8133;
+	/** 神秘的汤药 */
+	public static final int $8134 = 8134;
+	/** 伊柏克斯 */
+	public static final int $8135 = 8135;
+	/** 爱心勋章 */
+	public static final int $8136 = 8136;
+	/** 古老的黑项链 */
+	public static final int $8137 = 8137;
+	/** 古老的红项链 */
+	public static final int $8138 = 8138;
+	/** 古老的戒指 */
+	public static final int $8139 = 8139;
+	/** 古老的皮带 */
+	public static final int $8140 = 8140;
+	/** 织女 */
+	public static final int $8141 = 8141;
+	/** 鹊桥守卫 */
+	public static final int $8142 = 8142;
+	/** 浓情巧克力 */
+	public static final int $8143 = 8143;
+	/** 鹊桥守卫召唤卷 */
+	public static final int $8144 = 8144;
+	/** 织女的宝袋(防) */
+	public static final int $8145 = 8145;
+	/** 织女的宝袋(武) */
+	public static final int $8146 = 8146;
+	/** 织女的武器袋 */
+	public static final int $8147 = 8147;
+	/** 嫦娥 */
+	public static final int $8148 = 8148;
+	/** 花 月饼 */
+	public static final int $8149 = 8149;
+	/** 好 月饼 */
+	public static final int $8150 = 8150;
+	/** 月 月饼 */
+	public static final int $8151 = 8151;
+	/** 圆 月饼 */
+	public static final int $8152 = 8152;
+	/** 月兔的帽子 */
+	public static final int $8153 = 8153;
+	/** 天堂武器大师 */
+	public static final int $8154 = 8154;
+	/** 龙形剑 */
+	public static final int $8155 = 8155;
+	/** 风神弓 */
+	public static final int $8156 = 8156;
+	/** 战斗法杖 */
+	public static final int $8157 = 8157;
+	/** 痛苦双刀 */
+	public static final int $8158 = 8158;
+	/** 完美的龙形剑 */
+	public static final int $8159 = 8159;
+	/** 完美的风神弓 */
+	public static final int $8160 = 8160;
+	/** 完美的战斗法杖 */
+	public static final int $8161 = 8161;
+	/** 完美的痛苦双刀 */
+	public static final int $8162 = 8162;
+	/** 火龙之晶 */
+	public static final int $8163 = 8163;
+	/** 风龙之晶 */
+	public static final int $8164 = 8164;
+	/** 水龙之晶 */
+	public static final int $8165 = 8165;
+	/** 地龙之晶 */
+	public static final int $8166 = 8166;
+	/** 苍天的南瓜帽 */
+	public static final int $8167 = 8167;
+	/** 魔幻灵药 */
+	public static final int $8168 = 8168;
+	/** 黑暗结界3楼传送卷 */
+	public static final int $8169 = 8169;
+	/** 致命匕首 */
+	public static final int $8170 = 8170;
+	/** 幸运礼袋 */
+	public static final int $8171 = 8171;
+	/** 受诅咒的防武卷补给箱[活动] */
+	public static final int $8172 = 8172;
+	/** 神秘魔法娃娃之袋[活动] */
+	public static final int $8173 = 8173;
+	/** 回忆蜡烛[活动] */
+	public static final int $8174 = 8174;
+	/** 苍天武器兑换券[赠送] */
+	public static final int $8175 = 8175;
+	/** 苍天防具兑换券[赠送] */
+	public static final int $8176 = 8176;
+	/** 苍天防具袍[赠送] */
+	public static final int $8177 = 8177;
+	/** 苍天大武器示范卷轴盒子 */
+	public static final int $8178 = 8178;
+	/** 苍天大盔甲示范卷轴盒子 */
+	public static final int $8179 = 8179;
+	/** 泡沫肩章袍[赠送] */
+	public static final int $8180 = 8180;
+	/** 龙骑士技能袍 */
+	public static final int $8181 = 8181;
+	/** 幻术师魔法盒 */
+	public static final int $8182 = 8182;
+	/** 黄金巡守变身卷 */
+	public static final int $8183 = 8183;
+	/** 黄金刺客变身卷 */
+	public static final int $8184 = 8184;
+	/** 黄金死亡骑士变身卷 */
+	public static final int $8185 = 8185;
+	/** 卷轴礼盒 */
+	public static final int $8186 = 8186;
+	/** 愿望礼袋 */
+	public static final int $8187 = 8187;
+	/** 风地武器强化卷轴5张[活动] */
+	public static final int $8188 = 8188;
+	/** 大地武器强化卷轴5张[活动] */
+	public static final int $8189 = 8189;
+	/** 水地武器强化卷轴5张[活动] */
+	public static final int $8190 = 8190;
+	/** 火地武器强化卷轴5张[活动] */
+	public static final int $8191 = 8191;
+	/** 饰品强化卷轴5张[活动] */
+	public static final int $8192 = 8192;
+	/** 古代卷轴[活动] */
+	public static final int $8193 = 8193;
+	/** 防卷补给箱[活动] */
+	public static final int $8194 = 8194;
+	/** 瞬移[希望地图] */
+	public static final int $8195 = 8195;
+	/** 梦想冰晶 */
+	public static final int $8196 = 8196;
+	/** 彩组信任 */
+	public static final int $8197 = 8197;
+	/** 设计图链锁信任 */
+	public static final int $8198 = 8198;
+	/** 古路径链锁信任 */
+	public static final int $8199 = 8199;
+	/** 更特链锁信任 */
+	public static final int $8200 = 8200;
+	/**  */
+	public static final int $8201 = 8201;
+	/**  */
+	public static final int $8202 = 8202;
+	/**  */
+	public static final int $8203 = 8203;
+	/**  */
+	public static final int $8204 = 8204;
+	/**  */
+	public static final int $8205 = 8205;
+	/**  */
+	public static final int $8206 = 8206;
+	/**  */
+	public static final int $8207 = 8207;
+	/**  */
+	public static final int $8208 = 8208;
+	/**  */
+	public static final int $8209 = 8209;
+	/**  */
+	public static final int $8210 = 8210;
 
 }
