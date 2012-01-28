@@ -15,12 +15,13 @@
 package l1j.server.server.model.identity;
 
 /**
- * 包括: 武器,装备,道具,魔法,Npc名字,怪物喊话内容.(未完成) (12144)
+ * 包括: 武器,装备,道具,魔法,Npc名字,怪物喊话内容.(未完成) (12942)
  * 
- * <h1>desc-h.tbl 字串编号
+ * <h1>desc-h.tbl 字串编号<br>
+ * <br>
  * 
+ * @author jrwz
  */
-
 public class L1DescId {
 	/** 长剑 */
 	public static final int $0 = 0;
@@ -7004,7 +7005,7 @@ public class L1DescId {
 	public static final int $8106 = 8106;
 	/** 艾莉丝头饰 */
 	public static final int $8107 = 8107;
-	/** 赛尼斯头饰 */
+	/** 凯尔尼斯头饰 */
 	public static final int $8108 = 8108;
 	/** 蕾雅头饰 */
 	public static final int $8109 = 8109;
@@ -7012,145 +7013,145 @@ public class L1DescId {
 	public static final int $8110 = 8110;
 	/** 瞬移[冒险洞窟2F]推荐lv20[赠送] */
 	public static final int $8111 = 8111;
-	/** 瞬移[古鲁丁地监6F]推荐lv30[赠送] */
-	public static final int $8112 = 8112;
-	/** 瞬移[妖森地监2F]推荐lv20[赠送] */
-	public static final int $8113 = 8113;
-	/** 瞬移[龙之谷地监3F]推荐lv40[赠送] */
-	public static final int $8114 = 8114;
-	/** 瞬移[象牙塔5F]推荐lv35[赠送] */
-	public static final int $8115 = 8115;
-	/** 瞬移[奇岩地监3F]推荐lv30[赠送] */
-	public static final int $8116 = 8116;
-	/** 瞬移[蚂蚁洞穴]推荐lv15[赠送] */
-	public static final int $8117 = 8117;
-	/** 药水组合包[赠送] */
-	public static final int $8118 = 8118;
-	/** 卷轴组合包[赠送] */
-	public static final int $8119 = 8119;
-	/** 道具兑换券 */
-	public static final int $8120 = 8120;
-	/** 对盔甲施法的卷轴[活动] */
-	public static final int $8121 = 8121;
-	/** 防武卷补给箱[活动] */
-	public static final int $8122 = 8122;
-	/** 受祝福的防武卷补给箱[活动] */
-	public static final int $8123 = 8123;
 	/** 魔法娃娃租赁商 */
-	public static final int $8124 = 8124;
+	public static final int $8112 = 8112;
 	/** 幻象思克巴魔法娃娃 */
-	public static final int $8125 = 8125;
+	public static final int $8113 = 8113;
 	/** 幻象食人妖精魔法娃娃 */
-	public static final int $8126 = 8126;
+	public static final int $8114 = 8114;
 	/** 幻象狼人魔法娃娃 */
-	public static final int $8127 = 8127;
+	public static final int $8115 = 8115;
 	/** 天堂嘉年华传送师 */
-	public static final int $8128 = 8128;
+	public static final int $8116 = 8116;
 	/** 占星术的咒符 鼠人 */
-	public static final int $8129 = 8129;
+	public static final int $8117 = 8117;
 	/** 占星术的咒符 老虎 */
-	public static final int $8130 = 8130;
+	public static final int $8118 = 8118;
 	/** 占星术的咒符 变形怪首领 */
-	public static final int $8131 = 8131;
+	public static final int $8119 = 8119;
 	/** 神秘的项链I */
-	public static final int $8132 = 8132;
+	public static final int $8120 = 8120;
 	/** 神秘的项链II */
-	public static final int $8133 = 8133;
+	public static final int $8121 = 8121;
 	/** 神秘的汤药 */
-	public static final int $8134 = 8134;
+	public static final int $8122 = 8122;
 	/** 伊柏克斯 */
-	public static final int $8135 = 8135;
+	public static final int $8123 = 8123;
 	/** 爱心勋章 */
-	public static final int $8136 = 8136;
+	public static final int $8124 = 8124;
 	/** 古老的黑项链 */
-	public static final int $8137 = 8137;
+	public static final int $8125 = 8125;
 	/** 古老的红项链 */
-	public static final int $8138 = 8138;
+	public static final int $8126 = 8126;
 	/** 古老的戒指 */
-	public static final int $8139 = 8139;
+	public static final int $8127 = 8127;
 	/** 古老的皮带 */
-	public static final int $8140 = 8140;
+	public static final int $8128 = 8128;
 	/** 织女 */
-	public static final int $8141 = 8141;
+	public static final int $8129 = 8129;
 	/** 鹊桥守卫 */
-	public static final int $8142 = 8142;
+	public static final int $8130 = 8130;
 	/** 浓情巧克力 */
-	public static final int $8143 = 8143;
+	public static final int $8131 = 8131;
 	/** 鹊桥守卫召唤卷 */
-	public static final int $8144 = 8144;
+	public static final int $8132 = 8132;
 	/** 织女的宝袋(防) */
-	public static final int $8145 = 8145;
+	public static final int $8133 = 8133;
 	/** 织女的宝袋(武) */
-	public static final int $8146 = 8146;
+	public static final int $8134 = 8134;
 	/** 织女的武器袋 */
-	public static final int $8147 = 8147;
+	public static final int $8135 = 8135;
 	/** 嫦娥 */
-	public static final int $8148 = 8148;
+	public static final int $8136 = 8136;
 	/** 花 月饼 */
-	public static final int $8149 = 8149;
+	public static final int $8137 = 8137;
 	/** 好 月饼 */
-	public static final int $8150 = 8150;
+	public static final int $8138 = 8138;
 	/** 月 月饼 */
-	public static final int $8151 = 8151;
+	public static final int $8139 = 8139;
 	/** 圆 月饼 */
-	public static final int $8152 = 8152;
+	public static final int $8140 = 8140;
 	/** 月兔的帽子 */
-	public static final int $8153 = 8153;
+	public static final int $8141 = 8141;
 	/** 天堂武器大师 */
-	public static final int $8154 = 8154;
+	public static final int $8142 = 8142;
 	/** 龙形剑 */
-	public static final int $8155 = 8155;
+	public static final int $8143 = 8143;
 	/** 风神弓 */
-	public static final int $8156 = 8156;
+	public static final int $8144 = 8144;
 	/** 战斗法杖 */
-	public static final int $8157 = 8157;
+	public static final int $8145 = 8145;
 	/** 痛苦双刀 */
-	public static final int $8158 = 8158;
+	public static final int $8146 = 8146;
 	/** 完美的龙形剑 */
-	public static final int $8159 = 8159;
+	public static final int $8147 = 8147;
 	/** 完美的风神弓 */
-	public static final int $8160 = 8160;
+	public static final int $8148 = 8148;
 	/** 完美的战斗法杖 */
-	public static final int $8161 = 8161;
+	public static final int $8149 = 8149;
 	/** 完美的痛苦双刀 */
-	public static final int $8162 = 8162;
+	public static final int $8150 = 8150;
 	/** 火龙之晶 */
-	public static final int $8163 = 8163;
+	public static final int $8151 = 8151;
 	/** 风龙之晶 */
-	public static final int $8164 = 8164;
+	public static final int $8152 = 8152;
 	/** 水龙之晶 */
-	public static final int $8165 = 8165;
+	public static final int $8153 = 8153;
 	/** 地龙之晶 */
-	public static final int $8166 = 8166;
+	public static final int $8154 = 8154;
 	/** 苍天的南瓜帽 */
-	public static final int $8167 = 8167;
+	public static final int $8155 = 8155;
 	/** 魔幻灵药 */
-	public static final int $8168 = 8168;
+	public static final int $8156 = 8156;
 	/** 黑暗结界3楼传送卷 */
-	public static final int $8169 = 8169;
+	public static final int $8157 = 8157;
 	/** 致命匕首 */
-	public static final int $8170 = 8170;
+	public static final int $8158 = 8158;
 	/** 幸运礼袋 */
+	public static final int $8159 = 8159;
+	/** 瞬移[古鲁丁地监6F]推荐lv30[赠送] */
+	public static final int $8160 = 8160;
+	/** 瞬移[妖森地监2F]推荐lv20[赠送] */
+	public static final int $8161 = 8161;
+	/** 瞬移[龙之谷地监3F]推荐lv40[赠送] */
+	public static final int $8162 = 8162;
+	/** 瞬移[象牙塔5F]推荐lv35[赠送] */
+	public static final int $8163 = 8163;
+	/** 瞬移[奇岩地监3F]推荐lv30[赠送] */
+	public static final int $8164 = 8164;
+	/** 瞬移[蚂蚁洞穴]推荐lv15[赠送] */
+	public static final int $8165 = 8165;
+	/** 药水组合包[赠送] */
+	public static final int $8166 = 8166;
+	/** 卷轴组合包[赠送] */
+	public static final int $8167 = 8167;
+	/** 道具兑换卷 */
+	public static final int $8168 = 8168;
+	/** 对盔甲施法的卷轴[活动] */
+	public static final int $8169 = 8169;
+	/** 防武卷补给箱[活动] */
+	public static final int $8170 = 8170;
+	/** 受祝福的防武卷补给箱[活动] */
 	public static final int $8171 = 8171;
 	/** 受诅咒的防武卷补给箱[活动] */
 	public static final int $8172 = 8172;
-	/** 神秘魔法娃娃之袋[活动] */
+	/** 神秘的魔法娃娃袋[活动] */
 	public static final int $8173 = 8173;
-	/** 回忆蜡烛[活动] */
+	/** 回忆蜡烛箱[活动] */
 	public static final int $8174 = 8174;
 	/** 苍天武器兑换券[赠送] */
 	public static final int $8175 = 8175;
 	/** 苍天防具兑换券[赠送] */
 	public static final int $8176 = 8176;
-	/** 苍天防具袍[赠送] */
+	/** 苍天防具包[赠送] */
 	public static final int $8177 = 8177;
-	/** 苍天大武器示范卷轴盒子 */
+	/** 苍天对武器施法的卷轴盒子 */
 	public static final int $8178 = 8178;
-	/** 苍天大盔甲示范卷轴盒子 */
+	/** 苍天对盔甲施法的卷轴盒子 */
 	public static final int $8179 = 8179;
-	/** 泡沫肩章袍[赠送] */
+	/** 极品肩章包[赠送] */
 	public static final int $8180 = 8180;
-	/** 龙骑士技能袍 */
+	/** 龙骑士技能包 */
 	public static final int $8181 = 8181;
 	/** 幻术师魔法盒 */
 	public static final int $8182 = 8182;
@@ -7178,37 +7179,2417 @@ public class L1DescId {
 	public static final int $8193 = 8193;
 	/** 防卷补给箱[活动] */
 	public static final int $8194 = 8194;
-	/** 瞬移[希望地图] */
+	/** 瞬移[遗忘之岛] */
 	public static final int $8195 = 8195;
-	/** 梦想冰晶 */
+	/** 梦想的凭证 */
 	public static final int $8196 = 8196;
-	/** 彩组信任 */
+	/** 菜鸟的信任 */
 	public static final int $8197 = 8197;
-	/** 设计图链锁信任 */
+	/** 说话岛达人的信任 */
 	public static final int $8198 = 8198;
-	/** 古路径链锁信任 */
+	/** 古鲁丁达人的信任 */
 	public static final int $8199 = 8199;
-	/** 更特链锁信任 */
+	/** 肯特达人的信任 */
 	public static final int $8200 = 8200;
-	/**  */
+	/** 奇岩达人的信任 */
 	public static final int $8201 = 8201;
-	/**  */
+	/** 海音达人的信任 */
 	public static final int $8202 = 8202;
-	/**  */
+	/** 威顿达人的信任 */
 	public static final int $8203 = 8203;
-	/**  */
+	/** 欧瑞达人的信任 */
 	public static final int $8204 = 8204;
-	/**  */
+	/** 亚丁达人的信任 */
 	public static final int $8205 = 8205;
-	/**  */
+	/** 梦想的水晶 */
 	public static final int $8206 = 8206;
-	/**  */
+	/** 达人礼袋 */
 	public static final int $8207 = 8207;
-	/**  */
+	/** 变身大礼包 */
 	public static final int $8208 = 8208;
-	/**  */
+	/** 经验兑换券(100000) */
 	public static final int $8209 = 8209;
-	/**  */
+	/** 经验兑换券(150000) */
 	public static final int $8210 = 8210;
+	/** 经验兑换券(200000) */
+	public static final int $8211 = 8211;
+	/** 古代臂甲材料袋 */
+	public static final int $8212 = 8212;
+	/** 努岛双倍经验卷 */
+	public static final int $8213 = 8213;
+	/** 隐谷双倍经验卷 */
+	public static final int $8214 = 8214;
+	/** 魔法宝石补给袋 */
+	public static final int $8215 = 8215;
+	/** 精灵玉补给袋 */
+	public static final int $8216 = 8216;
+	/** 一级黑魔石补给袋 */
+	public static final int $8217 = 8217;
+	/** 勇敢药水补给袋 */
+	public static final int $8218 = 8218;
+	/** 慎重药水补给袋 */
+	public static final int $8219 = 8219;
+	/** 精灵饼干补给袋 */
+	public static final int $8220 = 8220;
+	/** 铜蛋 */
+	public static final int $8221 = 8221;
+	/** 银蛋 */
+	public static final int $8222 = 8222;
+	/** 金蛋 */
+	public static final int $8223 = 8223;
+	/** 强化苍天之剑 */
+	public static final int $8224 = 8224;
+	/** 强化苍天双手剑 */
+	public static final int $8225 = 8225;
+	/** 强化苍天巨斧 */
+	public static final int $8226 = 8226;
+	/** 强化苍天之弓 */
+	public static final int $8227 = 8227;
+	/** 强化苍天双刀 */
+	public static final int $8228 = 8228;
+	/** 强化苍天钢爪 */
+	public static final int $8229 = 8229;
+	/** 强化苍天魔杖 */
+	public static final int $8230 = 8230;
+	/** 强化苍天盔甲 */
+	public static final int $8231 = 8231;
+	/** 强化苍天斗篷 */
+	public static final int $8232 = 8232;
+	/** 强化苍天长靴 */
+	public static final int $8233 = 8233;
+	/** 强化苍天手套 */
+	public static final int $8234 = 8234;
+	/** 强化苍天帽子 */
+	public static final int $8235 = 8235;
+	/** 强化苍天耳环 */
+	public static final int $8236 = 8236;
+	/** 强化苍天戒指 */
+	public static final int $8237 = 8237;
+	/** 强化苍天项链 */
+	public static final int $8238 = 8238;
+	/** 强化苍天武器箱 */
+	public static final int $8239 = 8239;
+	/** 元帅信物 */
+	public static final int $8240 = 8240;
+	/** 好人卡 */
+	public static final int $8241 = 8241;
+	/** 屠龙剑的遗物 */
+	public static final int $8242 = 8242;
+	/** 现在要回去了 */
+	public static final int $8243 = 8243;
+	/** 安静地 */
+	public static final int $8244 = 8244;
+	/** 会回去 */
+	public static final int $8245 = 8245;
+	/** 向家里 */
+	public static final int $8246 = 8246;
+	/** 突然给礼物 */
+	public static final int $8247 = 8247;
+	/** dummy */
+	public static final int $8248 = 8248;
+	/** dummy */
+	public static final int $8249 = 8249;
+	/** dummy */
+	public static final int $8250 = 8250;
+	/** dummy */
+	public static final int $8251 = 8251;
+	/** dummy */
+	public static final int $8252 = 8252;
+	/** dummy */
+	public static final int $8253 = 8253;
+	/** dummy */
+	public static final int $8254 = 8254;
+	/** dummy */
+	public static final int $8255 = 8255;
+	/** dummy */
+	public static final int $8256 = 8256;
+	/** dummy */
+	public static final int $8257 = 8257;
+	/** dummy */
+	public static final int $8258 = 8258;
+	/** dummy */
+	public static final int $8259 = 8259;
+	/** dummy */
+	public static final int $8260 = 8260;
+	/** dummy */
+	public static final int $8261 = 8261;
+	/** dummy */
+	public static final int $8262 = 8262;
+	/** dummy */
+	public static final int $8263 = 8263;
+	/** dummy */
+	public static final int $8264 = 8264;
+	/** dummy */
+	public static final int $8265 = 8265;
+	/** dummy */
+	public static final int $8266 = 8266;
+	/** dummy */
+	public static final int $8267 = 8267;
+	/** err1 */
+	public static final int $8268 = 8268;
+	/** 回归的勇士袋子 */
+	public static final int $8269 = 8269;
+	/** 万圣节庆典帽子 */
+	public static final int $8270 = 8270;
+	/** 万圣节南瓜箱子 */
+	public static final int $8271 = 8271;
+	/** 万圣节南瓜法杖 */
+	public static final int $8272 = 8272;
+	/** 彷徨的稻草人 */
+	public static final int $8273 = 8273;
+	/** 永恒戒指 */
+	public static final int $8274 = 8274;
+	/** 永恒对戒盒 */
+	public static final int $8275 = 8275;
+	/** err2 */
+	public static final int $8276 = 8276;
+	/** 龙的宝物箱子包 */
+	public static final int $8277 = 8277;
+	/** 精灵之印(II) */
+	public static final int $8278 = 8278;
+	/** 精灵之印(III) */
+	public static final int $8279 = 8279;
+	/** 精灵之印(IV) */
+	public static final int $8280 = 8280;
+	/** 精灵之印(V) */
+	public static final int $8281 = 8281;
+	/** 火灵之印(I) */
+	public static final int $8282 = 8282;
+	/** 火灵之印(II) */
+	public static final int $8283 = 8283;
+	/** 火灵之印(III) */
+	public static final int $8284 = 8284;
+	/** 火灵之印(IV) */
+	public static final int $8285 = 8285;
+	/** 火灵之印(V) */
+	public static final int $8286 = 8286;
+	/** 水灵之印(I) */
+	public static final int $8287 = 8287;
+	/** 水灵之印(II) */
+	public static final int $8288 = 8288;
+	/** 水灵之印(III) */
+	public static final int $8289 = 8289;
+	/** 水灵之印(IV) */
+	public static final int $8290 = 8290;
+	/** 水灵之印(V) */
+	public static final int $8291 = 8291;
+	/** 风灵之印(I) */
+	public static final int $8292 = 8292;
+	/** 风灵之印(II) */
+	public static final int $8293 = 8293;
+	/** 风灵之印(III) */
+	public static final int $8294 = 8294;
+	/** 风灵之印(IV) */
+	public static final int $8295 = 8295;
+	/** 风灵之印(V) */
+	public static final int $8296 = 8296;
+	/** 地灵之印(I) */
+	public static final int $8297 = 8297;
+	/** 地灵之印(II) */
+	public static final int $8298 = 8298;
+	/** 地灵之印(III) */
+	public static final int $8299 = 8299;
+	/** 地灵之印(IV) */
+	public static final int $8300 = 8300;
+	/** 地灵之印(V) */
+	public static final int $8301 = 8301;
+	/** 精灵的印章 */
+	public static final int $8302 = 8302;
+	/** 火灵的印章 */
+	public static final int $8303 = 8303;
+	/** 水灵的印章 */
+	public static final int $8304 = 8304;
+	/** 风灵的印章 */
+	public static final int $8305 = 8305;
+	/** 地灵的印章 */
+	public static final int $8306 = 8306;
+	/** 幸运兔脚 */
+	public static final int $8307 = 8307;
+	/** 残缺的书页包 */
+	public static final int $8308 = 8308;
+	/** 残缺的书页“亚” */
+	public static final int $8309 = 8309;
+	/** 残缺的书页“丁” */
+	public static final int $8310 = 8310;
+	/** 残缺的书页“王” */
+	public static final int $8311 = 8311;
+	/** 残缺的书页“国” */
+	public static final int $8312 = 8312;
+	/** 空白书页 */
+	public static final int $8313 = 8313;
+	/** 遗失的四叶草 */
+	public static final int $8314 = 8314;
+	/** 泛着暗光的袋子 */
+	public static final int $8315 = 8315;
+	/** 满满的一罐宝石 */
+	public static final int $8316 = 8316;
+	/** 经验书 第一卷 */
+	public static final int $8317 = 8317;
+	/** 阿努比斯，贺洛斯 */
+	public static final int $8318 = 8318;
+	/** 杰弗雷库 */
+	public static final int $8319 = 8319;
+	/** 兔子的神秘袋子 */
+	public static final int $8320 = 8320;
+	/** 强化苍天防具箱 */
+	public static final int $8321 = 8321;
+	/** 消耗补给品包 */
+	public static final int $8322 = 8322;
+	/** 回归大礼包 */
+	public static final int $8323 = 8323;
+	/** 勇气结晶补给袋 */
+	public static final int $8324 = 8324;
+	/** 聚宝盆 */
+	public static final int $8325 = 8325;
+	/** 世界树的叶子 */
+	public static final int $8326 = 8326;
+	/** 防卷补给箱[活动优惠] */
+	public static final int $8327 = 8327;
+	/** 武卷补给箱[活动优惠] */
+	public static final int $8328 = 8328;
+	/** 王族50级任务箱[活动优惠] */
+	public static final int $8329 = 8329;
+	/** 骑士50级任务箱[活动优惠] */
+	public static final int $8330 = 8330;
+	/** 妖精50级任务箱[活动优惠] */
+	public static final int $8331 = 8331;
+	/** 法师50级任务箱[活动优惠] */
+	public static final int $8332 = 8332;
+	/** 神秘魔法娃娃之箱[活动优惠] */
+	public static final int $8333 = 8333;
+	/** 新手冲级大礼包 */
+	public static final int $8334 = 8334;
+	/** 强化苍天饰品包 */
+	public static final int $8335 = 8335;
+	/** 象牙塔装备补给箱 */
+	public static final int $8336 = 8336;
+	/** 追忆之岛传送符 */
+	public static final int $8337 = 8337;
+	/** 追忆之岛传送卷轴 */
+	public static final int $8338 = 8338;
+	/** 名誉祝福 */
+	public static final int $8339 = 8339;
+	/** 信赖祝福 */
+	public static final int $8340 = 8340;
+	/** 智慧祝福 */
+	public static final int $8341 = 8341;
+	/** 勇气祝福 */
+	public static final int $8342 = 8342;
+	/** 果实袋 */
+	public static final int $8343 = 8343;
+	/** 青涩的果实 */
+	public static final int $8344 = 8344;
+	/** 成熟的果实 */
+	public static final int $8345 = 8345;
+	/** 金色的果实 */
+	public static final int $8346 = 8346;
+	/** 智力T恤袋 */
+	public static final int $8347 = 8347;
+	/** 力量T恤袋 */
+	public static final int $8348 = 8348;
+	/** 敏捷T恤袋 */
+	public static final int $8349 = 8349;
+	/** 风之武器强化卷轴袋 */
+	public static final int $8350 = 8350;
+	/** 地之武器强化卷轴袋 */
+	public static final int $8351 = 8351;
+	/** 水之武器强化卷轴袋 */
+	public static final int $8352 = 8352;
+	/** 火之武器强化卷轴袋 */
+	public static final int $8353 = 8353;
+	/** 战斗药水袋 */
+	public static final int $8354 = 8354;
+	/** 赎罪圣经袋 */
+	public static final int $8355 = 8355;
+	/** 礼袋 */
+	public static final int $8356 = 8356;
+	/** CH objects desc dummy */
+	public static final int $8357 = 8357;
+	/** 南瓜糖果 */
+	public static final int $8358 = 8358;
+	/** 南瓜使者 */
+	public static final int $8359 = 8359;
+	/** 南瓜盅 */
+	public static final int $8360 = 8360;
+	/** dummy */
+	public static final int $8361 = 8361;
+	/** dummy */
+	public static final int $8362 = 8362;
+	/** dummy */
+	public static final int $8363 = 8363;
+	/** dummy */
+	public static final int $8364 = 8364;
+	/** dummy */
+	public static final int $8365 = 8365;
+	/** dummy */
+	public static final int $8366 = 8366;
+	/** dummy */
+	public static final int $8367 = 8367;
+	/** %i力量特质T恤 */
+	public static final int $8368 = 8368;
+	/** %i敏捷特质T恤 */
+	public static final int $8369 = 8369;
+	/** %i魅力特质T恤 */
+	public static final int $8370 = 8370;
+	/** %i魔力特质T恤 */
+	public static final int $8371 = 8371;
+	/** %i体力特质T恤 */
+	public static final int $8372 = 8372;
+	/** %i玛那特质T恤 */
+	public static final int $8373 = 8373;
+	/** %i昏迷耐性特质T恤 */
+	public static final int $8374 = 8374;
+	/** %i支撑耐性特质T恤 */
+	public static final int $8375 = 8375;
+	/** %i魔法抵抗特质T恤 */
+	public static final int $8376 = 8376;
+	/** %i昏迷耐性T恤 */
+	public static final int $8377 = 8377;
+	/** %i支撑耐性T恤 */
+	public static final int $8378 = 8378;
+	/** %i魔法抵抗特质T恤 */
+	public static final int $8379 = 8379;
+	/** 力量T恤箱 */
+	public static final int $8380 = 8380;
+	/** 敏捷T恤箱 */
+	public static final int $8381 = 8381;
+	/** 魅力T恤箱 */
+	public static final int $8382 = 8382;
+	/** 魔力T恤箱 */
+	public static final int $8383 = 8383;
+	/** 体力T恤箱 */
+	public static final int $8384 = 8384;
+	/** 玛那T恤箱子 */
+	public static final int $8385 = 8385;
+	/** 昏迷耐性T恤箱子 */
+	public static final int $8386 = 8386;
+	/** 支撑耐性T恤箱子 */
+	public static final int $8387 = 8387;
+	/** 魔法抵抗T恤箱 */
+	public static final int $8388 = 8388;
+	/** 力量T恤箱（4张） */
+	public static final int $8389 = 8389;
+	/** 敏捷T恤箱（4张） */
+	public static final int $8390 = 8390;
+	/** 魅力T恤箱（4张） */
+	public static final int $8391 = 8391;
+	/** 魔力T恤箱（4张） */
+	public static final int $8392 = 8392;
+	/** 体力T恤箱（4张） */
+	public static final int $8393 = 8393;
+	/** 玛那T恤箱子（4张） */
+	public static final int $8394 = 8394;
+	/** 昏迷耐性T恤箱子（4张） */
+	public static final int $8395 = 8395;
+	/** 支撑耐性T恤箱子（4张） */
+	public static final int $8396 = 8396;
+	/** 魔法抵抗T恤箱（4张） */
+	public static final int $8397 = 8397;
+	/** 精灵的印章箱 */
+	public static final int $8398 = 8398;
+	/** 11th黑色附加包 */
+	public static final int $8399 = 8399;
+	/** 11th白色附加包 */
+	public static final int $8400 = 8400;
+	/** 11th红色附加包 */
+	public static final int $8401 = 8401;
+	/** 11周年白色项链 */
+	public static final int $8402 = 8402;
+	/** 11周年黑色项链 */
+	public static final int $8403 = 8403;
+	/** 11周年红色项链 */
+	public static final int $8404 = 8404;
+	/** 11周年纪念耳环 */
+	public static final int $8405 = 8405;
+	/** 安塔拉斯的巢穴 */
+	public static final int $8406 = 8406;
+	/** 法利昂的巢穴 */
+	public static final int $8407 = 8407;
+	/** dummy */
+	public static final int $8408 = 8408;
+	/** dummy */
+	public static final int $8409 = 8409;
+	/** 神秘的棱镜 : 雄性彩色龙 */
+	public static final int $8410 = 8410;
+	/** 神秘的棱镜 : 雌性彩色龙 */
+	public static final int $8411 = 8411;
+	/** 神秘的棱镜 : 进化的雄性彩色龙 */
+	public static final int $8412 = 8412;
+	/** 神秘的棱镜 : 进化的雌性彩色龙 */
+	public static final int $8413 = 8413;
+	/** 龙的亚丁箱子 */
+	public static final int $8414 = 8414;
+	/** 五彩珍珠 */
+	public static final int $8415 = 8415;
+	/** 神秘的五彩珍珠 */
+	public static final int $8416 = 8416;
+	/** 阿尔普斯 奈劳 */
+	public static final int $8417 = 8417;
+	/** 阿尔普斯 梅嘉 */
+	public static final int $8418 = 8418;
+	/** 阿尔普斯 菲亚 */
+	public static final int $8419 = 8419;
+	/** 图尔纳 */
+	public static final int $8420 = 8420;
+	/** 卡因斯姆 */
+	public static final int $8421 = 8421;
+	/** 贝亚斯姆 */
+	public static final int $8422 = 8422;
+	/** 大蚬子 */
+	public static final int $8423 = 8423;
+	/** 蚬子 */
+	public static final int $8424 = 8424;
+	/** dummy */
+	public static final int $8425 = 8425;
+	/** 象牙塔魔法袋 */
+	public static final int $8426 = 8426;
+	/** 象牙塔补给品传送卷轴 */
+	public static final int $8427 = 8427;
+	/** 象牙塔灵药 */
+	public static final int $8428 = 8428;
+	/** 旅行者的武器魔法卷轴 */
+	public static final int $8429 = 8429;
+	/** 旅行者的防具魔法卷轴 */
+	public static final int $8430 = 8430;
+	/** 亚克变身卷轴箱子 */
+	public static final int $8431 = 8431;
+	/** dummy */
+	public static final int $8432 = 8432;
+	/** dummy */
+	public static final int $8433 = 8433;
+	/** dummy */
+	public static final int $8434 = 8434;
+	/** dummy */
+	public static final int $8435 = 8435;
+	/** dummy */
+	public static final int $8436 = 8436;
+	/** dummy */
+	public static final int $8437 = 8437;
+	/** dummy */
+	public static final int $8438 = 8438;
+	/** dummy */
+	public static final int $8439 = 8439;
+	/** dummy */
+	public static final int $8440 = 8440;
+	/** dummy */
+	public static final int $8441 = 8441;
+	/** 11周年礼物箱子 */
+	public static final int $8442 = 8442;
+	/** 11周年礼物箱子 */
+	public static final int $8443 = 8443;
+	/** 变身鳞袋子 */
+	public static final int $8444 = 8444;
+	/** 变身袋子 */
+	public static final int $8445 = 8445;
+	/** 新手帮助 */
+	public static final int $8446 = 8446;
+	/** 修练场管理员 */
+	public static final int $8447 = 8447;
+	/** 旅行者帮助归还卷轴 */
+	public static final int $8448 = 8448;
+	/** 魔法娃娃：史巴托箱子 */
+	public static final int $8449 = 8449;
+	/** 宫殿记忆书 */
+	public static final int $8450 = 8450;
+	/** 宫殿记忆书箱子 */
+	public static final int $8451 = 8451;
+	/** 轻的 */
+	public static final int $8452 = 8452;
+	/** 号外少年 */
+	public static final int $8453 = 8453;
+	/** 利奥塔！拉娜 碰碰.. */
+	public static final int $8454 = 8454;
+	/** 利奥塔！雷普 碰碰.. */
+	public static final int $8455 = 8455;
+	/** 利奥塔！妮娜 予努斯.. */
+	public static final int $8456 = 8456;
+	/** 利奥塔！泰娜 维因拉克.. */
+	public static final int $8457 = 8457;
+	/** 利奥塔！拉娜 奥依姆.. */
+	public static final int $8458 = 8458;
+	/** 利奥塔！雷普 奥依姆.. */
+	public static final int $8459 = 8459;
+	/** 利奥塔！泰娜 伦蒂尔.. */
+	public static final int $8460 = 8460;
+	/** 利奥塔！妮娜 伦蒂尔.. */
+	public static final int $8461 = 8461;
+	/** 利奥塔！努斯跟 卡普.. */
+	public static final int $8462 = 8462;
+	/** 利奥塔！奥尼兹 维因拉克.. */
+	public static final int $8463 = 8463;
+	/** 利奥塔！奥尼兹 伊尼格玛.. */
+	public static final int $8464 = 8464;
+	/** 利奥塔！奥尼兹 库斯温 维因拉克.. */
+	public static final int $8465 = 8465;
+	/** 利奥塔！奥尼兹 伊尼格玛 维因拉克.. */
+	public static final int $8466 = 8466;
+	/** 利奥塔！皮劳依娜 */
+	public static final int $8467 = 8467;
+	/** 五彩珍珠给法利昂力量！ */
+	public static final int $8468 = 8468;
+	/** 神秘的五彩珍珠让法利昂敏捷！ */
+	public static final int $8469 = 8469;
+	/** 神秘的五彩珍珠对魔法弱 */
+	public static final int $8470 = 8470;
+	/** 神秘的五彩珍珠对近战物理攻击弱。 */
+	public static final int $8471 = 8471;
+	/** 神秘的五彩珍珠对远距离物理攻击弱。 */
+	public static final int $8472 = 8472;
+	/** dummy */
+	public static final int $8473 = 8473;
+	/** dummy */
+	public static final int $8474 = 8474;
+	/** dummy */
+	public static final int $8475 = 8475;
+	/** dummy */
+	public static final int $8476 = 8476;
+	/** 南瓜种子 */
+	public static final int $8477 = 8477;
+	/** 天空体力卷轴 */
+	public static final int $8478 = 8478;
+	/** 天空魔力卷轴 */
+	public static final int $8479 = 8479;
+	/** 天空战斗卷轴 */
+	public static final int $8480 = 8480;
+	/** 旅行者帮助 */
+	public static final int $8481 = 8481;
+	/** 潘多拉的箱子 */
+	public static final int $8482 = 8482;
+	/** 巴露的朋友 */
+	public static final int $8483 = 8483;
+	/** 性急的守门人 */
+	public static final int $8484 = 8484;
+	/** 古代妖魔族头盔 */
+	public static final int $8485 = 8485;
+	/** 古代妖魔族环甲 */
+	public static final int $8486 = 8486;
+	/** 古代妖魔族斗篷 */
+	public static final int $8487 = 8487;
+	/** 古代阿克海盾牌 */
+	public static final int $8488 = 8488;
+	/** 古代矮人族铁头盔 */
+	public static final int $8489 = 8489;
+	/** 古代矮人族斗篷 */
+	public static final int $8490 = 8490;
+	/** 古代矮人族圆盾牌 */
+	public static final int $8491 = 8491;
+	/** 13日的袋子 */
+	public static final int $8492 = 8492;
+	/** 古代妖魔战士 */
+	public static final int $8493 = 8493;
+	/** 古代矮人族战士 */
+	public static final int $8494 = 8494;
+	/** 古代Buff标志 */
+	public static final int $8495 = 8495;
+	/** 古代T恤 */
+	public static final int $8496 = 8496;
+	/** 古代Buff队长 */
+	public static final int $8497 = 8497;
+	/** 古代Buff队员 */
+	public static final int $8498 = 8498;
+	/** 大海的秘密 */
+	public static final int $8499 = 8499;
+	/** 古代骷髅头盔 */
+	public static final int $8500 = 8500;
+	/** 古代骨头盔甲 */
+	public static final int $8501 = 8501;
+	/** 古代骨骼盾牌 */
+	public static final int $8502 = 8502;
+	/** 古代骸骨 */
+	public static final int $8503 = 8503;
+	/** 顺移[海贼岛] */
+	public static final int $8504 = 8504;
+	/** 弓箭匣 */
+	public static final int $8505 = 8505;
+	/** 古代长老 */
+	public static final int $8506 = 8506;
+	/** 古代夏洛伯 */
+	public static final int $8507 = 8507;
+	/** 新鲜的诱饵 */
+	public static final int $8508 = 8508;
+	/** 精致的地龙魔眼 */
+	public static final int $8509 = 8509;
+	/** 精致的水龙魔眼 */
+	public static final int $8510 = 8510;
+	/** 精致的风龙魔眼 */
+	public static final int $8511 = 8511;
+	/** 精致的火龙魔眼 */
+	public static final int $8512 = 8512;
+	/** 精致的诞生魔眼 */
+	public static final int $8513 = 8513;
+	/** 精致的形象魔眼 */
+	public static final int $8514 = 8514;
+	/** T恤强化徽标 */
+	public static final int $8515 = 8515;
+	/** T恤补给管理员 */
+	public static final int $8516 = 8516;
+	/** 圣诞礼品盒 */
+	public static final int $8517 = 8517;
+	/** 圣诞蛋糕 */
+	public static final int $8518 = 8518;
+	/** 芝士蛋糕 */
+	public static final int $8519 = 8519;
+	/** 抹茶蛋糕 */
+	public static final int $8520 = 8520;
+	/** 香蕉蛋糕块 */
+	public static final int $8521 = 8521;
+	/** 香蕉蛋糕 */
+	public static final int $8522 = 8522;
+	/** 樱桃蛋糕块 */
+	public static final int $8523 = 8523;
+	/** 樱桃蛋糕 */
+	public static final int $8524 = 8524;
+	/** 草莓蛋糕块 */
+	public static final int $8525 = 8525;
+	/** 草莓蛋糕 */
+	public static final int $8526 = 8526;
+	/** 鲁道夫魔法帽 */
+	public static final int $8527 = 8527;
+	/** 大毛的身份牌 */
+	public static final int $8528 = 8528;
+	/** 二毛的身份牌 */
+	public static final int $8529 = 8529;
+	/** 好市民奖励袋 */
+	public static final int $8530 = 8530;
+	/** 抢劫犯大毛 */
+	public static final int $8531 = 8531;
+	/** 抢劫犯二毛 */
+	public static final int $8532 = 8532;
+	/** 治安官 */
+	public static final int $8533 = 8533;
+	/** 抢钱，抢粮，抢女人！ */
+	public static final int $8534 = 8534;
+	/** 打劫，男的站左边，女的站右边，不男不女站中间。 */
+	public static final int $8535 = 8535;
+	/** 神秘的速度药水 */
+	public static final int $8536 = 8536;
+	/** 天空骑士变身帽子 */
+	public static final int $8537 = 8537;
+	/** 幸运饼干 */
+	public static final int $8538 = 8538;
+	/** 运势条 */
+	public static final int $8539 = 8539;
+	/** 饼干块 */
+	public static final int $8540 = 8540;
+	/** dummy */
+	public static final int $8541 = 8541;
+	/** dummy */
+	public static final int $8542 = 8542;
+	/** dummy */
+	public static final int $8543 = 8543;
+	/** 象牙塔斗篷 */
+	public static final int $8544 = 8544;
+	/** dummy */
+	public static final int $8545 = 8545;
+	/** dummy */
+	public static final int $8546 = 8546;
+	/** 诡异的料理师 */
+	public static final int $8547 = 8547;
+	/** 奇怪的传送员 */
+	public static final int $8548 = 8548;
+	/** 特殊仓库巴扎尔 */
+	public static final int $8549 = 8549;
+	/** 特殊仓库巴多尔 */
+	public static final int $8550 = 8550;
+	/** 特殊仓库巴高尔 */
+	public static final int $8551 = 8551;
+	/** 特殊仓库巴萨尔 */
+	public static final int $8552 = 8552;
+	/** 特殊仓库巴玛尔 */
+	public static final int $8553 = 8553;
+	/** 特殊仓库巴努尔 */
+	public static final int $8554 = 8554;
+	/** 特殊仓库巴奥尔 */
+	public static final int $8555 = 8555;
+	/** 特殊仓库巴胡尔 */
+	public static final int $8556 = 8556;
+	/** 特殊仓库巴卡尔 */
+	public static final int $8557 = 8557;
+	/** 特殊仓库巴图尔 */
+	public static final int $8558 = 8558;
+	/** 特殊仓库巴诧尔 */
+	public static final int $8559 = 8559;
+	/** 炼金术士鲁芯 */
+	public static final int $8560 = 8560;
+	/** 炼金术士克落兹 */
+	public static final int $8561 = 8561;
+	/** 炼金术士普拉梅斯 */
+	public static final int $8562 = 8562;
+	/** 炼金术士阿惠尔斯 */
+	public static final int $8563 = 8563;
+	/** 炼金术士赛顿 */
+	public static final int $8564 = 8564;
+	/** 炼金术士濡巴尔蒙 */
+	public static final int $8565 = 8565;
+	/** 炼金术士夏利尔恩 */
+	public static final int $8566 = 8566;
+	/** 炼金术士德里斯图 */
+	public static final int $8567 = 8567;
+	/** 炼金术士普惠斯 */
+	public static final int $8568 = 8568;
+	/** 炼金术士里奥斯特 */
+	public static final int $8569 = 8569;
+	/** 炼金术士蒂尔昂 */
+	public static final int $8570 = 8570;
+	/** 炼金术士艾修姆 */
+	public static final int $8571 = 8571;
+	/** 梅迪 */
+	public static final int $8572 = 8572;
+	/** 艾尔芭 */
+	public static final int $8573 = 8573;
+	/** 艾尔布 */
+	public static final int $8574 = 8574;
+	/** 贝尔吉 */
+	public static final int $8575 = 8575;
+	/** 赎罪的神女姚娜 */
+	public static final int $8576 = 8576;
+	/** 赎罪的神女贊克 */
+	public static final int $8577 = 8577;
+	/** 赎罪的神女迪奥尼斯 */
+	public static final int $8578 = 8578;
+	/** 赎罪的神女提多 */
+	public static final int $8579 = 8579;
+	/** 赎罪的神女戴尔匹 */
+	public static final int $8580 = 8580;
+	/** 赎罪的神女奥提尔 */
+	public static final int $8581 = 8581;
+	/** 赎罪的神女鲁奇 */
+	public static final int $8582 = 8582;
+	/** 赎罪的神女雅迪拉 */
+	public static final int $8583 = 8583;
+	/** 赎罪的神女吉尼 */
+	public static final int $8584 = 8584;
+	/** 赎罪的神女亚娜斯塔 */
+	public static final int $8585 = 8585;
+	/** 象牙塔弓箭 */
+	public static final int $8586 = 8586;
+	/** dummy */
+	public static final int $8587 = 8587;
+	/** 黑暗妖精警卫（弓） */
+	public static final int $8588 = 8588;
+	/** 黑暗妖精警卫（矛） */
+	public static final int $8589 = 8589;
+	/** 兰斯 领主 */
+	public static final int $8590 = 8590;
+	/** 黑暗骑士 */
+	public static final int $8591 = 8591;
+	/** 巴普尔 */
+	public static final int $8592 = 8592;
+	/** 巴皮尔 */
+	public static final int $8593 = 8593;
+	/** 雷奥滨 */
+	public static final int $8594 = 8594;
+	/** 银骑士 */
+	public static final int $8595 = 8595;
+	/** 银魔导师 */
+	public static final int $8596 = 8596;
+	/** 银巡守 */
+	public static final int $8597 = 8597;
+	/** 银暗影 */
+	public static final int $8598 = 8598;
+	/** 剑之领主 */
+	public static final int $8599 = 8599;
+	/** 卫嘉德尔领主 */
+	public static final int $8600 = 8600;
+	/** 箭之领主 */
+	public static final int $8601 = 8601;
+	/** 暗影领主 */
+	public static final int $8602 = 8602;
+	/** 亚克骑士 */
+	public static final int $8603 = 8603;
+	/** 亚克法师 */
+	public static final int $8604 = 8604;
+	/** 亚克侦察员 */
+	public static final int $8605 = 8605;
+	/** 亚克暗影 */
+	public static final int $8606 = 8606;
+	/** 黑暗魔导师 */
+	public static final int $8607 = 8607;
+	/** 黑暗巡守 */
+	public static final int $8608 = 8608;
+	/** 黑暗之影 */
+	public static final int $8609 = 8609;
+	/** 大毛的身份牌 */
+	public static final int $8610 = 8610;
+	/** 二毛的身份牌 */
+	public static final int $8611 = 8611;
+	/** 好市民奖励袋 */
+	public static final int $8612 = 8612;
+	/** 抢劫犯大毛 */
+	public static final int $8613 = 8613;
+	/** 抢劫犯二毛 */
+	public static final int $8614 = 8614;
+	/** 治安官 */
+	public static final int $8615 = 8615;
+	/** 抢钱，抢粮，抢女人！ */
+	public static final int $8616 = 8616;
+	/** 打劫，男的站左边，女的站右边，不男不女站中间。 */
+	public static final int $8617 = 8617;
+	/** 浓缩的高级体力恢复剂箱子 */
+	public static final int $8618 = 8618;
+	/** dummy */
+	public static final int $8619 = 8619;
+	/** dummy */
+	public static final int $8620 = 8620;
+	/** dummy */
+	public static final int $8621 = 8621;
+	/** dummy */
+	public static final int $8622 = 8622;
+	/** dummy */
+	public static final int $8623 = 8623;
+	/** dummy */
+	public static final int $8624 = 8624;
+	/** dummy */
+	public static final int $8625 = 8625;
+	/** dummy */
+	public static final int $8626 = 8626;
+	/** dummy */
+	public static final int $8627 = 8627;
+	/** dummy */
+	public static final int $8628 = 8628;
+	/** dummy */
+	public static final int $8629 = 8629;
+	/** dummy */
+	public static final int $8630 = 8630;
+	/** dummy */
+	public static final int $8631 = 8631;
+	/** dummy */
+	public static final int $8632 = 8632;
+	/** dummy */
+	public static final int $8633 = 8633;
+	/** dummy */
+	public static final int $8634 = 8634;
+	/** dummy */
+	public static final int $8635 = 8635;
+	/** dummy */
+	public static final int $8636 = 8636;
+	/** 库杰的银图腾 */
+	public static final int $8637 = 8637;
+	/** 库杰的金图腾 */
+	public static final int $8638 = 8638;
+	/** 库杰的口罩 */
+	public static final int $8639 = 8639;
+	/** 库杰的 */
+	public static final int $8640 = 8640;
+	/** 被污染的潘 */
+	public static final int $8641 = 8641;
+	/** 被污染的芮克妮 */
+	public static final int $8642 = 8642;
+	/** 纯白的恢复戒指 */
+	public static final int $8643 = 8643;
+	/** 纯白的精神戒指 */
+	public static final int $8644 = 8644;
+	/** 纯白的体力戒指 */
+	public static final int $8645 = 8645;
+	/** 纯白的魔力戒指 */
+	public static final int $8646 = 8646;
+	/** 纯白的魔法抵抗戒指 */
+	public static final int $8647 = 8647;
+	/** 特 */
+	public static final int $8648 = 8648;
+	/** 速度提升卷轴 */
+	public static final int $8649 = 8649;
+	/** 妖魔士兵 */
+	public static final int $8650 = 8650;
+	/** 黄虎 */
+	public static final int $8651 = 8651;
+	/** 白虎 */
+	public static final int $8652 = 8652;
+	/** 大福袋子 */
+	public static final int $8653 = 8653;
+	/** 庚寅年福钱 */
+	public static final int $8654 = 8654;
+	/** 庚寅年新年米汤 */
+	public static final int $8655 = 8655;
+	/** 猎虎者 */
+	public static final int $8656 = 8656;
+	/** 情人节祝词 */
+	public static final int $8657 = 8657;
+	/** 黑巧克力 */
+	public static final int $8658 = 8658;
+	/** 草莓巧克力 */
+	public static final int $8659 = 8659;
+	/** 牛奶巧克力 */
+	public static final int $8660 = 8660;
+	/** 香蕉巧克力 */
+	public static final int $8661 = 8661;
+	/** 近距离瞬间移动卷轴 */
+	public static final int $8662 = 8662;
+	/** 恋人福袋 */
+	public static final int $8663 = 8663;
+	/** 恋人糖果 */
+	public static final int $8664 = 8664;
+	/** 恋人巧克力 */
+	public static final int $8665 = 8665;
+	/** 恋人身份 */
+	public static final int $8666 = 8666;
+	/** 魔法恋人水晶（男） */
+	public static final int $8667 = 8667;
+	/** 魔法恋人水晶（女） */
+	public static final int $8668 = 8668;
+	/** 老虎老头的红福袋 */
+	public static final int $8669 = 8669;
+	/** 老虎卡 */
+	public static final int $8670 = 8670;
+	/** 新年服装箱子 */
+	public static final int $8671 = 8671;
+	/** 唐山服装 */
+	public static final int $8672 = 8672;
+	/** 旗袍服装 */
+	public static final int $8673 = 8673;
+	/** 福老虎箱子 */
+	public static final int $8674 = 8674;
+	/** dummy */
+	public static final int $8675 = 8675;
+	/** dummy */
+	public static final int $8676 = 8676;
+	/** 老虎老头 */
+	public static final int $8677 = 8677;
+	/** 史斌 */
+	public static final int $8678 = 8678;
+	/** 香港体验服礼物箱子 */
+	public static final int $8679 = 8679;
+	/** 香港体验服攻略箱子 */
+	public static final int $8680 = 8680;
+	/** [近战攻击力] */
+	public static final int $8681 = 8681;
+	/** [近战命中率] */
+	public static final int $8682 = 8682;
+	/** [远距离攻击力] */
+	public static final int $8683 = 8683;
+	/** [远距离命中率] */
+	public static final int $8684 = 8684;
+	/** [魔攻] */
+	public static final int $8685 = 8685;
+	/** [咒文命中率] */
+	public static final int $8686 = 8686;
+	/** [昏迷耐性] */
+	public static final int $8687 = 8687;
+	/** [支撑耐性] */
+	public static final int $8688 = 8688;
+	/** 封印解开了点[1/4] */
+	public static final int $8689 = 8689;
+	/** 封印揭开了一半[2/4] */
+	public static final int $8690 = 8690;
+	/** 封印解开了一半以上[3/4] */
+	public static final int $8691 = 8691;
+	/** 封印完全解开了[4/4] */
+	public static final int $8692 = 8692;
+	/** 那开始最终检验吧? */
+	public static final int $8693 = 8693;
+	/** 不需要最终检验就按[alt+2]. */
+	public static final int $8694 = 8694;
+	/** 进入宫殿,会接受资格试验的. */
+	public static final int $8695 = 8695;
+	/** 对手不是很强,相信你们能通过. */
+	public static final int $8696 = 8696;
+	/** 然后为你们准备了可以解除或设置陷阱的脚板. */
+	public static final int $8697 = 8697;
+	/** 虽然让你们容易看到脚板.. */
+	public static final int $8698 = 8698;
+	/** 以我的味觉就不需要工具了. */
+	public static final int $8699 = 8699;
+	/** 此外还有可期待的,但时间问题赶紧吧. */
+	public static final int $8700 = 8700;
+	/** 小心点吧!安全是无法保障的. */
+	public static final int $8701 = 8701;
+	/** 那开始吧? */
+	public static final int $8702 = 8702;
+	/** 哈丁:呼…算是阻止了.加油啊! */
+	public static final int $8703 = 8703;
+	/** 第四个封印解除了[4/12] */
+	public static final int $8704 = 8704;
+	/** 谁叫醒我了…我…累啊… */
+	public static final int $8705 = 8705;
+	/** 第八个封印解除了[8/12] */
+	public static final int $8706 = 8706;
+	/** 门开了么! */
+	public static final int $8707 = 8707;
+	/** 第一个封印解除了[1/12] */
+	public static final int $8708 = 8708;
+	/** 第二个封印解除了[2/12] */
+	public static final int $8709 = 8709;
+	/** 第三个封印解除了[3/12] */
+	public static final int $8710 = 8710;
+	/** 第五个封印解除了[5/12] */
+	public static final int $8711 = 8711;
+	/** 第六个封印解除了[6/12] */
+	public static final int $8712 = 8712;
+	/** 第七个封印解除了[7/12] */
+	public static final int $8713 = 8713;
+	/** 第九个封印解除了[9/12] */
+	public static final int $8714 = 8714;
+	/** 第十个封印解除了[10/12] */
+	public static final int $8715 = 8715;
+	/** 第十一个封印解除了[11/12] */
+	public static final int $8716 = 8716;
+	/** 最后一个封印解除了[12/12] */
+	public static final int $8717 = 8717;
+	/** 中间的脚板只能启动一次,注意点. */
+	public static final int $8718 = 8718;
+	/** 因为启动了中间脚板,决定了补偿. */
+	public static final int $8719 = 8719;
+	/** 悄悄话传到了奥琳的耳朵里. */
+	public static final int $8720 = 8720;
+	/** 纯白的戒指强化卷轴 */
+	public static final int $8721 = 8721;
+	/** 白色情人节糖果篮(恢复之气) */
+	public static final int $8722 = 8722;
+	/** 白色情人节糖果篮(精神之气) */
+	public static final int $8723 = 8723;
+	/** 白色情人节糖果篮(体力之气) */
+	public static final int $8724 = 8724;
+	/** 白色情人节糖果篮(魔力之气) */
+	public static final int $8725 = 8725;
+	/** 白色情人节糖果篮(魔法抵抗之气) */
+	public static final int $8726 = 8726;
+	/** 纯白的恢复戒指箱子 */
+	public static final int $8727 = 8727;
+	/** 纯白的精神戒指箱子 */
+	public static final int $8728 = 8728;
+	/** 纯白的体力戒指箱子 */
+	public static final int $8729 = 8729;
+	/** 纯白的魔力戒指箱子 */
+	public static final int $8730 = 8730;
+	/** 纯白的魔法抵抗戒指箱子 */
+	public static final int $8731 = 8731;
+	/** 纯白的戒指强化卷轴箱子(1张) */
+	public static final int $8732 = 8732;
+	/** 纯白的戒指强化卷轴箱子(2张) */
+	public static final int $8733 = 8733;
+	/** 纯白的戒指强化卷轴箱子(3张) */
+	public static final int $8734 = 8734;
+	/** 纯白的戒指强化卷轴箱子(4张) */
+	public static final int $8735 = 8735;
+	/** 纯白的戒指强化卷轴箱子(5张) */
+	public static final int $8736 = 8736;
+	/** 纯白的戒指强化卷轴箱子(6张) */
+	public static final int $8737 = 8737;
+	/** 纯白的戒指强化卷轴箱子(7张) */
+	public static final int $8738 = 8738;
+	/** 纯白的戒指强化卷轴箱子(8张) */
+	public static final int $8739 = 8739;
+	/** 纯白的戒指强化卷轴箱子(9张) */
+	public static final int $8740 = 8740;
+	/** 纯白的戒指强化卷轴箱子(10张) */
+	public static final int $8741 = 8741;
+	/** 奇怪的访问者 */
+	public static final int $8742 = 8742;
+	/** 奇怪的村庄访问标志 */
+	public static final int $8743 = 8743;
+	/** dummy */
+	public static final int $8744 = 8744;
+	/** dummy */
+	public static final int $8745 = 8745;
+	/** dummy */
+	public static final int $8746 = 8746;
+	/** dummy */
+	public static final int $8747 = 8747;
+	/** dummy */
+	public static final int $8748 = 8748;
+	/** dummy */
+	public static final int $8749 = 8749;
+	/** dummy */
+	public static final int $8750 = 8750;
+	/** dummy */
+	public static final int $8751 = 8751;
+	/** dummy */
+	public static final int $8752 = 8752;
+	/** dummy */
+	public static final int $8753 = 8753;
+	/** dummy */
+	public static final int $8754 = 8754;
+	/** dummy */
+	public static final int $8755 = 8755;
+	/** dummy */
+	public static final int $8756 = 8756;
+	/** dummy */
+	public static final int $8757 = 8757;
+	/** dummy */
+	public static final int $8758 = 8758;
+	/** dummy */
+	public static final int $8759 = 8759;
+	/** dummy */
+	public static final int $8760 = 8760;
+	/** dummy */
+	public static final int $8761 = 8761;
+	/** dummy */
+	public static final int $8762 = 8762;
+	/** dummy */
+	public static final int $8763 = 8763;
+	/** dummy */
+	public static final int $8764 = 8764;
+	/** dummy */
+	public static final int $8765 = 8765;
+	/** dummy */
+	public static final int $8766 = 8766;
+	/** dummy */
+	public static final int $8767 = 8767;
+	/** dummy */
+	public static final int $8768 = 8768;
+	/** dummy */
+	public static final int $8769 = 8769;
+	/** dummy */
+	public static final int $8770 = 8770;
+	/** dummy */
+	public static final int $8771 = 8771;
+	/** dummy */
+	public static final int $8772 = 8772;
+	/** dummy */
+	public static final int $8773 = 8773;
+	/** dummy */
+	public static final int $8774 = 8774;
+	/** dummy */
+	public static final int $8775 = 8775;
+	/** dummy */
+	public static final int $8776 = 8776;
+	/** dummy */
+	public static final int $8777 = 8777;
+	/** dummy */
+	public static final int $8778 = 8778;
+	/** dummy */
+	public static final int $8779 = 8779;
+	/** dummy */
+	public static final int $8780 = 8780;
+	/** dummy */
+	public static final int $8781 = 8781;
+	/** dummy */
+	public static final int $8782 = 8782;
+	/** dummy */
+	public static final int $8783 = 8783;
+	/** dummy */
+	public static final int $8784 = 8784;
+	/** dummy */
+	public static final int $8785 = 8785;
+	/** dummy */
+	public static final int $8786 = 8786;
+	/** dummy */
+	public static final int $8787 = 8787;
+	/** dummy */
+	public static final int $8788 = 8788;
+	/** dummy */
+	public static final int $8789 = 8789;
+	/** dummy */
+	public static final int $8790 = 8790;
+	/** dummy */
+	public static final int $8791 = 8791;
+	/** dummy */
+	public static final int $8792 = 8792;
+	/** dummy */
+	public static final int $8793 = 8793;
+	/** dummy */
+	public static final int $8794 = 8794;
+	/** dummy */
+	public static final int $8795 = 8795;
+	/** dummy */
+	public static final int $8796 = 8796;
+	/** dummy */
+	public static final int $8797 = 8797;
+	/** dummy */
+	public static final int $8798 = 8798;
+	/** dummy */
+	public static final int $8799 = 8799;
+	/** dummy */
+	public static final int $8800 = 8800;
+	/** dummy */
+	public static final int $8801 = 8801;
+	/** dummy */
+	public static final int $8802 = 8802;
+	/** dummy */
+	public static final int $8803 = 8803;
+	/** dummy */
+	public static final int $8804 = 8804;
+	/** dummy */
+	public static final int $8805 = 8805;
+	/** dummy */
+	public static final int $8806 = 8806;
+	/** dummy */
+	public static final int $8807 = 8807;
+	/** dummy */
+	public static final int $8808 = 8808;
+	/** dummy */
+	public static final int $8809 = 8809;
+	/** dummy */
+	public static final int $8810 = 8810;
+	/** 闪烁的鳞 */
+	public static final int $8811 = 8811;
+	/** 潘多拉变身 */
+	public static final int $8812 = 8812;
+	/** 塔洛斯变身 */
+	public static final int $8813 = 8813;
+	/** 拉罗森变身 */
+	public static final int $8814 = 8814;
+	/** 镰刀死神变身 */
+	public static final int $8815 = 8815;
+	/** 甜美的冰茶 */
+	public static final int $8816 = 8816;
+	/** 清爽的冰茶 */
+	public static final int $8817 = 8817;
+	/** 幻想的冰茶 */
+	public static final int $8818 = 8818;
+	/** 未成熟的幼龙 */
+	public static final int $8819 = 8819;
+	/** 曼波兔口罩(女) */
+	public static final int $8820 = 8820;
+	/** 曼波兔口罩(男) */
+	public static final int $8821 = 8821;
+	/** 发火的 */
+	public static final int $8822 = 8822;
+	/** 冰茶袋 */
+	public static final int $8823 = 8823;
+	/** 埋藏的魔族剑 */
+	public static final int $8824 = 8824;
+	/** 埋藏的魔族弓 */
+	public static final int $8825 = 8825;
+	/** 埋藏的魔族杖 */
+	public static final int $8826 = 8826;
+	/** 埋藏的魔族钢爪 */
+	public static final int $8827 = 8827;
+	/** 埋藏的魔族链锁剑 */
+	public static final int $8828 = 8828;
+	/** 埋藏的魔族奇古兽 */
+	public static final int $8829 = 8829;
+	/** 埋藏的魔族武器函 */
+	public static final int $8830 = 8830;
+	/** 哈丁的日记：11月10日 */
+	public static final int $8831 = 8831;
+	/** 哈丁的日记：6月2日 */
+	public static final int $8832 = 8832;
+	/** 哈丁的日记：8月9日 */
+	public static final int $8833 = 8833;
+	/** 哈丁的日记：10月12日 */
+	public static final int $8834 = 8834;
+	/** 哈丁的日记：2月24日 */
+	public static final int $8835 = 8835;
+	/** 哈丁的日记：2月25日 */
+	public static final int $8836 = 8836;
+	/** 哈丁的日记：5月5日 */
+	public static final int $8837 = 8837;
+	/** 哈丁的日记：1月1日 */
+	public static final int $8838 = 8838;
+	/** 哈丁的日记：6月9日 */
+	public static final int $8839 = 8839;
+	/** 哈丁的日记：8月19日 */
+	public static final int $8840 = 8840;
+	/** 黑暗的哈丁日记 */
+	public static final int $8841 = 8841;
+	/** 时空罐子 */
+	public static final int $8842 = 8842;
+	/** 时空珠子 */
+	public static final int $8843 = 8843;
+	/** 安塔瑞斯的宝物箱 */
+	public static final int $8844 = 8844;
+	/** 安塔瑞斯的印章 */
+	public static final int $8845 = 8845;
+	/** 动心的宝物箱子 */
+	public static final int $8846 = 8846;
+	/** 免费-战斗药水10个包 */
+	public static final int $8847 = 8847;
+	/** 天堂惊喜礼物 */
+	public static final int $8848 = 8848;
+	/** 坚固的欢迎箱子 */
+	public static final int $8849 = 8849;
+	/** 发光的欢迎箱子 */
+	public static final int $8850 = 8850;
+	/** 欢迎立方 */
+	public static final int $8851 = 8851;
+	/** 回归英雄的黄金立方 */
+	public static final int $8852 = 8852;
+	/** 欢迎的强化速度提升药水 */
+	public static final int $8853 = 8853;
+	/** 欢迎的强力体力恢复剂 */
+	public static final int $8854 = 8854;
+	/** 欢迎的高级体力恢复剂 */
+	public static final int $8855 = 8855;
+	/** 欢迎的体力恢复剂 */
+	public static final int $8856 = 8856;
+	/** 欢迎的魔力恢复药水 */
+	public static final int $8857 = 8857;
+	/** 逃跑的曼波兔 */
+	public static final int $8858 = 8858;
+	/** 胡萝卜兔变身帽子 */
+	public static final int $8859 = 8859;
+	/** 兔子变身帽子 */
+	public static final int $8860 = 8860;
+	/** 妖魔猎人变身帽子 */
+	public static final int $8861 = 8861;
+	/** 亚娜巴达套包 */
+	public static final int $8862 = 8862;
+	/** 财力恢复箱子 */
+	public static final int $8863 = 8863;
+	/** 人脉恢复箱子 */
+	public static final int $8864 = 8864;
+	/** 象牙塔的石头高伦 */
+	public static final int $8865 = 8865;
+	/** 欢迎的黑暗变身卷轴 */
+	public static final int $8866 = 8866;
+	/** 欢迎的银变身卷轴 */
+	public static final int $8867 = 8867;
+	/** 欢迎的剑变身卷轴 */
+	public static final int $8868 = 8868;
+	/** 欢迎的亚克变身卷轴 */
+	public static final int $8869 = 8869;
+	/** dummy */
+	public static final int $8870 = 8870;
+	/** dummy */
+	public static final int $8871 = 8871;
+	/** dummy */
+	public static final int $8872 = 8872;
+	/** dummy */
+	public static final int $8873 = 8873;
+	/** dummy */
+	public static final int $8874 = 8874;
+	/** dummy */
+	public static final int $8875 = 8875;
+	/** dummy */
+	public static final int $8876 = 8876;
+	/** dummy */
+	public static final int $8877 = 8877;
+	/** dummy */
+	public static final int $8878 = 8878;
+	/** dummy */
+	public static final int $8879 = 8879;
+	/** dummy */
+	public static final int $8880 = 8880;
+	/** dummy */
+	public static final int $8881 = 8881;
+	/** dummy */
+	public static final int $8882 = 8882;
+	/** dummy */
+	public static final int $8883 = 8883;
+	/** dummy */
+	public static final int $8884 = 8884;
+	/** dummy */
+	public static final int $8885 = 8885;
+	/** dummy */
+	public static final int $8886 = 8886;
+	/** dummy */
+	public static final int $8887 = 8887;
+	/** dummy */
+	public static final int $8888 = 8888;
+	/** dummy */
+	public static final int $8889 = 8889;
+	/** dummy */
+	public static final int $8890 = 8890;
+	/** dummy */
+	public static final int $8891 = 8891;
+	/** dummy */
+	public static final int $8892 = 8892;
+	/** dummy */
+	public static final int $8893 = 8893;
+	/** dummy */
+	public static final int $8894 = 8894;
+	/** dummy */
+	public static final int $8895 = 8895;
+	/** dummy */
+	public static final int $8896 = 8896;
+	/** dummy */
+	public static final int $8897 = 8897;
+	/** dummy */
+	public static final int $8898 = 8898;
+	/** dummy */
+	public static final int $8899 = 8899;
+	/** dummy */
+	public static final int $8900 = 8900;
+	/** 回归英雄的白银立方 */
+	public static final int $8901 = 8901;
+	/** dummy */
+	public static final int $8902 = 8902;
+	/** dummy */
+	public static final int $8903 = 8903;
+	/** dummy */
+	public static final int $8904 = 8904;
+	/** dummy */
+	public static final int $8905 = 8905;
+	/** dummy */
+	public static final int $8906 = 8906;
+	/** dummy */
+	public static final int $8907 = 8907;
+	/** dummy */
+	public static final int $8908 = 8908;
+	/** dummy */
+	public static final int $8909 = 8909;
+	/** dummy */
+	public static final int $8910 = 8910;
+	/** dummy */
+	public static final int $8911 = 8911;
+	/** dummy */
+	public static final int $8912 = 8912;
+	/** dummy */
+	public static final int $8913 = 8913;
+	/** dummy */
+	public static final int $8914 = 8914;
+	/** dummy */
+	public static final int $8915 = 8915;
+	/** dummy */
+	public static final int $8916 = 8916;
+	/** 号外~反王和英雄们回来了！！！ */
+	public static final int $8917 = 8917;
+	/** 号外~4月17日是阴历15日，据说圆月发动神秘的力量！ */
+	public static final int $8918 = 8918;
+	/** 王族活动袋子 */
+	public static final int $8919 = 8919;
+	/** 骑士活动袋子 */
+	public static final int $8920 = 8920;
+	/** 妖精活动袋子 */
+	public static final int $8921 = 8921;
+	/** 魔法师活动袋子 */
+	public static final int $8922 = 8922;
+	/** 黑暗妖精活动袋子 */
+	public static final int $8923 = 8923;
+	/** 幻术师活动袋子 */
+	public static final int $8924 = 8924;
+	/** 龙骑士活动袋子 */
+	public static final int $8925 = 8925;
+	/** 活动金币箱子 */
+	public static final int $8926 = 8926;
+	/** 测试活动徽标 */
+	public static final int $8927 = 8927;
+	/** 测试活动铜南瓜 */
+	public static final int $8928 = 8928;
+	/** 测试活动银南瓜 */
+	public static final int $8929 = 8929;
+	/** 测试活动金南瓜 */
+	public static final int $8930 = 8930;
+	/** dummy */
+	public static final int $8931 = 8931;
+	/** dummy */
+	public static final int $8932 = 8932;
+	/** dummy */
+	public static final int $8933 = 8933;
+	/** dummy */
+	public static final int $8934 = 8934;
+	/** dummy */
+	public static final int $8935 = 8935;
+	/** dummy */
+	public static final int $8936 = 8936;
+	/** dummy */
+	public static final int $8937 = 8937;
+	/** dummy */
+	public static final int $8938 = 8938;
+	/** dummy */
+	public static final int $8939 = 8939;
+	/** dummy */
+	public static final int $8940 = 8940;
+	/** dummy */
+	public static final int $8941 = 8941;
+	/** dummy */
+	public static final int $8942 = 8942;
+	/** dummy */
+	public static final int $8943 = 8943;
+	/** dummy */
+	public static final int $8944 = 8944;
+	/** dummy */
+	public static final int $8945 = 8945;
+	/** dummy */
+	public static final int $8946 = 8946;
+	/** 仓库大发放礼物包 */
+	public static final int $8947 = 8947;
+	/** 埋藏的龙的地面入口 */
+	public static final int $8948 = 8948;
+	/** 龙蛋 */
+	public static final int $8949 = 8949;
+	/** 巨大蚬子 */
+	public static final int $8950 = 8950;
+	/** dummy */
+	public static final int $8951 = 8951;
+	/** dummy */
+	public static final int $8952 = 8952;
+	/** dummy */
+	public static final int $8953 = 8953;
+	/** dummy */
+	public static final int $8954 = 8954;
+	/** dummy */
+	public static final int $8955 = 8955;
+	/** dummy */
+	public static final int $8956 = 8956;
+	/** dummy */
+	public static final int $8957 = 8957;
+	/** dummy */
+	public static final int $8958 = 8958;
+	/** dummy */
+	public static final int $8959 = 8959;
+	/** dummy */
+	public static final int $8960 = 8960;
+	/** dummy */
+	public static final int $8961 = 8961;
+	/** dummy */
+	public static final int $8962 = 8962;
+	/** dummy */
+	public static final int $8963 = 8963;
+	/** dummy */
+	public static final int $8964 = 8964;
+	/** dummy */
+	public static final int $8965 = 8965;
+	/** dummy */
+	public static final int $8966 = 8966;
+	/** dummy */
+	public static final int $8967 = 8967;
+	/** dummy */
+	public static final int $8968 = 8968;
+	/** dummy */
+	public static final int $8969 = 8969;
+	/** dummy */
+	public static final int $8970 = 8970;
+	/** dummy */
+	public static final int $8971 = 8971;
+	/** dummy */
+	public static final int $8972 = 8972;
+	/** dummy */
+	public static final int $8973 = 8973;
+	/** dummy */
+	public static final int $8974 = 8974;
+	/** dummy */
+	public static final int $8975 = 8975;
+	/** dummy */
+	public static final int $8976 = 8976;
+	/** dummy */
+	public static final int $8977 = 8977;
+	/** dummy */
+	public static final int $8978 = 8978;
+	/** dummy */
+	public static final int $8979 = 8979;
+	/** dummy */
+	public static final int $8980 = 8980;
+	/** dummy */
+	public static final int $8981 = 8981;
+	/** dummy */
+	public static final int $8982 = 8982;
+	/** dummy */
+	public static final int $8983 = 8983;
+	/** dummy */
+	public static final int $8984 = 8984;
+	/** dummy */
+	public static final int $8985 = 8985;
+	/** dummy */
+	public static final int $8986 = 8986;
+	/** dummy */
+	public static final int $8987 = 8987;
+	/** dummy */
+	public static final int $8988 = 8988;
+	/** dummy */
+	public static final int $8989 = 8989;
+	/** dummy */
+	public static final int $8990 = 8990;
+	/** dummy */
+	public static final int $8991 = 8991;
+	/** dummy */
+	public static final int $8992 = 8992;
+	/** dummy */
+	public static final int $8993 = 8993;
+	/** dummy */
+	public static final int $8994 = 8994;
+	/** dummy */
+	public static final int $8995 = 8995;
+	/** dummy */
+	public static final int $8996 = 8996;
+	/** dummy */
+	public static final int $8997 = 8997;
+	/** dummy */
+	public static final int $8998 = 8998;
+	/** dummy */
+	public static final int $8999 = 8999;
+	/** dummy */
+	public static final int $9000 = 9000;
+	/** dummy */
+	public static final int $9001 = 9001;
+	/** dummy */
+	public static final int $9002 = 9002;
+	/** dummy */
+	public static final int $9003 = 9003;
+	/** dummy */
+	public static final int $9004 = 9004;
+	/** dummy */
+	public static final int $9005 = 9005;
+	/** dummy */
+	public static final int $9006 = 9006;
+	/** dummy */
+	public static final int $9007 = 9007;
+	/** dummy */
+	public static final int $9008 = 9008;
+	/** dummy */
+	public static final int $9009 = 9009;
+	/** dummy */
+	public static final int $9010 = 9010;
+	/** dummy */
+	public static final int $9011 = 9011;
+	/** dummy */
+	public static final int $9012 = 9012;
+	/** dummy */
+	public static final int $9013 = 9013;
+	/** dummy */
+	public static final int $9014 = 9014;
+	/** dummy */
+	public static final int $9015 = 9015;
+	/** dummy */
+	public static final int $9016 = 9016;
+	/** dummy */
+	public static final int $9017 = 9017;
+	/** dummy */
+	public static final int $9018 = 9018;
+	/** dummy */
+	public static final int $9019 = 9019;
+	/** dummy */
+	public static final int $9020 = 9020;
+	/** dummy */
+	public static final int $9021 = 9021;
+	/** dummy */
+	public static final int $9022 = 9022;
+	/** dummy */
+	public static final int $9023 = 9023;
+	/** dummy */
+	public static final int $9024 = 9024;
+	/** dummy */
+	public static final int $9025 = 9025;
+	/** dummy */
+	public static final int $9026 = 9026;
+	/** dummy */
+	public static final int $9027 = 9027;
+	/** dummy */
+	public static final int $9028 = 9028;
+	/** dummy */
+	public static final int $9029 = 9029;
+	/** dummy */
+	public static final int $9030 = 9030;
+	/** dummy */
+	public static final int $9031 = 9031;
+	/** dummy */
+	public static final int $9032 = 9032;
+	/** dummy */
+	public static final int $9033 = 9033;
+	/** dummy */
+	public static final int $9034 = 9034;
+	/** dummy */
+	public static final int $9035 = 9035;
+	/** dummy */
+	public static final int $9036 = 9036;
+	/** dummy */
+	public static final int $9037 = 9037;
+	/** dummy */
+	public static final int $9038 = 9038;
+	/** dummy */
+	public static final int $9039 = 9039;
+	/** dummy */
+	public static final int $9040 = 9040;
+	/** dummy */
+	public static final int $9041 = 9041;
+	/** dummy */
+	public static final int $9042 = 9042;
+	/** dummy */
+	public static final int $9043 = 9043;
+	/** dummy */
+	public static final int $9044 = 9044;
+	/** dummy */
+	public static final int $9045 = 9045;
+	/** dummy */
+	public static final int $9046 = 9046;
+	/** dummy */
+	public static final int $9047 = 9047;
+	/** dummy */
+	public static final int $9048 = 9048;
+	/** dummy */
+	public static final int $9049 = 9049;
+	/** dummy */
+	public static final int $9050 = 9050;
+	/** dummy */
+	public static final int $9051 = 9051;
+	/** dummy */
+	public static final int $9052 = 9052;
+	/** dummy */
+	public static final int $9053 = 9053;
+	/** dummy */
+	public static final int $9054 = 9054;
+	/** dummy */
+	public static final int $9055 = 9055;
+	/** dummy */
+	public static final int $9056 = 9056;
+	/** dummy */
+	public static final int $9057 = 9057;
+	/** dummy */
+	public static final int $9058 = 9058;
+	/** dummy */
+	public static final int $9059 = 9059;
+	/** dummy */
+	public static final int $9060 = 9060;
+	/** dummy */
+	public static final int $9061 = 9061;
+	/** dummy */
+	public static final int $9062 = 9062;
+	/** dummy */
+	public static final int $9063 = 9063;
+	/** dummy */
+	public static final int $9064 = 9064;
+	/** dummy */
+	public static final int $9065 = 9065;
+	/** dummy */
+	public static final int $9066 = 9066;
+	/** dummy */
+	public static final int $9067 = 9067;
+	/** dummy */
+	public static final int $9068 = 9068;
+	/** dummy */
+	public static final int $9069 = 9069;
+	/** dummy */
+	public static final int $9070 = 9070;
+	/** dummy */
+	public static final int $9071 = 9071;
+	/** dummy */
+	public static final int $9072 = 9072;
+	/** dummy */
+	public static final int $9073 = 9073;
+	/** dummy */
+	public static final int $9074 = 9074;
+	/** dummy */
+	public static final int $9075 = 9075;
+	/** dummy */
+	public static final int $9076 = 9076;
+	/** dummy */
+	public static final int $9077 = 9077;
+	/** dummy */
+	public static final int $9078 = 9078;
+	/** dummy */
+	public static final int $9079 = 9079;
+	/** dummy */
+	public static final int $9080 = 9080;
+	/** dummy */
+	public static final int $9081 = 9081;
+	/** dummy */
+	public static final int $9082 = 9082;
+	/** dummy */
+	public static final int $9083 = 9083;
+	/** dummy */
+	public static final int $9084 = 9084;
+	/** dummy */
+	public static final int $9085 = 9085;
+	/** dummy */
+	public static final int $9086 = 9086;
+	/** dummy */
+	public static final int $9087 = 9087;
+	/** dummy */
+	public static final int $9088 = 9088;
+	/** dummy */
+	public static final int $9089 = 9089;
+	/** dummy */
+	public static final int $9090 = 9090;
+	/** dummy */
+	public static final int $9091 = 9091;
+	/** dummy */
+	public static final int $9092 = 9092;
+	/** dummy */
+	public static final int $9093 = 9093;
+	/** dummy */
+	public static final int $9094 = 9094;
+	/** dummy */
+	public static final int $9095 = 9095;
+	/** dummy */
+	public static final int $9096 = 9096;
+	/** dummy */
+	public static final int $9097 = 9097;
+	/** dummy */
+	public static final int $9098 = 9098;
+	/** dummy */
+	public static final int $9099 = 9099;
+	/** dummy */
+	public static final int $9100 = 9100;
+	/** dummy */
+	public static final int $9101 = 9101;
+	/** dummy */
+	public static final int $9102 = 9102;
+	/** dummy */
+	public static final int $9103 = 9103;
+	/** dummy */
+	public static final int $9104 = 9104;
+	/** dummy */
+	public static final int $9105 = 9105;
+	/** dummy */
+	public static final int $9106 = 9106;
+	/** dummy */
+	public static final int $9107 = 9107;
+	/** dummy */
+	public static final int $9108 = 9108;
+	/** dummy */
+	public static final int $9109 = 9109;
+	/** dummy */
+	public static final int $9110 = 9110;
+	/** dummy */
+	public static final int $9111 = 9111;
+	/** dummy */
+	public static final int $9112 = 9112;
+	/** dummy */
+	public static final int $9113 = 9113;
+	/** dummy */
+	public static final int $9114 = 9114;
+	/** 热情箱子 */
+	public static final int $9115 = 9115;
+	/** 雷德特 */
+	public static final int $9116 = 9116;
+	/** 冰茶 */
+	public static final int $9117 = 9117;
+	/** 足球拉拉队队长 */
+	public static final int $9118 = 9118;
+	/** 支持杜根 */
+	public static final int $9119 = 9119;
+	/** dummy */
+	public static final int $9120 = 9120;
+	/** dummy */
+	public static final int $9121 = 9121;
+	/** dummy */
+	public static final int $9122 = 9122;
+	/** dummy */
+	public static final int $9123 = 9123;
+	/** dummy */
+	public static final int $9124 = 9124;
+	/** dummy */
+	public static final int $9125 = 9125;
+	/** dummy */
+	public static final int $9126 = 9126;
+	/** dummy */
+	public static final int $9127 = 9127;
+	/** dummy */
+	public static final int $9128 = 9128;
+	/** dummy */
+	public static final int $9129 = 9129;
+	/** dummy */
+	public static final int $9130 = 9130;
+	/** dummy */
+	public static final int $9131 = 9131;
+	/** dummy */
+	public static final int $9132 = 9132;
+	/** dummy */
+	public static final int $9133 = 9133;
+	/** dummy */
+	public static final int $9134 = 9134;
+	/** dummy */
+	public static final int $9135 = 9135;
+	/** dummy */
+	public static final int $9136 = 9136;
+	/** dummy */
+	public static final int $9137 = 9137;
+	/** dummy */
+	public static final int $9138 = 9138;
+	/** 米尔 */
+	public static final int $9139 = 9139;
+	/** 时尔 */
+	public static final int $9140 = 9140;
+	/** 盔甲魔法卷轴包 */
+	public static final int $9141 = 9141;
+	/** 必胜战斗套装 */
+	public static final int $9142 = 9142;
+	/** 世界杯神秘的立方 */
+	public static final int $9143 = 9143;
+	/** dummy */
+	public static final int $9144 = 9144;
+	/** dummy */
+	public static final int $9145 = 9145;
+	/** 安全卷轴包 */
+	public static final int $9146 = 9146;
+	/** 新手管理员 */
+	public static final int $9147 = 9147;
+	/** dummy */
+	public static final int $9148 = 9148;
+	/** dummy */
+	public static final int $9149 = 9149;
+	/** dummy */
+	public static final int $9150 = 9150;
+	/** dummy */
+	public static final int $9151 = 9151;
+	/** dummy */
+	public static final int $9152 = 9152;
+	/** 泰尔 */
+	public static final int $9153 = 9153;
+	/** 梅贝尔 */
+	public static final int $9154 = 9154;
+	/** 辛德尔 */
+	public static final int $9155 = 9155;
+	/** 鲁德尔 */
+	public static final int $9156 = 9156;
+	/** 伦德尔 */
+	public static final int $9157 = 9157;
+	/** 杰德尔 */
+	public static final int $9158 = 9158;
+	/** 玛依贝尔 */
+	public static final int $9159 = 9159;
+	/** 丹尔 */
+	public static final int $9160 = 9160;
+	/** 特鲁尔 */
+	public static final int $9161 = 9161;
+	/** 纳尼艾尔 */
+	public static final int $9162 = 9162;
+	/** 尼贝尔 */
+	public static final int $9163 = 9163;
+	/** 最后的气息 */
+	public static final int $9164 = 9164;
+	/** 高级魔力的气息 */
+	public static final int $9165 = 9165;
+	/** 最高级魔力的气息 */
+	public static final int $9166 = 9166;
+	/** 近距离攻击记号 */
+	public static final int $9167 = 9167;
+	/** 远距离攻击记号 */
+	public static final int $9168 = 9168;
+	/** 魔法攻击记号 */
+	public static final int $9169 = 9169;
+	/** 近距离命中记号 */
+	public static final int $9170 = 9170;
+	/** 远距离命中记号 */
+	public static final int $9171 = 9171;
+	/** 魔法命中记号 */
+	public static final int $9172 = 9172;
+	/** 火抗记号 */
+	public static final int $9173 = 9173;
+	/** 风抗记号 */
+	public static final int $9174 = 9174;
+	/** 水抗记号 */
+	public static final int $9175 = 9175;
+	/** 地抗记号 */
+	public static final int $9176 = 9176;
+	/** 被封印的剑（增加打击） */
+	public static final int $9177 = 9177;
+	/** 被封印的弓（增加打击） */
+	public static final int $9178 = 9178;
+	/** 被封印的杖（魔法力） */
+	public static final int $9179 = 9179;
+	/** 被封印的哥布林盔甲 */
+	public static final int $9180 = 9180;
+	/** 被封印的靴子一双 */
+	public static final int $9181 = 9181;
+	/** 无韧的矮人族剑 */
+	public static final int $9182 = 9182;
+	/** 妖魔族的脏弓 */
+	public static final int $9183 = 9183;
+	/** 长者的损杖 */
+	public static final int $9184 = 9184;
+	/** 有褶的盔甲碎片 */
+	public static final int $9185 = 9185;
+	/** 思克巴扔下的靴子 */
+	public static final int $9186 = 9186;
+	/** 补给用的剑（增加打击） */
+	public static final int $9187 = 9187;
+	/** 补给用的弓（增加打击） */
+	public static final int $9188 = 9188;
+	/** 补给用的杖（魔法力） */
+	public static final int $9189 = 9189;
+	/** 补给用的哥布林盔甲 */
+	public static final int $9190 = 9190;
+	/** 补给用的靴子一双 */
+	public static final int $9191 = 9191;
+	/** 遗物礼物箱子 */
+	public static final int $9192 = 9192;
+	/** 特里曼 */
+	public static final int $9193 = 9193;
+	/** 修格林特 */
+	public static final int $9194 = 9194;
+	/** dummy */
+	public static final int $9195 = 9195;
+	/** dummy */
+	public static final int $9196 = 9196;
+	/** dummy */
+	public static final int $9197 = 9197;
+	/** dummy */
+	public static final int $9198 = 9198;
+	/** dummy */
+	public static final int $9199 = 9199;
+	/** dummy */
+	public static final int $9200 = 9200;
+	/** dummy */
+	public static final int $9201 = 9201;
+	/** dummy */
+	public static final int $9202 = 9202;
+	/** dummy */
+	public static final int $9203 = 9203;
+	/** dummy */
+	public static final int $9204 = 9204;
+	/** dummy */
+	public static final int $9205 = 9205;
+	/** dummy */
+	public static final int $9206 = 9206;
+	/** dummy */
+	public static final int $9207 = 9207;
+	/** dummy */
+	public static final int $9208 = 9208;
+	/** dummy */
+	public static final int $9209 = 9209;
+	/** dummy */
+	public static final int $9210 = 9210;
+	/** dummy */
+	public static final int $9211 = 9211;
+	/** dummy */
+	public static final int $9212 = 9212;
+	/** dummy */
+	public static final int $9213 = 9213;
+	/** dummy */
+	public static final int $9214 = 9214;
+	/** dummy */
+	public static final int $9215 = 9215;
+	/** dummy */
+	public static final int $9216 = 9216;
+	/** dummy */
+	public static final int $9217 = 9217;
+	/** dummy */
+	public static final int $9218 = 9218;
+	/** 被封印的近距离攻击记号 */
+	public static final int $9219 = 9219;
+	/** 被封印的远距离攻击记号 */
+	public static final int $9220 = 9220;
+	/** 被封印的魔法攻击记号 */
+	public static final int $9221 = 9221;
+	/** 被封印的近距离命中记号 */
+	public static final int $9222 = 9222;
+	/** 被封印的远距离命中记号 */
+	public static final int $9223 = 9223;
+	/** 被封印的魔法命中记号 */
+	public static final int $9224 = 9224;
+	/** 被封印的火抗记号 */
+	public static final int $9225 = 9225;
+	/** 被封印的风抗记号 */
+	public static final int $9226 = 9226;
+	/** 被封印的水抗记号 */
+	public static final int $9227 = 9227;
+	/** 被封印的地抗记号 */
+	public static final int $9228 = 9228;
+	/** dummy */
+	public static final int $9229 = 9229;
+	/** dummy */
+	public static final int $9230 = 9230;
+	/** dummy */
+	public static final int $9231 = 9231;
+	/** dummy */
+	public static final int $9232 = 9232;
+	/** dummy */
+	public static final int $9233 = 9233;
+	/** dummy */
+	public static final int $9234 = 9234;
+	/** dummy */
+	public static final int $9235 = 9235;
+	/** dummy */
+	public static final int $9236 = 9236;
+	/** dummy */
+	public static final int $9237 = 9237;
+	/** dummy */
+	public static final int $9238 = 9238;
+	/** dummy */
+	public static final int $9239 = 9239;
+	/** dummy */
+	public static final int $9240 = 9240;
+	/** dummy */
+	public static final int $9241 = 9241;
+	/** dummy */
+	public static final int $9242 = 9242;
+	/** dummy */
+	public static final int $9243 = 9243;
+	/** dummy */
+	public static final int $9244 = 9244;
+	/** dummy */
+	public static final int $9245 = 9245;
+	/** dummy */
+	public static final int $9246 = 9246;
+	/** dummy */
+	public static final int $9247 = 9247;
+	/** dummy */
+	public static final int $9248 = 9248;
+	/** dummy */
+	public static final int $9249 = 9249;
+	/** dummy */
+	public static final int $9250 = 9250;
+	/** dummy */
+	public static final int $9251 = 9251;
+	/** dummy */
+	public static final int $9252 = 9252;
+	/** dummy */
+	public static final int $9253 = 9253;
+	/** dummy */
+	public static final int $9254 = 9254;
+	/** dummy */
+	public static final int $9255 = 9255;
+	/** dummy */
+	public static final int $9256 = 9256;
+	/** dummy */
+	public static final int $9257 = 9257;
+	/** dummy */
+	public static final int $9258 = 9258;
+	/** dummy */
+	public static final int $9259 = 9259;
+	/** dummy */
+	public static final int $9260 = 9260;
+	/** dummy */
+	public static final int $9261 = 9261;
+	/** dummy */
+	public static final int $9262 = 9262;
+	/** dummy */
+	public static final int $9263 = 9263;
+	/** dummy */
+	public static final int $9264 = 9264;
+	/** dummy */
+	public static final int $9265 = 9265;
+	/** dummy */
+	public static final int $9266 = 9266;
+	/** dummy */
+	public static final int $9267 = 9267;
+	/** dummy */
+	public static final int $9268 = 9268;
+	/** dummy */
+	public static final int $9269 = 9269;
+	/** dummy */
+	public static final int $9270 = 9270;
+	/** dummy */
+	public static final int $9271 = 9271;
+	/** dummy */
+	public static final int $9272 = 9272;
+	/** dummy */
+	public static final int $9273 = 9273;
+	/** dummy */
+	public static final int $9274 = 9274;
+	/** dummy */
+	public static final int $9275 = 9275;
+	/** dummy */
+	public static final int $9276 = 9276;
+	/** dummy */
+	public static final int $9277 = 9277;
+	/** dummy */
+	public static final int $9278 = 9278;
+	/** dummy */
+	public static final int $9279 = 9279;
+	/** dummy */
+	public static final int $9280 = 9280;
+	/** dummy */
+	public static final int $9281 = 9281;
+	/** dummy */
+	public static final int $9282 = 9282;
+	/** dummy */
+	public static final int $9283 = 9283;
+	/** dummy */
+	public static final int $9284 = 9284;
+	/** dummy */
+	public static final int $9285 = 9285;
+	/** dummy */
+	public static final int $9286 = 9286;
+	/** dummy */
+	public static final int $9287 = 9287;
+	/** dummy */
+	public static final int $9288 = 9288;
+	/** dummy */
+	public static final int $9289 = 9289;
+	/** dummy */
+	public static final int $9290 = 9290;
+	/** dummy */
+	public static final int $9291 = 9291;
+	/** dummy */
+	public static final int $9292 = 9292;
+	/** dummy */
+	public static final int $9293 = 9293;
+	/** dummy */
+	public static final int $9294 = 9294;
+	/** dummy */
+	public static final int $9295 = 9295;
+	/** dummy */
+	public static final int $9296 = 9296;
+	/** dummy */
+	public static final int $9297 = 9297;
+	/** dummy */
+	public static final int $9298 = 9298;
+	/** dummy */
+	public static final int $9299 = 9299;
+	/** dummy */
+	public static final int $9300 = 9300;
+	/** dummy */
+	public static final int $9301 = 9301;
+	/** dummy */
+	public static final int $9302 = 9302;
+	/** dummy */
+	public static final int $9303 = 9303;
+	/** dummy */
+	public static final int $9304 = 9304;
+	/** dummy */
+	public static final int $9305 = 9305;
+	/** dummy */
+	public static final int $9306 = 9306;
+	/** dummy */
+	public static final int $9307 = 9307;
+	/** dummy */
+	public static final int $9308 = 9308;
+	/** dummy */
+	public static final int $9309 = 9309;
+	/** dummy */
+	public static final int $9310 = 9310;
+	/** dummy */
+	public static final int $9311 = 9311;
+	/** dummy */
+	public static final int $9312 = 9312;
+	/** dummy */
+	public static final int $9313 = 9313;
+	/** dummy */
+	public static final int $9314 = 9314;
+	/** dummy */
+	public static final int $9315 = 9315;
+	/** dummy */
+	public static final int $9316 = 9316;
+	/** dummy */
+	public static final int $9317 = 9317;
+	/** dummy */
+	public static final int $9318 = 9318;
+	/** dummy */
+	public static final int $9319 = 9319;
+	/** dummy */
+	public static final int $9320 = 9320;
+	/** dummy */
+	public static final int $9321 = 9321;
+	/** dummy */
+	public static final int $9322 = 9322;
+	/** dummy */
+	public static final int $9323 = 9323;
+	/** dummy */
+	public static final int $9324 = 9324;
+	/** dummy */
+	public static final int $9325 = 9325;
+	/** dummy */
+	public static final int $9326 = 9326;
+	/** dummy */
+	public static final int $9327 = 9327;
+	/** dummy */
+	public static final int $9328 = 9328;
+	/** dummy */
+	public static final int $9329 = 9329;
+	/** dummy */
+	public static final int $9330 = 9330;
+	/** dummy */
+	public static final int $9331 = 9331;
+	/** dummy */
+	public static final int $9332 = 9332;
+	/** dummy */
+	public static final int $9333 = 9333;
+	/** dummy */
+	public static final int $9334 = 9334;
+	/** dummy */
+	public static final int $9335 = 9335;
+	/** dummy */
+	public static final int $9336 = 9336;
+	/** dummy */
+	public static final int $9337 = 9337;
+	/** dummy */
+	public static final int $9338 = 9338;
+	/** dummy */
+	public static final int $9339 = 9339;
+	/** dummy */
+	public static final int $9340 = 9340;
+	/** dummy */
+	public static final int $9341 = 9341;
+	/** dummy */
+	public static final int $9342 = 9342;
+	/** dummy */
+	public static final int $9343 = 9343;
+	/** dummy */
+	public static final int $9344 = 9344;
+	/** dummy */
+	public static final int $9345 = 9345;
+	/** dummy */
+	public static final int $9346 = 9346;
+	/** dummy */
+	public static final int $9347 = 9347;
+	/** dummy */
+	public static final int $9348 = 9348;
+	/** dummy */
+	public static final int $9349 = 9349;
+	/** dummy */
+	public static final int $9350 = 9350;
+	/** dummy */
+	public static final int $9351 = 9351;
+	/** dummy */
+	public static final int $9352 = 9352;
+	/** dummy */
+	public static final int $9353 = 9353;
+	/** dummy */
+	public static final int $9354 = 9354;
+	/** 神秘包裹 */
+	public static final int $9355 = 9355;
+	/** dummy */
+	public static final int $9356 = 9356;
+	/** dummy */
+	public static final int $9357 = 9357;
+	/** dummy */
+	public static final int $9358 = 9358;
+	/** dummy */
+	public static final int $9359 = 9359;
+	/** dummy */
+	public static final int $9360 = 9360;
+	/** dummy */
+	public static final int $9361 = 9361;
+	/** dummy */
+	public static final int $9362 = 9362;
+	/** dummy */
+	public static final int $9363 = 9363;
+	/** dummy */
+	public static final int $9364 = 9364;
+	/** dummy */
+	public static final int $9365 = 9365;
+	/** dummy */
+	public static final int $9366 = 9366;
+	/** dummy */
+	public static final int $9367 = 9367;
+	/** dummy */
+	public static final int $9368 = 9368;
+	/** dummy */
+	public static final int $9369 = 9369;
+	/** dummy */
+	public static final int $9370 = 9370;
+	/** 生日礼物 */
+	public static final int $9371 = 9371;
+	/** 生日蛋糕 */
+	public static final int $9372 = 9372;
+	/** 生日蛋糕怪 */
+	public static final int $9373 = 9373;
+	/** 幻想蛋糕块 */
+	public static final int $9374 = 9374;
+	/** 加速袋子 */
+	public static final int $9375 = 9375;
+	/** dummy */
+	public static final int $9376 = 9376;
+	/** 料理师的帽子 */
+	public static final int $9377 = 9377;
+	/** 幻想的立方 */
+	public static final int $9378 = 9378;
+	/** 高级幻想立方 */
+	public static final int $9379 = 9379;
+	/** 魔女的魔力恢复剂 */
+	public static final int $9380 = 9380;
+	/** 傲慢之塔移动卷轴 */
+	public static final int $9381 = 9381;
+	/** dummy */
+	public static final int $9382 = 9382;
+	/** 炎魔奉献卷轴 */
+	public static final int $9383 = 9383;
+	/** 亚希奉献卷轴 */
+	public static final int $9384 = 9384;
+	/** 英雄之剑 */
+	public static final int $9385 = 9385;
+	/** 英雄魔杖 */
+	public static final int $9386 = 9386;
+	/** 英雄之弓 */
+	public static final int $9387 = 9387;
+	/** dummy */
+	public static final int $9388 = 9388;
+	/** dummy */
+	public static final int $9389 = 9389;
+	/** dummy */
+	public static final int $9390 = 9390;
+	/** dummy */
+	public static final int $9391 = 9391;
+	/** dummy */
+	public static final int $9392 = 9392;
+	/** dummy */
+	public static final int $9393 = 9393;
+	/** dummy */
+	public static final int $9394 = 9394;
+	/** dummy */
+	public static final int $9395 = 9395;
+	/** dummy */
+	public static final int $9396 = 9396;
+	/** dummy */
+	public static final int $9397 = 9397;
+	/** dummy */
+	public static final int $9398 = 9398;
+	/** dummy */
+	public static final int $9399 = 9399;
+	/** dummy */
+	public static final int $9400 = 9400;
 
 }
