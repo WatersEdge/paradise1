@@ -1,7 +1,10 @@
 package l1j.server.server.model.identity;
 
 /**
- * <h1>magicdoll.tbl 字串编号 (52)
+ * <h1>magicdoll.tbl 字串编号 (92) <br>
+ * <br>
+ * 
+ * @author jrwz
  */
 public class L1MagicDollId {
 	/** 魔法娃娃：小思克巴 */
@@ -105,10 +108,88 @@ public class L1MagicDollId {
 	/**  */
 	public static final int $8744 = 49;
 	/**  */
-	public static final int $8758 = 50;
+	public static final int $8748 = 50;
 	/**  */
 	public static final int $8749 = 51;
 	/**  */
 	public static final int $8750 = 52;
+	/**  */
+	public static final int $9377 = 53;
+	/**  */
+	public static final int $9381 = 54;
+	/**  */
+	public static final int $9385 = 55;
+	/**  */
+	public static final int $9188 = 56;
+	/**  */
+	public static final int $9391 = 57;
+	/**  */
+	public static final int $9395 = 58;
+	/**  */
+	public static final int $9398 = 59;
+	/**  */
+	public static final int $9401 = 60;
+	/**  */
+	public static final int $9404 = 61;
+	/**  */
+	public static final int $9407 = 62;
+	/**  */
+	public static final int $9411 = 63;
+	/**  */
+	public static final int $9414 = 64;
+	/**  */
+	public static final int $9635 = 65;
+	/**  */
+	public static final int $9638 = 66;
+	/**  */
+	public static final int $10256 = 67;
+	/**  */
+	public static final int $9705 = 68;
+	/**  */
+	public static final int $9706 = 69;
+	/**  */
+	public static final int $9707 = 70;
+	/**  */
+	public static final int $9708 = 71;
+	/**  */
+	public static final int $9709 = 72;
+	/**  */
+	public static final int $9710 = 73;
+	/**  */
+	public static final int $9699 = 74;
+	/**  */
+	public static final int $9700 = 75;
+	/**  */
+	public static final int $9701 = 76;
+	/**  */
+	public static final int $9702 = 77;
+	/**  */
+	public static final int $9703 = 78;
+	/**  */
+	public static final int $9704 = 79;
+	/**  */
+	public static final int $9693 = 80;
+	/**  */
+	public static final int $9694 = 81;
+	/**  */
+	public static final int $9695 = 82;
+	/**  */
+	public static final int $9696 = 83;
+	/**  */
+	public static final int $9697 = 84;
+	/**  */
+	public static final int $9698 = 85;
+	/**  */
+	public static final int $10266 = 86;
+	/**  */
+	public static final int $9684 = 87;
+	/**  */
+	public static final int $9685 = 88;
+	/**  */
+	public static final int $9690 = 89;
+	/**  */
+	public static final int $9691 = 90;
+	/**  */
+	public static final int $9692 = 91;
 
 }
