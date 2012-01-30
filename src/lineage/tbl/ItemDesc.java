@@ -1,4 +1,4 @@
-package l1j.server.server.model.identity;
+package lineage.tbl;
 
 /**
  * <h1>itemdesc-h.tbl 字串编号 (11687)<br>
@@ -8,7 +8,7 @@ package l1j.server.server.model.identity;
  * 
  * @author jrwz
  */
-public class L1ItemDescID {
+public class ItemDesc {
 	/**
 	 * 
 	 * 9 是漂浮之眼厚厚的壳里面的嫩肉。吃完后会提高灵敏的能力。通常作为魔法材料。

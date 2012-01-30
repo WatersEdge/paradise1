@@ -33,7 +33,6 @@ import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.identity.L1SystemMessageId;
 import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
@@ -186,7 +185,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 							}
 							_inventory.consumeItem(40499, itemCount);
 							pc.getInventory().storeItem(40505, itemCount);
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+							pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							if (!isDropitems()) {
 								doGDropItem(3);
 							}
@@ -197,11 +196,11 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName = item40505.getName();
 								_inventory.consumeItem(40505, 1);
 								pc.getInventory().storeItem(40505, 1);
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+								pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							}
 							else {
 								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(337, itemName));
 							}
 						}
 						else if (_inventory.checkItem(40507) && !_inventory.checkItem(40505)) { // 安特之树枝
@@ -211,11 +210,11 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName += " (6)";
 								_inventory.consumeItem(40507, 6);
 								pc.getInventory().storeItem(40507, 6);
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+								pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							}
 							else {
 								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(337, itemName));
 							}
 						}
 						else if (_inventory.checkItem(40506) && !_inventory.checkItem(40507)) { // 安特的水果
@@ -224,11 +223,11 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName = item40506.getName();
 								_inventory.consumeItem(40506, 1);
 								pc.getInventory().storeItem(40506, 1);
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+								pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							}
 							else {
 								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(337, itemName));
 							}
 						}
 						else {
@@ -242,7 +241,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 							}
 							else {
 								itemName = item40499.getName();
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName));
+								pc.sendPackets(new S_ServerMessage(337, itemName));
 							}
 						}
 					}
@@ -254,7 +253,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 								itemName += " (5)";
 								_inventory.consumeItem(40519, 5);
 								pc.getInventory().storeItem(40519, 5);
-								pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+								pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 							}
 						}
 						else {
@@ -277,11 +276,11 @@ public class L1GuardianInstance extends L1NpcInstance {
 							}
 							_inventory.consumeItem(40507, itemCount);
 							pc.getInventory().storeItem(40503, itemCount);
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$143, npcName, itemName));
+							pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 						}
 						else {
 							itemName = item40507.getName();
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$337, itemName)); // \\f1%0不足%s。
+							pc.sendPackets(new S_ServerMessage(337, itemName)); // \\f1%0不足%s。
 						}
 					}
 				}

@@ -18,7 +18,6 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.identity.L1SystemMessageId;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
@@ -49,7 +48,7 @@ public class C_CreateParty extends ClientBasePacket {
 
 				// 邀请组队时，对象不再荧幕内或是7步内
 				if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))) {
-					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952)); // 距离太远以致于无法邀请至队伍。
+					pc.sendPackets(new S_ServerMessage(952)); // 距离太远以致于无法邀请至队伍。
 					return;
 				}
 				if (targetPc.isInParty()) {
@@ -101,7 +100,7 @@ public class C_CreateParty extends ClientBasePacket {
 
 			// 邀请组队时，对象不再荧幕内或是7步内
 			if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))) {
-				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952)); // 距离太远以致于无法邀请至队伍。
+				pc.sendPackets(new S_ServerMessage(952)); // 距离太远以致于无法邀请至队伍。
 				return;
 			}
 			if (targetPc.isInChatParty()) {
@@ -144,7 +143,7 @@ public class C_CreateParty extends ClientBasePacket {
 
 			// 邀请组队时，对象不再荧幕内或是7步内
 			if ((!pc.getLocation().isInScreen(obj.getLocation()) || (pc.getLocation().getTileLineDistance(obj.getLocation()) > 7))) {
-				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$1695)); // 距离太远以致于无法邀请至队伍。
+				pc.sendPackets(new S_ServerMessage(1695)); // 距离太远以致于无法邀请至队伍。
 				return;
 			}
 
@@ -157,7 +156,7 @@ public class C_CreateParty extends ClientBasePacket {
 				return;
 			}
 			// 委任给其他玩家?
-			pc.sendPackets(new S_Message_YN(L1SystemMessageId.$1703, "")); // 确认把队长委任给队员？
+			pc.sendPackets(new S_Message_YN(1703, "")); // 确认把队长委任给队员？
 
 			// 指定队长给新的目标
 			pc.getParty().passLeader(targetPc);
