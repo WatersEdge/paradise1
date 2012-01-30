@@ -1,4 +1,4 @@
-package l1j.server.server.model.identity;
+package lineage.tbl;
 
 /**
  * <h1>spelldesc-h.tbl 字串编号 (300) <br>
@@ -6,7 +6,7 @@ package l1j.server.server.model.identity;
  * 
  * @author jrwz
  */
-public class SpellDescID {
+public class SpellDesc {
 	/** 0 初级治愈术 (4/0) */
 	public static final int $0 = 0;
 	/** 1 日光术 (4/0) */

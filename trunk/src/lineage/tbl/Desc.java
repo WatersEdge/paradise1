@@ -1,4 +1,4 @@
-﻿package l1j.server.server.model.identity;
+package lineage.tbl;
 
 /**
  * 包括: 武器,装备,道具,魔法,Npc名字,怪物喊话内容. (12942)
@@ -8,7 +8,7 @@
  * 
  * @author jrwz
  */
-public class L1DescId {
+public class Desc {
 	/** 长剑 */
 	public static final int $0 = 0;
 	/** 斧 */

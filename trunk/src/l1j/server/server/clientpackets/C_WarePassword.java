@@ -21,7 +21,6 @@ import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.identity.L1SystemMessageId;
 import l1j.server.server.serverpackets.S_RetrieveElfList;
 import l1j.server.server.serverpackets.S_RetrieveList;
 import l1j.server.server.serverpackets.S_RetrievePledgeList;
@@ -54,7 +53,7 @@ public class C_WarePassword extends ClientBasePacket {
 		if (type == 0) {
 			// 两次皆直接跳过密码输入
 			if ((pass1 < 0) && (pass2 < 0)) {
-				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$79));
+				pc.sendPackets(new S_ServerMessage(79));
 			}
 
 			// 进行新密码的设定
@@ -69,7 +68,7 @@ public class C_WarePassword extends ClientBasePacket {
 				// 进行密码变更
 				if (pass1 == pass2) {
 					// [342::你不能使用旧的密码当作新的密码。请再次输入密码。]
-					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$342));
+					pc.sendPackets(new S_ServerMessage(342));
 					return;
 				}
 				else if (pass2 > 0) {
@@ -83,7 +82,7 @@ public class C_WarePassword extends ClientBasePacket {
 			}
 			else {
 				// 送出密码错误的提示讯息[835:密码错误。]
-				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$835));
+				pc.sendPackets(new S_ServerMessage(835));
 			}
 		}
 
@@ -115,18 +114,18 @@ public class C_WarePassword extends ClientBasePacket {
 					else if (type == 2) {
 						if (pc.getClanid() == 0) {
 							// \f1若想使用血盟仓库，必须加入血盟。
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$208));
+							pc.sendPackets(new S_ServerMessage(208));
 							return;
 						}
 						int rank = pc.getClanRank();
 						if (rank == L1Clan.CLAN_RANK_PROBATION) {
 							// 只有收到称谓的人才能使用血盟仓库。
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$728));
+							pc.sendPackets(new S_ServerMessage(728));
 							return;
 						}
 						if ((rank != L1Clan.CLAN_RANK_PRINCE) && pc.getTitle().equalsIgnoreCase("")) {
 							// 只有收到称谓的人才能使用血盟仓库。
-							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$728));
+							pc.sendPackets(new S_ServerMessage(728));
 							return;
 						}
 						pc.sendPackets(new S_RetrievePledgeList(objid, pc));

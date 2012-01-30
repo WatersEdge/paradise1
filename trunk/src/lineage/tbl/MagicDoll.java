@@ -1,4 +1,4 @@
-package l1j.server.server.model.identity;
+package lineage.tbl;
 
 /**
  * <h1>magicdoll.tbl 字串编号 (92) <br>
@@ -6,7 +6,7 @@ package l1j.server.server.model.identity;
  * 
  * @author jrwz
  */
-public class L1MagicDollId {
+public class MagicDoll {
 	/** 魔法娃娃：小思克巴 */
 	public static final int $5919 = 0;
 	/** 魔法娃娃：公主 */
