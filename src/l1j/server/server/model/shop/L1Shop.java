@@ -334,28 +334,35 @@ public class L1Shop {
 			item.setIdentified(true);
 			inv.storeItem(item);
 			if ((_npcId == 70068) || (_npcId == 70020)) { // 福朗克、罗克(贩卖道具随机加成)
-				item.setIdentified(false);
+				item.setIdentified(true);
 				int chance = Random.nextInt(100) + 1; // 几率
 				if (chance <= 15) {
 					item.setEnchantLevel(-2); // -2装备
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if ((chance >= 16) && (chance <= 30)) { // 15%几率
 					item.setEnchantLevel(-1);
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if ((chance >= 31) && (chance <= 70)) { // 40%几率
 					item.setEnchantLevel(0);
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if ((chance >= 71) && (chance <= 87)) { // 17%几率
 					item.setEnchantLevel(Random.nextInt(2) + 1);
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if ((chance >= 88) && (chance <= 97)) { // 10%几率
 					item.setEnchantLevel(Random.nextInt(3) + 3);
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if ((chance >= 98) && (chance <= 99)) { // 2%几率
 					item.setEnchantLevel(6);
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 				else if (chance == 100) {
 					item.setEnchantLevel(7); // +7装备
+					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 				}
 			}
 		}
