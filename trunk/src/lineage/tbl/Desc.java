@@ -4110,63 +4110,910 @@ public class Desc {
 	/** 艾琳达 */
 	public static final int $2049 = 2049;
 	/** 艾琳达的追踪者 */
-	public static final int $2051 = 2051;
+	public static final int $2050 = 2050;
 	/** 麦琳达 */
-	public static final int $2052 = 2052;
+	public static final int $2051 = 2051;
 	/** 塔纳 */
-	public static final int $2053 = 2053;
+	public static final int $2052 = 2052;
 	/** 蓝达夫 */
-	public static final int $2054 = 2054;
+	public static final int $2053 = 2053;
 	/** 艾斯默拉德 */
+	public static final int $2054 = 2054;
+	/** 尤利亚 */
 	public static final int $2055 = 2055;
-
-	/**  */
+	/** 约瑟 */
+	public static final int $2056 = 2056;
+	/** 拉肯 */
+	public static final int $2057 = 2057;
+	/** 鲁斯 */
+	public static final int $2058 = 2058;
+	/** 柯拉斯 */
+	public static final int $2059 = 2059;
+	/** 柯拉 */
+	public static final int $2060 = 2060;
+	/** 鲁班 */
+	public static final int $2061 = 2061;
+	/** 马柯 */
+	public static final int $2062 = 2062;
+	/** 南瓜怪 */
+	public static final int $2063 = 2063;
+	/** 南瓜怪 */
+	public static final int $2064 = 2064;
+	/** 南瓜种子 */
+	public static final int $2065 = 2065;
+	/** 巨大南瓜种子 */
+	public static final int $2066 = 2066;
+	/** 南瓜帽 */
+	public static final int $2067 = 2067;
+	/** 南瓜糖果 */
+	public static final int $2068 = 2068;
+	/** 金南瓜 */
+	public static final int $2069 = 2069;
+	/** 银南瓜 */
+	public static final int $2070 = 2070;
+	/** 铜南瓜 */
+	public static final int $2071 = 2071;
+	/** 南瓜头套 */
+	public static final int $2072 = 2072;
+	/** 变种巨蚁女皇 */
+	public static final int $2073 = 2073;
+	/** 变种巨大兵蚁 */
+	public static final int $2074 = 2074;
+	/** 精灵T恤 */
+	public static final int $2075 = 2075;
+	/** 君主的威严 */
+	public static final int $2076 = 2076;
+	/** 秘密钥匙 */
+	public static final int $2077 = 2077;
+	/** 神秘水晶球 */
+	public static final int $2078 = 2078;
+	/** 神秘魔杖 */
+	public static final int $2079 = 2079;
+	/** 水晶魔杖 */
+	public static final int $2080 = 2080;
+	/** 背叛的骷髅警卫兵 */
+	public static final int $2081 = 2081;
+	/** 南瓜人 */
+	public static final int $2082 = 2082;
+	/** 达克马勒之火精灵 */
+	public static final int $2083 = 2083;
+	/** 达克马勒之水精灵 */
+	public static final int $2084 = 2084;
+	/** 达克马勒之风精灵 */
+	public static final int $2085 = 2085;
+	/** 达克马勒之土精灵 */
+	public static final int $2086 = 2086;
+	/** 金侃 */
+	public static final int $2087 = 2087;
+	/** 蛇女房间钥匙 */
+	public static final int $2088 = 2088;
+	/** 魔法书 (呼唤盟友) */
+	public static final int $2089 = 2089;
+	/** 艾莉亚的回报 */
+	public static final int $2090 = 2090;
+	/** 妖精族宝物 */
+	public static final int $2091 = 2091;
+	/** 妖魔伦 */
+	public static final int $2092 = 2092;
+	/** 拾荒者 */
+	public static final int $2093 = 2093;
+	/** 古代水龙鳞盔甲 */
+	public static final int $2094 = 2094;
+	/** 古代地龙鳞盔甲 */
+	public static final int $2095 = 2095;
+	/** 古代火龙鳞盔甲 */
+	public static final int $2096 = 2096;
+	/** 古代风龙鳞盔甲 */
+	public static final int $2097 = 2097;
+	/** 初级传送师 */
+	public static final int $2098 = 2098;
+	/** 强盗 */
+	public static final int $2099 = 2099;
+	/** 强盗头目 */
+	public static final int $2100 = 2100;
+	/** 变形怪首领 */
+	public static final int $2101 = 2101;
+	/** 翼魔 */
+	public static final int $2102 = 2102;
+	/** 梦魇 */
+	public static final int $2103 = 2103;
+	/** 幼龙 */
+	public static final int $2104 = 2104;
+	/** 魔狼 */
+	public static final int $2105 = 2105;
+	/** 巨大牛人 */
+	public static final int $2106 = 2106;
+	/** 奇美拉 */
+	public static final int $2107 = 2107;
+	/** 骨龙 */
+	public static final int $2108 = 2108;
+	/** 古代巨人 */
+	public static final int $2109 = 2109;
+	/** 巫妖 */
+	public static final int $2110 = 2110;
+	/** 死亡之剑 */
+	public static final int $2111 = 2111;
+	/** 小恶魔 */
+	public static final int $2112 = 2112;
+	/** 梅杜莎 */
+	public static final int $2113 = 2113;
+	/** 炎魔 */
+	public static final int $2114 = 2114;
+	/** 果冻怪 */
+	public static final int $2115 = 2115;
+	/** 林德拜尔 */
+	public static final int $2116 = 2116;
+	/** 反王肯恩 */
+	public static final int $2117 = 2117;
+	/** 凯尔尼斯 */
+	public static final int $2118 = 2118;
+	/** 警卫队 */
+	public static final int $2119 = 2119;
+	/** 亲卫队 */
+	public static final int $2120 = 2120;
+	/** 戴夫曼 */
+	public static final int $2121 = 2121;
+	/** 拉温 */
+	public static final int $2122 = 2122;
+	/** 包武 */
+	public static final int $2123 = 2123;
+	/** 卡木 */
+	public static final int $2124 = 2124;
+	/** 奥基 */
+	public static final int $2125 = 2125;
+	/** 西里乌斯 */
+	public static final int $2126 = 2126;
+	/** 提蒙 */
+	public static final int $2127 = 2127;
+	/** 毕斯特 */
+	public static final int $2128 = 2128;
+	/** 亚丁 */
+	public static final int $2129 = 2129;
+	/** 洁西卡 */
+	public static final int $2130 = 2130;
+	/** 米萨 */
+	public static final int $2131 = 2131;
+	/** 摩札 */
+	public static final int $2132 = 2132;
+	/** 乔比 */
+	public static final int $2133 = 2133;
+	/** 宾多 */
+	public static final int $2134 = 2134;
+	/** 马依琪 */
+	public static final int $2135 = 2135;
+	/** 亚琳 */
+	public static final int $2136 = 2136;
+	/** 马提达 */
+	public static final int $2137 = 2137;
+	/** 艾列亚诺 */
+	public static final int $2138 = 2138;
+	/** 珍妮佛 */
+	public static final int $2139 = 2139;
+	/** 仙玛 */
+	public static final int $2140 = 2140;
+	/** 莉莉亚 */
+	public static final int $2141 = 2141;
+	/** 马勒安 */
+	public static final int $2142 = 2142;
+	/** 雪莉 */
+	public static final int $2143 = 2143;
+	/** 巴克利 */
+	public static final int $2144 = 2144;
+	/** 琼斯 */
+	public static final int $2145 = 2145;
+	/** 宾 */
+	public static final int $2146 = 2146;
+	/** 拉弗嘉 */
+	public static final int $2147 = 2147;
+	/** 罗杰 */
+	public static final int $2148 = 2148;
+	/** 杰迈 */
+	public static final int $2149 = 2149;
+	/** 马克斯 */
+	public static final int $2150 = 2150;
+	/** 拉帕尔 */
+	public static final int $2151 = 2151;
+	/** 巴巴拉 */
+	public static final int $2152 = 2152;
+	/** 齐德曼 */
+	public static final int $2153 = 2153;
+	/** 阿库 */
+	public static final int $2154 = 2154;
+	/** 莫丽 */
+	public static final int $2155 = 2155;
+	/** 欧文 */
+	public static final int $2156 = 2156;
+	/** 喀尔文 */
+	public static final int $2157 = 2157;
+	/** 路易斯 */
+	public static final int $2158 = 2158;
+	/** 丁 */
+	public static final int $2159 = 2159;
+	/** 李察 */
+	public static final int $2160 = 2160;
+	/** 麦 */
+	public static final int $2161 = 2161;
+	/** 威利 */
+	public static final int $2162 = 2162;
+	/** 史斌 */
+	public static final int $2163 = 2163;
+	/** 杰可 */
+	public static final int $2164 = 2164;
+	/** 艾裴利 */
+	public static final int $2165 = 2165;
+	/** 布朗德 */
+	public static final int $2166 = 2166;
+	/** 鲁琪 */
+	public static final int $2167 = 2167;
+	/** 傲慢之塔移动卷轴(21F) */
+	public static final int $2168 = 2168;
+	/** 傲慢之塔移动卷轴(11F) */
+	public static final int $2169 = 2169;
+	/** 副村长 */
+	public static final int $2170 = 2170;
+	/** 村庄管理人 */
+	public static final int $2171 = 2171;
+	/** 说话之岛村庄 */
+	public static final int $2172 = 2172;
+	/** 古鲁丁村庄 */
+	public static final int $2173 = 2173;
+	/** 肯特村庄 */
+	public static final int $2174 = 2174;
+	/** 燃柳村庄 */
+	public static final int $2175 = 2175;
+	/** 风木村庄 */
+	public static final int $2176 = 2176;
+	/** 银骑士村庄 */
+	public static final int $2177 = 2177;
+	/** 奇岩村庄 */
+	public static final int $2178 = 2178;
+	/** 海音村庄 */
+	public static final int $2179 = 2179;
+	/** 欧瑞村庄 */
+	public static final int $2180 = 2180;
+	/** 威顿村庄 */
+	public static final int $2181 = 2181;
+	/** 圣十字军 */
+	public static final int $2182 = 2182;
+	/** 贵族妇人 */
+	public static final int $2183 = 2183;
+	/** 贵族男士 */
+	public static final int $2184 = 2184;
+	/** 青年 */
+	public static final int $2185 = 2185;
+	/** 小朋友 */
+	public static final int $2186 = 2186;
+	/** 少年 */
+	public static final int $2187 = 2187;
+	/** 村民 */
+	public static final int $2188 = 2188;
+	/** 反王盔甲 */
+	public static final int $2189 = 2189;
+	/** 反王长靴 */
+	public static final int $2190 = 2190;
+	/** 反王手套 */
+	public static final int $2191 = 2191;
+	/** 反王头盔 */
+	public static final int $2192 = 2192;
+	/** 龙之骨 */
+	public static final int $2193 = 2193;
+	/** 凯尔尼斯长靴 */
+	public static final int $2194 = 2194;
+	/** 奇美拉之皮(龙) */
+	public static final int $2195 = 2195;
+	/** 奇美拉之皮(山羊) */
+	public static final int $2196 = 2196;
+	/** 奇美拉之皮(狮子) */
+	public static final int $2197 = 2197;
+	/** 奇美拉之皮(蛇) */
+	public static final int $2198 = 2198;
+	/** 凯尔尼斯头箍 */
+	public static final int $2199 = 2199;
+	/** 龙之心 */
+	public static final int $2200 = 2200;
+	/** 凯尔尼斯手套 */
+	public static final int $2201 = 2201;
+	/** 凯尔尼斯斗篷 */
+	public static final int $2202 = 2202;
+	/** 地图:亚丁 */
+	public static final int $2203 = 2203;
+	/** 守护塔:伊娃 */
+	public static final int $2204 = 2204;
+	/** 守护塔:帕格里奥 */
+	public static final int $2205 = 2205;
+	/** 守护塔:马普勒 */
+	public static final int $2206 = 2206;
+	/** 守护塔:沙哈 */
+	public static final int $2207 = 2207;
+	/** 马普勒之斧 */
+	public static final int $2208 = 2208;
+	/** 巴拉卡斯鳞甲 */
+	public static final int $2209 = 2209;
+	/** 亚丁纪念货币 */
+	public static final int $2210 = 2210;
+	/** 林德拜尔鳞甲 */
+	public static final int $2211 = 2211;
+	/** 巫妖斗篷 */
+	public static final int $2212 = 2212;
+	/** 梅杜莎盾牌 */
+	public static final int $2213 = 2213;
+	/** 牛人斧头 */
+	public static final int $2214 = 2214;
+	/** 古代巨人戒指 */
+	public static final int $2215 = 2215;
+	/** 安塔瑞斯鳞甲 */
+	public static final int $2216 = 2216;
+	/** 法利昂鳞甲 */
+	public static final int $2217 = 2217;
+	/** 冰之女王侍女 */
+	public static final int $2218 = 2218;
+	/** 背叛的妖魔队长 */
+	public static final int $2219 = 2219;
+	/** 背叛的妖魔巡守 */
+	public static final int $2220 = 2220;
+	/** 灵魂水晶 */
+	public static final int $2221 = 2221;
+	/** 灵魂之证 */
+	public static final int $2222 = 2222;
+	/** 王族徽章的碎片 */
+	public static final int $2223 = 2223;
+	/** 神秘的袋子 */
+	public static final int $2224 = 2224;
+	/** 守护者的戒指 */
+	public static final int $2225 = 2225;
+	/** 冰之女王... */
+	public static final int $2226 = 2226;
+	/** 灵魂水晶...我的... */
+	public static final int $2227 = 2227;
+	/** 卡路丁 */
+	public static final int $2228 = 2228;
+	/** 朱奎 */
+	public static final int $2229 = 2229;
+	/** 恬金 */
+	public static final int $2230 = 2230;
+	/** 凯瑟琳 */
+	public static final int $2231 = 2231;
+	/** 夏露 */
+	public static final int $2232 = 2232;
+	/** 奇宁 */
+	public static final int $2233 = 2233;
+	/** 艾勒里斯 */
+	public static final int $2234 = 2234;
+	/** 马古斯 */
+	public static final int $2235 = 2235;
+	/** 菲卡 */
+	public static final int $2236 = 2236;
+	/** 马夏 */
+	public static final int $2237 = 2237;
+	/** 血盟执行人 */
+	public static final int $2238 = 2238;
+	/** 变形怪的血 */
+	public static final int $2239 = 2239;
+	/** 古代钥匙(上半部) */
+	public static final int $2240 = 2240;
+	/** 古代人的智慧 */
+	public static final int $2241 = 2241;
+	/** 古代恶魔的记载 */
+	public static final int $2242 = 2242;
+	/** 蓝色长笛 */
+	public static final int $2243 = 2243;
+	/** 神秘贝壳 */
+	public static final int $2244 = 2244;
+	/** 夜之视野 */
+	public static final int $2245 = 2245;
+	/** 古代的遗物 */
+	public static final int $2246 = 2246;
+	/** 破损的调查簿 */
+	public static final int $2247 = 2247;
+	/** 调查簿的缺页 */
+	public static final int $2248 = 2248;
+	/** 保护者手套 */
+	public static final int $2249 = 2249;
+	/** 玛那斗篷 */
+	public static final int $2250 = 2250;
+	/** 勇敢皮带 */
+	public static final int $2251 = 2251;
+	/** 水精灵之弓 */
+	public static final int $2252 = 2252;
+	/** 天空之剑 */
+	public static final int $2253 = 2253;
+	/** 志武 */
+	public static final int $2254 = 2254;
+	/** 巨人长老 */
+	public static final int $2255 = 2255;
+	/** 巨人守护神 */
+	public static final int $2256 = 2256;
+	/** 调查员 */
+	public static final int $2257 = 2257;
+	/** 希托 */
+	public static final int $2258 = 2258;
+	/** 赛菲亚 */
+	public static final int $2259 = 2259;
+	/** 赛菲亚之罪 */
+	public static final int $2260 = 2260;
+	/** 古代亡灵 */
+	public static final int $2261 = 2261;
+	/** 神秘的岩石 */
+	public static final int $2262 = 2262;
+	/** 强盗头目 */
+	public static final int $2263 = 2263;
+	/** 守护神之袋 */
+	public static final int $2264 = 2264;
+	/** 马沙之袋 */
+	public static final int $2265 = 2265;
+	/** 水之竖琴 */
+	public static final int $2266 = 2266;
+	/** 公爵的士兵 */
+	public static final int $2267 = 2267;
+	/** 结婚戒指(蓝宝石) */
+	public static final int $2268 = 2268;
+	/** 结婚戒指(钻石) */
+	public static final int $2269 = 2269;
+	/** 古代亡灵之袋 */
+	public static final int $2270 = 2270;
+	/** 奥帝亚 */
+	public static final int $2271 = 2271;
+	/** 毛林 */
+	public static final int $2272 = 2272;
+	/** 肯帝斯 */
+	public static final int $2273 = 2273;
+	/** 谢林纳 */
+	public static final int $2274 = 2274;
+	/** 辛蒂 */
+	public static final int $2275 = 2275;
+	/** 帝那 */
+	public static final int $2276 = 2276;
+	/** 爱宝尼 */
+	public static final int $2277 = 2277;
+	/** 里贾 */
+	public static final int $2278 = 2278;
+	/** 波菲 */
+	public static final int $2279 = 2279;
+	/** 黎宾斯 */
+	public static final int $2280 = 2280;
+	/** 阿米勒 */
+	public static final int $2281 = 2281;
+	/** 里斯 */
+	public static final int $2282 = 2282;
+	/** 贝斯 */
+	public static final int $2283 = 2283;
+	/** 戴娜 */
+	public static final int $2284 = 2284;
+	/** 娜希 */
+	public static final int $2285 = 2285;
+	/** 米倩 */
+	public static final int $2286 = 2286;
+	/** 阿卡希亚 */
+	public static final int $2287 = 2287;
+	/** 敏迪 */
+	public static final int $2288 = 2288;
+	/** 安琪林 */
+	public static final int $2289 = 2289;
+	/** 罗林 */
+	public static final int $2290 = 2290;
+	/** 贾牧拉 */
+	public static final int $2291 = 2291;
+	/** 塔拉斯的魔法袋 */
+	public static final int $2292 = 2292;
+	/** 骑士之剑 */
+	public static final int $2293 = 2293;
+	/** 艾帝尔 */
+	public static final int $2294 = 2294;
+	/** 阿拉纳 */
+	public static final int $2295 = 2295;
+	/** 波波里 */
+	public static final int $2296 = 2296;
+	/** 美遥 */
+	public static final int $2297 = 2297;
+	/** 波罗林斯 */
+	public static final int $2298 = 2298;
+	/** 杰奈斯 */
+	public static final int $2299 = 2299;
+	/** 朱帝斯 */
+	public static final int $2300 = 2300;
+	/** 鲁西尔 */
+	public static final int $2301 = 2301;
+	/** 里沙比尔 */
+	public static final int $2302 = 2302;
+	/** 罗希里 */
+	public static final int $2303 = 2303;
+	/** 那帝奈 */
+	public static final int $2304 = 2304;
+	/** 希菲亚 */
+	public static final int $2305 = 2305;
+	/** 苏菲亚 */
+	public static final int $2306 = 2306;
+	/** 雅裴里 */
+	public static final int $2307 = 2307;
+	/** 卡伦 */
+	public static final int $2308 = 2308;
+	/** 罗希斯 */
+	public static final int $2309 = 2309;
+	/** 希利尔 */
+	public static final int $2310 = 2310;
+	/** 谢里 */
+	public static final int $2311 = 2311;
+	/** 安琪利亚 */
+	public static final int $2312 = 2312;
+	/** 米琴利 */
+	public static final int $2313 = 2313;
+	/** 纳塔利亚 */
+	public static final int $2314 = 2314;
+	/** 非奥赖特 */
+	public static final int $2315 = 2315;
+	/** 马里尔 */
+	public static final int $2316 = 2316;
+	/** 菲卡 */
+	public static final int $2317 = 2317;
+	/** 比拉 */
+	public static final int $2318 = 2318;
+	/** 波罗里奈 */
+	public static final int $2319 = 2319;
+	/** 丸塔 */
+	public static final int $2320 = 2320;
+	/** 梅梅 */
+	public static final int $2321 = 2321;
+	/** 乔安 */
+	public static final int $2322 = 2322;
+	/** 奥发利亚 */
+	public static final int $2323 = 2323;
+	/** 波尼尔 */
+	public static final int $2324 = 2324;
+	/** 麦拉 */
+	public static final int $2325 = 2325;
+	/** 塔丽沙 */
+	public static final int $2326 = 2326;
+	/** 诺那 */
+	public static final int $2327 = 2327;
+	/** 沙帝尔 */
+	public static final int $2328 = 2328;
+	/** 布里帝奈 */
+	public static final int $2329 = 2329;
+	/** 塔马拉 */
+	public static final int $2330 = 2330;
+	/** 鲁辛达 */
+	public static final int $2331 = 2331;
+	/** 安洁里卡 */
+	public static final int $2332 = 2332;
+	/** 洁列奈 */
+	public static final int $2333 = 2333;
+	/** 利希尔 */
+	public static final int $2334 = 2334;
+	/** 卡里沙 */
+	public static final int $2335 = 2335;
+	/** 施非亚 */
+	public static final int $2336 = 2336;
+	/** 洁尼斯 */
+	public static final int $2337 = 2337;
+	/** 尼塔 */
+	public static final int $2338 = 2338;
+	/** 麦客里 */
+	public static final int $2339 = 2339;
+	/** 桃里尔 */
+	public static final int $2340 = 2340;
+	/** 海乐奈 */
+	public static final int $2341 = 2341;
+	/** 神女艾利尔 */
+	public static final int $2342 = 2342;
+	/** 加速师 */
+	public static final int $2343 = 2343;
+	/** 库伯 */
+	public static final int $2344 = 2344;
+	/** 德汉 */
+	public static final int $2345 = 2345;
+	/** 炎魔之剑 */
+	public static final int $2346 = 2346;
+	/** 炎魔之眼 */
+	public static final int $2347 = 2347;
+	/** 炎魔之爪 */
+	public static final int $2348 = 2348;
+	/** 炎魔之心 */
+	public static final int $2349 = 2349;
+	/** 黑焰之剑 */
+	public static final int $2350 = 2350;
+	/** 玛那水晶球 */
+	public static final int $2351 = 2351;
+	/** 赤焰之弓 */
+	public static final int $2352 = 2352;
+	/** 赤焰之剑 */
+	public static final int $2353 = 2353;
+	/** 黄金权杖 */
+	public static final int $2354 = 2354;
+	/** 迪嘉勒廷 */
+	public static final int $2355 = 2355;
+	/** 拉姆塔 */
+	public static final int $2356 = 2356;
+	/** 古代人 */
+	public static final int $2357 = 2357;
+	/** 胜利烟火 */
+	public static final int $2358 = 2358;
+	/** 魔法球 */
+	public static final int $2359 = 2359;
+	/** 炎魔仆人 */
+	public static final int $2360 = 2360;
+	/** 古代人亡灵 */
+	public static final int $2361 = 2361;
+	/** 愤怒的古代人亡灵 */
+	public static final int $2362 = 2362;
+	/** 古代王族的钥匙 */
+	public static final int $2363 = 2363;
+	/** 古代骑士的钥匙 */
+	public static final int $2364 = 2364;
+	/** 古代妖精的钥匙 */
+	public static final int $2365 = 2365;
+	/** 古代法师的钥匙 */
+	public static final int $2366 = 2366;
+	/** 文明的钥匙 */
+	public static final int $2367 = 2367;
+	/** 炎魔创造物 */
+	public static final int $2368 = 2368;
+	/** 古代变身魔杖 */
+	public static final int $2369 = 2369;
+	/** 珠宝大师 */
+	public static final int $2370 = 2370;
+	/** 帕勒特 */
+	public static final int $2371 = 2371;
+	/** 汁 */
+	public static final int $2372 = 2372;
+	/** 结婚戒指(绿宝石) */
+	public static final int $2373 = 2373;
+	/** 结婚戒指(红宝石) */
+	public static final int $2374 = 2374;
+	/** 结婚戒指(金) */
+	public static final int $2375 = 2375;
+	/** 结婚戒指(银) */
+	public static final int $2376 = 2376;
+	/** 古代之箭 */
+	public static final int $2377 = 2377;
+	/** 古代钥匙(下半部) */
+	public static final int $2378 = 2378;
+	/** 召唤卷轴 */
+	public static final int $2379 = 2379;
+	/** 血盟传送卷轴 */
+	public static final int $2380 = 2380;
+	/** 变种杨果里恩 */
+	public static final int $2381 = 2381;
+	/** 变种蛇女 */
+	public static final int $2382 = 2382;
+	/** 邪恶多眼怪 */
+	public static final int $2383 = 2383;
+	/** 邪恶密密 */
+	public static final int $2384 = 2384;
+	/** 恐怖的地狱犬 */
+	public static final int $2385 = 2385;
+	/** 恐怖的火炎蛋 */
+	public static final int $2386 = 2386;
+	/** 残暴的史巴托 */
+	public static final int $2387 = 2387;
+	/** 残暴的骷髅斗士 */
+	public static final int $2388 = 2388;
+	/** 残暴的骷髅斧兵 */
+	public static final int $2389 = 2389;
+	/** 残暴的骷髅神射手 */
+	public static final int $2390 = 2390;
+	/** 残暴的骷髅枪兵 */
+	public static final int $2391 = 2391;
+	/** 残暴的食尸鬼 */
+	public static final int $2392 = 2392;
+	/** 火焰之灵魂 */
+	public static final int $2393 = 2393;
+	/** 火焰之魔法师 */
+	public static final int $2394 = 2394;
+	/** 洁尼斯女王 */
+	public static final int $2395 = 2395;
+	/** 钻石高仑怪 */
+	public static final int $2396 = 2396;
+	/** 幻象眼魔 */
+	public static final int $2397 = 2397;
+	/** 僵尸王 */
+	public static final int $2398 = 2398;
+	/** 吸血鬼 */
+	public static final int $2399 = 2399;
+	/** 傲慢之塔传送符(11F) */
+	public static final int $2400 = 2400;
+	/** 傲慢之塔传送符(21F) */
+	public static final int $2401 = 2401;
+	/** 傲慢之塔传送符(31F) */
+	public static final int $2402 = 2402;
+	/** 傲慢之塔传送符(41F) */
+	public static final int $2403 = 2403;
+	/** 傲慢之塔移动卷轴(31F) */
+	public static final int $2404 = 2404;
+	/** 傲慢之塔移动卷轴(41F) */
+	public static final int $2405 = 2405;
+	/** 洁尼斯戒指 */
+	public static final int $2406 = 2406;
+	/** 恐怖的高仑钢铁怪 */
+	public static final int $2407 = 2407;
+	/** 奇岩密密 */
+	public static final int $2408 = 2408;
+	/** 蝙蝠 */
+	public static final int $2409 = 2409;
+	/** 影子面具 */
+	public static final int $2410 = 2410;
+	/** 妖魔长老首级 */
+	public static final int $2411 = 2411;
+	/** 影子手套 */
+	public static final int $2412 = 2412;
+	/** 秘密名单 */
+	public static final int $2413 = 2413;
+	/** 暗杀名单(古鲁丁村) */
+	public static final int $2414 = 2414;
+	/** 暗杀名单(燃柳村) */
+	public static final int $2415 = 2415;
+	/** 暗杀名单(肯特村) */
+	public static final int $2416 = 2416;
+	/** 暗杀名单(风木村) */
+	public static final int $2417 = 2417;
+	/** 暗杀名单(海音村) */
+	public static final int $2418 = 2418;
+	/** 暗杀名单(亚丁城镇) */
+	public static final int $2419 = 2419;
+	/** 暗杀名单(奇岩村) */
+	public static final int $2420 = 2420;
+	/** 暗杀名单之袋 */
+	public static final int $2421 = 2421;
+	/** 死亡誓约 */
+	public static final int $2422 = 2422;
+	/** 影子长靴 */
+	public static final int $2423 = 2423;
+	/** 雪怪首级 */
+	public static final int $2424 = 2424;
+	/** 蘑菇毒液 */
+	public static final int $2425 = 2425;
+	/** 刺客之证 */
+	public static final int $2426 = 2426;
+	/** 生锈的刺客之剑 */
+	public static final int $2427 = 2427;
+	/** 死亡之证 */
+	public static final int $2428 = 2428;
+	/** 刺客首领的箱子 */
+	public static final int $2429 = 2429;
+	/** 康 */
+	public static final int $2430 = 2430;
+	/** 妖魔长老 */
+	public static final int $2431 = 2431;
+	/** 伦得 */
+	public static final int $2432 = 2432;
+	/** 叛逃的刺客警卫 */
+	public static final int $2433 = 2433;
+	/** 力比 */
+	public static final int $2434 = 2434;
+	/** 戴度普 */
+	public static final int $2435 = 2435;
+	/** 依卡 */
+	public static final int $2436 = 2436;
+	/** 托得 */
+	public static final int $2437 = 2437;
+	/** 罗德 */
+	public static final int $2438 = 2438;
+	/** 亚特辛 */
+	public static final int $2439 = 2439;
+	/** 托达 */
+	public static final int $2440 = 2440;
+	/** 布鲁迪卡 */
+	public static final int $2441 = 2441;
+	/** 库普 */
+	public static final int $2442 = 2442;
+	/** 刺客首领护卫 */
+	public static final int $2443 = 2443;
+	/** 罗吉 */
+	public static final int $2444 = 2444;
+	/** 刺客 */
+	public static final int $2445 = 2445;
+	/** 刺客首领 */
+	public static final int $2446 = 2446;
+	/** 凶猛的雪怪 */
+	public static final int $2447 = 2447;
+	/** 哈路 */
+	public static final int $2448 = 2448;
+	/** 双刀 */
+	public static final int $2449 = 2449;
+	/** 钢爪 */
+	public static final int $2450 = 2450;
+	/** 十字弓 */
+	public static final int $2451 = 2451;
+	/** 黑暗 */
+	public static final int $2452 = 2452;
+	/** 幽暗 */
+	public static final int $2453 = 2453;
+	/** 银光 */
+	public static final int $2454 = 2454;
+	/** 暗黑双刀 */
+	public static final int $2455 = 2455;
+	/** 暗黑钢爪 */
+	public static final int $2456 = 2456;
+	/** 暗黑十字弓 */
+	public static final int $2457 = 2457;
+	/** 青铜 */
+	public static final int $2458 = 2458;
+	/** 钢铁 */
+	public static final int $2459 = 2459;
+	/** 暗影 */
+	public static final int $2460 = 2460;
+	/** 短 */
+	public static final int $2461 = 2461;
+	/** 大马士革 */
+	public static final int $2462 = 2462;
+	/** 飞刀 */
+	public static final int $2463 = 2463;
+	/** 铁手甲 */
+	public static final int $2464 = 2464;
+	/** 斗篷 */
+	public static final int $2465 = 2465;
+	/** 披肩 */
+	public static final int $2466 = 2466;
+	/** 手套 */
+	public static final int $2467 = 2467;
+	/** 头饰 */
+	public static final int $2468 = 2468;
+	/** 长靴 */
+	public static final int $2469 = 2469;
+	/** 火属性 */
+	public static final int $2470 = 2470;
+	/** 水属性 */
+	public static final int $2471 = 2471;
+	/** 风属性 */
+	public static final int $2472 = 2472;
+	/** 地属性 */
+	public static final int $2473 = 2473;
+	/** 一级黑魔石 */
+	public static final int $2474 = 2474;
+	/** 二级黑魔石 */
+	public static final int $2475 = 2475;
+	/** 三级黑魔石 */
+	public static final int $2476 = 2476;
+	/** 四级黑魔石 */
+	public static final int $2477 = 2477;
+	/** 五级黑魔石 */
+	public static final int $2478 = 2478;
+	/** 黑魔石水晶 */
 	public static final int $2479 = 2479;
-	/**  */
+	/** 结晶 */
 	public static final int $2480 = 2480;
-	/**  */
+	/** 火精灵王 */
 	public static final int $2481 = 2481;
-	/**  */
+	/** 水精灵王 */
 	public static final int $2482 = 2482;
-	/**  */
+	/** 风精灵王 */
 	public static final int $2483 = 2483;
-	/**  */
+	/** 杀人蜂 */
 	public static final int $2484 = 2484;
-	/**  */
+	/** 闪电球 */
 	public static final int $2485 = 2485;
-	/**  */
+	/** 兔子 */
 	public static final int $2486 = 2486;
-	/**  */
+	/** 铠甲守护神 */
 	public static final int $2487 = 2487;
-	/**  */
+	/** 独角兽 */
 	public static final int $2488 = 2488;
-	/**  */
+	/** 鬼火 */
 	public static final int $2489 = 2489;
-	/**  */
+	/** 彷徨的 */
 	public static final int $2490 = 2490;
-	/**  */
+	/** 哈德斯提 */
 	public static final int $2491 = 2491;
-	/**  */
+	/** 雷亚斯 */
 	public static final int $2492 = 2492;
-	/**  */
+	/** 艾纳 */
 	public static final int $2493 = 2493;
-	/**  */
+	/** 史克瓦提 */
 	public static final int $2494 = 2494;
-	/**  */
+	/** 黑暗妖精巡守 */
 	public static final int $2495 = 2495;
-	/**  */
+	/** 卡连 */
 	public static final int $2496 = 2496;
-	/**  */
+	/** 艾德连 */
 	public static final int $2497 = 2497;
-	/**  */
+	/** 康的警卫 */
 	public static final int $2498 = 2498;
-	/**  */
+	/** 棕马 */
 	public static final int $2499 = 2499;
-	/**  */
+	/** 白马 */
 	public static final int $2500 = 2500;
-	/**  */
+	/** 伦得的刺客 */
 	public static final int $2501 = 2501;
-	/**  */
+	/** 布鲁迪卡的刺客 */
 	public static final int $2502 = 2502;
 	/** [黑暗妖精] */
 	public static final int $2503 = 2503;
