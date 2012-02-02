@@ -757,6 +757,42 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("withdrawnpc")) { // 领取宠物
 			pc.sendPackets(new S_PetList(objid, pc));
 		}
+		else if (s.equalsIgnoreCase("aggressive")) { // 攻击型态
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(1);
+			}
+		}
+		else if (s.equalsIgnoreCase("defensive")) { // 防御型态
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(2);
+			}
+		}
+		else if (s.equalsIgnoreCase("stay")) { // 休息
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(3);
+			}
+		}
+		else if (s.equalsIgnoreCase("extend")) { // 配备
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(4);
+			}
+		}
+		else if (s.equalsIgnoreCase("alert")) { // 警戒
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(5);
+			}
+		}
+		else if (s.equalsIgnoreCase("dismiss")) { // 解散
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(6);
+			}
+		}
 		else if (s.equalsIgnoreCase("changename")) { // 宠物改名
 			pc.setTempID(objid); // 暂时保存宠物的对象ID
 			pc.sendPackets(new S_Message_YN(325, "")); // 你想叫它什么名字？
@@ -1822,13 +1858,36 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 
-		// 查询最近的物价
-		else if (s.equalsIgnoreCase("pandora6" // 潘多拉
-				) || s.equalsIgnoreCase("cold6" // 库德
-				) || s.equalsIgnoreCase("balsim3" // 巴辛
-				) || s.equalsIgnoreCase("mellin3" // 梅林
-				) || s.equalsIgnoreCase("glen3" // 格林
-				)) {
+		// 查询最近的物价倍率
+		else if (s.equalsIgnoreCase("pandora6") // 潘朵拉(说话之岛 杂货商)
+				|| s.equalsIgnoreCase("cold6") // 库德(说话之岛 烟火商)
+				|| s.equalsIgnoreCase("balsim3") // 巴辛(说话之岛 妖魔商)
+				|| s.equalsIgnoreCase("arieh6") // 70015: 艾莉雅(肯特 烟火商)
+				|| s.equalsIgnoreCase("andyn3") // 70016: 安迪(肯特 武器商)
+				|| s.equalsIgnoreCase("ysorya3") // 70018: 索拉雅(肯特 杂货商)
+				|| s.equalsIgnoreCase("luth3") // 70021: 露西(古鲁丁 杂货商)
+				|| s.equalsIgnoreCase("catty3") // 70024: 凯蒂(古鲁丁 武器商)
+				|| s.equalsIgnoreCase("mayer3") // 70030: 迈尔(奇岩 杂货商)
+				|| s.equalsIgnoreCase("vergil3") // 70032: 范吉尔(奇岩 防具商)
+				|| s.equalsIgnoreCase("stella6") // 70036: 史堤拉(奇岩 烟火商)
+				|| s.equalsIgnoreCase("ralf6") // 70044: 瑞福(威顿 武器商)
+				|| s.equalsIgnoreCase("berry6") // 70045: 蓓莉(威顿 杂货商)
+				|| s.equalsIgnoreCase("jin6") // 70046: 珍(威顿 烟火商)
+				|| s.equalsIgnoreCase("defman3") // 70047: 戴夫曼(亚丁 武器商)
+				|| s.equalsIgnoreCase("mellisa3") // 70052: 马夏(亚丁 杂货商)
+				|| s.equalsIgnoreCase("mandra3") // 70061: 曼德拉(欧瑞 武器商)
+				|| s.equalsIgnoreCase("bius3") // 70063: 毕伍斯(欧瑞 杂货商)
+				|| s.equalsIgnoreCase("momo6") // 70069: 摩摩(风木 烟火商)
+				|| s.equalsIgnoreCase("ashurEv7") // 70071: 亚修(绿洲 杂货商)
+				|| s.equalsIgnoreCase("elmina3") // 70072: 艾米娜(风木 杂货商)
+				|| s.equalsIgnoreCase("glen3") // 70073: 格林(银骑士 武器商)
+				|| s.equalsIgnoreCase("mellin3") // 70074: 梅林(银骑士 杂货商)
+				|| s.equalsIgnoreCase("orcm6") // 70078: 欧肯(燃柳 烟火商)
+				|| s.equalsIgnoreCase("jackson3") // 70079: 杰克森(燃柳 杂货商)
+				|| s.equalsIgnoreCase("britt3") // 70082: 比特(海音 杂货商)
+				|| s.equalsIgnoreCase("old6") // 70085: 欧得(海音 烟火商)
+				|| s.equalsIgnoreCase("shivan3") // 70083: 须凡(海音 武器商)
+		) {
 			htmlid = s;
 			int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
 			int taxRatesCastle = L1CastleLocation.getCastleTaxRateByNpcId(npcid);
