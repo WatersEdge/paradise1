@@ -1050,8 +1050,8 @@ public class L1Attack {
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
 		}
 
-		// 雷雨之剑,(没有291武器编号) (极道落雷)
-		else if (_weaponId == 264 || _weaponId == 291) {
+		// 雷雨之剑,天雷剑 (极道落雷)
+		else if (_weaponId == 264 || _weaponId == 288) {
 			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
 		}
 
