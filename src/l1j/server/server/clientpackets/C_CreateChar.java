@@ -190,8 +190,14 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.setClanid(0);
 		pc.setClanRank(0);
 		pc.set_food(40);
-		pc.setAccessLevel((short) 0);
-		pc.setGm(false);
+		if (Config.NewCreateRoleSetGM) {
+			pc.setAccessLevel((short) 200);
+			pc.setGm(true);
+		}
+		else {
+			pc.setAccessLevel((short) 0);
+			pc.setGm(false);
+		}
 		pc.setMonitor(false);
 		pc.setGmInvis(false);
 		pc.setExp(0);

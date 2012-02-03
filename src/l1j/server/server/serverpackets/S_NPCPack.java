@@ -14,6 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
+import l1j.server.Config;
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.model.L1NpcTalkData;
@@ -52,7 +53,12 @@ public class S_NPCPack extends ServerBasePacket {
 		writeC(npc.getMoveSpeed());
 		writeExp(npc.getExp());
 		writeH(npc.getTempLawful());
-		writeS(npc.getNameId());
+		if (Config.ShowNpcId) {
+			writeS(npc.getNameId() + "[" + npc.getNpcId() + "]" + " \\f4面向[" + npc.getHeading() + "]" + " \\fA图形[" + npc.getGfxId() + "]");
+		}
+		else {
+			writeS(npc.getNameId());
+		}
 		if (npc instanceof L1FieldObjectInstance) { // SICの壁字、看板など
 			L1NpcTalkData talkdata = NPCTalkDataTable.getInstance().getTemplate(npc.getNpcTemplate().get_npcId());
 			if (talkdata != null) {
