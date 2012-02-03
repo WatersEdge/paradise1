@@ -475,6 +475,10 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	// 其他设置相关 /** OtherSettings Settings */
 	// -----------------------------------------------------------------------------
+	/** 是否新建角色即为GM */
+	public static boolean NewCreateRoleSetGM;
+	/** 是否显示NpcId */
+	public static boolean ShowNpcId;
 	/** 升级血魔满 */
 	public static boolean LvUpHpMpFull;
 	/** 伺服器重启时间 */
@@ -837,6 +841,8 @@ public final class Config {
 			otherSettings.load(is);
 			is.close();
 
+			NewCreateRoleSetGM = Boolean.parseBoolean(otherSettings.getProperty("NewCreateRoleSetGM", "false"));
+			ShowNpcId = Boolean.parseBoolean(otherSettings.getProperty("ShowNpcId", "false"));
 			LvUpHpMpFull = Boolean.parseBoolean(otherSettings.getProperty("LvUpHpMpFull", "false"));
 			REST_TIME = Integer.parseInt(otherSettings.getProperty("RestartTime", "240"));
 			HOURLY_CHIME = Boolean.parseBoolean(otherSettings.getProperty("HourlyChime", "false"));
