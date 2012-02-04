@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2011-12-19 ���� 06:32:27
+Date: 2012-2-4 21:44:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -589,16 +589,16 @@ INSERT INTO `spawnlist_door` VALUES ('4001', '帕古洞穴', '93', '32742', '328
 INSERT INTO `spawnlist_door` VALUES ('4002', '帕古洞穴', '93', '32742', '32809', '87', '0', '0', '0');
 INSERT INTO `spawnlist_door` VALUES ('4003', '帕古洞穴', '92', '32729', '32793', '87', '0', '0', '0');
 INSERT INTO `spawnlist_door` VALUES ('4004', '帕古洞穴', '92', '32725', '32793', '87', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5001', '水晶の洞窟1阶', '6640', '32859', '32835', '72', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5002', '水晶の洞窟2阶', '6640', '32862', '32764', '73', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5003', '水晶の洞窟2阶', '6640', '32845', '32809', '73', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5004', '水晶の洞窟2阶', '6642', '32825', '32862', '73', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5005', '水晶の洞窟2阶', '6642', '32767', '32837', '73', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5006', '水晶の洞窟2阶', '6642', '32752', '32753', '73', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5007', '水晶の洞窟3阶', '6640', '32784', '32818', '74', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5008', '水晶の洞窟3阶', '6640', '32852', '32806', '74', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5009', '水晶の洞窟3阶', '6640', '32822', '32855', '74', '0', '0', '0');
-INSERT INTO `spawnlist_door` VALUES ('5010', '水晶の洞窟3阶', '6642', '32762', '32916', '74', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5001', '水晶洞穴1阶', '6640', '32859', '32835', '72', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5002', '水晶洞穴2阶', '6640', '32862', '32764', '73', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5003', '水晶洞穴2阶', '6640', '32845', '32809', '73', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5004', '水晶洞穴2阶', '6642', '32825', '32862', '73', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5005', '水晶洞穴2阶', '6642', '32767', '32837', '73', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5006', '水晶洞穴2阶', '6642', '32752', '32753', '73', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5007', '水晶洞穴3阶', '6640', '32784', '32818', '74', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5008', '水晶洞穴3阶', '6640', '32852', '32806', '74', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5009', '水晶洞穴3阶', '6640', '32822', '32855', '74', '0', '0', '0');
+INSERT INTO `spawnlist_door` VALUES ('5010', '水晶洞穴3阶', '6642', '32762', '32916', '74', '0', '0', '0');
 INSERT INTO `spawnlist_door` VALUES ('6001', '冒险洞窟2楼', '92', '32664', '32807', '2', '0', '0', '1');
 INSERT INTO `spawnlist_door` VALUES ('6002', '冒险洞窟2楼', '93', '32673', '32820', '2', '0', '0', '1');
 INSERT INTO `spawnlist_door` VALUES ('6003', '冒险洞窟2楼', '92', '32668', '32833', '2', '0', '0', '1');
