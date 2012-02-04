@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: l1jdb
 Target Host: localhost
 Target Database: l1jdb
-Date: 2011-12-19 ÏÂÎç 06:31:12
+Date: 2012-2-4 17:27:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,10 +23,6 @@ CREATE TABLE `npcaction` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `npcaction` VALUES ('782', 'fivelviin3', 'fivelviin3', '', '');
-INSERT INTO `npcaction` VALUES ('1621', 'fivelviin2', 'fivelviin2', '', '');
-INSERT INTO `npcaction` VALUES ('2255', 'fivelviin1', 'fivelviin1', '', '');
-INSERT INTO `npcaction` VALUES ('2820', 'fivelviin4', 'fivelviin4', '', '');
 INSERT INTO `npcaction` VALUES ('45015', 'duck1', 'duck1', '', '');
 INSERT INTO `npcaction` VALUES ('45154', 'mermaid', 'mermaid', '', '');
 INSERT INTO `npcaction` VALUES ('46069', 'minicod1', 'minicod1', '', '');
