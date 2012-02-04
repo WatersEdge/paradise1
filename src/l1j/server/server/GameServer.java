@@ -93,6 +93,8 @@ public class GameServer extends Thread {
 
 	private ServerSocket _serverSocket;
 
+	private static int YesNoCount = 0;
+
 	private int _port;
 	// private Logins _logins;
 	private LoginController _loginController;
@@ -394,5 +396,15 @@ public class GameServer extends Thread {
 
 		_shutdownThread.interrupt();
 		_shutdownThread = null;
+	}
+
+	/**
+	 * 取得世界中发送YesNo总次数
+	 * 
+	 * @return YesNo总次数
+	 */
+	public static int getYesNoCount() {
+		YesNoCount += 1;
+		return YesNoCount;
 	}
 }
