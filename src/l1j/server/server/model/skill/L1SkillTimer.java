@@ -651,7 +651,7 @@ class L1SkillStop {
 		else if (skillId == EFFECT_HELMET_OF_MAGIC_PUMPKIN) {
 			L1PcInstance pc = (L1PcInstance) cha;
 			if (cha instanceof L1PcInstance) {
-				L1ItemInstance item = ItemTable.getInstance().createItem(400000); // 万圣节南瓜派
+				L1ItemInstance item = ItemTable.getInstance().createItem(50000); // 万圣节南瓜派
 				item.setCount(1); // 一次给予的数量
 				if (item != null) {
 					if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
