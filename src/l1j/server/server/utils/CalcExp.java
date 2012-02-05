@@ -448,28 +448,28 @@ public class CalcExp {
 		}
 
 		// 1.25倍经验肩章
-		if ((pc.getInventory().checkEquipped(200036)) // [1小时]
-				|| (pc.getInventory().checkEquipped(200037)) // [3小时]
-				|| (pc.getInventory().checkEquipped(200038)) // [12小时]
-				|| (pc.getInventory().checkEquipped(200039)) // [24小时]
+		if ((pc.getInventory().checkEquipped(22101)) // [1小时]
+				|| (pc.getInventory().checkEquipped(22102)) // [3小时]
+				|| (pc.getInventory().checkEquipped(22103)) // [12小时]
+				|| (pc.getInventory().checkEquipped(22104)) // [24小时]
 		) {
 			tattoo = 1.25;
 		}
 
 		// 1.5倍经验肩章
-		if ((pc.getInventory().checkEquipped(200040)) // [1小时]
-				|| (pc.getInventory().checkEquipped(200041)) // [3小时]
-				|| (pc.getInventory().checkEquipped(200042)) // [12小时]
-				|| (pc.getInventory().checkEquipped(200043)) // [24小时]
+		if ((pc.getInventory().checkEquipped(22105)) // [1小时]
+				|| (pc.getInventory().checkEquipped(22106)) // [3小时]
+				|| (pc.getInventory().checkEquipped(22107)) // [12小时]
+				|| (pc.getInventory().checkEquipped(22108)) // [24小时]
 		) {
 			tattoo = 1.50;
 		}
 
 		// 1.75倍经验肩章
-		if ((pc.getInventory().checkEquipped(200044)) // [1小时]
-				|| (pc.getInventory().checkEquipped(200045)) // [3小时]
-				|| (pc.getInventory().checkEquipped(200046)) // [12小时]
-				|| (pc.getInventory().checkEquipped(200047)) // [24小时]
+		if ((pc.getInventory().checkEquipped(22109)) // [1小时]
+				|| (pc.getInventory().checkEquipped(22110)) // [3小时]
+				|| (pc.getInventory().checkEquipped(22111)) // [12小时]
+				|| (pc.getInventory().checkEquipped(22112)) // [24小时]
 		) {
 			tattoo = 1.75;
 		}
