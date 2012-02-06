@@ -192,6 +192,14 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				break;
 
+			case 16: // 变形卷轴
+				if (isClass) {
+					final String cmd = this.readS();
+					pc.setText(cmd);// 选取的变身命令
+					ItemClass.getInstance().item(null, pc, useItem);
+				}
+				break;
+
 			default: // 检测
 				_log.info("未处理的道具类型: " + use_type);
 				break;

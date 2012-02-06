@@ -5362,6 +5362,29 @@ public class L1PcInstance extends L1Character {
 		return _partyType;
 	}
 
+	/**
+	 * 暂存字符串
+	 */
+	private String _text;
+
+	/**
+	 * 设置暂存字符串(收件者)
+	 * 
+	 * @param text
+	 */
+	public void setText(final String text) {
+		this._text = text;
+	}
+
+	/**
+	 * 取得暂存字符串(收件者)
+	 * 
+	 * @return
+	 */
+	public String getText() {
+		return this._text;
+	}
+
 	/****************************** 战斗特化系统 ******************************/
 	// 改变战斗特化状态
 	public void changeFightType(int oldType, int newType) {
