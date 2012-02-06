@@ -1,4 +1,4 @@
-package lineage.item.etcitem.scroll;
+package lineage.item.etcitem.poly;
 
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
@@ -19,13 +19,13 @@ import lineage.console.executor.ItemExecutor;
  * 
  * @author jrwz
  */
-public class Poly extends ItemExecutor {
+public class PolyScroll extends ItemExecutor {
 
-	private Poly() {
+	private PolyScroll() {
 	}
 
 	public static ItemExecutor get() {
-		return new Poly();
+		return new PolyScroll();
 	}
 
 	/**
