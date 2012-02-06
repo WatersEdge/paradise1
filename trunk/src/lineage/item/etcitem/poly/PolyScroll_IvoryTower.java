@@ -6,17 +6,17 @@ import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 象牙塔变形卷轴 - 40096
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class PolyScroll_IvoryTower extends ItemExecutor {
 
-	private PolyScroll() {
+	private PolyScroll_IvoryTower() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new PolyScroll_IvoryTower();
 	}
 
 	/**

@@ -6,33 +6,33 @@ import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 暗之鳞 - 41154
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class PolyScale_Dark extends ItemExecutor {
 
-	private PolyScroll() {
+	private PolyScale_Dark() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new PolyScale_Dark();
 	}
 
 	/**
-	 * 道具执行
+	 * 道具物件执行
 	 * 
 	 * @param data
 	 *            参数
 	 * @param pc
-	 *            对象
+	 *            执行者
 	 * @param item
-	 *            道具
+	 *            物件
 	 */
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, 1800);
+		// 变身时间 (秒)与变身编号
+		Factory.getPoly().usePolyScale(pc, item, 900, 3101);
 	}
 }

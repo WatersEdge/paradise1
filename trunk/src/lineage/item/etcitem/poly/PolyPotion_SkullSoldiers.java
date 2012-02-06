@@ -6,17 +6,17 @@ import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 海贼骷髅士兵变身药水 - 41144
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class PolyPotion_SkullSoldiers extends ItemExecutor {
 
-	private PolyScroll() {
+	private PolyPotion_SkullSoldiers() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new PolyPotion_SkullSoldiers();
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class PolyScroll extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, 1800);
+		// 变身时间 (秒)与变身编号
+		Factory.getPoly().usePolyPotion(pc, item, 900, 6087);
 	}
 }

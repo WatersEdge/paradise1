@@ -138,71 +138,74 @@ public class C_ItemUSe extends ClientBasePacket {
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
 
-			case -4: // 加速类道具 (绿色药水)
-			case -3: // 回魔类道具 (蓝色药水)
-			case -2: // 加血类道具 (治愈药水)
-				if (!CheckUtil.checkUsePotion(client)) {
-					return;
-				}
-				if (isClass) {
-					ItemClass.getInstance().item(null, pc, useItem);
-				}
-				break;
+				case -4: // 加速类道具 (绿色药水)
+				case -3: // 回魔类道具 (蓝色药水)
+				case -2: // 加血类道具 (治愈药水)
+					if (!CheckUtil.checkUsePotion(client)) {
+						return;
+					}
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
 
-			case -1: // 无法使用 (材料等)
-				pc.sendPackets(new S_ServerMessage(74, useItem.getLogName())); // \f1%0%o 无法使用。
-				break;
+				case -1: // 无法使用 (材料等)
+					pc.sendPackets(new S_ServerMessage(74, useItem.getLogName())); // \f1%0%o 无法使用。
+					break;
 
-			case 0: // 一般类道具
-				if (isClass) {
-					ItemClass.getInstance().item(null, pc, useItem);
-				}
-				break;
+				case 0: // 一般类道具
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
 
-			case 1: // 武器
-					// 武器禁止使用
-				if (pc.hasItemDelay(L1ItemDelay.WEAPON) == true) {
-					return;
-				}
-				if (CheckUtil.checkEquipped(pc, useItem)) {
-					CheckUtil.useWeapon(pc, useItem);
-				}
-				break;
+				case 1: // 武器
+						// 武器禁止使用
+					if (pc.hasItemDelay(L1ItemDelay.WEAPON) == true) {
+						return;
+					}
+					if (CheckUtil.checkEquipped(pc, useItem)) {
+						CheckUtil.useWeapon(pc, useItem);
+					}
+					break;
 
-			case 2: // 盔甲
-			case 18: // T恤
-			case 19: // 斗篷
-			case 20: // 手套
-			case 21: // 长靴
-			case 22: // 头盔
-			case 23: // 戒指
-			case 24: // 项链
-			case 25: // 盾牌
-			case 37: // 腰带
-			case 40: // 耳环
-			case 43: // 辅助装备 (右)
-			case 44: // 辅助装备 (左)
-			case 45: // 辅助装备 (中)
-				// 防具禁止使用
-				if (pc.hasItemDelay(L1ItemDelay.ARMOR) == true) {
-					return;
-				}
-				if (CheckUtil.checkEquipped(pc, useItem)) {
-					CheckUtil.useArmor(pc, useItem);
-				}
-				break;
+				case 2: // 盔甲
+				case 18: // T恤
+				case 19: // 斗篷
+				case 20: // 手套
+				case 21: // 长靴
+				case 22: // 头盔
+				case 23: // 戒指
+				case 24: // 项链
+				case 25: // 盾牌
+				case 37: // 腰带
+				case 40: // 耳环
+				case 43: // 辅助装备 (右)
+				case 44: // 辅助装备 (左)
+				case 45: // 辅助装备 (中)
+					// 防具禁止使用
+					if (pc.hasItemDelay(L1ItemDelay.ARMOR) == true) {
+						return;
+					}
+					if (CheckUtil.checkEquipped(pc, useItem)) {
+						CheckUtil.useArmor(pc, useItem);
+					}
+					break;
 
-			case 16: // 变形卷轴
-				if (isClass) {
-					final String cmd = this.readS();
-					pc.setText(cmd);// 选取的变身命令
-					ItemClass.getInstance().item(null, pc, useItem);
-				}
-				break;
+				case 16: // 变形卷轴
+					if (!CheckUtil.checkPoly(pc)) {
+						return;
+					}
+					if (isClass) {
+						final String cmd = this.readS();
+						pc.setText(cmd);// 选取的变身命令
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
 
-			default: // 检测
-				_log.info("未处理的道具类型: " + use_type);
-				break;
+				default: // 检测
+					_log.info("未处理的道具类型: " + use_type);
+					break;
 			}
 
 			// 道具类 (L1EtcItem)

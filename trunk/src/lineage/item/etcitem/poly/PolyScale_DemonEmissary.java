@@ -6,33 +6,33 @@ import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 妖魔密使变形卷轴 - 49220
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class PolyScale_DemonEmissary extends ItemExecutor {
 
-	private PolyScroll() {
+	private PolyScale_DemonEmissary() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new PolyScale_DemonEmissary();
 	}
 
 	/**
-	 * 道具执行
+	 * 道具物件执行
 	 * 
 	 * @param data
 	 *            参数
 	 * @param pc
-	 *            对象
+	 *            执行者
 	 * @param item
-	 *            道具
+	 *            物件
 	 */
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, 1800);
+		// 变身时间 (秒)与变身编号
+		Factory.getPoly().usePolyScale(pc, item, 1200, 6984);
 	}
 }

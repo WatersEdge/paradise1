@@ -1,5 +1,8 @@
 package lineage.console.utils;
 
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_ANTHARAS;
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
 import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
 import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
@@ -98,6 +101,25 @@ public class CheckUtil {
 		// 药水霜化术状态
 		if (pc.hasSkillEffect(DECAY_POTION)) {
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * 检查能否变身
+	 * 
+	 * @param pc
+	 *            对象
+	 * @return 如果可用、true
+	 */
+	public static boolean checkPoly(final L1PcInstance pc) {
+
+		// 取回觉醒技能ID
+		final int awakeSkillId = pc.getAwakeSkillId();
+		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return false;
 		}
 
