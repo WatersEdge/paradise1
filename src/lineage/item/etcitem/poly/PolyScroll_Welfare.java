@@ -2,21 +2,22 @@ package lineage.item.etcitem.poly;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.utils.Random;
 import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 福利变形药水 - 49308
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class PolyScroll_Welfare extends ItemExecutor {
 
-	private PolyScroll() {
+	private PolyScroll_Welfare() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new PolyScroll_Welfare();
 	}
 
 	/**
@@ -32,7 +33,11 @@ public class PolyScroll extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
+		// 变身时间随机
+		int time = 0;
+		time = Random.nextInt(2401, 4800);
+
 		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, 1800);
+		Factory.getPoly().usePolyScroll(pc, item, time);
 	}
 }

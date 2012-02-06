@@ -6,17 +6,17 @@ import lineage.console.Factory;
 import lineage.console.executor.ItemExecutor;
 
 /**
- * 变形卷轴 - 40088
+ * 受祝福的 变形卷轴 - 140088
  * 
  * @author jrwz
  */
-public class PolyScroll extends ItemExecutor {
+public class B_PolyScroll extends ItemExecutor {
 
-	private PolyScroll() {
+	private B_PolyScroll() {
 	}
 
 	public static ItemExecutor get() {
-		return new PolyScroll();
+		return new B_PolyScroll();
 	}
 
 	/**
@@ -33,6 +33,6 @@ public class PolyScroll extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, 1800);
+		Factory.getPoly().usePolyScroll(pc, item, 2100);
 	}
 }
