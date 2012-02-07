@@ -108,6 +108,24 @@ public class CheckUtil {
 	}
 
 	/**
+	 * 检查能否使用道具(药水霜化术状态下)
+	 * 
+	 * @param pc
+	 *            检查对象
+	 * @return 如果可用、true
+	 */
+	public static boolean checkUseItemByDecay(final L1PcInstance pc) {
+
+		// 药水霜化术状态
+		if (pc.hasSkillEffect(DECAY_POTION)) {
+			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * 检查能否变身
 	 * 
 	 * @param pc

@@ -5385,127 +5385,155 @@ public class L1PcInstance extends L1Character {
 		return this._text;
 	}
 
+	/**
+	 * 产生新道具
+	 * 
+	 * @param pc
+	 *            对象
+	 * @param item_id
+	 *            道具ID
+	 * @param count
+	 *            道具数量
+	 */
+	public boolean createNewItem(L1PcInstance pc, int item_id, int count) {
+		L1ItemInstance item = ItemTable.getInstance().createItem(item_id);
+		if (item != null) {
+			item.setCount(count);
+			if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
+				pc.getInventory().storeItem(item);
+			}
+			else { // 背包道具满掉落地面（不正防止）
+				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
+			}
+			pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	/****************************** 战斗特化系统 ******************************/
 	// 改变战斗特化状态
 	public void changeFightType(int oldType, int newType) {
 		// 消除既有的战斗特化状态
 		switch (oldType) {
-		case 1:
-			addAc(2);
-			addMr(-3);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
-			break;
+			case 1:
+				addAc(2);
+				addMr(-3);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
+				break;
 
-		case 2:
-			addAc(4);
-			addMr(-6);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
-			break;
+			case 2:
+				addAc(4);
+				addMr(-6);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
+				break;
 
-		case 3:
-			addAc(6);
-			addMr(-9);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
-			break;
+			case 3:
+				addAc(6);
+				addMr(-9);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
+				break;
 
-		case -1:
-			addDmgup(-1);
-			addBowDmgup(-1);
-			addSp(-1);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
-			break;
+			case -1:
+				addDmgup(-1);
+				addBowDmgup(-1);
+				addSp(-1);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
+				break;
 
-		case -2:
-			addDmgup(-3);
-			addBowDmgup(-3);
-			addSp(-2);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
-			break;
+			case -2:
+				addDmgup(-3);
+				addBowDmgup(-3);
+				addSp(-2);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
+				break;
 
-		case -3:
-			addDmgup(-5);
-			addBowDmgup(-5);
-			addSp(-3);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
-			break;
+			case -3:
+				addDmgup(-5);
+				addBowDmgup(-5);
+				addSp(-3);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
+				break;
 		}
 
 		// 增加新的战斗特化状态
 		switch (newType) {
-		case 1:
-			addAc(-2);
-			addMr(3);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
-			break;
+			case 1:
+				addAc(-2);
+				addMr(3);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
+				break;
 
-		case 2:
-			addAc(-4);
-			addMr(6);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
-			break;
+			case 2:
+				addAc(-4);
+				addMr(6);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
+				break;
 
-		case 3:
-			addAc(-6);
-			addMr(9);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
-			break;
+			case 3:
+				addAc(-6);
+				addMr(9);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
+				break;
 
-		case -1:
-			addDmgup(1);
-			addBowDmgup(1);
-			addSp(1);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
-			break;
+			case -1:
+				addDmgup(1);
+				addBowDmgup(1);
+				addSp(1);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
+				break;
 
-		case -2:
-			addDmgup(3);
-			addBowDmgup(3);
-			addSp(2);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
-			break;
+			case -2:
+				addDmgup(3);
+				addBowDmgup(3);
+				addSp(2);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
+				break;
 
-		case -3:
-			addDmgup(5);
-			addBowDmgup(5);
-			addSp(3);
-			sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-			sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-			sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-			sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
-			break;
+			case -3:
+				addDmgup(5);
+				addBowDmgup(5);
+				addSp(3);
+				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
+				break;
 		}
 	}
 
