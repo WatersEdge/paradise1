@@ -138,6 +138,12 @@ public class C_ItemUSe extends ClientBasePacket {
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
 
+				case -5: // 其他类道具
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
+
 				case -4: // 加速类道具 (绿色药水)
 				case -3: // 回魔类道具 (蓝色药水)
 				case -2: // 加血类道具 (治愈药水)
@@ -192,13 +198,21 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 14: // 请选择一个物品 (道具栏位) 灯油/磨刀石/胶水/龙之魔眼等
+					if (isClass) {
+						final int[] newData = new int[1];
+						newData[0] = this.readD(); // 选取物件的OBJID
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case 16: // 变形卷轴
 					if (!CheckUtil.checkPoly(pc)) {
 						return;
 					}
 					if (isClass) {
 						final String cmd = this.readS();
-						pc.setText(cmd);// 选取的变身命令
+						pc.setText(cmd); // 选取的变身命令
 						ItemClass.getInstance().item(null, pc, useItem);
 					}
 					break;
