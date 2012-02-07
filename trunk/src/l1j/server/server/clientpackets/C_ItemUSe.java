@@ -198,6 +198,14 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 7: // 鉴定卷轴
+					if (isClass) {
+						final int[] newData = new int[1];
+						newData[0] = this.readD(); // 选取物件的OBJID
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case 14: // 请选择一个物品 (道具栏位) 灯油/磨刀石/胶水/龙之魔眼等
 					if (isClass) {
 						final int[] newData = new int[1];
