@@ -22,6 +22,7 @@ import l1j.server.server.model.L1ItemDelay;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1EtcItem;
@@ -237,9 +238,94 @@ public class C_ItemUSe extends ClientBasePacket {
 				final int itemId = useItem.getItem().getItemId();
 
 				switch (itemId) {
-				/*
-				 * case 40024: // 古代终极体力恢复剂 Potion.UseHeallingPotion(pc, UseItem, 55, 197); return;
-				 */
+					/*
+					 * case 40024: // 古代终极体力恢复剂 Potion.UseHeallingPotion(pc, UseItem, 55, 197); return;
+					 */
+					// 1 ~ 4 阶附魔石(近战)(远攻)(恢复)(防御)
+					case 47064:
+					case 47065:
+					case 47066:
+					case 47067:
+					case 47074:
+					case 47075:
+					case 47076:
+					case 47077:
+					case 47084:
+					case 47085:
+					case 47086:
+					case 47087:
+					case 47094:
+					case 47095:
+					case 47096:
+					case 47097:
+						if (pc.getInventory().consumeItem(41246, 30)) {
+							Effect.useEffectItem(pc, useItem);
+						}
+						else {
+							isDelayEffect = false;
+							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+						}
+						break;
+
+					// 5 ~ 6阶附魔石(近战)(远攻)(恢复)(防御)
+					case 47068:
+					case 47069:
+					case 47078:
+					case 47079:
+					case 47088:
+					case 47089:
+					case 47098:
+					case 47099:
+						if (pc.getInventory().consumeItem(41246, 60)) {
+							Effect.useEffectItem(pc, useItem);
+						}
+						else {
+							isDelayEffect = false;
+							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+						}
+						break;
+
+					// 7阶附魔石(近战)(远攻)(恢复)(防御)
+					case 47070:
+					case 47080:
+					case 47090:
+					case 47100:
+						if (pc.getInventory().consumeItem(41246, 100)) {
+							Effect.useEffectItem(pc, useItem);
+						}
+						else {
+							isDelayEffect = false;
+							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+						}
+						break;
+
+					// 8阶附魔石(近战)(远攻)(恢复)(防御)
+					case 47071:
+					case 47081:
+					case 47091:
+					case 47101:
+						if (pc.getInventory().consumeItem(41246, 200)) {
+							Effect.useEffectItem(pc, useItem);
+						}
+						else {
+							isDelayEffect = false;
+							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+						}
+						break;
+
+					// 9阶附魔石(近战)(远攻)(恢复)(防御)
+					case 47072:
+					case 47082:
+					case 47092:
+					case 47102:
+						if (pc.getInventory().consumeItem(41246, 300)) {
+							Effect.useEffectItem(pc, useItem);
+						}
+						else {
+							isDelayEffect = false;
+							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+						}
+						break;
 				}
 			}
 
