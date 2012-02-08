@@ -225,6 +225,16 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 17: // 选取目标 地面 (近距离)
+					if (isClass) {
+						final int[] newData = new int[3];
+						newData[0] = this.readD(); // 选取目标的OBJID
+						newData[1] = this.readH(); // X坐标
+						newData[2] = this.readH(); // Y坐标
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case 16: // 变形卷轴
 					if (!CheckUtil.checkPoly(pc)) {
 						return;
