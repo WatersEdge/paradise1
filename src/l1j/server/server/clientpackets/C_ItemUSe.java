@@ -225,13 +225,9 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
-				case 17: // 选取目标 地面 (近距离)
+				case 15:// 哨子
 					if (isClass) {
-						final int[] newData = new int[3];
-						newData[0] = this.readD(); // 选取目标的OBJID
-						newData[1] = this.readH(); // X坐标
-						newData[2] = this.readH(); // Y坐标
-						ItemClass.getInstance().item(newData, pc, useItem);
+						ItemClass.getInstance().item(null, pc, useItem);
 					}
 					break;
 
@@ -243,6 +239,16 @@ public class C_ItemUSe extends ClientBasePacket {
 						final String cmd = this.readS();
 						pc.setText(cmd); // 选取的变身命令
 						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
+
+				case 17: // 选取目标 地面 (近距离)
+					if (isClass) {
+						final int[] newData = new int[3];
+						newData[0] = this.readD(); // 选取目标的OBJID
+						newData[1] = this.readH(); // X坐标
+						newData[2] = this.readH(); // Y坐标
+						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
 
