@@ -236,6 +236,15 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 26: // 对武器施法的卷轴
+				case 27: // 对盔甲施法的卷轴
+					if (isClass) {
+						final int[] newData = new int[1];
+						newData[0] = this.readD(); // 选取物件的OBJID
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case 28: // 空的魔法卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
