@@ -139,6 +139,12 @@ public class C_ItemUSe extends ClientBasePacket {
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
 
+				case -6: // 技能书
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
+
 				case -5: // 其他类道具
 					if (isClass) {
 						ItemClass.getInstance().item(null, pc, useItem);

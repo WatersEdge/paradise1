@@ -2,8 +2,10 @@ package lineage.console;
 
 import lineage.console.connector.ConnectorPoly;
 import lineage.console.connector.ConnectorPotion;
+import lineage.console.connector.ConnectorSpellBook;
 import lineage.console.connector.cite.CiteConnectorPoly;
 import lineage.console.connector.cite.CiteConnectorPotion;
+import lineage.console.connector.cite.CiteConnectorSpellBook;
 
 /**
  * 类工厂
@@ -24,5 +26,12 @@ public class Factory {
 	 */
 	public final static ConnectorPoly getPoly() {
 		return new CiteConnectorPoly();
+	}
+
+	/**
+	 * 取得技能书类
+	 */
+	public final static ConnectorSpellBook getSpellBook() {
+		return new CiteConnectorSpellBook();
 	}
 }
