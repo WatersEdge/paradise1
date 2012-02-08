@@ -234,6 +234,14 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 30: // 选取目标 (对NPC需要Ctrl 远距离 无XY坐标传回)
+					if (isClass) {
+						final int obj = this.readD(); // 选取目标的OBJID
+						final int[] newData = new int[] { obj };
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				default: // 检测
 					_log.info("未处理的道具类型: " + use_type);
 					break;
