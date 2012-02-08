@@ -226,6 +226,14 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 28: // 空的魔法卷轴
+					if (isClass) {
+						final int[] newData = new int[1];
+						newData[0] = this.readC();
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				default: // 检测
 					_log.info("未处理的道具类型: " + use_type);
 					break;
