@@ -215,6 +215,16 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 6: // 瞬间移动卷轴
+				case 29: // 瞬间移动卷轴(祝福)
+					if (isClass) {
+						final int[] newData = new int[2];
+						newData[1] = this.readH(); // 所在地图编号
+						newData[0] = this.readD(); // 选取目标的OBJID
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case 7: // 鉴定卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
