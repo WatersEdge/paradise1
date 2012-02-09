@@ -301,6 +301,15 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 42: // 钓鱼杆 (魔法钓竿)
+					if (isClass) {
+						final int[] newData = new int[3];
+						newData[0] = this.readH(); // X坐标
+						newData[1] = this.readH(); // Y坐标
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				default: // 检测
 					_log.info("未处理的道具类型: " + use_type);
 					break;
