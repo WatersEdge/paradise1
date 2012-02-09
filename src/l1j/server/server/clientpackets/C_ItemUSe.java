@@ -139,6 +139,15 @@ public class C_ItemUSe extends ClientBasePacket {
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
 
+				case -7: // 料理书
+					if (isClass) {
+						final int[] newData = new int[2];
+						newData[0] = this.readC();
+						newData[1] = this.readC();
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
 				case -6: // 技能书
 					if (isClass) {
 						ItemClass.getInstance().item(null, pc, useItem);

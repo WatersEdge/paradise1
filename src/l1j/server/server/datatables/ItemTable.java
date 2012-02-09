@@ -90,6 +90,7 @@ public class ItemTable {
 		_etcItemTypes.put("magic_doll", new Integer(17)); // 魔法娃娃
 
 		// 道具使用类型
+		_useTypes.put("cooking_books", new Integer(-7)); // 料理书
 		_useTypes.put("spellbook", new Integer(-6)); // 技能书
 		_useTypes.put("other", new Integer(-5)); // 其他类道具
 		_useTypes.put("green", new Integer(-4)); // 加速类道具 (绿色药水)
