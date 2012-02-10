@@ -166,6 +166,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case -9: // 状态药水
 				case -4: // 加速类道具 (绿色药水)
 				case -3: // 回魔类道具 (蓝色药水)
 				case -2: // 加血类道具 (治愈药水)
