@@ -22,6 +22,7 @@ import l1j.server.server.model.L1ItemDelay;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
@@ -368,6 +369,51 @@ public class C_ItemUSe extends ClientBasePacket {
 
 					// 取得道具ID
 					final int itemId = useItem.getItem().getItemId();
+
+					// 取得物品类型
+					final int etcitem_type = useItem.getItem().getType();
+
+					switch (etcitem_type) {
+
+						case 0: // 箭
+							pc.getInventory().setArrow(useItem.getItem().getItemId());
+							pc.sendPackets(new S_ServerMessage(452, useItem.getLogName())); // %0%s 被选择了。
+							break;
+
+						case 15: // 飞刀
+							pc.getInventory().setSting(useItem.getItem().getItemId());
+							pc.sendPackets(new S_ServerMessage(452, useItem.getLogName())); // %0%s 被选择了。
+							break;
+
+						case 16: // treasure_box (宝箱类)
+							final L1TreasureBox box = L1TreasureBox.get(itemId);
+							if (box != null) {
+								if (box.open(pc)) {
+									final L1EtcItem temp = (L1EtcItem) useItem.getItem();
+									if (temp.get_delayEffect() > 0) {
+										// 有限制再次使用的时间且可堆叠的道具
+										if (useItem.isStackable()) {
+											if (useItem.getCount() > 1) {
+												isDelayEffect = true;
+											}
+											pc.getInventory().removeItem(useItem.getId(), 1);
+										}
+										else {
+											isDelayEffect = true;
+										}
+									}
+									else {
+										pc.getInventory().removeItem(useItem.getId(), 1);
+									}
+								}
+							}
+							break;
+
+						default: // 检测
+							// _log.info("未处理的道具类型: " + use_type);
+							break;
+					}
+
 					switch (itemId) {
 						/*
 						 * case 40024: // 古代终极体力恢复剂 Potion.UseHeallingPotion(pc, UseItem, 55, 197); return;
@@ -455,6 +501,24 @@ public class C_ItemUSe extends ClientBasePacket {
 							else {
 								isDelayEffect = false;
 								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
+
+						case 40576: // 灵魂水晶（白）
+							if (!pc.isElf()) {
+								pc.sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此道具。
+							}
+							break;
+
+						case 40577: // 灵魂水晶（黒）
+							if (!pc.isWizard()) {
+								pc.sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此道具。
+							}
+							break;
+
+						case 40578: // 灵魂水晶（赤）
+							if (!pc.isKnight()) {
+								pc.sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此道具。
 							}
 							break;
 					}
