@@ -20,6 +20,7 @@ import java.util.Calendar;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1ItemDelay;
 import l1j.server.server.model.L1PcInventory;
+import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.item.L1TreasureBox;
@@ -521,10 +522,32 @@ public class C_ItemUSe extends ClientBasePacket {
 								pc.sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此道具。
 							}
 							break;
+
+						default: // 检测
+
+							final int locX = ((L1EtcItem) useItem.getItem()).get_locx();
+							final int locY = ((L1EtcItem) useItem.getItem()).get_locy();
+							final short mapId = ((L1EtcItem) useItem.getItem()).get_mapid();
+
+							// 各种传送卷轴
+							if ((locX != 0) && (locY != 0)) {
+								if (!(itemId >= 40289 && itemId <= 40297)) {
+									if (pc.getMap().isEscapable() || pc.isGm()) {
+										L1Teleport.teleport(pc, locX, locY, mapId, pc.getHeading(), true);
+										pc.getInventory().removeItem(useItem, 1);
+									}
+									else {
+										pc.sendPackets(new S_ServerMessage(647)); // 这附近的能量影响到瞬间移动。在此地无法使用瞬间移动。
+									}
+								}
+							}
+							// _log.info("未处理的道具类型: " + use_type);
+							break;
 					}
 					break;
 
 				default: // 检测
+
 					// _log.info("未处理的道具类型: " + use_type);
 					break;
 			}
