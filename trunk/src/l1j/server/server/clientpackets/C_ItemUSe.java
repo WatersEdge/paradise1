@@ -294,6 +294,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 				case 26: // 对武器施法的卷轴
 				case 27: // 对盔甲施法的卷轴
+				case 46: // 饰品强化卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
 						newData[0] = this.readD(); // 选取物件的OBJID

@@ -112,14 +112,14 @@ public class Enchant {
 				FailureEnchant(pc, l1iteminstance1);
 			}
 			else {
-				SuccessEnchant(pc, l1iteminstance1, client, -1);
+				SuccessEnchant(pc, l1iteminstance1, -1);
 			}
 		}
 
 		// 强化等级小于安定值
 		else if (enchant_level < safe_enchant) {
 			pc.getInventory().removeItem(l1iteminstance, 1);
-			SuccessEnchant(pc, l1iteminstance1, client, RandomELevel(l1iteminstance1, itemId));
+			SuccessEnchant(pc, l1iteminstance1, RandomELevel(l1iteminstance1, itemId));
 		}
 		else {
 			pc.getInventory().removeItem(l1iteminstance, 1);
@@ -135,7 +135,7 @@ public class Enchant {
 
 			if (rnd < enchant_chance_wepon) {
 				int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
-				SuccessEnchant(pc, l1iteminstance1, client, randomEnchantLevel);
+				SuccessEnchant(pc, l1iteminstance1, randomEnchantLevel);
 			}
 			else if ((enchant_level >= 9) && (rnd < (enchant_chance_wepon * 2))) {
 				// \f1%0%s 持续发出 产生激烈的 蓝色的 光芒，但是没有任何事情发生。
@@ -208,14 +208,14 @@ public class Enchant {
 				FailureEnchant(pc, l1iteminstance1);
 			}
 			else {
-				SuccessEnchant(pc, l1iteminstance1, client, -1);
+				SuccessEnchant(pc, l1iteminstance1, -1);
 			}
 		}
 
 		// 强化等级小于安定值
 		else if (enchant_level < safe_enchant) {
 			pc.getInventory().removeItem(l1iteminstance, 1);
-			SuccessEnchant(pc, l1iteminstance1, client, RandomELevel(l1iteminstance1, itemId));
+			SuccessEnchant(pc, l1iteminstance1, RandomELevel(l1iteminstance1, itemId));
 		}
 		else {
 			pc.getInventory().removeItem(l1iteminstance, 1);
@@ -237,7 +237,7 @@ public class Enchant {
 
 			if (rnd < enchant_chance_armor) {
 				int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
-				SuccessEnchant(pc, l1iteminstance1, client, randomEnchantLevel);
+				SuccessEnchant(pc, l1iteminstance1, randomEnchantLevel);
 			}
 			else if ((enchant_level >= 9) && (rnd < (enchant_chance_armor * 2))) {
 				// \f1%0%s 持续发出 产生激烈的 银色的 光芒，但是没有任何事情发生。
@@ -255,9 +255,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantAccessory(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantAccessory(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128) // 封印中
@@ -292,73 +291,73 @@ public class Enchant {
 				award = true;
 			}
 			switch (l1iteminstance1.getItem().getGrade()) {
-			case 0: // 上等
-				// 四属性 +1
-				l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
-				itemStatus += L1PcInventory.COL_EARTHMR;
-				l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
-				itemStatus += L1PcInventory.COL_FIREMR;
-				l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
-				itemStatus += L1PcInventory.COL_WATERMR;
-				l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
-				itemStatus += L1PcInventory.COL_WINDMR;
-				// LV6 额外奖励：体力与魔力回复量 +1
-				if (award) {
-					l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
-					itemStatus += L1PcInventory.COL_HPR;
-					l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
-					itemStatus += L1PcInventory.COL_MPR;
-				}
-				// 装备中
-				if (l1iteminstance1.isEquipped()) {
-					pc.addFire(1);
-					pc.addWater(1);
-					pc.addEarth(1);
-					pc.addWind(1);
-				}
-				break;
-			case 1: // 中等
-				// HP +2
-				l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
-				itemStatus += L1PcInventory.COL_ADDHP;
-				// LV6 额外奖励：魔防 +1
-				if (award) {
-					l1iteminstance1.setM_Def(l1iteminstance1.getM_Def() + 1);
-					itemStatus += L1PcInventory.COL_M_DEF;
-				}
-				// 装备中
-				if (l1iteminstance1.isEquipped()) {
-					pc.addMaxHp(2);
+				case 0: // 上等
+					// 四属性 +1
+					l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
+					itemStatus += L1PcInventory.COL_EARTHMR;
+					l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
+					itemStatus += L1PcInventory.COL_FIREMR;
+					l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
+					itemStatus += L1PcInventory.COL_WATERMR;
+					l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
+					itemStatus += L1PcInventory.COL_WINDMR;
+					// LV6 额外奖励：体力与魔力回复量 +1
 					if (award) {
-						pc.addMr(1);
-						pc.sendPackets(new S_SPMR(pc));
+						l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
+						itemStatus += L1PcInventory.COL_HPR;
+						l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
+						itemStatus += L1PcInventory.COL_MPR;
 					}
-				}
-				break;
-			case 2: // 初等
-				// MP +1
-				l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
-				itemStatus += L1PcInventory.COL_ADDMP;
-				// LV6 额外奖励：魔攻 +1
-				if (award) {
-					l1iteminstance1.setaddSp(l1iteminstance1.getaddSp() + 1);
-					itemStatus += L1PcInventory.COL_ADDSP;
-				}
-				// 装备中
-				if (l1iteminstance1.isEquipped()) {
-					pc.addMaxMp(1);
+					// 装备中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addFire(1);
+						pc.addWater(1);
+						pc.addEarth(1);
+						pc.addWind(1);
+					}
+					break;
+				case 1: // 中等
+					// HP +2
+					l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
+					itemStatus += L1PcInventory.COL_ADDHP;
+					// LV6 额外奖励：魔防 +1
 					if (award) {
-						pc.addSp(1);
-						pc.sendPackets(new S_SPMR(pc));
+						l1iteminstance1.setM_Def(l1iteminstance1.getM_Def() + 1);
+						itemStatus += L1PcInventory.COL_M_DEF;
 					}
-				}
-				break;
-			case 3: // 特等
-				// 功能台版未实装。
-				break;
-			default:
-				pc.sendPackets(new S_ServerMessage(79));
-				return;
+					// 装备中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addMaxHp(2);
+						if (award) {
+							pc.addMr(1);
+							pc.sendPackets(new S_SPMR(pc));
+						}
+					}
+					break;
+				case 2: // 初等
+					// MP +1
+					l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
+					itemStatus += L1PcInventory.COL_ADDMP;
+					// LV6 额外奖励：魔攻 +1
+					if (award) {
+						l1iteminstance1.setaddSp(l1iteminstance1.getaddSp() + 1);
+						itemStatus += L1PcInventory.COL_ADDSP;
+					}
+					// 装备中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addMaxMp(1);
+						if (award) {
+							pc.addSp(1);
+							pc.sendPackets(new S_SPMR(pc));
+						}
+					}
+					break;
+				case 3: // 特等
+					// 功能台版未实装。
+					break;
+				default:
+					pc.sendPackets(new S_ServerMessage(79));
+					return;
 			}
 		}
 		else { // 饰品强化失败
@@ -366,7 +365,7 @@ public class Enchant {
 			pc.getInventory().removeItem(l1iteminstance, 1);
 			return;
 		}
-		SuccessEnchant(pc, l1iteminstance1, client, 1);
+		SuccessEnchant(pc, l1iteminstance1, 1);
 		// 更新
 		pc.sendPackets(new S_ItemStatus(l1iteminstance1));
 		pc.getInventory().saveEnchantAccessory(l1iteminstance1, itemStatus);
@@ -484,7 +483,7 @@ public class Enchant {
 		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
 			pc.getInventory().removeItem(l1iteminstance, 1);
-			SuccessEnchant(pc, l1iteminstance1, client, 1);
+			SuccessEnchant(pc, l1iteminstance1, 1);
 		}
 		else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
@@ -525,7 +524,7 @@ public class Enchant {
 		//
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
 			pc.getInventory().removeItem(l1iteminstance, 1);
-			SuccessEnchant(pc, l1iteminstance1, client, 1);
+			SuccessEnchant(pc, l1iteminstance1, 1);
 		}
 		else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
@@ -537,10 +536,9 @@ public class Enchant {
 	 * 
 	 * @param pc
 	 * @param item
-	 * @param client
 	 * @param i
 	 */
-	private static void SuccessEnchant(L1PcInstance pc, L1ItemInstance item, ClientThread client, int i) {
+	private static void SuccessEnchant(L1PcInstance pc, L1ItemInstance item, int i) {
 
 		// 取得类型
 		int itemType2 = item.getItem().getType2();
@@ -555,10 +553,10 @@ public class Enchant {
 		int newEnchantLvl = oldEnchantLvl + i;
 		int safe_enchant = item.getItem().get_safeenchant();
 		item.setEnchantLevel(newEnchantLvl);
-		client.getActiveChar().getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
+		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 
 		if (newEnchantLvl > safe_enchant) {
-			client.getActiveChar().getInventory().saveItem(item, L1PcInventory.COL_ENCHANTLVL);
+			pc.getInventory().saveItem(item, L1PcInventory.COL_ENCHANTLVL);
 		}
 		if ((item.getItem().getType2() == 1) && (Config.LOGGING_WEAPON_ENCHANT != 0)) {
 			if ((safe_enchant == 0) || (newEnchantLvl >= Config.LOGGING_WEAPON_ENCHANT)) {
