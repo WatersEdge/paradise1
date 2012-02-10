@@ -39,9 +39,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantWeapon(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantWeapon(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
 		int itemId = l1iteminstance.getItem().getItemId();
@@ -379,9 +378,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantWeaponAttr(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantWeaponAttr(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
 		int itemId = l1iteminstance.getItem().getItemId();
@@ -453,9 +451,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantWeaponIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantWeaponIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
 		int weaponId = l1iteminstance1.getItem().getItemId();
