@@ -257,6 +257,28 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					break;
 
+				case 12: // 信纸
+				case 31: // 圣诞卡片
+				case 33: // 情人节卡片
+				case 35: // 白色情人节卡片
+					if (isClass) {
+						final int[] newData = new int[1];
+						newData[0] = this.readH();
+						pc.setText(this.readS());
+						pc.setTextByte(this.readByte());
+						ItemClass.getInstance().item(newData, pc, useItem);
+					}
+					break;
+
+				case 13: // 信纸(打开)
+				case 32: // 圣诞卡片(打开)
+				case 34: // 情人节卡片(打开)
+				case 36: // 白色情人节卡片(打开)
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
+
 				case 14: // 请选择一个物品 (道具栏位) 灯油/磨刀石/胶水/龙之魔眼等
 					if (isClass) {
 						final int[] newData = new int[1];
