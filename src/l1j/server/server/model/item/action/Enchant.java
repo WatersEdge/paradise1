@@ -15,7 +15,6 @@
 package l1j.server.server.model.item.action;
 
 import l1j.server.Config;
-import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.LogEnchantTable;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -152,9 +151,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantArmor(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantArmor(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
 		int itemId = l1iteminstance.getItem().getItemId();
@@ -493,9 +491,8 @@ public class Enchant {
 	 * @param pc
 	 * @param l1iteminstance
 	 * @param l1iteminstance1
-	 * @param client
 	 */
-	public static void scrollOfEnchantArmorIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1, ClientThread client) {
+	public static void scrollOfEnchantArmorIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
 
 		// 装备ID
 		int armorId = l1iteminstance1.getItem().getItemId();
