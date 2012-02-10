@@ -5386,6 +5386,29 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/**
+	 * 暂存byte[]阵列
+	 */
+	private byte[] _textByte = null;
+
+	/**
+	 * 设置暂存byte[]阵列
+	 * 
+	 * @param textByte
+	 */
+	public void setTextByte(final byte[] textByte) {
+		this._textByte = textByte;
+	}
+
+	/**
+	 * 取得暂存byte[]阵列
+	 * 
+	 * @return
+	 */
+	public byte[] getTextByte() {
+		return this._textByte;
+	}
+
+	/**
 	 * 产生新道具
 	 * 
 	 * @param pc
