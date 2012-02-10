@@ -56,7 +56,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		super(abyte0);
 
 		// 使用物件的OBJID
-		int itemObjid = readD();
+		final int itemObjid = readD();
 
 		// 不能使用道具的状态
 		if (!CheckUtil.checkUseItem(client)) {
@@ -64,10 +64,10 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 
 		// 取得使用者
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
 		// 取得使用道具
-		L1ItemInstance useItem = pc.getInventory().getItem(itemObjid);
+		final L1ItemInstance useItem = pc.getInventory().getItem(itemObjid);
 
 		// 例外:空道具
 		if (useItem == null) {
@@ -101,8 +101,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 			}
 
-			int min = useItem.getItem().getMinLevel(); // 取得可以使用道具的最低等级
-			int max = useItem.getItem().getMaxLevel(); // 取得可以使用道具的最高等级
+			final int min = useItem.getItem().getMinLevel(); // 取得可以使用道具的最低等级
+			final int max = useItem.getItem().getMaxLevel(); // 取得可以使用道具的最高等级
 
 			if ((min != 0) && (min > pc.getLevel())) {
 				pc.sendPackets(new S_ServerMessage(318, String.valueOf(min))); // 等级 %0以上才可使用此道具。
@@ -116,10 +116,10 @@ public class C_ItemUSe extends ClientBasePacket {
 			// 是否具有延迟时间
 			boolean isDelayEffect = false;
 			if (useItem.getItem().getType2() == 0) { // 使用类型为道具 (etcitem)
-				int delayEffect = ((L1EtcItem) useItem.getItem()).get_delayEffect(); // 延迟时间
+				final int delayEffect = ((L1EtcItem) useItem.getItem()).get_delayEffect(); // 延迟时间
 				if (delayEffect > 0) {
 					isDelayEffect = true;
-					Timestamp lastUsed = useItem.getLastUsed();
+					final Timestamp lastUsed = useItem.getLastUsed();
 					if (lastUsed != null) {
 						Calendar cal = Calendar.getInstance();
 						long UseTime = (cal.getTimeInMillis() - lastUsed.getTime()) / 1000;
@@ -127,7 +127,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							// 转换为须等待时间
 							UseTime = (delayEffect - UseTime) / 60;
 							// 取得等待时间 (时间数字 转换为字串)
-							String UseTimeSurplus = useItem.getLogName() + " " + String.valueOf(UseTime);
+							final String UseTimeSurplus = useItem.getLogName() + " " + String.valueOf(UseTime);
 							pc.sendPackets(new S_ServerMessage(1139, UseTimeSurplus)); // %0 分钟之内无法使用。
 							return;
 						}
@@ -138,6 +138,12 @@ public class C_ItemUSe extends ClientBasePacket {
 			// 取得物件触发事件
 			final int use_type = useItem.getItem().getUseType();
 			switch (use_type) {
+
+				case -10: // 魔法娃娃类
+					if (isClass) {
+						ItemClass.getInstance().item(null, pc, useItem);
+					}
+					break;
 
 				case -8: // 料理
 					if (isClass) {
@@ -354,102 +360,109 @@ public class C_ItemUSe extends ClientBasePacket {
 					break;
 			}
 
-			// 道具类 (L1EtcItem)
-			if (useItem.getItem().getType2() == 0) {
+			// 取得道具类型 (0:道具、1:武器、2:防具)
+			final int item_type = useItem.getItem().getType2();
+			switch (item_type) {
 
-				// 取得道具ID
-				final int itemId = useItem.getItem().getItemId();
+				case 0: // 道具类 (L1EtcItem)
 
-				switch (itemId) {
-					/*
-					 * case 40024: // 古代终极体力恢复剂 Potion.UseHeallingPotion(pc, UseItem, 55, 197); return;
-					 */
-					// 1 ~ 4 阶附魔石(近战)(远攻)(恢复)(防御)
-					case 47064:
-					case 47065:
-					case 47066:
-					case 47067:
-					case 47074:
-					case 47075:
-					case 47076:
-					case 47077:
-					case 47084:
-					case 47085:
-					case 47086:
-					case 47087:
-					case 47094:
-					case 47095:
-					case 47096:
-					case 47097:
-						if (pc.getInventory().consumeItem(41246, 30)) {
-							Effect.useEffectItem(pc, useItem);
-						}
-						else {
-							isDelayEffect = false;
-							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
-						}
-						break;
+					// 取得道具ID
+					final int itemId = useItem.getItem().getItemId();
+					switch (itemId) {
+						/*
+						 * case 40024: // 古代终极体力恢复剂 Potion.UseHeallingPotion(pc, UseItem, 55, 197); return;
+						 */
+						// 1 ~ 4 阶附魔石(近战)(远攻)(恢复)(防御)
+						case 47064:
+						case 47065:
+						case 47066:
+						case 47067:
+						case 47074:
+						case 47075:
+						case 47076:
+						case 47077:
+						case 47084:
+						case 47085:
+						case 47086:
+						case 47087:
+						case 47094:
+						case 47095:
+						case 47096:
+						case 47097:
+							if (pc.getInventory().consumeItem(41246, 30)) {
+								Effect.useEffectItem(pc, useItem);
+							}
+							else {
+								isDelayEffect = false;
+								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
 
-					// 5 ~ 6阶附魔石(近战)(远攻)(恢复)(防御)
-					case 47068:
-					case 47069:
-					case 47078:
-					case 47079:
-					case 47088:
-					case 47089:
-					case 47098:
-					case 47099:
-						if (pc.getInventory().consumeItem(41246, 60)) {
-							Effect.useEffectItem(pc, useItem);
-						}
-						else {
-							isDelayEffect = false;
-							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
-						}
-						break;
+						// 5 ~ 6阶附魔石(近战)(远攻)(恢复)(防御)
+						case 47068:
+						case 47069:
+						case 47078:
+						case 47079:
+						case 47088:
+						case 47089:
+						case 47098:
+						case 47099:
+							if (pc.getInventory().consumeItem(41246, 60)) {
+								Effect.useEffectItem(pc, useItem);
+							}
+							else {
+								isDelayEffect = false;
+								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
 
-					// 7阶附魔石(近战)(远攻)(恢复)(防御)
-					case 47070:
-					case 47080:
-					case 47090:
-					case 47100:
-						if (pc.getInventory().consumeItem(41246, 100)) {
-							Effect.useEffectItem(pc, useItem);
-						}
-						else {
-							isDelayEffect = false;
-							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
-						}
-						break;
+						// 7阶附魔石(近战)(远攻)(恢复)(防御)
+						case 47070:
+						case 47080:
+						case 47090:
+						case 47100:
+							if (pc.getInventory().consumeItem(41246, 100)) {
+								Effect.useEffectItem(pc, useItem);
+							}
+							else {
+								isDelayEffect = false;
+								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
 
-					// 8阶附魔石(近战)(远攻)(恢复)(防御)
-					case 47071:
-					case 47081:
-					case 47091:
-					case 47101:
-						if (pc.getInventory().consumeItem(41246, 200)) {
-							Effect.useEffectItem(pc, useItem);
-						}
-						else {
-							isDelayEffect = false;
-							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
-						}
-						break;
+						// 8阶附魔石(近战)(远攻)(恢复)(防御)
+						case 47071:
+						case 47081:
+						case 47091:
+						case 47101:
+							if (pc.getInventory().consumeItem(41246, 200)) {
+								Effect.useEffectItem(pc, useItem);
+							}
+							else {
+								isDelayEffect = false;
+								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
 
-					// 9阶附魔石(近战)(远攻)(恢复)(防御)
-					case 47072:
-					case 47082:
-					case 47092:
-					case 47102:
-						if (pc.getInventory().consumeItem(41246, 300)) {
-							Effect.useEffectItem(pc, useItem);
-						}
-						else {
-							isDelayEffect = false;
-							pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
-						}
-						break;
-				}
+						// 9阶附魔石(近战)(远攻)(恢复)(防御)
+						case 47072:
+						case 47082:
+						case 47092:
+						case 47102:
+							if (pc.getInventory().consumeItem(41246, 300)) {
+								Effect.useEffectItem(pc, useItem);
+							}
+							else {
+								isDelayEffect = false;
+								pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0不足%s。
+							}
+							break;
+					}
+					break;
+
+				default: // 检测
+					// _log.info("未处理的道具类型: " + use_type);
+					break;
 			}
 
 			// 物件使用延迟设置
