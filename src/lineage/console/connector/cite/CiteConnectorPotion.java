@@ -1,33 +1,15 @@
 package lineage.console.connector.cite;
 
-import static l1j.server.server.model.skill.L1SkillId.BLOODLUST;
 import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
 import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
-import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
-import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HOLY_WALK;
-import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
-import static l1j.server.server.model.skill.L1SkillId.MOVING_ACCELERATION;
 import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
-import static l1j.server.server.model.skill.L1SkillId.SLOW;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE2;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_WISDOM_POTION;
-import static l1j.server.server.model.skill.L1SkillId.WIND_WALK;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CurseBlind;
-import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import l1j.server.server.serverpackets.S_SkillBrave;
-import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
@@ -41,104 +23,6 @@ import lineage.console.delete.DeleteSkillEffect;
  * @author jrwz
  */
 public class CiteConnectorPotion implements ConnectorPotion {
-
-	// 一段加速药水 (绿色药水)
-	@Override
-	public final void useGreenPotion(final L1PcInstance pc, final int time, final int gfxid) {
-
-		// 装备加速道具时
-		if (pc.getHasteItemEquipped() > 0) {
-			return;
-		}
-
-		// 解除醉酒状态
-		pc.setDrink(false);
-
-		// 删除重复的一段加速状态
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, STATUS_HASTE); // 一段加速
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, HASTE); // 加速术
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, GREATER_HASTE); // // 强力加速术
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-
-		// 删除重复的缓速状态 (相互抵消、不加速)
-		if (pc.getMoveSpeed() == 2) {
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, SLOW); // 缓速术
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, MASS_SLOW); // 集体缓速术
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, ENTANGLE); // 地面障碍
-		}
-		else {
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time)); // 加速效果与时间 (自己看得到)
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0)); // 加速效果与时间 (同画面的其他人看得到)
-			pc.setSkillEffect(STATUS_HASTE, time * 1000); // 给予一段加速时间 (秒)
-			pc.setMoveSpeed(1); // 设置为加速状态
-		}
-	}
-
-	// 二段加速药水 (勇敢药水)
-	@Override
-	public final void useBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
-
-		// 删除重复的二段加速效果
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, HOLY_WALK); // 神圣疾走 移速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, MOVING_ACCELERATION); // 行走加速 移速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, BLOODLUST); // 血之渴望 攻速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
-
-		// 给予状态 && 效果
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.sendPackets(new S_SkillBrave(pc.getId(), 1, time)); // 加速效果与时间 (自己看得到)
-		pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0)); // 加速效果与时间 (同画面的其他人看得到)
-		pc.setSkillEffect(STATUS_BRAVE, time * 1000); // 给予二段加速时间 (秒)
-		pc.setBraveSpeed(1); // 设置勇水速度
-	}
-
-	// 二段加速药水 (精灵饼干)
-	@Override
-	public final void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
-
-		// 删除重复的二段加速效果
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
-
-		// 给予状态 && 效果
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.sendPackets(new S_SkillBrave(pc.getId(), 3, time)); // 加速效果与时间 (自己看得到)
-		pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0)); // 加速效果与时间 (同画面的其他人看得到)
-		pc.setSkillEffect(STATUS_ELFBRAVE, time * 1000); // 给予二段加速时间 (秒)
-		pc.setBraveSpeed(3); // 设置饼干速度
-	}
-
-	// 二段加速药水 (生命之树果实)
-	@Override
-	public final void useRiBravePotion(final L1PcInstance pc, final int time, final int gfxid) {
-
-		// 删除状态不明
-		pc.setSkillEffect(STATUS_RIBRAVE, time * 1000); // 给予二段加速时间 (秒)
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-	}
-
-	// 三段加速药水 (巧克力蛋糕)
-	@Override
-	public final void useThirdSpeedPotion(L1PcInstance pc, final int time, int gfxid) {
-
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_THIRD_SPEED); // 删除重复的三段加速效果
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-		pc.sendPackets(new S_ServerMessage(1065)); // 将发生神秘的奇迹力量。
-		pc.setSkillEffect(STATUS_THIRD_SPEED, time * 1000); // 给予三段加速时间 (秒)
-	}
 
 	// 治愈类药水 (红色药水)
 	@Override
