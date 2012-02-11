@@ -2,7 +2,8 @@ package lineage.item.etcitem.potion.hp;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UsePotion_AddHp;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -32,8 +33,10 @@ public class OrangeJuice1 extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
+		final UniversalUseItem a = new UsePotion_AddHp();
+		a.useItem(pc, item, 0, 25, 0, 189);
 		// 基本加血量与动画ID
-		Factory.getPotion().useHealingPotion(pc, 25, 189);
+		// Factory.getPotion().useHealingPotion(pc, 25, 189);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);
