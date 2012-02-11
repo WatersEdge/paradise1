@@ -3,7 +3,8 @@ package lineage.item.etcitem.poly;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.Random;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UsePolyScroll;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -37,7 +38,9 @@ public class PolyScroll_Welfare extends ItemExecutor {
 		int time = 0;
 		time = Random.nextInt(2401, 4800);
 
+		final UniversalUseItem a = new UsePolyScroll();
+		a.useItem(pc, item, 0, 0, time, 0);
 		// 变身时间 (秒)
-		Factory.getPoly().usePolyScroll(pc, item, time);
+		// Factory.getPoly().usePolyScroll(pc, item, time);
 	}
 }
