@@ -2,7 +2,8 @@ package lineage.item.etcitem.poly;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UsePolyOther;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -84,7 +85,9 @@ public class PolyPotion_ShinerLV55 extends ItemExecutor {
 				break;
 		}
 
+		final UniversalUseItem a = new UsePolyOther();
+		a.useItem(pc, item, 0, polyId, 1800, 0);
 		// 变身时间 (秒)与变身编号
-		Factory.getPoly().usePolyPotion(pc, item, 1800, polyId);
+		// Factory.getPoly().usePolyPotion(pc, item, 1800, polyId);
 	}
 }

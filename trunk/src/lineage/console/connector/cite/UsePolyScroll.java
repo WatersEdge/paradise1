@@ -6,18 +6,17 @@ import l1j.server.server.model.L1PolyMorph;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import lineage.console.connector.ConnectorPoly;
-import lineage.console.utils.CheckUtil;
+import lineage.console.connector.UniversalUseItem;
 
 /**
- * 实例化 (接口引用:变身相关)
+ * 变身效果 (变形卷轴)
  * 
  * @author jrwz
  */
-public class CiteConnectorPoly implements ConnectorPoly {
+public class UsePolyScroll implements UniversalUseItem {
 
 	@Override
-	public void usePolyScroll(final L1PcInstance pc, final L1ItemInstance item, final int time) {
+	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
 		// 取回字符串
 		final String text = pc.getText();
@@ -40,32 +39,4 @@ public class CiteConnectorPoly implements ConnectorPoly {
 		}
 	}
 
-	@Override
-	public void usePolyScale(final L1PcInstance pc, final L1ItemInstance item, final int time, final int polyId) {
-
-		// 不能变身的状态
-		if (!CheckUtil.checkPoly(pc)) {
-			return;
-		}
-
-		L1PolyMorph.doPoly(pc, polyId, time, L1PolyMorph.MORPH_BY_ITEMMAGIC);
-
-		// 删除道具
-		pc.getInventory().removeItem(item, 1);
-
-	}
-
-	@Override
-	public void usePolyPotion(final L1PcInstance pc, final L1ItemInstance item, final int time, final int polyId) {
-
-		// 不能变身的状态
-		if (!CheckUtil.checkPoly(pc)) {
-			return;
-		}
-
-		L1PolyMorph.doPoly(pc, polyId, time, L1PolyMorph.MORPH_BY_ITEMMAGIC);
-
-		// 删除道具
-		pc.getInventory().removeItem(item, 1);
-	}
 }
