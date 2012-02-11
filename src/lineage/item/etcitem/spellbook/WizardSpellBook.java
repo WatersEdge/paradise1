@@ -2,7 +2,8 @@ package lineage.item.etcitem.spellbook;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UseSpellBook;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -33,6 +34,8 @@ public class WizardSpellBook extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		final int itemId = item.getItemId();
-		Factory.getSpellBook().useSpellBook(pc, item, itemId);
+		final UniversalUseItem d = new UseSpellBook();
+		d.useItem(pc, item, itemId, 0, 0, 0);
+		// Factory.getSpellBook().useSpellBook(pc, item, itemId);
 	}
 }

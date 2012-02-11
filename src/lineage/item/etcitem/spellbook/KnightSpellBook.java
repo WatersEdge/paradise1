@@ -2,7 +2,9 @@ package lineage.item.etcitem.spellbook;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import l1j.server.server.serverpackets.S_ServerMessage;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UseSpellBook_Knight;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -32,7 +34,14 @@ public class KnightSpellBook extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		final int itemId = item.getItemId();
-		Factory.getSpellBook().useKnightSpellBook(pc, item, itemId);
+		if (pc.isKnight() || pc.isGm()) {
+			final int itemId = item.getItemId();
+			final UniversalUseItem b = new UseSpellBook_Knight();
+			b.useItem(pc, item, itemId, 0, 0, 0);
+			// Factory.getSpellBook().useKnightSpellBook(pc, item, itemId);
+		}
+		else {
+			pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
+		}
 	}
 }
