@@ -10,18 +10,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public interface ConnectorPotion {
 
 	/**
-	 * 使用恢复魔力类药水 (蓝色药水)
-	 * 
-	 * @param pc
-	 *            使用对象
-	 * @param time
-	 *            效果时间
-	 * @param gfxid
-	 *            动画ID
-	 */
-	void useBluePotion(final L1PcInstance pc, final int time, final int gfxid);
-
-	/**
 	 * 使用增加魔攻类药水 (智慧药水)
 	 * 
 	 * @param pc
