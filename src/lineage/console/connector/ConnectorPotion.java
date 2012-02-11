@@ -10,18 +10,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public interface ConnectorPotion {
 
 	/**
-	 * 使用增加魔力类药水 (月饼)
-	 * 
-	 * @param pc
-	 *            使用对象
-	 * @param newMp
-	 *            增加魔量
-	 * @param gfxid
-	 *            动画ID
-	 */
-	void useAddMpPotion(final L1PcInstance pc, final int newMp, final int gfxid);
-
-	/**
 	 * 使用恢复魔力类药水 (蓝色药水)
 	 * 
 	 * @param pc
