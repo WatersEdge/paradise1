@@ -3,11 +3,8 @@ package lineage.console.connector.cite;
 import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
 import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CurseBlind;
-import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
-import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.ConnectorPotion;
 import lineage.console.delete.DeleteSkillEffect;
 
@@ -17,25 +14,6 @@ import lineage.console.delete.DeleteSkillEffect;
  * @author jrwz
  */
 public class CiteConnectorPotion implements ConnectorPotion {
-
-	// 可以在水中呼吸的药水 (伊娃的祝福)
-	@Override
-	public final void useBlessOfEvaPotion(final L1PcInstance pc, int time, final int gfxid) {
-
-		// 持续时间可累加
-		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
-			int timeSec = pc.getSkillEffectTimeSec(STATUS_UNDERWATER_BREATH);
-			time += timeSec;
-			if (time > 7200) {
-				time = 7200;
-			}
-			pc.killSkillEffectTimer(STATUS_UNDERWATER_BREATH);
-		}
-		pc.sendPackets(new S_SkillIconBlessOfEva(pc.getId(), time)); // 状态图示
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.setSkillEffect(STATUS_UNDERWATER_BREATH, time * 1000); // 给予时间 (秒)
-	}
 
 	// 黑色药水 (失明药水)
 	@Override
