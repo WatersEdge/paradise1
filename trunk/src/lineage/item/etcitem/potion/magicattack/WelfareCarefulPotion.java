@@ -2,7 +2,8 @@ package lineage.item.etcitem.potion.magicattack;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UsePotion_Wisdom;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -34,8 +35,10 @@ public class WelfareCarefulPotion extends ItemExecutor {
 
 		// 法师
 		if (pc.isWizard()) {
+			final UniversalUseItem a = new UsePotion_Wisdom();
+			a.useItem(pc, item, 0, 0, 1000, 750);
 			// 效果时间 (秒)与动画ID
-			Factory.getPotion().useWisdomPotion(pc, 1000, 750);
+			// Factory.getPotion().useWisdomPotion(pc, 1000, 750);
 		}
 
 		// 删除道具

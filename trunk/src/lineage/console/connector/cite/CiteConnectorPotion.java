@@ -4,11 +4,9 @@ import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
 import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_WISDOM_POTION;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CurseBlind;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
-import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.ConnectorPotion;
 import lineage.console.delete.DeleteSkillEffect;
@@ -19,19 +17,6 @@ import lineage.console.delete.DeleteSkillEffect;
  * @author jrwz
  */
 public class CiteConnectorPotion implements ConnectorPotion {
-
-	// 增加魔攻药水 (智慧药水)
-	@Override
-	public final void useWisdomPotion(final L1PcInstance pc, final int time, final int gfxid) {
-
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
-
-		pc.sendPackets(new S_SkillIconWisdomPotion((time / 4))); // 状态图示
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.setSkillEffect(STATUS_WISDOM_POTION, time * 1000); // 给予智慧药水时间 (秒)
-		pc.addSp(2); // 魔攻 + 2
-	}
 
 	// 可以在水中呼吸的药水 (伊娃的祝福)
 	@Override
