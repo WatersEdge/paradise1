@@ -2,7 +2,8 @@ package lineage.item.etcitem.potion.blessofeva;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UsePotion_BlessOfEva;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -32,8 +33,10 @@ public class WelfareRespiratoryPotion extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
+		final UniversalUseItem a = new UsePotion_BlessOfEva();
+		a.useItem(pc, item, 0, 0, 7200, 190);
 		// 效果时间 (秒)与动画ID
-		Factory.getPotion().useBlessOfEvaPotion(pc, 7200, 190);
+		// Factory.getPotion().useBlessOfEvaPotion(pc, 7200, 190);
 
 		// 删除道具
 		pc.getInventory().removeItem(item, 1);

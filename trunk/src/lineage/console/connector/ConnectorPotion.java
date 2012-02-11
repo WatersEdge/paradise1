@@ -10,18 +10,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public interface ConnectorPotion {
 
 	/**
-	 * 可以在水中呼吸的药水 (伊娃的祝福)
-	 * 
-	 * @param pc
-	 *            使用对象
-	 * @param time
-	 *            效果时间
-	 * @param gfxid
-	 *            动画ID
-	 */
-	void useBlessOfEvaPotion(final L1PcInstance pc, final int time, final int gfxid);
-
-	/**
 	 * 使用黑色药水 (失明药水)
 	 * 
 	 * @param pc
