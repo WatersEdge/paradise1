@@ -2,7 +2,6 @@ package lineage.console.connector.cite;
 
 import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
 import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
-import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
@@ -23,24 +22,6 @@ import lineage.console.delete.DeleteSkillEffect;
  * @author jrwz
  */
 public class CiteConnectorPotion implements ConnectorPotion {
-
-	// 治愈类药水 (红色药水)
-	@Override
-	public final void useHealingPotion(final L1PcInstance pc, int healHp, final int gfxid) {
-
-		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
-		healHp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D; // 随机加血量
-
-		// 污浊之水 - 效果减半
-		if (pc.hasSkillEffect(POLLUTE_WATER)) {
-			healHp /= 2;
-		}
-		pc.setCurrentHp(pc.getCurrentHp() + healHp); // 为角色增加HP
-	}
 
 	// 加魔类药水 (月饼)
 	@Override
