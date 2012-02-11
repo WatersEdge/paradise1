@@ -23,19 +23,6 @@ import lineage.console.delete.DeleteSkillEffect;
  */
 public class CiteConnectorPotion implements ConnectorPotion {
 
-	// 加魔类药水 (月饼)
-	@Override
-	public final void useAddMpPotion(final L1PcInstance pc, int newMp, final int gfxid) {
-
-		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
-		pc.sendPackets(new S_ServerMessage(338, "$1084")); // 你的 魔力 渐渐恢复。
-		newMp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D; // 随机加魔量
-		pc.setCurrentMp(pc.getCurrentMp() + newMp); // 为角色增加MP
-	}
-
 	// 恢复魔力药水 (蓝色药水)
 	@Override
 	public final void useBluePotion(final L1PcInstance pc, final int time, final int gfxid) {
