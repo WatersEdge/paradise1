@@ -19,7 +19,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useGreenPotion(final L1PcInstance pc, final int time, final int gfxid);
+	// void useGreenPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (勇敢药水)
@@ -31,7 +31,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useBravePotion(final L1PcInstance pc, final int time, final int gfxid);
+	// void useBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (精灵饼干)
@@ -43,7 +43,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid);
+	// void useElfBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用二段加速药水 (生命之树果实)
@@ -55,7 +55,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useRiBravePotion(final L1PcInstance pc, final int time, final int gfxid);
+	// void useRiBravePotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用三段加速药水 (巧克力蛋糕)
@@ -67,7 +67,7 @@ public interface ConnectorPotion {
 	 * @param gfxid
 	 *            动画ID
 	 */
-	void useThirdSpeedPotion(final L1PcInstance pc, final int time, final int gfxid);
+	// void useThirdSpeedPotion(final L1PcInstance pc, final int time, final int gfxid);
 
 	/**
 	 * 使用治愈类药水 (红色药水)

@@ -3,7 +3,8 @@ package lineage.item.etcitem.potion.speed2;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UseSpeedPotion_2_Brave;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -35,8 +36,10 @@ public class B_BravePotion extends ItemExecutor {
 
 		// 骑士
 		if (pc.isKnight()) {
+			final UniversalUseItem b = new UseSpeedPotion_2_Brave();
+			b.useItem(pc, item, 0, 0, 350, 751);
 			// 效果时间 (秒)与动画ID
-			Factory.getPotion().useBravePotion(pc, 350, 751);
+			// Factory.getPotion().useBravePotion(pc, 350, 751);
 		}
 		else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。

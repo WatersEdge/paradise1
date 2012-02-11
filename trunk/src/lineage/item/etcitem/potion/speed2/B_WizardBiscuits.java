@@ -3,7 +3,8 @@ package lineage.item.etcitem.potion.speed2;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import lineage.console.Factory;
+import lineage.console.connector.UniversalUseItem;
+import lineage.console.connector.cite.UseSpeedPotion_2_ElfBrave;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -35,8 +36,10 @@ public class B_WizardBiscuits extends ItemExecutor {
 
 		// 精灵
 		if (pc.isElf()) {
+			final UniversalUseItem b = new UseSpeedPotion_2_ElfBrave();
+			b.useItem(pc, item, 0, 0, 700, 751);
 			// 效果时间 (秒)与动画ID
-			Factory.getPotion().useElfBravePotion(pc, 700, 751);
+			// Factory.getPotion().useElfBravePotion(pc, 700, 751);
 		}
 		else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
