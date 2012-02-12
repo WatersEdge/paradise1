@@ -1111,6 +1111,14 @@ public class L1Attack {
 					dmg /= 8;
 			}
 		}
+
+		// 吉尔塔斯反击屏障伤害判断 (PC_NPC)
+		if (_targetNpc.getHiddenStatus() == L1NpcInstance.HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(), ActionCodes.ACTION_Damage));
+			_pc.receiveDamage(_targetNpc, (int) (dmg * 2), true);
+			dmg = 0;
+		}
+
 		if (dmg <= 0) {
 			_isHit = false;
 			_drainHp = 0; // 没有伤害 不能吸取体力
@@ -1245,6 +1253,13 @@ public class L1Attack {
 		}
 
 		addNpcPoisonAttack(_npc, _targetNpc);
+
+		// 吉尔塔斯反击屏障伤害判断 (NPC_NPC)
+		if (_targetNpc.getHiddenStatus() == L1NpcInstance.HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Damage));
+			_npc.receiveDamage(_targetNpc, (int) (dmg * 2));
+			dmg = 0;
+		}
 
 		if (dmg <= 0) {
 			_isHit = false;
