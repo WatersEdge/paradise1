@@ -9,7 +9,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 加速药水效果 (二段:精灵饼干)
@@ -22,10 +21,10 @@ public class UseSpeedPotion_2_ElfBrave implements UniversalUseItem {
 	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
 		// 删除重复的二段加速效果
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE); // 勇敢药水类 1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_ELFBRAVE); // 精灵饼干 1.15倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, WIND_WALK); // 风之疾走 移速1.33倍
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_BRAVE2); // 超级加速 2.66倍
+		pc.delRepeatSkillEffect(STATUS_BRAVE); // 勇敢药水类 1.33倍
+		pc.delRepeatSkillEffect(STATUS_ELFBRAVE); // 精灵饼干 1.15倍
+		pc.delRepeatSkillEffect(WIND_WALK); // 风之疾走 移速1.33倍
+		pc.delRepeatSkillEffect(STATUS_BRAVE2); // 超级加速 2.66倍
 
 		// 给予状态 && 效果
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)

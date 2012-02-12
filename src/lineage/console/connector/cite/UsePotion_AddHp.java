@@ -6,7 +6,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 药水效果 (治愈类)
@@ -18,7 +17,7 @@ public class UsePotion_AddHp implements UniversalUseItem {
 	@Override
 	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
-		DeleteSkillEffect.DeleteEffectOfAbsoluteBarrier(pc); // 删除绝对屏障效果
+		pc.delAbsoluteBarrier(); // 删除绝对屏障效果
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)

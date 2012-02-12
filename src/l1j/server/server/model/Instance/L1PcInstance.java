@@ -14,32 +14,101 @@
  */
 package l1j.server.server.model.Instance;
 
+import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.BLIND_HIDING;
+import static l1j.server.server.model.skill.L1SkillId.BURNING_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.DECREASE_WEIGHT;
 import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
+import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_ENCHANTING_BATTLE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_AHTHARTS;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_BIRTH;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_FAFURION;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_FIGURE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_LIFE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_LINDVIOR;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_VALAKAS;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_1;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_2;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_3;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_4;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_5;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_6;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_7;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_8;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_A_9;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_1;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_2;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_3;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_4;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_5;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_6;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_7;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_8;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_B_9;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_1;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_2;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_3;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_4;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_5;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_6;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_7;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_8;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_C_9;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_1;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_2;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_3;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_4;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_5;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_6;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_7;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_8;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_STONE_D_9;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_HP;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_MP;
 import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
+import static l1j.server.server.model.skill.L1SkillId.FIRE_BLESS;
+import static l1j.server.server.model.skill.L1SkillId.FIRE_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_FINDINVIS;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_HPBAR;
 import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.HASTE;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE_BASILISK;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE_COCKATRICE;
 import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
 import static l1j.server.server.model.skill.L1SkillId.INVISIBILITY;
 import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
+import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
 import static l1j.server.server.model.skill.L1SkillId.MORTAL_BODY;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
+import static l1j.server.server.model.skill.L1SkillId.SHOCK_SKIN;
+import static l1j.server.server.model.skill.L1SkillId.SHOCK_STUN;
 import static l1j.server.server.model.skill.L1SkillId.SLOW;
 import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_PARALYZED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.STORM_EYE;
+import static l1j.server.server.model.skill.L1SkillId.STORM_SHOT;
 import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
 import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
+import static l1j.server.server.model.skill.L1SkillId.WIND_SHOT;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -122,6 +191,7 @@ import l1j.server.server.serverpackets.S_Poison;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_bonusstats;
@@ -1377,6 +1447,138 @@ public class L1PcInstance extends L1Character {
 		killSkillEffectTimer(BLIND_HIDING); // 黑暗妖精魔法 (暗隐术)
 		sendPackets(new S_Invis(getId(), 0));
 		broadcastPacket(new S_OtherCharPacks(this));
+	}
+
+	/**
+	 * 解除绝对屏障状态
+	 */
+	public void delAbsoluteBarrier() {
+		if (hasSkillEffect(ABSOLUTE_BARRIER)) {
+			killSkillEffectTimer(ABSOLUTE_BARRIER);
+			startHpRegeneration(); // 开始角色回血
+			startMpRegeneration(); // 开始角色回魔
+			startHpRegenerationByDoll(); // 开始魔法娃娃对角色的回血
+			startMpRegenerationByDoll(); // 开始魔法娃娃对角色的回魔
+		}
+	}
+
+	/**
+	 * 取消冥想效果
+	 */
+	public void delMeditation() {
+		if (hasSkillEffect(MEDITATION)) {
+			removeSkillEffect(MEDITATION);
+		}
+	}
+
+	/**
+	 * 什么都不能做的状态 (无法离线、无法移动、无法使用道具等)
+	 * 
+	 * @return
+	 */
+	public boolean CanNotDoAnything() {
+		return (/*
+				 * hasSkillEffect(IMMUNE_TO_HARM) // 法师魔法 (圣结界) 测试用
+				 * ||
+				 */
+		hasSkillEffect(STATUS_CURSE_PARALYZED) // 麻痹毒(木乃伊诅咒)后
+				|| hasSkillEffect(ICE_LANCE) // 法师魔法 (冰矛围篱)
+				|| hasSkillEffect(FREEZING_BLIZZARD) // 法师魔法 (冰雪飓风)
+				|| hasSkillEffect(ICE_LANCE_COCKATRICE) // 亚力安冰矛围篱
+				|| hasSkillEffect(ICE_LANCE_BASILISK) // 邪恶蜥蜴冰矛围篱
+				|| hasSkillEffect(FOG_OF_SLEEPING) // 法师魔法 (沉睡之雾)
+				|| hasSkillEffect(SHOCK_STUN) // 骑士魔法 (冲击之晕)
+				|| hasSkillEffect(EARTH_BIND) // 妖精魔法 (大地屏障)
+				|| hasSkillEffect(SHOCK_SKIN) // 龙骑士魔法 (冲击之肤) 冲晕效果
+		|| hasSkillEffect(FREEZING_BREATH)); // 龙骑士魔法 (寒冰喷吐)
+	}
+
+	/**
+	 * 删除重复的技能效果
+	 * 
+	 * @param skill_id
+	 *            要删除的技能编号
+	 */
+	public void delRepeatSkillEffect(final int skill_id) {
+		if (hasSkillEffect(skill_id)) {
+			killSkillEffectTimer(skill_id);
+		}
+	}
+
+	/**
+	 * 删除重复的一段加速效果 (绿色药水)
+	 * 
+	 * @param skill_id
+	 *            技能ID
+	 */
+	public void delEffectOfGreenPotion(final int skill_id) {
+		if (hasSkillEffect(skill_id)) {
+			killSkillEffectTimer(skill_id);
+			sendPackets(new S_SkillHaste(getId(), 0, 0));
+			broadcastPacket(new S_SkillHaste(getId(), 0, 0));
+			setMoveSpeed(0);
+		}
+	}
+
+	/**
+	 * 删除重复的缓速效果
+	 * 
+	 * @param skill_id
+	 *            技能ID
+	 */
+	public void delEffectOfSlow(final int skill_id) {
+		if (hasSkillEffect(skill_id)) {
+			killSkillEffectTimer(skill_id);
+			sendPackets(new S_SkillHaste(getId(), 0, 0));
+			broadcastPacket(new S_SkillHaste(getId(), 0, 0));
+		}
+	}
+
+	/**
+	 * 设定不可重复的魔法状态 (经验药水、魔眼等等)
+	 * 
+	 * @param skillId
+	 *            技能ID
+	 */
+	public void deleteRepeatedSkills(final int skillId) {
+		final int[][] repeatedSkills = {
+				// 经验加成状态
+				{ EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225, EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE },
+				// 体力增强卷轴、魔力增强卷轴、强化战斗卷
+				{ EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP, EFFECT_ENCHANTING_BATTLE },
+				// 火焰武器、风之神射、烈炎气息、暴风之眼、烈炎武器、暴风神射、妈祖的祝福
+				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT, EFFECT_BLESS_OF_MAZU },
+				// 1 ~ 9 阶附魔石(近战)(远攻)(恢复)(防御)
+				{ EFFECT_MAGIC_STONE_A_1, EFFECT_MAGIC_STONE_A_2, EFFECT_MAGIC_STONE_A_3, EFFECT_MAGIC_STONE_A_4, EFFECT_MAGIC_STONE_A_5, EFFECT_MAGIC_STONE_A_6, EFFECT_MAGIC_STONE_A_7, EFFECT_MAGIC_STONE_A_8, EFFECT_MAGIC_STONE_A_9, EFFECT_MAGIC_STONE_B_1,
+						EFFECT_MAGIC_STONE_B_2, EFFECT_MAGIC_STONE_B_3, EFFECT_MAGIC_STONE_B_4, EFFECT_MAGIC_STONE_B_5, EFFECT_MAGIC_STONE_B_6, EFFECT_MAGIC_STONE_B_7, EFFECT_MAGIC_STONE_B_8, EFFECT_MAGIC_STONE_B_9, EFFECT_MAGIC_STONE_C_1, EFFECT_MAGIC_STONE_C_2,
+						EFFECT_MAGIC_STONE_C_3, EFFECT_MAGIC_STONE_C_4, EFFECT_MAGIC_STONE_C_5, EFFECT_MAGIC_STONE_C_6, EFFECT_MAGIC_STONE_C_7, EFFECT_MAGIC_STONE_C_8, EFFECT_MAGIC_STONE_C_9, EFFECT_MAGIC_STONE_D_1, EFFECT_MAGIC_STONE_D_2, EFFECT_MAGIC_STONE_D_3,
+						EFFECT_MAGIC_STONE_D_4, EFFECT_MAGIC_STONE_D_5, EFFECT_MAGIC_STONE_D_6, EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9 },
+				// 魔眼
+				{ EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR, EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE, EFFECT_MAGIC_EYE_OF_LIFE } };
+
+		for (final int[] skills : repeatedSkills) {
+			for (final int id : skills) {
+				if (id == skillId) {
+					stopSkillList(skillId, skills);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 将重复的状态删除 (经验药水、魔眼等等)
+	 * 
+	 * @param _skillId
+	 *            技能ID
+	 * @param repeat_skill
+	 *            重复的技能ID
+	 */
+	private void stopSkillList(final int _skillId, final int[] repeat_skill) {
+		for (final int skillId : repeat_skill) {
+			if (skillId != _skillId) {
+				removeSkillEffect(skillId);
+			}
+		}
 	}
 
 	/**

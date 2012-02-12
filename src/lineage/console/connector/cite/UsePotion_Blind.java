@@ -7,7 +7,6 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CurseBlind;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 药水效果 (黑色药水)
@@ -20,8 +19,8 @@ public class UsePotion_Blind implements UniversalUseItem {
 	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
 		// 删除重复的技能效果
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, CURSE_BLIND); // 法师魔法 (闇盲咒术)
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, DARKNESS); // 法师魔法 (黑闇之影)
+		pc.delRepeatSkillEffect(CURSE_BLIND); // 法师魔法 (闇盲咒术)
+		pc.delRepeatSkillEffect(DARKNESS); // 法师魔法 (黑闇之影)
 
 		// 漂浮之眼肉
 		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {

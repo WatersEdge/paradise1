@@ -66,7 +66,6 @@ import l1j.server.server.serverpackets.S_OwnCharStatus2;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 效果
@@ -103,20 +102,20 @@ public class Effect {
 				skillId = itemId - 42999;
 				time = 900;
 				gfxid = itemId - 39699;
-				DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 与战斗药水等相冲
+				pc.deleteRepeatedSkills(skillId); // 与战斗药水等相冲
 				pc.sendPackets(new S_ServerMessage(1292)); // 狩猎的经验值将会增加。
 				break;
 			case L1ItemId.BLESS_OF_MAZU: // 妈祖祝福平安符
 				skillId = EFFECT_BLESS_OF_MAZU;
 				time = 2400;
 				gfxid = 7321;
-				DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 与妖精属性魔法相冲！
+				pc.deleteRepeatedSkills(skillId); // 与妖精属性魔法相冲！
 				break;
 			case L1ItemId.POTION_OF_BATTLE: // 战斗药水
 				skillId = EFFECT_POTION_OF_BATTLE;
 				time = 3600;
 				gfxid = 7013;
-				DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 与神力药水等相冲
+				pc.deleteRepeatedSkills(skillId); // 与神力药水等相冲
 				break;
 			case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 体力增强卷轴
 			case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增强卷轴
@@ -124,7 +123,7 @@ public class Effect {
 				skillId = itemId - 42999;
 				time = 3600;
 				gfxid = itemId - 40014;
-				DeleteSkillEffect.deleteRepeatedSkills(pc, skillId);
+				pc.deleteRepeatedSkills(skillId);
 				break;
 
 			default:
@@ -133,28 +132,28 @@ public class Effect {
 					gfxid = itemId - 38125;
 					time = 600;
 					isMagicStone = true;
-					DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
 				else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
 					skillId = itemId - 43052;
 					gfxid = itemId - 38126;
 					time = 600;
 					isMagicStone = true;
-					DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
 				else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
 					skillId = itemId - 43053;
 					gfxid = itemId - 38127;
 					time = 600;
 					isMagicStone = true;
-					DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
 				else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
 					skillId = itemId - 43054;
 					gfxid = itemId - 38128;
 					time = 600;
 					isMagicStone = true;
-					DeleteSkillEffect.deleteRepeatedSkills(pc, skillId); // 附魔石不可共存
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
 				else {
 					pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
