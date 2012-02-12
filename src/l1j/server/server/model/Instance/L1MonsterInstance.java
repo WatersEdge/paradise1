@@ -130,8 +130,9 @@ public class L1MonsterInstance extends L1NpcInstance {
 		}
 	}
 
+	// 荧幕范围内进入玩家
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		if (0 < getCurrentHp()) {
 			perceivedFrom.sendPackets(new S_NPCPack(this));
@@ -768,6 +769,15 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 			}
 		}
+		else if (npcid == 81163) { // 吉尔塔斯
+			if (getCurrentHp() <= 5000) {
+				allTargetClear();
+				setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
+				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
+				setStatus(4);
+				broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
+			}
+		}
 	}
 
 	/** 初始化隐藏动作 */
@@ -818,6 +828,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 			setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
 			setStatus(4);
 		}
+		else if (npcid == 81163) { // 吉尔塔斯
+			setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
+			setStatus(4);
+		}
 	}
 
 	public void initHideForMinion(L1NpcInstance leader) {
@@ -861,6 +875,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 		}
 		else if ((npcid >= 46125) && (npcid <= 46128)) {
 			setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
+			setStatus(4);
+		}
+		else if (npcid == 81163) { // 吉尔塔斯
+			setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
 			setStatus(4);
 		}
 	}

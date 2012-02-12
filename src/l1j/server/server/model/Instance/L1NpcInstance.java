@@ -98,6 +98,8 @@ public class L1NpcInstance extends L1Character {
 	public static final int HIDDEN_STATUS_FLY = 2;
 	/** 隐藏状态 ICE */
 	public static final int HIDDEN_STATUS_ICE = 3;
+	/** 隐藏状态 (吉尔塔斯反击屏障) */
+	public static final int HIDDEN_STATUS_COUNTERATTACK_BARRIER = 4;
 	/** 怪物喊话设定？ */
 	public static final int CHAT_TIMING_APPEARANCE = 0;
 	/**  */
@@ -1444,10 +1446,18 @@ public class L1NpcInstance extends L1Character {
 				appearOnGround(pc);
 			}
 		}
+		// 吉尔塔斯反击屏障判断 (解除)
+		else if (getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			if (getCurrentHp() == getMaxHp()) {
+				if (pc.getLocation().getTileLineDistance(getLocation()) <= 2) {
+					appearOnGround(pc);
+				}
+			}
+		}
 	}
 
 	/** 怪物解除遁地、飞天、冰冻 */
-	public void appearOnGround(L1PcInstance pc) {
+	public void appearOnGround(final L1PcInstance pc) {
 		if (getHiddenStatus() == HIDDEN_STATUS_SINK) {
 			setHiddenStatus(HIDDEN_STATUS_NONE);
 			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
@@ -1486,6 +1496,20 @@ public class L1NpcInstance extends L1Character {
 			onNpcAI(); // 怪物AI，开始
 			startChat(CHAT_TIMING_HIDE);
 		}
+		// 吉尔塔斯反击屏障判断 (解除)
+		else if (getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			setHiddenStatus(HIDDEN_STATUS_NONE);
+			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Appear));
+			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
+			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中以外、GM以外
+					&& !pc.isGm()) {
+				_hateList.add(pc, 0);
+				_target = pc;
+			}
+			onNpcAI(); // 怪物AI，开始
+			startChat(CHAT_TIMING_HIDE);
+		}
 	}
 
 	// ■■■■■■■■■■■■■ 移动关连 ■■■■■■■■■■■
@@ -1498,56 +1522,56 @@ public class L1NpcInstance extends L1Character {
 			int ny = 0;
 
 			switch (dir) {
-			case 1:
-				nx = 1;
-				ny = -1;
-				setHeading(1);
-				break;
+				case 1:
+					nx = 1;
+					ny = -1;
+					setHeading(1);
+					break;
 
-			case 2:
-				nx = 1;
-				ny = 0;
-				setHeading(2);
-				break;
+				case 2:
+					nx = 1;
+					ny = 0;
+					setHeading(2);
+					break;
 
-			case 3:
-				nx = 1;
-				ny = 1;
-				setHeading(3);
-				break;
+				case 3:
+					nx = 1;
+					ny = 1;
+					setHeading(3);
+					break;
 
-			case 4:
-				nx = 0;
-				ny = 1;
-				setHeading(4);
-				break;
+				case 4:
+					nx = 0;
+					ny = 1;
+					setHeading(4);
+					break;
 
-			case 5:
-				nx = -1;
-				ny = 1;
-				setHeading(5);
-				break;
+				case 5:
+					nx = -1;
+					ny = 1;
+					setHeading(5);
+					break;
 
-			case 6:
-				nx = -1;
-				ny = 0;
-				setHeading(6);
-				break;
+				case 6:
+					nx = -1;
+					ny = 0;
+					setHeading(6);
+					break;
 
-			case 7:
-				nx = -1;
-				ny = -1;
-				setHeading(7);
-				break;
+				case 7:
+					nx = -1;
+					ny = -1;
+					setHeading(7);
+					break;
 
-			case 0:
-				nx = 0;
-				ny = -1;
-				setHeading(0);
-				break;
+				case 0:
+					nx = 0;
+					ny = -1;
+					setHeading(0);
+					break;
 
-			default:
-				break;
+				default:
+					break;
 
 			}
 
@@ -2296,14 +2320,14 @@ public class L1NpcInstance extends L1Character {
 
 	protected int calcSleepTime(int sleepTime, int type) {
 		switch (getMoveSpeed()) {
-		case 0: // 通常
-			break;
-		case 1: // 加速
-			sleepTime -= (sleepTime * 0.25);
-			break;
-		case 2: // 减速
-			sleepTime *= 2;
-			break;
+			case 0: // 通常
+				break;
+			case 1: // 加速
+				sleepTime -= (sleepTime * 0.25);
+				break;
+			case 2: // 减速
+				sleepTime *= 2;
+				break;
 		}
 		if (getBraveSpeed() == 1) {
 			sleepTime -= (sleepTime * 0.25);
@@ -2467,7 +2491,7 @@ public class L1NpcInstance extends L1Character {
 
 	/** 删除定时器 */
 	protected static class DeleteTimer extends TimerTask {
-		private int _id;
+		private final int _id;
 
 		protected DeleteTimer(int oId) {
 			_id = oId;
