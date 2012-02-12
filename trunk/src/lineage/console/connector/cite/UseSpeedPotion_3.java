@@ -7,7 +7,6 @@ import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 加速药水效果 (三段) (巧克力蛋糕)
@@ -19,7 +18,7 @@ public class UseSpeedPotion_3 implements UniversalUseItem {
 	@Override
 	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_THIRD_SPEED); // 删除重复的三段加速效果
+		pc.delRepeatSkillEffect(STATUS_THIRD_SPEED); // 删除重复的三段加速效果
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)

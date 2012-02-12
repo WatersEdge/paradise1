@@ -6,7 +6,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 药水效果 (增加魔攻)
@@ -18,7 +17,7 @@ public class UsePotion_Wisdom implements UniversalUseItem {
 	@Override
 	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
 
-		DeleteSkillEffect.DeleteEffectOfRepeat(pc, STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
+		pc.delRepeatSkillEffect(STATUS_WISDOM_POTION); // 删除重复的智慧药水效果
 
 		pc.sendPackets(new S_SkillIconWisdomPotion((time / 4))); // 状态图示
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)

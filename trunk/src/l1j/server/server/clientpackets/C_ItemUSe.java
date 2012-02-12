@@ -14,6 +14,11 @@
  */
 package l1j.server.server.clientpackets;
 
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_ANTHARAS;
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
+import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
+import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -60,13 +65,44 @@ public class C_ItemUSe extends ClientBasePacket {
 		// 使用物件的OBJID
 		final int itemObjid = readD();
 
-		// 不能使用道具的状态
-		if (!CheckUtil.checkUseItem(client)) {
+		// 取得使用者
+		final L1PcInstance pc = client.getActiveChar();
+
+		// 角色为空
+		if (pc == null) {
 			return;
 		}
 
-		// 取得使用者
-		final L1PcInstance pc = client.getActiveChar();
+		// 幽灵状态
+		if (pc.isGhost()) {
+			return;
+		}
+
+		// 死亡状态
+		if (pc.isDead()) {
+			return;
+		}
+
+		// 传送状态
+		if (pc.isTeleport()) {
+			return;
+		}
+
+		// 开个人商店中
+		if (pc.isPrivateShop()) {
+			return;
+		}
+
+		// 不能使用道具的地图
+		if (!pc.getMap().isUsableItem()) {
+			pc.sendPackets(new S_ServerMessage(563)); // \f1你无法在这个地方使用。
+			return;
+		}
+
+		// 什么都不能做的状态
+		if (pc.CanNotDoAnything()) {
+			return;
+		}
 
 		// 取得使用道具
 		final L1ItemInstance useItem = pc.getInventory().getItem(itemObjid);
@@ -178,7 +214,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case -4: // 加速类道具 (绿色药水)
 				case -3: // 回魔类道具 (蓝色药水)
 				case -2: // 加血类道具 (治愈药水)
-					if (!CheckUtil.checkUsePotion(client)) {
+					if (pc.hasSkillEffect(DECAY_POTION)) {
+						pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 						return;
 					}
 					if (isClass) {
@@ -302,7 +339,10 @@ public class C_ItemUSe extends ClientBasePacket {
 					break;
 
 				case 16: // 变形卷轴
-					if (!CheckUtil.checkPoly(pc)) {
+					// 取回觉醒技能ID
+					final int awakeSkillId = pc.getAwakeSkillId();
+					if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+						pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 						return;
 					}
 					if (isClass) {

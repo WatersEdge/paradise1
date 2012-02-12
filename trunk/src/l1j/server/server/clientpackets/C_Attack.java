@@ -15,8 +15,6 @@
 package l1j.server.server.clientpackets;
 
 import static l1j.server.server.model.Instance.L1PcInstance.REGENSTATE_ATTACK;
-import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
-import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
 import l1j.server.Config;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.AcceleratorChecker;
@@ -36,24 +34,50 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class C_Attack extends ClientBasePacket {
 
-	public C_Attack(byte[] decrypt, ClientThread client) {
-		super(decrypt);
-		int targetId = readD();
-		int x = readH();
-		int y = readH();
+	public C_Attack(final byte[] decrypt, final ClientThread client) {
 
-		L1PcInstance pc = client.getActiveChar();
+		// 载入资料
+		super(decrypt);
+		final int targetId = readD(); // 目标ID
+		final int x = readH(); // X坐标
+		final int y = readH(); // Y坐标
+
+		// 取得在线角色
+		final L1PcInstance pc = client.getActiveChar();
+
+		// 角色为空
+		if (pc == null) {
+			return;
+		}
 
 		if (pc.isGhost() || pc.isDead() || pc.isTeleport() || pc.isParalyzed() || pc.isSleeped()) {
 			return;
 		}
 
-		L1Object target = L1World.getInstance().findObject(targetId);
+		// 取得目标
+		final L1Object target = L1World.getInstance().findObject(targetId);
 
 		// 确认是否可以攻击
 		// 是否超重
 		if (pc.getInventory().getWeight242() >= 197) {
 			pc.sendPackets(new S_ServerMessage(110)); // \f1当负重过重的时候，无法战斗。
+			return;
+		}
+
+		/*
+		 * // 什么都不能做的状态
+		 * if (CheckUtil.check(client)) {
+		 * return;
+		 * }
+		 */
+
+		// 什么都不能做的状态
+		if (pc.CanNotDoAnything()) {
+			return;
+		}
+
+		// 开个人商店中
+		if (pc.isPrivateShop()) {
 			return;
 		}
 
@@ -67,6 +91,7 @@ public class C_Attack extends ClientBasePacket {
 			return;
 		}
 
+		// PC
 		if (target instanceof L1Character) {
 			// 如果目标距离玩家太远(外挂)
 			if ((target.getMapId() != pc.getMapId()) || (pc.getLocation().getLineDistance(target.getLocation()) > 20D)) {
@@ -74,8 +99,9 @@ public class C_Attack extends ClientBasePacket {
 			}
 		}
 
+		// NPC
 		if (target instanceof L1NpcInstance) {
-			int hiddenStatus = ((L1NpcInstance) target).getHiddenStatus();
+			final int hiddenStatus = ((L1NpcInstance) target).getHiddenStatus();
 			// 如果目标躲到土里面，或是飞起來了
 			if ((hiddenStatus == L1NpcInstance.HIDDEN_STATUS_SINK) || (hiddenStatus == L1NpcInstance.HIDDEN_STATUS_FLY)) {
 				return;
@@ -84,33 +110,27 @@ public class C_Attack extends ClientBasePacket {
 
 		// 是否要检查攻击的间隔
 		if (Config.CHECK_ATTACK_INTERVAL) {
-			int result;
+			final int result;
 			result = pc.getAcceleratorChecker().checkInterval(AcceleratorChecker.ACT_TYPE.ATTACK);
 			if (result == AcceleratorChecker.R_DISPOSED) {
 				return;
 			}
 		}
 
-		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 取消绝对屏障
-			pc.removeSkillEffect(ABSOLUTE_BARRIER);
-		}
-		if (pc.hasSkillEffect(MEDITATION)) { // 取消冥想效果
-			pc.removeSkillEffect(MEDITATION);
-		}
-
+		pc.delAbsoluteBarrier(); // 取消绝对屏障
+		pc.delMeditation(); // 取消冥想效果
 		pc.delInvis(); // 解除隐形状态
-
-		pc.setRegenState(REGENSTATE_ATTACK);
+		pc.setRegenState(REGENSTATE_ATTACK); // 设置恢复状态
 
 		if ((target != null) && !((L1Character) target).isDead()) {
 			target.onAction(pc);
 		}
 		else { // 目标为空或死亡
-			L1Character cha = new L1Character();
+			final L1Character cha = new L1Character();
 			cha.setId(targetId);
 			cha.setX(x);
 			cha.setY(y);
-			L1Attack atk = new L1Attack(pc, cha);
+			final L1Attack atk = new L1Attack(pc, cha);
 			atk.actionPc();
 		}
 	}

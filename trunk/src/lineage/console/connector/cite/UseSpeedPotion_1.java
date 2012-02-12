@@ -11,7 +11,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillSound;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.delete.DeleteSkillEffect;
 
 /**
  * 加速药水效果 (一段)
@@ -32,17 +31,17 @@ public class UseSpeedPotion_1 implements UniversalUseItem {
 		pc.setDrink(false);
 
 		// 删除重复的一段加速状态
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, STATUS_HASTE); // 一段加速
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, HASTE); // 加速术
-		DeleteSkillEffect.DeleteEffectOfGreenPotion(pc, GREATER_HASTE); // // 强力加速术
+		pc.delEffectOfGreenPotion(STATUS_HASTE); // 一段加速
+		pc.delEffectOfGreenPotion(HASTE); // 加速术
+		pc.delEffectOfGreenPotion(GREATER_HASTE); // // 强力加速术
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (自己看得到)
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid)); // 效果动画 (同画面的其他人看得到)
 
 		// 删除重复的缓速状态 (相互抵消、不加速)
 		if (pc.getMoveSpeed() == 2) {
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, SLOW); // 缓速术
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, MASS_SLOW); // 集体缓速术
-			DeleteSkillEffect.DeleteEffectOfSlow(pc, ENTANGLE); // 地面障碍
+			pc.delEffectOfSlow(SLOW); // 缓速术
+			pc.delEffectOfSlow(MASS_SLOW); // 集体缓速术
+			pc.delEffectOfSlow(ENTANGLE); // 地面障碍
 		}
 		else {
 			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time)); // 加速效果与时间 (自己看得到)
