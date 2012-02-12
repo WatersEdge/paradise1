@@ -34,7 +34,6 @@ import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1EtcItem;
 import lineage.console.ItemClass;
-import lineage.console.utils.CheckUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -238,8 +237,8 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (pc.hasItemDelay(L1ItemDelay.WEAPON) == true) {
 						return;
 					}
-					if (CheckUtil.checkEquipped(pc, useItem)) {
-						CheckUtil.useWeapon(pc, useItem);
+					if (pc.checkEquipped(useItem)) {
+						pc.setEquippedWeapon(useItem);
 					}
 					break;
 
@@ -261,8 +260,8 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (pc.hasItemDelay(L1ItemDelay.ARMOR) == true) {
 						return;
 					}
-					if (CheckUtil.checkEquipped(pc, useItem)) {
-						CheckUtil.useArmor(pc, useItem);
+					if (pc.checkEquipped(useItem)) {
+						pc.setEquippedArmor(useItem);
 					}
 					break;
 
