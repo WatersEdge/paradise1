@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.console.ItemClass;
 import l1j.server.server.IdFactory;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -33,7 +34,6 @@ import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Weapon;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
-import lineage.console.ItemClass;
 
 /**
  * 武器、防具、道具资料表

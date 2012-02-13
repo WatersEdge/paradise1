@@ -22,6 +22,7 @@ import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import l1j.server.console.ItemClass;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1ItemDelay;
 import l1j.server.server.model.L1PcInventory;
@@ -33,7 +34,6 @@ import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1EtcItem;
-import lineage.console.ItemClass;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
