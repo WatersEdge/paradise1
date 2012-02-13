@@ -14,7 +14,6 @@
  */
 package l1j.server.server.model.Instance;
 
-import l1j.server.server.utils.Random;
 import java.util.logging.Logger;
 
 import l1j.server.server.GeneralThreadPool;
@@ -27,6 +26,7 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.npc.L1NpcHtml;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.utils.Random;
 
 // Referenced classes of package l1j.server.server.model:
 // L1NpcInstance, L1Teleport, L1NpcTalkData, L1PcInstance,
@@ -365,6 +365,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		public TeleportDelyTimer() {
 		}
 
+		@Override
 		public void run() {
 			try {
 				_isNowDely = true;

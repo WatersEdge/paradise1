@@ -3,8 +3,8 @@ package lineage.item.etcitem.potion.magicattack;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.connector.cite.UsePotion_Wisdom;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.UsePotion_Wisdom;
 
 /**
  * 福利慎重药水 - 49307

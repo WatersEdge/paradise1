@@ -81,7 +81,6 @@ import l1j.server.server.serverpackets.S_Strup;
 import l1j.server.server.serverpackets.S_TrueTarget;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
 import l1j.server.server.templates.L1BookMark;
-
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.Random;
 import l1j.server.server.utils.collections.Lists;

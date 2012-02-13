@@ -14,8 +14,6 @@
  */
 package l1j.server.server.model.npc.action;
 
-import org.w3c.dom.Element;
-
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1Teleport;
@@ -23,6 +21,8 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.npc.L1NpcHtml;
 import l1j.server.server.serverpackets.S_ServerMessage;
+
+import org.w3c.dom.Element;
 
 /**
  * NPC传送动作

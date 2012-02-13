@@ -14,6 +14,7 @@
  */
 package l1j.server.server.model.skill;
 
+import static l1j.server.server.model.skill.L1SkillId.*;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.datatables.NpcTable;
@@ -66,8 +67,6 @@ import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Strup;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.Random;
-
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 /**
  * Buff使用率

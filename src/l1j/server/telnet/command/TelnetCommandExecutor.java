@@ -14,8 +14,10 @@
  */
 package l1j.server.telnet.command;
 
+import static l1j.server.telnet.command.TelnetCommandResult.CMD_INTERNAL_ERROR;
+import static l1j.server.telnet.command.TelnetCommandResult.CMD_NOT_FOUND;
+
 import java.util.StringTokenizer;
-import static l1j.server.telnet.command.TelnetCommandResult.*;
 
 /**
  * Telnet指令执行

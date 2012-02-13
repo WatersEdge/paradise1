@@ -34,6 +34,7 @@ public class S_LoginGame extends ServerBasePacket {
 		writeC(0xc1);
 	}
 
+	@Override
 	public byte[] getContent() {
 		return getBytes();
 	}

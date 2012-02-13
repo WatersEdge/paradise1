@@ -14,8 +14,17 @@
  */
 package l1j.server.server.serverpackets;
 
-import static l1j.server.server.model.skill.L1SkillId.*;
-
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
+import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_CRAY;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_SAELL;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_MAGIC_EYE_OF_AHTHARTS;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_HP;
+import static l1j.server.server.model.skill.L1SkillId.RESIST_FEAR;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
 import l1j.server.server.model.Instance.L1PcInstance;

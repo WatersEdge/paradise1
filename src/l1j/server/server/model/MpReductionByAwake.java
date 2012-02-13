@@ -18,7 +18,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import l1j.server.server.model.L1Awake;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**

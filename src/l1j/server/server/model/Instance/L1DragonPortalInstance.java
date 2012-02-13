@@ -16,7 +16,6 @@ package l1j.server.server.model.Instance;
 
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
-
 import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1NpcTalkData;

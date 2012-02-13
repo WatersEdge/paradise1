@@ -189,7 +189,7 @@ public class C_CommonClick {
 					intel = 255;
 				}
 				int accessLevel = rs.getShort("AccessLevel");
-				Timestamp _birthday = (Timestamp) rs.getTimestamp("birthday");
+				Timestamp _birthday = rs.getTimestamp("birthday");
 				SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
 				int birthday = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
 

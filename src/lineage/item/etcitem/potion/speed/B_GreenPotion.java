@@ -3,8 +3,8 @@ package lineage.item.etcitem.potion.speed;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.connector.cite.UseSpeedPotion_1;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.UseSpeedPotion_1;
 
 /**
  * 受祝福的 绿色药水 - 140013

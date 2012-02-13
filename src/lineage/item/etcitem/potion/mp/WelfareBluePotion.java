@@ -3,8 +3,8 @@ package lineage.item.etcitem.potion.mp;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.connector.cite.UsePotion_RestorationMp;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.UsePotion_RestorationMp;
 
 /**
  * 福利蓝色药水 - 49306

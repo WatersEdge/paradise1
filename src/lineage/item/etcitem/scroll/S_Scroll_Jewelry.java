@@ -3,8 +3,8 @@ package lineage.item.etcitem.scroll;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.ScrollEnchant;
-import lineage.console.connector.cite.CiteScrollEnchant;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.CiteScrollEnchant;
 
 /**
  * 饰品强化卷轴 - 49148

@@ -14,6 +14,9 @@
  */
 package l1j.server.telnet.command;
 
+import static l1j.server.telnet.command.TelnetCommandResult.CMD_INTERNAL_ERROR;
+import static l1j.server.telnet.command.TelnetCommandResult.CMD_OK;
+
 import java.util.StringTokenizer;
 
 import l1j.server.server.GameServer;
@@ -26,7 +29,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ChatPacket;
 import l1j.server.server.storage.mysql.MySqlCharacterStorage;
 import l1j.server.server.utils.IntRange;
-import static l1j.server.telnet.command.TelnetCommandResult.*;
 
 /**
  * Telnet指令

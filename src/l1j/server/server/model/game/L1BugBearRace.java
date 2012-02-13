@@ -351,7 +351,7 @@ public class L1BugBearRace {
 
 				for (int i = 0; i < _runner.length; i++) {
 					if (getBetCount(i) > 0) {
-						_allotment_percentage[i] = (double) (getAllBet() / (getBetCount(i)) / 500D);
+						_allotment_percentage[i] = (getAllBet() / (getBetCount(i)) / 500D);
 					}
 					else {
 						_allotment_percentage[i] = 0.0;

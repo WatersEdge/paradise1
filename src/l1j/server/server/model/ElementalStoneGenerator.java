@@ -15,7 +15,6 @@
 package l1j.server.server.model;
 
 import java.util.ArrayList;
-import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +24,7 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.types.Point;
+import l1j.server.server.utils.Random;
 
 /**
  * 生成精灵元素石
