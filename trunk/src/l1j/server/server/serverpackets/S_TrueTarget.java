@@ -39,15 +39,15 @@ public class S_TrueTarget extends ServerBasePacket {
 	 *            附加讯息
 	 */
 	public S_TrueTarget(final int targetId, final int objectId, final String message) {
-		buildPacket(targetId, objectId, message);
+		this.buildPacket(targetId, objectId, message);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -56,9 +56,9 @@ public class S_TrueTarget extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int targetId, final int objectId, final String message) {
-		writeC(Opcodes.S_OPCODE_TRUETARGET);
-		writeD(targetId);
-		writeD(objectId);
-		writeS(message);
+		this.writeC(Opcodes.S_OPCODE_TRUETARGET);
+		this.writeD(targetId);
+		this.writeD(objectId);
+		this.writeS(message);
 	}
 }

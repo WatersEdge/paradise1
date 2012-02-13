@@ -88,51 +88,51 @@ public class S_DelSkill extends ServerBasePacket {
 			final int k4, final int l4, final int i5, final int j5, final int k5, final int l5, final int m5, final int n5, final int o5, final int p5) {
 		final int i6 = i1 + j1 + k1 + l1;
 		final int j6 = i2 + j2;
-		writeC(Opcodes.S_OPCODE_DELSKILL);
+		this.writeC(Opcodes.S_OPCODE_DELSKILL);
 		if ((i6 > 0) && (j6 == 0)) {
-			writeC(50);
+			this.writeC(50);
 		}
 		else if (j6 > 0) {
-			writeC(100);
+			this.writeC(100);
 		}
 		else {
-			writeC(32);
+			this.writeC(32);
 		}
-		writeC(i);
-		writeC(j);
-		writeC(k);
-		writeC(l);
-		writeC(i1);
-		writeC(j1);
-		writeC(k1);
-		writeC(l1);
-		writeC(i2);
-		writeC(j2);
-		writeC(k2);
-		writeC(l2);
-		writeC(i3);
-		writeC(j3);
-		writeC(k3);
-		writeC(l3);
-		writeC(i4);
-		writeC(j4);
-		writeC(k4);
-		writeC(l4);
-		writeC(i5);
-		writeC(j5);
-		writeC(k5);
-		writeC(l5);
-		writeC(m5);
-		writeC(n5);
-		writeC(o5);
-		writeC(p5);
-		writeD(0);
-		writeD(0);
+		this.writeC(i);
+		this.writeC(j);
+		this.writeC(k);
+		this.writeC(l);
+		this.writeC(i1);
+		this.writeC(j1);
+		this.writeC(k1);
+		this.writeC(l1);
+		this.writeC(i2);
+		this.writeC(j2);
+		this.writeC(k2);
+		this.writeC(l2);
+		this.writeC(i3);
+		this.writeC(j3);
+		this.writeC(k3);
+		this.writeC(l3);
+		this.writeC(i4);
+		this.writeC(j4);
+		this.writeC(k4);
+		this.writeC(l4);
+		this.writeC(i5);
+		this.writeC(j5);
+		this.writeC(k5);
+		this.writeC(l5);
+		this.writeC(m5);
+		this.writeC(n5);
+		this.writeC(o5);
+		this.writeC(p5);
+		this.writeD(0);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

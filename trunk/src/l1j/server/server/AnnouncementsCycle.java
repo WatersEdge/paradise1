@@ -42,17 +42,17 @@ public class AnnouncementsCycle {
 	class AnnouncementsCycleTask implements Runnable {
 		@Override
 		public void run() {
-			scanfile();
+			AnnouncementsCycle.this.scanfile();
 			// 启用修改时间显示 - 〈yyyy.MM.dd〉
-			if (AnnounceTimeDisplay) {
+			if (AnnouncementsCycle.this.AnnounceTimeDisplay) {
 				final SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
-				ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
+				AnnouncementsCycle.this.ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
 			}
-			final Iterator<String> iterator = list.listIterator();
+			final Iterator<String> iterator = AnnouncementsCycle.this.list.listIterator();
 			if (iterator.hasNext()) {
-				round %= list.size();
-				ShowAnnouncementsCycle(list.get(round));
-				round++;
+				AnnouncementsCycle.this.round %= AnnouncementsCycle.this.list.size();
+				AnnouncementsCycle.this.ShowAnnouncementsCycle(AnnouncementsCycle.this.list.get(AnnouncementsCycle.this.round));
+				AnnouncementsCycle.this.round++;
 			}
 		}
 	}
@@ -90,7 +90,7 @@ public class AnnouncementsCycle {
 	List<String> list = new FastList<String>();
 
 	private AnnouncementsCycle() {
-		cycle();
+		this.cycle();
 	}
 
 	private void cycle() {
@@ -115,16 +115,16 @@ public class AnnouncementsCycle {
 	 */
 	private void scanfile() {
 		try {
-			fileEnsure(); // 先确保档案存在
-			if ((dir.lastModified() > lastmodify) || firstboot) { // 如果有修改过
-				list.clear(); // 清空容器
+			this.fileEnsure(); // 先确保档案存在
+			if ((dir.lastModified() > lastmodify) || this.firstboot) { // 如果有修改过
+				this.list.clear(); // 清空容器
 				buf = new BufferedReader(new InputStreamReader(new FileInputStream(dir)));
-				while ((line = buf.readLine()) != null) {
-					if (line.startsWith("#") || line.isEmpty()) {
+				while ((this.line = buf.readLine()) != null) {
+					if (this.line.startsWith("#") || this.line.isEmpty()) {
 						continue;
 					}
-					sb.delete(0, sb.length()); // 清空 buffer [未来扩充用]
-					list.add(line);
+					this.sb.delete(0, this.sb.length()); // 清空 buffer [未来扩充用]
+					this.list.add(this.line);
 				}
 				lastmodify = dir.lastModified(); // 回存修改时间
 			}
@@ -137,7 +137,7 @@ public class AnnouncementsCycle {
 		} finally {
 			try {
 				buf.close();
-				firstboot = false;
+				this.firstboot = false;
 			}
 			catch (final IOException e) {
 				e.printStackTrace();

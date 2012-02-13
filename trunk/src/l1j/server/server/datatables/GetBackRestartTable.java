@@ -61,7 +61,7 @@ public class GetBackRestartTable {
 				gbr.setLocY(rs.getInt("locy"));
 				gbr.setMapId(rs.getShort("mapid"));
 
-				_getbackrestart.put(new Integer(area), gbr);
+				this._getbackrestart.put(new Integer(area), gbr);
 			}
 		}
 		catch (final SQLException e) {
@@ -79,7 +79,7 @@ public class GetBackRestartTable {
 	 * @return
 	 */
 	public L1GetBackRestart[] getGetBackRestartTableList() {
-		return _getbackrestart.values().toArray(new L1GetBackRestart[_getbackrestart.size()]);
+		return this._getbackrestart.values().toArray(new L1GetBackRestart[this._getbackrestart.size()]);
 	}
 
 }

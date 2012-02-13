@@ -43,8 +43,8 @@ public class C_UseSkill extends ClientBasePacket {
 
 	public C_UseSkill(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		final int row = readC();
-		final int column = readC();
+		final int row = this.readC();
+		final int column = this.readC();
 		final int skillId = (row * 8) + column + 1;
 		String charName = null;
 		String message = null;
@@ -85,26 +85,26 @@ public class C_UseSkill extends ClientBasePacket {
 		if (abyte0.length > 4) {
 			try {
 				if ((skillId == CALL_CLAN) || (skillId == RUN_CLAN)) { // 呼唤盟友、援护盟友
-					charName = readS();
+					charName = this.readS();
 				}
 				else if (skillId == TRUE_TARGET) { // 精准目标
-					targetId = readD();
-					targetX = readH();
-					targetY = readH();
-					message = readS();
+					targetId = this.readD();
+					targetX = this.readH();
+					targetY = this.readH();
+					message = this.readS();
 				}
 				else if ((skillId == TELEPORT) || (skillId == MASS_TELEPORT)) { // 指定传送、集体传送
-					readH(); // MapID
-					targetId = readD(); // Bookmark ID
+					this.readH(); // MapID
+					targetId = this.readD(); // Bookmark ID
 				}
 				else if ((skillId == FIRE_WALL) || (skillId == LIFE_STREAM)) { // 火牢、治愈能量风暴
-					targetX = readH();
-					targetY = readH();
+					targetX = this.readH();
+					targetY = this.readH();
 				}
 				else {
-					targetId = readD();
-					targetX = readH();
-					targetY = readH();
+					targetId = this.readD();
+					targetX = this.readH();
+					targetY = this.readH();
 				}
 			}
 			catch (final Exception e) {

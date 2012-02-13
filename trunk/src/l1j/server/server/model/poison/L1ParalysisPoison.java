@@ -34,28 +34,28 @@ public class L1ParalysisPoison extends L1Poison {
 	private class ParalysisPoisonTimer extends Thread {
 		@Override
 		public void run() {
-			_target.setSkillEffect(STATUS_POISON_PARALYZING, 0);
+			L1ParalysisPoison.this._target.setSkillEffect(STATUS_POISON_PARALYZING, 0);
 
 			try {
-				Thread.sleep(_delay); // 麻痺するまでの猶予時間を待つ。
+				Thread.sleep(L1ParalysisPoison.this._delay); // 麻痺するまでの猶予時間を待つ。
 			}
 			catch (final InterruptedException e) {
-				_target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
+				L1ParalysisPoison.this._target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
 				return;
 			}
 
 			// エフェクトを緑から灰色へ
-			_effectId = 2;
-			_target.setPoisonEffect(2);
+			L1ParalysisPoison.this._effectId = 2;
+			L1ParalysisPoison.this._target.setPoisonEffect(2);
 
-			if (_target instanceof L1PcInstance) {
-				final L1PcInstance player = (L1PcInstance) _target;
+			if (L1ParalysisPoison.this._target instanceof L1PcInstance) {
+				final L1PcInstance player = (L1PcInstance) L1ParalysisPoison.this._target;
 				if (player.isDead() == false) {
 					player.sendPackets(new S_Paralysis(1, true)); // 麻痺状態にする
-					_timer = new ParalysisTimer();
-					GeneralThreadPool.getInstance().execute(_timer); // 麻痺タイマー開始
-					if (isInterrupted()) {
-						_timer.interrupt();
+					L1ParalysisPoison.this._timer = new ParalysisTimer();
+					GeneralThreadPool.getInstance().execute(L1ParalysisPoison.this._timer); // 麻痺タイマー開始
+					if (this.isInterrupted()) {
+						L1ParalysisPoison.this._timer.interrupt();
 					}
 				}
 			}
@@ -65,20 +65,20 @@ public class L1ParalysisPoison extends L1Poison {
 	private class ParalysisTimer extends Thread {
 		@Override
 		public void run() {
-			_target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
-			_target.setSkillEffect(STATUS_POISON_PARALYZED, 0);
+			L1ParalysisPoison.this._target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
+			L1ParalysisPoison.this._target.setSkillEffect(STATUS_POISON_PARALYZED, 0);
 			try {
-				Thread.sleep(_time);
+				Thread.sleep(L1ParalysisPoison.this._time);
 			}
 			catch (final InterruptedException e) {
 			}
 
-			_target.killSkillEffectTimer(STATUS_POISON_PARALYZED);
-			if (_target instanceof L1PcInstance) {
-				final L1PcInstance player = (L1PcInstance) _target;
+			L1ParalysisPoison.this._target.killSkillEffectTimer(STATUS_POISON_PARALYZED);
+			if (L1ParalysisPoison.this._target instanceof L1PcInstance) {
+				final L1PcInstance player = (L1PcInstance) L1ParalysisPoison.this._target;
 				if (!player.isDead()) {
 					player.sendPackets(new S_Paralysis(1, false)); // 麻痺状態を解除する
-					cure(); // 解毒処理
+					L1ParalysisPoison.this.cure(); // 解毒処理
 				}
 			}
 		}
@@ -104,35 +104,35 @@ public class L1ParalysisPoison extends L1Poison {
 	private int _effectId = 1;
 
 	private L1ParalysisPoison(final L1Character cha, final int delay, final int time) {
-		_target = cha;
-		_delay = delay;
-		_time = time;
+		this._target = cha;
+		this._delay = delay;
+		this._time = time;
 
-		doInfection();
+		this.doInfection();
 	}
 
 	@Override
 	public void cure() {
-		if (_timer != null) {
-			_timer.interrupt(); // 麻痺毒タイマー解除
+		if (this._timer != null) {
+			this._timer.interrupt(); // 麻痺毒タイマー解除
 		}
 
-		_target.setPoisonEffect(0);
-		_target.setPoison(null);
+		this._target.setPoisonEffect(0);
+		this._target.setPoison(null);
 	}
 
 	@Override
 	public int getEffectId() {
-		return _effectId;
+		return this._effectId;
 	}
 
 	private void doInfection() {
-		sendMessageIfPlayer(_target, 212);
-		_target.setPoisonEffect(1);
+		sendMessageIfPlayer(this._target, 212);
+		this._target.setPoisonEffect(1);
 
-		if (_target instanceof L1PcInstance) {
-			_timer = new ParalysisPoisonTimer();
-			GeneralThreadPool.getInstance().execute(_timer);
+		if (this._target instanceof L1PcInstance) {
+			this._timer = new ParalysisPoisonTimer();
+			GeneralThreadPool.getInstance().execute(this._timer);
 		}
 	}
 }

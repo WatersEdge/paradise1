@@ -28,19 +28,19 @@ public class S_OwnCharStatus2 extends ServerBasePacket {
 
 	/** 更新六項能力值以及負重 */
 	public S_OwnCharStatus2(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_OWNCHARSTATUS2);
-		writeC(pc.getStr());
-		writeC(pc.getInt());
-		writeC(pc.getWis());
-		writeC(pc.getDex());
-		writeC(pc.getCon());
-		writeC(pc.getCha());
-		writeC(pc.getInventory().getWeight242());
+		this.writeC(Opcodes.S_OPCODE_OWNCHARSTATUS2);
+		this.writeC(pc.getStr());
+		this.writeC(pc.getInt());
+		this.writeC(pc.getWis());
+		this.writeC(pc.getDex());
+		this.writeC(pc.getCon());
+		this.writeC(pc.getCha());
+		this.writeC(pc.getInventory().getWeight242());
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

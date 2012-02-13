@@ -46,11 +46,11 @@ public class WeaponSkillTable {
 	private final Map<Integer, L1WeaponSkill> _weaponIdIndex = Maps.newMap();
 
 	private WeaponSkillTable() {
-		loadWeaponSkill();
+		this.loadWeaponSkill();
 	}
 
 	public L1WeaponSkill getTemplate(final int weaponId) {
-		return _weaponIdIndex.get(weaponId);
+		return this._weaponIdIndex.get(weaponId);
 	}
 
 	private void fillWeaponSkillTable(final ResultSet rs) throws SQLException {
@@ -67,9 +67,9 @@ public class WeaponSkillTable {
 			final boolean isArrowType = rs.getBoolean("arrow_type");
 			final int attr = rs.getInt("attr");
 			final L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability, fixDamage, randomDamage, area, skillId, skillTime, effectId, effectTarget, isArrowType, attr);
-			_weaponIdIndex.put(weaponId, weaponSkill);
+			this._weaponIdIndex.put(weaponId, weaponSkill);
 		}
-		_log.config("魔法武器列表 " + _weaponIdIndex.size() + "件");
+		_log.config("魔法武器列表 " + this._weaponIdIndex.size() + "件");
 	}
 
 	private void loadWeaponSkill() {
@@ -81,7 +81,7 @@ public class WeaponSkillTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM weapon_skill");
 			rs = pstm.executeQuery();
-			fillWeaponSkillTable(rs);
+			this.fillWeaponSkillTable(rs);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);

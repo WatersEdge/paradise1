@@ -31,12 +31,12 @@ public class L1BoardInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance player) {
-		player.sendPackets(new S_Board(getId()));
+		player.sendPackets(new S_Board(this.getId()));
 	}
 
 	@Override
 	public void onAction(final L1PcInstance player, final int number) {
-		player.sendPackets(new S_Board(getId(), number));
+		player.sendPackets(new S_Board(this.getId(), number));
 	}
 
 	public void onActionRead(final L1PcInstance player, final int number) {

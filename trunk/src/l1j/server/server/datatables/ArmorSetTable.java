@@ -48,7 +48,7 @@ public class ArmorSetTable {
 	private final List<L1ArmorSets> _armorSetList = Lists.newList();
 
 	private ArmorSetTable() {
-		load();
+		this.load();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class ArmorSetTable {
 	 * @return 所有套装列表
 	 */
 	public L1ArmorSets[] getAllList() {
-		return _armorSetList.toArray(new L1ArmorSets[_armorSetList.size()]);
+		return this._armorSetList.toArray(new L1ArmorSets[this._armorSetList.size()]);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class ArmorSetTable {
 			as.setDefenseFire(rs.getInt("defense_fire")); // 增加火属性防御
 			as.setDefenseEarth(rs.getInt("defense_earth")); // 增加地属性防御
 
-			_armorSetList.add(as);
+			this._armorSetList.add(as);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class ArmorSetTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM armor_set");
 			rs = pstm.executeQuery();
-			fillTable(rs);
+			this.fillTable(rs);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);

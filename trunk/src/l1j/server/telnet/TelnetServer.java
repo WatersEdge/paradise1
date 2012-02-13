@@ -31,17 +31,17 @@ public class TelnetServer {
 		@Override
 		public void run() {
 			try {
-				_sock = new ServerSocket(Config.TELNET_SERVER_PORT);
+				this._sock = new ServerSocket(Config.TELNET_SERVER_PORT);
 
 				while (true) {
-					final Socket sock = _sock.accept();
+					final Socket sock = this._sock.accept();
 					new TelnetConnection(sock);
 				}
 			}
 			catch (final IOException e) {
 			}
 			try {
-				_sock.close();
+				this._sock.close();
 			}
 			catch (final IOException e) {
 			}

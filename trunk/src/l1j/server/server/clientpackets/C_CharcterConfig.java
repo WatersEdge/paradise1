@@ -33,8 +33,8 @@ public class C_CharcterConfig extends ClientBasePacket {
 		super(abyte0);
 		if (Config.CHARACTER_CONFIG_IN_SERVER_SIDE) {
 			final L1PcInstance pc = client.getActiveChar();
-			final int length = readD() - 3;
-			final byte data[] = readByte();
+			final int length = this.readD() - 3;
+			final byte data[] = this.readByte();
 			final int count = CharacterConfigTable.getInstance().countCharacterConfig(pc.getId());
 			if (count == 0) {
 				CharacterConfigTable.getInstance().storeCharacterConfig(pc.getId(), length, data);

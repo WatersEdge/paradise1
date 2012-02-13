@@ -35,15 +35,15 @@ public class S_Sound extends ServerBasePacket {
 	 *            音效编号
 	 */
 	public S_Sound(final int sound) {
-		buildPacket(sound);
+		this.buildPacket(sound);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,8 +52,8 @@ public class S_Sound extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int sound) {
-		writeC(Opcodes.S_OPCODE_SOUND);
-		writeC(0); // repeat
-		writeH(sound);
+		this.writeC(Opcodes.S_OPCODE_SOUND);
+		this.writeC(0); // repeat
+		this.writeH(sound);
 	}
 }

@@ -28,45 +28,45 @@ public class L1Castle {
 	private int _publicMoney;
 
 	public L1Castle(final int id, final String name) {
-		_id = id;
-		_name = name;
+		this._id = id;
+		this._name = name;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public int getPublicMoney() {
-		if (_publicMoney < 0) {
+		if (this._publicMoney < 0) {
 			return 0;
 		}
 		else {
-			return _publicMoney;
+			return this._publicMoney;
 		}
 	}
 
 	public int getTaxRate() {
-		return _taxRate;
+		return this._taxRate;
 	}
 
 	public Calendar getWarTime() {
-		return _warTime;
+		return this._warTime;
 	}
 
 	public void setPublicMoney(final int i) {
-		_publicMoney = i;
+		this._publicMoney = i;
 	}
 
 	public void setTaxRate(final int i) {
-		_taxRate = i;
+		this._taxRate = i;
 	}
 
 	public void setWarTime(final Calendar i) {
-		_warTime = i;
+		this._warTime = i;
 	}
 
 }

@@ -25,13 +25,13 @@ import l1j.server.server.Opcodes;
 public class S_SkillIconGFX extends ServerBasePacket {
 
 	public S_SkillIconGFX(final int i, final int j) {
-		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
-		writeC(i);
-		writeH(j);
+		this.writeC(Opcodes.S_OPCODE_SKILLICONGFX);
+		this.writeC(i);
+		this.writeH(j);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

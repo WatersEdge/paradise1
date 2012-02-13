@@ -64,7 +64,7 @@ public class AuctionTimeController implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				checkAuctionDeadline();
+				this.checkAuctionDeadline();
 				Thread.sleep(60000);
 			}
 		}
@@ -78,8 +78,8 @@ public class AuctionTimeController implements Runnable {
 	private void checkAuctionDeadline() {
 		final AuctionBoardTable boardTable = new AuctionBoardTable();
 		for (final L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
-			if (board.getDeadline().before(getRealTime())) {
-				endAuction(board);
+			if (board.getDeadline().before(this.getRealTime())) {
+				this.endAuction(board);
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public class AuctionTimeController implements Runnable {
 		// 将血盟小屋的状态设定为不拍卖
 		final L1House house = HouseTable.getInstance().getHouseTable(houseId);
 		house.setOnSale(false);
-		final Calendar cal = getRealTime();
+		final Calendar cal = this.getRealTime();
 		cal.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -161,9 +161,9 @@ public class AuctionTimeController implements Runnable {
 				// 恭喜。%n你在拍卖会上以 %0金币成交。%n现在去您的血盟小屋后，可利用多样的设备。%n谢谢。%n%n
 				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
 			}
-			deleteHouseInfo(houseId);
-			setHouseInfo(houseId, bidderId);
-			deleteNote(houseId);
+			this.deleteHouseInfo(houseId);
+			this.setHouseInfo(houseId, bidderId);
+			this.deleteNote(houseId);
 		}
 		else if ((oldOwnerId == 0) && (bidderId != 0)) { // 在先前的拥有者没有中标
 			final L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
@@ -172,8 +172,8 @@ public class AuctionTimeController implements Runnable {
 				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
 			}
 
-			setHouseInfo(houseId, bidderId);
-			deleteNote(houseId);
+			this.setHouseInfo(houseId, bidderId);
+			this.deleteNote(houseId);
 		}
 		else if ((oldOwnerId != 0) && (bidderId == 0)) { // 以前没有人成功竞投无
 			final L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
@@ -181,11 +181,11 @@ public class AuctionTimeController implements Runnable {
 				// 在拍卖期间并没有出现提出适当价格的人，所以拍卖取消。%n因此所有权还在您那里。%n谢谢。%n%n
 				oldOwnerPc.sendPackets(new S_ServerMessage(528));
 			}
-			deleteNote(houseId);
+			this.deleteNote(houseId);
 		}
 		else if ((oldOwnerId == 0) && (bidderId == 0)) { // 在先前的拥有者没有中标
 			// 设定五天之后再次竞标
-			final Calendar cal = getRealTime();
+			final Calendar cal = this.getRealTime();
 			cal.add(Calendar.DATE, 5); // 5天后
 			cal.set(Calendar.MINUTE, 0);
 			cal.set(Calendar.SECOND, 0);

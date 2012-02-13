@@ -31,13 +31,13 @@ public class L1NpcListedAction extends L1NpcXmlAction {
 
 	public L1NpcListedAction(final Element element) {
 		super(element);
-		_actions = L1NpcXmlParser.listActions(element);
+		this._actions = L1NpcXmlParser.listActions(element);
 	}
 
 	@Override
 	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
 		L1NpcHtml result = null;
-		for (final L1NpcAction action : _actions) {
+		for (final L1NpcAction action : this._actions) {
 			if (!action.acceptsRequest(actionName, pc, obj)) {
 				continue;
 			}
@@ -52,7 +52,7 @@ public class L1NpcListedAction extends L1NpcXmlAction {
 	@Override
 	public L1NpcHtml executeWithAmount(final String actionName, final L1PcInstance pc, final L1Object obj, final int amount) {
 		L1NpcHtml result = null;
-		for (final L1NpcAction action : _actions) {
+		for (final L1NpcAction action : this._actions) {
 			if (!action.acceptsRequest(actionName, pc, obj)) {
 				continue;
 			}

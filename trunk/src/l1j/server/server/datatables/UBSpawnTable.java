@@ -47,7 +47,7 @@ public class UBSpawnTable {
 	private final Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
 
 	private UBSpawnTable() {
-		loadSpawnTable();
+		this.loadSpawnTable();
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class UBSpawnTable {
 
 	public L1UbPattern getPattern(final int ubId, final int patternNumer) {
 		final L1UbPattern pattern = new L1UbPattern();
-		for (final L1UbSpawn spawn : _spawnTable.values()) {
+		for (final L1UbSpawn spawn : this._spawnTable.values()) {
 			if ((spawn.getUbId() == ubId) && (spawn.getPattern() == patternNumer)) {
 				pattern.addSpawn(spawn.getGroup(), spawn);
 			}
@@ -95,7 +95,7 @@ public class UBSpawnTable {
 	}
 
 	public L1UbSpawn getSpawn(final int spawnId) {
-		return _spawnTable.get(spawnId);
+		return this._spawnTable.get(spawnId);
 	}
 
 	private void loadSpawnTable() {
@@ -126,7 +126,7 @@ public class UBSpawnTable {
 				spawnDat.setSpawnDelay(rs.getInt(8));
 				spawnDat.setSealCount(rs.getInt(9));
 
-				_spawnTable.put(spawnDat.getId(), spawnDat);
+				this._spawnTable.put(spawnDat.getId(), spawnDat);
 			}
 		}
 		catch (final SQLException e) {
@@ -137,6 +137,6 @@ public class UBSpawnTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-		_log.config("UB安置怪物列表 " + _spawnTable.size() + "件");
+		_log.config("UB安置怪物列表 " + this._spawnTable.size() + "件");
 	}
 }

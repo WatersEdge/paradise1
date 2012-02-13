@@ -60,36 +60,36 @@ public class L1GameTime {
 	}
 
 	private L1GameTime(final int time) {
-		_time = time;
-		_calendar = makeCalendar(time);
+		this._time = time;
+		this._calendar = this.makeCalendar(time);
 	}
 
 	public int get(final int field) {
-		return _calendar.get(field);
+		return this._calendar.get(field);
 	}
 
 	public Calendar getCalendar() {
-		return (Calendar) _calendar.clone();
+		return (Calendar) this._calendar.clone();
 	}
 
 	public int getSeconds() {
-		return _time;
+		return this._time;
 	}
 
 	public boolean isNight() {
-		final int hour = _calendar.get(Calendar.HOUR_OF_DAY);
+		final int hour = this._calendar.get(Calendar.HOUR_OF_DAY);
 		return !IntRange.includes(hour, 6, 17); // 6:00-17:59(昼)で無ければtrue
 	}
 
 	@Override
 	public String toString() {
 		final SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-		f.setTimeZone(_calendar.getTimeZone());
-		return f.format(_calendar.getTime()) + "(" + getSeconds() + ")";
+		f.setTimeZone(this._calendar.getTimeZone());
+		return f.format(this._calendar.getTime()) + "(" + this.getSeconds() + ")";
 	}
 
 	public Time toTime() {
-		final int t = _time % (24 * 3600); // 日付情報分を切り捨て
+		final int t = this._time % (24 * 3600); // 日付情報分を切り捨て
 		return new Time(t * 1000L - TimeZone.getDefault().getRawOffset());
 	}
 

@@ -27,22 +27,22 @@ public class IterableElementList implements Iterable<Element> {
 		private Element _next = null;
 
 		public MyIterator(final Iterator<Node> itr) {
-			_itr = itr;
-			updateNextElement();
+			this._itr = itr;
+			this.updateNextElement();
 		}
 
 		@Override
 		public boolean hasNext() {
-			return _next != null;
+			return this._next != null;
 		}
 
 		@Override
 		public Element next() {
-			if (!hasNext()) {
+			if (!this.hasNext()) {
 				throw new NoSuchElementException();
 			}
-			final Element result = _next;
-			updateNextElement();
+			final Element result = this._next;
+			this.updateNextElement();
 			return result;
 		}
 
@@ -52,26 +52,26 @@ public class IterableElementList implements Iterable<Element> {
 		}
 
 		private void updateNextElement() {
-			while (_itr.hasNext()) {
-				final Node node = _itr.next();
+			while (this._itr.hasNext()) {
+				final Node node = this._itr.next();
 				if (node instanceof Element) {
-					_next = (Element) node;
+					this._next = (Element) node;
 					return;
 				}
 			}
-			_next = null;
+			this._next = null;
 		}
 	}
 
 	IterableNodeList _list;
 
 	public IterableElementList(final NodeList list) {
-		_list = new IterableNodeList(list);
+		this._list = new IterableNodeList(list);
 	}
 
 	@Override
 	public Iterator<Element> iterator() {
-		return new MyIterator(_list.iterator());
+		return new MyIterator(this._list.iterator());
 	}
 
 }

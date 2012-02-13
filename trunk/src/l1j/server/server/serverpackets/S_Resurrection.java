@@ -35,16 +35,16 @@ public class S_Resurrection extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_Resurrection(final L1PcInstance target, final L1PcInstance use, final int type) {
-		writeC(Opcodes.S_OPCODE_RESURRECTION);
-		writeD(target.getId());
-		writeC(type);
-		writeD(use.getId());
-		writeD(target.getClassId());
+		this.writeC(Opcodes.S_OPCODE_RESURRECTION);
+		this.writeD(target.getId());
+		this.writeC(type);
+		this.writeD(use.getId());
+		this.writeD(target.getClassId());
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

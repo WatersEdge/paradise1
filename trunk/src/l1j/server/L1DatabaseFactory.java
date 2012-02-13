@@ -90,14 +90,14 @@ public class L1DatabaseFactory {
 	public L1DatabaseFactory() throws SQLException {
 		try {
 			// DatabaseFactoryをL2Jから一部を除いて拜借
-			_source = new ComboPooledDataSource();
-			_source.setDriverClass(_driver);
-			_source.setJdbcUrl(_url);
-			_source.setUser(_user);
-			_source.setPassword(_password);
+			this._source = new ComboPooledDataSource();
+			this._source.setDriverClass(_driver);
+			this._source.setJdbcUrl(_url);
+			this._source.setUser(_user);
+			this._source.setPassword(_password);
 
 			// 测试连接
-			_source.getConnection().close();
+			this._source.getConnection().close();
 		}
 		catch (final SQLException x) {
 			_log.fine("数据库连接失败");
@@ -121,7 +121,7 @@ public class L1DatabaseFactory {
 
 		while (con == null) {
 			try {
-				con = _source.getConnection();
+				con = this._source.getConnection();
 			}
 			catch (final SQLException e) {
 				_log.warning("L1DatabaseFactory: getConnection() failed, trying again " + e);
@@ -135,13 +135,13 @@ public class L1DatabaseFactory {
 	 */
 	public void shutdown() {
 		try {
-			_source.close();
+			this._source.close();
 		}
 		catch (final Exception e) {
 			_log.log(Level.INFO, "", e);
 		}
 		try {
-			_source = null;
+			this._source = null;
 		}
 		catch (final Exception e) {
 			_log.log(Level.INFO, "", e);

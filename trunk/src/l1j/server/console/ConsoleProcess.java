@@ -38,8 +38,8 @@ public class ConsoleProcess extends Thread {
 	Runtime rt = Runtime.getRuntime();
 
 	public ConsoleProcess() {
-		onStarup = Config.CmdActive;
-		if (!onStarup) {
+		this.onStarup = Config.CmdActive;
+		if (!this.onStarup) {
 			return;
 		}
 		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");
@@ -47,14 +47,14 @@ public class ConsoleProcess extends Thread {
 
 	@Override
 	public void run() {
-		while (onStarup && stillrun) {
-			final String action = UserInput.nextLine();
+		while (this.onStarup && this.stillrun) {
+			final String action = this.UserInput.nextLine();
 			final String word[] = action.split(" ");
 			if (word.length == 1) {
-				execute(word[0]);
+				this.execute(word[0]);
 			}
 			if (word.length == 2) {
-				execute(word[0], word[1]);
+				this.execute(word[0], word[1]);
 			}
 		}
 		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");

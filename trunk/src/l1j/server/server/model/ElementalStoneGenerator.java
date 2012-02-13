@@ -67,17 +67,17 @@ public class ElementalStoneGenerator implements Runnable {
 		try {
 			final L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
 			while (true) {
-				removeItemsPickedUp();
+				this.removeItemsPickedUp();
 
-				while (_itemList.size() < MAX_COUNT) { // 减少的情况
-					final L1Location loc = new L1Location(nextPoint(), map);
+				while (this._itemList.size() < MAX_COUNT) { // 减少的情况
+					final L1Location loc = new L1Location(this.nextPoint(), map);
 
-					if (!canPut(loc)) {
+					if (!this.canPut(loc)) {
 						// XXX 设置范围内全てにPCが居た场合无限循环…
 						continue;
 					}
 
-					putElementalStone(loc);
+					this.putElementalStone(loc);
 
 					Thread.sleep(INTERVAL * 1000); // 设置时间间隔
 				}
@@ -93,12 +93,12 @@ public class ElementalStoneGenerator implements Runnable {
 	 * 返回在指定地点放置精灵石。
 	 */
 	private boolean canPut(final L1Location loc) {
-		_dummy.setMap(loc.getMap());
-		_dummy.setX(loc.getX());
-		_dummy.setY(loc.getY());
+		this._dummy.setMap(loc.getMap());
+		this._dummy.setX(loc.getX());
+		this._dummy.setY(loc.getY());
 
 		// 检查玩家的可视范围
-		if (L1World.getInstance().getVisiblePlayer(_dummy).size() > 0) {
+		if (L1World.getInstance().getVisiblePlayer(this._dummy).size() > 0) {
 			return false;
 		}
 		return true;
@@ -124,17 +124,17 @@ public class ElementalStoneGenerator implements Runnable {
 		item.setEnchantLevel(0);
 		item.setCount(1);
 		gInventory.storeItem(item);
-		_itemList.add(gInventory);
+		this._itemList.add(gInventory);
 	}
 
 	/**
 	 * 捡起石头从名单中删除。
 	 */
 	private void removeItemsPickedUp() {
-		for (int i = 0; i < _itemList.size(); i++) {
-			final L1GroundInventory gInventory = _itemList.get(i);
+		for (int i = 0; i < this._itemList.size(); i++) {
+			final L1GroundInventory gInventory = this._itemList.get(i);
 			if (!gInventory.checkItem(ELEMENTAL_STONE_ID)) {
-				_itemList.remove(i);
+				this._itemList.remove(i);
 				i--;
 			}
 		}

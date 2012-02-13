@@ -30,8 +30,8 @@ public class C_EnterPortal extends ClientBasePacket {
 
 	public C_EnterPortal(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		final int locx = readH();
-		final int locy = readH();
+		final int locx = this.readH();
+		final int locy = this.readH();
 		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isTeleport()) { // 传送中
 			return;

@@ -45,8 +45,8 @@ public class L1WorldMap {
 		System.out.print("╔》正在读取 Map...");
 
 		try {
-			_maps = MapReader.getDefaultReader().read();
-			if (_maps == null) {
+			this._maps = MapReader.getDefaultReader().read();
+			if (this._maps == null) {
 				throw new RuntimeException("地图档案读取失败...");
 			}
 		}
@@ -71,7 +71,7 @@ public class L1WorldMap {
 	 * @return 地图信息、L1Map对象。
 	 */
 	public L1Map getMap(final short mapId) {
-		L1Map map = _maps.get((int) mapId);
+		L1Map map = this._maps.get((int) mapId);
 		if (map == null) { // 没有地图信息
 			map = L1Map.newNull(); // 返回一个没有任何信息的Map。
 		}

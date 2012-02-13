@@ -31,26 +31,26 @@ public class S_ItemStatus extends ServerBasePacket {
 	 * 更新道具的名称、状态、特性、数量
 	 */
 	public S_ItemStatus(final L1ItemInstance item) {
-		writeC(Opcodes.S_OPCODE_ITEMSTATUS);
-		writeD(item.getId());
-		writeS(item.getViewName());
-		writeD(item.getCount());
+		this.writeC(Opcodes.S_OPCODE_ITEMSTATUS);
+		this.writeD(item.getId());
+		this.writeS(item.getViewName());
+		this.writeD(item.getCount());
 		if (!item.isIdentified()) {
 			// 未鉴定情况不发送详细资料
-			writeC(0);
+			this.writeC(0);
 		}
 		else {
 			final byte[] status = item.getStatusBytes();
-			writeC(status.length);
+			this.writeC(status.length);
 			for (final byte b : status) {
-				writeC(b);
+				this.writeC(b);
 			}
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	@Override

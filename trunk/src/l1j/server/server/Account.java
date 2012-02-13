@@ -372,10 +372,10 @@ public class Account {
 
 			pstm = con.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
 			pstm.setInt(1, newPassword);
-			pstm.setString(2, getName());
+			pstm.setString(2, this.getName());
 			pstm.execute();
 
-			_WarePassword = newPassword;
+			this._WarePassword = newPassword;
 		}
 		catch (final SQLException e) {
 		} finally {
@@ -398,7 +398,7 @@ public class Account {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			final String sqlstr = "SELECT count(*) as cnt FROM characters WHERE account_name=?";
 			pstm = con.prepareStatement(sqlstr);
-			pstm.setString(1, _name);
+			pstm.setString(1, this._name);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt("cnt");
@@ -420,7 +420,7 @@ public class Account {
 	 * @return int
 	 */
 	public int getAccessLevel() {
-		return _accessLevel;
+		return this._accessLevel;
 	}
 
 	/**
@@ -429,7 +429,7 @@ public class Account {
 	 * @return int
 	 */
 	public int getCharacterSlot() {
-		return _characterSlot;
+		return this._characterSlot;
 	}
 
 	/**
@@ -438,7 +438,7 @@ public class Account {
 	 * @return String
 	 */
 	public String getHost() {
-		return _host;
+		return this._host;
 	}
 
 	/**
@@ -447,14 +447,14 @@ public class Account {
 	 * @return String
 	 */
 	public String getIp() {
-		return _ip;
+		return this._ip;
 	}
 
 	/**
 	 * 取得上次登入的时间
 	 */
 	public Timestamp getLastActive() {
-		return _lastActive;
+		return this._lastActive;
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class Account {
 	 * @return String
 	 */
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	/**
@@ -472,7 +472,7 @@ public class Account {
 	 * @return 仓库密码
 	 */
 	public int getWarePassword() {
-		return _WarePassword;
+		return this._WarePassword;
 	}
 
 	/**
@@ -481,7 +481,7 @@ public class Account {
 	 * @return boolean
 	 */
 	public boolean isBanned() {
-		return _banned;
+		return this._banned;
 	}
 
 	/**
@@ -490,7 +490,7 @@ public class Account {
 	 * @return boolean
 	 */
 	public boolean isGameMaster() {
-		return 0 < _accessLevel;
+		return 0 < this._accessLevel;
 	}
 
 	/**
@@ -499,7 +499,7 @@ public class Account {
 	 * @return
 	 */
 	public synchronized boolean isOnlined() {
-		return _online;
+		return this._online;
 	}
 
 	/**
@@ -508,7 +508,7 @@ public class Account {
 	 * @return
 	 */
 	public synchronized boolean isOnlineStatus() {
-		return _onlineStatus;
+		return this._onlineStatus;
 	}
 
 	/**
@@ -517,7 +517,7 @@ public class Account {
 	 * @return boolean
 	 */
 	public boolean isValid() {
-		return _isValid;
+		return this._isValid;
 	}
 
 	/**
@@ -527,7 +527,7 @@ public class Account {
 	 *            欲设定的数目
 	 */
 	public void setCharacterSlot(final int i) {
-		_characterSlot = i;
+		this._characterSlot = i;
 	}
 
 	/**
@@ -536,7 +536,7 @@ public class Account {
 	 * @param i
 	 */
 	public synchronized void setOnline(final boolean i) {
-		_online = i;
+		this._online = i;
 	}
 
 	/**
@@ -545,7 +545,7 @@ public class Account {
 	 * @param i
 	 */
 	public synchronized void setOnlineStatus(final boolean i) {
-		_onlineStatus = i;
+		this._onlineStatus = i;
 	}
 
 	/**
@@ -557,15 +557,15 @@ public class Account {
 	 */
 	public boolean validatePassword(final String rawPassword) {
 		// 认证成功后如果再度认证就判断为失败
-		if (_isValid) {
+		if (this._isValid) {
 			return false;
 		}
 		try {
-			_isValid = _password.equals(encodePassword(rawPassword));
-			if (_isValid) {
-				_password = null; // 认证成功后就将记忆体中的密码清除
+			this._isValid = this._password.equals(encodePassword(rawPassword));
+			if (this._isValid) {
+				this._password = null; // 认证成功后就将记忆体中的密码清除
 			}
-			return _isValid;
+			return this._isValid;
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

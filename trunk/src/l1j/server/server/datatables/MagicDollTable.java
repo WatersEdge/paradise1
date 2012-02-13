@@ -31,12 +31,12 @@ public class MagicDollTable {
 	private final HashMap<Integer, L1MagicDoll> _dolls = new HashMap<Integer, L1MagicDoll>();
 
 	private MagicDollTable() {
-		load();
+		this.load();
 	}
 
 	public L1MagicDoll getTemplate(final int itemId) {
-		if (_dolls.containsKey(itemId)) {
-			return _dolls.get(itemId);
+		if (this._dolls.containsKey(itemId)) {
+			return this._dolls.get(itemId);
 		}
 		return null;
 	}
@@ -78,7 +78,7 @@ public class MagicDollTable {
 				doll.setEffect(rs.getByte("effect")); // 效果 1:中毒
 				doll.setEffectChance(rs.getInt("effect_chance")); // 中毒几率
 
-				_dolls.put(new Integer(itemId), doll);
+				this._dolls.put(new Integer(itemId), doll);
 			}
 		}
 		catch (final SQLException e) {

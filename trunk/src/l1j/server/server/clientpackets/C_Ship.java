@@ -32,9 +32,9 @@ public class C_Ship extends ClientBasePacket {
 	public C_Ship(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
 
-		final int shipMapId = readH();
-		final int locX = readH();
-		final int locY = readH();
+		final int shipMapId = this.readH();
+		final int locX = this.readH();
+		final int locY = this.readH();
 
 		final L1PcInstance pc = client.getActiveChar();
 		final int mapId = pc.getMapId();

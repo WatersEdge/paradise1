@@ -32,7 +32,7 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param msg1
 	 */
 	public S_BlueMessage(final int type, final String msg1) {
-		buildPacket(type, msg1, null, null, 1);
+		this.buildPacket(type, msg1, null, null, 1);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param msg2
 	 */
 	public S_BlueMessage(final int type, final String msg1, final String msg2) {
-		buildPacket(type, msg1, msg2, null, 2);
+		this.buildPacket(type, msg1, msg2, null, 2);
 	}
 
 	/**
@@ -55,15 +55,15 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param msg3
 	 */
 	public S_BlueMessage(final int type, final String msg1, final String msg2, final String msg3) {
-		buildPacket(type, msg1, msg2, msg3, 3);
+		this.buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -72,27 +72,27 @@ public class S_BlueMessage extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final int check) {
-		writeC(Opcodes.S_OPCODE_BLUEMESSAGE);
-		writeH(type);
+		this.writeC(Opcodes.S_OPCODE_BLUEMESSAGE);
+		this.writeH(type);
 		if (check == 1) {
 			if (msg1.length() <= 0) {
-				writeC(0);
+				this.writeC(0);
 			}
 			else {
-				writeC(1);
-				writeS(msg1);
+				this.writeC(1);
+				this.writeS(msg1);
 			}
 		}
 		else if (check == 2) {
-			writeC(2);
-			writeS(msg1);
-			writeS(msg2);
+			this.writeC(2);
+			this.writeS(msg1);
+			this.writeS(msg2);
 		}
 		else if (check == 3) {
-			writeC(3);
-			writeS(msg1);
-			writeS(msg2);
-			writeS(msg3);
+			this.writeC(3);
+			this.writeS(msg1);
+			this.writeS(msg2);
+			this.writeS(msg3);
 		}
 	}
 }

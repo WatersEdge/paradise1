@@ -38,8 +38,8 @@ public class C_NPCTalkAction extends ClientBasePacket {
 	public C_NPCTalkAction(final byte decrypt[], final ClientThread client) throws FileNotFoundException, Exception {
 
 		super(decrypt);
-		final int objectId = readD();
-		final String action = readS();
+		final int objectId = this.readD();
+		final String action = this.readS();
 		final L1PcInstance activeChar = client.getActiveChar();
 
 		final L1Object obj = L1World.getInstance().findObject(objectId);

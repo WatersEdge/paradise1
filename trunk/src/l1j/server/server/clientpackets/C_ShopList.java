@@ -31,8 +31,8 @@ public class C_ShopList extends ClientBasePacket {
 	public C_ShopList(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 
-		final int type = readC();
-		final int objectId = readD();
+		final int type = this.readC();
+		final int objectId = this.readD();
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {

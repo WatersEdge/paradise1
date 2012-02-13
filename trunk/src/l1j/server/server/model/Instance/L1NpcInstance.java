@@ -85,15 +85,15 @@ public class L1NpcInstance extends L1Character {
 		private final int _id;
 
 		protected DeleteTimer(final int oId) {
-			_id = oId;
-			if (!(L1World.getInstance().findObject(_id) instanceof L1NpcInstance)) {
+			this._id = oId;
+			if (!(L1World.getInstance().findObject(this._id) instanceof L1NpcInstance)) {
 				throw new IllegalArgumentException("allowed only L1NpcInstance");
 			}
 		}
 
 		@Override
 		public void run() {
-			final L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(_id);
+			final L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(this._id);
 			if ((npc == null) || !npc.isDead() || npc._destroyed) {
 				return; // 复活してるか、既に破弃济みだったら拔け
 			}
@@ -109,8 +109,8 @@ public class L1NpcInstance extends L1Character {
 	class DigestItemTimer implements Runnable {
 		@Override
 		public void run() {
-			_digestItemRunning = true;
-			while (!_destroyed && (_digestItems.size() > 0)) {
+			L1NpcInstance.this._digestItemRunning = true;
+			while (!L1NpcInstance.this._destroyed && (L1NpcInstance.this._digestItems.size() > 0)) {
 				try {
 					Thread.sleep(1000);
 				}
@@ -118,24 +118,24 @@ public class L1NpcInstance extends L1Character {
 					break;
 				}
 
-				final Object[] keys = _digestItems.keySet().toArray();
+				final Object[] keys = L1NpcInstance.this._digestItems.keySet().toArray();
 				for (final Object key2 : keys) {
 					final Integer key = (Integer) key2;
-					Integer digestCounter = _digestItems.get(key);
+					Integer digestCounter = L1NpcInstance.this._digestItems.get(key);
 					digestCounter -= 1;
 					if (digestCounter <= 0) {
-						_digestItems.remove(key);
-						final L1ItemInstance digestItem = getInventory().getItem(key);
+						L1NpcInstance.this._digestItems.remove(key);
+						final L1ItemInstance digestItem = L1NpcInstance.this.getInventory().getItem(key);
 						if (digestItem != null) {
-							getInventory().removeItem(digestItem, digestItem.getCount());
+							L1NpcInstance.this.getInventory().removeItem(digestItem, digestItem.getCount());
 						}
 					}
 					else {
-						_digestItems.put(key, digestCounter);
+						L1NpcInstance.this._digestItems.put(key, digestCounter);
 					}
 				}
 			}
-			_digestItemRunning = false;
+			L1NpcInstance.this._digestItemRunning = false;
 		}
 	}
 
@@ -146,18 +146,18 @@ public class L1NpcInstance extends L1Character {
 			if (point < 1) {
 				point = 1;
 			}
-			_point = point;
+			this._point = point;
 		}
 
 		@Override
 		public void run() {
 			try {
-				if ((!_destroyed && !isDead()) && ((getCurrentHp() > 0) && (getCurrentHp() < getMaxHp()))) {
-					setCurrentHp(getCurrentHp() + _point);
+				if ((!L1NpcInstance.this._destroyed && !L1NpcInstance.this.isDead()) && ((L1NpcInstance.this.getCurrentHp() > 0) && (L1NpcInstance.this.getCurrentHp() < L1NpcInstance.this.getMaxHp()))) {
+					L1NpcInstance.this.setCurrentHp(L1NpcInstance.this.getCurrentHp() + this._point);
 				}
 				else {
-					cancel();
-					_hprRunning = false;
+					this.cancel();
+					L1NpcInstance.this._hprRunning = false;
 				}
 			}
 			catch (final Exception e) {
@@ -173,18 +173,18 @@ public class L1NpcInstance extends L1Character {
 			if (point < 1) {
 				point = 1;
 			}
-			_point = point;
+			this._point = point;
 		}
 
 		@Override
 		public void run() {
 			try {
-				if ((!_destroyed && !isDead()) && ((getCurrentHp() > 0) && (getCurrentMp() < getMaxMp()))) {
-					setCurrentMp(getCurrentMp() + _point);
+				if ((!L1NpcInstance.this._destroyed && !L1NpcInstance.this.isDead()) && ((L1NpcInstance.this.getCurrentHp() > 0) && (L1NpcInstance.this.getCurrentMp() < L1NpcInstance.this.getMaxMp()))) {
+					L1NpcInstance.this.setCurrentMp(L1NpcInstance.this.getCurrentMp() + this._point);
 				}
 				else {
-					cancel();
-					_mprRunning = false;
+					this.cancel();
+					L1NpcInstance.this._mprRunning = false;
 				}
 			}
 			catch (final Exception e) {
@@ -201,42 +201,42 @@ public class L1NpcInstance extends L1Character {
 		@Override
 		public void run() {
 			try {
-				setAiRunning(true);
-				while (!_destroyed && !isDead() && (getCurrentHp() > 0) && (getHiddenStatus() == HIDDEN_STATUS_NONE)) {
+				L1NpcInstance.this.setAiRunning(true);
+				while (!L1NpcInstance.this._destroyed && !L1NpcInstance.this.isDead() && (L1NpcInstance.this.getCurrentHp() > 0) && (L1NpcInstance.this.getHiddenStatus() == HIDDEN_STATUS_NONE)) {
 					/*
 					 * if (_paralysisTime > 0) { try { Thread.sleep(_paralysisTime); } catch (Exception exception) { break; } finally { setParalyzed(false); _paralysisTime = 0; } }
 					 */
-					while (isParalyzed() || isSleeped()) {
+					while (L1NpcInstance.this.isParalyzed() || L1NpcInstance.this.isSleeped()) {
 						try {
 							Thread.sleep(200);
 						}
 						catch (final InterruptedException e) {
-							setParalyzed(false);
+							L1NpcInstance.this.setParalyzed(false);
 						}
 					}
 
-					if (AIProcess()) {
+					if (L1NpcInstance.this.AIProcess()) {
 						break;
 					}
 					try {
 						// 指定时间停止线程
-						Thread.sleep(getSleepTime());
+						Thread.sleep(L1NpcInstance.this.getSleepTime());
 					}
 					catch (final Exception e) {
 						break;
 					}
 				}
-				mobSkill.resetAllSkillUseCount();
+				L1NpcInstance.this.mobSkill.resetAllSkillUseCount();
 				do {
 					try {
-						Thread.sleep(getSleepTime());
+						Thread.sleep(L1NpcInstance.this.getSleepTime());
 					}
 					catch (final Exception e) {
 						break;
 					}
-				} while (isDeathProcessing());
-				allTargetClear();
-				setAiRunning(false);
+				} while (L1NpcInstance.this.isDeathProcessing());
+				L1NpcInstance.this.allTargetClear();
+				L1NpcInstance.this.setAiRunning(false);
 			}
 			catch (final Exception e) {
 				_log.log(Level.WARNING, "NpcAI发生例外的错误。", e);
@@ -256,12 +256,12 @@ public class L1NpcInstance extends L1Character {
 		private class DeathSyncTimer extends TimerTask {
 			@Override
 			public void run() {
-				if (isDeathProcessing()) {
-					schedule(getSleepTime());
+				if (L1NpcInstance.this.isDeathProcessing()) {
+					this.schedule(L1NpcInstance.this.getSleepTime());
 					return;
 				}
-				allTargetClear();
-				setAiRunning(false);
+				L1NpcInstance.this.allTargetClear();
+				L1NpcInstance.this.setAiRunning(false);
 			}
 
 			private void schedule(final int delay) {
@@ -272,28 +272,28 @@ public class L1NpcInstance extends L1Character {
 		@Override
 		public void run() {
 			try {
-				if (notContinued()) {
-					stop();
+				if (this.notContinued()) {
+					this.stop();
 					return;
 				}
 
 				// XXX 同期がとても怪しげな麻痹判定
-				if (0 < _paralysisTime) {
-					schedule(_paralysisTime);
-					_paralysisTime = 0;
-					setParalyzed(false);
+				if (0 < L1NpcInstance.this._paralysisTime) {
+					this.schedule(L1NpcInstance.this._paralysisTime);
+					L1NpcInstance.this._paralysisTime = 0;
+					L1NpcInstance.this.setParalyzed(false);
 					return;
 				}
-				else if (isParalyzed() || isSleeped()) {
-					schedule(200);
+				else if (L1NpcInstance.this.isParalyzed() || L1NpcInstance.this.isSleeped()) {
+					this.schedule(200);
 					return;
 				}
 
-				if (!AIProcess()) { // AIを续けるべきであれば、次の实行をスケジュールし、终了
-					schedule(getSleepTime());
+				if (!L1NpcInstance.this.AIProcess()) { // AIを续けるべきであれば、次の实行をスケジュールし、终了
+					this.schedule(L1NpcInstance.this.getSleepTime());
 					return;
 				}
-				stop();
+				this.stop();
 			}
 			catch (final Exception e) {
 				_log.log(Level.WARNING, "NpcAI发生例外的错误。", e);
@@ -302,12 +302,12 @@ public class L1NpcInstance extends L1Character {
 
 		@Override
 		public void start() {
-			setAiRunning(true);
+			L1NpcInstance.this.setAiRunning(true);
 			_timerPool.getTimer().schedule(NpcAITimerImpl.this, 0);
 		}
 
 		private boolean notContinued() {
-			return _destroyed || isDead() || (getCurrentHp() <= 0) || (getHiddenStatus() != HIDDEN_STATUS_NONE);
+			return L1NpcInstance.this._destroyed || L1NpcInstance.this.isDead() || (L1NpcInstance.this.getCurrentHp() <= 0) || (L1NpcInstance.this.getHiddenStatus() != HIDDEN_STATUS_NONE);
 		}
 
 		// 同じインスタンスをTimerへ登录できない为、苦肉の策。
@@ -316,7 +316,7 @@ public class L1NpcInstance extends L1Character {
 		}
 
 		private void stop() {
-			mobSkill.resetAllSkillUseCount();
+			L1NpcInstance.this.mobSkill.resetAllSkillUseCount();
 			_timerPool.getTimer().schedule(new DeathSyncTimer(), 0); // 死亡同期を开始
 		}
 	}
@@ -629,13 +629,13 @@ public class L1NpcInstance extends L1Character {
 	private int _polyArrowGfx = 0;
 
 	public L1NpcInstance(final L1Npc template) {
-		setStatus(0);
-		setMoveSpeed(0);
-		setDead(false);
-		setreSpawn(false);
+		this.setStatus(0);
+		this.setMoveSpeed(0);
+		this.setDead(false);
+		this.setreSpawn(false);
 
 		if (template != null) {
-			setting_template(template);
+			this.setting_template(template);
 		}
 	}
 
@@ -643,66 +643,66 @@ public class L1NpcInstance extends L1Character {
 
 	/** 删除所有目标 */
 	public void allTargetClear() {
-		_hateList.clear();
-		_dropHateList.clear();
-		_target = null;
-		_targetItemList.clear();
-		_targetItem = null;
+		this._hateList.clear();
+		this._dropHateList.clear();
+		this._target = null;
+		this._targetItemList.clear();
+		this._targetItem = null;
 	}
 
 	/** 怪物解除遁地、飞天、冰冻 */
 	public void appearOnGround(final L1PcInstance pc) {
-		if (getHiddenStatus() == HIDDEN_STATUS_SINK) {
-			setHiddenStatus(HIDDEN_STATUS_NONE);
-			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Appear));
-			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
+		if (this.getHiddenStatus() == HIDDEN_STATUS_SINK) {
+			this.setHiddenStatus(HIDDEN_STATUS_NONE);
+			this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+			this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Appear));
+			this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中以外、GM以外
 					&& !pc.isGm()) {
-				_hateList.add(pc, 0);
-				_target = pc;
+				this._hateList.add(pc, 0);
+				this._target = pc;
 			}
-			onNpcAI(); // 怪物AI，开始
-			startChat(CHAT_TIMING_HIDE);
+			this.onNpcAI(); // 怪物AI，开始
+			this.startChat(CHAT_TIMING_HIDE);
 		}
-		else if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
-			setHiddenStatus(HIDDEN_STATUS_NONE);
-			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Movedown));
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_FLY) {
+			this.setHiddenStatus(HIDDEN_STATUS_NONE);
+			this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+			this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Movedown));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中以外、GM以外
 					&& !pc.isGm()) {
-				_hateList.add(pc, 0);
-				_target = pc;
+				this._hateList.add(pc, 0);
+				this._target = pc;
 			}
-			onNpcAI(); // 怪物AI，开始
-			startChat(CHAT_TIMING_HIDE);
+			this.onNpcAI(); // 怪物AI，开始
+			this.startChat(CHAT_TIMING_HIDE);
 		}
-		else if (getHiddenStatus() == HIDDEN_STATUS_ICE) {
-			setHiddenStatus(HIDDEN_STATUS_NONE);
-			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_AxeWalk));
-			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_ICE) {
+			this.setHiddenStatus(HIDDEN_STATUS_NONE);
+			this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+			this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_AxeWalk));
+			this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中以外、GM以外
 					&& !pc.isGm()) {
-				_hateList.add(pc, 0);
-				_target = pc;
+				this._hateList.add(pc, 0);
+				this._target = pc;
 			}
-			onNpcAI(); // 怪物AI，开始
-			startChat(CHAT_TIMING_HIDE);
+			this.onNpcAI(); // 怪物AI，开始
+			this.startChat(CHAT_TIMING_HIDE);
 		}
 		// 吉尔塔斯反击屏障判断 (解除)
-		else if (getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
-			setHiddenStatus(HIDDEN_STATUS_NONE);
-			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Appear));
-			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			this.setHiddenStatus(HIDDEN_STATUS_NONE);
+			this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+			this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Appear));
+			this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中以外、GM以外
 					&& !pc.isGm()) {
-				_hateList.add(pc, 0);
-				_target = pc;
+				this._hateList.add(pc, 0);
+				this._target = pc;
 			}
-			onNpcAI(); // 怪物AI，开始
-			startChat(CHAT_TIMING_HIDE);
+			this.onNpcAI(); // 怪物AI，开始
+			this.startChat(CHAT_TIMING_HIDE);
 		}
 	}
 
@@ -711,35 +711,35 @@ public class L1NpcInstance extends L1Character {
 		if (pc.hasSkillEffect(60) || pc.hasSkillEffect(97)) { // 法师魔法 (隐身术)、黑暗妖精魔法 (暗隐术)中
 			return;
 		}
-		if (getHiddenStatus() == HIDDEN_STATUS_SINK) {
-			if (getCurrentHp() == getMaxHp()) {
-				if (pc.getLocation().getTileLineDistance(getLocation()) <= 2) {
-					appearOnGround(pc);
+		if (this.getHiddenStatus() == HIDDEN_STATUS_SINK) {
+			if (this.getCurrentHp() == this.getMaxHp()) {
+				if (pc.getLocation().getTileLineDistance(this.getLocation()) <= 2) {
+					this.appearOnGround(pc);
 				}
 			}
 		}
-		else if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
-			if (getCurrentHp() == getMaxHp()) {
-				if (pc.getLocation().getTileLineDistance(getLocation()) <= 1) {
-					appearOnGround(pc);
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_FLY) {
+			if (this.getCurrentHp() == this.getMaxHp()) {
+				if (pc.getLocation().getTileLineDistance(this.getLocation()) <= 1) {
+					this.appearOnGround(pc);
 				}
 			}
 			else {
 				// if (getNpcTemplate().get_npcId() != 45681) { // リンドビオル以外
-				searchItemFromAir();
+				this.searchItemFromAir();
 				// }
 			}
 		}
-		else if (getHiddenStatus() == HIDDEN_STATUS_ICE) {
-			if (getCurrentHp() < getMaxHp()) {
-				appearOnGround(pc);
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_ICE) {
+			if (this.getCurrentHp() < this.getMaxHp()) {
+				this.appearOnGround(pc);
 			}
 		}
 		// 吉尔塔斯反击屏障判断 (解除)
-		else if (getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
-			if (getCurrentHp() == getMaxHp()) {
-				if (pc.getLocation().getTileLineDistance(getLocation()) <= 2) {
-					appearOnGround(pc);
+		else if (this.getHiddenStatus() == HIDDEN_STATUS_COUNTERATTACK_BARRIER) {
+			if (this.getCurrentHp() == this.getMaxHp()) {
+				if (pc.getLocation().getTileLineDistance(this.getLocation()) <= 2) {
+					this.appearOnGround(pc);
 				}
 			}
 		}
@@ -797,7 +797,7 @@ public class L1NpcInstance extends L1Character {
 		if (target instanceof L1NpcInstance) {
 			final L1NpcInstance npc = (L1NpcInstance) target;
 			if (npc.getHiddenStatus() != HIDDEN_STATUS_NONE) { // 潜入地下、飞到天上
-				allTargetClear();
+				this.allTargetClear();
 				return;
 			}
 		}
@@ -825,46 +825,46 @@ public class L1NpcInstance extends L1Character {
 			attack.action();
 			attack.commit();
 		}
-		setSleepTime(calcSleepTime(getAtkspeed(), ATTACK_SPEED));
+		this.setSleepTime(this.calcSleepTime(this.getAtkspeed(), ATTACK_SPEED));
 	}
 
 	/** 检查设定有效目标 */
 	public void checkTarget() {
-		if ((_target == null) || (_target.getMapId() != getMapId()) || (_target.getCurrentHp() <= 0) || _target.isDead() || (_target.isInvisble() && !getNpcTemplate().is_agrocoi() && !_hateList.containsKey(_target))
+		if ((this._target == null) || (this._target.getMapId() != this.getMapId()) || (this._target.getCurrentHp() <= 0) || this._target.isDead() || (this._target.isInvisble() && !this.getNpcTemplate().is_agrocoi() && !this._hateList.containsKey(this._target))
 		// 目标距离超过30以上
-				|| (_target.getTileLineDistance(this) > 30)) {
-			if (_target != null) {
-				tagertClear();
+				|| (this._target.getTileLineDistance(this) > 30)) {
+			if (this._target != null) {
+				this.tagertClear();
 			}
-			if (!_hateList.isEmpty()) {
-				_target = _hateList.getMaxHateCharacter();
-				checkTarget();
+			if (!this._hateList.isEmpty()) {
+				this._target = this._hateList.getMaxHateCharacter();
+				this.checkTarget();
 			}
 		}
 	}
 
 	/** 检查目标项目 */
 	public void checkTargetItem() {
-		if ((_targetItem == null) || (_targetItem.getMapId() != getMapId()) || (getLocation().getTileDistance(_targetItem.getLocation()) > 15)) {
-			if (!_targetItemList.isEmpty()) {
-				_targetItem = _targetItemList.get(0);
-				_targetItemList.remove(0);
-				checkTargetItem();
+		if ((this._targetItem == null) || (this._targetItem.getMapId() != this.getMapId()) || (this.getLocation().getTileDistance(this._targetItem.getLocation()) > 15)) {
+			if (!this._targetItemList.isEmpty()) {
+				this._targetItem = this._targetItemList.get(0);
+				this._targetItemList.remove(0);
+				this.checkTargetItem();
 			}
 			else {
-				_targetItem = null;
+				this._targetItem = null;
 			}
 		}
 	}
 
 	/** 删除自己 */
 	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
-		allTargetClear();
-		_master = null;
+		this.allTargetClear();
+		this._master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
 		final List<L1PcInstance> players = L1World.getInstance().getRecognizePlayer(this);
@@ -878,235 +878,235 @@ public class L1NpcInstance extends L1Character {
 				}
 			}
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 
 		// 设置重生
-		final L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
+		final L1MobGroupInfo mobGroupInfo = this.getMobGroupInfo();
 		if (mobGroupInfo == null) {
-			if (isReSpawn()) {
-				onDecay(true);
+			if (this.isReSpawn()) {
+				this.onDecay(true);
 			}
 		}
 		else {
 			if (mobGroupInfo.removeMember(this) == 0) { // 集团成员湮灭
-				setMobGroupInfo(null);
-				if (isReSpawn()) {
-					onDecay(false);
+				this.setMobGroupInfo(null);
+				if (this.isReSpawn()) {
+					this.onDecay(false);
 				}
 			}
 		}
 	}
 
 	public int drainMana(final int drain) {
-		if (_drainedMana >= Config.MANA_DRAIN_LIMIT_PER_NPC) {
+		if (this._drainedMana >= Config.MANA_DRAIN_LIMIT_PER_NPC) {
 			return 0;
 		}
-		int result = Math.min(drain, getCurrentMp());
-		if (_drainedMana + result > Config.MANA_DRAIN_LIMIT_PER_NPC) {
-			result = Config.MANA_DRAIN_LIMIT_PER_NPC - _drainedMana;
+		int result = Math.min(drain, this.getCurrentMp());
+		if (this._drainedMana + result > Config.MANA_DRAIN_LIMIT_PER_NPC) {
+			result = Config.MANA_DRAIN_LIMIT_PER_NPC - this._drainedMana;
 		}
-		_drainedMana += result;
+		this._drainedMana += result;
 		return result;
 	}
 
 	public boolean forDropitems() {
-		return _forDropitems;
+		return this._forDropitems;
 	}
 
 	/** 取得远程攻击 */
 	public int getAtkRanged() {
-		if (_polyAtkRanged == -1) {
-			return getNpcTemplate().get_ranged();
+		if (this._polyAtkRanged == -1) {
+			return this.getNpcTemplate().get_ranged();
 		}
-		return _polyAtkRanged;
+		return this._polyAtkRanged;
 	}
 
 	/** 获得攻击速度 */
 	public int getAtkspeed() {
-		return _atkspeed;
+		return this._atkspeed;
 	}
 
 	public L1HateList getHateList() {
-		return _hateList;
+		return this._hateList;
 	}
 
 	/** 获得隐藏状态 */
 	public int getHiddenStatus() {
-		return _hiddenStatus;
+		return this._hiddenStatus;
 	}
 
 	/**  */
 	public int getHomeX() {
-		return _homeX;
+		return this._homeX;
 	}
 
 	/**  */
 	public int getHomeY() {
-		return _homeY;
+		return this._homeY;
 	}
 
 	@Override
 	public L1Inventory getInventory() {
-		return _inventory;
+		return this._inventory;
 	}
 
 	/**  */
 	public int getLightSize() {
-		return _lightSize;
+		return this._lightSize;
 	}
 
 	/** 获得主人 */
 	public L1Character getMaster() {
-		return _master;
+		return this._master;
 	}
 
 	/** 取得MOB族群ID */
 	public int getMobGroupId() {
-		return _mobGroupId;
+		return this._mobGroupId;
 	}
 
 	/** 取得MOB族群信息 */
 	public L1MobGroupInfo getMobGroupInfo() {
-		return _mobGroupInfo;
+		return this._mobGroupInfo;
 	}
 
 	/** 获得移动距离 */
 	public int getMovementDistance() {
-		return _movementDistance;
+		return this._movementDistance;
 	}
 
 	/** 获得名称ＩＤ */
 	public String getNameId() {
-		return _nameId;
+		return this._nameId;
 	}
 
 	/** 取得NPC ID */
 	public int getNpcId() {
-		return _npcTemplate.get_npcId();
+		return this._npcTemplate.get_npcId();
 	}
 
 	/** 取得NPC范本 */
 	public L1Npc getNpcTemplate() {
-		return _npcTemplate;
+		return this._npcTemplate;
 	}
 
 	public int getParalysisTime() {
-		return _paralysisTime;
+		return this._paralysisTime;
 	}
 
 	/**  */
 	public int getPassispeed() {
-		return _passispeed;
+		return this._passispeed;
 	}
 
 	/** 取得宠物的费用 */
 	public int getPetcost() {
-		return _petcost;
+		return this._petcost;
 	}
 
 	/** 取得变身箭头GFX */
 	public int getPolyArrowGfx() {
-		return _polyArrowGfx;
+		return this._polyArrowGfx;
 	}
 
 	/** 取得变身远程攻击 */
 	public int getPolyAtkRanged() {
-		return _polyAtkRanged;
+		return this._polyAtkRanged;
 	}
 
 	/**  */
 	public L1Spawn getSpawn() {
-		return _spawn;
+		return this._spawn;
 	}
 
 	/**  */
 	public int getSpawnNumber() {
-		return _spawnNumber;
+		return this._spawnNumber;
 	}
 
 	// ■■■■■■■■■■■■■ 移动关连 ■■■■■■■■■■■
 
 	/** 获得临时正义值 */
 	public int getTempLawful() {
-		return _tempLawful;
+		return this._tempLawful;
 	}
 
 	public void giveDropItems(final boolean i) {
-		_forDropitems = i;
+		this._forDropitems = i;
 	}
 
 	/**  */
 	public boolean isAgro() {
-		return _Agro;
+		return this._Agro;
 	}
 
 	/**  */
 	public boolean isAgrocoi() {
-		return _Agrocoi;
+		return this._Agrocoi;
 	}
 
 	/**  */
 	public boolean isAgrososc() {
-		return _Agrososc;
+		return this._Agrososc;
 	}
 
 	public boolean isDropitems() {
-		return _isDropitems;
+		return this._isDropitems;
 	}
 
 	/** MOB族群 */
 	public boolean isInMobGroup() {
-		return getMobGroupInfo() != null;
+		return this.getMobGroupInfo() != null;
 	}
 
 	/** 捡取道具 */
 	public boolean isPickupItem() {
-		return _pickupItem;
+		return this._pickupItem;
 	}
 
 	/**  */
 	public boolean isReSpawn() {
-		return _reSpawn;
+		return this._reSpawn;
 	}
 
 	// ■■■■■■■■■■■■ 项目关连 ■■■■■■■■■■
 
 	public boolean isRest() {
-		return _rest;
+		return this._rest;
 	}
 
 	public boolean isResurrect() {
-		return _isResurrect;
+		return this._isResurrect;
 	}
 
 	/** 武器损坏中 */
 	public boolean isWeaponBreaked() {
-		return _weaponBreaked;
+		return this._weaponBreaked;
 	}
 
 	public int moveDirection(final int x, final int y) { // 目标点Ｘ 目标点Ｙ
-		return moveDirection(x, y, getLocation().getLineDistance(new Point(x, y)));
+		return this.moveDirection(x, y, this.getLocation().getLineDistance(new Point(x, y)));
 	}
 
 	/** 返回离目标最佳的移动方向 */
 	public int moveDirection(final int x, final int y, final double d) { // 目标点Ｘ 目标点Ｙ 目标的距离
 		int dir = 0;
-		if ((hasSkillEffect(40) == true) && (d >= 2D)) { // ダークネスが挂かっていて、距离が2以上の场合追迹终了
+		if ((this.hasSkillEffect(40) == true) && (d >= 2D)) { // ダークネスが挂かっていて、距离が2以上の场合追迹终了
 			return -1;
 		}
 		else if (d > 30D) { // 距离が激しく远い场合は追迹终了
 			return -1;
 		}
 		else if (d > courceRange) { // 距离が远い场合は单纯计算
-			dir = targetDirection(x, y);
-			dir = checkObject(getX(), getY(), getMapId(), dir);
+			dir = this.targetDirection(x, y);
+			dir = checkObject(this.getX(), this.getY(), this.getMapId(), dir);
 		}
 		else { // 探索目标的最短经路
-			dir = _serchCource(x, y);
+			dir = this._serchCource(x, y);
 			if (dir == -1) { // 目标までの经路がなっかた场合はとりあえず近づいておく
-				dir = targetDirection(x, y);
-				if (!isExsistCharacterBetweenTarget(dir)) {
-					dir = checkObject(getX(), getY(), getMapId(), dir);
+				dir = this.targetDirection(x, y);
+				if (!this.isExsistCharacterBetweenTarget(dir)) {
+					dir = checkObject(this.getX(), this.getY(), this.getMapId(), dir);
 				}
 			}
 		}
@@ -1150,13 +1150,13 @@ public class L1NpcInstance extends L1Character {
 			else if (dir == 0) {
 				ny--;
 			}
-			if (getMap().isPassable(nx, ny)) {
+			if (this.getMap().isPassable(nx, ny)) {
 				dir += 4;
 				if (dir > 7) {
 					dir -= 8;
 				}
-				teleport(nx, ny, dir);
-				setCurrentMp(getCurrentMp() - 10);
+				this.teleport(nx, ny, dir);
+				this.setCurrentMp(this.getCurrentMp() - 10);
 				return true;
 			}
 		}
@@ -1165,11 +1165,11 @@ public class L1NpcInstance extends L1Character {
 
 	/** 处理时没有目标（不论是否返回值处理退出AI） */
 	public boolean noTarget() {
-		if ((_master != null) && (_master.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_master.getLocation()) > 2)) { // 主人が同じマップにいて离れてる场合は追尾
-			final int dir = moveDirection(_master.getX(), _master.getY());
+		if ((this._master != null) && (this._master.getMapId() == this.getMapId()) && (this.getLocation().getTileLineDistance(this._master.getLocation()) > 2)) { // 主人が同じマップにいて离れてる场合は追尾
+			final int dir = this.moveDirection(this._master.getX(), this._master.getY());
 			if (dir != -1) {
-				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				this.setDirectionMove(dir);
+				this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 			}
 			else {
 				return true;
@@ -1180,39 +1180,39 @@ public class L1NpcInstance extends L1Character {
 				return true; // 周りにプレイヤーがいなくなったらＡＩ处理终了
 			}
 			// 移动できるキャラはランダムに动いておく
-			if ((_master == null) && (getPassispeed() > 0) && !isRest()) {
+			if ((this._master == null) && (this.getPassispeed() > 0) && !this.isRest()) {
 				// グループに属していないorグループに属していてリーダーの场合、ランダムに动いておく
-				final L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
+				final L1MobGroupInfo mobGroupInfo = this.getMobGroupInfo();
 				if ((mobGroupInfo == null) || ((mobGroupInfo != null) && mobGroupInfo.isLeader(this))) {
 					// 移动する予定の距离を移动し终えたら、新たに距离と方向を决める
 					// そうでないなら、移动する予定の距离をデクリメント
-					if (_randomMoveDistance == 0) {
-						_randomMoveDistance = Random.nextInt(5) + 1;
-						_randomMoveDirection = Random.nextInt(20);
+					if (this._randomMoveDistance == 0) {
+						this._randomMoveDistance = Random.nextInt(5) + 1;
+						this._randomMoveDirection = Random.nextInt(20);
 						// ホームポイントから离れすぎないように、一定の确率でホームポイントの方向に补正
-						if ((getHomeX() != 0) && (getHomeY() != 0) && (_randomMoveDirection < 8) && (Random.nextInt(3) == 0)) {
-							_randomMoveDirection = moveDirection(getHomeX(), getHomeY());
+						if ((this.getHomeX() != 0) && (this.getHomeY() != 0) && (this._randomMoveDirection < 8) && (Random.nextInt(3) == 0)) {
+							this._randomMoveDirection = this.moveDirection(this.getHomeX(), this.getHomeY());
 						}
 					}
 					else {
-						_randomMoveDistance--;
+						this._randomMoveDistance--;
 					}
-					final int dir = checkObject(getX(), getY(), getMapId(), _randomMoveDirection);
+					final int dir = checkObject(this.getX(), this.getY(), this.getMapId(), this._randomMoveDirection);
 					if (dir != -1) {
-						setDirectionMove(dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+						this.setDirectionMove(dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				else { // リーダーを追尾
 					final L1NpcInstance leader = mobGroupInfo.getLeader();
-					if (getLocation().getTileLineDistance(leader.getLocation()) > 2) {
-						final int dir = moveDirection(leader.getX(), leader.getY());
+					if (this.getLocation().getTileLineDistance(leader.getLocation()) > 2) {
+						final int dir = this.moveDirection(leader.getX(), leader.getY());
 						if (dir == -1) {
 							return true;
 						}
 						else {
-							setDirectionMove(dir);
-							setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+							this.setDirectionMove(dir);
+							this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 						}
 					}
 				}
@@ -1225,7 +1225,7 @@ public class L1NpcInstance extends L1Character {
 
 	/** NPC延迟时间 */
 	public void npcSleepTime(final int i, final int type) {
-		setSleepTime(calcSleepTime(SprTable.getInstance().getSprSpeed(getTempCharGfx(), i), type));
+		this.setSleepTime(this.calcSleepTime(SprTable.getInstance().getSprSpeed(this.getTempCharGfx(), i), type));
 	}
 
 	// 对象ID重用SpawnTask传递
@@ -1233,12 +1233,12 @@ public class L1NpcInstance extends L1Character {
 	public void onDecay(final boolean isReuseId) {
 		int id = 0;
 		if (isReuseId) {
-			id = getId();
+			id = this.getId();
 		}
 		else {
 			id = 0;
 		}
-		_spawn.executeSpawnTask(_spawnNumber, id);
+		this._spawn.executeSpawnTask(this._spawnNumber, id);
 	}
 
 	/** 变形怪变形 */
@@ -1251,10 +1251,10 @@ public class L1NpcInstance extends L1Character {
 
 	/** 获取项目 */
 	public void onGetItem(final L1ItemInstance item) {
-		refineItem();
-		getInventory().shuffle();
-		if (getNpcTemplate().get_digestitem() > 0) {
-			setDigestItem(item);
+		this.refineItem();
+		this.getInventory().shuffle();
+		if (this.getNpcTemplate().get_digestitem() > 0) {
+			this.setDigestItem(item);
 		}
 	}
 
@@ -1270,82 +1270,82 @@ public class L1NpcInstance extends L1Character {
 	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_NPCPack(this));
-		onNpcAI();
+		this.onNpcAI();
 	}
 
 	/** 目标处理 */
 	public void onTarget() {
-		setActived(true);
-		_targetItemList.clear();
-		_targetItem = null;
-		final L1Character target = _target; // ここから先は_targetが变わると影响出るので别领域に参照确保
-		if (getAtkspeed() == 0) { // 逃げるキャラ
-			if (getPassispeed() > 0) { // 角色可以移动
+		this.setActived(true);
+		this._targetItemList.clear();
+		this._targetItem = null;
+		final L1Character target = this._target; // ここから先は_targetが变わると影响出るので别领域に参照确保
+		if (this.getAtkspeed() == 0) { // 逃げるキャラ
+			if (this.getPassispeed() > 0) { // 角色可以移动
 				int escapeDistance = 15;
-				if (hasSkillEffect(40) == true) {
+				if (this.hasSkillEffect(40) == true) {
 					escapeDistance = 1;
 				}
-				if (getLocation().getTileLineDistance(target.getLocation()) > escapeDistance) { // ターゲットから逃げるの终了
-					tagertClear();
+				if (this.getLocation().getTileLineDistance(target.getLocation()) > escapeDistance) { // ターゲットから逃げるの终了
+					this.tagertClear();
 				}
 				else { // ターゲットから逃げる
-					int dir = targetReverseDirection(target.getX(), target.getY());
-					dir = checkObject(getX(), getY(), getMapId(), dir);
-					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+					int dir = this.targetReverseDirection(target.getX(), target.getY());
+					dir = checkObject(this.getX(), this.getY(), this.getMapId(), dir);
+					this.setDirectionMove(dir);
+					this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 				}
 			}
 		}
 		else { // 逃げないキャラ
-			if (isAttackPosition(target.getX(), target.getY(), getAtkRanged())) { // 攻击可能位置
-				if (mobSkill.isSkillTrigger(target)) { // トリガの条件に合うスキルがある
-					if (mobSkill.skillUse(target, true)) { // スキル使用(mobskill.sqlのTriRndに从う)
-						setSleepTime(calcSleepTime(mobSkill.getSleepTime(), MAGIC_SPEED));
+			if (this.isAttackPosition(target.getX(), target.getY(), this.getAtkRanged())) { // 攻击可能位置
+				if (this.mobSkill.isSkillTrigger(target)) { // トリガの条件に合うスキルがある
+					if (this.mobSkill.skillUse(target, true)) { // スキル使用(mobskill.sqlのTriRndに从う)
+						this.setSleepTime(this.calcSleepTime(this.mobSkill.getSleepTime(), MAGIC_SPEED));
 					}
 					else { // スキル使用が失败したら物理攻击
-						setHeading(targetDirection(target.getX(), target.getY()));
-						attackTarget(target);
+						this.setHeading(this.targetDirection(target.getX(), target.getY()));
+						this.attackTarget(target);
 					}
 				}
 				else {
-					setHeading(targetDirection(target.getX(), target.getY()));
-					attackTarget(target);
+					this.setHeading(this.targetDirection(target.getX(), target.getY()));
+					this.attackTarget(target);
 				}
 			}
 			else { // 攻击不可能位置
-				if (mobSkill.skillUse(target, false)) { // 使用技能(mobskill.sqlのTriRndに从わず、発动确率は100%。ただしサモン、强制变身は常にTriRndに从う。)
-					setSleepTime(calcSleepTime(mobSkill.getSleepTime(), MAGIC_SPEED));
+				if (this.mobSkill.skillUse(target, false)) { // 使用技能(mobskill.sqlのTriRndに从わず、発动确率は100%。ただしサモン、强制变身は常にTriRndに从う。)
+					this.setSleepTime(this.calcSleepTime(this.mobSkill.getSleepTime(), MAGIC_SPEED));
 					return;
 				}
 
-				if (getPassispeed() > 0) {
+				if (this.getPassispeed() > 0) {
 					// 角色可以移动
-					final int distance = getLocation().getTileDistance(target.getLocation());
-					if ((firstFound == true) && getNpcTemplate().is_teleport() && (distance > 3) && (distance < 15)) {
-						if (nearTeleport(target.getX(), target.getY()) == true) {
-							firstFound = false;
+					final int distance = this.getLocation().getTileDistance(target.getLocation());
+					if ((this.firstFound == true) && this.getNpcTemplate().is_teleport() && (distance > 3) && (distance < 15)) {
+						if (this.nearTeleport(target.getX(), target.getY()) == true) {
+							this.firstFound = false;
 							return;
 						}
 					}
 
-					if (getNpcTemplate().is_teleport() && (20 > Random.nextInt(100)) && (getCurrentMp() >= 10) && (distance > 6) && (distance < 15)) { // 瞬移移动
-						if (nearTeleport(target.getX(), target.getY()) == true) {
+					if (this.getNpcTemplate().is_teleport() && (20 > Random.nextInt(100)) && (this.getCurrentMp() >= 10) && (distance > 6) && (distance < 15)) { // 瞬移移动
+						if (this.nearTeleport(target.getX(), target.getY()) == true) {
 							return;
 						}
 					}
-					final int dir = moveDirection(target.getX(), target.getY());
+					final int dir = this.moveDirection(target.getX(), target.getY());
 					if (dir == -1) {
 						// 假如怪物走不过去 就找附近下一个玩家攻击
-						searchTarget();
+						this.searchTarget();
 					}
 					else {
-						setDirectionMove(dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+						this.setDirectionMove(dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				else {
 					// 角色不能移动（从目标排除、ＰＴのときドロップチャンスがリセットされるけどまぁ自业自得）
-					tagertClear();
+					this.tagertClear();
 				}
 			}
 		}
@@ -1353,18 +1353,18 @@ public class L1NpcInstance extends L1Character {
 
 	/** 处理目标项目 */
 	public void onTargetItem() {
-		if (getLocation().getTileLineDistance(_targetItem.getLocation()) == 0) { // 可以拿起的位置
-			pickupTargetItem(_targetItem);
+		if (this.getLocation().getTileLineDistance(this._targetItem.getLocation()) == 0) { // 可以拿起的位置
+			this.pickupTargetItem(this._targetItem);
 		}
 		else { // 不可能位置
-			final int dir = moveDirection(_targetItem.getX(), _targetItem.getY());
+			final int dir = this.moveDirection(this._targetItem.getX(), this._targetItem.getY());
 			if (dir == -1) { // 拾うの谛め
-				_targetItemList.remove(_targetItem);
-				_targetItem = null;
+				this._targetItemList.remove(this._targetItem);
+				this._targetItem = null;
 			}
 			else { // 移至目标项
-				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				this.setDirectionMove(dir);
+				this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 			}
 		}
 	}
@@ -1372,12 +1372,12 @@ public class L1NpcInstance extends L1Character {
 	/** 拿起一个项目 */
 	public void pickupTargetItem(final L1ItemInstance targetItem) {
 		final L1Inventory groundInventory = L1World.getInstance().getInventory(targetItem.getX(), targetItem.getY(), targetItem.getMapId());
-		final L1ItemInstance item = groundInventory.tradeItem(targetItem, targetItem.getCount(), getInventory());
-		turnOnOffLight();
-		onGetItem(item);
-		_targetItemList.remove(_targetItem);
-		_targetItem = null;
-		setSleepTime(1000);
+		final L1ItemInstance item = groundInventory.tradeItem(targetItem, targetItem.getCount(), this.getInventory());
+		this.turnOnOffLight();
+		this.onGetItem(item);
+		this._targetItemList.remove(this._targetItem);
+		this._targetItem = null;
+		this.setSleepTime(1000);
 	}
 
 	/** 受到伤害 */
@@ -1396,118 +1396,118 @@ public class L1NpcInstance extends L1Character {
 		int[] createitem = null;
 		int[] createcount = null;
 
-		if (_npcTemplate.get_npcId() == 45032) { // 布拉伯
+		if (this._npcTemplate.get_npcId() == 45032) { // 布拉伯
 			// 奥里哈鲁根的剑身
-			if ((getExp() != 0) && !_inventory.checkItem(20)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(20)) {
 				materials = new int[] { 40508, 40521, 40045 }; // 奥里哈鲁根、精灵羽翼、红宝石
 				counts = new int[] { 150, 3, 3 };
 				createitem = new int[] { 20 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
 			// 长剑的剑身
-			if ((getExp() != 0) && !_inventory.checkItem(19)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(19)) {
 				materials = new int[] { 40494, 40521 }; // 纯粹的米索莉块、精灵羽翼
 				counts = new int[] { 150, 3 };
 				createitem = new int[] { 19 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
 			// 短剑的剑身
-			if ((getExp() != 0) && !_inventory.checkItem(3)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(3)) {
 				materials = new int[] { 40494, 40521 }; // 纯粹的米索莉块、精灵羽翼
 				counts = new int[] { 50, 1 };
 				createitem = new int[] { 3 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
 			// 覆上奥里哈鲁根的角
-			if ((getExp() != 0) && !_inventory.checkItem(100)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(100)) {
 				materials = new int[] { 88, 40508, 40045 }; // 潘的角、奥里哈鲁根、红宝石
 				counts = new int[] { 4, 80, 3 };
 				createitem = new int[] { 100 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
 			// 覆上米索莉的角
-			if ((getExp() != 0) && !_inventory.checkItem(89)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(89)) {
 				materials = new int[] { 88, 40494 }; // 潘的角、纯粹的米索莉块
 				counts = new int[] { 2, 80 };
 				createitem = new int[] { 89 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						final L1ItemInstance item = _inventory.storeItem(createitem[j], createcount[j]);
-						if (getNpcTemplate().get_digestitem() > 0) {
-							setDigestItem(item);
+						final L1ItemInstance item = this._inventory.storeItem(createitem[j], createcount[j]);
+						if (this.getNpcTemplate().get_digestitem() > 0) {
+							this.setDigestItem(item);
 						}
 					}
 				}
 			}
 		}
-		else if (_npcTemplate.get_npcId() == 81069) { // 变形怪（法师45级任务）
+		else if (this._npcTemplate.get_npcId() == 81069) { // 变形怪（法师45级任务）
 			// 变形怪的血
-			if ((getExp() != 0) && !_inventory.checkItem(40542)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(40542)) {
 				materials = new int[] { 40032 }; // 伊娃的祝福
 				counts = new int[] { 1 };
 				createitem = new int[] { 40542 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
 		}
-		else if ((_npcTemplate.get_npcId() == 45166 // 南瓜怪
+		else if ((this._npcTemplate.get_npcId() == 45166 // 南瓜怪
 				)
-				|| (_npcTemplate.get_npcId() == 45167)) { // 南瓜怪
+				|| (this._npcTemplate.get_npcId() == 45167)) { // 南瓜怪
 			// 南瓜种子
-			if ((getExp() != 0) && !_inventory.checkItem(40726)) {
+			if ((this.getExp() != 0) && !this._inventory.checkItem(40726)) {
 				materials = new int[] { 40725 }; // 南瓜糖果
 				counts = new int[] { 1 };
 				createitem = new int[] { 40726 };
 				createcount = new int[] { 1 };
-				if (_inventory.checkItem(materials, counts)) {
+				if (this._inventory.checkItem(materials, counts)) {
 					for (int i = 0; i < materials.length; i++) {
-						_inventory.consumeItem(materials[i], counts[i]);
+						this._inventory.consumeItem(materials[i], counts[i]);
 					}
 					for (int j = 0; j < createitem.length; j++) {
-						_inventory.storeItem(createitem[j], createcount[j]);
+						this._inventory.storeItem(createitem[j], createcount[j]);
 					}
 				}
 			}
@@ -1516,22 +1516,22 @@ public class L1NpcInstance extends L1Character {
 
 	@Override
 	public synchronized void resurrect(final int hp) {
-		if (_destroyed) {
+		if (this._destroyed) {
 			return;
 		}
-		if (_deleteTask != null) {
-			if (!_future.cancel(false)) { // 不能被取消
+		if (this._deleteTask != null) {
+			if (!this._future.cancel(false)) { // 不能被取消
 				return;
 			}
-			_deleteTask = null;
-			_future = null;
+			this._deleteTask = null;
+			this._future = null;
 		}
 		super.resurrect(hp);
 
 		// キャンセレーションをエフェクトなしでかける
 		// 本来は死亡时に行うべきだが、负荷が大きくなるため复活时に行う
 		final L1SkillUse skill = new L1SkillUse();
-		skill.handleCommands(null, CANCELLATION, getId(), getX(), getY(), null, 0, L1SkillUse.TYPE_LOGIN, this);
+		skill.handleCommands(null, CANCELLATION, this.getId(), this.getX(), this.getY(), null, 0, L1SkillUse.TYPE_LOGIN, this);
 	}
 
 	/** 怪物飞天中，发现特定道具时解除飞天捡拾道具 */
@@ -1552,15 +1552,15 @@ public class L1NpcInstance extends L1Character {
 		for (final L1ItemInstance item : inventory.getItems()) {
 			if ((item.getItem().getType() == 6) // potion(药水)
 					|| (item.getItem().getType() == 7)) { // food(食物)
-				if (getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
-					if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
-						setHiddenStatus(HIDDEN_STATUS_NONE);
-						setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Movedown));
-						onNpcAI();
-						startChat(CHAT_TIMING_HIDE);
-						_targetItem = item;
-						_targetItemList.add(_targetItem);
+				if (this.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
+					if (this.getHiddenStatus() == HIDDEN_STATUS_FLY) {
+						this.setHiddenStatus(HIDDEN_STATUS_NONE);
+						this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Movedown));
+						this.onNpcAI();
+						this.startChat(CHAT_TIMING_HIDE);
+						this._targetItem = item;
+						this._targetItemList.add(this._targetItem);
 					}
 				}
 			}
@@ -1569,7 +1569,7 @@ public class L1NpcInstance extends L1Character {
 
 	// 寻找目标（Ｔｙｐｅによって结构违うのでオーバライドで实装）
 	public void searchTarget() {
-		tagertClear();
+		this.tagertClear();
 	}
 
 	/** 找到目标项目 */
@@ -1589,9 +1589,9 @@ public class L1NpcInstance extends L1Character {
 		final int pickupIndex = Random.nextInt(gInventorys.size());
 		final L1GroundInventory inventory = gInventorys.get(pickupIndex);
 		for (final L1ItemInstance item : inventory.getItems()) {
-			if (getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) { // 持てるならターゲットアイテムに加える
-				_targetItem = item;
-				_targetItemList.add(_targetItem);
+			if (this.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) { // 持てるならターゲットアイテムに加える
+				this._targetItem = item;
+				this._targetItemList.add(this._targetItem);
 			}
 		}
 	}
@@ -1615,9 +1615,9 @@ public class L1NpcInstance extends L1Character {
 						npc.setLink(targetPlayer);
 					}
 				}
-				final L1MobGroupInfo mobGroupInfo = getMobGroupInfo();
+				final L1MobGroupInfo mobGroupInfo = this.getMobGroupInfo();
 				if (mobGroupInfo != null) {
-					if ((getMobGroupId() != 0) && (getMobGroupId() == npc.getMobGroupId())) { // 同じグループ
+					if ((this.getMobGroupId() != 0) && (this.getMobGroupId() == npc.getMobGroupId())) { // 同じグループ
 						npc.setLink(targetPlayer);
 					}
 				}
@@ -1627,28 +1627,28 @@ public class L1NpcInstance extends L1Character {
 
 	/**  */
 	public void setAgro(final boolean flag) {
-		_Agro = flag;
+		this._Agro = flag;
 	}
 
 	/**  */
 	public void setAgrocoi(final boolean flag) {
-		_Agrocoi = flag;
+		this._Agrocoi = flag;
 	}
 
 	/**  */
 	public void setAgrososc(final boolean flag) {
-		_Agrososc = flag;
+		this._Agrososc = flag;
 	}
 
 	/** 设置攻击速度 */
 	public void setAtkspeed(final int i) {
-		_atkspeed = i;
+		this._atkspeed = i;
 	}
 
 	/** 设置消化道具 */
 	public void setDigestItem(final L1ItemInstance item) {
-		_digestItems.put(new Integer(item.getId()), new Integer(getNpcTemplate().get_digestitem()));
-		if (!_digestItemRunning) {
+		this._digestItems.put(new Integer(item.getId()), new Integer(this.getNpcTemplate().get_digestitem()));
+		if (!this._digestItemRunning) {
 			final DigestItemTimer digestItemTimer = new DigestItemTimer();
 			GeneralThreadPool.getInstance().execute(digestItemTimer);
 		}
@@ -1665,49 +1665,49 @@ public class L1NpcInstance extends L1Character {
 				case 1:
 					nx = 1;
 					ny = -1;
-					setHeading(1);
+					this.setHeading(1);
 					break;
 
 				case 2:
 					nx = 1;
 					ny = 0;
-					setHeading(2);
+					this.setHeading(2);
 					break;
 
 				case 3:
 					nx = 1;
 					ny = 1;
-					setHeading(3);
+					this.setHeading(3);
 					break;
 
 				case 4:
 					nx = 0;
 					ny = 1;
-					setHeading(4);
+					this.setHeading(4);
 					break;
 
 				case 5:
 					nx = -1;
 					ny = 1;
-					setHeading(5);
+					this.setHeading(5);
 					break;
 
 				case 6:
 					nx = -1;
 					ny = 0;
-					setHeading(6);
+					this.setHeading(6);
 					break;
 
 				case 7:
 					nx = -1;
 					ny = -1;
-					setHeading(7);
+					this.setHeading(7);
 					break;
 
 				case 0:
 					nx = 0;
 					ny = -1;
-					setHeading(0);
+					this.setHeading(0);
 					break;
 
 				default:
@@ -1715,77 +1715,77 @@ public class L1NpcInstance extends L1Character {
 
 			}
 
-			getMap().setPassable(getLocation(), true);
+			this.getMap().setPassable(this.getLocation(), true);
 
-			final int nnx = getX() + nx;
-			final int nny = getY() + ny;
-			setX(nnx);
-			setY(nny);
+			final int nnx = this.getX() + nx;
+			final int nny = this.getY() + ny;
+			this.setX(nnx);
+			this.setY(nny);
 
-			getMap().setPassable(getLocation(), false);
+			this.getMap().setPassable(this.getLocation(), false);
 
-			broadcastPacket(new S_MoveCharPacket(this));
+			this.broadcastPacket(new S_MoveCharPacket(this));
 
 			// movement_distanceマス以上离れたらホームポイントへテレポート
-			if (getMovementDistance() > 0) {
+			if (this.getMovementDistance() > 0) {
 				if ((this instanceof L1GuardInstance) || (this instanceof L1MerchantInstance) || (this instanceof L1MonsterInstance)) {
-					if (getLocation().getLineDistance(new Point(getHomeX(), getHomeY())) > getMovementDistance()) {
-						teleport(getHomeX(), getHomeY(), getHeading());
+					if (this.getLocation().getLineDistance(new Point(this.getHomeX(), this.getHomeY())) > this.getMovementDistance()) {
+						this.teleport(this.getHomeX(), this.getHomeY(), this.getHeading());
 					}
 				}
 			}
 			// 判断士兵的怨灵、怨灵、哈蒙将军的怨灵离开墓园范围时传送回墓园！
-			if ((getNpcTemplate().get_npcId() >= 45912) && (getNpcTemplate().get_npcId() <= 45916)) {
-				if (!((getX() >= 32591) && (getX() <= 32644) && (getY() >= 32643) && (getY() <= 32688) && (getMapId() == 4))) {
-					teleport(getHomeX(), getHomeY(), getHeading());
+			if ((this.getNpcTemplate().get_npcId() >= 45912) && (this.getNpcTemplate().get_npcId() <= 45916)) {
+				if (!((this.getX() >= 32591) && (this.getX() <= 32644) && (this.getY() >= 32643) && (this.getY() <= 32688) && (this.getMapId() == 4))) {
+					this.teleport(this.getHomeX(), this.getHomeY(), this.getHeading());
 				}
 			}
 		}
 	}
 
 	public void setDropItems(final boolean i) {
-		_isDropitems = i;
+		this._isDropitems = i;
 	}
 
 	/** 仇恨设置 */
 	public void setHate(final L1Character cha, int hate) {
-		if ((cha != null) && (cha.getId() != getId())) {
-			if (!isFirstAttack() && (hate != 0)) {
+		if ((cha != null) && (cha.getId() != this.getId())) {
+			if (!this.isFirstAttack() && (hate != 0)) {
 				// hate += 20; // ＦＡヘイト
-				hate += getMaxHp() / 10; // ＦＡヘイト
-				setFirstAttack(true);
+				hate += this.getMaxHp() / 10; // ＦＡヘイト
+				this.setFirstAttack(true);
 			}
 
-			_hateList.add(cha, hate);
-			_dropHateList.add(cha, hate);
-			_target = _hateList.getMaxHateCharacter();
-			checkTarget();
+			this._hateList.add(cha, hate);
+			this._dropHateList.add(cha, hate);
+			this._target = this._hateList.getMaxHateCharacter();
+			this.checkTarget();
 		}
 	}
 
 	/** 设置隐藏状态 */
 	public void setHiddenStatus(final int i) {
-		_hiddenStatus = i;
+		this._hiddenStatus = i;
 	}
 
 	/**  */
 	public void setHomeX(final int i) {
-		_homeX = i;
+		this._homeX = i;
 	}
 
 	/**  */
 	public void setHomeY(final int i) {
-		_homeY = i;
+		this._homeY = i;
 	}
 
 	/** 设定角色身上的道具 */
 	public void setInventory(final L1Inventory inventory) {
-		_inventory = inventory;
+		this._inventory = inventory;
 	}
 
 	/**  */
 	public void setLightSize(final int i) {
-		_lightSize = i;
+		this._lightSize = i;
 	}
 
 	// 设置链接
@@ -1794,61 +1794,61 @@ public class L1NpcInstance extends L1Character {
 
 	/** 设置主人 */
 	public void setMaster(final L1Character cha) {
-		_master = cha;
+		this._master = cha;
 	}
 
 	/** 设定MOB族群ID */
 	public void setMobGroupId(final int i) {
-		_mobGroupId = i;
+		this._mobGroupId = i;
 	}
 
 	/** 设定MOB族群信息 */
 	public void setMobGroupInfo(final L1MobGroupInfo m) {
-		_mobGroupInfo = m;
+		this._mobGroupInfo = m;
 	}
 
 	/** 设置移动距离 */
 	public void setMovementDistance(final int i) {
-		_movementDistance = i;
+		this._movementDistance = i;
 	}
 
 	/** 设置名称ＩＤ */
 	public void setNameId(final String s) {
-		_nameId = s;
+		this._nameId = s;
 	}
 
 	public void setParalysisTime(final int ptime) {
-		_paralysisTime = ptime;
+		this._paralysisTime = ptime;
 	}
 
 	/**  */
 	public void setPassispeed(final int i) {
-		_passispeed = i;
+		this._passispeed = i;
 	}
 
 	/** 设定宠物的费用 */
 	public void setPetcost(final int i) {
-		_petcost = i;
+		this._petcost = i;
 	}
 
 	/** 设定捡取道具 */
 	public void setPickupItem(final boolean flag) {
-		_pickupItem = flag;
+		this._pickupItem = flag;
 	}
 
 	/** 设定变身箭头GFX */
 	public void setPolyArrowGfx(final int i) {
-		_polyArrowGfx = i;
+		this._polyArrowGfx = i;
 	}
 
 	/** 设定变身远程攻击 */
 	public void setPolyAtkRanged(final int i) {
-		_polyAtkRanged = i;
+		this._polyAtkRanged = i;
 	}
 
 	/**  */
 	public void setreSpawn(final boolean flag) {
-		_reSpawn = flag;
+		this._reSpawn = flag;
 	}
 
 	public void setRest(final boolean _rest) {
@@ -1856,176 +1856,176 @@ public class L1NpcInstance extends L1Character {
 	}
 
 	public void setResurrect(final boolean flag) {
-		_isResurrect = flag;
+		this._isResurrect = flag;
 	}
 
 	/**  */
 	public void setSpawn(final L1Spawn spawn) {
-		_spawn = spawn;
+		this._spawn = spawn;
 	}
 
 	/**  */
 	public void setSpawnNumber(final int number) {
-		_spawnNumber = number;
+		this._spawnNumber = number;
 	}
 
 	/** 设置临时正义值 */
 	public void setTempLawful(final int i) {
-		_tempLawful = i;
+		this._tempLawful = i;
 	}
 
 	/** 初始化指定的各种模板值 */
 	public void setting_template(final L1Npc template) {
-		_npcTemplate = template;
+		this._npcTemplate = template;
 		int randomlevel = 0;
 		double rate = 0;
 		double diff = 0;
-		setName(template.get_name());
-		setNameId(template.get_nameid());
+		this.setName(template.get_name());
+		this.setNameId(template.get_nameid());
 		if (template.get_randomlevel() == 0) { // 没有指定Lv
-			setLevel(template.get_level());
+			this.setLevel(template.get_level());
 		}
 		else { // 指定随机Lv（最小值:get_level(),最大值:get_randomlevel()）
 			randomlevel = Random.nextInt(template.get_randomlevel() - template.get_level() + 1);
 			diff = template.get_randomlevel() - template.get_level();
 			rate = randomlevel / diff;
 			randomlevel += template.get_level();
-			setLevel(randomlevel);
+			this.setLevel(randomlevel);
 		}
 		if (template.get_randomhp() == 0) {
-			setMaxHp(template.get_hp());
-			setCurrentHpDirect(template.get_hp());
+			this.setMaxHp(template.get_hp());
+			this.setCurrentHpDirect(template.get_hp());
 		}
 		else {
 			final double randomhp = rate * (template.get_randomhp() - template.get_hp());
 			final int hp = (int) (template.get_hp() + randomhp);
-			setMaxHp(hp);
-			setCurrentHpDirect(hp);
+			this.setMaxHp(hp);
+			this.setCurrentHpDirect(hp);
 		}
 		if (template.get_randommp() == 0) {
-			setMaxMp(template.get_mp());
-			setCurrentMpDirect(template.get_mp());
+			this.setMaxMp(template.get_mp());
+			this.setCurrentMpDirect(template.get_mp());
 		}
 		else {
 			final double randommp = rate * (template.get_randommp() - template.get_mp());
 			final int mp = (int) (template.get_mp() + randommp);
-			setMaxMp(mp);
-			setCurrentMpDirect(mp);
+			this.setMaxMp(mp);
+			this.setCurrentMpDirect(mp);
 		}
 		if (template.get_randomac() == 0) {
-			setAc(template.get_ac());
+			this.setAc(template.get_ac());
 		}
 		else {
 			final double randomac = rate * (template.get_randomac() - template.get_ac());
 			final int ac = (int) (template.get_ac() + randomac);
-			setAc(ac);
+			this.setAc(ac);
 		}
 		if (template.get_randomlevel() == 0) {
-			setStr(template.get_str());
-			setCon(template.get_con());
-			setDex(template.get_dex());
-			setInt(template.get_int());
-			setWis(template.get_wis());
-			setMr(template.get_mr());
+			this.setStr(template.get_str());
+			this.setCon(template.get_con());
+			this.setDex(template.get_dex());
+			this.setInt(template.get_int());
+			this.setWis(template.get_wis());
+			this.setMr(template.get_mr());
 		}
 		else {
-			setStr((byte) Math.min(template.get_str() + diff, 127));
-			setCon((byte) Math.min(template.get_con() + diff, 127));
-			setDex((byte) Math.min(template.get_dex() + diff, 127));
-			setInt((byte) Math.min(template.get_int() + diff, 127));
-			setWis((byte) Math.min(template.get_wis() + diff, 127));
-			setMr((byte) Math.min(template.get_mr() + diff, 127));
+			this.setStr((byte) Math.min(template.get_str() + diff, 127));
+			this.setCon((byte) Math.min(template.get_con() + diff, 127));
+			this.setDex((byte) Math.min(template.get_dex() + diff, 127));
+			this.setInt((byte) Math.min(template.get_int() + diff, 127));
+			this.setWis((byte) Math.min(template.get_wis() + diff, 127));
+			this.setMr((byte) Math.min(template.get_mr() + diff, 127));
 
-			addHitup((int) diff * 2);
-			addDmgup((int) diff * 2);
+			this.addHitup((int) diff * 2);
+			this.addDmgup((int) diff * 2);
 		}
-		setAgro(template.is_agro());
-		setAgrocoi(template.is_agrocoi());
-		setAgrososc(template.is_agrososc());
-		setTempCharGfx(template.get_gfxid());
-		setGfxId(template.get_gfxid());
-		setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
-		setPolyAtkRanged(template.get_ranged());
-		setPolyArrowGfx(template.getBowActId());
+		this.setAgro(template.is_agro());
+		this.setAgrocoi(template.is_agrocoi());
+		this.setAgrososc(template.is_agrososc());
+		this.setTempCharGfx(template.get_gfxid());
+		this.setGfxId(template.get_gfxid());
+		this.setStatus(L1NpcDefaultAction.getInstance().getStatus(this.getTempCharGfx()));
+		this.setPolyAtkRanged(template.get_ranged());
+		this.setPolyArrowGfx(template.getBowActId());
 
 		// 移动
 		if (template.get_passispeed() != 0) {
-			setPassispeed(SprTable.getInstance().getSprSpeed(getTempCharGfx(), getStatus()));
+			this.setPassispeed(SprTable.getInstance().getSprSpeed(this.getTempCharGfx(), this.getStatus()));
 		}
 		else {
-			setPassispeed(0);
+			this.setPassispeed(0);
 		}
 		// 攻击
 		if (template.get_atkspeed() != 0) {
-			int actid = (getStatus() + 1);
-			if (L1NpcDefaultAction.getInstance().getDefaultAttack(getTempCharGfx()) != actid) {
-				actid = L1NpcDefaultAction.getInstance().getDefaultAttack(getTempCharGfx());
+			int actid = (this.getStatus() + 1);
+			if (L1NpcDefaultAction.getInstance().getDefaultAttack(this.getTempCharGfx()) != actid) {
+				actid = L1NpcDefaultAction.getInstance().getDefaultAttack(this.getTempCharGfx());
 			}
-			setAtkspeed(SprTable.getInstance().getSprSpeed(getTempCharGfx(), actid));
+			this.setAtkspeed(SprTable.getInstance().getSprSpeed(this.getTempCharGfx(), actid));
 		}
 		else {
-			setAtkspeed(0);
+			this.setAtkspeed(0);
 		}
 
 		if (template.get_randomexp() == 0) {
-			setExp(template.get_exp());
+			this.setExp(template.get_exp());
 		}
 		else {
-			final int level = getLevel();
+			final int level = this.getLevel();
 			int exp = level * level;
 			exp += 1;
-			setExp(exp);
+			this.setExp(exp);
 		}
 		if (template.get_randomlawful() == 0) {
-			setLawful(template.get_lawful());
-			setTempLawful(template.get_lawful());
+			this.setLawful(template.get_lawful());
+			this.setTempLawful(template.get_lawful());
 		}
 		else {
 			final double randomlawful = rate * (template.get_randomlawful() - template.get_lawful());
 			final int lawful = (int) (template.get_lawful() + randomlawful);
-			setLawful(lawful);
-			setTempLawful(lawful);
+			this.setLawful(lawful);
+			this.setTempLawful(lawful);
 		}
-		setPickupItem(template.is_picupitem());
+		this.setPickupItem(template.is_picupitem());
 		if (template.is_bravespeed()) {
-			setBraveSpeed(1);
+			this.setBraveSpeed(1);
 		}
 		else {
-			setBraveSpeed(0);
+			this.setBraveSpeed(0);
 		}
 		if (template.get_digestitem() > 0) {
-			_digestItems = Maps.newMap();
+			this._digestItems = Maps.newMap();
 		}
-		setKarma(template.getKarma());
-		setLightSize(template.getLightSize());
+		this.setKarma(template.getKarma());
+		this.setLightSize(template.getLightSize());
 
-		mobSkill = new L1MobSkillUse(this);
+		this.mobSkill = new L1MobSkillUse(this);
 	}
 
 	// ※破弃后に动かないよう强制的にＡＩ等のスレッド处理中止（念のため）
 
 	/** 设定武器损坏 */
 	public void setWeaponBreaked(final boolean flag) {
-		_weaponBreaked = flag;
+		this._weaponBreaked = flag;
 	}
 
 	/** 开始怪物喊话 */
 	public void startChat(final int chatTiming) {
 		// 出现时与死亡时的喊话
-		if ((chatTiming == CHAT_TIMING_APPEARANCE) && isDead()) {
+		if ((chatTiming == CHAT_TIMING_APPEARANCE) && this.isDead()) {
 			return;
 		}
-		if ((chatTiming == CHAT_TIMING_DEAD) && !isDead()) {
+		if ((chatTiming == CHAT_TIMING_DEAD) && !this.isDead()) {
 			return;
 		}
-		if ((chatTiming == CHAT_TIMING_HIDE) && isDead()) {
+		if ((chatTiming == CHAT_TIMING_HIDE) && this.isDead()) {
 			return;
 		}
-		if ((chatTiming == CHAT_TIMING_GAME_TIME) && isDead()) {
+		if ((chatTiming == CHAT_TIMING_GAME_TIME) && this.isDead()) {
 			return;
 		}
 
-		final int npcId = getNpcTemplate().get_npcId();
+		final int npcId = this.getNpcTemplate().get_npcId();
 		L1NpcChat npcChat = null;
 		if (chatTiming == CHAT_TIMING_APPEARANCE) {
 			npcChat = NpcChatTable.getInstance().getTemplateAppearance(npcId);
@@ -2055,62 +2055,62 @@ public class L1NpcInstance extends L1Character {
 
 	/** HP自然回复 */
 	public final void startHpRegeneration() {
-		final int hprInterval = getNpcTemplate().get_hprinterval();
-		final int hpr = getNpcTemplate().get_hpr();
-		if (!_hprRunning && (hprInterval > 0) && (hpr > 0)) {
-			_hprTimer = new HprTimer(hpr);
-			L1NpcRegenerationTimer.getInstance().scheduleAtFixedRate(_hprTimer, hprInterval, hprInterval);
-			_hprRunning = true;
+		final int hprInterval = this.getNpcTemplate().get_hprinterval();
+		final int hpr = this.getNpcTemplate().get_hpr();
+		if (!this._hprRunning && (hprInterval > 0) && (hpr > 0)) {
+			this._hprTimer = new HprTimer(hpr);
+			L1NpcRegenerationTimer.getInstance().scheduleAtFixedRate(this._hprTimer, hprInterval, hprInterval);
+			this._hprRunning = true;
 		}
 	}
 
 	/** MP自然回复 */
 	public final void startMpRegeneration() {
-		final int mprInterval = getNpcTemplate().get_mprinterval();
-		final int mpr = getNpcTemplate().get_mpr();
-		if (!_mprRunning && (mprInterval > 0) && (mpr > 0)) {
-			_mprTimer = new MprTimer(mpr);
-			L1NpcRegenerationTimer.getInstance().scheduleAtFixedRate(_mprTimer, mprInterval, mprInterval);
-			_mprRunning = true;
+		final int mprInterval = this.getNpcTemplate().get_mprinterval();
+		final int mpr = this.getNpcTemplate().get_mpr();
+		if (!this._mprRunning && (mprInterval > 0) && (mpr > 0)) {
+			this._mprTimer = new MprTimer(mpr);
+			L1NpcRegenerationTimer.getInstance().scheduleAtFixedRate(this._mprTimer, mprInterval, mprInterval);
+			this._mprRunning = true;
 		}
 	}
 
 	/** 停止回复HP */
 	public final void stopHpRegeneration() {
-		if (_hprRunning) {
-			_hprTimer.cancel();
-			_hprRunning = false;
+		if (this._hprRunning) {
+			this._hprTimer.cancel();
+			this._hprRunning = false;
 		}
 	}
 
 	/** 停止回复MP */
 	public final void stopMpRegeneration() {
-		if (_mprRunning) {
-			_mprTimer.cancel();
-			_mprRunning = false;
+		if (this._mprRunning) {
+			this._mprTimer.cancel();
+			this._mprRunning = false;
 		}
 	}
 
 	/** 删除现在的目标 */
 	public void tagertClear() {
-		if (_target == null) {
+		if (this._target == null) {
 			return;
 		}
-		_hateList.remove(_target);
-		_target = null;
+		this._hateList.remove(this._target);
+		this._target = null;
 	}
 
 	/** 删除指定的目标 */
 	public void targetRemove(final L1Character target) {
-		_hateList.remove(target);
-		if ((_target != null) && _target.equals(target)) {
-			_target = null;
+		this._hateList.remove(target);
+		if ((this._target != null) && this._target.equals(target)) {
+			this._target = null;
 		}
 	}
 
 	/** 返回目标相反的方向 */
 	public int targetReverseDirection(final int tx, final int ty) { // 目标点Ｘ 目标点Ｙ
-		int dir = targetDirection(tx, ty);
+		int dir = this.targetDirection(tx, ty);
 		dir += 4;
 		if (dir > 7) {
 			dir -= 8;
@@ -2121,18 +2121,18 @@ public class L1NpcInstance extends L1Character {
 	/** 瞬移到目标 */
 	public void teleport(final int nx, final int ny, final int dir) {
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			pc.sendPackets(new S_SkillSound(getId(), 169));
+			pc.sendPackets(new S_SkillSound(this.getId(), 169));
 			pc.sendPackets(new S_RemoveObject(this));
 			pc.removeKnownObject(this);
 		}
-		setX(nx);
-		setY(ny);
-		setHeading(dir);
+		this.setX(nx);
+		this.setY(ny);
+		this.setHeading(dir);
 	}
 
 	/** 使用道具 */
 	public void useItem(final int type, final int chance) { // 使用する种类 使用する可能性(％)
-		if (hasSkillEffect(71)) {
+		if (this.hasSkillEffect(71)) {
 			return; // ディケイ ポーション状态かチェック
 		}
 
@@ -2142,33 +2142,33 @@ public class L1NpcInstance extends L1Character {
 
 		if (type == USEITEM_HEAL) { // 恢复药水系统
 			// 回复量の大きい顺
-			if (getInventory().consumeItem(POTION_OF_GREATER_HEALING, 1)) {
-				useHealPotion(75, 197);
+			if (this.getInventory().consumeItem(POTION_OF_GREATER_HEALING, 1)) {
+				this.useHealPotion(75, 197);
 			}
-			else if (getInventory().consumeItem(POTION_OF_EXTRA_HEALING, 1)) {
-				useHealPotion(45, 194);
+			else if (this.getInventory().consumeItem(POTION_OF_EXTRA_HEALING, 1)) {
+				this.useHealPotion(45, 194);
 			}
-			else if (getInventory().consumeItem(POTION_OF_HEALING, 1)) {
-				useHealPotion(15, 189);
+			else if (this.getInventory().consumeItem(POTION_OF_HEALING, 1)) {
+				this.useHealPotion(15, 189);
 			}
 		}
 		else if (type == USEITEM_HASTE) { // 加速药水系统
-			if (hasSkillEffect(1001)) { // 一段加速
+			if (this.hasSkillEffect(1001)) { // 一段加速
 				return; // 检查加速状态
 			}
 
 			// 效果延长
-			if (getInventory().consumeItem(B_POTION_OF_GREATER_HASTE_SELF, 1)) {
-				useHastePotion(2100);
+			if (this.getInventory().consumeItem(B_POTION_OF_GREATER_HASTE_SELF, 1)) {
+				this.useHastePotion(2100);
 			}
-			else if (getInventory().consumeItem(POTION_OF_GREATER_HASTE_SELF, 1)) {
-				useHastePotion(1800);
+			else if (this.getInventory().consumeItem(POTION_OF_GREATER_HASTE_SELF, 1)) {
+				this.useHastePotion(1800);
 			}
-			else if (getInventory().consumeItem(B_POTION_OF_HASTE_SELF, 1)) {
-				useHastePotion(350);
+			else if (this.getInventory().consumeItem(B_POTION_OF_HASTE_SELF, 1)) {
+				this.useHastePotion(350);
 			}
-			else if (getInventory().consumeItem(POTION_OF_HASTE_SELF, 1)) {
-				useHastePotion(300);
+			else if (this.getInventory().consumeItem(POTION_OF_HASTE_SELF, 1)) {
+				this.useHastePotion(300);
 			}
 		}
 	}
@@ -2274,7 +2274,7 @@ public class L1NpcInstance extends L1Character {
 		final int locCenter = courceRange + 1;
 		final int diff_x = x - locCenter; // Ｘの实际のロケーションとの差
 		final int diff_y = y - locCenter; // Ｙの实际のロケーションとの差
-		int[] locBace = { getX() - diff_x, getY() - diff_y, 0, 0 }; // Ｘ Ｙ
+		int[] locBace = { this.getX() - diff_x, this.getY() - diff_y, 0, 0 }; // Ｘ Ｙ
 		// 方向
 		// 初期方向
 		final int[] locNext = new int[4];
@@ -2295,7 +2295,7 @@ public class L1NpcInstance extends L1Character {
 		final int[] firstCource = { 2, 4, 6, 0, 1, 3, 5, 7 };
 		for (i = 0; i < 8; i++) {
 			System.arraycopy(locBace, 0, locNext, 0, 4);
-			_moveLocation(locNext, firstCource[i]);
+			this._moveLocation(locNext, firstCource[i]);
 			if ((locNext[0] - locCenter == 0) && (locNext[1] - locCenter == 0)) {
 				// 最短经路が见つかった场合:邻
 				return firstCource[i];
@@ -2305,28 +2305,28 @@ public class L1NpcInstance extends L1Character {
 				final int tmpY = locNext[1] + diff_y;
 				boolean found = false;
 				if (i == 0) {
-					found = getMap().isPassable(tmpX, tmpY + 1, i);
+					found = this.getMap().isPassable(tmpX, tmpY + 1, i);
 				}
 				else if (i == 1) {
-					found = getMap().isPassable(tmpX - 1, tmpY + 1, i);
+					found = this.getMap().isPassable(tmpX - 1, tmpY + 1, i);
 				}
 				else if (i == 2) {
-					found = getMap().isPassable(tmpX - 1, tmpY, i);
+					found = this.getMap().isPassable(tmpX - 1, tmpY, i);
 				}
 				else if (i == 3) {
-					found = getMap().isPassable(tmpX - 1, tmpY - 1, i);
+					found = this.getMap().isPassable(tmpX - 1, tmpY - 1, i);
 				}
 				else if (i == 4) {
-					found = getMap().isPassable(tmpX, tmpY - 1, i);
+					found = this.getMap().isPassable(tmpX, tmpY - 1, i);
 				}
 				else if (i == 5) {
-					found = getMap().isPassable(tmpX + 1, tmpY - 1, i);
+					found = this.getMap().isPassable(tmpX + 1, tmpY - 1, i);
 				}
 				else if (i == 6) {
-					found = getMap().isPassable(tmpX + 1, tmpY, i);
+					found = this.getMap().isPassable(tmpX + 1, tmpY, i);
 				}
 				else if (i == 7) {
-					found = getMap().isPassable(tmpX + 1, tmpY + 1, i);
+					found = this.getMap().isPassable(tmpX + 1, tmpY + 1, i);
 				}
 				if (found)// 移动经路があった场合
 				{
@@ -2344,10 +2344,10 @@ public class L1NpcInstance extends L1Character {
 		// 最短经路を探索
 		while (queueSerch.size() > 0) {
 			locBace = queueSerch.removeFirst();
-			_getFront(dirFront, locBace[2]);
+			this._getFront(dirFront, locBace[2]);
 			for (i = 4; i >= 0; i--) {
 				System.arraycopy(locBace, 0, locNext, 0, 4);
-				_moveLocation(locNext, dirFront[i]);
+				this._moveLocation(locNext, dirFront[i]);
 				if ((locNext[0] - locCenter == 0) && (locNext[1] - locCenter == 0)) {
 					return locNext[3];
 				}
@@ -2356,19 +2356,19 @@ public class L1NpcInstance extends L1Character {
 					final int tmpY = locNext[1] + diff_y;
 					boolean found = false;
 					if (i == 0) {
-						found = getMap().isPassable(tmpX, tmpY + 1, i);
+						found = this.getMap().isPassable(tmpX, tmpY + 1, i);
 					}
 					else if (i == 1) {
-						found = getMap().isPassable(tmpX - 1, tmpY + 1, i);
+						found = this.getMap().isPassable(tmpX - 1, tmpY + 1, i);
 					}
 					else if (i == 2) {
-						found = getMap().isPassable(tmpX - 1, tmpY, i);
+						found = this.getMap().isPassable(tmpX - 1, tmpY, i);
 					}
 					else if (i == 3) {
-						found = getMap().isPassable(tmpX - 1, tmpY - 1, i);
+						found = this.getMap().isPassable(tmpX - 1, tmpY - 1, i);
 					}
 					else if (i == 4) {
-						found = getMap().isPassable(tmpX, tmpY - 1, i);
+						found = this.getMap().isPassable(tmpX, tmpY - 1, i);
 					}
 					if (found) // 移动经路があった场合
 					{
@@ -2387,48 +2387,48 @@ public class L1NpcInstance extends L1Character {
 
 	/** ＡＩの处理 (返回ＡＩ处理是否结束) */
 	private boolean AIProcess() {
-		setSleepTime(300);
+		this.setSleepTime(300);
 
-		checkTarget();
-		if ((_target == null) && (_master == null)) {
+		this.checkTarget();
+		if ((this._target == null) && (this._master == null)) {
 			// 空目标的场合 尝试找到目标
 			// （有主人的场合寻找一个目标）
-			searchTarget();
+			this.searchTarget();
 		}
 
-		onDoppel(true);
-		onItemUse();
+		this.onDoppel(true);
+		this.onItemUse();
 
-		if (_target == null) {
+		if (this._target == null) {
 			// 没有目标的场合
-			checkTargetItem();
-			if (isPickupItem() && (_targetItem == null)) {
+			this.checkTargetItem();
+			if (this.isPickupItem() && (this._targetItem == null)) {
 				// アイテム拾う子の场合はアイテムを探してみる
-				searchTargetItem();
+				this.searchTargetItem();
 			}
 
-			if (_targetItem == null) {
-				if (noTarget()) {
+			if (this._targetItem == null) {
+				if (this.noTarget()) {
 					return true;
 				}
 			}
 			else {
 				// onTargetItem();
-				final L1Inventory groundInventory = L1World.getInstance().getInventory(_targetItem.getX(), _targetItem.getY(), _targetItem.getMapId());
-				if (groundInventory.checkItem(_targetItem.getItemId())) {
-					onTargetItem();
+				final L1Inventory groundInventory = L1World.getInstance().getInventory(this._targetItem.getX(), this._targetItem.getY(), this._targetItem.getMapId());
+				if (groundInventory.checkItem(this._targetItem.getItemId())) {
+					this.onTargetItem();
 				}
 				else {
-					_targetItemList.remove(_targetItem);
-					_targetItem = null;
-					setSleepTime(1000);
+					this._targetItemList.remove(this._targetItem);
+					this._targetItem = null;
+					this.setSleepTime(1000);
 					return false;
 				}
 			}
 		}
 		else { // 有目标的场合
-			if (getHiddenStatus() == HIDDEN_STATUS_NONE) {
-				onTarget();
+			if (this.getHiddenStatus() == HIDDEN_STATUS_NONE) {
+				this.onTarget();
 			}
 			else {
 				return true;
@@ -2443,12 +2443,12 @@ public class L1NpcInstance extends L1Character {
 		if (!(this instanceof L1MonsterInstance)) { // 怪物以外的对象
 			return false;
 		}
-		if (_target == null) { // 如果没有目标
+		if (this._target == null) { // 如果没有目标
 			return false;
 		}
 
-		final int locX = getX();
-		final int locY = getY();
+		final int locX = this.getX();
+		final int locY = this.getY();
 		int targetX = locX;
 		int targetY = locY;
 
@@ -2486,15 +2486,15 @@ public class L1NpcInstance extends L1Character {
 			if ((object instanceof L1PcInstance) || (object instanceof L1SummonInstance) || (object instanceof L1PetInstance)) {
 				final L1Character cha = (L1Character) object;
 				// 进行方向に立ちふさがっている场合、ターゲットリストに加える
-				if ((cha.getX() == targetX) && (cha.getY() == targetY) && (cha.getMapId() == getMapId())) {
+				if ((cha.getX() == targetX) && (cha.getY() == targetY) && (cha.getMapId() == this.getMapId())) {
 					if (object instanceof L1PcInstance) {
 						final L1PcInstance pc = (L1PcInstance) object;
 						if (pc.isGhost()) { // 排除UB观战中的PC
 							continue;
 						}
 					}
-					_hateList.add(cha, 0);
-					_target = cha;
+					this._hateList.add(cha, 0);
+					this._target = cha;
 					return true;
 				}
 			}
@@ -2504,31 +2504,31 @@ public class L1NpcInstance extends L1Character {
 
 	/** 使用加速药水 */
 	private void useHastePotion(final int time) {
-		broadcastPacket(new S_SkillHaste(getId(), 1, time));
-		broadcastPacket(new S_SkillSound(getId(), 191));
-		setMoveSpeed(1);
-		setSkillEffect(STATUS_HASTE, time * 1000);
+		this.broadcastPacket(new S_SkillHaste(this.getId(), 1, time));
+		this.broadcastPacket(new S_SkillSound(this.getId(), 191));
+		this.setMoveSpeed(1);
+		this.setSkillEffect(STATUS_HASTE, time * 1000);
 	}
 
 	/** 使用治愈药水 */
 	private void useHealPotion(int healHp, final int effectId) {
-		broadcastPacket(new S_SkillSound(getId(), effectId));
-		if (hasSkillEffect(POLLUTE_WATER)) { // 污浊之水 恢复量减半
+		this.broadcastPacket(new S_SkillSound(this.getId(), effectId));
+		if (this.hasSkillEffect(POLLUTE_WATER)) { // 污浊之水 恢复量减半
 			healHp /= 2;
 		}
 		if (this instanceof L1PetInstance) {
-			((L1PetInstance) this).setCurrentHp(getCurrentHp() + healHp);
+			((L1PetInstance) this).setCurrentHp(this.getCurrentHp() + healHp);
 		}
 		else if (this instanceof L1SummonInstance) {
-			((L1SummonInstance) this).setCurrentHp(getCurrentHp() + healHp);
+			((L1SummonInstance) this).setCurrentHp(this.getCurrentHp() + healHp);
 		}
 		else {
-			setCurrentHpDirect(getCurrentHp() + healHp);
+			this.setCurrentHpDirect(this.getCurrentHp() + healHp);
 		}
 	}
 
 	protected int calcSleepTime(int sleepTime, final int type) {
-		switch (getMoveSpeed()) {
+		switch (this.getMoveSpeed()) {
 			case 0: // 通常
 				break;
 			case 1: // 加速
@@ -2538,10 +2538,10 @@ public class L1NpcInstance extends L1Character {
 				sleepTime *= 2;
 				break;
 		}
-		if (getBraveSpeed() == 1) {
+		if (this.getBraveSpeed() == 1) {
 			sleepTime -= (sleepTime * 0.25);
 		}
-		if (hasSkillEffect(WIND_SHACKLE)) {
+		if (this.hasSkillEffect(WIND_SHACKLE)) {
 			if ((type == ATTACK_SPEED) || (type == MAGIC_SPEED)) {
 				sleepTime += (sleepTime * 0.25);
 			}
@@ -2550,45 +2550,45 @@ public class L1NpcInstance extends L1Character {
 	}
 
 	protected int getSleepTime() {
-		return _sleep_time;
+		return this._sleep_time;
 	}
 
 	protected boolean isActived() {
-		return _actived;
+		return this._actived;
 	}
 
 	/** 设置AI运行中 */
 	protected boolean isAiRunning() {
-		return _aiRunning;
+		return this._aiRunning;
 	}
 
 	protected boolean isDeathProcessing() {
-		return _deathProcessing;
+		return this._deathProcessing;
 	}
 
 	protected boolean isFirstAttack() {
-		return _firstAttack;
+		return this._firstAttack;
 	}
 
 	protected void setActived(final boolean actived) {
-		_actived = actived;
+		this._actived = actived;
 	}
 
 	/** 设置AI运行 */
 	protected void setAiRunning(final boolean aiRunning) {
-		_aiRunning = aiRunning;
+		this._aiRunning = aiRunning;
 	}
 
 	protected void setDeathProcessing(final boolean deathProcessing) {
-		_deathProcessing = deathProcessing;
+		this._deathProcessing = deathProcessing;
 	}
 
 	protected void setFirstAttack(final boolean firstAttack) {
-		_firstAttack = firstAttack;
+		this._firstAttack = firstAttack;
 	}
 
 	protected void setSleepTime(final int sleep_time) {
-		_sleep_time = sleep_time;
+		this._sleep_time = sleep_time;
 	}
 
 	protected void startAI() {
@@ -2605,27 +2605,27 @@ public class L1NpcInstance extends L1Character {
 
 	/** 开始定时器 */
 	protected synchronized void startDeleteTimer() {
-		if (_deleteTask != null) {
+		if (this._deleteTask != null) {
 			return;
 		}
-		_deleteTask = new DeleteTimer(getId());
-		_future = GeneralThreadPool.getInstance().schedule(_deleteTask, Config.NPC_DELETION_TIME * 1000);
+		this._deleteTask = new DeleteTimer(this.getId());
+		this._future = GeneralThreadPool.getInstance().schedule(this._deleteTask, Config.NPC_DELETION_TIME * 1000);
 	}
 
 	// NPCが别のNPCに变わる场合の处理
 	protected void transform(final int transformId) {
-		stopHpRegeneration();
-		stopMpRegeneration();
-		final int transformGfxId = getNpcTemplate().getTransformGfxId();
+		this.stopHpRegeneration();
+		this.stopMpRegeneration();
+		final int transformGfxId = this.getNpcTemplate().getTransformGfxId();
 		if (transformGfxId != 0) {
-			broadcastPacket(new S_SkillSound(getId(), transformGfxId));
+			this.broadcastPacket(new S_SkillSound(this.getId(), transformGfxId));
 		}
 		final L1Npc npcTemplate = NpcTable.getInstance().getTemplate(transformId);
-		setting_template(npcTemplate);
+		this.setting_template(npcTemplate);
 
-		broadcastPacket(new S_NpcChangeShape(getId(), getTempCharGfx(), getLawful(), getStatus()));
+		this.broadcastPacket(new S_NpcChangeShape(this.getId(), this.getTempCharGfx(), this.getLawful(), this.getStatus()));
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 
 	}

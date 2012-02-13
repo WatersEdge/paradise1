@@ -28,14 +28,14 @@ public class S_GMHtml extends ServerBasePacket {
 	 * @param html
 	 */
 	public S_GMHtml(final int _objid, final String html) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(_objid);
-		writeS("hsiw");
-		writeS(html);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(_objid);
+		this.writeS("hsiw");
+		this.writeS(html);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

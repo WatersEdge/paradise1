@@ -35,15 +35,15 @@ public class S_Ability extends ServerBasePacket {
 	 * @param equipped
 	 */
 	public S_Ability(final int type, final boolean equipped) {
-		buildPacket(type, equipped);
+		this.buildPacket(type, equipped);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,15 +52,15 @@ public class S_Ability extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int type, final boolean equipped) {
-		writeC(Opcodes.S_OPCODE_ABILITY);
-		writeC(type); // 1:ROTC 5:ROSC
+		this.writeC(Opcodes.S_OPCODE_ABILITY);
+		this.writeC(type); // 1:ROTC 5:ROSC
 		if (equipped) {
-			writeC(0x01);
+			this.writeC(0x01);
 		}
 		else {
-			writeC(0x00);
+			this.writeC(0x00);
 		}
-		writeC(0x02);
-		writeH(0x0000);
+		this.writeC(0x02);
+		this.writeH(0x0000);
 	}
 }

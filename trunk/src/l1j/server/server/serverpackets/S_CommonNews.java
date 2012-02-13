@@ -34,14 +34,14 @@ public class S_CommonNews extends ServerBasePacket {
 	private List<String> _announcements;
 
 	public S_CommonNews() {
-		_announcements = Lists.newList();
-		loadAnnouncements();
-		writeC(Opcodes.S_OPCODE_COMMONNEWS);
+		this._announcements = Lists.newList();
+		this.loadAnnouncements();
+		this.writeC(Opcodes.S_OPCODE_COMMONNEWS);
 		String message = "";
-		for (int i = 0; i < _announcements.size(); i++) {
-			message = (new StringBuilder()).append(message).append(_announcements.get(i)).append("\n").toString();
+		for (int i = 0; i < this._announcements.size(); i++) {
+			message = (new StringBuilder()).append(message).append(this._announcements.get(i)).append("\n").toString();
 		}
-		writeS(message);
+		this.writeS(message);
 	}
 
 	/**
@@ -50,13 +50,13 @@ public class S_CommonNews extends ServerBasePacket {
 	 * @param s
 	 */
 	public S_CommonNews(final String s) {
-		writeC(Opcodes.S_OPCODE_COMMONNEWS);
-		writeS(s);
+		this.writeC(Opcodes.S_OPCODE_COMMONNEWS);
+		this.writeS(s);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override
@@ -66,10 +66,10 @@ public class S_CommonNews extends ServerBasePacket {
 
 	/** 载入公告 */
 	private void loadAnnouncements() {
-		_announcements.clear();
+		this._announcements.clear();
 		final File file = new File("data/announcements.txt");
 		if (file.exists()) {
-			readFromDisk(file);
+			this.readFromDisk(file);
 		}
 	}
 
@@ -86,10 +86,10 @@ public class S_CommonNews extends ServerBasePacket {
 				final StringTokenizer st = new StringTokenizer(line, "\n\r");
 				if (st.hasMoreTokens()) {
 					final String announcement = st.nextToken();
-					_announcements.add(announcement);
+					this._announcements.add(announcement);
 				}
 				else {
-					_announcements.add(" ");
+					this._announcements.add(" ");
 				}
 			} while (true);
 		}

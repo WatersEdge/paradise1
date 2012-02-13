@@ -533,72 +533,72 @@ public class L1WeaponSkill {
 	private final int _attr;
 
 	public L1WeaponSkill(final int weaponId, final int probability, final int fixDamage, final int randomDamage, final int area, final int skillId, final int skillTime, final int effectId, final int effectTarget, final boolean isArrowType, final int attr) {
-		_weaponId = weaponId;
-		_probability = probability;
-		_fixDamage = fixDamage;
-		_randomDamage = randomDamage;
-		_area = area;
-		_skillId = skillId;
-		_skillTime = skillTime;
-		_effectId = effectId;
-		_effectTarget = effectTarget;
-		_isArrowType = isArrowType;
-		_attr = attr;
+		this._weaponId = weaponId;
+		this._probability = probability;
+		this._fixDamage = fixDamage;
+		this._randomDamage = randomDamage;
+		this._area = area;
+		this._skillId = skillId;
+		this._skillTime = skillTime;
+		this._effectId = effectId;
+		this._effectTarget = effectTarget;
+		this._isArrowType = isArrowType;
+		this._attr = attr;
 	}
 
 	/** 取得范围 */
 	public int getArea() {
-		return _area;
+		return this._area;
 	}
 
 	/** 取得属性 */
 	public int getAttr() {
-		return _attr;
+		return this._attr;
 	}
 
 	/** 取得效果ID */
 	public int getEffectId() {
-		return _effectId;
+		return this._effectId;
 	}
 
 	/** 取得效果对象 0:对方 1:自身 */
 	public int getEffectTarget() {
-		return _effectTarget;
+		return this._effectTarget;
 	}
 
 	/** 取得修复损伤 */
 	public int getFixDamage() {
-		return _fixDamage;
+		return this._fixDamage;
 	}
 
 	/** 取得几率 */
 	public int getProbability() {
-		return _probability;
+		return this._probability;
 	}
 
 	/** 取得随机伤害 */
 	public int getRandomDamage() {
-		return _randomDamage;
+		return this._randomDamage;
 	}
 
 	/** 取得技能ID */
 	public int getSkillId() {
-		return _skillId;
+		return this._skillId;
 	}
 
 	/** 取得技能时间 */
 	public int getSkillTime() {
-		return _skillTime;
+		return this._skillTime;
 	}
 
 	/** 取得武器ID */
 	public int getWeaponId() {
-		return _weaponId;
+		return this._weaponId;
 	}
 
 	/** 箭头类型 */
 	public boolean isArrowType() {
-		return _isArrowType;
+		return this._isArrowType;
 	}
 
 }

@@ -56,7 +56,7 @@ public class L1DeleteItemOnGround {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
-				deleteItem();
+				L1DeleteItemOnGround.this.deleteItem();
 				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage(166, L1Message.onGroundItem, L1Message.deleted + "。"));
 			}
 		}
@@ -74,8 +74,8 @@ public class L1DeleteItemOnGround {
 			return;
 		}
 
-		_deleteTimer = new DeleteTimer();
-		GeneralThreadPool.getInstance().execute(_deleteTimer); // 启动定时器
+		this._deleteTimer = new DeleteTimer();
+		GeneralThreadPool.getInstance().execute(this._deleteTimer); // 启动定时器
 	}
 
 	/** 删除道具 */

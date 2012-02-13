@@ -35,53 +35,53 @@ public class L1NpcChatTimer extends TimerTask {
 	private final L1NpcChat _npcChat;
 
 	public L1NpcChatTimer(final L1NpcInstance npc, final L1NpcChat npcChat) {
-		_npc = npc;
-		_npcChat = npcChat;
+		this._npc = npc;
+		this._npcChat = npcChat;
 	}
 
 	@Override
 	public void run() {
 		try {
-			if ((_npc == null) || (_npcChat == null)) {
+			if ((this._npc == null) || (this._npcChat == null)) {
 				return;
 			}
 
-			if ((_npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE) || _npc._destroyed) {
+			if ((this._npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE) || this._npc._destroyed) {
 				return;
 			}
 
-			final int chatTiming = _npcChat.getChatTiming();
-			final int chatInterval = _npcChat.getChatInterval();
-			final boolean isShout = _npcChat.isShout();
-			final boolean isWorldChat = _npcChat.isWorldChat();
-			final String chatId1 = _npcChat.getChatId1();
-			final String chatId2 = _npcChat.getChatId2();
-			final String chatId3 = _npcChat.getChatId3();
-			final String chatId4 = _npcChat.getChatId4();
-			final String chatId5 = _npcChat.getChatId5();
+			final int chatTiming = this._npcChat.getChatTiming();
+			final int chatInterval = this._npcChat.getChatInterval();
+			final boolean isShout = this._npcChat.isShout();
+			final boolean isWorldChat = this._npcChat.isWorldChat();
+			final String chatId1 = this._npcChat.getChatId1();
+			final String chatId2 = this._npcChat.getChatId2();
+			final String chatId3 = this._npcChat.getChatId3();
+			final String chatId4 = this._npcChat.getChatId4();
+			final String chatId5 = this._npcChat.getChatId5();
 
 			if (!chatId1.equals("")) {
-				chat(_npc, chatTiming, chatId1, isShout, isWorldChat);
+				this.chat(this._npc, chatTiming, chatId1, isShout, isWorldChat);
 			}
 
 			if (!chatId2.equals("")) {
 				Thread.sleep(chatInterval);
-				chat(_npc, chatTiming, chatId2, isShout, isWorldChat);
+				this.chat(this._npc, chatTiming, chatId2, isShout, isWorldChat);
 			}
 
 			if (!chatId3.equals("")) {
 				Thread.sleep(chatInterval);
-				chat(_npc, chatTiming, chatId3, isShout, isWorldChat);
+				this.chat(this._npc, chatTiming, chatId3, isShout, isWorldChat);
 			}
 
 			if (!chatId4.equals("")) {
 				Thread.sleep(chatInterval);
-				chat(_npc, chatTiming, chatId4, isShout, isWorldChat);
+				this.chat(this._npc, chatTiming, chatId4, isShout, isWorldChat);
 			}
 
 			if (!chatId5.equals("")) {
 				Thread.sleep(chatInterval);
-				chat(_npc, chatTiming, chatId5, isShout, isWorldChat);
+				this.chat(this._npc, chatTiming, chatId5, isShout, isWorldChat);
 			}
 		}
 		catch (final Throwable e) {

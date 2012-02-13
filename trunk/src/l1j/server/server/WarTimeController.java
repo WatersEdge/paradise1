@@ -62,18 +62,18 @@ public class WarTimeController implements Runnable {
 
 	/** 攻城战时间控制器 */
 	private WarTimeController() {
-		for (int i = 0; i < _l1castle.length; i++) {
-			_l1castle[i] = CastleTable.getInstance().getCastleTable(i + 1);
-			_war_start_time[i] = _l1castle[i].getWarTime();
-			_war_end_time[i] = (Calendar) _l1castle[i].getWarTime().clone();
-			_war_end_time[i].add(Config.ALT_WAR_TIME_UNIT, Config.ALT_WAR_TIME);
+		for (int i = 0; i < this._l1castle.length; i++) {
+			this._l1castle[i] = CastleTable.getInstance().getCastleTable(i + 1);
+			this._war_start_time[i] = this._l1castle[i].getWarTime();
+			this._war_end_time[i] = (Calendar) this._l1castle[i].getWarTime().clone();
+			this._war_end_time[i].add(Config.ALT_WAR_TIME_UNIT, Config.ALT_WAR_TIME);
 		}
 	}
 
 	/** 检查城堡战争 */
 	public void checkCastleWar(final L1PcInstance player) {
 		for (int i = 0; i < 8; i++) {
-			if (_is_now_war[i]) {
+			if (this._is_now_war[i]) {
 				player.sendPackets(new S_PacketBox(S_PacketBox.MSG_WAR_GOING, i + 1)); // %s的攻城战正在进行中。
 			}
 		}
@@ -88,14 +88,14 @@ public class WarTimeController implements Runnable {
 
 	/** 是攻城战区域 */
 	public boolean isNowWar(final int castle_id) {
-		return _is_now_war[castle_id - 1];
+		return this._is_now_war[castle_id - 1];
 	}
 
 	@Override
 	public void run() {
 		try {
 			while (true) {
-				checkWarTime(); // 检查攻城时间
+				this.checkWarTime(); // 检查攻城时间
 				Thread.sleep(1000);
 			}
 		}
@@ -106,10 +106,10 @@ public class WarTimeController implements Runnable {
 	/** 检查攻城时间 */
 	private void checkWarTime() {
 		for (int i = 0; i < 8; i++) {
-			if (_war_start_time[i].before(getRealTime()) // 攻城开始
-					&& _war_end_time[i].after(getRealTime())) {
-				if (_is_now_war[i] == false) {
-					_is_now_war[i] = true;
+			if (this._war_start_time[i].before(this.getRealTime()) // 攻城开始
+					&& this._war_end_time[i].after(this.getRealTime())) {
+				if (this._is_now_war[i] == false) {
+					this._is_now_war[i] = true;
 					// 招出攻城的旗子
 					final L1WarSpawn warspawn = new L1WarSpawn();
 					warspawn.SpawnFlag(i + 1);
@@ -137,12 +137,12 @@ public class WarTimeController implements Runnable {
 					}
 				}
 			}
-			else if (_war_end_time[i].before(getRealTime())) { // 攻城结束
-				if (_is_now_war[i] == true) {
-					_is_now_war[i] = false;
+			else if (this._war_end_time[i].before(this.getRealTime())) { // 攻城结束
+				if (this._is_now_war[i] == true) {
+					this._is_now_war[i] = false;
 					L1World.getInstance().broadcastPacketToAll(new S_PacketBox(S_PacketBox.MSG_WAR_END, i + 1)); // %s的攻城战结束。
 					// 更新攻城时间
-					WarUpdate(i);
+					this.WarUpdate(i);
 
 					final int castle_id = i + 1;
 					for (final L1Object l1object : L1World.getInstance().getObject()) {
@@ -180,9 +180,9 @@ public class WarTimeController implements Runnable {
 					}
 				}
 				else { // 更新过期的攻城时间
-					_war_start_time[i] = getRealTime();
-					_war_end_time[i] = (Calendar) _war_start_time[i].clone();
-					WarUpdate(i);
+					this._war_start_time[i] = this.getRealTime();
+					this._war_end_time[i] = (Calendar) this._war_start_time[i].clone();
+					this.WarUpdate(i);
 				}
 			}
 
@@ -191,11 +191,11 @@ public class WarTimeController implements Runnable {
 
 	/** 更新攻城战时间 */
 	private void WarUpdate(final int i) {
-		_war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
-		_war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
-		_l1castle[i].setWarTime(_war_start_time[i]);
-		_l1castle[i].setTaxRate(10); // 税率10%
-		_l1castle[i].setPublicMoney(0); // 清除城堡税收
-		CastleTable.getInstance().updateCastle(_l1castle[i]);
+		this._war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
+		this._war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
+		this._l1castle[i].setWarTime(this._war_start_time[i]);
+		this._l1castle[i].setTaxRate(10); // 税率10%
+		this._l1castle[i].setPublicMoney(0); // 清除城堡税收
+		CastleTable.getInstance().updateCastle(this._l1castle[i]);
 	}
 }

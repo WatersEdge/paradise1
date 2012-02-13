@@ -46,8 +46,8 @@ public class C_Chat extends ClientBasePacket {
 		super(abyte0);
 
 		final L1PcInstance pc = clientthread.getActiveChar();
-		final int chatType = readC();
-		final String chatText = readS();
+		final int chatType = this.readC();
+		final String chatText = this.readS();
 		if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE) || pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
 			return;
 		}
@@ -72,7 +72,7 @@ public class C_Chat extends ClientBasePacket {
 			// 本来はchatType==12になるはずだが、行头の$が送信されない
 			if (chatText.startsWith("$")) {
 				final String text = chatText.substring(1);
-				chatWorld(pc, text, 12);
+				this.chatWorld(pc, text, 12);
 				if (!pc.isGm()) {
 					pc.checkChatInterval();
 				}
@@ -136,7 +136,7 @@ public class C_Chat extends ClientBasePacket {
 
 		// 全体聊天
 		else if (chatType == 3) {
-			chatWorld(pc, chatText, chatType);
+			this.chatWorld(pc, chatText, chatType);
 		}
 
 		// 血盟聊天
@@ -177,7 +177,7 @@ public class C_Chat extends ClientBasePacket {
 
 		// 交易聊天
 		else if (chatType == 12) {
-			chatWorld(pc, chatText, chatType);
+			this.chatWorld(pc, chatText, chatType);
 		}
 
 		// 联合血盟

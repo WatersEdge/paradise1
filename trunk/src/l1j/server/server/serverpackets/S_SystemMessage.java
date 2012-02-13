@@ -34,10 +34,10 @@ public class S_SystemMessage extends ServerBasePacket {
 	 *            - 要显示的文字信息
 	 */
 	public S_SystemMessage(final String msg) {
-		_msg = msg;
-		writeC(Opcodes.S_OPCODE_SYSMSG);
-		writeC(0x09);
-		writeS(msg);
+		this._msg = msg;
+		this.writeC(Opcodes.S_OPCODE_SYSMSG);
+		this.writeC(0x09);
+		this.writeS(msg);
 	}
 
 	/**
@@ -49,20 +49,20 @@ public class S_SystemMessage extends ServerBasePacket {
 	 *            - 文字列にnameid($xxx)が含まれている場合trueにする。
 	 */
 	public S_SystemMessage(final String msg, final boolean nameid) {
-		_msg = msg;
-		writeC(Opcodes.S_OPCODE_NPCSHOUT);
-		writeC(2);
-		writeD(0);
-		writeS(msg);
+		this._msg = msg;
+		this.writeC(Opcodes.S_OPCODE_NPCSHOUT);
+		this.writeC(2);
+		this.writeD(0);
+		this.writeS(msg);
 		// NPCチャットパケットであればnameidが解釈されるためこれを利用する
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -72,6 +72,6 @@ public class S_SystemMessage extends ServerBasePacket {
 
 	@Override
 	public String toString() {
-		return String.format("%s: %s", S_SYSTEM_MESSAGE, _msg);
+		return String.format("%s: %s", S_SYSTEM_MESSAGE, this._msg);
 	}
 }

@@ -30,20 +30,20 @@ public class L1GameTimeCarrier extends TimerTask {
 	private final L1PcInstance _pc;
 
 	public L1GameTimeCarrier(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	@Override
 	public void run() {
 		try {
-			if (_pc.getNetConnection() == null) {
-				cancel();
+			if (this._pc.getNetConnection() == null) {
+				this.cancel();
 				return;
 			}
 
 			final int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 			if (serverTime % 300 == 0) {
-				_pc.sendPackets(new S_GameTime(serverTime));
+				this._pc.sendPackets(new S_GameTime(serverTime));
 			}
 		}
 		catch (final Exception e) {
@@ -56,6 +56,6 @@ public class L1GameTimeCarrier extends TimerTask {
 	}
 
 	public void stop() {
-		cancel();
+		this.cancel();
 	}
 }

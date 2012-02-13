@@ -284,7 +284,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_addcha() {
-		return _addcha;
+		return this._addcha;
 	}
 
 	/**
@@ -293,7 +293,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_addcon() {
-		return _addcon;
+		return this._addcon;
 	}
 
 	/**
@@ -302,7 +302,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_adddex() {
-		return _adddex;
+		return this._adddex;
 	}
 
 	/**
@@ -311,7 +311,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_addhp() {
-		return _addhp;
+		return this._addhp;
 	}
 
 	/**
@@ -320,7 +320,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_addhpr() {
-		return _addhpr;
+		return this._addhpr;
 	}
 
 	/**
@@ -329,7 +329,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_addint() {
-		return _addint;
+		return this._addint;
 	}
 
 	/**
@@ -338,7 +338,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_addmp() {
-		return _addmp;
+		return this._addmp;
 	}
 
 	/**
@@ -347,7 +347,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_addmpr() {
-		return _addmpr;
+		return this._addmpr;
 	}
 
 	/**
@@ -356,7 +356,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_addsp() {
-		return _addsp;
+		return this._addsp;
 	}
 
 	/**
@@ -365,7 +365,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_addstr() {
-		return _addstr;
+		return this._addstr;
 	}
 
 	/**
@@ -374,7 +374,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public byte get_addwis() {
-		return _addwis;
+		return this._addwis;
 	}
 
 	/**
@@ -479,7 +479,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_mdef() {
-		return _mdef;
+		return this._mdef;
 	}
 
 	/**
@@ -542,7 +542,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int get_safeenchant() {
-		return _safeEnchant;
+		return this._safeEnchant;
 	}
 
 	/**
@@ -551,7 +551,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return 0:祝福 1:一般 2:诅咒
 	 */
 	public int getBless() {
-		return _bless;
+		return this._bless;
 	}
 
 	/**
@@ -578,7 +578,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getClassName() {
-		return _className;
+		return this._className;
 	}
 
 	/**
@@ -596,7 +596,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getDmgLarge() {
-		return _dmgLarge;
+		return this._dmgLarge;
 	}
 
 	/**
@@ -623,7 +623,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getDmgSmall() {
-		return _dmgSmall;
+		return this._dmgSmall;
 	}
 
 	/**
@@ -641,7 +641,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getFoodVolume() {
-		return _foodVolume;
+		return this._foodVolume;
 	}
 
 	/**
@@ -650,7 +650,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getGfxId() {
-		return _gfxId;
+		return this._gfxId;
 	}
 
 	/**
@@ -668,7 +668,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getGroundGfxId() {
-		return _groundGfxId;
+		return this._groundGfxId;
 	}
 
 	/**
@@ -695,7 +695,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getIdentifiedNameId() {
-		return _identifiedNameId;
+		return this._identifiedNameId;
 	}
 
 	/**
@@ -704,7 +704,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getItemDescId() {
-		return _itemDescId;
+		return this._itemDescId;
 	}
 
 	/**
@@ -713,7 +713,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getItemId() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	/**
@@ -722,19 +722,19 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getLightFuel() {
-		if (_itemId == 40001) { // 灯
+		if (this._itemId == 40001) { // 灯
 			return 6000;
 		}
-		else if (_itemId == 40002) { // 灯笼
+		else if (this._itemId == 40002) { // 灯笼
 			return 12000;
 		}
-		else if (_itemId == 40003) { // 灯油
+		else if (this._itemId == 40003) { // 灯油
 			return 12000;
 		}
-		else if (_itemId == 40004) { // 魔法灯笼
+		else if (this._itemId == 40004) { // 魔法灯笼
 			return 0;
 		}
-		else if (_itemId == 40005) { // 蜡烛
+		else if (this._itemId == 40005) { // 蜡烛
 			return 600;
 		}
 		else {
@@ -748,16 +748,16 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getLightRange() {
-		if (_itemId == 40001) { // 灯
+		if (this._itemId == 40001) { // 灯
 			return 11;
 		}
-		else if (_itemId == 40002) { // 灯笼
+		else if (this._itemId == 40002) { // 灯笼
 			return 14;
 		}
-		else if (_itemId == 40004) { // 魔法灯笼
+		else if (this._itemId == 40004) { // 魔法灯笼
 			return 14;
 		}
-		else if (_itemId == 40005) { // 蜡烛
+		else if (this._itemId == 40005) { // 蜡烛
 			return 8;
 		}
 		else {
@@ -805,7 +805,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         </p>
 	 */
 	public int getMaterial() {
-		return _material;
+		return this._material;
 	}
 
 	/**
@@ -823,7 +823,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getMaxLevel() {
-		return _maxLevel;
+		return this._maxLevel;
 	}
 
 	/**
@@ -832,7 +832,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getMaxUseTime() {
-		return _maxUseTime;
+		return this._maxUseTime;
 	}
 
 	/**
@@ -841,7 +841,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getMinLevel() {
-		return _minLevel;
+		return this._minLevel;
 	}
 
 	/**
@@ -850,7 +850,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	/**
@@ -859,7 +859,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getNameId() {
-		return _nameId;
+		return this._nameId;
 	}
 
 	/**
@@ -935,7 +935,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         </p>
 	 */
 	public int getType() {
-		return _type;
+		return this._type;
 	}
 
 	/**
@@ -964,7 +964,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *         </p>
 	 */
 	public int getType1() {
-		return _type1;
+		return this._type1;
 	}
 
 	/**
@@ -973,7 +973,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return 0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
 	public int getType2() {
-		return _type2;
+		return this._type2;
 	}
 
 	/**
@@ -982,7 +982,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getUnidentifiedNameId() {
-		return _unidentifiedNameId;
+		return this._unidentifiedNameId;
 	}
 
 	/**
@@ -1037,7 +1037,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getUseType() {
-		return _useType;
+		return this._useType;
 	}
 
 	/**
@@ -1046,7 +1046,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public int getWeight() {
-		return _weight;
+		return this._weight;
 	}
 
 	/**
@@ -1073,7 +1073,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return true:可以 false:不可以
 	 */
 	public boolean isCantDelete() {
-		return _cantDelete;
+		return this._cantDelete;
 	}
 
 	/**
@@ -1082,7 +1082,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isHasteItem() {
-		return _isHasteItem;
+		return this._isHasteItem;
 	}
 
 	/**
@@ -1100,7 +1100,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isToBeSavedAtOnce() {
-		return _save_at_once;
+		return this._save_at_once;
 	}
 
 	/**
@@ -1109,7 +1109,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return true:可以 false:不可以
 	 */
 	public boolean isTradable() {
-		return _tradable;
+		return this._tradable;
 	}
 
 	/**
@@ -1127,7 +1127,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseDarkelf() {
-		return _useDarkelf;
+		return this._useDarkelf;
 	}
 
 	/**
@@ -1136,7 +1136,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseDragonknight() {
-		return _useDragonknight;
+		return this._useDragonknight;
 	}
 
 	/**
@@ -1145,7 +1145,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseElf() {
-		return _useElf;
+		return this._useElf;
 	}
 
 	/**
@@ -1154,7 +1154,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseIllusionist() {
-		return _useIllusionist;
+		return this._useIllusionist;
 	}
 
 	/**
@@ -1163,7 +1163,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseKnight() {
-		return _useKnight;
+		return this._useKnight;
 	}
 
 	/**
@@ -1172,7 +1172,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseMage() {
-		return _useMage;
+		return this._useMage;
 	}
 
 	/**
@@ -1181,7 +1181,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public boolean isUseRoyal() {
-		return _useRoyal;
+		return this._useRoyal;
 	}
 
 	/**
@@ -1190,7 +1190,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addcha
 	 */
 	public void set_addcha(final byte addcha) {
-		_addcha = addcha;
+		this._addcha = addcha;
 	}
 
 	/**
@@ -1199,7 +1199,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addcon
 	 */
 	public void set_addcon(final byte addcon) {
-		_addcon = addcon;
+		this._addcon = addcon;
 	}
 
 	/**
@@ -1208,7 +1208,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param adddex
 	 */
 	public void set_adddex(final byte adddex) {
-		_adddex = adddex;
+		this._adddex = adddex;
 	}
 
 	/**
@@ -1217,7 +1217,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addhp
 	 */
 	public void set_addhp(final int addhp) {
-		_addhp = addhp;
+		this._addhp = addhp;
 	}
 
 	/**
@@ -1226,7 +1226,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addhpr
 	 */
 	public void set_addhpr(final int addhpr) {
-		_addhpr = addhpr;
+		this._addhpr = addhpr;
 	}
 
 	/**
@@ -1235,7 +1235,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addint
 	 */
 	public void set_addint(final byte addint) {
-		_addint = addint;
+		this._addint = addint;
 	}
 
 	/**
@@ -1244,7 +1244,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addmp
 	 */
 	public void set_addmp(final int addmp) {
-		_addmp = addmp;
+		this._addmp = addmp;
 	}
 
 	/**
@@ -1253,7 +1253,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addmpr
 	 */
 	public void set_addmpr(final int addmpr) {
-		_addmpr = addmpr;
+		this._addmpr = addmpr;
 	}
 
 	/**
@@ -1262,7 +1262,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addsp
 	 */
 	public void set_addsp(final int addsp) {
-		_addsp = addsp;
+		this._addsp = addsp;
 	}
 
 	/**
@@ -1271,7 +1271,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addstr
 	 */
 	public void set_addstr(final byte addstr) {
-		_addstr = addstr;
+		this._addstr = addstr;
 	}
 
 	/**
@@ -1280,7 +1280,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param addwis
 	 */
 	public void set_addwis(final byte addwis) {
-		_addwis = addwis;
+		this._addwis = addwis;
 	}
 
 	/**
@@ -1289,7 +1289,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param i
 	 */
 	public void set_mdef(final int i) {
-		_mdef = i;
+		this._mdef = i;
 	}
 
 	/**
@@ -1298,7 +1298,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param safeenchant
 	 */
 	public void set_safeenchant(final int safeenchant) {
-		_safeEnchant = safeenchant;
+		this._safeEnchant = safeenchant;
 	}
 
 	// ■■■■■■ 由L1EtcItem 覆盖的道具 ■■■■■■
@@ -1309,7 +1309,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param i
 	 */
 	public void setBless(final int i) {
-		_bless = i;
+		this._bless = i;
 	}
 
 	/**
@@ -1318,7 +1318,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setCantDelete(final boolean flag) {
-		_cantDelete = flag;
+		this._cantDelete = flag;
 	}
 
 	/**
@@ -1327,7 +1327,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param classname
 	 */
 	public void setClassName(final String className) {
-		_className = className;
+		this._className = className;
 	}
 
 	/**
@@ -1336,7 +1336,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param dmgLarge
 	 */
 	public void setDmgLarge(final int dmgLarge) {
-		_dmgLarge = dmgLarge;
+		this._dmgLarge = dmgLarge;
 	}
 
 	/**
@@ -1345,7 +1345,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param dmgSmall
 	 */
 	public void setDmgSmall(final int dmgSmall) {
-		_dmgSmall = dmgSmall;
+		this._dmgSmall = dmgSmall;
 	}
 
 	/**
@@ -1354,7 +1354,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param volume
 	 */
 	public void setFoodVolume(final int volume) {
-		_foodVolume = volume;
+		this._foodVolume = volume;
 	}
 
 	/**
@@ -1363,7 +1363,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param gfxId
 	 */
 	public void setGfxId(final int gfxId) {
-		_gfxId = gfxId;
+		this._gfxId = gfxId;
 	}
 
 	/**
@@ -1372,7 +1372,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param groundGfxId
 	 */
 	public void setGroundGfxId(final int groundGfxId) {
-		_groundGfxId = groundGfxId;
+		this._groundGfxId = groundGfxId;
 	}
 
 	// ■■■■■■ 由L1Weapon 覆盖的项目 ■■■■■■
@@ -1383,7 +1383,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setHasteItem(final boolean flag) {
-		_isHasteItem = flag;
+		this._isHasteItem = flag;
 	}
 
 	/**
@@ -1392,7 +1392,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param identifiedNameId
 	 */
 	public void setIdentifiedNameId(final String identifiedNameId) {
-		_identifiedNameId = identifiedNameId;
+		this._identifiedNameId = identifiedNameId;
 	}
 
 	/**
@@ -1401,7 +1401,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param descId
 	 */
 	public void setItemDescId(final int descId) {
-		_itemDescId = descId;
+		this._itemDescId = descId;
 	}
 
 	/**
@@ -1410,7 +1410,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param itemId
 	 */
 	public void setItemId(final int itemId) {
-		_itemId = itemId;
+		this._itemId = itemId;
 	}
 
 	/**
@@ -1419,7 +1419,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param material
 	 */
 	public void setMaterial(final int material) {
-		_material = material;
+		this._material = material;
 	}
 
 	/**
@@ -1428,7 +1428,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param maxlvl
 	 */
 	public void setMaxLevel(final int maxlvl) {
-		_maxLevel = maxlvl;
+		this._maxLevel = maxlvl;
 	}
 
 	/**
@@ -1437,7 +1437,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param i
 	 */
 	public void setMaxUseTime(final int i) {
-		_maxUseTime = i;
+		this._maxUseTime = i;
 	}
 
 	// ■■■■■■ 由L1Armor 覆盖的项目 ■■■■■■
@@ -1448,7 +1448,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param level
 	 */
 	public void setMinLevel(final int level) {
-		_minLevel = level;
+		this._minLevel = level;
 	}
 
 	/**
@@ -1457,7 +1457,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param name
 	 */
 	public void setName(final String name) {
-		_name = name;
+		this._name = name;
 	}
 
 	/**
@@ -1466,7 +1466,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param nameid
 	 */
 	public void setNameId(final String nameid) {
-		_nameId = nameid;
+		this._nameId = nameid;
 	}
 
 	/**
@@ -1475,7 +1475,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setToBeSavedAtOnce(final boolean flag) {
-		_save_at_once = flag;
+		this._save_at_once = flag;
 	}
 
 	/**
@@ -1484,7 +1484,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setTradable(final boolean flag) {
-		_tradable = flag;
+		this._tradable = flag;
 	}
 
 	/**
@@ -1493,7 +1493,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param type
 	 */
 	public void setType(final int type) {
-		_type = type;
+		this._type = type;
 	}
 
 	/**
@@ -1502,7 +1502,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param type1
 	 */
 	public void setType1(final int type1) {
-		_type1 = type1;
+		this._type1 = type1;
 	}
 
 	/**
@@ -1512,7 +1512,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 *            0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
 	public void setType2(final int type) {
-		_type2 = type;
+		this._type2 = type;
 	}
 
 	/**
@@ -1521,7 +1521,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param unidentifiedNameId
 	 */
 	public void setUnidentifiedNameId(final String unidentifiedNameId) {
-		_unidentifiedNameId = unidentifiedNameId;
+		this._unidentifiedNameId = unidentifiedNameId;
 	}
 
 	/**
@@ -1530,7 +1530,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseDarkelf(final boolean flag) {
-		_useDarkelf = flag;
+		this._useDarkelf = flag;
 	}
 
 	/**
@@ -1539,7 +1539,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseDragonknight(final boolean flag) {
-		_useDragonknight = flag;
+		this._useDragonknight = flag;
 	}
 
 	/**
@@ -1548,7 +1548,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseElf(final boolean flag) {
-		_useElf = flag;
+		this._useElf = flag;
 	}
 
 	/**
@@ -1557,7 +1557,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseIllusionist(final boolean flag) {
-		_useIllusionist = flag;
+		this._useIllusionist = flag;
 	}
 
 	/**
@@ -1566,7 +1566,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseKnight(final boolean flag) {
-		_useKnight = flag;
+		this._useKnight = flag;
 	}
 
 	/**
@@ -1575,7 +1575,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseMage(final boolean flag) {
-		_useMage = flag;
+		this._useMage = flag;
 	}
 
 	/**
@@ -1584,7 +1584,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param flag
 	 */
 	public void setUseRoyal(final boolean flag) {
-		_useRoyal = flag;
+		this._useRoyal = flag;
 	}
 
 	/**
@@ -1593,7 +1593,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param useType
 	 */
 	public void setUseType(final int useType) {
-		_useType = useType;
+		this._useType = useType;
 	}
 
 	/**
@@ -1602,7 +1602,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param weight
 	 */
 	public void setWeight(final int weight) {
-		_weight = weight;
+		this._weight = weight;
 	}
 
 }

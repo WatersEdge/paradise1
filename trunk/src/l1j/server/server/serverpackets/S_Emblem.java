@@ -39,13 +39,13 @@ public class S_Emblem extends ServerBasePacket {
 			if (file.exists()) {
 				int data = 0;
 				bis = new BufferedInputStream(new FileInputStream(file));
-				writeC(Opcodes.S_OPCODE_EMBLEM);
-				writeD(clanid);
+				this.writeC(Opcodes.S_OPCODE_EMBLEM);
+				this.writeD(clanid);
 				while ((data = bis.read()) != -1) {
-					writeP(data);
+					this.writeP(data);
 				}
-				writeC(0x00); // 3.5C 於盟徽封包末未知的值
-				writeH(0x0000);
+				this.writeC(0x00); // 3.5C 於盟徽封包末未知的值
+				this.writeH(0x0000);
 			}
 		}
 		catch (final Exception e) {
@@ -63,7 +63,7 @@ public class S_Emblem extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

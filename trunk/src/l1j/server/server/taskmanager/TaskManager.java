@@ -50,55 +50,55 @@ public final class TaskManager {
 		ScheduledFuture<?> _scheduled;
 
 		public ExecutedTask(final Task task, final TaskTypes type, final ResultSet rset) throws SQLException {
-			_task = task;
-			_type = type;
-			_id = rset.getInt("id");
-			_lastActivation = rset.getLong("last_activation");
-			_params = new String[] { rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
+			this._task = task;
+			this._type = type;
+			this._id = rset.getInt("id");
+			this._lastActivation = rset.getLong("last_activation");
+			this._params = new String[] { rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
 		}
 
 		@Override
 		public boolean equals(final Object object) {
-			return _id == ((ExecutedTask) object)._id;
+			return this._id == ((ExecutedTask) object)._id;
 		}
 
 		public int getId() {
-			return _id;
+			return this._id;
 		}
 
 		public long getLastActivation() {
-			return _lastActivation;
+			return this._lastActivation;
 		}
 
 		public String[] getParams() {
-			return _params;
+			return this._params;
 		}
 
 		public Task getTask() {
-			return _task;
+			return this._task;
 		}
 
 		public TaskTypes getType() {
-			return _type;
+			return this._type;
 		}
 
 		@Override
 		public void run() {
-			_task.onTimeElapsed(this);
+			this._task.onTimeElapsed(this);
 
-			_lastActivation = System.currentTimeMillis();
+			this._lastActivation = System.currentTimeMillis();
 
 			java.sql.Connection con = null;
 			PreparedStatement pstm = null;
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con.prepareStatement(SQL_STATEMENTS[1]);
-				pstm.setLong(1, _lastActivation);
-				pstm.setInt(2, _id);
+				pstm.setLong(1, this._lastActivation);
+				pstm.setInt(2, this._id);
 				pstm.executeUpdate();
 			}
 			catch (final SQLException e) {
-				_log.warning("cannot updated the Global Task " + _id + ": " + e.getMessage());
+				_log.warning("cannot updated the Global Task " + this._id + ": " + e.getMessage());
 			} finally {
 				SQLUtil.close(pstm);
 				SQLUtil.close(con);
@@ -107,13 +107,13 @@ public final class TaskManager {
 		}
 
 		public void stopTask() {
-			_task.onDestroy();
+			this._task.onDestroy();
 
-			if (_scheduled != null) {
-				_scheduled.cancel(true);
+			if (this._scheduled != null) {
+				this._scheduled.cancel(true);
 			}
 
-			_currentTasks.remove(this);
+			TaskManager.this._currentTasks.remove(this);
 		}
 
 	}
@@ -207,21 +207,21 @@ public final class TaskManager {
 	protected final List<ExecutedTask> _currentTasks = Lists.newList();
 
 	public TaskManager() {
-		initializate();
-		startAllTasks();
+		this.initializate();
+		this.startAllTasks();
 	}
 
 	public void registerTask(final Task task) {
 		final int key = task.getName().hashCode();
-		if (!_tasks.containsKey(key)) {
-			_tasks.put(key, task);
+		if (!this._tasks.containsKey(key)) {
+			this._tasks.put(key, task);
 			task.initializate();
 		}
 	}
 
 	private void initializate() {
-		registerTask(new TaskRestart());
-		registerTask(new TaskShutdown());
+		this.registerTask(new TaskRestart());
+		this.registerTask(new TaskShutdown());
 	}
 
 	private void startAllTasks() {
@@ -234,7 +234,7 @@ public final class TaskManager {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				final Task task = _tasks.get(rs.getString("task").trim().toLowerCase().hashCode());
+				final Task task = this._tasks.get(rs.getString("task").trim().toLowerCase().hashCode());
 
 				if (task == null) {
 					continue;

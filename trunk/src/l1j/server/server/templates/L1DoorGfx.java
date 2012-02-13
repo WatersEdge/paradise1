@@ -70,25 +70,25 @@ public class L1DoorGfx {
 	private final int _leftEdgeOffset;
 
 	private L1DoorGfx(final int gfxId, final int direction, final int rightEdgeOffset, final int leftEdgeOffset) {
-		_gfxId = gfxId;
-		_direction = direction;
-		_rightEdgeOffset = rightEdgeOffset;
-		_leftEdgeOffset = leftEdgeOffset;
+		this._gfxId = gfxId;
+		this._direction = direction;
+		this._rightEdgeOffset = rightEdgeOffset;
+		this._leftEdgeOffset = leftEdgeOffset;
 	}
 
 	public int getDirection() {
-		return _direction;
+		return this._direction;
 	}
 
 	public int getGfxId() {
-		return _gfxId;
+		return this._gfxId;
 	}
 
 	public int getLeftEdgeOffset() {
-		return _leftEdgeOffset;
+		return this._leftEdgeOffset;
 	}
 
 	public int getRightEdgeOffset() {
-		return _rightEdgeOffset;
+		return this._rightEdgeOffset;
 	}
 }

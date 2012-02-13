@@ -30,15 +30,15 @@ public class S_ChangeHeading extends ServerBasePacket {
 	 * @param cha
 	 */
 	public S_ChangeHeading(final L1Character cha) {
-		buildPacket(cha);
+		this.buildPacket(cha);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class S_ChangeHeading extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1Character cha) {
-		writeC(Opcodes.S_OPCODE_CHANGEHEADING);
-		writeD(cha.getId());
-		writeC(cha.getHeading());
+		this.writeC(Opcodes.S_OPCODE_CHANGEHEADING);
+		this.writeD(cha.getId());
+		this.writeC(cha.getHeading());
 	}
 }

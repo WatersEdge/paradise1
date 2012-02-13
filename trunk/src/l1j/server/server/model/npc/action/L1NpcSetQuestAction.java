@@ -31,17 +31,17 @@ public class L1NpcSetQuestAction extends L1NpcXmlAction {
 	public L1NpcSetQuestAction(final Element element) {
 		super(element);
 
-		_id = L1NpcXmlParser.parseQuestId(element.getAttribute("Id"));
-		_step = L1NpcXmlParser.parseQuestStep(element.getAttribute("Step"));
+		this._id = L1NpcXmlParser.parseQuestId(element.getAttribute("Id"));
+		this._step = L1NpcXmlParser.parseQuestStep(element.getAttribute("Step"));
 
-		if ((_id == -1) || (_step == -1)) {
+		if ((this._id == -1) || (this._step == -1)) {
 			throw new IllegalArgumentException();
 		}
 	}
 
 	@Override
 	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
-		pc.getQuest().set_step(_id, _step);
+		pc.getQuest().set_step(this._id, this._step);
 		return null;
 	}
 

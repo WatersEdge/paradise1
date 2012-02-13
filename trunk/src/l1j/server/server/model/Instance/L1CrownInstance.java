@@ -43,19 +43,19 @@ public class L1CrownInstance extends L1NpcInstance {
 
 	@Override
 	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
-		allTargetClear();
-		_master = null;
+		this.allTargetClear();
+		this._master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		if (player.getId() != clan.getLeaderId()) { // 血盟主以外
 			return;
 		}
-		if (!checkRange(player)) { // クラウンの1セル以内
+		if (!this.checkRange(player)) { // クラウンの1セル以内
 			return;
 		}
 
@@ -90,7 +90,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		}
 
 		// クラウンの座標からcastle_idを取得
-		final int castle_id = L1CastleLocation.getCastleId(getX(), getY(), getMapId());
+		final int castle_id = L1CastleLocation.getCastleId(this.getX(), this.getY(), this.getMapId());
 
 		// 布告しているかチェック。但し、城主が居ない場合は布告不要
 		boolean existDefenseClan = false;
@@ -166,7 +166,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		}
 
 		// 删除王冠
-		deleteMe();
+		this.deleteMe();
 
 		// 守护塔重新出现
 		for (final L1Object l1object : L1World.getInstance().getObject()) {
@@ -189,6 +189,6 @@ public class L1CrownInstance extends L1NpcInstance {
 	}
 
 	private boolean checkRange(final L1PcInstance pc) {
-		return ((getX() - 1 <= pc.getX()) && (pc.getX() <= getX() + 1) && (getY() - 1 <= pc.getY()) && (pc.getY() <= getY() + 1));
+		return ((this.getX() - 1 <= pc.getX()) && (pc.getX() <= this.getX() + 1) && (this.getY() - 1 <= pc.getY()) && (pc.getY() <= this.getY() + 1));
 	}
 }

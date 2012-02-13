@@ -33,15 +33,15 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 	 * 更新角色物理防御与四属性防御
 	 */
 	public S_OwnCharAttrDef(final L1PcInstance pc) {
-		buildPacket(pc);
+		this.buildPacket(pc);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -50,11 +50,11 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_OWNCHARATTRDEF);
-		writeC(pc.getAc());
-		writeC(pc.getFire());
-		writeC(pc.getWater());
-		writeC(pc.getWind());
-		writeC(pc.getEarth());
+		this.writeC(Opcodes.S_OPCODE_OWNCHARATTRDEF);
+		this.writeC(pc.getAc());
+		this.writeC(pc.getFire());
+		this.writeC(pc.getWater());
+		this.writeC(pc.getWind());
+		this.writeC(pc.getEarth());
 	}
 }

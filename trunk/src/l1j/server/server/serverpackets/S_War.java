@@ -46,15 +46,15 @@ public class S_War extends ServerBasePacket {
 	 *            目标血盟名称
 	 */
 	public S_War(final int type, final String clan_name1, final String clan_name2) {
-		buildPacket(type, clan_name1, clan_name2);
+		this.buildPacket(type, clan_name1, clan_name2);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -71,9 +71,9 @@ public class S_War extends ServerBasePacket {
 		// 7 : _血盟と_血盟との同盟関係が解除されました。
 		// 8 : あなたの血盟が現在_血盟と交戦中です。
 
-		writeC(Opcodes.S_OPCODE_WAR);
-		writeC(type);
-		writeS(clan_name1);
-		writeS(clan_name2);
+		this.writeC(Opcodes.S_OPCODE_WAR);
+		this.writeC(type);
+		this.writeS(clan_name1);
+		this.writeS(clan_name2);
 	}
 }

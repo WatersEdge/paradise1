@@ -137,19 +137,19 @@ public class L1BoardTopic {
 	private final String _content;
 
 	private L1BoardTopic(final int id, final String name, final String title, final String content) {
-		_id = id;
-		_name = name;
-		_date = today();
-		_title = title;
-		_content = content;
+		this._id = id;
+		this._name = name;
+		this._date = this.today();
+		this._title = title;
+		this._content = content;
 	}
 
 	private L1BoardTopic(final ResultSet rs) throws SQLException {
-		_id = rs.getInt("id");
-		_name = rs.getString("name");
-		_date = rs.getString("date");
-		_title = rs.getString("title");
-		_content = rs.getString("content");
+		this._id = rs.getInt("id");
+		this._name = rs.getString("name");
+		this._date = rs.getString("date");
+		this._title = rs.getString("title");
+		this._content = rs.getString("content");
 	}
 
 	public void delete() {
@@ -159,7 +159,7 @@ public class L1BoardTopic {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("DELETE FROM board WHERE id=?");
-			pstm.setInt(1, getId());
+			pstm.setInt(1, this.getId());
 			pstm.execute();
 		}
 		catch (final SQLException e) {
@@ -171,23 +171,23 @@ public class L1BoardTopic {
 	}
 
 	public String getContent() {
-		return _content;
+		return this._content;
 	}
 
 	public String getDate() {
-		return _date;
+		return this._date;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public String getTitle() {
-		return _title;
+		return this._title;
 	}
 
 	/**

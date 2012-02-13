@@ -49,29 +49,29 @@ public class S_WarTime extends ServerBasePacket {
 		// writeDの直前のwriteCで時間の調節ができる
 		// 0.7倍した時間だけ縮まるが
 		// 1つ調整するとその次の時間が広がる？
-		writeC(Opcodes.S_OPCODE_WARTIME);
-		writeH(6); // リストの数（6以上は無効）
-		writeS(Config.TIME_ZONE); // 時間の後ろの（）内に表示される文字列
-		writeC(0); // ?
-		writeC(0); // ?
-		writeC(0);
-		writeD(time);
-		writeC(0);
-		writeD(time - 1);
-		writeC(0);
-		writeD(time - 2);
-		writeC(0);
-		writeD(time - 3);
-		writeC(0);
-		writeD(time - 4);
-		writeC(0);
-		writeD(time - 5);
-		writeC(0);
+		this.writeC(Opcodes.S_OPCODE_WARTIME);
+		this.writeH(6); // リストの数（6以上は無効）
+		this.writeS(Config.TIME_ZONE); // 時間の後ろの（）内に表示される文字列
+		this.writeC(0); // ?
+		this.writeC(0); // ?
+		this.writeC(0);
+		this.writeD(time);
+		this.writeC(0);
+		this.writeD(time - 1);
+		this.writeC(0);
+		this.writeD(time - 2);
+		this.writeC(0);
+		this.writeD(time - 3);
+		this.writeC(0);
+		this.writeD(time - 4);
+		this.writeC(0);
+		this.writeD(time - 5);
+		this.writeC(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

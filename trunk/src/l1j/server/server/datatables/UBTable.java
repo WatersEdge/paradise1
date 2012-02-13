@@ -44,11 +44,11 @@ public class UBTable {
 	private final Map<Integer, L1UltimateBattle> _ub = Maps.newMap();
 
 	private UBTable() {
-		loadTable();
+		this.loadTable();
 	}
 
 	public Collection<L1UltimateBattle> getAllUb() {
-		return Collections.unmodifiableCollection(_ub.values());
+		return Collections.unmodifiableCollection(this._ub.values());
 	}
 
 	/**
@@ -84,11 +84,11 @@ public class UBTable {
 	}
 
 	public L1UltimateBattle getUb(final int ubId) {
-		return _ub.get(ubId);
+		return this._ub.get(ubId);
 	}
 
 	public L1UltimateBattle getUbForNpcId(final int npcId) {
-		for (final L1UltimateBattle ub : _ub.values()) {
+		for (final L1UltimateBattle ub : this._ub.values()) {
 			if (ub.containsManager(npcId)) {
 				return ub;
 			}
@@ -133,7 +133,7 @@ public class UBTable {
 				ub.setMpr(rs.getInt("mpr_bonus"));
 				ub.resetLoc();
 
-				_ub.put(ub.getUbId(), ub);
+				this._ub.put(ub.getUbId(), ub);
 			}
 		}
 		catch (final SQLException e) {
@@ -149,7 +149,7 @@ public class UBTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				final L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
+				final L1UltimateBattle ub = this.getUb(rs.getInt("ub_id"));
 				if (ub != null) {
 					ub.addManager(rs.getInt("ub_manager_npc_id"));
 				}
@@ -168,7 +168,7 @@ public class UBTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				final L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
+				final L1UltimateBattle ub = this.getUb(rs.getInt("ub_id"));
 				if (ub != null) {
 					ub.addUbTime(rs.getInt("ub_time"));
 				}
@@ -179,7 +179,7 @@ public class UBTable {
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
-		_log.config("UB名单 " + _ub.size() + "件");
+		_log.config("UB名单 " + this._ub.size() + "件");
 	}
 
 }

@@ -60,12 +60,12 @@ public class Stationery extends ItemExecutor {
 		final String letterReceiver = pc.getText();
 		final byte[] letterText = pc.getTextByte();
 
-		if (writeLetter(itemId, pc, letterCode, letterReceiver, letterText)) {
+		if (this.writeLetter(itemId, pc, letterCode, letterReceiver, letterText)) {
 			pc.getInventory().removeItem(item, 1);
 		}
 
 		// 血盟
-		else if (writeClanLetter(itemId, pc, letterCode, letterReceiver, letterText)) {
+		else if (this.writeClanLetter(itemId, pc, letterCode, letterReceiver, letterText)) {
 			pc.getInventory().removeItem(item, 1);
 		}
 	}
@@ -171,8 +171,8 @@ public class Stationery extends ItemExecutor {
 				return false;
 			}
 			item.setCount(1);
-			if (sendLetter(pc, element, item, false)) {
-				saveLetter(item.getId(), letterCode, pc.getName(), element, letterText);
+			if (this.sendLetter(pc, element, item, false)) {
+				this.saveLetter(item.getId(), letterCode, pc.getName(), element, letterText);
 			}
 		}
 		return true;
@@ -207,8 +207,8 @@ public class Stationery extends ItemExecutor {
 		}
 		item.setCount(1);
 
-		if (sendLetter(pc, letterReceiver, item, true)) {
-			saveLetter(item.getId(), letterCode, pc.getName(), letterReceiver, letterText);
+		if (this.sendLetter(pc, letterReceiver, item, true)) {
+			this.saveLetter(item.getId(), letterCode, pc.getName(), letterReceiver, letterText);
 		}
 		else {
 			return false;

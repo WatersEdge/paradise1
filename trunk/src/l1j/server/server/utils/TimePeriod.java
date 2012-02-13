@@ -42,8 +42,8 @@ public class TimePeriod {
 			throw new IllegalArgumentException("开始时间不能等于结束时间");
 		}
 
-		_timeStart = timeStart;
-		_timeEnd = timeEnd;
+		this._timeStart = timeStart;
+		this._timeEnd = timeEnd;
 	}
 
 	/**  */
@@ -51,7 +51,7 @@ public class TimePeriod {
 		/*
 		 * 分かりづらいロジック・・・ timeStart after timeEndのとき(例:18:00~06:00) timeEnd~timeStart(06:00~18:00)の範囲内でなければ、 timeStart~timeEnd(18:00~06:00)の範囲内と見なせる
 		 */
-		return _timeStart.after(_timeEnd) ? !includes(time, _timeEnd, _timeStart) : includes(time, _timeStart, _timeEnd);
+		return this._timeStart.after(this._timeEnd) ? !this.includes(time, this._timeEnd, this._timeStart) : this.includes(time, this._timeStart, this._timeEnd);
 	}
 
 	/**  */

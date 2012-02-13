@@ -33,27 +33,27 @@ public class S_InvList extends ServerBasePacket {
 	 * 一起增加多个道具到背包。
 	 */
 	public S_InvList(final List<L1ItemInstance> items) {
-		writeC(Opcodes.S_OPCODE_INVLIST);
-		writeC(items.size()); // 道具数量
+		this.writeC(Opcodes.S_OPCODE_INVLIST);
+		this.writeC(items.size()); // 道具数量
 
 		for (final L1ItemInstance item : items) {
-			writeD(item.getId());
-			writeC(item.getItem().getUseType()); // 使用类型
-			writeC(0); // 可用次数
-			writeH(item.get_gfxid()); // 图示
-			writeC(item.getBless()); // 祝福状态
-			writeD(item.getCount()); // 数量
-			writeC((item.isIdentified()) ? 1 : 0); // 鉴定状态
-			writeS(item.getViewName()); // 名称
+			this.writeD(item.getId());
+			this.writeC(item.getItem().getUseType()); // 使用类型
+			this.writeC(0); // 可用次数
+			this.writeH(item.get_gfxid()); // 图示
+			this.writeC(item.getBless()); // 祝福状态
+			this.writeD(item.getCount()); // 数量
+			this.writeC((item.isIdentified()) ? 1 : 0); // 鉴定状态
+			this.writeS(item.getViewName()); // 名称
 			if (!item.isIdentified()) {
 				// 未鉴定状态不发送详细资料
-				writeC(0);
+				this.writeC(0);
 			}
 			else {
 				final byte[] status = item.getStatusBytes();
-				writeC(status.length);
+				this.writeC(status.length);
 				for (final byte b : status) {
-					writeC(b);
+					this.writeC(b);
 				}
 			}
 		}
@@ -61,7 +61,7 @@ public class S_InvList extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	@Override

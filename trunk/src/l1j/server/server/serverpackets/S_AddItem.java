@@ -31,31 +31,31 @@ public class S_AddItem extends ServerBasePacket {
 	 * 在清单中增加一个道具。
 	 */
 	public S_AddItem(final L1ItemInstance item) {
-		writeC(Opcodes.S_OPCODE_ADDITEM);
-		writeD(item.getId());
-		writeC(item.getItem().getUseType());
-		writeC(0);
-		writeH(item.get_gfxid());
-		writeC(item.getBless());
-		writeD(item.getCount());
-		writeC((item.isIdentified()) ? 1 : 0);
-		writeS(item.getViewName());
+		this.writeC(Opcodes.S_OPCODE_ADDITEM);
+		this.writeD(item.getId());
+		this.writeC(item.getItem().getUseType());
+		this.writeC(0);
+		this.writeH(item.get_gfxid());
+		this.writeC(item.getBless());
+		this.writeD(item.getCount());
+		this.writeC((item.isIdentified()) ? 1 : 0);
+		this.writeS(item.getViewName());
 		if (!item.isIdentified()) {
 			// 未鉴定不发送详细讯息
-			writeC(0);
+			this.writeC(0);
 		}
 		else {
 			final byte[] status = item.getStatusBytes();
-			writeC(status.length);
+			this.writeC(status.length);
 			for (final byte b : status) {
-				writeC(b);
+				this.writeC(b);
 			}
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	@Override

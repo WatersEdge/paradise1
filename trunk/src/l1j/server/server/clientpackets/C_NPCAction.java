@@ -130,20 +130,20 @@ public class C_NPCAction extends ClientBasePacket {
 
 	public C_NPCAction(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		final int objid = readD();
-		final String s = readS();
+		final int objid = this.readD();
+		final String s = this.readS();
 
 		String s2 = null;
 		if (s.equalsIgnoreCase("select") // 拍卖公告板的选择
 				|| s.equalsIgnoreCase("map") // 地图位置的确认
 				|| s.equalsIgnoreCase("apply")) { // 参加拍卖
-			s2 = readS();
+			s2 = this.readS();
 		}
 		else if (s.equalsIgnoreCase("ent")) {
 			final L1Object obj = L1World.getInstance().findObject(objid);
 			if ((obj != null) && (obj instanceof L1NpcInstance)) {
 				if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80088) { // 宠物战管理人
-					s2 = readS();
+					s2 = this.readS();
 				}
 			}
 		}
@@ -181,7 +181,7 @@ public class C_NPCAction extends ClientBasePacket {
 				target = (L1PcInstance) obj;
 				if (s.matches("[0-9]+")) {
 					if (target.isSummonMonster()) {
-						summonMonster(target, s);
+						this.summonMonster(target, s);
 						target.setSummonMonster(false);
 					}
 				}
@@ -202,11 +202,11 @@ public class C_NPCAction extends ClientBasePacket {
 					else {
 						final L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
 						if ((poly != null) || s.equals("none")) {
-							if (target.getInventory().checkItem(40088) && usePolyScroll(target, 40088, s)) {
+							if (target.getInventory().checkItem(40088) && this.usePolyScroll(target, 40088, s)) {
 							}
-							if (target.getInventory().checkItem(40096) && usePolyScroll(target, 40096, s)) {
+							if (target.getInventory().checkItem(40096) && this.usePolyScroll(target, 40096, s)) {
 							}
-							if (target.getInventory().checkItem(140088) && usePolyScroll(target, 140088, s)) {
+							if (target.getInventory().checkItem(140088) && this.usePolyScroll(target, 140088, s)) {
 							}
 						}
 					}
@@ -221,7 +221,7 @@ public class C_NPCAction extends ClientBasePacket {
 		// XML化されたアクション
 		final L1NpcAction action = NpcActionTable.getInstance().get(s, pc, obj);
 		if (action != null) {
-			final L1NpcHtml result = action.execute(s, pc, obj, readByte());
+			final L1NpcHtml result = action.execute(s, pc, obj, this.readByte());
 			if (result != null) {
 				pc.sendPackets(new S_NPCTalkReturn(obj.getId(), result));
 			}
@@ -236,7 +236,7 @@ public class C_NPCAction extends ClientBasePacket {
 		if (s.equalsIgnoreCase("buy")) {
 			final L1NpcInstance npc = (L1NpcInstance) obj;
 			// sell 应该指给 NPC 检查
-			if (isNpcSellOnly(npc)) { // 只出售的NPC
+			if (this.isNpcSellOnly(npc)) { // 只出售的NPC
 				return;
 			}
 			pc.sendPackets(new S_ShopSellList(objid, pc));
@@ -259,7 +259,7 @@ public class C_NPCAction extends ClientBasePacket {
 					|| (npcid == 50501) || (npcid == 50503) || (npcid == 50508) || (npcid == 50514) || (npcid == 50532) || (npcid == 50544) || (npcid == 50524) || (npcid == 50535) || (npcid == 50521) || (npcid == 50517) || (npcid == 50537) || (npcid == 50539) || (npcid == 50507)
 					|| (npcid == 50530) || (npcid == 50502) || (npcid == 50506) || (npcid == 50522) || (npcid == 50541) || (npcid == 50523) || (npcid == 50620) || (npcid == 50623) || (npcid == 50619) || (npcid == 50621) || (npcid == 50622) || (npcid == 50624) || (npcid == 50617)
 					|| (npcid == 50614) || (npcid == 50618) || (npcid == 50616) || (npcid == 50615) || (npcid == 50626) || (npcid == 50627) || (npcid == 50628) || (npcid == 50629) || (npcid == 50630) || (npcid == 50631)) { // アジトのNPC
-				final String sellHouseMessage = sellHouse(pc, objid, npcid);
+				final String sellHouseMessage = this.sellHouse(pc, objid, npcid);
 				if (sellHouseMessage != null) {
 					htmlid = sellHouseMessage;
 				}
@@ -623,50 +623,50 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("openigate")) { // 看门人 / 打开城门
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			openCloseGate(pc, npc.getNpcTemplate().get_npcId(), true);
+			this.openCloseGate(pc, npc.getNpcTemplate().get_npcId(), true);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("closeigate")) { // 看门人 / 关闭城门
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			openCloseGate(pc, npc.getNpcTemplate().get_npcId(), false);
+			this.openCloseGate(pc, npc.getNpcTemplate().get_npcId(), false);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("askwartime")) { // 近卫兵 / 查询下次攻城战时间
 			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (npc.getNpcTemplate().get_npcId() == 60514) { // 肯特城堡卫兵
-				htmldata = makeWarTimeStrings(L1CastleLocation.KENT_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.KENT_CASTLE_ID);
 				htmlid = "ktguard7";
 			}
 			else if (npc.getNpcTemplate().get_npcId() == 60560) { // 妖魔城堡警卫
-				htmldata = makeWarTimeStrings(L1CastleLocation.OT_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.OT_CASTLE_ID);
 				htmlid = "orcguard7";
 			}
 			else if (npc.getNpcTemplate().get_npcId() == 60552) { // 风木城堡卫兵
-				htmldata = makeWarTimeStrings(L1CastleLocation.WW_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.WW_CASTLE_ID);
 				htmlid = "wdguard7";
 			}
 			else if ((npc.getNpcTemplate().get_npcId() == 60524) || // 奇岩左口近卫兵(弓)
 					(npc.getNpcTemplate().get_npcId() == 60525) || // 奇岩左口近卫兵
 					(npc.getNpcTemplate().get_npcId() == 60529)) { // 奇岩内城守卫
-				htmldata = makeWarTimeStrings(L1CastleLocation.GIRAN_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.GIRAN_CASTLE_ID);
 				htmlid = "grguard7";
 			}
 			else if (npc.getNpcTemplate().get_npcId() == 70857) { // 海音城守卫
-				htmldata = makeWarTimeStrings(L1CastleLocation.HEINE_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.HEINE_CASTLE_ID);
 				htmlid = "heguard7";
 			}
 			else if ((npc.getNpcTemplate().get_npcId() == 60530) || // 侏儒城守卫
 					(npc.getNpcTemplate().get_npcId() == 60531)) {
-				htmldata = makeWarTimeStrings(L1CastleLocation.DOWA_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.DOWA_CASTLE_ID);
 				htmlid = "dcguard7";
 			}
 			else if ((npc.getNpcTemplate().get_npcId() == 60533) || // 亚丁内城警卫
 					(npc.getNpcTemplate().get_npcId() == 60534)) {
-				htmldata = makeWarTimeStrings(L1CastleLocation.ADEN_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.ADEN_CASTLE_ID);
 				htmlid = "adguard7";
 			}
 			else if (npc.getNpcTemplate().get_npcId() == 81156) { // 亚丁侦察兵（狄亚得要塞）
-				htmldata = makeWarTimeStrings(L1CastleLocation.DIAD_CASTLE_ID);
+				htmldata = this.makeWarTimeStrings(L1CastleLocation.DIAD_CASTLE_ID);
 				htmlid = "dfguard3";
 			}
 		}
@@ -707,7 +707,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		}
 		else if (s.equalsIgnoreCase("castlegate")) { // 城门管理
-			repairGate(pc);
+			this.repairGate(pc);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("encw")) { // 武器专门家 / 武器强化魔法
@@ -840,24 +840,24 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("open") // 打开门
 				|| s.equalsIgnoreCase("close")) { // 关闭门
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			openCloseDoor(pc, npc, s);
+			this.openCloseDoor(pc, npc, s);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("expel")) { // 外部の人间を追い出す
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			expelOtherClan(pc, npc.getNpcTemplate().get_npcId());
+			this.expelOtherClan(pc, npc.getNpcTemplate().get_npcId());
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("pay")) { // 税金を纳める
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			htmldata = makeHouseTaxStrings(pc, npc);
+			htmldata = this.makeHouseTaxStrings(pc, npc);
 			htmlid = "agpay";
 		}
 		else if (s.equalsIgnoreCase("payfee")) { // 税金を纳める
 			final L1NpcInstance npc = (L1NpcInstance) obj;
 			htmldata = new String[] { npc.getNpcTemplate().get_name(), "2000" };
 			htmlid = "";
-			if (payFee(pc, npc)) {
+			if (this.payFee(pc, npc)) {
 				htmlid = "agpayfee";
 			}
 		}
@@ -1094,13 +1094,13 @@ public class C_NPCAction extends ClientBasePacket {
 
 			final int npcId = ((L1NpcInstance) obj).getNpcId();
 			if (npcId == 80085) { // 幽灵之家管理人杜乌
-				htmlid = enterHauntedHouse(pc);
+				htmlid = this.enterHauntedHouse(pc);
 			}
 			else if (npcId == 80088) { // 宠物战管理人
-				htmlid = enterPetMatch(pc, Integer.valueOf(s2));
+				htmlid = this.enterPetMatch(pc, Integer.valueOf(s2));
 			}
 			else if ((npcId == 50038) || (npcId == 50042) || (npcId == 50029) || (npcId == 50019) || (npcId == 50062)) { // 竞技场入场管理员
-				htmlid = watchUb(pc, npcId);
+				htmlid = this.watchUb(pc, npcId);
 			}
 			else if (npcId == 71251) { // 回想之蜡烛看门者露露
 				if (!pc.getInventory().checkItem(49142)) { // 回忆蜡烛
@@ -1143,13 +1143,13 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.sendPackets(new S_CharReset(pc));
 			}
 			else {
-				htmlid = enterUb(pc, npcId);
+				htmlid = this.enterUb(pc, npcId);
 			}
 		}
 
 		// UB关连
 		else if (s.equalsIgnoreCase("par")) { // UB关连“参加无限大战” 副管理人经由
-			htmlid = enterUb(pc, ((L1NpcInstance) obj).getNpcId());
+			htmlid = this.enterUb(pc, ((L1NpcInstance) obj).getNpcId());
 		}
 
 		// UB关连
@@ -1181,35 +1181,35 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 变身专门家
 		else if (s.equalsIgnoreCase("skeleton nbmorph")) {
-			poly(client, 2374);
+			this.poly(client, 2374);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("lycanthrope nbmorph")) {
-			poly(client, 3874);
+			this.poly(client, 3874);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("shelob nbmorph")) {
-			poly(client, 95);
+			this.poly(client, 95);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("ghoul nbmorph")) {
-			poly(client, 3873);
+			this.poly(client, 3873);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("ghast nbmorph")) {
-			poly(client, 3875);
+			this.poly(client, 3875);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("atuba orc nbmorph")) {
-			poly(client, 3868);
+			this.poly(client, 3868);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("skeleton axeman nbmorph")) {
-			poly(client, 2376);
+			this.poly(client, 2376);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("troll nbmorph")) {
-			poly(client, 3878);
+			this.poly(client, 3878);
 			htmlid = ""; // 关闭窗口
 		}
 
@@ -1557,14 +1557,14 @@ public class C_NPCAction extends ClientBasePacket {
 		// 火焰之影的辅佐官
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80055) {
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			htmlid = getYaheeAmulet(pc, npc, s);
+			htmlid = this.getYaheeAmulet(pc, npc, s);
 		}
 
 		// 业の管理者
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80056) {
 			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (pc.getKarma() <= -10000000) {
-				getBloodCrystalByKarma(pc, npc, s);
+				this.getBloodCrystalByKarma(pc, npc, s);
 			}
 			htmlid = "";
 		}
@@ -1672,7 +1672,7 @@ public class C_NPCAction extends ClientBasePacket {
 		// 炎魔的辅佐官
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80071) {
 			final L1NpcInstance npc = (L1NpcInstance) obj;
-			htmlid = getBarlogEarring(pc, npc, s);
+			htmlid = this.getBarlogEarring(pc, npc, s);
 		}
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80073) { // 炎魔的军师
 			if (s.equalsIgnoreCase("a")) { // 请给我力量
@@ -1740,34 +1740,34 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80074) {
 			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (pc.getKarma() >= 10000000) {
-				getSoulCrystalByKarma(pc, npc, s);
+				this.getSoulCrystalByKarma(pc, npc, s);
 			}
 			htmlid = "";
 		}
 
 		// 爱尔芬
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80057) {
-			htmlid = karmaLevelToHtmlId(pc.getKarmaLevel());
+			htmlid = this.karmaLevelToHtmlId(pc.getKarmaLevel());
 			htmldata = new String[] { String.valueOf(pc.getKarmaPercent()) };
 		}
 
 		// 次元之门(土风水火)
 		else if ((((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80059) || (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80060) || (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80061) || (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80062)) {
-			htmlid = talkToDimensionDoor(pc, (L1NpcInstance) obj, s);
+			htmlid = this.talkToDimensionDoor(pc, (L1NpcInstance) obj, s);
 		}
 
 		// 南瓜怪
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81124) {
 			if (s.equalsIgnoreCase("1")) {
-				poly(client, 4002);
+				this.poly(client, 4002);
 				htmlid = ""; // 关闭窗口
 			}
 			else if (s.equalsIgnoreCase("2")) {
-				poly(client, 4004);
+				this.poly(client, 4004);
 				htmlid = ""; // 关闭窗口
 			}
 			else if (s.equalsIgnoreCase("3")) {
-				poly(client, 4950);
+				this.poly(client, 4950);
 				htmlid = ""; // 关闭窗口
 			}
 		}
@@ -2687,7 +2687,7 @@ public class C_NPCAction extends ClientBasePacket {
 						pc.getInventory().consumeItem(41314, 1); // 占星术师のお守り XXX 貌似有错误
 						final int html = Random.nextInt(9) + 1;
 						final int PolyId = 6180 + Random.nextInt(64);
-						polyByKeplisha(client, PolyId);
+						this.polyByKeplisha(client, PolyId);
 						switch (html) {
 							case 1:
 								htmlid = "horomon11";
@@ -3479,7 +3479,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// “慌张的答应”
 			if (s.equalsIgnoreCase("n")) {
 				htmlid = "";
-				poly(client, 6034);
+				this.poly(client, 6034);
 				final int[] item_ids = { 41132, 41133, 41134 };
 				final int[] item_amounts = { 1, 1, 1 };
 				for (int i = 0; i < item_ids.length; i++) {
@@ -3538,7 +3538,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// “慌张的答应”
 			if (s.equalsIgnoreCase("n")) {
 				htmlid = "";
-				poly(client, 6035);
+				this.poly(client, 6035);
 				final int[] item_ids = { 41123, 41124, 41125 };
 				final int[] item_amounts = { 1, 1, 1 };
 				for (int i = 0; i < item_ids.length; i++) {
@@ -5286,7 +5286,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// else System.out.println("C_NpcAction: " + s);
 		if ((htmlid != null) && htmlid.equalsIgnoreCase("colos2")) {
-			htmldata = makeUbInfoStrings(((L1NpcInstance) obj).getNpcTemplate().get_npcId());
+			htmldata = this.makeUbInfoStrings(((L1NpcInstance) obj).getNpcTemplate().get_npcId());
 		}
 		if (createitem != null) { // 净化道具
 			boolean isCreate = true;
@@ -5792,7 +5792,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		if ((keeperId == 70656) || (keeperId == 70549) || (keeperId == 70985)) { // 肯特城堡
-			if (isExistDefenseClan(L1CastleLocation.KENT_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.KENT_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.KENT_CASTLE_ID) {
 					return;
 				}
@@ -5800,7 +5800,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.KENT_CASTLE_ID);
 		}
 		else if (keeperId == 70600) { // OT
-			if (isExistDefenseClan(L1CastleLocation.OT_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.OT_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.OT_CASTLE_ID) {
 					return;
 				}
@@ -5808,7 +5808,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.OT_CASTLE_ID);
 		}
 		else if ((keeperId == 70778) || (keeperId == 70987) || (keeperId == 70687)) { // WW城
-			if (isExistDefenseClan(L1CastleLocation.WW_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.WW_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.WW_CASTLE_ID) {
 					return;
 				}
@@ -5816,7 +5816,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.WW_CASTLE_ID);
 		}
 		else if ((keeperId == 70817) || (keeperId == 70800) || (keeperId == 70988) || (keeperId == 70990) || (keeperId == 70989) || (keeperId == 70991)) { // ギラン城
-			if (isExistDefenseClan(L1CastleLocation.GIRAN_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.GIRAN_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.GIRAN_CASTLE_ID) {
 					return;
 				}
@@ -5824,7 +5824,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.GIRAN_CASTLE_ID);
 		}
 		else if ((keeperId == 70863) || (keeperId == 70992) || (keeperId == 70862)) { // 海音城堡
-			if (isExistDefenseClan(L1CastleLocation.HEINE_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.HEINE_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.HEINE_CASTLE_ID) {
 					return;
 				}
@@ -5832,7 +5832,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.HEINE_CASTLE_ID);
 		}
 		else if ((keeperId == 70995) || (keeperId == 70994) || (keeperId == 70993)) { // 威顿城堡
-			if (isExistDefenseClan(L1CastleLocation.DOWA_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.DOWA_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.DOWA_CASTLE_ID) {
 					return;
 				}
@@ -5840,7 +5840,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.DOWA_CASTLE_ID);
 		}
 		else if (keeperId == 70996) { // 亚丁城堡
-			if (isExistDefenseClan(L1CastleLocation.ADEN_CASTLE_ID)) {
+			if (this.isExistDefenseClan(L1CastleLocation.ADEN_CASTLE_ID)) {
 				if (pcCastleId != L1CastleLocation.ADEN_CASTLE_ID) {
 					return;
 				}

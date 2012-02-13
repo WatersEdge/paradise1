@@ -47,7 +47,7 @@ public class FurnitureSpawnTable {
 	}
 
 	private FurnitureSpawnTable() {
-		FillFurnitureSpawnTable();
+		this.FillFurnitureSpawnTable();
 	}
 
 	/**

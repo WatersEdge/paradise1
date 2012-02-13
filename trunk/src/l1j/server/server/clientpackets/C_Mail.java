@@ -49,14 +49,14 @@ public class C_Mail extends ClientBasePacket {
 
 	public C_Mail(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		final int type = readC();
+		final int type = this.readC();
 		final L1PcInstance pc = client.getActiveChar();
 
 		if ((type == 0x00) || (type == 0x01) || (type == 0x02)) { // 开启
 			pc.sendPackets(new S_Mail(pc.getName(), type));
 		}
 		else if ((type == 0x10) || (type == 0x11) || (type == 0x12)) { // 读取
-			final int mailId = readD();
+			final int mailId = this.readD();
 			MailTable.getInstance();
 			final L1Mail mail = MailTable.getMail(mailId);
 			if (mail.getReadStatus() == 0) {
@@ -65,12 +65,12 @@ public class C_Mail extends ClientBasePacket {
 			pc.sendPackets(new S_Mail(mailId, type));
 		}
 		else if (type == 0x20) { // 一般信纸
-			readH();
-			final String receiverName = readS();
-			final byte[] text = readByte();
+			this.readH();
+			final String receiverName = this.readS();
+			final byte[] text = this.readByte();
 			final L1PcInstance receiver = L1World.getInstance().getPlayer(receiverName);
 			if (receiver != null) { // 对方在线上
-				if (getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
+				if (this.getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
 					pc.sendPackets(new S_Mail(type));
 					return;
 				}
@@ -83,7 +83,7 @@ public class C_Mail extends ClientBasePacket {
 				try {
 					final L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(receiverName);
 					if (restorePc != null) {
-						if (getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
+						if (this.getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
 							pc.sendPackets(new S_Mail(type));
 							return;
 						}
@@ -99,13 +99,13 @@ public class C_Mail extends ClientBasePacket {
 			}
 		}
 		else if (type == 0x21) { // 血盟信纸
-			readH();
-			final String clanName = readS();
-			final byte[] text = readByte();
+			this.readH();
+			final String clanName = this.readS();
+			final byte[] text = this.readByte();
 			final L1Clan clan = L1World.getInstance().getClan(clanName);
 			if (clan != null) {
 				for (final String name : clan.getAllMembers()) {
-					final int size = getMailSizeByReceiver(name, TYPE_CLAN_MAIL);
+					final int size = this.getMailSizeByReceiver(name, TYPE_CLAN_MAIL);
 					if (size >= 50) {
 						continue;
 					}
@@ -118,12 +118,12 @@ public class C_Mail extends ClientBasePacket {
 			}
 		}
 		else if ((type == 0x30) || (type == 0x31) || (type == 0x32)) { // 删除
-			final int mailId = readD();
+			final int mailId = this.readD();
 			MailTable.getInstance().deleteMail(mailId);
 			pc.sendPackets(new S_Mail(mailId, type));
 		}
 		else if (type == 0x40) { // 保管箱储存
-			final int mailId = readD();
+			final int mailId = this.readD();
 			MailTable.getInstance().setMailType(mailId, TYPE_MAIL_BOX);
 			pc.sendPackets(new S_Mail(mailId, type));
 		}

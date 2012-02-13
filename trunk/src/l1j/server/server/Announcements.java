@@ -51,7 +51,7 @@ public class Announcements {
 	private final List<String> _announcements = Lists.newList();
 
 	private Announcements() {
-		loadAnnouncements();
+		this.loadAnnouncements();
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class Announcements {
 	 * 显示公告
 	 */
 	public void showAnnouncements(final L1PcInstance showTo) {
-		for (final String msg : _announcements) {
+		for (final String msg : this._announcements) {
 			showTo.sendPackets(new S_SystemMessage(msg));
 		}
 	}
@@ -74,10 +74,10 @@ public class Announcements {
 	 * 加载公告
 	 */
 	private void loadAnnouncements() {
-		_announcements.clear();
+		this._announcements.clear();
 		final File file = new File("data/announcements.txt");
 		if (file.exists()) {
-			readFromDisk(file);
+			this.readFromDisk(file);
 		}
 		else {
 			_log.config("data/announcements.txt 不存在");
@@ -97,7 +97,7 @@ public class Announcements {
 				final StringTokenizer st = new StringTokenizer(line, "\n\r");
 				if (st.hasMoreTokens()) {
 					final String announcement = st.nextToken();
-					_announcements.add(announcement);
+					this._announcements.add(announcement);
 
 					i++;
 				}

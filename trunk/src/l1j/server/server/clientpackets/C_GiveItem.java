@@ -50,11 +50,11 @@ public class C_GiveItem extends ClientBasePacket {
 
 	public C_GiveItem(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		final int targetId = readD();
-		readH();
-		readH();
-		final int itemId = readD();
-		final int count = readD();
+		final int targetId = this.readD();
+		this.readH();
+		this.readH();
+		final int itemId = this.readD();
+		final int count = this.readD();
 
 		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
@@ -66,7 +66,7 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 		final L1NpcInstance target = (L1NpcInstance) object;
-		if (!isNpcItemReceivable(target.getNpcTemplate())) {
+		if (!this.isNpcItemReceivable(target.getNpcTemplate())) {
 			return;
 		}
 		final L1Inventory targetInv = target.getInventory();
@@ -124,21 +124,21 @@ public class C_GiveItem extends ClientBasePacket {
 
 		// 捕抓宠物
 		if (item.getItemId() == petType.getItemIdForTaming()) {
-			tamePet(pc, target);
+			this.tamePet(pc, target);
 		}
 		// 进化宠物
 		else if (item.getItemId() == petType.getEvolvItemId()) {
-			evolvePet(pc, target, item.getItemId());
+			this.evolvePet(pc, target, item.getItemId());
 		}
 
 		if (item.getItem().getType2() == 0) { // 道具类
 			// 食物类
 			if (item.getItem().getType() == 7) {
-				eatFood(pc, target, item, count);
+				this.eatFood(pc, target, item, count);
 			}
 			// 宠物装备类
 			else if ((item.getItem().getType() == 11) && (petType.canUseEquipment())) { // 判断是否可用宠物装备
-				usePetWeaponArmor(target, item);
+				this.usePetWeaponArmor(target, item);
 			}
 		}
 
@@ -286,7 +286,7 @@ public class C_GiveItem extends ClientBasePacket {
 
 		final L1PcInventory inv = pc.getInventory();
 		if ((charisma >= 6) && (inv.getSize() < 180)) {
-			if (isTamePet(target)) {
+			if (this.isTamePet(target)) {
 				final L1ItemInstance petamu = inv.storeItem(40314, 1); // 漂浮之眼的肉
 				if (petamu != null) {
 					new L1PetInstance(target, pc, petamu.getId());

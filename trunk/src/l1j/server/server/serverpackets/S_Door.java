@@ -27,15 +27,15 @@ public class S_Door extends ServerBasePacket {
 	private static final int NOT_PASS = 1;
 
 	public S_Door(final int x, final int y, final int direction, final boolean isPassable) {
-		buildPacket(x, y, direction, isPassable);
+		this.buildPacket(x, y, direction, isPassable);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -44,10 +44,10 @@ public class S_Door extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int x, final int y, final int direction, final boolean isPassable) {
-		writeC(Opcodes.S_OPCODE_ATTRIBUTE);
-		writeH(x);
-		writeH(y);
-		writeC(direction); // ドアの方向 0: ／ 1: ＼
-		writeC(isPassable ? PASS : NOT_PASS);
+		this.writeC(Opcodes.S_OPCODE_ATTRIBUTE);
+		this.writeH(x);
+		this.writeH(y);
+		this.writeC(direction); // ドアの方向 0: ／ 1: ＼
+		this.writeC(isPassable ? PASS : NOT_PASS);
 	}
 }

@@ -54,7 +54,7 @@ public class DoorTable {
 	private final Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
 
 	private DoorTable() {
-		loadDoors();
+		this.loadDoors();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class DoorTable {
 	 * @param isOpening
 	 */
 	public L1DoorInstance createDoor(final int doorId, final L1DoorGfx gfx, final L1Location loc, final int hp, final int keeper, final boolean isOpening) {
-		if (_doors.containsKey(loc)) {
+		if (this._doors.containsKey(loc)) {
 			return null;
 		}
 		final L1DoorInstance door = new L1DoorInstance(doorId, gfx, loc, hp, keeper, isOpening);
@@ -78,8 +78,8 @@ public class DoorTable {
 		L1World.getInstance().storeObject(door);
 		L1World.getInstance().addVisibleObject(door);
 
-		_doors.put(door.getLocation(), door);
-		putDirections(door);
+		this._doors.put(door.getLocation(), door);
+		this.putDirections(door);
 		return door;
 	}
 
@@ -89,9 +89,9 @@ public class DoorTable {
 	 * @param loc
 	 */
 	public void deleteDoorByLocation(final L1Location loc) {
-		final L1DoorInstance door = _doors.remove(loc);
+		final L1DoorInstance door = this._doors.remove(loc);
 		if (door != null) {
-			removeDirections(door);
+			this.removeDirections(door);
 			door.deleteMe();
 		}
 	}
@@ -102,7 +102,7 @@ public class DoorTable {
 	 * @param doorId
 	 */
 	public L1DoorInstance findByDoorId(final int doorId) {
-		for (final L1DoorInstance door : _doors.values()) {
+		for (final L1DoorInstance door : this._doors.values()) {
 			if (door.getDoorId() == doorId) {
 				return door;
 			}
@@ -116,7 +116,7 @@ public class DoorTable {
 	 * @param loc
 	 */
 	public int getDoorDirection(final L1Location loc) {
-		final L1DoorInstance door = _doorDirections.get(loc);
+		final L1DoorInstance door = this._doorDirections.get(loc);
 		if ((door == null) || (door.getOpenStatus() == ActionCodes.ACTION_Open)) {
 			return -1;
 		}
@@ -129,7 +129,7 @@ public class DoorTable {
 	 * @return
 	 */
 	public L1DoorInstance[] getDoorList() {
-		return _doors.values().toArray(new L1DoorInstance[_doors.size()]);
+		return this._doors.values().toArray(new L1DoorInstance[this._doors.size()]);
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class DoorTable {
 	private void loadDoors() {
 		for (final L1DoorSpawn spawn : L1DoorSpawn.all()) {
 			final L1Location loc = spawn.getLocation();
-			if (_doors.containsKey(loc)) {
+			if (this._doors.containsKey(loc)) {
 				_log.log(Level.WARNING, String.format("重复的门 位置: id = %d", spawn.getId()));
 				continue;
 			}
-			createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(), spawn.getKeeper(), spawn.isOpening());
+			this.createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(), spawn.getKeeper(), spawn.isOpening());
 		}
 	}
 
@@ -174,8 +174,8 @@ public class DoorTable {
 	 * @param door
 	 */
 	private void putDirections(final L1DoorInstance door) {
-		for (final L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.put(key, door);
+		for (final L1Location key : this.makeDirectionsKeys(door)) {
+			this._doorDirections.put(key, door);
 		}
 	}
 
@@ -185,8 +185,8 @@ public class DoorTable {
 	 * @param door
 	 */
 	private void removeDirections(final L1DoorInstance door) {
-		for (final L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.remove(key);
+		for (final L1Location key : this.makeDirectionsKeys(door)) {
+			this._doorDirections.remove(key);
 		}
 	}
 }

@@ -60,27 +60,27 @@ public class L1Clan {
 
 	/** 增加成员名称 */
 	public void addMemberName(final String member_name) {
-		if (!membersNameList.contains(member_name)) {
-			membersNameList.add(member_name);
+		if (!this.membersNameList.contains(member_name)) {
+			this.membersNameList.add(member_name);
 		}
 	}
 
 	/** 删除成员名称 */
 	public void delMemberName(final String member_name) {
-		if (membersNameList.contains(member_name)) {
-			membersNameList.remove(member_name);
+		if (this.membersNameList.contains(member_name)) {
+			this.membersNameList.remove(member_name);
 		}
 	}
 
 	/** 取得所有成员 */
 	public String[] getAllMembers() {
-		return membersNameList.toArray(new String[membersNameList.size()]);
+		return this.membersNameList.toArray(new String[this.membersNameList.size()]);
 	}
 
 	/** 获得所有成员FP */
 	public String getAllMembersFP() {
 		String result = "";
-		for (final String name : membersNameList) {
+		for (final String name : this.membersNameList) {
 			result = result + name + " ";
 		}
 		return result;
@@ -90,10 +90,10 @@ public class L1Clan {
 	public String getAllMembersFPWithRank() {
 		String result = "";
 		try {
-			for (final String name : membersNameList) {
+			for (final String name : this.membersNameList) {
 				final L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
 				if (pc != null) {
-					result = result + name + getRankString(pc) + " ";
+					result = result + name + this.getRankString(pc) + " ";
 				}
 			}
 		}
@@ -105,43 +105,43 @@ public class L1Clan {
 
 	/** 获得城堡ID */
 	public int getCastleId() {
-		return _castleId;
+		return this._castleId;
 	}
 
 	/** 获得血盟ID */
 	public int getClanId() {
-		return _clanId;
+		return this._clanId;
 	}
 
 	/** 获得血盟名称 */
 	public String getClanName() {
-		return _clanName;
+		return this._clanName;
 	}
 
 	/**  */
 	public L1DwarfForClanInventory getDwarfForClanInventory() {
-		return _dwarfForClan;
+		return this._dwarfForClan;
 	}
 
 	/** 获得盟屋ID */
 	public int getHouseId() {
-		return _houseId;
+		return this._houseId;
 	}
 
 	/** 获得领导者的ID */
 	public int getLeaderId() {
-		return _leaderId;
+		return this._leaderId;
 	}
 
 	/** 获得领导者的名称 */
 	public String getLeaderName() {
-		return _leaderName;
+		return this._leaderName;
 	}
 
 	/** 获得在线血盟成员 */
 	public L1PcInstance[] getOnlineClanMember() {
 		final List<L1PcInstance> onlineMembers = Lists.newList();
-		for (final String name : membersNameList) {
+		for (final String name : this.membersNameList) {
 			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if ((pc != null) && !onlineMembers.contains(pc)) {
 				onlineMembers.add(pc);
@@ -153,7 +153,7 @@ public class L1Clan {
 	/** 获得在线成员FP */
 	public String getOnlineMembersFP() { // FP means "For Pledge" (FP表示承诺)
 		String result = "";
-		for (final String name : membersNameList) {
+		for (final String name : this.membersNameList) {
 			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if (pc != null) {
 				result = result + name + " ";
@@ -165,10 +165,10 @@ public class L1Clan {
 	/** 获得在线成员FP排名 */
 	public String getOnlineMembersFPWithRank() {
 		String result = "";
-		for (final String name : membersNameList) {
+		for (final String name : this.membersNameList) {
 			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if (pc != null) {
-				result = result + name + getRankString(pc) + " ";
+				result = result + name + this.getRankString(pc) + " ";
 			}
 		}
 		return result;
@@ -176,42 +176,42 @@ public class L1Clan {
 
 	/** 取得使用仓库的角色 */
 	public int getWarehouseUsingChar() {
-		return _warehouse;
+		return this._warehouse;
 	}
 
 	/** 设置城堡ID */
 	public void setCastleId(final int hasCastle) {
-		_castleId = hasCastle;
+		this._castleId = hasCastle;
 	}
 
 	/** 设置血盟ID */
 	public void setClanId(final int clan_id) {
-		_clanId = clan_id;
+		this._clanId = clan_id;
 	}
 
 	/** 设置血盟名称 */
 	public void setClanName(final String clan_name) {
-		_clanName = clan_name;
+		this._clanName = clan_name;
 	}
 
 	/** 设置盟屋ID */
 	public void setHouseId(final int hasHideout) {
-		_houseId = hasHideout;
+		this._houseId = hasHideout;
 	}
 
 	/** 设置领导者的ID */
 	public void setLeaderId(final int leader_id) {
-		_leaderId = leader_id;
+		this._leaderId = leader_id;
 	}
 
 	/** 设置领导者的名称 */
 	public void setLeaderName(final String leader_name) {
-		_leaderName = leader_name;
+		this._leaderName = leader_name;
 	}
 
 	/** 设定使用仓库的角色 */
 	public void setWarehouseUsingChar(final int objid) {
-		_warehouse = objid;
+		this._warehouse = objid;
 	}
 
 	/** 获得排名字符串 */

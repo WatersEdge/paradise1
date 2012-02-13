@@ -31,14 +31,14 @@ public class S_PinkName extends ServerBasePacket {
 	 * @param time
 	 */
 	public S_PinkName(final int objecId, final int time) {
-		writeC(Opcodes.S_OPCODE_PINKNAME);
-		writeD(objecId);
-		writeD(time);
+		this.writeC(Opcodes.S_OPCODE_PINKNAME);
+		this.writeD(objecId);
+		this.writeD(time);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

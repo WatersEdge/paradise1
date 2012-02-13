@@ -27,16 +27,16 @@ public class S_NoSell extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_NoSell(final L1NpcInstance npc) {
-		buildPacket(npc);
+		this.buildPacket(npc);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -45,10 +45,10 @@ public class S_NoSell extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1NpcInstance npc) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(npc.getId());
-		writeS("nosell");
-		writeC(0x00);
-		writeH(0x00);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(npc.getId());
+		this.writeS("nosell");
+		this.writeC(0x00);
+		this.writeH(0x00);
 	}
 }

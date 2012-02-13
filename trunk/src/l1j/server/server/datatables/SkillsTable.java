@@ -50,16 +50,16 @@ public class SkillsTable {
 	private final boolean _initialized;
 
 	private SkillsTable() {
-		_initialized = true;
-		RestoreSkills();
+		this._initialized = true;
+		this.RestoreSkills();
 	}
 
 	public L1Skills getTemplate(final int i) {
-		return _skills.get(new Integer(i));
+		return this._skills.get(new Integer(i));
 	}
 
 	public boolean isInitialized() {
-		return _initialized;
+		return this._initialized;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class SkillsTable {
 	 * @param time
 	 */
 	public void spellMastery(final int playerobjid, final int skillid, final String skillname, final int active, final int time) {
-		if (spellCheck(playerobjid, skillid)) {
+		if (this.spellCheck(playerobjid, skillid)) {
 			return;
 		}
 		final L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
@@ -206,9 +206,9 @@ public class SkillsTable {
 			l1skills.setSysmsgIdStop(rs.getInt("sysmsgID_stop"));
 			l1skills.setSysmsgIdFail(rs.getInt("sysmsgID_fail"));
 
-			_skills.put(new Integer(skill_id), l1skills);
+			this._skills.put(new Integer(skill_id), l1skills);
 		}
-		_log.config("技能 " + _skills.size() + "件");
+		_log.config("技能 " + this._skills.size() + "件");
 	}
 
 	private void RestoreSkills() {
@@ -219,7 +219,7 @@ public class SkillsTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM skills");
 			rs = pstm.executeQuery();
-			FillSkillsTable(rs);
+			this.FillSkillsTable(rs);
 
 		}
 		catch (final SQLException e) {

@@ -35,42 +35,42 @@ public class L1NpcTalkData {
 	 * @return Returns the caoticAction.
 	 */
 	public String getCaoticAction() {
-		return caoticAction;
+		return this.caoticAction;
 	}
 
 	/**
 	 * @return Returns the iD.
 	 */
 	public int getID() {
-		return ID;
+		return this.ID;
 	}
 
 	/**
 	 * @return Returns the normalAction.
 	 */
 	public String getNormalAction() {
-		return normalAction;
+		return this.normalAction;
 	}
 
 	/**
 	 * @return Returns the npcID.
 	 */
 	public int getNpcID() {
-		return NpcID;
+		return this.NpcID;
 	}
 
 	/**
 	 * @return Returns the teleportURL.
 	 */
 	public String getTeleportURL() {
-		return teleportURL;
+		return this.teleportURL;
 	}
 
 	/**
 	 * @return Returns the teleportURLA.
 	 */
 	public String getTeleportURLA() {
-		return teleportURLA;
+		return this.teleportURLA;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class L1NpcTalkData {
 	 *            The iD to set.
 	 */
 	public void setID(final int id) {
-		ID = id;
+		this.ID = id;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class L1NpcTalkData {
 	 *            The npcID to set.
 	 */
 	public void setNpcID(final int npcID) {
-		NpcID = npcID;
+		this.NpcID = npcID;
 	}
 
 	/**

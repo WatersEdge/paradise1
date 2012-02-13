@@ -42,9 +42,9 @@ public abstract class ClientBasePacket {
 	 * @param abyte0
 	 */
 	public ClientBasePacket(final byte abyte0[]) {
-		_log.finest("type=" + getType() + ", len=" + abyte0.length);
-		_decrypt = abyte0;
-		_off = 1;
+		_log.finest("type=" + this.getType() + ", len=" + abyte0.length);
+		this._decrypt = abyte0;
+		this._off = 1;
 	}
 
 	public ClientBasePacket(final ByteBuffer bytebuffer, final ClientThread clientthread) {
@@ -63,13 +63,13 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public byte[] readByte() {
-		final byte[] result = new byte[_decrypt.length - _off];
+		final byte[] result = new byte[this._decrypt.length - this._off];
 		try {
-			System.arraycopy(_decrypt, _off, result, 0, _decrypt.length - _off);
-			_off = _decrypt.length;
+			System.arraycopy(this._decrypt, this._off, result, 0, this._decrypt.length - this._off);
+			this._off = this._decrypt.length;
 		}
 		catch (final Exception e) {
-			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
+			_log.log(Level.SEVERE, "OpCode=" + (this._decrypt[0] & 0xff), e);
 		}
 		return result;
 	}
@@ -80,7 +80,7 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public int readC() {
-		final int i = _decrypt[_off++] & 0xff;
+		final int i = this._decrypt[this._off++] & 0xff;
 		return i;
 	}
 
@@ -90,9 +90,9 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public int readCH() {
-		int i = _decrypt[_off++] & 0xff;
-		i |= _decrypt[_off++] << 8 & 0xff00;
-		i |= _decrypt[_off++] << 16 & 0xff0000;
+		int i = this._decrypt[this._off++] & 0xff;
+		i |= this._decrypt[this._off++] << 8 & 0xff00;
+		i |= this._decrypt[this._off++] << 16 & 0xff0000;
 		return i;
 	}
 
@@ -102,10 +102,10 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public int readD() {
-		int i = _decrypt[_off++] & 0xff;
-		i |= _decrypt[_off++] << 8 & 0xff00;
-		i |= _decrypt[_off++] << 16 & 0xff0000;
-		i |= _decrypt[_off++] << 24 & 0xff000000;
+		int i = this._decrypt[this._off++] & 0xff;
+		i |= this._decrypt[this._off++] << 8 & 0xff00;
+		i |= this._decrypt[this._off++] << 16 & 0xff0000;
+		i |= this._decrypt[this._off++] << 24 & 0xff000000;
 		return i;
 	}
 
@@ -115,14 +115,14 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public double readF() {
-		long l = _decrypt[_off++] & 0xff;
-		l |= _decrypt[_off++] << 8 & 0xff00;
-		l |= _decrypt[_off++] << 16 & 0xff0000;
-		l |= _decrypt[_off++] << 24 & 0xff000000;
-		l |= (long) _decrypt[_off++] << 32 & 0xff00000000L;
-		l |= (long) _decrypt[_off++] << 40 & 0xff0000000000L;
-		l |= (long) _decrypt[_off++] << 48 & 0xff000000000000L;
-		l |= (long) _decrypt[_off++] << 56 & 0xff00000000000000L;
+		long l = this._decrypt[this._off++] & 0xff;
+		l |= this._decrypt[this._off++] << 8 & 0xff00;
+		l |= this._decrypt[this._off++] << 16 & 0xff0000;
+		l |= this._decrypt[this._off++] << 24 & 0xff000000;
+		l |= (long) this._decrypt[this._off++] << 32 & 0xff00000000L;
+		l |= (long) this._decrypt[this._off++] << 40 & 0xff0000000000L;
+		l |= (long) this._decrypt[this._off++] << 48 & 0xff000000000000L;
+		l |= (long) this._decrypt[this._off++] << 56 & 0xff00000000000000L;
 		return Double.longBitsToDouble(l);
 	}
 
@@ -132,8 +132,8 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public int readH() {
-		int i = _decrypt[_off++] & 0xff;
-		i |= _decrypt[_off++] << 8 & 0xff00;
+		int i = this._decrypt[this._off++] & 0xff;
+		i |= this._decrypt[this._off++] << 8 & 0xff00;
 		return i;
 	}
 
@@ -145,12 +145,12 @@ public abstract class ClientBasePacket {
 	public String readS() {
 		String s = null;
 		try {
-			s = new String(_decrypt, _off, _decrypt.length - _off, CLIENT_LANGUAGE_CODE);
+			s = new String(this._decrypt, this._off, this._decrypt.length - this._off, CLIENT_LANGUAGE_CODE);
 			s = s.substring(0, s.indexOf('\0'));
-			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
+			this._off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
 		}
 		catch (final Exception e) {
-			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
+			_log.log(Level.SEVERE, "OpCode=" + (this._decrypt[0] & 0xff), e);
 		}
 		return s;
 	}

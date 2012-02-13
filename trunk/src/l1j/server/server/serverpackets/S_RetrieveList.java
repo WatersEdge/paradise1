@@ -28,21 +28,21 @@ public class S_RetrieveList extends ServerBasePacket {
 		if (pc.getInventory().getSize() < 180) {
 			final int size = pc.getDwarfInventory().getSize();
 			if (size > 0) {
-				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-				writeD(objid);
-				writeH(size);
-				writeC(3); // 个人仓库
+				this.writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+				this.writeD(objid);
+				this.writeH(size);
+				this.writeC(3); // 个人仓库
 				for (final Object itemObject : pc.getDwarfInventory().getItems()) {
 					final L1ItemInstance item = (L1ItemInstance) itemObject;
-					writeD(item.getId());
-					writeC(0); // 道具:0 武器:1 防具:2...
-					writeH(item.get_gfxid());
-					writeC(item.getBless());
-					writeD(item.getCount());
-					writeC(item.isIdentified() ? 1 : 0);
-					writeS(item.getViewName());
+					this.writeD(item.getId());
+					this.writeC(0); // 道具:0 武器:1 防具:2...
+					this.writeH(item.get_gfxid());
+					this.writeC(item.getBless());
+					this.writeD(item.getCount());
+					this.writeC(item.isIdentified() ? 1 : 0);
+					this.writeS(item.getViewName());
 				}
-				writeH(0x001e); // 金币30
+				this.writeH(0x001e); // 金币30
 			}
 			else {
 				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
@@ -59,7 +59,7 @@ public class S_RetrieveList extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 
 }

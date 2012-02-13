@@ -35,8 +35,8 @@ public class C_BoardDelete extends ClientBasePacket {
 
 	public C_BoardDelete(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		final int objId = readD();
-		final int topicId = readD();
+		final int objId = this.readD();
+		final int topicId = this.readD();
 		final L1Object obj = L1World.getInstance().findObject(objId);
 		if (obj == null) {
 			_log.warning("不正确的NPCID : " + objId);
@@ -44,12 +44,12 @@ public class C_BoardDelete extends ClientBasePacket {
 		}
 		final L1BoardTopic topic = L1BoardTopic.findById(topicId);
 		if (topic == null) {
-			logNotExist(topicId);
+			this.logNotExist(topicId);
 			return;
 		}
 		final String name = client.getActiveChar().getName();
 		if (!name.equals(topic.getName())) {
-			logIllegalDeletion(topic, name);
+			this.logIllegalDeletion(topic, name);
 			return;
 		}
 

@@ -32,26 +32,26 @@ public class HpRegenerationByDoll extends TimerTask {
 	private final L1PcInstance _pc;
 
 	public HpRegenerationByDoll(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	public void regenHp() {
-		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHpByDoll(_pc);
+		int newHp = this._pc.getCurrentHp() + L1MagicDoll.getHpByDoll(this._pc);
 		if (newHp < 0) {
 			newHp = 0;
 		}
-		_pc.sendPackets(new S_SkillSound(_pc.getId(), 744));
-		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 744));
-		_pc.setCurrentHp(newHp);
+		this._pc.sendPackets(new S_SkillSound(this._pc.getId(), 744));
+		this._pc.broadcastPacket(new S_SkillSound(this._pc.getId(), 744));
+		this._pc.setCurrentHp(newHp);
 	}
 
 	@Override
 	public void run() {
 		try {
-			if (_pc.isDead()) {
+			if (this._pc.isDead()) {
 				return;
 			}
-			regenHp();
+			this.regenHp();
 		}
 		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);

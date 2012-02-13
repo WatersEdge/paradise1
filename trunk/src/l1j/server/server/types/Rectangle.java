@@ -28,11 +28,11 @@ public class Rectangle {
 	}
 
 	public Rectangle(final int left, final int top, final int right, final int bottom) {
-		set(left, top, right, bottom);
+		this.set(left, top, right, bottom);
 	}
 
 	public Rectangle(final Rectangle rect) {
-		set(rect);
+		this.set(rect);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class Rectangle {
 	 * @return 点(x, y)がこのRectangleの範囲内にある場合、true。
 	 */
 	public boolean contains(final int x, final int y) {
-		return ((_left <= x) && (x <= _right)) && ((_top <= y) && (y <= _bottom));
+		return ((this._left <= x) && (x <= this._right)) && ((this._top <= y) && (y <= this._bottom));
 	}
 
 	/**
@@ -56,41 +56,41 @@ public class Rectangle {
 	 * @return ptがこのRectangleの範囲内にある場合、true。
 	 */
 	public boolean contains(final Point pt) {
-		return contains(pt.getX(), pt.getY());
+		return this.contains(pt.getX(), pt.getY());
 	}
 
 	public int getBottom() {
-		return _bottom;
+		return this._bottom;
 	}
 
 	public int getHeight() {
-		return _bottom - _top;
+		return this._bottom - this._top;
 	}
 
 	public int getLeft() {
-		return _left;
+		return this._left;
 	}
 
 	public int getRight() {
-		return _right;
+		return this._right;
 	}
 
 	public int getTop() {
-		return _top;
+		return this._top;
 	}
 
 	public int getWidth() {
-		return _right - _left;
+		return this._right - this._left;
 	}
 
 	public void set(final int left, final int top, final int right, final int bottom) {
-		_left = left;
-		_top = top;
-		_right = right;
-		_bottom = bottom;
+		this._left = left;
+		this._top = top;
+		this._right = right;
+		this._bottom = bottom;
 	}
 
 	public void set(final Rectangle rect) {
-		set(rect.getLeft(), rect.getTop(), rect.getWidth(), rect.getHeight());
+		this.set(rect.getLeft(), rect.getTop(), rect.getWidth(), rect.getHeight());
 	}
 }

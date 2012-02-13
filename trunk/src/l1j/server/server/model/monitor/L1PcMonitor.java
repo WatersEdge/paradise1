@@ -39,7 +39,7 @@ public abstract class L1PcMonitor implements Runnable {
 	 *            {@link L1PcInstance#getId()}で取得できるオブジェクトID
 	 */
 	public L1PcMonitor(final int oId) {
-		_id = oId;
+		this._id = oId;
 	}
 
 	/**
@@ -52,10 +52,10 @@ public abstract class L1PcMonitor implements Runnable {
 
 	@Override
 	public final void run() {
-		final L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(_id);
+		final L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(this._id);
 		if ((pc == null) || (pc.getNetConnection() == null)) {
 			return;
 		}
-		execTask(pc);
+		this.execTask(pc);
 	}
 }

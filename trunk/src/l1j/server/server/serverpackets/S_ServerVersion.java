@@ -33,24 +33,24 @@ public class S_ServerVersion extends ServerBasePacket {
 	 * 伺服器版本
 	 */
 	public S_ServerVersion() {
-		writeC(Opcodes.S_OPCODE_SERVERVERSION);
-		writeC(0x00);
-		writeC(0x02);
-		writeD(0x00a8c732); // server verion 3.5C Taiwan Server
-		writeD(0x00a8c6a7); // cache verion 3.5C Taiwan Server
-		writeD(0x77cf6eba); // auth verion 3.5C Taiwan Server
-		writeD(0x00a8cdad); // npc verion 3.5C Taiwan Server
-		writeD(uptime);
-		writeC(0x00); // unknown
-		writeC(0x00); // unknown
-		writeC(CLIENT_LANGUAGE); // Country: 0.US 3.Taiwan 4.Janpan 5.China
-		writeD(0x00000000);
-		writeC(0xae); // unknown
-		writeC(0xb2); // unknown
+		this.writeC(Opcodes.S_OPCODE_SERVERVERSION);
+		this.writeC(0x00);
+		this.writeC(0x02);
+		this.writeD(0x00a8c732); // server verion 3.5C Taiwan Server
+		this.writeD(0x00a8c6a7); // cache verion 3.5C Taiwan Server
+		this.writeD(0x77cf6eba); // auth verion 3.5C Taiwan Server
+		this.writeD(0x00a8cdad); // npc verion 3.5C Taiwan Server
+		this.writeD(uptime);
+		this.writeC(0x00); // unknown
+		this.writeC(0x00); // unknown
+		this.writeC(CLIENT_LANGUAGE); // Country: 0.US 3.Taiwan 4.Janpan 5.China
+		this.writeD(0x00000000);
+		this.writeC(0xae); // unknown
+		this.writeC(0xb2); // unknown
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

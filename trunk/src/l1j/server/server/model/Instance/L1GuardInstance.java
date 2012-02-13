@@ -38,27 +38,27 @@ public class L1GuardInstance extends L1NpcInstance {
 		L1Character _lastAttacker;
 
 		public Death(final L1Character lastAttacker) {
-			_lastAttacker = lastAttacker;
+			this._lastAttacker = lastAttacker;
 		}
 
 		@Override
 		public void run() {
-			setDeathProcessing(true);
-			setCurrentHpDirect(0);
-			setDead(true);
-			setStatus(ActionCodes.ACTION_Die);
+			L1GuardInstance.this.setDeathProcessing(true);
+			L1GuardInstance.this.setCurrentHpDirect(0);
+			L1GuardInstance.this.setDead(true);
+			L1GuardInstance.this.setStatus(ActionCodes.ACTION_Die);
 
-			getMap().setPassable(getLocation(), true);
+			L1GuardInstance.this.getMap().setPassable(L1GuardInstance.this.getLocation(), true);
 
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
+			L1GuardInstance.this.broadcastPacket(new S_DoActionGFX(L1GuardInstance.this.getId(), ActionCodes.ACTION_Die));
 
-			startChat(CHAT_TIMING_DEAD);
+			L1GuardInstance.this.startChat(CHAT_TIMING_DEAD);
 
-			setDeathProcessing(false);
+			L1GuardInstance.this.setDeathProcessing(false);
 
-			allTargetClear();
+			L1GuardInstance.this.allTargetClear();
 
-			startDeleteTimer();
+			L1GuardInstance.this.startDeleteTimer();
 		}
 	}
 
@@ -75,15 +75,15 @@ public class L1GuardInstance extends L1NpcInstance {
 	// 如果没有目标处理
 	@Override
 	public boolean noTarget() {
-		if (getLocation().getTileLineDistance(new Point(getHomeX(), getHomeY())) > 0) {
-			final int dir = moveDirection(getHomeX(), getHomeY());
+		if (this.getLocation().getTileLineDistance(new Point(this.getHomeX(), this.getHomeY())) > 0) {
+			final int dir = this.moveDirection(this.getHomeX(), this.getHomeY());
 			if (dir != -1) {
-				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				this.setDirectionMove(dir);
+				this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 			}
 			else // 遠すぎるor経路が見つからない場合はテレポートして帰る
 			{
-				teleport(getHomeX(), getHomeY(), 1);
+				this.teleport(this.getHomeX(), this.getHomeY(), 1);
 			}
 		}
 		else {
@@ -96,13 +96,13 @@ public class L1GuardInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
 	public void onAction(final L1PcInstance pc, final int skillId) {
-		if (!isDead()) {
-			if (getCurrentHp() > 0) {
+		if (!this.isDead()) {
+			if (this.getCurrentHp() > 0) {
 				final L1Attack attack = new L1Attack(pc, this, skillId);
 				if (attack.calcHit()) {
 					attack.calcDamage();
@@ -127,18 +127,18 @@ public class L1GuardInstance extends L1NpcInstance {
 
 	@Override
 	public void onNpcAI() {
-		if (isAiRunning()) {
+		if (this.isAiRunning()) {
 			return;
 		}
-		setActived(false);
-		startAI();
+		this.setActived(false);
+		this.startAI();
 	}
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		final int objid = getId();
-		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		final int npcid = getNpcTemplate().get_npcId();
+		final int objid = this.getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(this.getNpcTemplate().get_npcId());
+		final int npcid = this.getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
 		boolean hascastle = false;
@@ -149,7 +149,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			// 管理人
 			if ((npcid == 70549) || // 肯特城堡的守门员左外门
 					(npcid == 70985)) { // 肯特城堡的守门员右外门(矛)
-				hascastle = checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
 				if (hascastle) { // 本城成员(城主)
 					htmlid = "gateokeeper";
 					htmldata = new String[] { player.getName() };
@@ -159,7 +159,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70656) { // 肯特城守门人(内城)
-				hascastle = checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
 				if (hascastle) { // 本城成员(城主)
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -170,7 +170,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 70600) || // オークの森外門キーパー
 					(npcid == 70986)) {
-				hascastle = checkHasCastle(player, L1CastleLocation.OT_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.OT_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "orckeeper";
 				}
@@ -180,7 +180,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 70687) || // ウィンダウッド城外門キーパー
 					(npcid == 70987)) {
-				hascastle = checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
 					htmldata = new String[] { player.getName() };
@@ -190,7 +190,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70778) { // ウィンダウッド城内門キーパー
-				hascastle = checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -201,7 +201,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 70800) || // ギラン城外門キーパー
 					(npcid == 70988) || (npcid == 70989) || (npcid == 70990) || (npcid == 70991)) {
-				hascastle = checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
 					htmldata = new String[] { player.getName() };
@@ -211,7 +211,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70817) { // ギラン城内門キーパー
-				hascastle = checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -222,7 +222,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 70862) || // ハイネ城外門キーパー
 					(npcid == 70992)) {
-				hascastle = checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
 					htmldata = new String[] { player.getName() };
@@ -232,7 +232,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70863) { // ハイネ城内門キーパー
-				hascastle = checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -243,7 +243,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 70993) || // ドワーフ城外門キーパー
 					(npcid == 70994)) {
-				hascastle = checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gateokeeper";
 					htmldata = new String[] { player.getName() };
@@ -253,7 +253,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70995) { // ドワーフ城内門キーパー
-				hascastle = checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -263,7 +263,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70996) { // アデン城内門キーパー
-				hascastle = checkHasCastle(player, L1CastleLocation.ADEN_CASTLE_ID);
+				hascastle = this.checkHasCastle(player, L1CastleLocation.ADEN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
 					htmlid = "gatekeeper";
 					htmldata = new String[] { player.getName() };
@@ -284,7 +284,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "ktguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60560) { // オーク近衛兵
 				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -296,7 +296,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "orcguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60552) { // ウィンダウッド城近衛兵
 				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -308,7 +308,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "wdguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60524) || // ギラン街入り口近衛兵(弓)
 					(npcid == 60525) || // ギラン街入り口近衛兵
@@ -322,7 +322,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "grguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if (npcid == 70857) { // ハイネ城ハイネ ガード
 				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -334,7 +334,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "heguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60530) || // ドワーフ城ドワーフ ガード
 					(npcid == 60531)) {
@@ -347,7 +347,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "dcguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if ((npcid == 60533) || // アデン城 ガード
 					(npcid == 60534)) {
@@ -360,7 +360,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "adguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 			else if (npcid == 81156) { // アデン偵察兵（ディアド要塞）
 				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
@@ -372,7 +372,7 @@ public class L1GuardInstance extends L1NpcInstance {
 					}
 				}
 				htmlid = "ktguard6";
-				htmldata = new String[] { getName(), clan_name, pri_name };
+				htmldata = new String[] { this.getName(), clan_name, pri_name };
 			}
 
 			// html表示パケット送信
@@ -397,41 +397,41 @@ public class L1GuardInstance extends L1NpcInstance {
 
 	@Override
 	public void receiveDamage(final L1Character attacker, final int damage) { // 攻撃でＨＰを減らすときはここを使用
-		if ((getCurrentHp() > 0) && !isDead()) {
+		if ((this.getCurrentHp() > 0) && !this.isDead()) {
 			if (damage >= 0) {
 				if (!(attacker instanceof L1EffectInstance)) { // FWはヘイトなし
-					setHate(attacker, damage);
+					this.setHate(attacker, damage);
 				}
 			}
 			if (damage > 0) {
-				removeSkillEffect(FOG_OF_SLEEPING);
+				this.removeSkillEffect(FOG_OF_SLEEPING);
 			}
 
-			onNpcAI();
+			this.onNpcAI();
 
 			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
 				final L1PcInstance pc = (L1PcInstance) attacker;
 				pc.setPetTarget(this);
-				serchLink(pc, getNpcTemplate().get_family());
+				this.serchLink(pc, this.getNpcTemplate().get_family());
 			}
 
-			final int newHp = getCurrentHp() - damage;
-			if ((newHp <= 0) && !isDead()) {
-				setCurrentHpDirect(0);
-				setDead(true);
-				setStatus(ActionCodes.ACTION_Die);
+			final int newHp = this.getCurrentHp() - damage;
+			if ((newHp <= 0) && !this.isDead()) {
+				this.setCurrentHpDirect(0);
+				this.setDead(true);
+				this.setStatus(ActionCodes.ACTION_Die);
 				final Death death = new Death(attacker);
 				GeneralThreadPool.getInstance().execute(death);
 			}
 			if (newHp > 0) {
-				setCurrentHp(newHp);
+				this.setCurrentHp(newHp);
 			}
 		}
-		else if ((getCurrentHp() == 0) && !isDead()) {
+		else if ((this.getCurrentHp() == 0) && !this.isDead()) {
 		}
-		else if (!isDead()) { // 念のため
-			setDead(true);
-			setStatus(ActionCodes.ACTION_Die);
+		else if (!this.isDead()) { // 念のため
+			this.setDead(true);
+			this.setStatus(ActionCodes.ACTION_Die);
 			final Death death = new Death(attacker);
 			GeneralThreadPool.getInstance().execute(death);
 		}
@@ -446,7 +446,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
 				continue;
 			}
-			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) // 检查隐身状态
+			if (!pc.isInvisble() || this.getNpcTemplate().is_agrocoi()) // 检查隐身状态
 			{
 				if (pc.isWanted()) { // PKで手配中か
 					targetPlayer = pc;
@@ -455,37 +455,37 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 		}
 		if (targetPlayer != null) {
-			_hateList.add(targetPlayer, 0);
-			_target = targetPlayer;
+			this._hateList.add(targetPlayer, 0);
+			this._target = targetPlayer;
 		}
 	}
 
 	@Override
 	public void setCurrentHp(final int i) {
 		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
+		if (currentHp >= this.getMaxHp()) {
+			currentHp = this.getMaxHp();
 		}
-		setCurrentHpDirect(currentHp);
+		this.setCurrentHpDirect(currentHp);
 
-		if (getMaxHp() > getCurrentHp()) {
-			startHpRegeneration();
+		if (this.getMaxHp() > this.getCurrentHp()) {
+			this.startHpRegeneration();
 		}
 	}
 
 	@Override
 	public void setLink(final L1Character cha) {
-		if ((cha != null) && _hateList.isEmpty()) {
-			_hateList.add(cha, 0);
-			checkTarget();
+		if ((cha != null) && this._hateList.isEmpty()) {
+			this._hateList.add(cha, 0);
+			this.checkTarget();
 		}
 	}
 
 	/** 设置目标 */
 	public void setTarget(final L1PcInstance targetPlayer) {
 		if (targetPlayer != null) {
-			_hateList.add(targetPlayer, 0);
-			_target = targetPlayer;
+			this._hateList.add(targetPlayer, 0);
+			this._target = targetPlayer;
 		}
 	}
 

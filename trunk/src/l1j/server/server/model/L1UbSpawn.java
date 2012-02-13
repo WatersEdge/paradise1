@@ -47,100 +47,100 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 	@Override
 	public int compareTo(final L1UbSpawn rhs) {
 		// XXX - 本当はもっと厳密な順序付けがあるはずだが、必要なさそうなので後回し
-		if (getId() < rhs.getId()) {
+		if (this.getId() < rhs.getId()) {
 			return -1;
 		}
-		if (getId() > rhs.getId()) {
+		if (this.getId() > rhs.getId()) {
 			return 1;
 		}
 		return 0;
 	}
 
 	public int getAmount() {
-		return _amount;
+		return this._amount;
 	}
 
 	public int getGroup() {
-		return _group;
+		return this._group;
 	}
 
 	// --------------------start getter/setter--------------------
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public int getNpcTemplateId() {
-		return _npcTemplateId;
+		return this._npcTemplateId;
 	}
 
 	public int getPattern() {
-		return _pattern;
+		return this._pattern;
 	}
 
 	public int getSealCount() {
-		return _sealCount;
+		return this._sealCount;
 	}
 
 	public int getSpawnDelay() {
-		return _spawnDelay;
+		return this._spawnDelay;
 	}
 
 	public int getUbId() {
-		return _ubId;
+		return this._ubId;
 	}
 
 	public void setAmount(final int amount) {
-		_amount = amount;
+		this._amount = amount;
 	}
 
 	public void setGroup(final int group) {
-		_group = group;
+		this._group = group;
 	}
 
 	public void setId(final int id) {
-		_id = id;
+		this._id = id;
 	}
 
 	public void setName(final String name) {
-		_name = name;
+		this._name = name;
 	}
 
 	public void setNpcTemplateId(final int npcTemplateId) {
-		_npcTemplateId = npcTemplateId;
+		this._npcTemplateId = npcTemplateId;
 	}
 
 	public void setPattern(final int pattern) {
-		_pattern = pattern;
+		this._pattern = pattern;
 	}
 
 	public void setSealCount(final int i) {
-		_sealCount = i;
+		this._sealCount = i;
 	}
 
 	public void setSpawnDelay(final int spawnDelay) {
-		_spawnDelay = spawnDelay;
+		this._spawnDelay = spawnDelay;
 	}
 
 	// --------------------end getter/setter--------------------
 
 	public void setUbId(final int ubId) {
-		_ubId = ubId;
+		this._ubId = ubId;
 	}
 
 	public void spawnAll() {
-		for (int i = 0; i < getAmount(); i++) {
-			spawnOne();
+		for (int i = 0; i < this.getAmount(); i++) {
+			this.spawnOne();
 		}
 	}
 
 	public void spawnOne() {
-		final L1UltimateBattle ub = UBTable.getInstance().getUb(_ubId);
+		final L1UltimateBattle ub = UBTable.getInstance().getUb(this._ubId);
 		final L1Location loc = ub.getLocation().randomLocation((ub.getLocX2() - ub.getLocX1()) / 2, false);
-		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(getNpcTemplateId()));
+		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(this.getNpcTemplateId()));
 
 		mob.setId(IdFactory.getInstance().nextId());
 		mob.setHeading(5);
@@ -149,9 +149,9 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		mob.setY(loc.getY());
 		mob.setHomeY(loc.getY());
 		mob.setMap((short) loc.getMapId());
-		mob.set_storeDroped(!(3 < getGroup()));
-		mob.setUbSealCount(getSealCount());
-		mob.setUbId(getUbId());
+		mob.set_storeDroped(!(3 < this.getGroup()));
+		mob.setUbSealCount(this.getSealCount());
+		mob.setUbId(this.getUbId());
 
 		L1World.getInstance().storeObject(mob);
 		L1World.getInstance().addVisibleObject(mob);

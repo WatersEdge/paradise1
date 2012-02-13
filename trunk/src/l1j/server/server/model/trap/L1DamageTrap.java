@@ -31,16 +31,16 @@ public class L1DamageTrap extends L1Trap {
 	public L1DamageTrap(final TrapStorage storage) {
 		super(storage);
 
-		_dice = new Dice(storage.getInt("dice"));
-		_base = storage.getInt("base");
-		_diceCount = storage.getInt("diceCount");
+		this._dice = new Dice(storage.getInt("dice"));
+		this._base = storage.getInt("base");
+		this._diceCount = storage.getInt("diceCount");
 	}
 
 	@Override
 	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
-		sendEffect(trapObj);
+		this.sendEffect(trapObj);
 
-		final int dmg = _dice.roll(_diceCount) + _base;
+		final int dmg = this._dice.roll(this._diceCount) + this._base;
 
 		trodFrom.receiveDamage(trodFrom, dmg, false);
 	}

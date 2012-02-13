@@ -35,7 +35,7 @@ public class S_SkillBuy extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_SkillBuy(final int o, final L1PcInstance pc) {
-		final int count = Scount(pc);
+		final int count = this.Scount(pc);
 		int inCount = 0;
 		for (int k = 0; k < count; k++) {
 			if (!pc.isSkillMastery((k + 1))) {
@@ -44,12 +44,12 @@ public class S_SkillBuy extends ServerBasePacket {
 		}
 
 		try {
-			writeC(Opcodes.S_OPCODE_SKILLBUY);
-			writeD(100);
-			writeH(inCount);
+			this.writeC(Opcodes.S_OPCODE_SKILLBUY);
+			this.writeD(100);
+			this.writeH(inCount);
 			for (int k = 0; k < count; k++) {
 				if (!pc.isSkillMastery((k + 1))) {
-					writeD(k);
+					this.writeD(k);
 				}
 			}
 		}
@@ -60,10 +60,10 @@ public class S_SkillBuy extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

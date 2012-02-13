@@ -35,15 +35,15 @@ public class S_Buddy extends ServerBasePacket {
 	 * @param buddy
 	 */
 	public S_Buddy(final int objId, final L1Buddy buddy) {
-		buildPacket(objId, buddy);
+		this.buildPacket(objId, buddy);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,13 +52,13 @@ public class S_Buddy extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int objId, final L1Buddy buddy) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objId);
-		writeS(_HTMLID);
-		writeH(0x02);
-		writeH(0x02);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objId);
+		this.writeS(_HTMLID);
+		this.writeH(0x02);
+		this.writeH(0x02);
 
-		writeS(buddy.getBuddyListString());
-		writeS(buddy.getOnlineBuddyListString());
+		this.writeS(buddy.getBuddyListString());
+		this.writeS(buddy.getOnlineBuddyListString());
 	}
 }

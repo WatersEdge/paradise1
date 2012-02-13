@@ -32,7 +32,7 @@ public class L1QuestInstance extends L1NpcInstance {
 	public class RestMonitor extends TimerTask {
 		@Override
 		public void run() {
-			setRest(false);
+			L1QuestInstance.this.setRest(false);
 		}
 	}
 
@@ -50,7 +50,7 @@ public class L1QuestInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -69,36 +69,36 @@ public class L1QuestInstance extends L1NpcInstance {
 	@Override
 	public void onFinalAction(final L1PcInstance pc, final String action) {
 		if (action.equalsIgnoreCase("start")) {
-			final int npcId = getNpcTemplate().get_npcId();
+			final int npcId = this.getNpcTemplate().get_npcId();
 			if (((npcId == 71092) || (npcId == 71093)) && pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 			else if ((npcId == 71062) && (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 			else if ((npcId == 71075) && (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 			else if ((npcId == 70957) || (npcId == 81209)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 			else if ((npcId == 81350) && (pc.getQuest().get_step(4) == 3)) {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
 				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), ""));
 			}
 
 		}
@@ -106,8 +106,8 @@ public class L1QuestInstance extends L1NpcInstance {
 
 	@Override
 	public void onNpcAI() {
-		final int npcId = getNpcTemplate().get_npcId();
-		if (isAiRunning()) {
+		final int npcId = this.getNpcTemplate().get_npcId();
+		if (this.isAiRunning()) {
 			return;
 		}
 		if ((npcId == 71075 // 疲惫的蜥蜴人战士
@@ -118,8 +118,8 @@ public class L1QuestInstance extends L1NpcInstance {
 			return;
 		}
 		else {
-			setActived(false);
-			startAI();
+			this.setActived(false);
+			this.startAI();
 		}
 	}
 
@@ -127,92 +127,92 @@ public class L1QuestInstance extends L1NpcInstance {
 	public void onTalkAction(final L1PcInstance pc) {
 		final int pcX = pc.getX();
 		final int pcY = pc.getY();
-		final int npcX = getX();
-		final int npcY = getY();
+		final int npcX = this.getX();
+		final int npcY = this.getY();
 
 		if ((pcX == npcX) && (pcY < npcY)) {
-			setHeading(0);
+			this.setHeading(0);
 		}
 		else if ((pcX > npcX) && (pcY < npcY)) {
-			setHeading(1);
+			this.setHeading(1);
 		}
 		else if ((pcX > npcX) && (pcY == npcY)) {
-			setHeading(2);
+			this.setHeading(2);
 		}
 		else if ((pcX > npcX) && (pcY > npcY)) {
-			setHeading(3);
+			this.setHeading(3);
 		}
 		else if ((pcX == npcX) && (pcY > npcY)) {
-			setHeading(4);
+			this.setHeading(4);
 		}
 		else if ((pcX < npcX) && (pcY > npcY)) {
-			setHeading(5);
+			this.setHeading(5);
 		}
 		else if ((pcX < npcX) && (pcY == npcY)) {
-			setHeading(6);
+			this.setHeading(6);
 		}
 		else if ((pcX < npcX) && (pcY < npcY)) {
-			setHeading(7);
+			this.setHeading(7);
 		}
-		broadcastPacket(new S_ChangeHeading(this));
+		this.broadcastPacket(new S_ChangeHeading(this));
 
-		final int npcId = getNpcTemplate().get_npcId();
+		final int npcId = this.getNpcTemplate().get_npcId();
 		if ((npcId == 71092) || (npcId == 71093)) { // 调查员
 			if (pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk1"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "searcherk1"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk4"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "searcherk4"));
 			}
 		}
 		else if (npcId == 71094) { // 安迪亚
 			if (pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq1"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "endiaq1"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq4"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "endiaq4"));
 			}
 		}
 		else if (npcId == 71062) { // 卡米特
 			if (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1b"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "kamit1b"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "kamit1"));
 			}
 		}
 		else if (npcId == 71075) { // 疲惫的蜥蜴人战士
 			if (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "llizard1b"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "llizard1b"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "llizard1a"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "llizard1a"));
 			}
 		}
 		else if ((npcId == 70957) || (npcId == 81209)) { // 罗伊
 			if (pc.getQuest().get_step(L1Quest.QUEST_ROI) != 1) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "roi1"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "roi1"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "roi2"));
 			}
 		}
 		else if (npcId == 81350) { // 迪嘉勒廷的女间谍
 			if (pc.isElf() && (pc.getQuest().get_step(4) == 3)) {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "dspy2"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "dspy2"));
 			}
 			else {
-				pc.sendPackets(new S_NPCTalkReturn(getId(), "dspy1"));
+				pc.sendPackets(new S_NPCTalkReturn(this.getId(), "dspy1"));
 			}
 		}
 
 		synchronized (this) {
-			if (_monitor != null) {
-				_monitor.cancel();
+			if (this._monitor != null) {
+				this._monitor.cancel();
 			}
-			setRest(true);
-			_monitor = new RestMonitor();
-			_restTimer.schedule(_monitor, REST_MILLISEC);
+			this.setRest(true);
+			this._monitor = new RestMonitor();
+			_restTimer.schedule(this._monitor, REST_MILLISEC);
 		}
 	}
 

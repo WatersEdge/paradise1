@@ -55,18 +55,18 @@ public class L1UltimateBattle {
 		@Override
 		public void run() {
 			try {
-				setActive(true);
-				countDown();
-				setNowUb(true);
+				L1UltimateBattle.this.setActive(true);
+				this.countDown();
+				L1UltimateBattle.this.setNowUb(true);
 				for (int round = 1; round <= 4; round++) {
-					sendRoundMessage(round);
+					L1UltimateBattle.this.sendRoundMessage(round);
 
-					final L1UbPattern pattern = UBSpawnTable.getInstance().getPattern(_ubId, _pattern);
+					final L1UbPattern pattern = UBSpawnTable.getInstance().getPattern(L1UltimateBattle.this._ubId, L1UltimateBattle.this._pattern);
 
 					final List<L1UbSpawn> spawnList = pattern.getSpawnList(round);
 
 					for (final L1UbSpawn spawn : spawnList) {
-						if (getMembersCount() > 0) {
+						if (L1UltimateBattle.this.getMembersCount() > 0) {
 							spawn.spawnAll();
 						}
 
@@ -74,14 +74,14 @@ public class L1UltimateBattle {
 						// removeRetiredMembers();
 					}
 
-					if (getMembersCount() > 0) {
-						spawnSupplies(round);
+					if (L1UltimateBattle.this.getMembersCount() > 0) {
+						L1UltimateBattle.this.spawnSupplies(round);
 					}
 
-					waitForNextRound(round);
+					this.waitForNextRound(round);
 				}
 
-				for (final L1PcInstance pc : getMembersArray()) // 竞技场内的PC出来
+				for (final L1PcInstance pc : L1UltimateBattle.this.getMembersArray()) // 竞技场内的PC出来
 				{
 					final int rndx = Random.nextInt(4);
 					final int rndy = Random.nextInt(4);
@@ -89,11 +89,11 @@ public class L1UltimateBattle {
 					final int locy = 32764 + rndy;
 					final short mapid = 4;
 					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
-					removeMember(pc);
+					L1UltimateBattle.this.removeMember(pc);
 				}
-				clearColosseum();
-				setActive(false);
-				setNowUb(false);
+				L1UltimateBattle.this.clearColosseum();
+				L1UltimateBattle.this.setActive(false);
+				L1UltimateBattle.this.setNowUb(false);
 			}
 			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -114,28 +114,28 @@ public class L1UltimateBattle {
 				Thread.sleep(1000);
 				// removeRetiredMembers();
 			}
-			removeRetiredMembers();
+			L1UltimateBattle.this.removeRetiredMembers();
 
-			sendMessage(MSGID_COUNT, "10"); // 10秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "10"); // 10秒前
 
 			Thread.sleep(5000);
-			sendMessage(MSGID_COUNT, "5"); // 5秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "5"); // 5秒前
 
 			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "4"); // 4秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "4"); // 4秒前
 
 			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "3"); // 3秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "3"); // 3秒前
 
 			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "2"); // 2秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "2"); // 2秒前
 
 			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "1"); // 1秒前
+			L1UltimateBattle.this.sendMessage(MSGID_COUNT, "1"); // 1秒前
 
 			Thread.sleep(1000);
-			sendMessage(MSGID_START, "无限大战开始"); // 开始
-			removeRetiredMembers();
+			L1UltimateBattle.this.sendMessage(MSGID_START, "无限大战开始"); // 开始
+			L1UltimateBattle.this.removeRetiredMembers();
 		}
 
 		/**
@@ -153,7 +153,7 @@ public class L1UltimateBattle {
 				Thread.sleep(10000);
 				// removeRetiredMembers();
 			}
-			removeRetiredMembers();
+			L1UltimateBattle.this.removeRetiredMembers();
 		}
 	}
 
@@ -240,7 +240,7 @@ public class L1UltimateBattle {
 	}
 
 	public void addManager(final int npcId) {
-		_managers.add(npcId);
+		this._managers.add(npcId);
 	}
 
 	/**
@@ -250,13 +250,13 @@ public class L1UltimateBattle {
 	 *            新角色参加
 	 */
 	public void addMember(final L1PcInstance pc) {
-		if (!_members.contains(pc)) {
-			_members.add(pc);
+		if (!this._members.contains(pc)) {
+			this._members.add(pc);
 		}
 	}
 
 	public void addUbTime(final int time) {
-		_ubTimes.add(time);
+		this._ubTimes.add(time);
 	}
 
 	/**
@@ -267,14 +267,14 @@ public class L1UltimateBattle {
 	 * @return 能参加true,不能false
 	 */
 	public boolean canPcEnter(final L1PcInstance pc) {
-		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[] { pc.getName(), _ubId, _minLevel, _maxLevel });
+		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[] { pc.getName(), this._ubId, this._minLevel, this._maxLevel });
 		// 什么级别可以参加
-		if (!IntRange.includes(pc.getLevel(), _minLevel, _maxLevel)) {
+		if (!IntRange.includes(pc.getLevel(), this._minLevel, this._maxLevel)) {
 			return false;
 		}
 
 		// 可以参加的玩家类别
-		if (!((pc.isCrown() && _enterRoyal) || (pc.isKnight() && _enterKnight) || (pc.isWizard() && _enterMage) || (pc.isElf() && _enterElf) || (pc.isDarkelf() && _enterDarkelf) || (pc.isDragonKnight() && _enterDragonKnight) || (pc.isIllusionist() && _enterIllusionist))) {
+		if (!((pc.isCrown() && this._enterRoyal) || (pc.isKnight() && this._enterKnight) || (pc.isWizard() && this._enterMage) || (pc.isElf() && this._enterElf) || (pc.isDarkelf() && this._enterDarkelf) || (pc.isDragonKnight() && this._enterDragonKnight) || (pc.isIllusionist() && this._enterIllusionist))) {
 			return false;
 		}
 
@@ -282,7 +282,7 @@ public class L1UltimateBattle {
 	}
 
 	public boolean canUsePot() {
-		return _usePot;
+		return this._usePot;
 	}
 
 	public boolean checkUbTime() {
@@ -290,54 +290,54 @@ public class L1UltimateBattle {
 		final Calendar realTime = getRealTime();
 		realTime.add(Calendar.MINUTE, BEFORE_MINUTE);
 		final int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
-		return _ubTimes.contains(nowTime);
+		return this._ubTimes.contains(nowTime);
 	}
 
 	/**
 	 * 清除参加人员名单。
 	 */
 	public void clearMembers() {
-		_members.clear();
+		this._members.clear();
 	}
 
 	public boolean containsManager(final int npcId) {
-		return _managers.contains(npcId);
+		return this._managers.contains(npcId);
 	}
 
 	public int getHpr() {
-		return _hpr;
+		return this._hpr;
 	}
 
 	public L1Location getLocation() {
-		return _location;
+		return this._location;
 	}
 
 	public int getLocX1() {
-		return _locX1;
+		return this._locX1;
 	}
 
 	public int getLocX2() {
-		return _locX2;
+		return this._locX2;
 	}
 
 	public int getLocY1() {
-		return _locY1;
+		return this._locY1;
 	}
 
 	public int getLocY2() {
-		return _locY2;
+		return this._locY2;
 	}
 
 	public short getMapId() {
-		return _mapId;
+		return this._mapId;
 	}
 
 	public int getMaxLevel() {
-		return _maxLevel;
+		return this._maxLevel;
 	}
 
 	public int getMaxPlayer() {
-		return _maxPlayer;
+		return this._maxPlayer;
 	}
 
 	/**
@@ -346,7 +346,7 @@ public class L1UltimateBattle {
 	 * @return 参加者的组队
 	 */
 	public L1PcInstance[] getMembersArray() {
-		return _members.toArray(new L1PcInstance[_members.size()]);
+		return this._members.toArray(new L1PcInstance[this._members.size()]);
 	}
 
 	/**
@@ -355,30 +355,30 @@ public class L1UltimateBattle {
 	 * @return 参加人数
 	 */
 	public int getMembersCount() {
-		return _members.size();
+		return this._members.size();
 	}
 
 	public int getMinLevel() {
-		return _minLevel;
+		return this._minLevel;
 	}
 
 	public int getMpr() {
-		return _mpr;
+		return this._mpr;
 	}
 
 	public String getNextUbTime() {
-		return intToTimeFormat(nextUbTime());
+		return intToTimeFormat(this.nextUbTime());
 	}
 
 	public int getUbId() {
-		return _ubId;
+		return this._ubId;
 	}
 
 	/**
 	 * @return UB入場可能～競技終了true,否则false。
 	 */
 	public boolean isActive() {
-		return _active;
+		return this._active;
 	}
 
 	/**
@@ -389,7 +389,7 @@ public class L1UltimateBattle {
 	 * @return 如果参加true、否则false。
 	 */
 	public boolean isMember(final L1PcInstance pc) {
-		return _members.contains(pc);
+		return this._members.contains(pc);
 	}
 
 	/**
@@ -398,58 +398,58 @@ public class L1UltimateBattle {
 	 * @return UB中true、否则false。
 	 */
 	public boolean isNowUb() {
-		return _isNowUb;
+		return this._isNowUb;
 	}
 
 	public String[] makeUbInfoStrings() {
-		if (_ubInfo != null) {
-			return _ubInfo;
+		if (this._ubInfo != null) {
+			return this._ubInfo;
 		}
-		final String nextUbTime = getNextUbTime();
+		final String nextUbTime = this.getNextUbTime();
 		// 类
 		final StringBuilder classesBuff = new StringBuilder();
-		if (_enterDarkelf) {
+		if (this._enterDarkelf) {
 			classesBuff.append("黑暗精灵 ");
 		}
-		if (_enterMage) {
+		if (this._enterMage) {
 			classesBuff.append("魔法师 ");
 		}
-		if (_enterElf) {
+		if (this._enterElf) {
 			classesBuff.append("精灵 ");
 		}
-		if (_enterKnight) {
+		if (this._enterKnight) {
 			classesBuff.append("骑士 ");
 		}
-		if (_enterRoyal) {
+		if (this._enterRoyal) {
 			classesBuff.append("王族 ");
 		}
-		if (_enterDragonKnight) {
+		if (this._enterDragonKnight) {
 			classesBuff.append("龙骑士 ");
 		}
-		if (_enterIllusionist) {
+		if (this._enterIllusionist) {
 			classesBuff.append("幻术师 ");
 		}
 		final String classes = classesBuff.toString().trim();
 		// 性別
 		final StringBuilder sexBuff = new StringBuilder();
-		if (_enterMale) {
+		if (this._enterMale) {
 			sexBuff.append("男 ");
 		}
-		if (_enterFemale) {
+		if (this._enterFemale) {
 			sexBuff.append("女 ");
 		}
 		final String sex = sexBuff.toString().trim();
-		final String loLevel = String.valueOf(_minLevel);
-		final String hiLevel = String.valueOf(_maxLevel);
-		final String teleport = _location.getMap().isEscapable() ? "可能" : "不可能";
-		final String res = _location.getMap().isUseResurrection() ? "可能" : "不可能";
+		final String loLevel = String.valueOf(this._minLevel);
+		final String hiLevel = String.valueOf(this._maxLevel);
+		final String teleport = this._location.getMap().isEscapable() ? "可能" : "不可能";
+		final String res = this._location.getMap().isUseResurrection() ? "可能" : "不可能";
 		final String pot = "可能";
-		final String hpr = String.valueOf(_hpr);
-		final String mpr = String.valueOf(_mpr);
-		final String summon = _location.getMap().isTakePets() ? "可能" : "不可能";
-		final String summon2 = _location.getMap().isRecallPets() ? "可能" : "不可能";
-		_ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
-		return _ubInfo;
+		final String hpr = String.valueOf(this._hpr);
+		final String mpr = String.valueOf(this._mpr);
+		final String summon = this._location.getMap().isTakePets() ? "可能" : "不可能";
+		final String summon2 = this._location.getMap().isRecallPets() ? "可能" : "不可能";
+		this._ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
+		return this._ubInfo;
 	}
 
 	/**
@@ -459,98 +459,98 @@ public class L1UltimateBattle {
 	 *            删除角色
 	 */
 	public void removeMember(final L1PcInstance pc) {
-		_members.remove(pc);
+		this._members.remove(pc);
 	}
 
 	// setされたlocx1～locy2から中心点を求める。
 	public void resetLoc() {
-		_locX = (_locX2 + _locX1) / 2;
-		_locY = (_locY2 + _locY1) / 2;
-		_location = new L1Location(_locX, _locY, _mapId);
+		this._locX = (this._locX2 + this._locX1) / 2;
+		this._locY = (this._locY2 + this._locY1) / 2;
+		this._location = new L1Location(this._locX, this._locY, this._mapId);
 	}
 
 	public void setEnterDarkelf(final boolean enterDarkelf) {
-		_enterDarkelf = enterDarkelf;
+		this._enterDarkelf = enterDarkelf;
 	}
 
 	public void setEnterDragonKnight(final boolean enterDragonKnight) {
-		_enterDragonKnight = enterDragonKnight;
+		this._enterDragonKnight = enterDragonKnight;
 	}
 
 	public void setEnterElf(final boolean enterElf) {
-		_enterElf = enterElf;
+		this._enterElf = enterElf;
 	}
 
 	public void setEnterFemale(final boolean enterFemale) {
-		_enterFemale = enterFemale;
+		this._enterFemale = enterFemale;
 	}
 
 	public void setEnterIllusionist(final boolean enterIllusionist) {
-		_enterIllusionist = enterIllusionist;
+		this._enterIllusionist = enterIllusionist;
 	}
 
 	public void setEnterKnight(final boolean enterKnight) {
-		_enterKnight = enterKnight;
+		this._enterKnight = enterKnight;
 	}
 
 	public void setEnterMage(final boolean enterMage) {
-		_enterMage = enterMage;
+		this._enterMage = enterMage;
 	}
 
 	public void setEnterMale(final boolean enterMale) {
-		_enterMale = enterMale;
+		this._enterMale = enterMale;
 	}
 
 	public void setEnterRoyal(final boolean enterRoyal) {
-		_enterRoyal = enterRoyal;
+		this._enterRoyal = enterRoyal;
 	}
 
 	public void setHpr(final int hpr) {
-		_hpr = hpr;
+		this._hpr = hpr;
 	}
 
 	public void setLocX1(final int locX1) {
-		_locX1 = locX1;
+		this._locX1 = locX1;
 	}
 
 	public void setLocX2(final int locX2) {
-		_locX2 = locX2;
+		this._locX2 = locX2;
 	}
 
 	public void setLocY1(final int locY1) {
-		_locY1 = locY1;
+		this._locY1 = locY1;
 	}
 
 	public void setLocY2(final int locY2) {
-		_locY2 = locY2;
+		this._locY2 = locY2;
 	}
 
 	public void setMapId(final short mapId) {
-		_mapId = mapId;
+		this._mapId = mapId;
 	}
 
 	public void setMaxLevel(final int level) {
-		_maxLevel = level;
+		this._maxLevel = level;
 	}
 
 	public void setMaxPlayer(final int count) {
-		_maxPlayer = count;
+		this._maxPlayer = count;
 	}
 
 	public void setMinLevel(final int level) {
-		_minLevel = level;
+		this._minLevel = level;
 	}
 
 	public void setMpr(final int mpr) {
-		_mpr = mpr;
+		this._mpr = mpr;
 	}
 
 	public void setUbId(final int id) {
-		_ubId = id;
+		this._ubId = id;
 	}
 
 	public void setUsePot(final boolean usePot) {
-		_usePot = usePot;
+		this._usePot = usePot;
 	}
 
 	/**
@@ -560,8 +560,8 @@ public class L1UltimateBattle {
 	 *            开始无限大战的ID
 	 */
 	public void start() {
-		final int patternsMax = UBSpawnTable.getInstance().getMaxPattern(_ubId);
-		_pattern = Random.nextInt(patternsMax) + 1; // 确定出现模式
+		final int patternsMax = UBSpawnTable.getInstance().getMaxPattern(this._ubId);
+		this._pattern = Random.nextInt(patternsMax) + 1; // 确定出现模式
 
 		final UbThread ub = new UbThread();
 		GeneralThreadPool.getInstance().execute(ub);
@@ -571,7 +571,7 @@ public class L1UltimateBattle {
 	 * 删除竞技场内所有的怪物与道具。
 	 */
 	private void clearColosseum() {
-		for (final Object obj : L1World.getInstance().getVisibleObjects(_mapId).values()) {
+		for (final Object obj : L1World.getInstance().getVisibleObjects(this._mapId).values()) {
 			if (obj instanceof L1MonsterInstance) // 删除怪物
 			{
 				final L1MonsterInstance mob = (L1MonsterInstance) obj;
@@ -594,9 +594,9 @@ public class L1UltimateBattle {
 	private int nextUbTime() {
 		final SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 		final int nowTime = Integer.valueOf(sdf.format(getRealTime().getTime()));
-		SortedSet<Integer> tailSet = _ubTimes.tailSet(nowTime);
+		SortedSet<Integer> tailSet = this._ubTimes.tailSet(nowTime);
 		if (tailSet.isEmpty()) {
-			tailSet = _ubTimes;
+			tailSet = this._ubTimes;
 		}
 		return tailSet.first();
 	}
@@ -605,10 +605,10 @@ public class L1UltimateBattle {
 	 * 从成员列表删除退出人员。
 	 */
 	private void removeRetiredMembers() {
-		final L1PcInstance[] temp = getMembersArray();
+		final L1PcInstance[] temp = this.getMembersArray();
 		for (final L1PcInstance element : temp) {
-			if (element.getMapId() != _mapId) {
-				removeMember(element);
+			if (element.getMapId() != this._mapId) {
+				this.removeMember(element);
 			}
 		}
 	}
@@ -622,7 +622,7 @@ public class L1UltimateBattle {
 	 *            发送消息
 	 */
 	private void sendMessage(final int type, final String msg) {
-		for (final L1PcInstance pc : getMembersArray()) {
+		for (final L1PcInstance pc : this.getMembersArray()) {
 			pc.sendPackets(new S_ServerMessage(type, msg));
 		}
 	}
@@ -637,11 +637,11 @@ public class L1UltimateBattle {
 		// XXX - 此ID错误
 		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
 
-		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
+		this.sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
 	}
 
 	private void setActive(final boolean f) {
-		_active = f;
+		this._active = f;
 	}
 
 	/**
@@ -651,7 +651,7 @@ public class L1UltimateBattle {
 	 *            true/false
 	 */
 	private void setNowUb(final boolean i) {
-		_isNowUb = i;
+		this._isNowUb = i;
 	}
 
 	/**
@@ -671,12 +671,12 @@ public class L1UltimateBattle {
 		}
 
 		for (int i = 0; i < count; i++) {
-			final L1Location loc = _location.randomLocation((getLocX2() - getLocX1()) / 2, false);
+			final L1Location loc = this._location.randomLocation((this.getLocX2() - this.getLocX1()) / 2, false);
 			if (temp.isStackable()) {
 				final L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 				item.setEnchantLevel(0);
 				item.setCount(stackCount);
-				final L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
+				final L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), this._mapId);
 				if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 					ground.storeItem(item);
 				}
@@ -686,7 +686,7 @@ public class L1UltimateBattle {
 				for (int createCount = 0; createCount < stackCount; createCount++) {
 					item = ItemTable.getInstance().createItem(itemId);
 					item.setEnchantLevel(0);
-					final L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
+					final L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), this._mapId);
 					if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 						ground.storeItem(item);
 					}
@@ -703,29 +703,29 @@ public class L1UltimateBattle {
 	 */
 	private void spawnSupplies(final int curRound) {
 		if (curRound == 1) {
-			spawnGroundItem(L1ItemId.ADENA, 1000, 60);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 3, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 5, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 3, 20);
-			spawnGroundItem(40317, 1, 5); // 磨刀石
-			spawnGroundItem(40079, 1, 20); // 传送回家的卷轴
+			this.spawnGroundItem(L1ItemId.ADENA, 1000, 60);
+			this.spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 3, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 5, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 3, 20);
+			this.spawnGroundItem(40317, 1, 5); // 磨刀石
+			this.spawnGroundItem(40079, 1, 20); // 传送回家的卷轴
 		}
 		else if (curRound == 2) {
-			spawnGroundItem(L1ItemId.ADENA, 5000, 50);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 5, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 10, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 5, 20);
-			spawnGroundItem(40317, 1, 7); // 磨刀石
-			spawnGroundItem(40093, 1, 10); // 空的魔法卷轴(Lv4)
-			spawnGroundItem(40079, 1, 5); // 传送回家的卷轴
+			this.spawnGroundItem(L1ItemId.ADENA, 5000, 50);
+			this.spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 5, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 10, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 5, 20);
+			this.spawnGroundItem(40317, 1, 7); // 磨刀石
+			this.spawnGroundItem(40093, 1, 10); // 空的魔法卷轴(Lv4)
+			this.spawnGroundItem(40079, 1, 5); // 传送回家的卷轴
 		}
 		else if (curRound == 3) {
-			spawnGroundItem(L1ItemId.ADENA, 10000, 30);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 7, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 20, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 10, 20);
-			spawnGroundItem(40317, 1, 10); // 磨刀石
-			spawnGroundItem(40094, 1, 10); // 空的魔法卷轴(Lv5)
+			this.spawnGroundItem(L1ItemId.ADENA, 10000, 30);
+			this.spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 7, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 20, 20);
+			this.spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 10, 20);
+			this.spawnGroundItem(40317, 1, 10); // 磨刀石
+			this.spawnGroundItem(40094, 1, 10); // 空的魔法卷轴(Lv5)
 		}
 	}
 }

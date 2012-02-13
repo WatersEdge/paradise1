@@ -34,17 +34,17 @@ public class S_DoActionGFX extends ServerBasePacket {
 	 * @param actionId
 	 */
 	public S_DoActionGFX(final int objectId, final int actionId) {
-		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
-		writeD(objectId);
-		writeC(actionId);
+		this.writeC(Opcodes.S_OPCODE_DOACTIONGFX);
+		this.writeD(objectId);
+		this.writeC(actionId);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

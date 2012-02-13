@@ -69,8 +69,8 @@ public class L1Message {
 
 	private L1Message() {
 		try {
-			resource = ResourceBundle.getBundle(messages.class.getName());
-			initLocaleMessage();
+			this.resource = ResourceBundle.getBundle(messages.class.getName());
+			this.initLocaleMessage();
 		}
 		catch (final MissingResourceException mre) {
 			mre.printStackTrace();
@@ -81,31 +81,31 @@ public class L1Message {
 	 * 简短化变数名词
 	 */
 	public void initLocaleMessage() {
-		memoryUse = resource.getString("l1j.server.memoryUse");
-		memory = resource.getString("l1j.server.memory");
-		onGroundItem = resource.getString("l1j.server.server.model.onGroundItem");
-		secondsDelete = resource.getString("l1j.server.server.model.seconds");
-		deleted = resource.getString("l1j.server.server.model.deleted");
-		ver = resource.getString("l1j.server.server.GameServer.ver");
-		settingslist = resource.getString("l1j.server.server.GameServer.settingslist");
-		exp = resource.getString("l1j.server.server.GameServer.exp");
-		x = resource.getString("l1j.server.server.GameServer.x");
-		level = resource.getString("l1j.server.server.GameServer.level");
-		justice = resource.getString("l1j.server.server.GameServer.justice");
-		karma = resource.getString("l1j.server.server.GameServer.karma");
-		dropitems = resource.getString("l1j.server.server.GameServer.dropitems");
-		dropadena = resource.getString("l1j.server.server.GameServer.dropadena");
-		enchantweapon = resource.getString("l1j.server.server.GameServer.enchantweapon");
-		enchantarmor = resource.getString("l1j.server.server.GameServer.enchantarmor");
-		chatlevel = resource.getString("l1j.server.server.GameServer.chatlevel");
-		nonpvpNo = resource.getString("l1j.server.server.GameServer.nonpvp1");
-		nonpvpYes = resource.getString("l1j.server.server.GameServer.nonpvp2");
-		maxplayer = resource.getString("l1j.server.server.GameServer.maxplayer");
-		player = resource.getString("l1j.server.server.GameServer.player");
-		waitingforuser = resource.getString("l1j.server.server.GameServer.waitingforuser");
-		from = resource.getString("l1j.server.server.GameServer.from");
-		attempt = resource.getString("l1j.server.server.GameServer.attempt");
-		setporton = resource.getString("l1j.server.server.GameServer.setporton");
-		initialfinished = resource.getString("l1j.server.server.GameServer.initialfinished");
+		memoryUse = this.resource.getString("l1j.server.memoryUse");
+		memory = this.resource.getString("l1j.server.memory");
+		onGroundItem = this.resource.getString("l1j.server.server.model.onGroundItem");
+		secondsDelete = this.resource.getString("l1j.server.server.model.seconds");
+		deleted = this.resource.getString("l1j.server.server.model.deleted");
+		ver = this.resource.getString("l1j.server.server.GameServer.ver");
+		settingslist = this.resource.getString("l1j.server.server.GameServer.settingslist");
+		exp = this.resource.getString("l1j.server.server.GameServer.exp");
+		x = this.resource.getString("l1j.server.server.GameServer.x");
+		level = this.resource.getString("l1j.server.server.GameServer.level");
+		justice = this.resource.getString("l1j.server.server.GameServer.justice");
+		karma = this.resource.getString("l1j.server.server.GameServer.karma");
+		dropitems = this.resource.getString("l1j.server.server.GameServer.dropitems");
+		dropadena = this.resource.getString("l1j.server.server.GameServer.dropadena");
+		enchantweapon = this.resource.getString("l1j.server.server.GameServer.enchantweapon");
+		enchantarmor = this.resource.getString("l1j.server.server.GameServer.enchantarmor");
+		chatlevel = this.resource.getString("l1j.server.server.GameServer.chatlevel");
+		nonpvpNo = this.resource.getString("l1j.server.server.GameServer.nonpvp1");
+		nonpvpYes = this.resource.getString("l1j.server.server.GameServer.nonpvp2");
+		maxplayer = this.resource.getString("l1j.server.server.GameServer.maxplayer");
+		player = this.resource.getString("l1j.server.server.GameServer.player");
+		waitingforuser = this.resource.getString("l1j.server.server.GameServer.waitingforuser");
+		from = this.resource.getString("l1j.server.server.GameServer.from");
+		attempt = this.resource.getString("l1j.server.server.GameServer.attempt");
+		setporton = this.resource.getString("l1j.server.server.GameServer.setporton");
+		initialfinished = this.resource.getString("l1j.server.server.GameServer.initialfinished");
 	}
 }

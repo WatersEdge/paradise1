@@ -39,8 +39,8 @@ public class IntRange {
 	private final int _high;
 
 	public IntRange(final int low, final int high) {
-		_low = low;
-		_high = high;
+		this._low = low;
+		this._high = high;
 	}
 
 	public IntRange(final IntRange range) {
@@ -56,8 +56,8 @@ public class IntRange {
 	 */
 	public int ensure(final int i) {
 		int r = i;
-		r = (_low <= r) ? r : _low;
-		r = (r <= _high) ? r : _high;
+		r = (this._low <= r) ? r : this._low;
+		r = (r <= this._high) ? r : this._high;
 		return r;
 	}
 
@@ -67,22 +67,22 @@ public class IntRange {
 			return false;
 		}
 		final IntRange range = (IntRange) obj;
-		return (_low == range._low) && (_high == range._high);
+		return (this._low == range._low) && (this._high == range._high);
 	}
 
 	/** 获得高的 */
 	public int getHigh() {
-		return _high;
+		return this._high;
 	}
 
 	/** 获得低的 */
 	public int getLow() {
-		return _low;
+		return this._low;
 	}
 
 	/** 获得宽度 */
 	public int getWidth() {
-		return _high - _low;
+		return this._high - this._low;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class IntRange {
 	 * @return 範囲内であればtrue
 	 */
 	public boolean includes(final int i) {
-		return (_low <= i) && (i <= _high);
+		return (this._low <= i) && (i <= this._high);
 	}
 
 	/**
@@ -102,11 +102,11 @@ public class IntRange {
 	 * @return 在范围内的随机值
 	 */
 	public int randomValue() {
-		return Random.nextInt(getWidth() + 1) + _low;
+		return Random.nextInt(this.getWidth() + 1) + this._low;
 	}
 
 	@Override
 	public String toString() {
-		return "low=" + _low + ", high=" + _high;
+		return "low=" + this._low + ", high=" + this._high;
 	}
 }

@@ -34,18 +34,18 @@ public class L1SilencePoison extends L1Poison {
 	private final L1Character _target;
 
 	private L1SilencePoison(final L1Character cha) {
-		_target = cha;
+		this._target = cha;
 
-		doInfection();
+		this.doInfection();
 	}
 
 	@Override
 	public void cure() {
-		_target.setPoisonEffect(0);
-		sendMessageIfPlayer(_target, 311);
+		this._target.setPoisonEffect(0);
+		sendMessageIfPlayer(this._target, 311);
 
-		_target.killSkillEffectTimer(STATUS_POISON_SILENCE);
-		_target.setPoison(null);
+		this._target.killSkillEffectTimer(STATUS_POISON_SILENCE);
+		this._target.setPoison(null);
 	}
 
 	@Override
@@ -54,9 +54,9 @@ public class L1SilencePoison extends L1Poison {
 	}
 
 	private void doInfection() {
-		_target.setPoisonEffect(1);
-		sendMessageIfPlayer(_target, 310);
+		this._target.setPoisonEffect(1);
+		sendMessageIfPlayer(this._target, 310);
 
-		_target.setSkillEffect(STATUS_POISON_SILENCE, 0);
+		this._target.setSkillEffect(STATUS_POISON_SILENCE, 0);
 	}
 }

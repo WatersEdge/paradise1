@@ -37,7 +37,7 @@ public class C_AddBuddy extends ClientBasePacket {
 		final L1PcInstance pc = client.getActiveChar();
 		final BuddyTable buddyTable = BuddyTable.getInstance();
 		final L1Buddy buddyList = buddyTable.getBuddyTable(pc.getId());
-		final String charName = readS();
+		final String charName = this.readS();
 
 		if (charName.equalsIgnoreCase(pc.getName())) {
 			return;

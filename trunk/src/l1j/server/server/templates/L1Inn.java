@@ -35,51 +35,51 @@ public class L1Inn {
 	private Timestamp _dueTime;
 
 	public Timestamp getDueTime() {
-		return _dueTime;
+		return this._dueTime;
 	}
 
 	public int getInnNpcId() {
-		return _npcId;
+		return this._npcId;
 	}
 
 	public int getKeyId() {
-		return _keyId;
+		return this._keyId;
 	}
 
 	public int getLodgerId() {
-		return _lodgerId;
+		return this._lodgerId;
 	}
 
 	public int getRoomNumber() {
-		return _roomNumber;
+		return this._roomNumber;
 	}
 
 	public boolean isHall() {
-		return _hall;
+		return this._hall;
 	}
 
 	public void setDueTime(final Timestamp i) {
-		_dueTime = i;
+		this._dueTime = i;
 	}
 
 	public void setHall(final boolean hall) {
-		_hall = hall;
+		this._hall = hall;
 	}
 
 	public void setInnNpcId(final int i) {
-		_npcId = i;
+		this._npcId = i;
 	}
 
 	public void setKeyId(final int i) {
-		_keyId = i;
+		this._keyId = i;
 	}
 
 	public void setLodgerId(final int i) {
-		_lodgerId = i;
+		this._lodgerId = i;
 	}
 
 	public void setRoomNumber(final int i) {
-		_roomNumber = i;
+		this._roomNumber = i;
 	}
 
 }

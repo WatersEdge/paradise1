@@ -48,7 +48,7 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			if (tok.hasMoreTokens()) {
 				randomrange = Integer.parseInt(tok.nextToken(), 10);
 			}
-			final int npcid = parseNpcId(nameId);
+			final int npcid = this.parseNpcId(nameId);
 
 			final L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
 			if (npc == null) {
@@ -62,10 +62,10 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			pc.sendPackets(new S_SystemMessage(msg));
 		}
 		catch (final NoSuchElementException e) {
-			sendErrorMessage(pc, cmdName);
+			this.sendErrorMessage(pc, cmdName);
 		}
 		catch (final NumberFormatException e) {
-			sendErrorMessage(pc, cmdName);
+			this.sendErrorMessage(pc, cmdName);
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

@@ -425,252 +425,252 @@ public class L1MagicDoll {
 
 	/** 取得AC */
 	public int getAc() {
-		return _ac;
+		return this._ac;
 	}
 
 	/** 取得弓伤害 */
 	public int getBowDmg() {
-		return _bowDmg;
+		return this._bowDmg;
 	}
 
 	/** 取得弓的命中率 */
 	public int getBowHit() {
-		return _bowHit;
+		return this._bowHit;
 	}
 
 	/** 取得伤害 */
 	public int getDmg() {
-		return _dmg;
+		return this._dmg;
 	}
 
 	/** 取得伤害几率 */
 	public int getDmgChance() {
-		return _dmgChance;
+		return this._dmgChance;
 	}
 
 	/** 取得伤害回避 */
 	public int getDmgEvasionChance() {
-		return _dmgEvasionChance;
+		return this._dmgEvasionChance;
 	}
 
 	/** 取得伤害减免 */
 	public int getDmgReduction() {
-		return _dmgReduction;
+		return this._dmgReduction;
 	}
 
 	/** 取得伤害减免的几率 */
 	public int getDmgReductionChance() {
-		return _dmgReductionChance;
+		return this._dmgReductionChance;
 	}
 
 	/** 取得娃娃ID */
 	public int getDollId() {
-		return _dollId;
+		return this._dollId;
 	}
 
 	/** 取得效果 */
 	public byte getEffect() {
-		return _effect;
+		return this._effect;
 	}
 
 	/** 取得效果几率 */
 	public int getEffectChance() {
-		return _EffectChance;
+		return this._EffectChance;
 	}
 
 	/** 取得命中率 */
 	public int getHit() {
-		return _hit;
+		return this._hit;
 	}
 
 	/** 取得回血 */
 	public int getHpr() {
-		return _hpr;
+		return this._hpr;
 	}
 
 	/** 取得回血时间 */
 	public boolean getHprTime() {
-		return _hprTime;
+		return this._hprTime;
 	}
 
 	/** 取得道具ID */
 	public int getItemId() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	/** 返回取得道具 */
 	public int getMakeItemId() {
-		return _makeItemId;
+		return this._makeItemId;
 	}
 
 	/** 取得回魔 */
 	public int getMpr() {
-		return _mpr;
+		return this._mpr;
 	}
 
 	/** 取得回魔时间 */
 	public boolean getMprTime() {
-		return _mprTime;
+		return this._mprTime;
 	}
 
 	/** 取得闇黑耐性 */
 	public int getRegistBlind() {
-		return _registBlind;
+		return this._registBlind;
 	}
 
 	/** 取得寒冰耐性 */
 	public int getRegistFreeze() {
-		return _registFreeze;
+		return this._registFreeze;
 	}
 
 	/** 取得睡眠耐性 */
 	public int getRegistSleep() {
-		return _registSleep;
+		return this._registSleep;
 	}
 
 	/** 取得石化耐性 */
 	public int getRegistStone() {
-		return _registStone;
+		return this._registStone;
 	}
 
 	/** 取得昏迷耐性 */
 	public int getRegistStun() {
-		return _registStun;
+		return this._registStun;
 	}
 
 	/** 取得支撑耐性 */
 	public int getRegistSustain() {
-		return _registSustain;
+		return this._registSustain;
 	}
 
 	/** 取得负重轻减 */
 	public int getWeightReduction() {
-		return _weightReduction;
+		return this._weightReduction;
 	}
 
 	/** 设定AC */
 	public void setAc(final int i) {
-		_ac = i;
+		this._ac = i;
 	}
 
 	/** 设定弓伤害 */
 	public void setBowDmg(final int i) {
-		_bowDmg = i;
+		this._bowDmg = i;
 	}
 
 	/** 设定弓的命中率 */
 	public void setBowHit(final int i) {
-		_bowHit = i;
+		this._bowHit = i;
 	}
 
 	/** 设定伤害 */
 	public void setDmg(final int i) {
-		_dmg = i;
+		this._dmg = i;
 	}
 
 	/** 设定伤害几率 */
 	public void setDmgChance(final int i) {
-		_dmgChance = i;
+		this._dmgChance = i;
 	}
 
 	/** 设定伤害回避 */
 	public void setDmgEvasionChance(final int i) {
-		_dmgEvasionChance = i;
+		this._dmgEvasionChance = i;
 	}
 
 	/** 设定伤害减免 */
 	public void setDmgReduction(final int i) {
-		_dmgReduction = i;
+		this._dmgReduction = i;
 	}
 
 	/** 设定伤害减免的几率 */
 	public void setDmgReductionChance(final int i) {
-		_dmgReductionChance = i;
+		this._dmgReductionChance = i;
 	}
 
 	/** 设定娃娃ID */
 	public void setDollId(final int i) {
-		_dollId = i;
+		this._dollId = i;
 	}
 
 	/** 设定效果 */
 	public void setEffect(final byte i) {
-		_effect = i;
+		this._effect = i;
 	}
 
 	/** 设定效果几率 */
 	public void setEffectChance(final int i) {
-		_EffectChance = i;
+		this._EffectChance = i;
 	}
 
 	/** 设定命中率 */
 	public void setHit(final int i) {
-		_hit = i;
+		this._hit = i;
 	}
 
 	/** 设定回血 */
 	public void setHpr(final int i) {
-		_hpr = i;
+		this._hpr = i;
 	}
 
 	/** 设定回血时间 */
 	public void setHprTime(final boolean i) {
-		_hprTime = i;
+		this._hprTime = i;
 	}
 
 	/** 设定道具ID */
 	public void setItemId(final int i) {
-		_itemId = i;
+		this._itemId = i;
 	}
 
 	/** 设定取得道具 */
 	public void setMakeItemId(final int i) {
-		_makeItemId = i;
+		this._makeItemId = i;
 	}
 
 	/** 设定回魔 */
 	public void setMpr(final int i) {
-		_mpr = i;
+		this._mpr = i;
 	}
 
 	/** 设定回魔时间 */
 	public void setMprTime(final boolean i) {
-		_mprTime = i;
+		this._mprTime = i;
 	}
 
 	/** 设定闇黑耐性 */
 	public void setRegistBlind(final int i) {
-		_registBlind = i;
+		this._registBlind = i;
 	}
 
 	/** 设定寒冰耐性 */
 	public void setRegistFreeze(final int i) {
-		_registFreeze = i;
+		this._registFreeze = i;
 	}
 
 	/** 设定睡眠耐性 */
 	public void setRegistSleep(final int i) {
-		_registSleep = i;
+		this._registSleep = i;
 	}
 
 	/** 设定石化耐性 */
 	public void setRegistStone(final int i) {
-		_registStone = i;
+		this._registStone = i;
 	}
 
 	/** 设定昏迷耐性 */
 	public void setRegistStun(final int i) {
-		_registStun = i;
+		this._registStun = i;
 	}
 
 	/** 设定支撑耐性 */
 	public void setRegistSustain(final int i) {
-		_registSustain = i;
+		this._registSustain = i;
 	}
 
 	/** 设定负重轻减 */
 	public void setWeightReduction(final int i) {
-		_weightReduction = i;
+		this._weightReduction = i;
 	}
 
 }

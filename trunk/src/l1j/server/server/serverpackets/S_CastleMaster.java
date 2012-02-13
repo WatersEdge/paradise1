@@ -37,15 +37,15 @@ public class S_CastleMaster extends ServerBasePacket {
 	 *            角色的OBJID
 	 */
 	public S_CastleMaster(final int type, final int objecId) {
-		buildPacket(type, objecId);
+		this.buildPacket(type, objecId);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -54,9 +54,9 @@ public class S_CastleMaster extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int type, final int objecId) {
-		writeC(Opcodes.S_OPCODE_CASTLEMASTER);
-		writeC(type);
-		writeD(objecId);
+		this.writeC(Opcodes.S_OPCODE_CASTLEMASTER);
+		this.writeC(type);
+		this.writeD(objecId);
 	}
 
 }

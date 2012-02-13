@@ -35,17 +35,17 @@ public class S_ChangeName extends ServerBasePacket {
 	 * @param name
 	 */
 	public S_ChangeName(final int objectId, final String name) {
-		writeC(Opcodes.S_OPCODE_CHANGENAME);
-		writeD(objectId);
-		writeS(name);
+		this.writeC(Opcodes.S_OPCODE_CHANGENAME);
+		this.writeD(objectId);
+		this.writeS(name);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

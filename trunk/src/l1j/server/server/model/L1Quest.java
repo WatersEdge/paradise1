@@ -102,39 +102,39 @@ public class L1Quest {
 	private Map<Integer, Integer> _quest = null;
 
 	public L1Quest(final L1PcInstance owner) {
-		_owner = owner;
+		this._owner = owner;
 	}
 
 	/** 增加步骤 */
 	public void add_step(final int quest_id, final int add) {
-		int step = get_step(quest_id);
+		int step = this.get_step(quest_id);
 		step += add;
-		set_step(quest_id, step);
+		this.set_step(quest_id, step);
 	}
 
 	/** 获得所有者 */
 	public L1PcInstance get_owner() {
-		return _owner;
+		return this._owner;
 	}
 
 	/** 获得步骤 */
 	public int get_step(final int quest_id) {
 
-		if (_quest == null) {
+		if (this._quest == null) {
 
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
 			try {
-				_quest = Maps.newMap();
+				this._quest = Maps.newMap();
 
 				con = L1DatabaseFactory.getInstance().getConnection();
 				pstm = con.prepareStatement("SELECT * FROM character_quests WHERE char_id=?");
-				pstm.setInt(1, _owner.getId());
+				pstm.setInt(1, this._owner.getId());
 				rs = pstm.executeQuery();
 
 				while (rs.next()) {
-					_quest.put(new Integer(rs.getInt(2)), new Integer(rs.getInt(3)));
+					this._quest.put(new Integer(rs.getInt(2)), new Integer(rs.getInt(3)));
 				}
 
 			}
@@ -146,7 +146,7 @@ public class L1Quest {
 				SQLUtil.close(con);
 			}
 		}
-		final Integer step = _quest.get(new Integer(quest_id));
+		final Integer step = this._quest.get(new Integer(quest_id));
 		if (step == null) {
 			return 0;
 		}
@@ -157,7 +157,7 @@ public class L1Quest {
 
 	/** 是结束 */
 	public boolean isEnd(final int quest_id) {
-		if (get_step(quest_id) == QUEST_END) {
+		if (this.get_step(quest_id) == QUEST_END) {
 			return true;
 		}
 		return false;
@@ -165,7 +165,7 @@ public class L1Quest {
 
 	/** 设置结束 */
 	public void set_end(final int quest_id) {
-		set_step(quest_id, QUEST_END);
+		this.set_step(quest_id, QUEST_END);
 	}
 
 	/** 设置步骤 */
@@ -176,10 +176,10 @@ public class L1Quest {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			if (_quest.get(new Integer(quest_id)) == null) {
+			if (this._quest.get(new Integer(quest_id)) == null) {
 
 				pstm = con.prepareStatement("INSERT INTO character_quests " + "SET char_id = ?, quest_id = ?, quest_step = ?");
-				pstm.setInt(1, _owner.getId());
+				pstm.setInt(1, this._owner.getId());
 				pstm.setInt(2, quest_id);
 				pstm.setInt(3, step);
 				pstm.execute();
@@ -187,7 +187,7 @@ public class L1Quest {
 			else {
 				pstm = con.prepareStatement("UPDATE character_quests " + "SET quest_step = ? WHERE char_id = ? AND quest_id = ?");
 				pstm.setInt(1, step);
-				pstm.setInt(2, _owner.getId());
+				pstm.setInt(2, this._owner.getId());
 				pstm.setInt(3, quest_id);
 				pstm.execute();
 			}
@@ -200,7 +200,7 @@ public class L1Quest {
 			SQLUtil.close(con);
 
 		}
-		_quest.put(new Integer(quest_id), new Integer(step));
+		this._quest.put(new Integer(quest_id), new Integer(step));
 	}
 
 }

@@ -40,7 +40,7 @@ public class PetCollar extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		if (pc.getInventory().checkItem(41160)) { // 宠物召唤笛
-			if (withdrawPet(pc, item.getId())) {
+			if (this.withdrawPet(pc, item.getId())) {
 				pc.getInventory().consumeItem(41160, 1);
 			}
 		}

@@ -29,43 +29,43 @@ public class L1GetBackRestart {
 	}
 
 	public int getArea() {
-		return _area;
+		return this._area;
 	}
 
 	public int getLocX() {
-		return _locX;
+		return this._locX;
 	}
 
 	public int getLocY() {
-		return _locY;
+		return this._locY;
 	}
 
 	public short getMapId() {
-		return _mapId;
+		return this._mapId;
 	}
 
 	public String getNote() {
-		return _note;
+		return this._note;
 	}
 
 	public void setArea(final int i) {
-		_area = i;
+		this._area = i;
 	}
 
 	public void setLocX(final int i) {
-		_locX = i;
+		this._locX = i;
 	}
 
 	public void setLocY(final int i) {
-		_locY = i;
+		this._locY = i;
 	}
 
 	public void setMapId(final short i) {
-		_mapId = i;
+		this._mapId = i;
 	}
 
 	public void setNote(final String s) {
-		_note = s;
+		this._note = s;
 	}
 
 }

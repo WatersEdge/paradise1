@@ -39,9 +39,9 @@ public class C_ChatParty extends ClientBasePacket {
 			return;
 		}
 
-		final int type = readC();
+		final int type = this.readC();
 		if (type == 0) { // /chatbanish 的命令
-			final String name = readS();
+			final String name = this.readS();
 
 			if (!pc.isInChatParty()) {
 				pc.sendPackets(new S_ServerMessage(425)); // 没有加入聊天组队

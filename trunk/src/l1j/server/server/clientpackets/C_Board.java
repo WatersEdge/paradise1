@@ -32,9 +32,9 @@ public class C_Board extends ClientBasePacket {
 
 	public C_Board(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		final int objectId = readD();
+		final int objectId = this.readD();
 		final L1Object obj = L1World.getInstance().findObject(objectId);
-		if (!isBoardInstance(obj)) {
+		if (!this.isBoardInstance(obj)) {
 			return; // 对象不是布告栏停止
 		}
 		obj.onAction(client.getActiveChar());

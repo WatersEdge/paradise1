@@ -53,11 +53,11 @@ public class PetItemTable {
 	}
 
 	private PetItemTable() {
-		loadPetItem();
+		this.loadPetItem();
 	}
 
 	public L1PetItem getTemplate(final int itemId) {
-		return _petItemIdIndex.get(itemId);
+		return this._petItemIdIndex.get(itemId);
 	}
 
 	private void fillPetItemTable(final ResultSet rs) throws SQLException {
@@ -77,7 +77,7 @@ public class PetItemTable {
 			petItem.setAddMp(rs.getInt("add_mp"));
 			petItem.setAddSp(rs.getInt("add_sp"));
 			petItem.setAddMr(rs.getInt("m_def"));
-			_petItemIdIndex.put(petItem.getItemId(), petItem);
+			this._petItemIdIndex.put(petItem.getItemId(), petItem);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class PetItemTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM petitem");
 			rs = pstm.executeQuery();
-			fillPetItemTable(rs);
+			this.fillPetItemTable(rs);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建etcitem_petitem表时出现错误", e);

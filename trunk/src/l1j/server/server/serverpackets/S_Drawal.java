@@ -31,14 +31,14 @@ public class S_Drawal extends ServerBasePacket {
 	 * @param count
 	 */
 	public S_Drawal(final int objectId, final int count) {
-		writeC(Opcodes.S_OPCODE_DRAWAL);
-		writeD(objectId);
-		writeD(count);
+		this.writeC(Opcodes.S_OPCODE_DRAWAL);
+		this.writeD(objectId);
+		this.writeD(count);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

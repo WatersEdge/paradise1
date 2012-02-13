@@ -27,47 +27,47 @@ public class S_CharReset extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_CharReset(final int point) {
-		writeC(Opcodes.S_OPCODE_CHARRESET);
-		writeC(0x03);
-		writeC(point);
+		this.writeC(Opcodes.S_OPCODE_CHARRESET);
+		this.writeC(0x03);
+		this.writeC(point);
 	}
 
 	/**
 	 * 45及腰精進入崇志 [Server] opcode = 43 0000: 2b 01 0f 00 04 00 0a 2d 56法進入崇志 [Server] opcode = 43 0000: 2b 01 0c 00 06 00 0a 38
 	 */
 	public S_CharReset(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_CHARRESET);
-		writeC(0x01);
+		this.writeC(Opcodes.S_OPCODE_CHARRESET);
+		this.writeC(0x01);
 		if (pc.isCrown()) {
-			writeH(14);
-			writeH(2);
+			this.writeH(14);
+			this.writeH(2);
 		}
 		else if (pc.isKnight()) {
-			writeH(16);
-			writeH(1);
+			this.writeH(16);
+			this.writeH(1);
 		}
 		else if (pc.isElf()) {
-			writeH(15);
-			writeH(4);
+			this.writeH(15);
+			this.writeH(4);
 		}
 		else if (pc.isWizard()) {
-			writeH(12);
-			writeH(6);
+			this.writeH(12);
+			this.writeH(6);
 		}
 		else if (pc.isDarkelf()) {
-			writeH(12);
-			writeH(3);
+			this.writeH(12);
+			this.writeH(3);
 		}
 		else if (pc.isDragonKnight()) {
-			writeH(15);
-			writeH(4);
+			this.writeH(15);
+			this.writeH(4);
 		}
 		else if (pc.isIllusionist()) {
-			writeH(15);
-			writeH(4);
+			this.writeH(15);
+			this.writeH(4);
 		}
-		writeC(0x0a); // AC
-		writeC(pc.getTempMaxLevel()); // Lv
+		this.writeC(0x0a); // AC
+		this.writeC(pc.getTempMaxLevel()); // Lv
 		/**
 		 * 0000: 2b 04 60 04 06 01 07 1e 不知道幹麻用的
 		 */
@@ -85,27 +85,27 @@ public class S_CharReset extends ServerBasePacket {
 	 * 重置升级能力更新 [Server] opcode = 43 0000: 2b /02/ 01 2d/ 0f 00/ 04 00/ 0a 00 /0c 0c 0c 0c 12 09 +..-............
 	 */
 	public S_CharReset(final L1PcInstance pc, final int lv, final int hp, final int mp, final int ac, final int str, final int intel, final int wis, final int dex, final int con, final int cha) {
-		writeC(Opcodes.S_OPCODE_CHARRESET);
-		writeC(0x02);
-		writeC(lv);
-		writeC(pc.getTempMaxLevel()); // max lv
-		writeH(hp);
-		writeH(mp);
-		writeH(ac);
-		writeC(str);
-		writeC(intel);
-		writeC(wis);
-		writeC(dex);
-		writeC(con);
-		writeC(cha);
+		this.writeC(Opcodes.S_OPCODE_CHARRESET);
+		this.writeC(0x02);
+		this.writeC(lv);
+		this.writeC(pc.getTempMaxLevel()); // max lv
+		this.writeH(hp);
+		this.writeH(mp);
+		this.writeH(ac);
+		this.writeC(str);
+		this.writeC(intel);
+		this.writeC(wis);
+		this.writeC(dex);
+		this.writeC(con);
+		this.writeC(cha);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

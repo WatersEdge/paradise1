@@ -191,134 +191,134 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 
 	@Override
 	public void updateaddHp(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET addhp = ? WHERE id = ?", item.getaddHp());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET addhp = ? WHERE id = ?", item.getaddHp());
 		item.getLastStatus().updateaddHp();
 	}
 
 	@Override
 	public void updateaddMp(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET addmp = ? WHERE id = ?", item.getaddMp());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET addmp = ? WHERE id = ?", item.getaddMp());
 		item.getLastStatus().updateaddMp();
 	}
 
 	@Override
 	public void updateaddSp(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET addsp = ? WHERE id = ?", item.getaddSp());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET addsp = ? WHERE id = ?", item.getaddSp());
 		item.getLastStatus().updateSp();
 	}
 
 	@Override
 	public void updateEarthMr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET earthmr = ? WHERE id = ?", item.getEarthMr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET earthmr = ? WHERE id = ?", item.getEarthMr());
 		item.getLastStatus().updateEarthMr();
 	}
 
 	/** 饰品强化卷轴 */
 	@Override
 	public void updateFireMr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET firemr = ? WHERE id = ?", item.getFireMr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET firemr = ? WHERE id = ?", item.getFireMr());
 		item.getLastStatus().updateFireMr();
 	}
 
 	@Override
 	public void updateHpr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET hpr = ? WHERE id = ?", item.getHpr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET hpr = ? WHERE id = ?", item.getHpr());
 		item.getLastStatus().updateHpr();
 	}
 
 	@Override
 	public void updateItemAttrEnchantKind(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_kind = ? WHERE id = ?", item.getAttrEnchantKind());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_kind = ? WHERE id = ?", item.getAttrEnchantKind());
 		item.getLastStatus().updateAttrEnchantKind();
 	}
 
 	@Override
 	public void updateItemAttrEnchantLevel(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_level = ? WHERE id = ?", item.getAttrEnchantLevel());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_level = ? WHERE id = ?", item.getAttrEnchantLevel());
 		item.getLastStatus().updateAttrEnchantLevel();
 	}
 
 	@Override
 	public void updateItemBless(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET bless = ? WHERE id = ?", item.getBless());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET bless = ? WHERE id = ?", item.getBless());
 		item.getLastStatus().updateBless();
 	}
 
 	@Override
 	public void updateItemChargeCount(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET charge_count = ? WHERE id = ?", item.getChargeCount());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET charge_count = ? WHERE id = ?", item.getChargeCount());
 		item.getLastStatus().updateChargeCount();
 	}
 
 	@Override
 	public void updateItemCount(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET count = ? WHERE id = ?", item.getCount());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET count = ? WHERE id = ?", item.getCount());
 		item.getLastStatus().updateCount();
 	}
 
 	@Override
 	public void updateItemDelayEffect(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET last_used = ? WHERE id = ?", item.getLastUsed());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET last_used = ? WHERE id = ?", item.getLastUsed());
 		item.getLastStatus().updateLastUsed();
 	}
 
 	@Override
 	public void updateItemDurability(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET durability = ? WHERE id = ?", item.get_durability());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET durability = ? WHERE id = ?", item.get_durability());
 		item.getLastStatus().updateDuraility();
 	}
 
 	@Override
 	public void updateItemEnchantLevel(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET enchantlvl = ? WHERE id = ?", item.getEnchantLevel());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET enchantlvl = ? WHERE id = ?", item.getEnchantLevel());
 		item.getLastStatus().updateEnchantLevel();
 	}
 
 	@Override
 	public void updateItemEquipped(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET is_equipped = ? WHERE id = ?", (item.isEquipped() ? 1 : 0));
+		this.executeUpdate(item.getId(), "UPDATE character_items SET is_equipped = ? WHERE id = ?", (item.isEquipped() ? 1 : 0));
 		item.getLastStatus().updateEquipped();
 	}
 
 	@Override
 	public void updateItemId(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET item_id = ? WHERE id = ?", item.getItemId());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET item_id = ? WHERE id = ?", item.getItemId());
 		item.getLastStatus().updateItemId();
 	}
 
 	@Override
 	public void updateItemIdentified(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET is_id = ? WHERE id = ?", (item.isIdentified() ? 1 : 0));
+		this.executeUpdate(item.getId(), "UPDATE character_items SET is_id = ? WHERE id = ?", (item.isIdentified() ? 1 : 0));
 		item.getLastStatus().updateIdentified();
 	}
 
 	@Override
 	public void updateItemRemainingTime(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET remaining_time = ? WHERE id = ?", item.getRemainingTime());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET remaining_time = ? WHERE id = ?", item.getRemainingTime());
 		item.getLastStatus().updateRemainingTime();
 	}
 
 	@Override
 	public void updateM_Def(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET m_def = ? WHERE id = ?", item.getM_Def());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET m_def = ? WHERE id = ?", item.getM_Def());
 		item.getLastStatus().updateM_Def();
 	}
 
 	@Override
 	public void updateMpr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET mpr = ? WHERE id = ?", item.getMpr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET mpr = ? WHERE id = ?", item.getMpr());
 		item.getLastStatus().updateMpr();
 	}
 
 	@Override
 	public void updateWaterMr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET watermr = ? WHERE id = ?", item.getWaterMr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET watermr = ? WHERE id = ?", item.getWaterMr());
 		item.getLastStatus().updateWaterMr();
 	}
 
 	@Override
 	public void updateWindMr(final L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(), "UPDATE character_items SET windmr = ? WHERE id = ?", item.getWindMr());
+		this.executeUpdate(item.getId(), "UPDATE character_items SET windmr = ? WHERE id = ?", item.getWindMr());
 		item.getLastStatus().updateWindMr();
 	}
 

@@ -124,7 +124,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		final String login = client.getAccountName();
 
 		// 取得角色名称
-		final String charName = readS();
+		final String charName = this.readS();
 
 		if (client.getActiveChar() != null) {
 			_log.info("同一个角色重复登入，强制切断 " + client.getHostname() + ") 的连结");
@@ -181,7 +181,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		 * S_Unknown1 s_unknown1 = new S_Unknown1(); pc.sendPackets(s_unknown1); S_Unknown2 s_unknown2 = new S_Unknown2(); pc.sendPackets(s_unknown2);
 		 */
 		pc.sendPackets(new S_LoginGame());
-		bookmarks(pc); // 加载记忆坐标
+		this.bookmarks(pc); // 加载记忆坐标
 
 		// Online = 1
 		// Account account = Account.load(pc.getAccountName());
@@ -262,9 +262,9 @@ public class C_LoginToServer extends ClientBasePacket {
 
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather())); // 发送游戏天气
 
-		items(pc); // 读取角色的道具
-		skills(pc); // 读取角色的技能
-		buff(client, pc); // 读取角色的状态
+		this.items(pc); // 读取角色的道具
+		this.skills(pc); // 读取角色的技能
+		this.buff(client, pc); // 读取角色的状态
 		pc.turnOnOffLight(); // 打开灯光 (照明范围)
 
 		pc.sendPackets(new S_Karma(pc)); // 友好度
@@ -296,7 +296,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			pc.sendPackets(new S_CharacterConfig(pc.getId()));
 		}
 
-		serchSummon(pc); // 读取角色的召唤物
+		this.serchSummon(pc); // 读取角色的召唤物
 
 		WarTimeController.getInstance().checkCastleWar(pc); // 检查攻城战
 

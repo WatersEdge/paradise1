@@ -32,12 +32,12 @@ public class L1Karma {
 
 	/** 增加友好度 */
 	public void add(final int i) {
-		set(_karma + i);
+		this.set(this._karma + i);
 	}
 
 	/** 取得友好度 */
 	public int get() {
-		return _karma;
+		return this._karma;
 	}
 
 	/** 取得友好度等级 */
@@ -45,7 +45,7 @@ public class L1Karma {
 		boolean isMinus = false;
 		int karmaLevel = 0;
 
-		int karma = get();
+		int karma = this.get();
 		if (karma < 0) {
 			isMinus = true;
 			karma *= -1;
@@ -71,8 +71,8 @@ public class L1Karma {
 
 	/** 取得友好度百分比(%) */
 	public int getPercent() {
-		int karma = get();
-		int karmaLevel = getLevel();
+		int karma = this.get();
+		int karmaLevel = this.getLevel();
 		if (karmaLevel == 0) {
 			return 0;
 		}
@@ -87,6 +87,6 @@ public class L1Karma {
 
 	/** 设定友好度 */
 	public void set(final int i) {
-		_karma = KARMA_RANGE.ensure(i);
+		this._karma = KARMA_RANGE.ensure(i);
 	}
 }

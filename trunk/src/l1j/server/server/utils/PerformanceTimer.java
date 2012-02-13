@@ -22,10 +22,10 @@ public class PerformanceTimer {
 	private long _begin = System.currentTimeMillis();
 
 	public long get() {
-		return System.currentTimeMillis() - _begin;
+		return System.currentTimeMillis() - this._begin;
 	}
 
 	public void reset() {
-		_begin = System.currentTimeMillis();
+		this._begin = System.currentTimeMillis();
 	}
 }

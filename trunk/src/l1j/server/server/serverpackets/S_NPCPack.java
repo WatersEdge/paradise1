@@ -37,39 +37,39 @@ public class S_NPCPack extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_NPCPack(final L1NpcInstance npc) {
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(npc.getX());
-		writeH(npc.getY());
-		writeD(npc.getId());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(npc.getX());
+		this.writeH(npc.getY());
+		this.writeD(npc.getId());
 		if (npc.getTempCharGfx() == 0) {
-			writeH(npc.getGfxId());
+			this.writeH(npc.getGfxId());
 		}
 		else {
-			writeH(npc.getTempCharGfx());
+			this.writeH(npc.getTempCharGfx());
 		}
-		writeC(npc.getStatus());
-		writeC(npc.getHeading());
-		writeC(npc.getChaLightSize());
-		writeC(npc.getMoveSpeed());
-		writeExp(npc.getExp());
-		writeH(npc.getTempLawful());
+		this.writeC(npc.getStatus());
+		this.writeC(npc.getHeading());
+		this.writeC(npc.getChaLightSize());
+		this.writeC(npc.getMoveSpeed());
+		this.writeExp(npc.getExp());
+		this.writeH(npc.getTempLawful());
 		if (Config.ShowNpcId) {
-			writeS(npc.getNameId() + "[" + npc.getNpcId() + "]" + " \\f4面向[" + npc.getHeading() + "]" + " \\fA图形[" + npc.getGfxId() + "]");
+			this.writeS(npc.getNameId() + "[" + npc.getNpcId() + "]" + " \\f4面向[" + npc.getHeading() + "]" + " \\fA图形[" + npc.getGfxId() + "]");
 		}
 		else {
-			writeS(npc.getNameId());
+			this.writeS(npc.getNameId());
 		}
 		if (npc instanceof L1FieldObjectInstance) { // SICの壁字、看板など
 			final L1NpcTalkData talkdata = NPCTalkDataTable.getInstance().getTemplate(npc.getNpcTemplate().get_npcId());
 			if (talkdata != null) {
-				writeS(talkdata.getNormalAction()); // タイトルがHTML名として解釈される
+				this.writeS(talkdata.getNormalAction()); // タイトルがHTML名として解釈される
 			}
 			else {
-				writeS(null);
+				this.writeS(null);
 			}
 		}
 		else {
-			writeS(npc.getTitle());
+			this.writeS(npc.getTitle());
 		}
 
 		/**
@@ -90,33 +90,33 @@ public class S_NPCPack extends ServerBasePacket {
 		// 二段加速狀態
 		status |= npc.getBraveSpeed() * 16;
 
-		writeC(status);
+		this.writeC(status);
 
-		writeD(0); // 0以外にするとC_27が飛ぶ
-		writeS(null);
-		writeS(null); // マスター名？
+		this.writeD(0); // 0以外にするとC_27が飛ぶ
+		this.writeS(null);
+		this.writeS(null); // マスター名？
 		if ((npc.getTempCharGfx() == 1024) || (npc.getTempCharGfx() == 2363) || (npc.getTempCharGfx() == 6697) || (npc.getTempCharGfx() == 8180) || (npc.getTempCharGfx() == 1204) || (npc.getTempCharGfx() == 2353) || (npc.getTempCharGfx() == 3631)
 				|| (npc.getTempCharGfx() == 2544)) { // 飛行系怪物
-			writeC(npc.getHiddenStatus() == HIDDEN_STATUS_FLY ? 2 : 1); // 判斷是否飛天中
+			this.writeC(npc.getHiddenStatus() == HIDDEN_STATUS_FLY ? 2 : 1); // 判斷是否飛天中
 		}
 		else {
-			writeC(0);
+			this.writeC(0);
 		}
-		writeC(0xFF); // HP
-		writeC(0);
-		writeC(npc.getLevel());
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(0xFF); // HP
+		this.writeC(0);
+		this.writeC(npc.getLevel());
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

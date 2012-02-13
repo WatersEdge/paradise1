@@ -58,25 +58,25 @@ public class L1TreasureBox {
 		private int _enchant;
 
 		public double getChance() {
-			return _chance;
+			return this._chance;
 		}
 
 		public int getCount() {
-			return _count;
+			return this._count;
 		}
 
 		public int getEnchant() {
-			return _enchant;
+			return this._enchant;
 		}
 
 		public int getItemId() {
-			return _itemId;
+			return this._itemId;
 		}
 
 		@SuppressWarnings("unused")
 		@XmlAttribute(name = "Chance")
 		private void setChance(final double chance) {
-			_chance = (int) (chance * 10000);
+			this._chance = (int) (chance * 10000);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class L1TreasureBox {
 
 		@Override
 		public Iterator<L1TreasureBox> iterator() {
-			return _list.iterator();
+			return this._list.iterator();
 		}
 	}
 
@@ -172,9 +172,9 @@ public class L1TreasureBox {
 	public boolean open(final L1PcInstance pc) {
 		L1ItemInstance item = null;
 
-		if (getType().equals(TYPE.SPECIFIC)) {
+		if (this.getType().equals(TYPE.SPECIFIC)) {
 			// 出るアイテムが決まっているもの
-			for (final Item each : getItems()) {
+			for (final Item each : this.getItems()) {
 				item = ItemTable.getInstance().createItem(each.getItemId());
 				item.setEnchantLevel(each.getEnchant()); // Enchant Feature for treasure_box
 				if (item != null) {
@@ -184,13 +184,13 @@ public class L1TreasureBox {
 			}
 
 		}
-		else if (getType().equals(TYPE.RANDOM)) {
+		else if (this.getType().equals(TYPE.RANDOM)) {
 			// 出るアイテムがランダムに決まるもの
 			int chance = 0;
 
-			final int r = Random.nextInt(getTotalChance());
+			final int r = Random.nextInt(this.getTotalChance());
 
-			for (final Item each : getItems()) {
+			for (final Item each : this.getItems()) {
 				chance += each.getChance();
 
 				if (r < chance) {
@@ -209,7 +209,7 @@ public class L1TreasureBox {
 			return false;
 		}
 		else {
-			final int itemId = getBoxId();
+			final int itemId = this.getBoxId();
 
 			// 灵魂水晶、黑暗安特的水果、魔族的卷轴
 			if ((itemId == 40576 // 灵魂水晶
@@ -237,32 +237,32 @@ public class L1TreasureBox {
 	}
 
 	private int getBoxId() {
-		return _boxId;
+		return this._boxId;
 	}
 
 	private List<Item> getItems() {
-		return _items;
+		return this._items;
 	}
 
 	/** 获得几率总和 */
 	private int getTotalChance() {
-		return _totalChance;
+		return this._totalChance;
 	}
 
 	private TYPE getType() {
-		return _type;
+		return this._type;
 	}
 
 	private void init() {
-		for (final Item each : getItems()) {
-			_totalChance += each.getChance();
+		for (final Item each : this.getItems()) {
+			this._totalChance += each.getChance();
 			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
-				getItems().remove(each);
+				this.getItems().remove(each);
 				_log.warning("对象 ID : " + each.getItemId() + " 无法找到对应的Template。");
 			}
 		}
-		if ((getTotalChance() != 0) && (getTotalChance() != 1000000)) {
-			_log.warning("ID " + getBoxId() + " 的机率总合不等于100%。");
+		if ((this.getTotalChance() != 0) && (this.getTotalChance() != 1000000)) {
+			_log.warning("ID " + this.getBoxId() + " 的机率总合不等于100%。");
 		}
 	}
 }

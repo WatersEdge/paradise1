@@ -38,13 +38,13 @@ public class TrapTable {
 		private final ResultSet _rs;
 
 		public SqlTrapStorage(final ResultSet rs) {
-			_rs = rs;
+			this._rs = rs;
 		}
 
 		@Override
 		public boolean getBoolean(final String name) {
 			try {
-				return _rs.getBoolean(name);
+				return this._rs.getBoolean(name);
 			}
 			catch (final SQLException e) {
 			}
@@ -54,7 +54,7 @@ public class TrapTable {
 		@Override
 		public int getInt(final String name) {
 			try {
-				return _rs.getInt(name);
+				return this._rs.getInt(name);
 			}
 			catch (final SQLException e) {
 
@@ -65,7 +65,7 @@ public class TrapTable {
 		@Override
 		public String getString(final String name) {
 			try {
-				return _rs.getString(name);
+				return this._rs.getString(name);
 			}
 			catch (final SQLException e) {
 			}
@@ -94,11 +94,11 @@ public class TrapTable {
 	private final Map<Integer, L1Trap> _traps = Maps.newMap();
 
 	private TrapTable() {
-		initialize();
+		this.initialize();
 	}
 
 	public L1Trap getTemplate(final int id) {
-		return _traps.get(id);
+		return this._traps.get(id);
 	}
 
 	private L1Trap createTrapInstance(final String name, final TrapStorage storage) throws Exception {
@@ -123,9 +123,9 @@ public class TrapTable {
 			while (rs.next()) {
 				final String typeName = rs.getString("type");
 
-				final L1Trap trap = createTrapInstance(typeName, new SqlTrapStorage(rs));
+				final L1Trap trap = this.createTrapInstance(typeName, new SqlTrapStorage(rs));
 
-				_traps.put(trap.getId(), trap);
+				this._traps.put(trap.getId(), trap);
 			}
 		}
 		catch (final SQLException e) {

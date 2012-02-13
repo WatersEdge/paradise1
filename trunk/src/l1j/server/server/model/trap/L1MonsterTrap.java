@@ -50,15 +50,15 @@ public class L1MonsterTrap extends L1Trap {
 	public L1MonsterTrap(final TrapStorage storage) {
 		super(storage);
 
-		_npcId = storage.getInt("monsterNpcId");
-		_count = storage.getInt("monsterCount");
+		this._npcId = storage.getInt("monsterNpcId");
+		this._count = storage.getInt("monsterCount");
 	}
 
 	@Override
 	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
-		sendEffect(trapObj);
+		this.sendEffect(trapObj);
 
-		final List<Point> points = getSpawnablePoints(trapObj.getLocation(), 5);
+		final List<Point> points = this.getSpawnablePoints(trapObj.getLocation(), 5);
 
 		// 沸ける場所が無ければ終了
 		if (points.isEmpty()) {
@@ -69,9 +69,9 @@ public class L1MonsterTrap extends L1Trap {
 			int cnt = 0;
 			while (true) {
 				for (final Point pt : points) {
-					spawn(new L1Location(pt, trapObj.getMap()));
+					this.spawn(new L1Location(pt, trapObj.getMap()));
 					cnt++;
-					if (_count <= cnt) {
+					if (this._count <= cnt) {
 						return;
 					}
 				}
@@ -89,14 +89,14 @@ public class L1MonsterTrap extends L1Trap {
 	}
 
 	private L1NpcInstance createNpc() throws Exception {
-		if (_npcTemp == null) {
-			_npcTemp = NpcTable.getInstance().getTemplate(_npcId);
+		if (this._npcTemp == null) {
+			this._npcTemp = NpcTable.getInstance().getTemplate(this._npcId);
 		}
-		if (_constructor == null) {
-			_constructor = getConstructor(_npcTemp);
+		if (this._constructor == null) {
+			this._constructor = this.getConstructor(this._npcTemp);
 		}
 
-		return (L1NpcInstance) _constructor.newInstance(new Object[] { _npcTemp });
+		return (L1NpcInstance) this._constructor.newInstance(new Object[] { this._npcTemp });
 	}
 
 	private Constructor<?> getConstructor(final L1Npc npc) throws ClassNotFoundException {
@@ -110,16 +110,16 @@ public class L1MonsterTrap extends L1Trap {
 		final int y = loc.getY();
 		// locを中心に、1辺dタイルの正方形を描くPointリストを作る
 		for (int i = 0; i < d; i++) {
-			addListIfPassable(result, m, new Point(d - i + x, i + y));
-			addListIfPassable(result, m, new Point(-(d - i) + x, -i + y));
-			addListIfPassable(result, m, new Point(-i + x, d - i + y));
-			addListIfPassable(result, m, new Point(i + x, -(d - i) + y));
+			this.addListIfPassable(result, m, new Point(d - i + x, i + y));
+			this.addListIfPassable(result, m, new Point(-(d - i) + x, -i + y));
+			this.addListIfPassable(result, m, new Point(-i + x, d - i + y));
+			this.addListIfPassable(result, m, new Point(i + x, -(d - i) + y));
 		}
 		return result;
 	}
 
 	private void spawn(final L1Location loc) throws Exception {
-		final L1NpcInstance npc = createNpc();
+		final L1NpcInstance npc = this.createNpc();
 		npc.setId(IdFactory.getInstance().nextId());
 		npc.getLocation().set(loc);
 		npc.setHomeX(loc.getX());

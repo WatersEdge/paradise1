@@ -24,18 +24,18 @@ public class S_SendLocation extends ServerBasePacket {
 	private static final String S_SEND_LOCATION = "[S] S_SendLocation";
 
 	public S_SendLocation(final int type, final String senderName, final int mapId, final int x, final int y, final int msgId) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x6f);
-		writeS(senderName);
-		writeH(mapId);
-		writeH(x);
-		writeH(y);
-		writeC(msgId); // 发信者所在的地图ID
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(0x6f);
+		this.writeS(senderName);
+		this.writeH(mapId);
+		this.writeH(x);
+		this.writeH(y);
+		this.writeC(msgId); // 发信者所在的地图ID
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

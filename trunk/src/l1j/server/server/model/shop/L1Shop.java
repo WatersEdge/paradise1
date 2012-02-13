@@ -63,9 +63,9 @@ public class L1Shop {
 			throw new NullPointerException();
 		}
 
-		_npcId = npcId;
-		_sellingItems = sellingItems;
-		_purchasingItems = purchasingItems;
+		this._npcId = npcId;
+		this._sellingItems = sellingItems;
+		this._purchasingItems = purchasingItems;
 	}
 
 	/**
@@ -74,11 +74,11 @@ public class L1Shop {
 	 * @param item
 	 */
 	public L1AssessedItem assessItem(final L1ItemInstance item) {
-		final L1ShopItem shopItem = getPurchasingItem(item.getItemId());
+		final L1ShopItem shopItem = this.getPurchasingItem(item.getItemId());
 		if (shopItem == null) {
 			return null;
 		}
-		return new L1AssessedItem(item.getId(), getAssessedPrice(shopItem));
+		return new L1AssessedItem(item.getId(), this.getAssessedPrice(shopItem));
 	}
 
 	/**
@@ -90,13 +90,13 @@ public class L1Shop {
 	 */
 	public List<L1AssessedItem> assessItems(final L1PcInventory inv) {
 		final List<L1AssessedItem> result = Lists.newList();
-		for (final L1ShopItem item : _purchasingItems) {
+		for (final L1ShopItem item : this._purchasingItems) {
 			for (final L1ItemInstance targetItem : inv.findItemsId(item.getItemId())) {
-				if (!isPurchaseableItem(targetItem)) {
+				if (!this.isPurchaseableItem(targetItem)) {
 					continue;
 				}
 
-				result.add(new L1AssessedItem(targetItem.getId(), getAssessedPrice(item)));
+				result.add(new L1AssessedItem(targetItem.getId(), this.getAssessedPrice(item)));
 			}
 		}
 		return result;
@@ -124,12 +124,12 @@ public class L1Shop {
 
 	/** 获得NPC ID */
 	public int getNpcId() {
-		return _npcId;
+		return this._npcId;
 	}
 
 	/** 获得销售项目 */
 	public List<L1ShopItem> getSellingItems() {
-		return _sellingItems;
+		return this._sellingItems;
 	}
 
 	/** 个人商店购买清单顺序 */
@@ -151,12 +151,12 @@ public class L1Shop {
 	 *            列出商店出售的道具L1ShopBuyOrderList
 	 */
 	public void sellItems(final L1PcInstance pc, final L1ShopBuyOrderList orderList) {
-		if (!ensureSell(pc, orderList)) {
+		if (!this.ensureSell(pc, orderList)) {
 			return;
 		}
 
-		sellItems(pc.getInventory(), orderList);
-		payTax(orderList);
+		this.sellItems(pc.getInventory(), orderList);
+		this.payTax(orderList);
 	}
 
 	/**
@@ -222,7 +222,7 @@ public class L1Shop {
 	 * @param itemId
 	 */
 	private L1ShopItem getPurchasingItem(final int itemId) {
-		for (final L1ShopItem shopItem : _purchasingItems) {
+		for (final L1ShopItem shopItem : this._purchasingItems) {
 			if (shopItem.getItemId() == itemId) {
 				return shopItem;
 			}
@@ -263,7 +263,7 @@ public class L1Shop {
 
 		final int price = orderList.getTotalPrice();
 
-		final int castleId = L1CastleLocation.getCastleIdByNpcid(_npcId);
+		final int castleId = L1CastleLocation.getCastleIdByNpcid(this._npcId);
 		int castleTax = calc.calcCastleTaxPrice(price);
 		int nationalTax = calc.calcNationalTaxPrice(price);
 		// アデン城・ディアド城の場合は国税なし
@@ -328,9 +328,9 @@ public class L1Shop {
 	// XXX 納税処理はこのクラスの責務では無い気がするが、とりあえず
 	/** 纳税处理 */
 	private void payTax(final L1ShopBuyOrderList orderList) {
-		payCastleTax(orderList);
-		payTownTax(orderList);
-		payDiadTax(orderList);
+		this.payCastleTax(orderList);
+		this.payTownTax(orderList);
+		this.payDiadTax(orderList);
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class L1Shop {
 
 		// 收入的城镇
 		if (!L1World.getInstance().isProcessingContributionTotal()) {
-			final int town_id = L1TownLocation.getTownIdByNpcid(_npcId);
+			final int town_id = L1TownLocation.getTownIdByNpcid(this._npcId);
 			if ((town_id >= 1) && (town_id <= 10)) {
 				TownTable.getInstance().addSalesMoney(town_id, price);
 			}
@@ -380,7 +380,7 @@ public class L1Shop {
 			item.setCount(amount);
 			item.setIdentified(true);
 			inv.storeItem(item);
-			if ((_npcId == 70068) || (_npcId == 70020)) { // 福朗克、罗克(贩卖道具随机加成)
+			if ((this._npcId == 70068) || (this._npcId == 70020)) { // 福朗克、罗克(贩卖道具随机加成)
 				item.setIdentified(true);
 				final int chance = Random.nextInt(100) + 1; // 几率
 				if (chance <= 15) {

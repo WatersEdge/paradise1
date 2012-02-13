@@ -40,21 +40,21 @@ public class S_MoveCharPacket extends ServerBasePacket {
 		final int x = cha.getX() - MoveUtil.MoveX(heading);
 		final int y = cha.getY() - MoveUtil.MoveY(heading);
 
-		writeC(Opcodes.S_OPCODE_MOVEOBJECT);
-		writeD(cha.getId());
-		writeH(x);
-		writeH(y);
-		writeC(heading);
-		writeC(129);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_MOVEOBJECT);
+		this.writeD(cha.getId());
+		this.writeH(x);
+		this.writeH(y);
+		this.writeC(heading);
+		this.writeC(129);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

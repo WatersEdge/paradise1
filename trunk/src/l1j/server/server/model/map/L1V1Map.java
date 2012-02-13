@@ -67,40 +67,40 @@ public class L1V1Map extends L1Map {
 
 	public L1V1Map(final int mapId, final byte map[][], final int worldTopLeftX, final int worldTopLeftY, final boolean underwater, final boolean markable, final boolean teleportable, final boolean escapable, final boolean useResurrection, final boolean usePainwand,
 			final boolean enabledDeathPenalty, final boolean takePets, final boolean recallPets, final boolean usableItem, final boolean usableSkill) {
-		_mapId = mapId;
-		_map = map;
-		_worldTopLeftX = worldTopLeftX;
-		_worldTopLeftY = worldTopLeftY;
+		this._mapId = mapId;
+		this._map = map;
+		this._worldTopLeftX = worldTopLeftX;
+		this._worldTopLeftY = worldTopLeftY;
 
-		_worldBottomRightX = worldTopLeftX + map.length - 1;
-		_worldBottomRightY = worldTopLeftY + map[0].length - 1;
+		this._worldBottomRightX = worldTopLeftX + map.length - 1;
+		this._worldBottomRightY = worldTopLeftY + map[0].length - 1;
 
-		_isUnderwater = underwater;
-		_isMarkable = markable;
-		_isTeleportable = teleportable;
-		_isEscapable = escapable;
-		_isUseResurrection = useResurrection;
-		_isUsePainwand = usePainwand;
-		_isEnabledDeathPenalty = enabledDeathPenalty;
-		_isTakePets = takePets;
-		_isRecallPets = recallPets;
-		_isUsableItem = usableItem;
-		_isUsableSkill = usableSkill;
+		this._isUnderwater = underwater;
+		this._isMarkable = markable;
+		this._isTeleportable = teleportable;
+		this._isEscapable = escapable;
+		this._isUseResurrection = useResurrection;
+		this._isUsePainwand = usePainwand;
+		this._isEnabledDeathPenalty = enabledDeathPenalty;
+		this._isTakePets = takePets;
+		this._isRecallPets = recallPets;
+		this._isUsableItem = usableItem;
+		this._isUsableSkill = usableSkill;
 	}
 
 	public L1V1Map(final L1V1Map map) {
-		_mapId = map._mapId;
+		this._mapId = map._mapId;
 
 		// _mapをコピー
-		_map = new byte[map._map.length][];
+		this._map = new byte[map._map.length][];
 		for (int i = 0; i < map._map.length; i++) {
-			_map[i] = map._map[i].clone();
+			this._map[i] = map._map[i].clone();
 		}
 
-		_worldTopLeftX = map._worldTopLeftX;
-		_worldTopLeftY = map._worldTopLeftY;
-		_worldBottomRightX = map._worldBottomRightX;
-		_worldBottomRightY = map._worldBottomRightY;
+		this._worldTopLeftX = map._worldTopLeftX;
+		this._worldTopLeftY = map._worldTopLeftY;
+		this._worldBottomRightX = map._worldBottomRightX;
+		this._worldBottomRightY = map._worldBottomRightY;
 
 	}
 
@@ -111,59 +111,59 @@ public class L1V1Map extends L1Map {
 	@Override
 	public int getHeight() {
 		// TODO Auto-generated method stub
-		return _worldBottomRightY - _worldTopLeftY + 1;
+		return this._worldBottomRightY - this._worldTopLeftY + 1;
 	}
 
 	@Override
 	public int getId() {
-		return _mapId;
+		return this._mapId;
 	}
 
 	@Override
 	public int getOriginalTile(final int x, final int y) {
-		return accessOriginalTile(x, y);
+		return this.accessOriginalTile(x, y);
 	}
 
 	/*
 	 * ものすごく良くない気がする
 	 */
 	public byte[][] getRawTiles() {
-		return _map;
+		return this._map;
 	}
 
 	@Override
 	public int getTile(final int x, final int y) {
-		final short tile = _map[x - _worldTopLeftX][y - _worldTopLeftY];
+		final short tile = this._map[x - this._worldTopLeftX][y - this._worldTopLeftY];
 		if (0 != (tile & BITFLAG_IS_IMPASSABLE)) {
 			return 300;
 		}
-		return accessOriginalTile(x, y);
+		return this.accessOriginalTile(x, y);
 	}
 
 	@Override
 	public int getWidth() {
-		return _worldBottomRightX - _worldTopLeftX + 1;
+		return this._worldBottomRightX - this._worldTopLeftX + 1;
 	}
 
 	@Override
 	public int getX() {
-		return _worldTopLeftX;
+		return this._worldTopLeftX;
 	}
 
 	@Override
 	public int getY() {
-		return _worldTopLeftY;
+		return this._worldTopLeftY;
 	}
 
 	@Override
 	public boolean isArrowPassable(final int x, final int y) {
-		return (accessOriginalTile(x, y) & 0x0e) != 0;
+		return (this.accessOriginalTile(x, y) & 0x0e) != 0;
 	}
 
 	@Override
 	public boolean isArrowPassable(final int x, final int y, final int heading) {
 		// 現在のタイル
-		final int tile1 = accessTile(x, y);
+		final int tile1 = this.accessTile(x, y);
 		// 移動予定のタイル
 		int tile2;
 		// 移動予定の座標
@@ -171,42 +171,42 @@ public class L1V1Map extends L1Map {
 		int newY;
 
 		if (heading == 0) {
-			tile2 = accessTile(x, y - 1);
+			tile2 = this.accessTile(x, y - 1);
 			newX = x;
 			newY = y - 1;
 		}
 		else if (heading == 1) {
-			tile2 = accessTile(x + 1, y - 1);
+			tile2 = this.accessTile(x + 1, y - 1);
 			newX = x + 1;
 			newY = y - 1;
 		}
 		else if (heading == 2) {
-			tile2 = accessTile(x + 1, y);
+			tile2 = this.accessTile(x + 1, y);
 			newX = x + 1;
 			newY = y;
 		}
 		else if (heading == 3) {
-			tile2 = accessTile(x + 1, y + 1);
+			tile2 = this.accessTile(x + 1, y + 1);
 			newX = x + 1;
 			newY = y + 1;
 		}
 		else if (heading == 4) {
-			tile2 = accessTile(x, y + 1);
+			tile2 = this.accessTile(x, y + 1);
 			newX = x;
 			newY = y + 1;
 		}
 		else if (heading == 5) {
-			tile2 = accessTile(x - 1, y + 1);
+			tile2 = this.accessTile(x - 1, y + 1);
 			newX = x - 1;
 			newY = y + 1;
 		}
 		else if (heading == 6) {
-			tile2 = accessTile(x - 1, y);
+			tile2 = this.accessTile(x - 1, y);
 			newX = x - 1;
 			newY = y;
 		}
 		else if (heading == 7) {
-			tile2 = accessTile(x - 1, y - 1);
+			tile2 = this.accessTile(x - 1, y - 1);
 			newX = x - 1;
 			newY = y - 1;
 		}
@@ -214,7 +214,7 @@ public class L1V1Map extends L1Map {
 			return false;
 		}
 
-		if (isExistDoor(newX, newY)) {
+		if (this.isExistDoor(newX, newY)) {
 			return false;
 		}
 
@@ -229,15 +229,15 @@ public class L1V1Map extends L1Map {
 			return (tile1 & 0x08) == 0x08;
 		}
 		else if (heading == 1) {
-			final int tile3 = accessTile(x, y - 1);
-			final int tile4 = accessTile(x + 1, y);
+			final int tile3 = this.accessTile(x, y - 1);
+			final int tile4 = this.accessTile(x + 1, y);
 			return ((tile3 & 0x04) == 0x04) || ((tile4 & 0x08) == 0x08);
 		}
 		else if (heading == 2) {
 			return (tile1 & 0x04) == 0x04;
 		}
 		else if (heading == 3) {
-			final int tile3 = accessTile(x, y + 1);
+			final int tile3 = this.accessTile(x, y + 1);
 			return (tile3 & 0x04) == 0x04;
 		}
 		else if (heading == 4) {
@@ -250,7 +250,7 @@ public class L1V1Map extends L1Map {
 			return (tile2 & 0x04) == 0x04;
 		}
 		else if (heading == 7) {
-			final int tile3 = accessTile(x - 1, y);
+			final int tile3 = this.accessTile(x - 1, y);
 			return (tile3 & 0x08) == 0x08;
 		}
 
@@ -259,40 +259,40 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isArrowPassable(final Point pt) {
-		return isArrowPassable(pt.getX(), pt.getY());
+		return this.isArrowPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isArrowPassable(final Point pt, final int heading) {
-		return isArrowPassable(pt.getX(), pt.getY(), heading);
+		return this.isArrowPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
 	public boolean isCombatZone(final int x, final int y) {
-		final int tile = accessOriginalTile(x, y);
+		final int tile = this.accessOriginalTile(x, y);
 
 		return (tile & 0x30) == 0x20;
 	}
 
 	@Override
 	public boolean isCombatZone(final Point pt) {
-		return isCombatZone(pt.getX(), pt.getY());
+		return this.isCombatZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isEnabledDeathPenalty() {
-		return _isEnabledDeathPenalty;
+		return this._isEnabledDeathPenalty;
 	}
 
 	@Override
 	public boolean isEscapable() {
-		return _isEscapable;
+		return this._isEscapable;
 	}
 
 	@Override
 	public boolean isExistDoor(final int x, final int y) {
 		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-			if (_mapId != door.getMapId()) {
+			if (this._mapId != door.getMapId()) {
 				continue;
 			}
 			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
@@ -331,74 +331,74 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isFishingZone(final int x, final int y) {
-		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
+		return this.accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
 	}
 
 	@Override
 	public boolean isInMap(final int x, final int y) {
 		// 确定的棕色领域的地区
-		if ((_mapId == 4) && ((x < 32520) || (y < 32070) || ((y < 32190) && (x < 33950)))) {
+		if ((this._mapId == 4) && ((x < 32520) || (y < 32070) || ((y < 32190) && (x < 33950)))) {
 			return false;
 		}
-		return ((_worldTopLeftX <= x) && (x <= _worldBottomRightX) && (_worldTopLeftY <= y) && (y <= _worldBottomRightY));
+		return ((this._worldTopLeftX <= x) && (x <= this._worldBottomRightX) && (this._worldTopLeftY <= y) && (y <= this._worldBottomRightY));
 	}
 
 	@Override
 	public boolean isInMap(final Point pt) {
-		return isInMap(pt.getX(), pt.getY());
+		return this.isInMap(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isMarkable() {
-		return _isMarkable;
+		return this._isMarkable;
 	}
 
 	@Override
 	public boolean isNormalZone(final int x, final int y) {
-		final int tile = accessOriginalTile(x, y);
+		final int tile = this.accessOriginalTile(x, y);
 		return (tile & 0x30) == 0x00;
 	}
 
 	@Override
 	public boolean isNormalZone(final Point pt) {
-		return isNormalZone(pt.getX(), pt.getY());
+		return this.isNormalZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isPassable(final int x, final int y) {
-		return isPassable(x, y - 1, 4) || isPassable(x + 1, y, 6) || isPassable(x, y + 1, 0) || isPassable(x - 1, y, 2);
+		return this.isPassable(x, y - 1, 4) || this.isPassable(x + 1, y, 6) || this.isPassable(x, y + 1, 0) || this.isPassable(x - 1, y, 2);
 	}
 
 	@Override
 	public boolean isPassable(final int x, final int y, final int heading) {
 		// 目前的面向
-		final int tile1 = accessTile(x, y);
+		final int tile1 = this.accessTile(x, y);
 		// 移动后的面向
 		int tile2;
 
 		if (heading == 0) {
-			tile2 = accessTile(x, y - 1);
+			tile2 = this.accessTile(x, y - 1);
 		}
 		else if (heading == 1) {
-			tile2 = accessTile(x + 1, y - 1);
+			tile2 = this.accessTile(x + 1, y - 1);
 		}
 		else if (heading == 2) {
-			tile2 = accessTile(x + 1, y);
+			tile2 = this.accessTile(x + 1, y);
 		}
 		else if (heading == 3) {
-			tile2 = accessTile(x + 1, y + 1);
+			tile2 = this.accessTile(x + 1, y + 1);
 		}
 		else if (heading == 4) {
-			tile2 = accessTile(x, y + 1);
+			tile2 = this.accessTile(x, y + 1);
 		}
 		else if (heading == 5) {
-			tile2 = accessTile(x - 1, y + 1);
+			tile2 = this.accessTile(x - 1, y + 1);
 		}
 		else if (heading == 6) {
-			tile2 = accessTile(x - 1, y);
+			tile2 = this.accessTile(x - 1, y);
 		}
 		else if (heading == 7) {
-			tile2 = accessTile(x - 1, y - 1);
+			tile2 = this.accessTile(x - 1, y - 1);
 		}
 		else {
 			return false;
@@ -416,15 +416,15 @@ public class L1V1Map extends L1Map {
 			return (tile1 & 0x02) == 0x02;
 		}
 		else if (heading == 1) {
-			final int tile3 = accessTile(x, y - 1);
-			final int tile4 = accessTile(x + 1, y);
+			final int tile3 = this.accessTile(x, y - 1);
+			final int tile4 = this.accessTile(x + 1, y);
 			return ((tile3 & 0x01) == 0x01) || ((tile4 & 0x02) == 0x02);
 		}
 		else if (heading == 2) {
 			return (tile1 & 0x01) == 0x01;
 		}
 		else if (heading == 3) {
-			final int tile3 = accessTile(x, y + 1);
+			final int tile3 = this.accessTile(x, y + 1);
 			return (tile3 & 0x01) == 0x01;
 		}
 		else if (heading == 4) {
@@ -437,7 +437,7 @@ public class L1V1Map extends L1Map {
 			return (tile2 & 0x01) == 0x01;
 		}
 		else if (heading == 7) {
-			final int tile3 = accessTile(x - 1, y);
+			final int tile3 = this.accessTile(x - 1, y);
 			return (tile3 & 0x02) == 0x02;
 		}
 
@@ -446,102 +446,102 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isPassable(final Point pt) {
-		return isPassable(pt.getX(), pt.getY());
+		return this.isPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isPassable(final Point pt, final int heading) {
-		return isPassable(pt.getX(), pt.getY(), heading);
+		return this.isPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
 	public boolean isRecallPets() {
-		return _isRecallPets;
+		return this._isRecallPets;
 	}
 
 	@Override
 	public boolean isSafetyZone(final int x, final int y) {
-		final int tile = accessOriginalTile(x, y);
+		final int tile = this.accessOriginalTile(x, y);
 
 		return (tile & 0x30) == 0x10;
 	}
 
 	@Override
 	public boolean isSafetyZone(final Point pt) {
-		return isSafetyZone(pt.getX(), pt.getY());
+		return this.isSafetyZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isTakePets() {
-		return _isTakePets;
+		return this._isTakePets;
 	}
 
 	@Override
 	public boolean isTeleportable() {
-		return _isTeleportable;
+		return this._isTeleportable;
 	}
 
 	@Override
 	public boolean isUnderwater() {
-		return _isUnderwater;
+		return this._isUnderwater;
 	}
 
 	@Override
 	public boolean isUsableItem() {
-		return _isUsableItem;
+		return this._isUsableItem;
 	}
 
 	@Override
 	public boolean isUsableSkill() {
-		return _isUsableSkill;
+		return this._isUsableSkill;
 	}
 
 	@Override
 	public boolean isUsePainwand() {
-		return _isUsePainwand;
+		return this._isUsePainwand;
 	}
 
 	@Override
 	public boolean isUseResurrection() {
-		return _isUseResurrection;
+		return this._isUseResurrection;
 	}
 
 	@Override
 	public void setPassable(final int x, final int y, final boolean isPassable) {
 		if (isPassable) {
-			setTile(x, y, (short) (accessTile(x, y) & (~BITFLAG_IS_IMPASSABLE)));
+			this.setTile(x, y, (short) (this.accessTile(x, y) & (~BITFLAG_IS_IMPASSABLE)));
 		}
 		else {
-			setTile(x, y, (short) (accessTile(x, y) | BITFLAG_IS_IMPASSABLE));
+			this.setTile(x, y, (short) (this.accessTile(x, y) | BITFLAG_IS_IMPASSABLE));
 		}
 	}
 
 	@Override
 	public void setPassable(final Point pt, final boolean isPassable) {
-		setPassable(pt.getX(), pt.getY(), isPassable);
+		this.setPassable(pt.getX(), pt.getY(), isPassable);
 	}
 
 	@Override
 	public String toString(final Point pt) {
-		return "" + getOriginalTile(pt.getX(), pt.getY());
+		return "" + this.getOriginalTile(pt.getX(), pt.getY());
 	}
 
 	private int accessOriginalTile(final int x, final int y) {
-		return accessTile(x, y) & (~BITFLAG_IS_IMPASSABLE);
+		return this.accessTile(x, y) & (~BITFLAG_IS_IMPASSABLE);
 	}
 
 	private int accessTile(final int x, final int y) {
-		if (!isInMap(x, y)) { // XXX とりあえずチェックする。これは良くない。
+		if (!this.isInMap(x, y)) { // XXX とりあえずチェックする。これは良くない。
 			return 0;
 		}
 
-		return _map[x - _worldTopLeftX][y - _worldTopLeftY];
+		return this._map[x - this._worldTopLeftX][y - this._worldTopLeftY];
 	}
 
 	private void setTile(final int x, final int y, final int tile) {
-		if (!isInMap(x, y)) { // XXX とりあえずチェックする。これは良くない。
+		if (!this.isInMap(x, y)) { // XXX とりあえずチェックする。これは良くない。
 			return;
 		}
-		_map[x - _worldTopLeftX][y - _worldTopLeftY] = (byte) tile;
+		this._map[x - this._worldTopLeftX][y - this._worldTopLeftY] = (byte) tile;
 	}
 }

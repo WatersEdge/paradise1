@@ -55,11 +55,11 @@ public class ShopTable {
 	private final Map<Integer, L1Shop> _allShops = Maps.newMap();
 
 	private ShopTable() {
-		loadShops();
+		this.loadShops();
 	}
 
 	public L1Shop get(final int npcId) {
-		return _allShops.get(npcId);
+		return this._allShops.get(npcId);
 	}
 
 	private List<Integer> enumNpcIds() {
@@ -112,11 +112,11 @@ public class ShopTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM shop WHERE npc_id=? ORDER BY order_id");
-			for (final int npcId : enumNpcIds()) {
+			for (final int npcId : this.enumNpcIds()) {
 				pstm.setInt(1, npcId);
 				rs = pstm.executeQuery();
-				final L1Shop shop = loadShop(npcId, rs);
-				_allShops.put(npcId, shop);
+				final L1Shop shop = this.loadShop(npcId, rs);
+				this._allShops.put(npcId, shop);
 				rs.close();
 			}
 		}

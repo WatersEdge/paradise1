@@ -41,7 +41,7 @@ public class HomeTownTimeController {
 	private class L1TownFixedProcListener extends L1GameTimeAdapter {
 		@Override
 		public void onDayChanged(final L1GameTime time) {
-			fixedProc(time);
+			HomeTownTimeController.this.fixedProc(time);
 		}
 	}
 
@@ -189,7 +189,7 @@ public class HomeTownTimeController {
 	}
 
 	private HomeTownTimeController() {
-		startListener();
+		this.startListener();
 	}
 
 	public void dailyProc() {
@@ -249,10 +249,10 @@ public class HomeTownTimeController {
 		final int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
 
 		if (day == 25) {
-			monthlyProc();
+			this.monthlyProc();
 		}
 		else {
-			dailyProc();
+			this.dailyProc();
 		}
 	}
 

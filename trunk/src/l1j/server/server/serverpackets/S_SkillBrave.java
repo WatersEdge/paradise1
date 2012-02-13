@@ -39,14 +39,14 @@ public class S_SkillBrave extends ServerBasePacket {
 	 * @param k
 	 */
 	public S_SkillBrave(final int i, final int j, final int k) {
-		writeC(Opcodes.S_OPCODE_SKILLBRAVE);
-		writeD(i);
-		writeC(j);
-		writeH(k);
+		this.writeC(Opcodes.S_OPCODE_SKILLBRAVE);
+		this.writeD(i);
+		this.writeC(j);
+		this.writeH(k);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

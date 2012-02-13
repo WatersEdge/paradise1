@@ -163,243 +163,243 @@ public class L1Npc extends L1Object implements Cloneable {
 	}
 
 	public int get_ac() {
-		return _ac;
+		return this._ac;
 	}
 
 	public int get_agrofamily() {
-		return _agrofamily;
+		return this._agrofamily;
 	}
 
 	public int get_atkspeed() {
-		return _atkspeed;
+		return this._atkspeed;
 	}
 
 	public byte get_con() {
-		return _con;
+		return this._con;
 	}
 
 	public int get_damagereduction() {
-		return _damagereduction;
+		return this._damagereduction;
 	}
 
 	public byte get_dex() {
-		return _dex;
+		return this._dex;
 	}
 
 	public int get_digestitem() {
-		return _digestitem;
+		return this._digestitem;
 	}
 
 	public int get_exp() {
-		return _exp;
+		return this._exp;
 	}
 
 	public int get_family() {
-		return _family;
+		return this._family;
 	}
 
 	public int get_gfxid() {
-		return _gfxid;
+		return this._gfxid;
 	}
 
 	public int get_hp() {
-		return _hp;
+		return this._hp;
 	}
 
 	public int get_hpr() {
-		return _hpr;
+		return this._hpr;
 	}
 
 	public int get_hprinterval() {
-		return _hprinterval;
+		return this._hprinterval;
 	}
 
 	public byte get_int() {
-		return _int;
+		return this._int;
 	}
 
 	public boolean get_IsErase() {
-		return _erase;
+		return this._erase;
 	}
 
 	public boolean get_IsTU() {
-		return _tu;
+		return this._tu;
 	}
 
 	public int get_lawful() {
-		return _lawful;
+		return this._lawful;
 	}
 
 	public int get_level() {
-		return _level;
+		return this._level;
 	}
 
 	public int get_mp() {
-		return _mp;
+		return this._mp;
 	}
 
 	public int get_mpr() {
-		return _mpr;
+		return this._mpr;
 	}
 
 	public int get_mprinterval() {
-		return _mprinterval;
+		return this._mprinterval;
 	}
 
 	public int get_mr() {
-		return _mr;
+		return this._mr;
 	}
 
 	public String get_name() {
-		return _name;
+		return this._name;
 	}
 
 	public String get_nameid() {
-		return _nameid;
+		return this._nameid;
 	}
 
 	public int get_npcId() {
-		return _npcid;
+		return this._npcid;
 	}
 
 	public int get_paralysisatk() {
-		return _paralysisatk;
+		return this._paralysisatk;
 	}
 
 	public int get_passispeed() {
-		return _passispeed;
+		return this._passispeed;
 	}
 
 	public int get_poisonatk() {
-		return _poisonatk;
+		return this._poisonatk;
 	}
 
 	public int get_randomac() {
-		return _randomac;
+		return this._randomac;
 	}
 
 	public int get_randomexp() {
-		return _randomexp;
+		return this._randomexp;
 	}
 
 	public int get_randomhp() {
-		return _randomhp;
+		return this._randomhp;
 	}
 
 	public int get_randomlawful() {
-		return _randomlawful;
+		return this._randomlawful;
 	}
 
 	public int get_randomlevel() {
-		return _randomlevel;
+		return this._randomlevel;
 	}
 
 	public int get_randommp() {
-		return _randommp;
+		return this._randommp;
 	}
 
 	public int get_ranged() {
-		return _ranged;
+		return this._ranged;
 	}
 
 	public String get_size() {
-		return _size;
+		return this._size;
 	}
 
 	public byte get_str() {
-		return _str;
+		return this._str;
 	}
 
 	public int get_undead() {
-		return _undead;
+		return this._undead;
 	}
 
 	public int get_weakAttr() {
-		return _weakAttr;
+		return this._weakAttr;
 	}
 
 	public byte get_wis() {
-		return _wis;
+		return this._wis;
 	}
 
 	public int getAltAtkSpeed() {
-		return _altAtkSpeed;
+		return this._altAtkSpeed;
 	}
 
 	public int getAtkMagicSpeed() {
-		return _atkMagicSpeed;
+		return this._atkMagicSpeed;
 	}
 
 	public int getBowActId() {
-		return bowActId;
+		return this.bowActId;
 	}
 
 	public boolean getChangeHead() {
-		return _changeHead;
+		return this._changeHead;
 	}
 
 	public String getImpl() {
-		return _impl;
+		return this._impl;
 	}
 
 	public int getKarma() {
-		return _karma;
+		return this._karma;
 	}
 
 	public int getLightSize() {
-		return _lightSize;
+		return this._lightSize;
 	}
 
 	public int getSubMagicSpeed() {
-		return _subMagicSpeed;
+		return this._subMagicSpeed;
 	}
 
 	public int getTransformGfxId() {
-		return _transformGfxId;
+		return this._transformGfxId;
 	}
 
 	public int getTransformId() {
-		return _transformId;
+		return this._transformId;
 	}
 
 	public boolean is_agro() {
-		return _agro;
+		return this._agro;
 	}
 
 	public boolean is_agrocoi() {
-		return _agrocoi;
+		return this._agrocoi;
 	}
 
 	public int is_agrogfxid1() {
-		return _agrogfxid1;
+		return this._agrogfxid1;
 	}
 
 	public int is_agrogfxid2() {
-		return _agrogfxid2;
+		return this._agrogfxid2;
 	}
 
 	public boolean is_agrososc() {
-		return _agrososc;
+		return this._agrososc;
 	}
 
 	public boolean is_bravespeed() {
-		return _bravespeed;
+		return this._bravespeed;
 	}
 
 	public boolean is_doppel() {
-		return _doppel;
+		return this._doppel;
 	}
 
 	public boolean is_hard() {
-		return _hard;
+		return this._hard;
 	}
 
 	public boolean is_picupitem() {
-		return _picupitem;
+		return this._picupitem;
 	}
 
 	public boolean is_teleport() {
-		return _teleport;
+		return this._teleport;
 	}
 
 	/**
@@ -408,266 +408,266 @@ public class L1Npc extends L1Object implements Cloneable {
 	 * @return 影響を受けないように設定されている場合はtrueを返す。
 	 */
 	public boolean isAmountFixed() {
-		return _amountFixed;
+		return this._amountFixed;
 	}
 
 	public boolean isCantResurrect() {
-		return _isCantResurrect;
+		return this._isCantResurrect;
 	}
 
 	public boolean isTamable() {
-		return _tameable;
+		return this._tameable;
 	}
 
 	public void set_ac(final int i) {
-		_ac = i;
+		this._ac = i;
 	}
 
 	public void set_agro(final boolean flag) {
-		_agro = flag;
+		this._agro = flag;
 	}
 
 	public void set_agrocoi(final boolean flag) {
-		_agrocoi = flag;
+		this._agrocoi = flag;
 	}
 
 	public void set_agrofamily(final int i) {
-		_agrofamily = i;
+		this._agrofamily = i;
 	}
 
 	public void set_agrogfxid1(final int i) {
-		_agrogfxid1 = i;
+		this._agrogfxid1 = i;
 	}
 
 	public void set_agrogfxid2(final int i) {
-		_agrogfxid2 = i;
+		this._agrogfxid2 = i;
 	}
 
 	public void set_agrososc(final boolean flag) {
-		_agrososc = flag;
+		this._agrososc = flag;
 	}
 
 	public void set_atkspeed(final int i) {
-		_atkspeed = i;
+		this._atkspeed = i;
 	}
 
 	public void set_bravespeed(final boolean flag) {
-		_bravespeed = flag;
+		this._bravespeed = flag;
 	}
 
 	public void set_con(final byte i) {
-		_con = i;
+		this._con = i;
 	}
 
 	public void set_damagereduction(final int i) {
-		_damagereduction = i;
+		this._damagereduction = i;
 	}
 
 	public void set_dex(final byte i) {
-		_dex = i;
+		this._dex = i;
 	}
 
 	public void set_digestitem(final int i) {
-		_digestitem = i;
+		this._digestitem = i;
 	}
 
 	public void set_doppel(final boolean flag) {
-		_doppel = flag;
+		this._doppel = flag;
 	}
 
 	public void set_exp(final int i) {
-		_exp = i;
+		this._exp = i;
 	}
 
 	public void set_family(final int i) {
-		_family = i;
+		this._family = i;
 	}
 
 	public void set_gfxid(final int i) {
-		_gfxid = i;
+		this._gfxid = i;
 	}
 
 	public void set_hard(final boolean flag) {
-		_hard = flag;
+		this._hard = flag;
 	}
 
 	public void set_hp(final int i) {
-		_hp = i;
+		this._hp = i;
 	}
 
 	public void set_hpr(final int i) {
-		_hpr = i;
+		this._hpr = i;
 	}
 
 	public void set_hprinterval(final int i) {
-		_hprinterval = i;
+		this._hprinterval = i;
 	}
 
 	public void set_int(final byte i) {
-		_int = i;
+		this._int = i;
 	}
 
 	public void set_IsErase(final boolean i) {
-		_erase = i;
+		this._erase = i;
 	}
 
 	public void set_IsTU(final boolean i) {
-		_tu = i;
+		this._tu = i;
 	}
 
 	public void set_lawful(final int i) {
-		_lawful = i;
+		this._lawful = i;
 	}
 
 	public void set_level(final int i) {
-		_level = i;
+		this._level = i;
 	}
 
 	public void set_mp(final int i) {
-		_mp = i;
+		this._mp = i;
 	}
 
 	public void set_mpr(final int i) {
-		_mpr = i;
+		this._mpr = i;
 	}
 
 	public void set_mprinterval(final int i) {
-		_mprinterval = i;
+		this._mprinterval = i;
 	}
 
 	public void set_mr(final int i) {
-		_mr = i;
+		this._mr = i;
 	}
 
 	public void set_name(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 	public void set_nameid(final String s) {
-		_nameid = s;
+		this._nameid = s;
 	}
 
 	public void set_npcId(final int i) {
-		_npcid = i;
+		this._npcid = i;
 	}
 
 	public void set_paralysisatk(final int i) {
-		_paralysisatk = i;
+		this._paralysisatk = i;
 	}
 
 	public void set_passispeed(final int i) {
-		_passispeed = i;
+		this._passispeed = i;
 	}
 
 	public void set_picupitem(final boolean flag) {
-		_picupitem = flag;
+		this._picupitem = flag;
 	}
 
 	public void set_poisonatk(final int i) {
-		_poisonatk = i;
+		this._poisonatk = i;
 	}
 
 	public void set_randomac(final int i) {
-		_randomac = i;
+		this._randomac = i;
 	}
 
 	public void set_randomexp(final int i) {
-		_randomexp = i;
+		this._randomexp = i;
 	}
 
 	public void set_randomhp(final int i) {
-		_randomhp = i;
+		this._randomhp = i;
 	}
 
 	public void set_randomlawful(final int i) {
-		_randomlawful = i;
+		this._randomlawful = i;
 	}
 
 	public void set_randomlevel(final int i) {
-		_randomlevel = i;
+		this._randomlevel = i;
 	}
 
 	public void set_randommp(final int i) {
-		_randommp = i;
+		this._randommp = i;
 	}
 
 	public void set_ranged(final int i) {
-		_ranged = i;
+		this._ranged = i;
 	}
 
 	public void set_size(final String s) {
-		_size = s;
+		this._size = s;
 	}
 
 	public void set_str(final byte i) {
-		_str = i;
+		this._str = i;
 	}
 
 	public void set_teleport(final boolean flag) {
-		_teleport = flag;
+		this._teleport = flag;
 	}
 
 	public void set_undead(final int i) {
-		_undead = i;
+		this._undead = i;
 	}
 
 	public void set_weakAttr(final int i) {
-		_weakAttr = i;
+		this._weakAttr = i;
 	}
 
 	public void set_wis(final byte i) {
-		_wis = i;
+		this._wis = i;
 	}
 
 	public void setAltAtkSpeed(final int altAtkSpeed) {
-		_altAtkSpeed = altAtkSpeed;
+		this._altAtkSpeed = altAtkSpeed;
 	}
 
 	public void setAmountFixed(final boolean fixed) {
-		_amountFixed = fixed;
+		this._amountFixed = fixed;
 	}
 
 	public void setAtkMagicSpeed(final int atkMagicSpeed) {
-		_atkMagicSpeed = atkMagicSpeed;
+		this._atkMagicSpeed = atkMagicSpeed;
 	}
 
 	public void setBowActId(final int i) {
-		bowActId = i;
+		this.bowActId = i;
 	}
 
 	public void setCantResurrect(final boolean isCantResurrect) {
-		_isCantResurrect = isCantResurrect;
+		this._isCantResurrect = isCantResurrect;
 	}
 
 	public void setChangeHead(final boolean changeHead) {
-		_changeHead = changeHead;
+		this._changeHead = changeHead;
 	}
 
 	public void setImpl(final String s) {
-		_impl = s;
+		this._impl = s;
 	}
 
 	public void setKarma(final int i) {
-		_karma = i;
+		this._karma = i;
 	}
 
 	public void setLightSize(final int lightSize) {
-		_lightSize = lightSize;
+		this._lightSize = lightSize;
 	}
 
 	public void setSubMagicSpeed(final int subMagicSpeed) {
-		_subMagicSpeed = subMagicSpeed;
+		this._subMagicSpeed = subMagicSpeed;
 	}
 
 	public void setTamable(final boolean flag) {
-		_tameable = flag;
+		this._tameable = flag;
 	}
 
 	public void setTransformGfxId(final int i) {
-		_transformGfxId = i;
+		this._transformGfxId = i;
 	}
 
 	public void setTransformId(final int transformId) {
-		_transformId = transformId;
+		this._transformId = transformId;
 	}
 }

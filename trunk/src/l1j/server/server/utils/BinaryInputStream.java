@@ -29,38 +29,38 @@ public class BinaryInputStream extends InputStream {
 	 * @param in
 	 */
 	public BinaryInputStream(final InputStream in) {
-		_in = in;
+		this._in = in;
 	}
 
 	@Override
 	public int available() throws IOException {
-		return _in.available();
+		return this._in.available();
 	}
 
 	@Override
 	public void close() throws IOException {
-		_in.close();
+		this._in.close();
 	}
 
 	@Override
 	public int read() throws IOException {
-		return _in.read();
+		return this._in.read();
 	}
 
 	public int readByte() throws IOException {
-		return _in.read();
+		return this._in.read();
 	}
 
 	public int readInt() throws IOException {
-		return readShort() | ((readShort() << 16) & 0xFFFF0000);
+		return this.readShort() | ((this.readShort() << 16) & 0xFFFF0000);
 	}
 
 	public int readShort() throws IOException {
-		return _in.read() | ((_in.read() << 8) & 0xFF00);
+		return this._in.read() | ((this._in.read() << 8) & 0xFF00);
 	}
 
 	@Override
 	public long skip(final long n) throws IOException {
-		return _in.skip(n);
+		return this._in.skip(n);
 	}
 }

@@ -35,20 +35,20 @@ public class S_MoveNpcPacket extends ServerBasePacket {
 	public S_MoveNpcPacket(final L1MonsterInstance npc, final int x, final int y, final int heading) {
 		// npc.set_moving(true);
 
-		writeC(Opcodes.S_OPCODE_MOVEOBJECT);
-		writeD(npc.getId());
-		writeH(x);
-		writeH(y);
-		writeC(heading);
-		writeC(0x81);
-		writeD(0x00000000);
+		this.writeC(Opcodes.S_OPCODE_MOVEOBJECT);
+		this.writeD(npc.getId());
+		this.writeH(x);
+		this.writeH(y);
+		this.writeC(heading);
+		this.writeC(0x81);
+		this.writeD(0x00000000);
 
 		// npc.set_moving(false);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

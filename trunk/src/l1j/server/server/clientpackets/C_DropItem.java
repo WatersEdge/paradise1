@@ -35,10 +35,10 @@ public class C_DropItem extends ClientBasePacket {
 
 	public C_DropItem(final byte[] decrypt, final ClientThread client) throws Exception {
 		super(decrypt);
-		final int x = readH();
-		final int y = readH();
-		final int objectId = readD();
-		int count = readD();
+		final int x = this.readH();
+		final int y = this.readH();
+		final int objectId = this.readD();
+		int count = this.readD();
 
 		if ((count > 0x77359400) || (count < 0)) { // 确保数量不会溢位
 			count = 0;

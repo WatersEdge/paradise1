@@ -40,13 +40,13 @@ public class C_Rank extends ClientBasePacket {
 	public C_Rank(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		final int data = readC(); // ?
+		final int data = this.readC(); // ?
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 
 		if (data == 1) {
-			final int rank = readC();
-			final String name = readS();
+			final int rank = this.readC();
+			final String name = this.readS();
 			final L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (pc == null) {
 				return;

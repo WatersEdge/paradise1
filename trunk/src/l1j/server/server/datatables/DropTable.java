@@ -62,7 +62,7 @@ public class DropTable {
 	private final Map<Integer, List<L1Drop>> _droplists;
 
 	private DropTable() {
-		_droplists = allDropList();
+		this._droplists = this.allDropList();
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class DropTable {
 
 		// 取得掉落列表
 		final int mobId = npc.getNpcTemplate().get_npcId();
-		final List<L1Drop> dropList = _droplists.get(mobId);
+		final List<L1Drop> dropList = this._droplists.get(mobId);
 		if (dropList == null) {
 			return;
 		}

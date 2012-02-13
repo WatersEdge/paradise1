@@ -25,13 +25,13 @@ import l1j.server.server.Opcodes;
 public class S_SkillIconWaterLife extends ServerBasePacket {
 
 	public S_SkillIconWaterLife() {
-		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
-		writeC(0x3b);
-		writeH(0x0000);
+		this.writeC(Opcodes.S_OPCODE_SKILLICONGFX);
+		this.writeC(0x3b);
+		this.writeH(0x0000);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

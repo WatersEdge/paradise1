@@ -51,17 +51,17 @@ public class NpcSpawnTable {
 	private int _highestId;
 
 	private NpcSpawnTable() {
-		fillNpcSpawnTable();
+		this.fillNpcSpawnTable();
 	}
 
 	public void addNewSpawn(final L1Spawn l1spawn) {
-		_highestId++;
-		l1spawn.setId(_highestId);
-		_spawntable.put(l1spawn.getId(), l1spawn);
+		this._highestId++;
+		l1spawn.setId(this._highestId);
+		this._spawntable.put(l1spawn.getId(), l1spawn);
 	}
 
 	public L1Spawn getTemplate(final int i) {
-		return _spawntable.get(i);
+		return this._spawntable.get(i);
 	}
 
 	/**
@@ -183,9 +183,9 @@ public class NpcSpawnTable {
 					l1spawn.init();
 					spawnCount += l1spawn.getAmount();
 
-					_spawntable.put(new Integer(l1spawn.getId()), l1spawn);
-					if (l1spawn.getId() > _highestId) {
-						_highestId = l1spawn.getId();
+					this._spawntable.put(new Integer(l1spawn.getId()), l1spawn);
+					if (l1spawn.getId() > this._highestId) {
+						this._highestId = l1spawn.getId();
 					}
 				}
 			}
@@ -198,7 +198,7 @@ public class NpcSpawnTable {
 			SQLUtil.close(con);
 		}
 
-		_log.config("NPC配置清单 " + _spawntable.size() + "件");
+		_log.config("NPC配置清单 " + this._spawntable.size() + "件");
 		_log.fine("NPC总数 " + spawnCount + "只");
 	}
 

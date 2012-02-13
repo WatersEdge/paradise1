@@ -25,20 +25,20 @@ public class UseSpellBook_Knight implements UniversalUseItem {
 			case 40164: // 技术书(冲击之晕)、技术书(增幅防御)
 			case 40165:
 				if (level >= 50) {
-					KnightSpellBook(pc, item);
+					this.KnightSpellBook(pc, item);
 				}
 				break;
 
 			case 41147: // 技术书(坚固防护)、技术书(反击屏障)
 			case 41148:
 				if (level >= 50) {
-					KnightSpellBook(pc, item);
+					this.KnightSpellBook(pc, item);
 				}
 				break;
 
 			case 40166: // 技术书(尖刺盔甲)
 				if (level >= 60) {
-					KnightSpellBook(pc, item);
+					this.KnightSpellBook(pc, item);
 				}
 				break;
 

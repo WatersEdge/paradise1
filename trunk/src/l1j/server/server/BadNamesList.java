@@ -60,11 +60,11 @@ public class BadNamesList {
 				final StringTokenizer st = new StringTokenizer(line, ";");
 
 				while (st.hasMoreTokens()) {
-					_nameList.add(st.nextToken());
+					this._nameList.add(st.nextToken());
 				}
 			}
 
-			_log.config("加载 " + _nameList.size() + " bad names");
+			_log.config("加载 " + this._nameList.size() + " bad names");
 		}
 		catch (final FileNotFoundException e) {
 			_log.warning("badnames.txt 数据文件夹丢失.");
@@ -77,11 +77,11 @@ public class BadNamesList {
 	}
 
 	public String[] getAllBadNames() {
-		return _nameList.toArray(new String[_nameList.size()]);
+		return this._nameList.toArray(new String[this._nameList.size()]);
 	}
 
 	public boolean isBadName(final String name) {
-		for (final String badName : _nameList) {
+		for (final String badName : this._nameList) {
 			if (name.toLowerCase().contains(badName.toLowerCase())) {
 				return true;
 			}

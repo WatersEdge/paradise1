@@ -53,7 +53,7 @@ public class NpcChatTable {
 	private final Map<Integer, L1NpcChat> _npcChatGameTime = Maps.newMap();
 
 	private NpcChatTable() {
-		FillNpcChatTable();
+		this.FillNpcChatTable();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class NpcChatTable {
 	 * @return
 	 */
 	public L1NpcChat[] getAllGameTime() {
-		return _npcChatGameTime.values().toArray(new L1NpcChat[_npcChatGameTime.size()]);
+		return this._npcChatGameTime.values().toArray(new L1NpcChat[this._npcChatGameTime.size()]);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class NpcChatTable {
 	 * @return
 	 */
 	public L1NpcChat getTemplateAppearance(final int i) {
-		return _npcChatAppearance.get(new Integer(i));
+		return this._npcChatAppearance.get(new Integer(i));
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class NpcChatTable {
 	 * @return
 	 */
 	public L1NpcChat getTemplateDead(final int i) {
-		return _npcChatDead.get(new Integer(i));
+		return this._npcChatDead.get(new Integer(i));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class NpcChatTable {
 	 * @return
 	 */
 	public L1NpcChat getTemplateGameTime(final int i) {
-		return _npcChatGameTime.get(new Integer(i));
+		return this._npcChatGameTime.get(new Integer(i));
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class NpcChatTable {
 	 * @return
 	 */
 	public L1NpcChat getTemplateHide(final int i) {
-		return _npcChatHide.get(new Integer(i));
+		return this._npcChatHide.get(new Integer(i));
 	}
 
 	private void FillNpcChatTable() {
@@ -136,16 +136,16 @@ public class NpcChatTable {
 				npcChat.setGameTime(rs.getInt("game_time"));
 
 				if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_APPEARANCE) {
-					_npcChatAppearance.put(new Integer(npcChat.getNpcId()), npcChat);
+					this._npcChatAppearance.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 				else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_DEAD) {
-					_npcChatDead.put(new Integer(npcChat.getNpcId()), npcChat);
+					this._npcChatDead.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 				else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_HIDE) {
-					_npcChatHide.put(new Integer(npcChat.getNpcId()), npcChat);
+					this._npcChatHide.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 				else if (npcChat.getChatTiming() == L1NpcInstance.CHAT_TIMING_GAME_TIME) {
-					_npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
+					this._npcChatGameTime.put(new Integer(npcChat.getNpcId()), npcChat);
 				}
 			}
 		}

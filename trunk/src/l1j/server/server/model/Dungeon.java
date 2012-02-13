@@ -59,11 +59,11 @@ public class Dungeon {
 		DungeonType _dungeonType;
 
 		private NewDungeon(final int newX, final int newY, final short newMapId, final int heading, final DungeonType dungeonType) {
-			_newX = newX;
-			_newY = newY;
-			_newMapId = newMapId;
-			_heading = heading;
-			_dungeonType = dungeonType;
+			this._newX = newX;
+			this._newY = newY;
+			this._newMapId = newMapId;
+			this._heading = heading;
+			this._dungeonType = dungeonType;
 
 		}
 	}
@@ -218,7 +218,7 @@ public class Dungeon {
 						data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
 					}
 
-					final int type = checkInnKey(pc, npcid);
+					final int type = this.checkInnKey(pc, npcid);
 
 					if (type == 1) { // 房间
 						newX = data[0];

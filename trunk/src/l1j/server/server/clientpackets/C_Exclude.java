@@ -39,7 +39,7 @@ public class C_Exclude extends ClientBasePacket {
 	 */
 	public C_Exclude(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		final String name = readS();
+		final String name = this.readS();
 		if (name.isEmpty()) {
 			return;
 		}

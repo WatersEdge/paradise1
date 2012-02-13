@@ -36,21 +36,21 @@ public abstract class ServerBasePacket {
 	}
 
 	public byte[] getBytes() {
-		final int padding = _bao.size() % 4;
+		final int padding = this._bao.size() % 4;
 
 		if (padding != 0) {
 			for (int i = padding; i < 4; i++) {
-				writeC(0x00);
+				this.writeC(0x00);
 			}
 		}
 
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	public abstract byte[] getContent() throws IOException;
 
 	public int getLength() {
-		return _bao.size() + 2;
+		return this._bao.size() + 2;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public abstract class ServerBasePacket {
 	protected void writeByte(final byte[] text) {
 		try {
 			if (text != null) {
-				_bao.write(text);
+				this._bao.write(text);
 			}
 		}
 		catch (final Exception e) {
@@ -72,58 +72,58 @@ public abstract class ServerBasePacket {
 	}
 
 	protected void writeC(final int value) {
-		_bao.write(value & 0xff);
+		this._bao.write(value & 0xff);
 	}
 
 	protected void writeD(final int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
-		_bao.write(value >> 16 & 0xff);
-		_bao.write(value >> 24 & 0xff);
+		this._bao.write(value & 0xff);
+		this._bao.write(value >> 8 & 0xff);
+		this._bao.write(value >> 16 & 0xff);
+		this._bao.write(value >> 24 & 0xff);
 	}
 
 	protected void writeExp(final long value) {
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) (value >> 8 & 0xff));
-		_bao.write((int) (value >> 16 & 0xff));
-		_bao.write((int) (value >> 24 & 0xff));
+		this._bao.write((int) (value & 0xff));
+		this._bao.write((int) (value >> 8 & 0xff));
+		this._bao.write((int) (value >> 16 & 0xff));
+		this._bao.write((int) (value >> 24 & 0xff));
 	}
 
 	protected void writeF(final double org) {
 		final long value = Double.doubleToRawLongBits(org);
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) (value >> 8 & 0xff));
-		_bao.write((int) (value >> 16 & 0xff));
-		_bao.write((int) (value >> 24 & 0xff));
-		_bao.write((int) (value >> 32 & 0xff));
-		_bao.write((int) (value >> 40 & 0xff));
-		_bao.write((int) (value >> 48 & 0xff));
-		_bao.write((int) (value >> 56 & 0xff));
+		this._bao.write((int) (value & 0xff));
+		this._bao.write((int) (value >> 8 & 0xff));
+		this._bao.write((int) (value >> 16 & 0xff));
+		this._bao.write((int) (value >> 24 & 0xff));
+		this._bao.write((int) (value >> 32 & 0xff));
+		this._bao.write((int) (value >> 40 & 0xff));
+		this._bao.write((int) (value >> 48 & 0xff));
+		this._bao.write((int) (value >> 56 & 0xff));
 	}
 
 	protected void writeH(final int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
+		this._bao.write(value & 0xff);
+		this._bao.write(value >> 8 & 0xff);
 	}
 
 	protected void writeL(final long value) {
-		_bao.write((int) (value & 0xff));
+		this._bao.write((int) (value & 0xff));
 	}
 
 	protected void writeP(final int value) {
-		_bao.write(value);
+		this._bao.write(value);
 	}
 
 	protected void writeS(final String text) {
 		try {
 			if (text != null) {
-				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
+				this._bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 
-		_bao.write(0);
+		this._bao.write(0);
 	}
 }

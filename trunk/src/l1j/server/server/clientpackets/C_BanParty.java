@@ -30,7 +30,7 @@ public class C_BanParty extends ClientBasePacket {
 
 	public C_BanParty(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		final String s = readS();
+		final String s = this.readS();
 
 		final L1PcInstance player = client.getActiveChar();
 		if (!player.getParty().isLeader(player)) {

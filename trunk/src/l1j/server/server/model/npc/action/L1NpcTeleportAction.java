@@ -40,22 +40,22 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 		final int x = L1NpcXmlParser.getIntAttribute(element, "X", -1);
 		final int y = L1NpcXmlParser.getIntAttribute(element, "Y", -1);
 		final int mapId = L1NpcXmlParser.getIntAttribute(element, "Map", -1);
-		_loc = new L1Location(x, y, mapId);
+		this._loc = new L1Location(x, y, mapId);
 
-		_heading = L1NpcXmlParser.getIntAttribute(element, "Heading", 5);
+		this._heading = L1NpcXmlParser.getIntAttribute(element, "Heading", 5);
 
-		_price = L1NpcXmlParser.getIntAttribute(element, "Price", 0);
-		_effect = L1NpcXmlParser.getBoolAttribute(element, "Effect", true);
+		this._price = L1NpcXmlParser.getIntAttribute(element, "Price", 0);
+		this._effect = L1NpcXmlParser.getBoolAttribute(element, "Effect", true);
 	}
 
 	@Override
 	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
-		if (!pc.getInventory().checkItem(L1ItemId.ADENA, _price)) {
+		if (!pc.getInventory().checkItem(L1ItemId.ADENA, this._price)) {
 			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
 			return L1NpcHtml.HTML_CLOSE;
 		}
-		pc.getInventory().consumeItem(L1ItemId.ADENA, _price);
-		L1Teleport.teleport(pc, _loc.getX(), _loc.getY(), (short) _loc.getMapId(), _heading, _effect);
+		pc.getInventory().consumeItem(L1ItemId.ADENA, this._price);
+		L1Teleport.teleport(pc, this._loc.getX(), this._loc.getY(), (short) this._loc.getMapId(), this._heading, this._effect);
 		return null;
 	}
 

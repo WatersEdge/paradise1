@@ -222,17 +222,17 @@ public class L1PcInstance extends L1Character {
 		L1Character _lastAttacker;
 
 		Death(final L1Character cha) {
-			_lastAttacker = cha;
+			this._lastAttacker = cha;
 		}
 
 		@Override
 		public void run() {
-			final L1Character lastAttacker = _lastAttacker;
-			_lastAttacker = null;
-			setCurrentHp(0);
-			setGresValid(false); // EXPロストするまでG-RES无效
+			final L1Character lastAttacker = this._lastAttacker;
+			this._lastAttacker = null;
+			L1PcInstance.this.setCurrentHp(0);
+			L1PcInstance.this.setGresValid(false); // EXPロストするまでG-RES无效
 
-			while (isTeleport()) { // 正在传送中等待传送结束
+			while (L1PcInstance.this.isTeleport()) { // 正在传送中等待传送结束
 				try {
 					Thread.sleep(300);
 				}
@@ -240,42 +240,42 @@ public class L1PcInstance extends L1Character {
 				}
 			}
 
-			stopHpRegeneration();
-			stopMpRegeneration();
+			L1PcInstance.this.stopHpRegeneration();
+			L1PcInstance.this.stopMpRegeneration();
 
-			final int targetobjid = getId();
-			getMap().setPassable(getLocation(), true);
+			final int targetobjid = L1PcInstance.this.getId();
+			L1PcInstance.this.getMap().setPassable(L1PcInstance.this.getLocation(), true);
 
 			// 死亡时解除变身
 			int tempchargfx = 0;
-			if (hasSkillEffect(SHAPE_CHANGE)) {
-				tempchargfx = getTempCharGfx();
-				setTempCharGfxAtDead(tempchargfx);
+			if (L1PcInstance.this.hasSkillEffect(SHAPE_CHANGE)) {
+				tempchargfx = L1PcInstance.this.getTempCharGfx();
+				L1PcInstance.this.setTempCharGfxAtDead(tempchargfx);
 			}
 			else {
-				setTempCharGfxAtDead(getClassId());
+				L1PcInstance.this.setTempCharGfxAtDead(L1PcInstance.this.getClassId());
 			}
 
 			// 死亡时解除现有技能效果
 			final L1SkillUse l1skilluse = new L1SkillUse();
-			l1skilluse.handleCommands(L1PcInstance.this, CANCELLATION, getId(), getX(), getY(), null, 0, L1SkillUse.TYPE_LOGIN);
+			l1skilluse.handleCommands(L1PcInstance.this, CANCELLATION, L1PcInstance.this.getId(), L1PcInstance.this.getX(), L1PcInstance.this.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 
 			// 战斗药水
-			if (hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
-				removeSkillEffect(EFFECT_POTION_OF_BATTLE);
+			if (L1PcInstance.this.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
+				L1PcInstance.this.removeSkillEffect(EFFECT_POTION_OF_BATTLE);
 			}
 			// 象牙塔妙药
-			if (hasSkillEffect(COOKING_WONDER_DRUG)) {
-				removeSkillEffect(COOKING_WONDER_DRUG);
+			if (L1PcInstance.this.hasSkillEffect(COOKING_WONDER_DRUG)) {
+				L1PcInstance.this.removeSkillEffect(COOKING_WONDER_DRUG);
 			}
 
-			sendPackets(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
-			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
+			L1PcInstance.this.sendPackets(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
+			L1PcInstance.this.broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
 
 			if (lastAttacker != L1PcInstance.this) {
 				// セーフティーゾーン、コンバットゾーンで最后に杀したキャラが
 				// プレイヤーorペットだったら、ペナルティなし
-				if (getZoneType() != 0) {
+				if (L1PcInstance.this.getZoneType() != 0) {
 					L1PcInstance player = null;
 					if (lastAttacker instanceof L1PcInstance) {
 						player = (L1PcInstance) lastAttacker;
@@ -288,19 +288,19 @@ public class L1PcInstance extends L1Character {
 					}
 					if (player != null) {
 						// 战争中に战争エリアに居る场合は例外
-						if (!isInWarAreaAndWarTime(L1PcInstance.this, player)) {
+						if (!L1PcInstance.this.isInWarAreaAndWarTime(L1PcInstance.this, player)) {
 							return;
 						}
 					}
 				}
 
-				final boolean sim_ret = simWarResult(lastAttacker); // 模拟战
+				final boolean sim_ret = L1PcInstance.this.simWarResult(lastAttacker); // 模拟战
 				if (sim_ret == true) { // 模拟战中ならペナルティなし
 					return;
 				}
 			}
 
-			if (!getMap().isEnabledDeathPenalty()) {
+			if (!L1PcInstance.this.getMap().isEnabledDeathPenalty()) {
 				return;
 			}
 
@@ -312,18 +312,18 @@ public class L1PcInstance extends L1Character {
 
 			// 判断是否属于新手保护阶段, 并且是被其他玩家所杀死
 			boolean isNovice = false;
-			if (hasSkillEffect(L1SkillId.STATUS_NOVICE) && (fightPc != null)) {
+			if (L1PcInstance.this.hasSkillEffect(L1SkillId.STATUS_NOVICE) && (fightPc != null)) {
 
 				// 判断是否在新手等级保护范围内
-				if (fightPc.getLevel() > (getLevel() + Config.NOVICE_PROTECTION_LEVEL_RANGE)) {
+				if (fightPc.getLevel() > (L1PcInstance.this.getLevel() + Config.NOVICE_PROTECTION_LEVEL_RANGE)) {
 					isNovice = true;
 				}
 			}
 
 			if (fightPc != null) {
-				if ((getFightId() == fightPc.getId()) && (fightPc.getFightId() == getId())) { // 决斗中
-					setFightId(0);
-					sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
+				if ((L1PcInstance.this.getFightId() == fightPc.getId()) && (fightPc.getFightId() == L1PcInstance.this.getId())) { // 决斗中
+					L1PcInstance.this.setFightId(0);
+					L1PcInstance.this.sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
 					fightPc.setFightId(0);
 					fightPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
 					return;
@@ -340,18 +340,18 @@ public class L1PcInstance extends L1Character {
 
 			// 减少PK次数
 			if (lastAttacker instanceof L1GuardInstance) {
-				if (get_PKcount() > 0) {
-					set_PKcount(get_PKcount() - 1);
+				if (L1PcInstance.this.get_PKcount() > 0) {
+					L1PcInstance.this.set_PKcount(L1PcInstance.this.get_PKcount() - 1);
 				}
-				setLastPk(null);
+				L1PcInstance.this.setLastPk(null);
 			}
 
 			/** 妖精杀死同族PK值另外计算 */
 			if (lastAttacker instanceof L1GuardianInstance) {
-				if (getPkCountForElf() > 0) {
-					setPkCountForElf(getPkCountForElf() - 1);
+				if (L1PcInstance.this.getPkCountForElf() > 0) {
+					L1PcInstance.this.setPkCountForElf(L1PcInstance.this.getPkCountForElf() - 1);
 				}
-				setLastPkForElf(null);
+				L1PcInstance.this.setLastPkForElf(null);
 			}
 
 			// 增加新手保护阶段, 将不会损失道具(不会喷装)
@@ -360,51 +360,51 @@ public class L1PcInstance extends L1Character {
 				// アライメント32000以上で0%、以降-1000每に0.4%
 				// アライメントが0未满の场合は-1000每に0.8%
 				// アライメント-32000以下で最高51.2%のDROP率
-				int lostRate = (int) (((getLawful() + 32768D) / 1000D - 65D) * 4D);
+				int lostRate = (int) (((L1PcInstance.this.getLawful() + 32768D) / 1000D - 65D) * 4D);
 				if (lostRate < 0) {
 					lostRate *= -1;
-					if (getLawful() < 0) {
+					if (L1PcInstance.this.getLawful() < 0) {
 						lostRate *= 2;
 					}
 					final int rnd = Random.nextInt(1000) + 1;
 					if (rnd <= lostRate) {
 						int count = 1;
-						if (getLawful() <= -30000) {
+						if (L1PcInstance.this.getLawful() <= -30000) {
 							count = Random.nextInt(4) + 1;
 						}
-						else if (getLawful() <= -20000) {
+						else if (L1PcInstance.this.getLawful() <= -20000) {
 							count = Random.nextInt(3) + 1;
 						}
-						else if (getLawful() <= -10000) {
+						else if (L1PcInstance.this.getLawful() <= -10000) {
 							count = Random.nextInt(2) + 1;
 						}
-						else if (getLawful() < 0) {
+						else if (L1PcInstance.this.getLawful() < 0) {
 							count = Random.nextInt(1) + 1;
 						}
-						caoPenaltyResult(count);
+						L1PcInstance.this.caoPenaltyResult(count);
 					}
 				}
 			}
 
-			final boolean castle_ret = castleWarResult(); // 攻城战
+			final boolean castle_ret = L1PcInstance.this.castleWarResult(); // 攻城战
 			if (castle_ret == true) { // 攻城战中で旗内なら赤ネームペナルティなし
 				return;
 			}
 
-			if (!getMap().isEnabledDeathPenalty()) {
+			if (!L1PcInstance.this.getMap().isEnabledDeathPenalty()) {
 				return;
 			}
 
 			// 增加新手保护阶段, 将不会损失经验值
 			if (!isNovice) {
-				deathPenalty(); // EXPロスト
-				setGresValid(true); // EXPロストしたらG-RES有效
+				L1PcInstance.this.deathPenalty(); // EXPロスト
+				L1PcInstance.this.setGresValid(true); // EXPロストしたらG-RES有效
 			}
 
-			if (get_PKcount() > 0) {
-				set_PKcount(get_PKcount() - 1);
+			if (L1PcInstance.this.get_PKcount() > 0) {
+				L1PcInstance.this.set_PKcount(L1PcInstance.this.get_PKcount() - 1);
 			}
-			setLastPk(null);
+			L1PcInstance.this.setLastPk(null);
 
 			// 最后に杀したキャラがプレイヤーだったら、赤ネームにする
 			L1PcInstance player = null;
@@ -412,13 +412,13 @@ public class L1PcInstance extends L1Character {
 				player = (L1PcInstance) lastAttacker;
 			}
 			if (player != null) {
-				if ((getLawful() >= 0) && (isPinkName() == false)) {
+				if ((L1PcInstance.this.getLawful() >= 0) && (L1PcInstance.this.isPinkName() == false)) {
 					boolean isChangePkCount = false;
 					// アライメントが30000未满の场合はPKカウント增加
 					if (player.getLawful() < 30000) {
 						player.set_PKcount(player.get_PKcount() + 1);
 						isChangePkCount = true;
-						if (player.isElf() && isElf()) {
+						if (player.isElf() && L1PcInstance.this.isElf()) {
 							player.setPkCountForElf(player.getPkCountForElf() + 1);
 						}
 					}
@@ -427,7 +427,7 @@ public class L1PcInstance extends L1Character {
 					if (player.getLawful() == 32767) {
 						player.setLastPk(null);
 					}
-					if (player.isElf() && isElf()) {
+					if (player.isElf() && L1PcInstance.this.isElf()) {
 						player.setLastPkForElf();
 					}
 
@@ -471,11 +471,11 @@ public class L1PcInstance extends L1Character {
 					}
 				}
 				else {
-					setPinkName(false);
+					L1PcInstance.this.setPinkName(false);
 				}
 			}
-			_pcDeleteTimer = new L1PcDeleteTimer(L1PcInstance.this);
-			_pcDeleteTimer.begin();
+			L1PcInstance.this._pcDeleteTimer = new L1PcDeleteTimer(L1PcInstance.this);
+			L1PcInstance.this._pcDeleteTimer.begin();
 		}
 	}
 
@@ -1077,134 +1077,134 @@ public class L1PcInstance extends L1Character {
 	private byte[] _textByte = null;
 
 	public L1PcInstance() {
-		_accessLevel = 0;
-		_currentWeapon = 0;
-		_inventory = new L1PcInventory(this);
-		_dwarf = new L1DwarfInventory(this);
-		_dwarfForElf = new L1DwarfForElfInventory(this);
-		_tradewindow = new L1Inventory();
-		_bookmarks = Lists.newList();
-		_quest = new L1Quest(this);
-		_equipSlot = new L1EquipmentSlot(this); // コンストラクタでthisポインタを渡すのは安全だろうか・・・
+		this._accessLevel = 0;
+		this._currentWeapon = 0;
+		this._inventory = new L1PcInventory(this);
+		this._dwarf = new L1DwarfInventory(this);
+		this._dwarfForElf = new L1DwarfForElfInventory(this);
+		this._tradewindow = new L1Inventory();
+		this._bookmarks = Lists.newList();
+		this._quest = new L1Quest(this);
+		this._equipSlot = new L1EquipmentSlot(this); // コンストラクタでthisポインタを渡すのは安全だろうか・・・
 	}
 
 	/** 增加基本的魅力值 */
 	public void addBaseCha(short i) {
-		i += _baseCha;
+		i += this._baseCha;
 		if (i >= 255) {
 			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addCha((short) (i - _baseCha));
-		_baseCha = i;
+		this.addCha((short) (i - this._baseCha));
+		this._baseCha = i;
 	}
 
 	/** 增加基本的体质值 */
 	public void addBaseCon(short i) {
-		i += _baseCon;
+		i += this._baseCon;
 		if (i >= 255) {
 			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addCon((short) (i - _baseCon));
-		_baseCon = i;
+		this.addCon((short) (i - this._baseCon));
+		this._baseCon = i;
 	}
 
 	/** 增加基本的敏捷值 */
 	public void addBaseDex(short i) {
-		i += _baseDex;
+		i += this._baseDex;
 		if (i >= 255) {
 			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addDex((short) (i - _baseDex));
-		_baseDex = i;
+		this.addDex((short) (i - this._baseDex));
+		this._baseDex = i;
 	}
 
 	/** 增加基本的智力值 */
 	public void addBaseInt(short i) {
-		i += _baseInt;
+		i += this._baseInt;
 		if (i >= 255) {
 			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addInt((short) (i - _baseInt));
-		_baseInt = i;
+		this.addInt((short) (i - this._baseInt));
+		this._baseInt = i;
 	}
 
 	/** 增加基本MaxHp */
 	public void addBaseMaxHp(short i) {
-		i += _baseMaxHp;
+		i += this._baseMaxHp;
 		if (i >= 32767) {
 			i = 32767;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addMaxHp(i - _baseMaxHp);
-		_baseMaxHp = i;
+		this.addMaxHp(i - this._baseMaxHp);
+		this._baseMaxHp = i;
 	}
 
 	/** 增加基本MaxMp */
 	public void addBaseMaxMp(short i) {
-		i += _baseMaxMp;
+		i += this._baseMaxMp;
 		if (i >= 32767) {
 			i = 32767;
 		}
 		else if (i < 0) {
 			i = 0;
 		}
-		addMaxMp(i - _baseMaxMp);
-		_baseMaxMp = i;
+		this.addMaxMp(i - this._baseMaxMp);
+		this._baseMaxMp = i;
 	}
 
 	/** 增加基本的力量值 */
 	public void addBaseStr(short s) {
-		s += _baseStr;
+		s += this._baseStr;
 		if (s >= 255) {
 			s = 255;
 		}
 		else if (s < 1) {
 			s = 1;
 		}
-		addStr((short) (s - _baseStr));
-		_baseStr = s;
+		this.addStr((short) (s - this._baseStr));
+		this._baseStr = s;
 	}
 
 	/** 增加基本的精神值 */
 	public void addBaseWis(short i) {
-		i += _baseWis;
+		i += this._baseWis;
 		if (i >= 255) {
 			i = 255;
 		}
 		else if (i < 1) {
 			i = 1;
 		}
-		addWis((short) (i - _baseWis));
-		_baseWis = i;
+		this.addWis((short) (i - this._baseWis));
+		this._baseWis = i;
 	}
 
 	/** 增加书签 */
 	public void addBookMark(final L1BookMark book) {
-		_bookmarks.add(book);
+		this._bookmarks.add(book);
 	}
 
 	/** 增加防具对损坏的弓的补正 */
 	public void addBowDmgModifierByArmor(final int i) {
-		_bowDmgModifierByArmor += i;
+		this._bowDmgModifierByArmor += i;
 	}
 
 	/** 增加防具对弓的命中率补正 */
 	public void addBowHitModifierByArmor(final int i) {
-		_bowHitModifierByArmor += i;
+		this._bowHitModifierByArmor += i;
 	}
 
 	/**
@@ -1213,71 +1213,71 @@ public class L1PcInstance extends L1Character {
 	 * @param contribution
 	 */
 	public synchronized void addContribution(final int contribution) {
-		_contribution += contribution;
+		this._contribution += contribution;
 	}
 
 	/** 增加防具的伤害减免 */
 	public void addDamageReductionByArmor(final int i) {
-		_damageReductionByArmor += i;
+		this._damageReductionByArmor += i;
 	}
 
 	/** 增加防具的伤害补正 */
 	public void addDmgModifierByArmor(final int i) {
-		_dmgModifierByArmor += i;
+		this._dmgModifierByArmor += i;
 	}
 
 	/** 增加经验值 */
 	public synchronized void addExp(final long exp) {
-		_exp += exp;
-		if (_exp > ExpTable.MAX_EXP) {
-			_exp = ExpTable.MAX_EXP;
+		this._exp += exp;
+		if (this._exp > ExpTable.MAX_EXP) {
+			this._exp = ExpTable.MAX_EXP;
 		}
 	}
 
 	/** 增加装备加速道具 */
 	public void addHasteItemEquipped(final int i) {
-		_hasteItemEquipped += i;
+		this._hasteItemEquipped += i;
 	}
 
 	/** 增加防具的命中率补正 */
 	public void addHitModifierByArmor(final int i) {
-		_hitModifierByArmor += i;
+		this._hitModifierByArmor += i;
 	}
 
 	/** 增加回血 */
 	public void addHpr(final int i) {
-		_trueHpr += i;
-		_hpr = (short) Math.max(0, _trueHpr);
+		this._trueHpr += i;
+		this._hpr = (short) Math.max(0, this._trueHpr);
 	}
 
 	/** 增加隐身延迟计时器 */
 	public void addInvisDelayCounter(final int counter) {
-		synchronized (_invisTimerMonitor) {
-			invisDelayCounter += counter;
+		synchronized (this._invisTimerMonitor) {
+			this.invisDelayCounter += counter;
 		}
 	}
 
 	/** 增加友好度 */
 	public void addKarma(final int i) {
-		synchronized (_karma) {
-			_karma.add(i);
+		synchronized (this._karma) {
+			this._karma.add(i);
 		}
 	}
 
 	/** 增加回魔 */
 	public void addMpr(final int i) {
-		_trueMpr += i;
-		_mpr = (short) Math.max(0, _trueMpr);
+		this._trueMpr += i;
+		this._mpr = (short) Math.max(0, this._trueMpr);
 	}
 
 	/**  */
 	public void addWeightReduction(final int i) {
-		_weightReduction += i;
+		this._weightReduction += i;
 	}
 
 	/** 开始经验值监视器 */
 	public void beginExpMonitor() {
-		_expMonitorFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcExpMonitor(getId()), 0L, INTERVAL_EXP_MONITOR);
+		this._expMonitorFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcExpMonitor(this.getId()), 0L, INTERVAL_EXP_MONITOR);
 	}
 
 	/**  */
@@ -1294,7 +1294,7 @@ public class L1PcInstance extends L1Character {
 	 * @param canTalk
 	 */
 	public void beginGhost(final int locx, final int locy, final short mapid, final boolean canTalk) {
-		beginGhost(locx, locy, mapid, canTalk, 0);
+		this.beginGhost(locx, locy, mapid, canTalk, 0);
 	}
 
 	/**
@@ -1307,25 +1307,25 @@ public class L1PcInstance extends L1Character {
 	 * @param sec
 	 */
 	public void beginGhost(final int locx, final int locy, final short mapid, final boolean canTalk, final int sec) {
-		if (isGhost()) {
+		if (this.isGhost()) {
 			return;
 		}
-		setGhost(true);
-		_ghostSaveLocX = getX();
-		_ghostSaveLocY = getY();
-		_ghostSaveMapId = getMapId();
-		_ghostSaveHeading = getHeading();
-		setGhostCanTalk(canTalk);
+		this.setGhost(true);
+		this._ghostSaveLocX = this.getX();
+		this._ghostSaveLocY = this.getY();
+		this._ghostSaveMapId = this.getMapId();
+		this._ghostSaveHeading = this.getHeading();
+		this.setGhostCanTalk(canTalk);
 		L1Teleport.teleport(this, locx, locy, mapid, 5, true);
 		if (sec > 0) {
-			_ghostFuture = GeneralThreadPool.getInstance().pcSchedule(new L1PcGhostMonitor(getId()), sec * 1000);
+			this._ghostFuture = GeneralThreadPool.getInstance().pcSchedule(new L1PcGhostMonitor(this.getId()), sec * 1000);
 		}
 	}
 
 	/** PK 值过高传送到地狱 */
 	public void beginHell(final boolean isFirst) {
 		// 坐标非地狱则强制传送到地狱地图
-		if (getMapId() != 666) {
+		if (this.getMapId() != 666) {
 			final int locx = 32701;
 			final int locy = 32777;
 			final short mapid = 666;
@@ -1333,28 +1333,28 @@ public class L1PcInstance extends L1Character {
 		}
 
 		if (isFirst) {
-			if (get_PKcount() <= 10) {
-				setHellTime(300);
+			if (this.get_PKcount() <= 10) {
+				this.setHellTime(300);
 			}
 			else {
-				setHellTime(300 * (get_PKcount() - 10) + 300);
+				this.setHellTime(300 * (this.get_PKcount() - 10) + 300);
 			}
 			// 因为你已经杀了 %0 人所以被打入地狱。 你将在这里停留 %1 分钟。
-			sendPackets(new S_BlueMessage(552, String.valueOf(get_PKcount()), String.valueOf(getHellTime() / 60)));
+			this.sendPackets(new S_BlueMessage(552, String.valueOf(this.get_PKcount()), String.valueOf(this.getHellTime() / 60)));
 		}
 		else {
 			// 你必须在此地停留 %0 秒。
-			sendPackets(new S_BlueMessage(637, String.valueOf(getHellTime())));
+			this.sendPackets(new S_BlueMessage(637, String.valueOf(this.getHellTime())));
 		}
-		if (_hellFuture == null) {
-			_hellFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcHellMonitor(getId()), 0L, 1000L);
+		if (this._hellFuture == null) {
+			this._hellFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcHellMonitor(this.getId()), 0L, 1000L);
 		}
 	}
 
 	/** 开始隐身计时器 */
 	public void beginInvisTimer() {
-		addInvisDelayCounter(1);
-		GeneralThreadPool.getInstance().pcSchedule(new L1PcInvisDelay(getId()), DELAY_INVIS);
+		this.addInvisDelayCounter(1);
+		GeneralThreadPool.getInstance().pcSchedule(new L1PcInvisDelay(this.getId()), DELAY_INVIS);
 	}
 
 	/**
@@ -1367,16 +1367,16 @@ public class L1PcInstance extends L1Character {
 				 * hasSkillEffect(IMMUNE_TO_HARM) // 法师魔法 (圣结界) 测试用
 				 * ||
 				 */
-		hasSkillEffect(STATUS_CURSE_PARALYZED) // 麻痹毒(木乃伊诅咒)后
-				|| hasSkillEffect(ICE_LANCE) // 法师魔法 (冰矛围篱)
-				|| hasSkillEffect(FREEZING_BLIZZARD) // 法师魔法 (冰雪飓风)
-				|| hasSkillEffect(ICE_LANCE_COCKATRICE) // 亚力安冰矛围篱
-				|| hasSkillEffect(ICE_LANCE_BASILISK) // 邪恶蜥蜴冰矛围篱
-				|| hasSkillEffect(FOG_OF_SLEEPING) // 法师魔法 (沉睡之雾)
-				|| hasSkillEffect(SHOCK_STUN) // 骑士魔法 (冲击之晕)
-				|| hasSkillEffect(EARTH_BIND) // 妖精魔法 (大地屏障)
-				|| hasSkillEffect(SHOCK_SKIN) // 龙骑士魔法 (冲击之肤) 冲晕效果
-		|| hasSkillEffect(FREEZING_BREATH)); // 龙骑士魔法 (寒冰喷吐)
+		this.hasSkillEffect(STATUS_CURSE_PARALYZED) // 麻痹毒(木乃伊诅咒)后
+				|| this.hasSkillEffect(ICE_LANCE) // 法师魔法 (冰矛围篱)
+				|| this.hasSkillEffect(FREEZING_BLIZZARD) // 法师魔法 (冰雪飓风)
+				|| this.hasSkillEffect(ICE_LANCE_COCKATRICE) // 亚力安冰矛围篱
+				|| this.hasSkillEffect(ICE_LANCE_BASILISK) // 邪恶蜥蜴冰矛围篱
+				|| this.hasSkillEffect(FOG_OF_SLEEPING) // 法师魔法 (沉睡之雾)
+				|| this.hasSkillEffect(SHOCK_STUN) // 骑士魔法 (冲击之晕)
+				|| this.hasSkillEffect(EARTH_BIND) // 妖精魔法 (大地屏障)
+				|| this.hasSkillEffect(SHOCK_SKIN) // 龙骑士魔法 (冲击之肤) 冲晕效果
+		|| this.hasSkillEffect(FREEZING_BREATH)); // 龙骑士魔法 (寒冰喷吐)
 	}
 
 	/**
@@ -1385,18 +1385,18 @@ public class L1PcInstance extends L1Character {
 	 * @return true:是 false:不是
 	 */
 	public boolean castleWarResult() {
-		if ((getClanid() != 0) && isCrown()) { // 有血盟并且是王族
-			final L1Clan clan = L1World.getInstance().getClan(getClanname());
+		if ((this.getClanid() != 0) && this.isCrown()) { // 有血盟并且是王族
+			final L1Clan clan = L1World.getInstance().getClan(this.getClanname());
 			// 取得全部战争列表
 			for (final L1War war : L1World.getInstance().getWarList()) {
 				final int warType = war.GetWarType();
-				final boolean isInWar = war.CheckClanInWar(getClanname());
-				final boolean isAttackClan = war.CheckAttackClan(getClanname());
-				if ((getId() == clan.getLeaderId()) && // 血盟主で攻击侧で攻城战中
+				final boolean isInWar = war.CheckClanInWar(this.getClanname());
+				final boolean isAttackClan = war.CheckAttackClan(this.getClanname());
+				if ((this.getId() == clan.getLeaderId()) && // 血盟主で攻击侧で攻城战中
 						(warType == 1) && isInWar && isAttackClan) {
-					final String enemyClanName = war.GetEnemyClanName(getClanname());
+					final String enemyClanName = war.GetEnemyClanName(this.getClanname());
 					if (enemyClanName != null) {
-						war.CeaseWar(getClanname(), enemyClanName); // 终结
+						war.CeaseWar(this.getClanname(), enemyClanName); // 终结
 					}
 					break;
 				}
@@ -1418,120 +1418,120 @@ public class L1PcInstance extends L1Character {
 		// 消除既有的战斗特化状态
 		switch (oldType) {
 			case 1:
-				addAc(2);
-				addMr(-3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
+				this.addAc(2);
+				this.addMr(-3);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_OFF));
 				break;
 
 			case 2:
-				addAc(4);
-				addMr(-6);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
+				this.addAc(4);
+				this.addMr(-6);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_OFF));
 				break;
 
 			case 3:
-				addAc(6);
-				addMr(-9);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
+				this.addAc(6);
+				this.addMr(-9);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_OFF));
 				break;
 
 			case -1:
-				addDmgup(-1);
-				addBowDmgup(-1);
-				addSp(-1);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
+				this.addDmgup(-1);
+				this.addBowDmgup(-1);
+				this.addSp(-1);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_OFF));
 				break;
 
 			case -2:
-				addDmgup(-3);
-				addBowDmgup(-3);
-				addSp(-2);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
+				this.addDmgup(-3);
+				this.addBowDmgup(-3);
+				this.addSp(-2);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_OFF));
 				break;
 
 			case -3:
-				addDmgup(-5);
-				addBowDmgup(-5);
-				addSp(-3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
+				this.addDmgup(-5);
+				this.addBowDmgup(-5);
+				this.addSp(-3);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_OFF));
 				break;
 		}
 
 		// 增加新的战斗特化状态
 		switch (newType) {
 			case 1:
-				addAc(-2);
-				addMr(3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
+				this.addAc(-2);
+				this.addMr(3);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL1, S_Fight.FLAG_ON));
 				break;
 
 			case 2:
-				addAc(-4);
-				addMr(6);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
+				this.addAc(-4);
+				this.addMr(6);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL2, S_Fight.FLAG_ON));
 				break;
 
 			case 3:
-				addAc(-6);
-				addMr(9);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
+				this.addAc(-6);
+				this.addMr(9);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_JUSTICE_LEVEL3, S_Fight.FLAG_ON));
 				break;
 
 			case -1:
-				addDmgup(1);
-				addBowDmgup(1);
-				addSp(1);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
+				this.addDmgup(1);
+				this.addBowDmgup(1);
+				this.addSp(1);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL1, S_Fight.FLAG_ON));
 				break;
 
 			case -2:
-				addDmgup(3);
-				addBowDmgup(3);
-				addSp(2);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
+				this.addDmgup(3);
+				this.addBowDmgup(3);
+				this.addSp(2);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL2, S_Fight.FLAG_ON));
 				break;
 
 			case -3:
-				addDmgup(5);
-				addBowDmgup(5);
-				addSp(3);
-				sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
-				sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
-				sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
-				sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
+				this.addDmgup(5);
+				this.addBowDmgup(5);
+				this.addSp(3);
+				this.sendPackets(new S_OwnCharStatus2(this)); // 更新六项能力值
+				this.sendPackets(new S_OwnCharAttrDef(this)); // 更新物理防显示
+				this.sendPackets(new S_SPMR(this)); // 更新魔防及魔攻显示
+				this.sendPackets(new S_Fight(S_Fight.TYPE_EVIL_LEVEL3, S_Fight.FLAG_ON));
 				break;
 		}
 	}
@@ -1539,26 +1539,26 @@ public class L1PcInstance extends L1Character {
 	/** 检查聊天间隔 */
 	public void checkChatInterval() {
 		final long nowChatTimeInMillis = System.currentTimeMillis();
-		if (_chatCount == 0) {
-			_chatCount++;
-			_oldChatTimeInMillis = nowChatTimeInMillis;
+		if (this._chatCount == 0) {
+			this._chatCount++;
+			this._oldChatTimeInMillis = nowChatTimeInMillis;
 			return;
 		}
 
-		final long chatInterval = nowChatTimeInMillis - _oldChatTimeInMillis;
+		final long chatInterval = nowChatTimeInMillis - this._oldChatTimeInMillis;
 		if (chatInterval > 2000) {
-			_chatCount = 0;
-			_oldChatTimeInMillis = 0;
+			this._chatCount = 0;
+			this._oldChatTimeInMillis = 0;
 		}
 		else {
-			if (_chatCount >= 3) {
-				setSkillEffect(STATUS_CHAT_PROHIBITED, 120 * 1000);
-				sendPackets(new S_SkillIconGFX(36, 120));
-				sendPackets(new S_ServerMessage(153)); // \f3因洗画面的关系，2分钟之内无法聊天。
-				_chatCount = 0;
-				_oldChatTimeInMillis = 0;
+			if (this._chatCount >= 3) {
+				this.setSkillEffect(STATUS_CHAT_PROHIBITED, 120 * 1000);
+				this.sendPackets(new S_SkillIconGFX(36, 120));
+				this.sendPackets(new S_ServerMessage(153)); // \f3因洗画面的关系，2分钟之内无法聊天。
+				this._chatCount = 0;
+				this._oldChatTimeInMillis = 0;
 			}
-			_chatCount++;
+			this._chatCount++;
 		}
 	}
 
@@ -1575,49 +1575,49 @@ public class L1PcInstance extends L1Character {
 		boolean isEquipped = false;
 
 		// 王族
-		if (isCrown()) {
+		if (this.isCrown()) {
 			if (useItem.getItem().isUseRoyal()) {
 				isEquipped = true;
 			}
 		}
 
 		// 骑士
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if (useItem.getItem().isUseKnight()) {
 				isEquipped = true;
 			}
 		}
 
 		// 精灵
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if (useItem.getItem().isUseElf()) {
 				isEquipped = true;
 			}
 		}
 
 		// 法师
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (useItem.getItem().isUseMage()) {
 				isEquipped = true;
 			}
 		}
 
 		// 黑暗精灵
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (useItem.getItem().isUseDarkelf()) {
 				isEquipped = true;
 			}
 		}
 
 		// 龙骑士
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if (useItem.getItem().isUseDragonknight()) {
 				isEquipped = true;
 			}
 		}
 
 		// 幻术师
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (useItem.getItem().isUseIllusionist()) {
 				isEquipped = true;
 			}
@@ -1625,7 +1625,7 @@ public class L1PcInstance extends L1Character {
 
 		// 该职业不可用
 		if (!isEquipped) {
-			sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此装备。
+			this.sendPackets(new S_ServerMessage(264)); // \f1你的职业无法使用此装备。
 		}
 
 		return isEquipped;
@@ -1653,7 +1653,7 @@ public class L1PcInstance extends L1Character {
 			return false; // 组队的PC、召唤、宠物以外
 		}
 		if (!Config.ALT_NONPVP) { // Non-PvP设定
-			if (getMap().isCombatZone(getLocation())) {
+			if (this.getMap().isCombatZone(this.getLocation())) {
 				return false;
 			}
 
@@ -1669,7 +1669,7 @@ public class L1PcInstance extends L1Character {
 			// Non-PvP设定でも战争中は布告なしで攻击可能
 			if (target instanceof L1PcInstance) {
 				final L1PcInstance targetPc = (L1PcInstance) target;
-				if (isInWarAreaAndWarTime(pc, targetPc)) {
+				if (this.isInWarAreaAndWarTime(pc, targetPc)) {
 					return false;
 				}
 			}
@@ -1688,31 +1688,31 @@ public class L1PcInstance extends L1Character {
 		}
 
 		// 判断目前等级是否已超过新手阶段
-		if (getLevel() > Config.NOVICE_MAX_LEVEL) {
+		if (this.getLevel() > Config.NOVICE_MAX_LEVEL) {
 			// 判断之前是否具有新手保护状态
-			if (hasSkillEffect(L1SkillId.STATUS_NOVICE)) {
+			if (this.hasSkillEffect(L1SkillId.STATUS_NOVICE)) {
 				// 移除新手保护状态
-				removeSkillEffect(L1SkillId.STATUS_NOVICE);
+				this.removeSkillEffect(L1SkillId.STATUS_NOVICE);
 
 				// 关闭遭遇的守护图示
-				sendPackets(new S_Fight(S_Fight.TYPE_ENCOUNTER, S_Fight.FLAG_OFF));
+				this.sendPackets(new S_Fight(S_Fight.TYPE_ENCOUNTER, S_Fight.FLAG_OFF));
 			}
 		}
 		else {
 			// 判断是否未具有新手保护状态
-			if (!hasSkillEffect(L1SkillId.STATUS_NOVICE)) {
+			if (!this.hasSkillEffect(L1SkillId.STATUS_NOVICE)) {
 				// 增加新手保护状态
-				setSkillEffect(L1SkillId.STATUS_NOVICE, 0);
+				this.setSkillEffect(L1SkillId.STATUS_NOVICE, 0);
 
 				// 开启遭遇的守护图示
-				sendPackets(new S_Fight(S_Fight.TYPE_ENCOUNTER, S_Fight.FLAG_ON));
+				this.sendPackets(new S_Fight(S_Fight.TYPE_ENCOUNTER, S_Fight.FLAG_ON));
 			}
 		}
 	}
 
 	/**  */
 	public void clearSkillMastery() {
-		skillList.clear();
+		this.skillList.clear();
 	}
 
 	/**
@@ -1751,11 +1751,11 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void death(final L1Character lastAttacker) {
 		synchronized (this) {
-			if (isDead()) {
+			if (this.isDead()) {
 				return;
 			}
-			setDead(true);
-			setStatus(ActionCodes.ACTION_Die); // 死亡动作
+			this.setDead(true);
+			this.setStatus(ActionCodes.ACTION_Die); // 死亡动作
 		}
 		GeneralThreadPool.getInstance().execute(new Death(lastAttacker));
 
@@ -1765,7 +1765,7 @@ public class L1PcInstance extends L1Character {
 	 * 角色死亡经验值处罚
 	 */
 	public void deathPenalty() {
-		final int oldLevel = getLevel();
+		final int oldLevel = this.getLevel();
 		final long needExp = ExpTable.getNeedExpNextLevel(oldLevel);
 		long exp = 0;
 		if ((oldLevel >= 1) && (oldLevel < 11)) {
@@ -1794,22 +1794,22 @@ public class L1PcInstance extends L1Character {
 			return;
 		}
 
-		if (getExpRes() >= 0) {
-			setExpRes(getExpRes() + 1);
+		if (this.getExpRes() >= 0) {
+			this.setExpRes(this.getExpRes() + 1);
 		}
-		addExp(-exp);
+		this.addExp(-exp);
 	}
 
 	/**
 	 * 解除绝对屏障状态
 	 */
 	public void delAbsoluteBarrier() {
-		if (hasSkillEffect(ABSOLUTE_BARRIER)) {
-			killSkillEffectTimer(ABSOLUTE_BARRIER);
-			startHpRegeneration(); // 开始角色回血
-			startMpRegeneration(); // 开始角色回魔
-			startHpRegenerationByDoll(); // 开始魔法娃娃对角色的回血
-			startMpRegenerationByDoll(); // 开始魔法娃娃对角色的回魔
+		if (this.hasSkillEffect(ABSOLUTE_BARRIER)) {
+			this.killSkillEffectTimer(ABSOLUTE_BARRIER);
+			this.startHpRegeneration(); // 开始角色回血
+			this.startMpRegeneration(); // 开始角色回魔
+			this.startHpRegenerationByDoll(); // 开始魔法娃娃对角色的回血
+			this.startMpRegenerationByDoll(); // 开始魔法娃娃对角色的回魔
 		}
 	}
 
@@ -1818,9 +1818,9 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void delBlindHiding() {
 		// 魔法接续时间终了はこちら
-		killSkillEffectTimer(BLIND_HIDING); // 黑暗妖精魔法 (暗隐术)
-		sendPackets(new S_Invis(getId(), 0));
-		broadcastPacket(new S_OtherCharPacks(this));
+		this.killSkillEffectTimer(BLIND_HIDING); // 黑暗妖精魔法 (暗隐术)
+		this.sendPackets(new S_Invis(this.getId(), 0));
+		this.broadcastPacket(new S_OtherCharPacks(this));
 	}
 
 	/**
@@ -1830,11 +1830,11 @@ public class L1PcInstance extends L1Character {
 	 *            技能ID
 	 */
 	public void delEffectOfGreenPotion(final int skill_id) {
-		if (hasSkillEffect(skill_id)) {
-			killSkillEffectTimer(skill_id);
-			sendPackets(new S_SkillHaste(getId(), 0, 0));
-			broadcastPacket(new S_SkillHaste(getId(), 0, 0));
-			setMoveSpeed(0);
+		if (this.hasSkillEffect(skill_id)) {
+			this.killSkillEffectTimer(skill_id);
+			this.sendPackets(new S_SkillHaste(this.getId(), 0, 0));
+			this.broadcastPacket(new S_SkillHaste(this.getId(), 0, 0));
+			this.setMoveSpeed(0);
 		}
 	}
 
@@ -1845,10 +1845,10 @@ public class L1PcInstance extends L1Character {
 	 *            技能ID
 	 */
 	public void delEffectOfSlow(final int skill_id) {
-		if (hasSkillEffect(skill_id)) {
-			killSkillEffectTimer(skill_id);
-			sendPackets(new S_SkillHaste(getId(), 0, 0));
-			broadcastPacket(new S_SkillHaste(getId(), 0, 0));
+		if (this.hasSkillEffect(skill_id)) {
+			this.killSkillEffectTimer(skill_id);
+			this.sendPackets(new S_SkillHaste(this.getId(), 0, 0));
+			this.broadcastPacket(new S_SkillHaste(this.getId(), 0, 0));
 		}
 	}
 
@@ -1877,7 +1877,7 @@ public class L1PcInstance extends L1Character {
 		for (final int[] skills : repeatedSkills) {
 			for (final int id : skills) {
 				if (id == skillId) {
-					stopSkillList(skillId, skills);
+					this.stopSkillList(skillId, skills);
 				}
 			}
 		}
@@ -1888,15 +1888,15 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void delInvis() {
 		// 魔法接续时间内はこちらを利用
-		if (hasSkillEffect(INVISIBILITY)) { // 法师魔法 (隐身术)
-			killSkillEffectTimer(INVISIBILITY);
-			sendPackets(new S_Invis(getId(), 0));
-			broadcastPacket(new S_OtherCharPacks(this));
+		if (this.hasSkillEffect(INVISIBILITY)) { // 法师魔法 (隐身术)
+			this.killSkillEffectTimer(INVISIBILITY);
+			this.sendPackets(new S_Invis(this.getId(), 0));
+			this.broadcastPacket(new S_OtherCharPacks(this));
 		}
-		if (hasSkillEffect(BLIND_HIDING)) { // 黑暗妖精魔法 (暗隐术)
-			killSkillEffectTimer(BLIND_HIDING);
-			sendPackets(new S_Invis(getId(), 0));
-			broadcastPacket(new S_OtherCharPacks(this));
+		if (this.hasSkillEffect(BLIND_HIDING)) { // 黑暗妖精魔法 (暗隐术)
+			this.killSkillEffectTimer(BLIND_HIDING);
+			this.sendPackets(new S_Invis(this.getId(), 0));
+			this.broadcastPacket(new S_OtherCharPacks(this));
 		}
 	}
 
@@ -1904,8 +1904,8 @@ public class L1PcInstance extends L1Character {
 	 * 取消冥想效果
 	 */
 	public void delMeditation() {
-		if (hasSkillEffect(MEDITATION)) {
-			removeSkillEffect(MEDITATION);
+		if (this.hasSkillEffect(MEDITATION)) {
+			this.removeSkillEffect(MEDITATION);
 		}
 	}
 
@@ -1916,8 +1916,8 @@ public class L1PcInstance extends L1Character {
 	 *            要删除的技能编号
 	 */
 	public void delRepeatSkillEffect(final int skill_id) {
-		if (hasSkillEffect(skill_id)) {
-			killSkillEffectTimer(skill_id);
+		if (this.hasSkillEffect(skill_id)) {
+			this.killSkillEffectTimer(skill_id);
 		}
 	}
 
@@ -1925,22 +1925,22 @@ public class L1PcInstance extends L1Character {
 	 * 结束幽灵状态
 	 */
 	public void endGhost() {
-		setGhost(false);
-		setGhostCanTalk(true);
-		setReserveGhost(false);
+		this.setGhost(false);
+		this.setGhostCanTalk(true);
+		this.setReserveGhost(false);
 	}
 
 	/** 传送出地狱 */
 	public void endHell() {
-		if (_hellFuture != null) {
-			_hellFuture.cancel(false);
-			_hellFuture = null;
+		if (this._hellFuture != null) {
+			this._hellFuture.cancel(false);
+			this._hellFuture = null;
 		}
 		// 从地狱出来后传送到燃柳村。
 		final int[] loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ORCISH_FOREST);
 		L1Teleport.teleport(this, loc[0], loc[1], (short) loc[2], 5, true);
 		try {
-			save();
+			this.save();
 		}
 		catch (final Exception ignore) {
 			// ignore
@@ -1949,128 +1949,128 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得PK次数 */
 	public int get_PKcount() {
-		return _PKcount;
+		return this._PKcount;
 	}
 
 	/** 取得性别 */
 	public byte get_sex() {
-		return _sex;
+		return this._sex;
 	}
 
 	/** 取得 -- 加速器检知机能 -- */
 	public AcceleratorChecker getAcceleratorChecker() {
-		return _acceleratorChecker;
+		return this._acceleratorChecker;
 	}
 
 	/** 取得账号等级 */
 	public short getAccessLevel() {
-		return _accessLevel;
+		return this._accessLevel;
 	}
 
 	/** 取得账号名称 */
 	public String getAccountName() {
-		return _accountName;
+		return this._accountName;
 	}
 
 	/** 取得灵魂升华增加的HP */
 	public int getAdvenHp() {
-		return _advenHp;
+		return this._advenHp;
 	}
 
 	/** 取得灵魂升华增加的MP */
 	public int getAdvenMp() {
-		return _advenMp;
+		return this._advenMp;
 	}
 
 	/** 取得觉醒技能ID */
 	public int getAwakeSkillId() {
-		return _awakeSkillId;
+		return this._awakeSkillId;
 	}
 
 	/** 取得基本Ac */
 	public int getBaseAc() {
-		return _baseAc;
+		return this._baseAc;
 	}
 
 	/** 取得弓类基本伤害补正 */
 	public int getBaseBowDmgup() {
-		return _baseBowDmgup;
+		return this._baseBowDmgup;
 	}
 
 	/** 取得弓基本命中补正 */
 	public int getBaseBowHitup() {
-		return _baseBowHitup;
+		return this._baseBowHitup;
 	}
 
 	/** 取得基本的魅力值 */
 	public short getBaseCha() {
-		return _baseCha;
+		return this._baseCha;
 	}
 
 	/** 取得基本的体质值 */
 	public short getBaseCon() {
-		return _baseCon;
+		return this._baseCon;
 	}
 
 	/** 取得基本的敏捷值 */
 	public short getBaseDex() {
-		return _baseDex;
+		return this._baseDex;
 	}
 
 	/** 取得基本伤害补正 */
 	public int getBaseDmgup() {
-		return _baseDmgup;
+		return this._baseDmgup;
 	}
 
 	/** 取得基本命中补正 */
 	public int getBaseHitup() {
-		return _baseHitup;
+		return this._baseHitup;
 	}
 
 	/** 取得基本的智力值 */
 	public short getBaseInt() {
-		return _baseInt;
+		return this._baseInt;
 	}
 
 	/** 取得基本MaxHp */
 	public short getBaseMaxHp() {
-		return _baseMaxHp;
+		return this._baseMaxHp;
 	}
 
 	/** 取得基本MaxMp */
 	public short getBaseMaxMp() {
-		return _baseMaxMp;
+		return this._baseMaxMp;
 	}
 
 	/** 取得基本魔法防御 */
 	public int getBaseMr() {
-		return _baseMr;
+		return this._baseMr;
 	}
 
 	/** 取得基本的力量值 */
 	public short getBaseStr() {
-		return _baseStr;
+		return this._baseStr;
 	}
 
 	/** 取得基本的精神值 */
 	public short getBaseWis() {
-		return _baseWis;
+		return this._baseWis;
 	}
 
 	/** 取得角色生日 */
 	public Timestamp getBirthday() {
-		return _birthday;
+		return this._birthday;
 	}
 
 	/** 取得奖励点分配状况 */
 	public int getBonusStats() {
-		return _bonusStats;
+		return this._bonusStats;
 	}
 
 	/** 取得书签ID */
 	public L1BookMark getBookMark(final int id) {
-		for (int i = 0; i < _bookmarks.size(); i++) {
-			final L1BookMark element = _bookmarks.get(i);
+		for (int i = 0; i < this._bookmarks.size(); i++) {
+			final L1BookMark element = this._bookmarks.get(i);
 			if (element.getId() == id) {
 				return element;
 			}
@@ -2081,8 +2081,8 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得书签名字 */
 	public L1BookMark getBookMark(final String name) {
-		for (int i = 0; i < _bookmarks.size(); i++) {
-			final L1BookMark element = _bookmarks.get(i);
+		for (int i = 0; i < this._bookmarks.size(); i++) {
+			final L1BookMark element = this._bookmarks.get(i);
 			if (element.getName().equalsIgnoreCase(name)) {
 				return element;
 			}
@@ -2093,163 +2093,163 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得书签大小 */
 	public int getBookMarkSize() {
-		return _bookmarks.size();
+		return this._bookmarks.size();
 	}
 
 	/** 取得防具对损坏的弓的补正 */
 	public int getBowDmgModifierByArmor() {
-		return _bowDmgModifierByArmor;
+		return this._bowDmgModifierByArmor;
 	}
 
 	/** 取得防具对弓的命中率补正 */
 	public int getBowHitModifierByArmor() {
-		return _bowHitModifierByArmor;
+		return this._bowHitModifierByArmor;
 	}
 
 	/** 取得购买清单 */
 	public List<L1PrivateShopBuyList> getBuyList() {
-		return _buyList;
+		return this._buyList;
 	}
 
 	/** 取得呼叫血盟名称 */
 	public int getCallClanHeading() {
-		return _callClanHeading;
+		return this._callClanHeading;
 	}
 
 	/** 取得呼叫血盟ID */
 	public int getCallClanId() {
-		return _callClanId;
+		return this._callClanId;
 	}
 
 	/** 取得聊天组队 */
 	public L1ChatParty getChatParty() {
-		return _chatParty;
+		return this._chatParty;
 	}
 
 	// 参照を持つようにしたほうがいいかもしれない
 	public L1Clan getClan() {
-		return L1World.getInstance().getClan(getClanname());
+		return L1World.getInstance().getClan(this.getClanname());
 	}
 
 	/** 取得血盟 ID */
 	public int getClanid() {
-		return _clanid;
+		return this._clanid;
 	}
 
 	/** 取得血盟名称 */
 	public String getClanname() {
-		return clanname;
+		return this.clanname;
 	}
 
 	/** 取得血盟内的阶级(联盟君主、守护骑士、一般、见习) */
 	public int getClanRank() {
-		return _clanRank;
+		return this._clanRank;
 	}
 
 	public L1ClassFeature getClassFeature() {
-		return _classFeature;
+		return this._classFeature;
 	}
 
 	/** 取得角色的ClassId */
 	public int getClassId() {
-		return _classId;
+		return this._classId;
 	}
 
 	/** 取得贡献度 */
 	public int getContribution() {
-		return _contribution;
+		return this._contribution;
 	}
 
 	/** 取得烹饪ID */
 	public int getCookingId() {
-		return _cookingId;
+		return this._cookingId;
 	}
 
 	/** 取得当前武器 */
 	public int getCurrentWeapon() {
-		return _currentWeapon;
+		return this._currentWeapon;
 	}
 
 	/** 取得防具的伤害减免 */
 	public int getDamageReductionByArmor() {
-		return _damageReductionByArmor;
+		return this._damageReductionByArmor;
 	}
 
 	/** 取得角色删除时间 */
 	public Timestamp getDeleteTime() {
-		return _deleteTime;
+		return this._deleteTime;
 	}
 
 	/** 取得点心ID */
 	public int getDessertId() {
-		return _dessertId;
+		return this._dessertId;
 	}
 
 	/** 取得防具的伤害补正 */
 	public int getDmgModifierByArmor() {
-		return _dmgModifierByArmor;
+		return this._dmgModifierByArmor;
 	}
 
 	/**  */
 	public L1DwarfForElfInventory getDwarfForElfInventory() {
-		return _dwarfForElf;
+		return this._dwarfForElf;
 	}
 
 	/**  */
 	public L1DwarfInventory getDwarfInventory() {
-		return _dwarf;
+		return this._dwarf;
 	}
 
 	/** 取得精灵属性 */
 	public int getElfAttr() {
-		return _elfAttr;
+		return this._elfAttr;
 	}
 
 	/**
 	 * 取得万能药使用状况
 	 */
 	public int getElixirStats() {
-		return _elixirStats;
+		return this._elixirStats;
 	}
 
 	public L1EquipmentSlot getEquipSlot() {
-		return _equipSlot;
+		return this._equipSlot;
 	}
 
 	/** 回避率变化 */
 	public int getEr() {
-		if (hasSkillEffect(STRIKER_GALE)) { // 精准射击
+		if (this.hasSkillEffect(STRIKER_GALE)) { // 精准射击
 			return 0;
 		}
 
 		int er = 0;
-		if (isKnight()) {
-			er = getLevel() / 4; // 骑士
+		if (this.isKnight()) {
+			er = this.getLevel() / 4; // 骑士
 		}
-		else if (isCrown() || isElf()) {
-			er = getLevel() / 8; // 王族・精灵
+		else if (this.isCrown() || this.isElf()) {
+			er = this.getLevel() / 8; // 王族・精灵
 		}
-		else if (isDarkelf()) {
-			er = getLevel() / 6; // 黑暗精灵
+		else if (this.isDarkelf()) {
+			er = this.getLevel() / 6; // 黑暗精灵
 		}
-		else if (isWizard()) {
-			er = getLevel() / 10; // 魔法师
+		else if (this.isWizard()) {
+			er = this.getLevel() / 10; // 魔法师
 		}
-		else if (isDragonKnight()) {
-			er = getLevel() / 7; // 龙骑士
+		else if (this.isDragonKnight()) {
+			er = this.getLevel() / 7; // 龙骑士
 		}
-		else if (isIllusionist()) {
-			er = getLevel() / 9; // 幻术师
+		else if (this.isIllusionist()) {
+			er = this.getLevel() / 9; // 幻术师
 		}
 
-		er += (getDex() - 8) / 2;
+		er += (this.getDex() - 8) / 2;
 
-		er += getOriginalEr();
+		er += this.getOriginalEr();
 
-		if (hasSkillEffect(DRESS_EVASION)) { // 闪避提升
+		if (this.hasSkillEffect(DRESS_EVASION)) { // 闪避提升
 			er += 12;
 		}
-		if (hasSkillEffect(SOLID_CARRIAGE)) { // 坚固防护
+		if (this.hasSkillEffect(SOLID_CARRIAGE)) { // 坚固防护
 			er += 15;
 		}
 		return er;
@@ -2261,104 +2261,104 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public L1ExcludingList getExcludingList() {
-		return _excludingList;
+		return this._excludingList;
 	}
 
 	@Override
 	public synchronized long getExp() {
-		return _exp;
+		return this._exp;
 	}
 
 	/** 取得恢复EXP */
 	public int getExpRes() {
-		return _expRes;
+		return this._expRes;
 	}
 
 	/** 取得战斗ID */
 	public int getFightId() {
-		return _fightId;
+		return this._fightId;
 	}
 
 	/** 取得钓鱼时间 */
 	public long getFishingTime() {
-		return _fishingTime;
+		return this._fishingTime;
 	}
 
 	/** 取得钓鱼坐标X */
 	public int getFishX() {
-		return _fishX;
+		return this._fishX;
 	}
 
 	/** 取得钓鱼坐标Y */
 	public int getFishY() {
-		return _fishY;
+		return this._fishY;
 	}
 
 	/** 取得装备加速道具 */
 	public int getHasteItemEquipped() {
-		return _hasteItemEquipped;
+		return this._hasteItemEquipped;
 	}
 
 	/** 取得地狱停留时间 (秒) */
 	public int getHellTime() {
-		return _hellTime;
+		return this._hellTime;
 	}
 
 	/** 取得过去最高等级 */
 	public int getHighLevel() {
-		return _highLevel;
+		return this._highLevel;
 	}
 
 	/** 取得防具的命中率补正 */
 	public int getHitModifierByArmor() {
-		return _hitModifierByArmor;
+		return this._hitModifierByArmor;
 	}
 
 	/** 取得所住村镇ID */
 	public int getHomeTownId() {
-		return _homeTownId;
+		return this._homeTownId;
 	}
 
 	/** 取得回血 */
 	public short getHpr() {
-		return _hpr;
+		return this._hpr;
 	}
 
 	@Override
 	public L1PcInventory getInventory() {
-		return _inventory;
+		return this._inventory;
 	}
 
 	@Override
 	public int getKarma() {
-		return _karma.get();
+		return this._karma.get();
 	}
 
 	/** 取得友好度级别 */
 	public int getKarmaLevel() {
-		return _karma.getLevel();
+		return this._karma.getLevel();
 	}
 
 	/** 取得友好度的百分比 */
 	public int getKarmaPercent() {
-		return _karma.getPercent();
+		return this._karma.getPercent();
 	}
 
 	/** 取得宠物竞速圈数 */
 	public int getLap() {
-		return _lap;
+		return this._lap;
 	}
 
 	/** 取得检查宠物竞速圈数 */
 	public int getLapCheck() {
-		return _lapCheck;
+		return this._lapCheck;
 	}
 
 	/**
 	 * 只是将总圈数的完程度数量化
 	 */
 	public int getLapScore() {
-		return _lap * 29 + _lapCheck;
+		return this._lap * 29 + this._lapCheck;
 	}
 
 	/**
@@ -2368,25 +2368,25 @@ public class L1PcInstance extends L1Character {
 	 * 
 	 */
 	public Timestamp getLastPk() {
-		return _lastPk;
+		return this._lastPk;
 	}
 
 	public Timestamp getLastPkForElf() {
-		return _lastPkForElf;
+		return this._lastPkForElf;
 	}
 
 	@Override
 	public int getMagicLevel() {
-		return getClassFeature().getMagicLevel(getLevel());
+		return this.getClassFeature().getMagicLevel(this.getLevel());
 	}
 
 	/** 取得最高负重 */
 	public double getMaxWeight() {
-		final int str = getStr();
-		final int con = getCon();
+		final int str = this.getStr();
+		final int con = this.getCon();
 		double maxWeight = 150 * (Math.floor(0.6 * str + 0.4 * con + 1));
 
-		double weightReductionByArmor = getWeightReduction(); // 防具的负重减轻
+		double weightReductionByArmor = this.getWeightReduction(); // 防具的负重减轻
 		weightReductionByArmor /= 100;
 
 		double weightReductionByDoll = 0; // 魔法娃娃负重减轻
@@ -2394,12 +2394,12 @@ public class L1PcInstance extends L1Character {
 		weightReductionByDoll /= 100;
 
 		int weightReductionByMagic = 0;
-		if (hasSkillEffect(DECREASE_WEIGHT)) { // 负重强化
+		if (this.hasSkillEffect(DECREASE_WEIGHT)) { // 负重强化
 			weightReductionByMagic = 180;
 		}
 
 		double originalWeightReduction = 0; // 原始状态的负重减轻
-		originalWeightReduction += 0.04 * (getOriginalStrWeightReduction() + getOriginalConWeightReduction());
+		originalWeightReduction += 0.04 * (this.getOriginalStrWeightReduction() + this.getOriginalConWeightReduction());
 
 		final double weightReduction = 1 + weightReductionByArmor + weightReductionByDoll + originalWeightReduction;
 
@@ -2414,192 +2414,192 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得回魔 */
 	public short getMpr() {
-		return _mpr;
+		return this._mpr;
 	}
 
 	/** 网络连接状态 */
 	public ClientThread getNetConnection() {
-		return _netConnection;
+		return this._netConnection;
 	}
 
 	/** 取得在线状态 */
 	public int getOnlineStatus() {
-		return _onlineStatus;
+		return this._onlineStatus;
 	}
 
 	/** 取得原始DEX ＡＣ补正 */
 	public int getOriginalAc() {
 
-		return _originalAc;
+		return this._originalAc;
 	}
 
 	/** 取得原始DEX 弓伤害补正 */
 	public int getOriginalBowDmgup() {
-		return _originalBowDmgup;
+		return this._originalBowDmgup;
 	}
 
 	/** 取得原始DEX 命中补正 */
 	public int getOriginalBowHitup() {
-		return _originalBowHitup;
+		return this._originalBowHitup;
 	}
 
 	/** 取得原始的魅力值 */
 	public int getOriginalCha() {
-		return _originalCha;
+		return this._originalCha;
 	}
 
 	/** 取得原始的体质值 */
 	public int getOriginalCon() {
-		return _originalCon;
+		return this._originalCon;
 	}
 
 	/** 取得原始CON 重量轻减 */
 	public int getOriginalConWeightReduction() {
-		return _originalConWeightReduction;
+		return this._originalConWeightReduction;
 	}
 
 	/** 取得原始的敏捷值 */
 	public int getOriginalDex() {
-		return _originalDex;
+		return this._originalDex;
 	}
 
 	/** 取得原始STR 伤害补正 */
 	public int getOriginalDmgup() {
-		return _originalDmgup;
+		return this._originalDmgup;
 	}
 
 	/** 取得原始DEX ER补正 */
 	public int getOriginalEr() {
-		return _originalEr;
+		return this._originalEr;
 	}
 
 	/** 取得原始STR 命中补正 */
 	public int getOriginalHitup() {
-		return _originalHitup;
+		return this._originalHitup;
 	}
 
 	/** 取得原始 CON HPR */
 	public short getOriginalHpr() {
-		return _originalHpr;
+		return this._originalHpr;
 	}
 
 	/** 取得原始CON HP上升值补正 */
 	public int getOriginalHpup() {
-		return _originalHpup;
+		return this._originalHpup;
 	}
 
 	/** 取得原始的智力值 */
 	public int getOriginalInt() {
-		return _originalInt;
+		return this._originalInt;
 	}
 
 	/** 取得原始INT 消费MP轻减 */
 	public int getOriginalMagicConsumeReduction() {
-		return _originalMagicConsumeReduction;
+		return this._originalMagicConsumeReduction;
 	}
 
 	/**  */
 	public int getOriginalMagicCritical() {
-		return _originalMagicCritical;
+		return this._originalMagicCritical;
 	}
 
 	/** 取得原始INT的魔法伤害 */
 	public int getOriginalMagicDamage() {
-		return _originalMagicDamage;
+		return this._originalMagicDamage;
 	}
 
 	/** 取得原始INT 魔法命中 */
 	public int getOriginalMagicHit() {
-		return _originalMagicHit;
+		return this._originalMagicHit;
 	}
 
 	/** 取得原始 WIS MPR */
 	public short getOriginalMpr() {
-		return _originalMpr;
+		return this._originalMpr;
 	}
 
 	/** 取得原始WIS MP上升值补正 */
 	public int getOriginalMpup() {
-		return _originalMpup;
+		return this._originalMpup;
 	}
 
 	/** 取得原始WIS 魔法防御 */
 	public int getOriginalMr() {
-		return _originalMr;
+		return this._originalMr;
 	}
 
 	/** 取得原始的力量值 */
 	public int getOriginalStr() {
-		return _originalStr;
+		return this._originalStr;
 	}
 
 	/** 取得原始STR 重量轻减 */
 	public int getOriginalStrWeightReduction() {
-		return _originalStrWeightReduction;
+		return this._originalStrWeightReduction;
 	}
 
 	/** 取得原始的精神值 */
 	public int getOriginalWis() {
-		return _originalWis;
+		return this._originalWis;
 	}
 
 	/** 取得结婚伴侣ID */
 	public int getPartnerId() {
-		return _partnerId;
+		return this._partnerId;
 	}
 
 	/**
 	 * 取得出售物品种类数量
 	 */
 	public int getPartnersPrivateShopItemCount() {
-		return _partnersPrivateShopItemCount;
+		return this._partnersPrivateShopItemCount;
 	}
 
 	/** 取得组队 */
 	public L1Party getParty() {
-		return _party;
+		return this._party;
 	}
 
 	/** 取得组队ID */
 	public int getPartyID() {
-		return _partyID;
+		return this._partyID;
 	}
 
 	/** 取得组队类型 */
 	public int getPartyType() {
-		return _partyType;
+		return this._partyType;
 	}
 
 	/** 取得村庄福利金 */
 	public int getPay() {
-		return _pay;
+		return this._pay;
 	}
 
 	/** 取得PK次数 (精灵用) */
 	public int getPkCountForElf() {
-		return _PkCountForElf;
+		return this._PkCountForElf;
 	}
 
 	/** 取得任务 */
 	public L1Quest getQuest() {
-		return _quest;
+		return this._quest;
 	}
 
 	/** 取得贩卖清单 */
 	public List<L1PrivateShopSellList> getSellList() {
-		return _sellList;
+		return this._sellList;
 	}
 
 	/** 取得商店聊天 */
 	public byte[] getShopChat() {
-		return _shopChat;
+		return this._shopChat;
 	}
 
 	/** 取得简单的角色生日 */
 	public int getSimpleBirthday() {
-		if (_birthday != null) {
+		if (this._birthday != null) {
 			final SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
-			final int BornTime = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
+			final int BornTime = Integer.parseInt(SimpleDate.format(this._birthday.getTime()));
 			return BornTime;
 		}
 		else {
@@ -2609,46 +2609,46 @@ public class L1PcInstance extends L1Character {
 
 	/** 取得传送目的地面向 */
 	public int getTeleportHeading() {
-		return _teleportHeading;
+		return this._teleportHeading;
 	}
 
 	/** 取得传送目的地地图ID */
 	public short getTeleportMapId() {
-		return _teleportMapId;
+		return this._teleportMapId;
 	}
 
 	/**
 	 * 取得传送目的地坐标X
 	 */
 	public int getTeleportX() {
-		return _teleportX;
+		return this._teleportX;
 	}
 
 	/**
 	 * 取得传送目的地坐标Y
 	 */
 	public int getTeleportY() {
-		return _teleportY;
+		return this._teleportY;
 	}
 
 	/** 取得角色死亡时的临时GFX图像 */
 	public int getTempCharGfxAtDead() {
-		return _tempCharGfxAtDead;
+		return this._tempCharGfxAtDead;
 	}
 
 	/** 取得临时ID */
 	public int getTempID() {
-		return _tempID;
+		return this._tempID;
 	}
 
 	/** 取得临时等级 */
 	public int getTempLevel() {
-		return _tempLevel;
+		return this._tempLevel;
 	}
 
 	/** 取得临时最高等级 */
 	public int getTempMaxLevel() {
-		return _tempMaxLevel;
+		return this._tempMaxLevel;
 	}
 
 	/**
@@ -2657,7 +2657,7 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public String getText() {
-		return _text;
+		return this._text;
 	}
 
 	/**
@@ -2666,22 +2666,22 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public byte[] getTextByte() {
-		return _textByte;
+		return this._textByte;
 	}
 
 	/** 取得交易ID */
 	public int getTradeID() {
-		return _tradeID;
+		return this._tradeID;
 	}
 
 	/** 取得交易OK */
 	public boolean getTradeOk() {
-		return _tradeOk;
+		return this._tradeOk;
 	}
 
 	/** 取得交易窗口的库存 */
 	public L1Inventory getTradeWindowInventory() {
-		return _tradewindow;
+		return this._tradewindow;
 	}
 
 	/**
@@ -2690,7 +2690,7 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public int getType() {
-		return _type;
+		return this._type;
 	}
 
 	/**
@@ -2699,29 +2699,29 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public L1ItemInstance getWeapon() {
-		return _weapon;
+		return this._weapon;
 	}
 
 	/**  */
 	public int getWeightReduction() {
-		return _weightReduction;
+		return this._weightReduction;
 	}
 
 	@Override
 	public void healHp(final int pt) {
 		super.healHp(pt);
 
-		sendPackets(new S_HPUpdate(this));
+		this.sendPackets(new S_HPUpdate(this));
 	}
 
 	/** 角色封锁中 */
 	public boolean isBanned() {
-		return _banned;
+		return this._banned;
 	}
 
 	/** 是可以密语 */
 	public boolean isCanWhisper() {
-		return _isCanWhisper;
+		return this._isCanWhisper;
 	}
 
 	/**
@@ -2730,7 +2730,7 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isCrown() {
-		return ((getClassId() == CLASSID_PRINCE) || (getClassId() == CLASSID_PRINCESS));
+		return ((this.getClassId() == CLASSID_PRINCE) || (this.getClassId() == CLASSID_PRINCESS));
 	}
 
 	/**
@@ -2739,7 +2739,7 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isDarkelf() {
-		return ((getClassId() == CLASSID_DARK_ELF_MALE) || (getClassId() == CLASSID_DARK_ELF_FEMALE));
+		return ((this.getClassId() == CLASSID_DARK_ELF_MALE) || (this.getClassId() == CLASSID_DARK_ELF_FEMALE));
 	}
 
 	/**
@@ -2748,12 +2748,12 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isDragonKnight() {
-		return ((getClassId() == CLASSID_DRAGON_KNIGHT_MALE) || (getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
+		return ((this.getClassId() == CLASSID_DRAGON_KNIGHT_MALE) || (this.getClassId() == CLASSID_DRAGON_KNIGHT_FEMALE));
 	}
 
 	/** 醉酒状态 */
 	public boolean isDrink() {
-		return _isDrink;
+		return this._isDrink;
 	}
 
 	/**
@@ -2762,52 +2762,52 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isElf() {
-		return ((getClassId() == CLASSID_ELF_MALE) || (getClassId() == CLASSID_ELF_FEMALE));
+		return ((this.getClassId() == CLASSID_ELF_MALE) || (this.getClassId() == CLASSID_ELF_FEMALE));
 	}
 
 	/** 钓鱼中 */
 	public boolean isFishing() {
-		return _isFishing;
+		return this._isFishing;
 	}
 
 	/** 准备好钓鱼 */
 	public boolean isFishingReady() {
-		return _isFishingReady;
+		return this._isFishingReady;
 	}
 
 	/** 使用屠宰者判断 */
 	public boolean isFoeSlayer() {
-		return _FoeSlayer;
+		return this._FoeSlayer;
 	}
 
 	/** 是幽灵状态 */
 	public boolean isGhost() {
-		return _ghost;
+		return this._ghost;
 	}
 
 	/** 幽灵状态可以与NPC对话 */
 	public boolean isGhostCanTalk() {
-		return _ghostCanTalk;
+		return this._ghostCanTalk;
 	}
 
 	/** 是GM */
 	public boolean isGm() {
-		return _gm;
+		return this._gm;
 	}
 
 	/** GM隐身中 */
 	public boolean isGmInvis() {
-		return _gmInvis;
+		return this._gmInvis;
 	}
 
 	/**  */
 	public boolean isGres() {
-		return _isGres;
+		return this._isGres;
 	}
 
 	/** 是G-RES有效 */
 	public boolean isGresValid() {
-		return _gresValid;
+		return this._gresValid;
 	}
 
 	/**
@@ -2816,31 +2816,31 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isIllusionist() {
-		return ((getClassId() == CLASSID_ILLUSIONIST_MALE) || (getClassId() == CLASSID_ILLUSIONIST_FEMALE));
+		return ((this.getClassId() == CLASSID_ILLUSIONIST_MALE) || (this.getClassId() == CLASSID_ILLUSIONIST_FEMALE));
 	}
 
 	/** 角色重新开始 */
 	public boolean isInCharReset() {
-		return _isInCharReset;
+		return this._isInCharReset;
 	}
 
 	/** 在聊天组队 */
 	public boolean isInChatParty() {
-		return getChatParty() != null;
+		return this.getChatParty() != null;
 	}
 
 	public boolean isInOrderList() {
-		return _order_list;
+		return this._order_list;
 	}
 
 	/** 在组队中 */
 	public boolean isInParty() {
-		return getParty() != null;
+		return this.getParty() != null;
 	}
 
 	/** 隐身延迟中 */
 	public boolean isInvisDelay() {
-		return (invisDelayCounter > 0);
+		return (this.invisDelayCounter > 0);
 	}
 
 	/**
@@ -2849,77 +2849,77 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isKnight() {
-		return ((getClassId() == CLASSID_KNIGHT_MALE) || (getClassId() == CLASSID_KNIGHT_FEMALE));
+		return ((this.getClassId() == CLASSID_KNIGHT_MALE) || (this.getClassId() == CLASSID_KNIGHT_FEMALE));
 	}
 
 	/** 是管理者 */
 	public boolean isMonitor() {
-		return _monitor;
+		return this._monitor;
 	}
 
 	/** 粉名 */
 	public boolean isPinkName() {
-		return _isPinkName;
+		return this._isPinkName;
 	}
 
 	/** 商店模式 */
 	public boolean isPrivateShop() {
-		return _isPrivateShop;
+		return this._isPrivateShop;
 	}
 
 	/** 准备解除幽灵状态 */
 	public boolean isReserveGhost() {
-		return _isReserveGhost;
+		return this._isReserveGhost;
 	}
 
 	/** 生命之树果实 移速 * 1.15 */
 	public boolean isRibrave() {
-		return hasSkillEffect(STATUS_RIBRAVE);
+		return this.hasSkillEffect(STATUS_RIBRAVE);
 	}
 
 	/** 变身中 */
 	public boolean isShapeChange() {
-		return _isShapeChange;
+		return this._isShapeChange;
 	}
 
 	/** 是显示血盟聊天 */
 	public boolean isShowClanChat() {
-		return _isShowClanChat;
+		return this._isShowClanChat;
 	}
 
 	/** 是显示组队聊天 */
 	public boolean isShowPartyChat() {
-		return _isShowPartyChat;
+		return this._isShowPartyChat;
 	}
 
 	/** 是显示交易聊天 */
 	public boolean isShowTradeChat() {
-		return _isShowTradeChat;
+		return this._isShowTradeChat;
 	}
 
 	/** 是显示世界聊天 */
 	public boolean isShowWorldChat() {
-		return _isShowWorldChat;
+		return this._isShowWorldChat;
 	}
 
 	/** 在学习技能 */
 	public boolean isSkillMastery(final int skillid) {
-		return skillList.contains(skillid);
+		return this.skillList.contains(skillid);
 	}
 
 	/** 判断是否无道具施法(召戒清单、变身清单) */
 	public boolean isSummonMonster() {
-		return _isSummonMonster;
+		return this._isSummonMonster;
 	}
 
 	/** 瞬移中 */
 	public boolean isTeleport() {
-		return _isTeleport;
+		return this._isTeleport;
 	}
 
 	/** 三段加速 * 1.15 */
 	public boolean isThirdSpeed() {
-		return hasSkillEffect(STATUS_THIRD_SPEED);
+		return this.hasSkillEffect(STATUS_THIRD_SPEED);
 	}
 
 	/**
@@ -2928,7 +2928,7 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isTradingInPrivateShop() {
-		return _isTradingInPrivateShop;
+		return this._isTradingInPrivateShop;
 	}
 
 	/**
@@ -2937,22 +2937,22 @@ public class L1PcInstance extends L1Character {
 	 * @return 角色正在被通缉、true
 	 */
 	public boolean isWanted() {
-		if (_lastPk == null) {
+		if (this._lastPk == null) {
 			return false;
 		}
-		else if (System.currentTimeMillis() - _lastPk.getTime() > 24 * 3600 * 1000) {
-			setLastPk(null);
+		else if (System.currentTimeMillis() - this._lastPk.getTime() > 24 * 3600 * 1000) {
+			this.setLastPk(null);
 			return false;
 		}
 		return true;
 	}
 
 	public boolean isWantedForElf() {
-		if (_lastPkForElf == null) {
+		if (this._lastPkForElf == null) {
 			return false;
 		}
-		else if (System.currentTimeMillis() - _lastPkForElf.getTime() > 24 * 3600 * 1000) {
-			setLastPkForElf(null);
+		else if (System.currentTimeMillis() - this._lastPkForElf.getTime() > 24 * 3600 * 1000) {
+			this.setLastPkForElf(null);
 			return false;
 		}
 		return true;
@@ -2960,7 +2960,7 @@ public class L1PcInstance extends L1Character {
 
 	/** 风之枷锁 攻速 / 2 */
 	public boolean isWindShackle() {
-		return hasSkillEffect(WIND_SHACKLE);
+		return this.hasSkillEffect(WIND_SHACKLE);
 	}
 
 	/**
@@ -2969,42 +2969,42 @@ public class L1PcInstance extends L1Character {
 	 * @return
 	 */
 	public boolean isWizard() {
-		return ((getClassId() == CLASSID_WIZARD_MALE) || (getClassId() == CLASSID_WIZARD_FEMALE));
+		return ((this.getClassId() == CLASSID_WIZARD_MALE) || (this.getClassId() == CLASSID_WIZARD_FEMALE));
 	}
 
 	/** 登出 */
 	public void logout() {
 		final L1World world = L1World.getInstance();
-		if (getClanid() != 0) // 有血盟
+		if (this.getClanid() != 0) // 有血盟
 		{
-			final L1Clan clan = world.getClan(getClanname());
+			final L1Clan clan = world.getClan(this.getClanname());
 			if (clan != null) {
-				if (clan.getWarehouseUsingChar() == getId()) // 使用自身的血盟仓库中
+				if (clan.getWarehouseUsingChar() == this.getId()) // 使用自身的血盟仓库中
 				{
 					clan.setWarehouseUsingChar(0); // 解锁血盟仓库
 				}
 			}
 		}
-		notifyPlayersLogout(getKnownPlayers());
+		this.notifyPlayersLogout(this.getKnownPlayers());
 		world.removeVisibleObject(this);
 		world.removeObject(this);
-		notifyPlayersLogout(world.getRecognizePlayer(this));
-		_inventory.clearItems();
-		_dwarf.clearItems();
-		removeAllKnownObjects();
-		stopHpRegeneration();
-		stopMpRegeneration();
-		setDead(true); // 使い方おかしいかもしれないけど、删除ＮＰＣ
-		setNetConnection(null);
-		setPacketOutput(null);
+		this.notifyPlayersLogout(world.getRecognizePlayer(this));
+		this._inventory.clearItems();
+		this._dwarf.clearItems();
+		this.removeAllKnownObjects();
+		this.stopHpRegeneration();
+		this.stopMpRegeneration();
+		this.setDead(true); // 使い方おかしいかもしれないけど、删除ＮＰＣ
+		this.setNetConnection(null);
+		this.setPacketOutput(null);
 	}
 
 	/**
 	 * 离开幽灵状态 (传送回出发点)
 	 */
 	public void makeReadyEndGhost() {
-		setReserveGhost(true);
-		L1Teleport.teleport(this, _ghostSaveLocX, _ghostSaveLocY, _ghostSaveMapId, _ghostSaveHeading, true);
+		this.setReserveGhost(true);
+		L1Teleport.teleport(this, this._ghostSaveLocX, this._ghostSaveLocY, this._ghostSaveMapId, this._ghostSaveHeading, true);
 	}
 
 	/**
@@ -3015,7 +3015,7 @@ public class L1PcInstance extends L1Character {
 	 */
 	@Override
 	public void onAction(final L1PcInstance attacker) {
-		onAction(attacker, 0);
+		this.onAction(attacker, 0);
 	}
 
 	/**
@@ -3033,12 +3033,12 @@ public class L1PcInstance extends L1Character {
 			return;
 		}
 		// 在瞬移中
-		if (isTeleport()) {
+		if (this.isTeleport()) {
 			return;
 		}
 
 		// 攻击或攻击方在安全区 仅送出动作资讯
-		if ((getZoneType() == 1) || (attacker.getZoneType() == 1)) {
+		if ((this.getZoneType() == 1) || (attacker.getZoneType() == 1)) {
 			// 发送攻击动作
 			final L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
 			attack_mortion.action();
@@ -3046,7 +3046,7 @@ public class L1PcInstance extends L1Character {
 		}
 
 		// 禁止PK服务器 仅送出动作资讯
-		if (checkNonPvP(this, attacker) == true) {
+		if (this.checkNonPvP(this, attacker) == true) {
 			// 发送攻击动作
 			final L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
 			attack_mortion.action();
@@ -3054,7 +3054,7 @@ public class L1PcInstance extends L1Character {
 		}
 
 		// 攻击解除隐身
-		if ((getCurrentHp() > 0) && !isDead()) {
+		if ((this.getCurrentHp() > 0) && !this.isDead()) {
 			attacker.delInvis();
 
 			boolean isCounterBarrier = false;
@@ -3062,7 +3062,7 @@ public class L1PcInstance extends L1Character {
 			// 开始计算攻击
 			final L1Attack attack = new L1Attack(attacker, this, skillId);
 			if (attack.calcHit()) {
-				if (hasSkillEffect(COUNTER_BARRIER)) {
+				if (this.hasSkillEffect(COUNTER_BARRIER)) {
 					final L1Magic magic = new L1Magic(this, attacker);
 					final boolean isProbability = magic.calcProbabilityMagic(COUNTER_BARRIER);
 					final boolean isShortDistance = attack.isShortDistance();
@@ -3092,21 +3092,21 @@ public class L1PcInstance extends L1Character {
 
 	/** 改变经验值 */
 	public void onChangeExp() {
-		final int level = ExpTable.getLevelByExp(getExp());
-		final int char_level = getLevel();
+		final int level = ExpTable.getLevelByExp(this.getExp());
+		final int char_level = this.getLevel();
 		final int gap = level - char_level;
 		if (gap == 0) {
 			// sendPackets(new S_OwnCharStatus(this));
-			sendPackets(new S_Exp(this));
+			this.sendPackets(new S_Exp(this));
 			return;
 		}
 
 		// 等级变化的场合
 		if (gap > 0) {
-			levelUp(gap);
+			this.levelUp(gap);
 		}
 		else if (gap < 0) {
-			levelDown(gap);
+			this.levelDown(gap);
 		}
 	}
 
@@ -3114,36 +3114,36 @@ public class L1PcInstance extends L1Character {
 	public void onPerceive(final L1PcInstance perceivedFrom) {
 		// 判断旅馆内是否使用相同钥匙
 		if ((perceivedFrom.getMapId() >= 16384) && (perceivedFrom.getMapId() <= 25088 // 旅馆内判断
-				) && (perceivedFrom.getInnKeyId() != getInnKeyId())) {
+				) && (perceivedFrom.getInnKeyId() != this.getInnKeyId())) {
 			return;
 		}
-		if (isGmInvis() || isGhost()) {
+		if (this.isGmInvis() || this.isGhost()) {
 			return;
 		}
-		if (isInvisble() && !perceivedFrom.hasSkillEffect(GMSTATUS_FINDINVIS)) {
+		if (this.isInvisble() && !perceivedFrom.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 			return;
 		}
 
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_OtherCharPacks(this, perceivedFrom.hasSkillEffect(GMSTATUS_FINDINVIS))); // 自分の情报を送る
-		if (isInParty() && getParty().isMember(perceivedFrom)) { // PTメンバーならHPメーターも送る
+		if (this.isInParty() && this.getParty().isMember(perceivedFrom)) { // PTメンバーならHPメーターも送る
 			perceivedFrom.sendPackets(new S_HPMeter(this));
 		}
 
-		if (isPrivateShop()) { // 开个人商店中
-			perceivedFrom.sendPackets(new S_DoActionShop(getId(), ActionCodes.ACTION_Shop, getShopChat()));
+		if (this.isPrivateShop()) { // 开个人商店中
+			perceivedFrom.sendPackets(new S_DoActionShop(this.getId(), ActionCodes.ACTION_Shop, this.getShopChat()));
 		}
-		else if (isFishing()) { // 钓鱼中
-			perceivedFrom.sendPackets(new S_Fishing(getId(), ActionCodes.ACTION_Fishing, getFishX(), getFishY()));
+		else if (this.isFishing()) { // 钓鱼中
+			perceivedFrom.sendPackets(new S_Fishing(this.getId(), ActionCodes.ACTION_Fishing, this.getFishX(), this.getFishY()));
 		}
 
-		if (isCrown()) { // 君主
-			final L1Clan clan = L1World.getInstance().getClan(getClanname());
+		if (this.isCrown()) { // 君主
+			final L1Clan clan = L1World.getInstance().getClan(this.getClanname());
 			if (clan != null) {
-				if ((getId() == clan.getLeaderId() // 血盟主で城主クラン
+				if ((this.getId() == clan.getLeaderId() // 血盟主で城主クラン
 						)
 						&& (clan.getCastleId() != 0)) {
-					perceivedFrom.sendPackets(new S_CastleMaster(clan.getCastleId(), getId()));
+					perceivedFrom.sendPackets(new S_CastleMaster(clan.getCastleId(), this.getId()));
 				}
 			}
 		}
@@ -3157,16 +3157,16 @@ public class L1PcInstance extends L1Character {
 	 * @param isMagicDamage
 	 */
 	public void receiveDamage(final L1Character attacker, double damage, final boolean isMagicDamage) { // 攻击でＨＰを减らすときはここを使用
-		if ((getCurrentHp() > 0) && !isDead()) {
+		if ((this.getCurrentHp() > 0) && !this.isDead()) {
 			if (attacker != this) {
-				if (!(attacker instanceof L1EffectInstance) && !knownsObject(attacker) && (attacker.getMapId() == getMapId())) {
+				if (!(attacker instanceof L1EffectInstance) && !this.knownsObject(attacker) && (attacker.getMapId() == this.getMapId())) {
 					attacker.onPerceive(this);
 				}
 			}
 
 			if (isMagicDamage == true) { // 连续魔法伤害による轻减
 				final double nowTime = System.currentTimeMillis();
-				final double interval = (20D - (nowTime - _oldTime) / 100D) % 20D;
+				final double interval = (20D - (nowTime - this._oldTime) / 100D) % 20D;
 
 				if (damage > 0) {
 					if (interval > 0) {
@@ -3177,11 +3177,11 @@ public class L1PcInstance extends L1Character {
 						damage = 0;
 					}
 
-					_oldTime = nowTime; // 次回のために时间を保存
+					this._oldTime = nowTime; // 次回のために时间を保存
 				}
 			}
 			if (damage > 0) {
-				delInvis();
+				this.delInvis();
 				if (attacker instanceof L1PcInstance) {
 					L1PinkName.onAction(this, attacker);
 				}
@@ -3197,10 +3197,10 @@ public class L1PcInstance extends L1Character {
 						}
 					}
 				}
-				removeSkillEffect(FOG_OF_SLEEPING); // 法师魔法 (沉睡之雾)
+				this.removeSkillEffect(FOG_OF_SLEEPING); // 法师魔法 (沉睡之雾)
 			}
 
-			if (hasSkillEffect(MORTAL_BODY) && (getId() != attacker.getId())) {
+			if (this.hasSkillEffect(MORTAL_BODY) && (this.getId() != attacker.getId())) {
 				final int rnd = Random.nextInt(100) + 1;
 				if ((damage > 0) && (rnd <= 10)) {
 					if (attacker instanceof L1PcInstance) {
@@ -3216,46 +3216,46 @@ public class L1PcInstance extends L1Character {
 					}
 				}
 			}
-			if (getInventory().checkEquipped(145) // 狂战士斧
-					|| getInventory().checkEquipped(149)) { // 牛人斧头
+			if (this.getInventory().checkEquipped(145) // 狂战士斧
+					|| this.getInventory().checkEquipped(149)) { // 牛人斧头
 				damage *= 1.5; // 伤害提高1.5倍
 			}
-			if (hasSkillEffect(ILLUSION_AVATAR)) {// 幻术师魔法 (幻觉：化身)
+			if (this.hasSkillEffect(ILLUSION_AVATAR)) {// 幻术师魔法 (幻觉：化身)
 				damage *= 1.2; // 伤害提高1.2倍
 			}
 			if (attacker instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (pet.getZoneType() == 1) || (checkNonPvP(this, pet))) {
+				if ((this.getZoneType() == 1) || (pet.getZoneType() == 1) || (this.checkNonPvP(this, pet))) {
 					damage = 0;
 				}
 			}
 			else if (attacker instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (summon.getZoneType() == 1) || (checkNonPvP(this, summon))) {
+				if ((this.getZoneType() == 1) || (summon.getZoneType() == 1) || (this.checkNonPvP(this, summon))) {
 					damage = 0;
 				}
 			}
-			int newHp = getCurrentHp() - (int) (damage);
-			if (newHp > getMaxHp()) {
-				newHp = getMaxHp();
+			int newHp = this.getCurrentHp() - (int) (damage);
+			if (newHp > this.getMaxHp()) {
+				newHp = this.getMaxHp();
 			}
 			if (newHp <= 0) {
-				if (isGm()) {
-					setCurrentHp(getMaxHp());
+				if (this.isGm()) {
+					this.setCurrentHp(this.getMaxHp());
 				}
 				else {
-					death(attacker);
+					this.death(attacker);
 				}
 			}
 			if (newHp > 0) {
-				setCurrentHp(newHp);
+				this.setCurrentHp(newHp);
 			}
 		}
-		else if (!isDead()) { // 不是死亡状态
+		else if (!this.isDead()) { // 不是死亡状态
 			System.out.println("警告∶PC的hp减少的运算出现错误。※将视为hp=0作处理");
-			death(attacker);
+			this.death(attacker);
 		}
 	}
 
@@ -3270,12 +3270,12 @@ public class L1PcInstance extends L1Character {
 	 *            属性
 	 * */
 	public void receiveDamage(final L1Character attacker, int damage, final int attr) {
-		final int player_mr = getMr();
+		final int player_mr = this.getMr();
 		final int rnd = Random.nextInt(100) + 1;
 		if (player_mr >= rnd) {
 			damage /= 2;
 		}
-		receiveDamage(attacker, damage, false);
+		this.receiveDamage(attacker, damage, false);
 	}
 
 	/**
@@ -3285,8 +3285,8 @@ public class L1PcInstance extends L1Character {
 	 * @param mpDamage
 	 */
 	public void receiveManaDamage(final L1Character attacker, final int mpDamage) { // 攻击でＭＰを减らすときはここを使用
-		if ((mpDamage > 0) && !isDead()) {
-			delInvis();
+		if ((mpDamage > 0) && !this.isDead()) {
+			this.delInvis();
 			if (attacker instanceof L1PcInstance) {
 				L1PinkName.onAction(this, attacker);
 			}
@@ -3300,82 +3300,82 @@ public class L1PcInstance extends L1Character {
 				}
 			}
 
-			int newMp = getCurrentMp() - mpDamage;
-			if (newMp > getMaxMp()) {
-				newMp = getMaxMp();
+			int newMp = this.getCurrentMp() - mpDamage;
+			if (newMp > this.getMaxMp()) {
+				newMp = this.getMaxMp();
 			}
 
 			if (newMp <= 0) {
 				newMp = 0;
 			}
-			setCurrentMp(newMp);
+			this.setCurrentMp(newMp);
 		}
 	}
 
 	/** 减少当前的HP */
 	public void reduceCurrentHp(final double d, final L1Character l1character) {
-		getStat().reduceCurrentHp(d, l1character);
+		this.getStat().reduceCurrentHp(d, l1character);
 	}
 
 	/**
 	 * 全属性重置
 	 */
 	public void refresh() {
-		resetLevel(); // 重置等级
-		resetBaseHitup(); // 重置基本命中率
-		resetBaseDmgup(); // 重置基本伤害值
-		resetBaseMr(); // 重置基本魔防
-		resetBaseAc(); // 重置基本防御
-		resetOriginalHpup(); // 重置原本的最高 HP
-		resetOriginalMpup(); // 重置原本的最高 MP
-		resetOriginalDmgup(); // 重置原本的最高伤害值
-		resetOriginalBowDmgup(); // 重置原本的最高弓箭伤害值
-		resetOriginalHitup(); // 重置原本的最高命中率
-		resetOriginalBowHitup(); // 重置原本弓箭的最高命中率
-		resetOriginalMr(); // 重置原本的魔防
-		resetOriginalMagicHit(); // 重置原本的魔法命中率
-		resetOriginalMagicCritical();
-		resetOriginalMagicConsumeReduction(); // 重置原始魔法消耗减少
-		resetOriginalMagicDamage(); // 重置原始的魔法伤害值
-		resetOriginalAc(); // 重置原始的防御
-		resetOriginalEr(); // 重置原始的回避率
-		resetOriginalHpr(); // 重置原始的回血量
-		resetOriginalMpr(); // 重置原始的回魔量
-		resetOriginalStrWeightReduction(); // 重置原始的 STR 减轻负重
-		resetOriginalConWeightReduction(); // 重置原始的 CON 减轻负重
+		this.resetLevel(); // 重置等级
+		this.resetBaseHitup(); // 重置基本命中率
+		this.resetBaseDmgup(); // 重置基本伤害值
+		this.resetBaseMr(); // 重置基本魔防
+		this.resetBaseAc(); // 重置基本防御
+		this.resetOriginalHpup(); // 重置原本的最高 HP
+		this.resetOriginalMpup(); // 重置原本的最高 MP
+		this.resetOriginalDmgup(); // 重置原本的最高伤害值
+		this.resetOriginalBowDmgup(); // 重置原本的最高弓箭伤害值
+		this.resetOriginalHitup(); // 重置原本的最高命中率
+		this.resetOriginalBowHitup(); // 重置原本弓箭的最高命中率
+		this.resetOriginalMr(); // 重置原本的魔防
+		this.resetOriginalMagicHit(); // 重置原本的魔法命中率
+		this.resetOriginalMagicCritical();
+		this.resetOriginalMagicConsumeReduction(); // 重置原始魔法消耗减少
+		this.resetOriginalMagicDamage(); // 重置原始的魔法伤害值
+		this.resetOriginalAc(); // 重置原始的防御
+		this.resetOriginalEr(); // 重置原始的回避率
+		this.resetOriginalHpr(); // 重置原始的回血量
+		this.resetOriginalMpr(); // 重置原始的回魔量
+		this.resetOriginalStrWeightReduction(); // 重置原始的 STR 减轻负重
+		this.resetOriginalConWeightReduction(); // 重置原始的 CON 减轻负重
 	}
 
 	/** 删除书签 */
 	public void removeBookMark(final L1BookMark book) {
-		_bookmarks.remove(book);
+		this._bookmarks.remove(book);
 	}
 
 	/** 删除重复的魔法状态 */
 	public void removeHasteSkillEffect() {
-		if (hasSkillEffect(SLOW)) {
-			removeSkillEffect(SLOW);
+		if (this.hasSkillEffect(SLOW)) {
+			this.removeSkillEffect(SLOW);
 		}
-		if (hasSkillEffect(MASS_SLOW)) {
-			removeSkillEffect(MASS_SLOW);
+		if (this.hasSkillEffect(MASS_SLOW)) {
+			this.removeSkillEffect(MASS_SLOW);
 		}
-		if (hasSkillEffect(ENTANGLE)) {
-			removeSkillEffect(ENTANGLE);
+		if (this.hasSkillEffect(ENTANGLE)) {
+			this.removeSkillEffect(ENTANGLE);
 		}
-		if (hasSkillEffect(HASTE)) {
-			removeSkillEffect(HASTE);
+		if (this.hasSkillEffect(HASTE)) {
+			this.removeSkillEffect(HASTE);
 		}
-		if (hasSkillEffect(GREATER_HASTE)) {
-			removeSkillEffect(GREATER_HASTE);
+		if (this.hasSkillEffect(GREATER_HASTE)) {
+			this.removeSkillEffect(GREATER_HASTE);
 		}
-		if (hasSkillEffect(STATUS_HASTE)) {
-			removeSkillEffect(STATUS_HASTE);
+		if (this.hasSkillEffect(STATUS_HASTE)) {
+			this.removeSkillEffect(STATUS_HASTE);
 		}
 	}
 
 	/** 删除学习的技能 */
 	public void removeSkillMastery(final int skillid) {
-		if (skillList.contains(skillid)) {
-			skillList.remove((Object) skillid);
+		if (this.skillList.contains(skillid)) {
+			this.skillList.remove((Object) skillid);
 		}
 	}
 
@@ -3383,9 +3383,9 @@ public class L1PcInstance extends L1Character {
 	 * 角色AC状态的初始设定、LVUP,LVDown时呼出
 	 */
 	public void resetBaseAc() {
-		final int newAc = CalcStat.calcAc(getLevel(), getBaseDex());
-		addAc(newAc - _baseAc);
-		_baseAc = newAc;
+		final int newAc = CalcStat.calcAc(this.getLevel(), this.getBaseDex());
+		this.addAc(newAc - this._baseAc);
+		this._baseAc = newAc;
 	}
 
 	/**
@@ -3396,18 +3396,18 @@ public class L1PcInstance extends L1Character {
 	public void resetBaseDmgup() {
 		int newBaseDmgup = 0;
 		int newBaseBowDmgup = 0;
-		if (isKnight() || isDarkelf() || isDragonKnight()) { // 骑士、精灵、龙骑士
-			newBaseDmgup = getLevel() / 10;
+		if (this.isKnight() || this.isDarkelf() || this.isDragonKnight()) { // 骑士、精灵、龙骑士
+			newBaseDmgup = this.getLevel() / 10;
 			newBaseBowDmgup = 0;
 		}
-		else if (isElf()) { // 精灵
+		else if (this.isElf()) { // 精灵
 			newBaseDmgup = 0;
-			newBaseBowDmgup = getLevel() / 10;
+			newBaseBowDmgup = this.getLevel() / 10;
 		}
-		addDmgup(newBaseDmgup - _baseDmgup);
-		addBowDmgup(newBaseBowDmgup - _baseBowDmgup);
-		_baseDmgup = newBaseDmgup;
-		_baseBowDmgup = newBaseBowDmgup;
+		this.addDmgup(newBaseDmgup - this._baseDmgup);
+		this.addBowDmgup(newBaseBowDmgup - this._baseBowDmgup);
+		this._baseDmgup = newBaseDmgup;
+		this._baseBowDmgup = newBaseBowDmgup;
 	}
 
 	/**
@@ -3418,34 +3418,34 @@ public class L1PcInstance extends L1Character {
 	public void resetBaseHitup() {
 		int newBaseHitup = 0;
 		int newBaseBowHitup = 0;
-		if (isCrown()) { // 王族
-			newBaseHitup = getLevel() / 5;
-			newBaseBowHitup = getLevel() / 5;
+		if (this.isCrown()) { // 王族
+			newBaseHitup = this.getLevel() / 5;
+			newBaseBowHitup = this.getLevel() / 5;
 		}
-		else if (isKnight()) { // 骑士
-			newBaseHitup = getLevel() / 3;
-			newBaseBowHitup = getLevel() / 3;
+		else if (this.isKnight()) { // 骑士
+			newBaseHitup = this.getLevel() / 3;
+			newBaseBowHitup = this.getLevel() / 3;
 		}
-		else if (isElf()) { // 精灵
-			newBaseHitup = getLevel() / 5;
-			newBaseBowHitup = getLevel() / 5;
+		else if (this.isElf()) { // 精灵
+			newBaseHitup = this.getLevel() / 5;
+			newBaseBowHitup = this.getLevel() / 5;
 		}
-		else if (isDarkelf()) { // 黑暗精灵
-			newBaseHitup = getLevel() / 3;
-			newBaseBowHitup = getLevel() / 3;
+		else if (this.isDarkelf()) { // 黑暗精灵
+			newBaseHitup = this.getLevel() / 3;
+			newBaseBowHitup = this.getLevel() / 3;
 		}
-		else if (isDragonKnight()) { // 龙骑士
-			newBaseHitup = getLevel() / 3;
-			newBaseBowHitup = getLevel() / 3;
+		else if (this.isDragonKnight()) { // 龙骑士
+			newBaseHitup = this.getLevel() / 3;
+			newBaseBowHitup = this.getLevel() / 3;
 		}
-		else if (isIllusionist()) { // 幻术师
-			newBaseHitup = getLevel() / 5;
-			newBaseBowHitup = getLevel() / 5;
+		else if (this.isIllusionist()) { // 幻术师
+			newBaseHitup = this.getLevel() / 5;
+			newBaseBowHitup = this.getLevel() / 5;
 		}
-		addHitup(newBaseHitup - _baseHitup);
-		addBowHitup(newBaseBowHitup - _baseBowHitup);
-		_baseHitup = newBaseHitup;
-		_baseBowHitup = newBaseBowHitup;
+		this.addHitup(newBaseHitup - this._baseHitup);
+		this.addBowHitup(newBaseBowHitup - this._baseBowHitup);
+		this._baseHitup = newBaseHitup;
+		this._baseBowHitup = newBaseBowHitup;
 	}
 
 	/**
@@ -3453,604 +3453,604 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void resetBaseMr() {
 		int newMr = 0;
-		if (isCrown()) { // 王族
+		if (this.isCrown()) { // 王族
 			newMr = 10;
 		}
-		else if (isElf()) { // 精灵
+		else if (this.isElf()) { // 精灵
 			newMr = 25;
 		}
-		else if (isWizard()) { // 魔法师
+		else if (this.isWizard()) { // 魔法师
 			newMr = 15;
 		}
-		else if (isDarkelf()) { // 黑暗精灵
+		else if (this.isDarkelf()) { // 黑暗精灵
 			newMr = 10;
 		}
-		else if (isDragonKnight()) { // 龙骑士
+		else if (this.isDragonKnight()) { // 龙骑士
 			newMr = 18;
 		}
-		else if (isIllusionist()) { // 幻术师
+		else if (this.isIllusionist()) { // 幻术师
 			newMr = 20;
 		}
-		newMr += CalcStat.calcStatMr(getWis()); // 精神对魔防的加成
-		newMr += getLevel() / 2; // LVの半分だけ追加
-		addMr(newMr - _baseMr);
-		_baseMr = newMr;
+		newMr += CalcStat.calcStatMr(this.getWis()); // 精神对魔防的加成
+		newMr += this.getLevel() / 2; // LVの半分だけ追加
+		this.addMr(newMr - this._baseMr);
+		this._baseMr = newMr;
 	}
 
 	/**
 	 * 重新设定等级与目前的经验值匹配
 	 */
 	public void resetLevel() {
-		setLevel(ExpTable.getLevelByExp(_exp));
+		this.setLevel(ExpTable.getLevelByExp(this._exp));
 
-		if (_hpRegen != null) {
-			_hpRegen.updateLevel();
+		if (this._hpRegen != null) {
+			this._hpRegen.updateLevel();
 		}
 	}
 
 	/** 重置原始的防御 */
 	public void resetOriginalAc() {
-		final int originalDex = getOriginalDex();
-		if (isCrown()) {
+		final int originalDex = this.getOriginalDex();
+		if (this.isCrown()) {
 			if ((originalDex >= 12) && (originalDex <= 14)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if ((originalDex == 15) || (originalDex == 16)) {
-				_originalAc = 2;
+				this._originalAc = 2;
 			}
 			else if (originalDex >= 17) {
-				_originalAc = 3;
+				this._originalAc = 3;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalDex == 13) || (originalDex == 14)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if (originalDex >= 15) {
-				_originalAc = 3;
+				this._originalAc = 3;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalDex >= 15) && (originalDex <= 17)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if (originalDex == 18) {
-				_originalAc = 2;
+				this._originalAc = 2;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalDex >= 17) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalDex == 8) || (originalDex == 9)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if (originalDex >= 10) {
-				_originalAc = 2;
+				this._originalAc = 2;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalDex == 12) || (originalDex == 13)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if (originalDex >= 14) {
-				_originalAc = 2;
+				this._originalAc = 2;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalDex == 11) || (originalDex == 12)) {
-				_originalAc = 1;
+				this._originalAc = 1;
 			}
 			else if (originalDex >= 13) {
-				_originalAc = 2;
+				this._originalAc = 2;
 			}
 			else {
-				_originalAc = 0;
+				this._originalAc = 0;
 			}
 		}
 
-		addAc(0 - _originalAc);
+		this.addAc(0 - this._originalAc);
 	}
 
 	/** 重置原始的弓的最大伤害 */
 	public void resetOriginalBowDmgup() {
-		final int originalDex = getOriginalDex();
-		if (isCrown()) {
+		final int originalDex = this.getOriginalDex();
+		if (this.isCrown()) {
 			if (originalDex >= 13) {
-				_originalBowDmgup = 1;
+				this._originalBowDmgup = 1;
 			}
 			else {
-				_originalBowDmgup = 0;
+				this._originalBowDmgup = 0;
 			}
 		}
-		else if (isKnight()) {
-			_originalBowDmgup = 0;
+		else if (this.isKnight()) {
+			this._originalBowDmgup = 0;
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalDex >= 14) && (originalDex <= 16)) {
-				_originalBowDmgup = 2;
+				this._originalBowDmgup = 2;
 			}
 			else if (originalDex >= 17) {
-				_originalBowDmgup = 3;
+				this._originalBowDmgup = 3;
 			}
 			else {
-				_originalBowDmgup = 0;
+				this._originalBowDmgup = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalDex == 18) {
-				_originalBowDmgup = 2;
+				this._originalBowDmgup = 2;
 			}
 			else {
-				_originalBowDmgup = 0;
+				this._originalBowDmgup = 0;
 			}
 		}
-		else if (isWizard()) {
-			_originalBowDmgup = 0;
+		else if (this.isWizard()) {
+			this._originalBowDmgup = 0;
 		}
-		else if (isDragonKnight()) {
-			_originalBowDmgup = 0;
+		else if (this.isDragonKnight()) {
+			this._originalBowDmgup = 0;
 		}
-		else if (isIllusionist()) {
-			_originalBowDmgup = 0;
+		else if (this.isIllusionist()) {
+			this._originalBowDmgup = 0;
 		}
 	}
 
 	/** 重置原始的弓的最大命中率 */
 	public void resetOriginalBowHitup() {
-		final int originalDex = getOriginalDex();
-		if (isCrown()) {
-			_originalBowHitup = 0;
+		final int originalDex = this.getOriginalDex();
+		if (this.isCrown()) {
+			this._originalBowHitup = 0;
 		}
-		else if (isKnight()) {
-			_originalBowHitup = 0;
+		else if (this.isKnight()) {
+			this._originalBowHitup = 0;
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalDex >= 13) && (originalDex <= 15)) {
-				_originalBowHitup = 2;
+				this._originalBowHitup = 2;
 			}
 			else if (originalDex >= 16) {
-				_originalBowHitup = 3;
+				this._originalBowHitup = 3;
 			}
 			else {
-				_originalBowHitup = 0;
+				this._originalBowHitup = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalDex == 17) {
-				_originalBowHitup = 1;
+				this._originalBowHitup = 1;
 			}
 			else if (originalDex == 18) {
-				_originalBowHitup = 2;
+				this._originalBowHitup = 2;
 			}
 			else {
-				_originalBowHitup = 0;
+				this._originalBowHitup = 0;
 			}
 		}
-		else if (isWizard()) {
-			_originalBowHitup = 0;
+		else if (this.isWizard()) {
+			this._originalBowHitup = 0;
 		}
-		else if (isDragonKnight()) {
-			_originalBowHitup = 0;
+		else if (this.isDragonKnight()) {
+			this._originalBowHitup = 0;
 		}
-		else if (isIllusionist()) {
-			_originalBowHitup = 0;
+		else if (this.isIllusionist()) {
+			this._originalBowHitup = 0;
 		}
 	}
 
 	/** 重置原始的 CON 负重减轻 */
 	public void resetOriginalConWeightReduction() {
-		final int originalCon = getOriginalCon();
-		if (isCrown()) {
+		final int originalCon = this.getOriginalCon();
+		if (this.isCrown()) {
 			if (originalCon >= 11) {
-				_originalConWeightReduction = 1;
+				this._originalConWeightReduction = 1;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if (originalCon >= 15) {
-				_originalConWeightReduction = 1;
+				this._originalConWeightReduction = 1;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if (originalCon >= 15) {
-				_originalConWeightReduction = 2;
+				this._originalConWeightReduction = 2;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalCon >= 9) {
-				_originalConWeightReduction = 1;
+				this._originalConWeightReduction = 1;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalCon == 13) || (originalCon == 14)) {
-				_originalConWeightReduction = 1;
+				this._originalConWeightReduction = 1;
 			}
 			else if (originalCon >= 15) {
-				_originalConWeightReduction = 2;
+				this._originalConWeightReduction = 2;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
-		else if (isDragonKnight()) {
-			_originalConWeightReduction = 0;
+		else if (this.isDragonKnight()) {
+			this._originalConWeightReduction = 0;
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (originalCon == 17) {
-				_originalConWeightReduction = 1;
+				this._originalConWeightReduction = 1;
 			}
 			else if (originalCon == 18) {
-				_originalConWeightReduction = 2;
+				this._originalConWeightReduction = 2;
 			}
 			else {
-				_originalConWeightReduction = 0;
+				this._originalConWeightReduction = 0;
 			}
 		}
 	}
 
 	/** 重置原始的最大伤害 */
 	public void resetOriginalDmgup() {
-		final int originalStr = getOriginalStr();
-		if (isCrown()) {
+		final int originalStr = this.getOriginalStr();
+		if (this.isCrown()) {
 			if ((originalStr >= 15) && (originalStr <= 17)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr >= 18) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalStr == 18) || (originalStr == 19)) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else if (originalStr == 20) {
-				_originalDmgup = 4;
+				this._originalDmgup = 4;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalStr == 12) || (originalStr == 13)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr >= 14) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalStr >= 14) && (originalStr <= 17)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr == 18) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalStr == 10) || (originalStr == 11)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr >= 12) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalStr >= 15) && (originalStr <= 17)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr >= 18) {
-				_originalDmgup = 3;
+				this._originalDmgup = 3;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalStr == 13) || (originalStr == 14)) {
-				_originalDmgup = 1;
+				this._originalDmgup = 1;
 			}
 			else if (originalStr >= 15) {
-				_originalDmgup = 2;
+				this._originalDmgup = 2;
 			}
 			else {
-				_originalDmgup = 0;
+				this._originalDmgup = 0;
 			}
 		}
 	}
 
 	/** 重置原始的回避率 */
 	public void resetOriginalEr() {
-		final int originalDex = getOriginalDex();
-		if (isCrown()) {
+		final int originalDex = this.getOriginalDex();
+		if (this.isCrown()) {
 			if ((originalDex == 14) || (originalDex == 15)) {
-				_originalEr = 1;
+				this._originalEr = 1;
 			}
 			else if ((originalDex == 16) || (originalDex == 17)) {
-				_originalEr = 2;
+				this._originalEr = 2;
 			}
 			else if (originalDex == 18) {
-				_originalEr = 3;
+				this._originalEr = 3;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalDex == 14) || (originalDex == 15)) {
-				_originalEr = 1;
+				this._originalEr = 1;
 			}
 			else if (originalDex == 16) {
-				_originalEr = 3;
+				this._originalEr = 3;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
-		else if (isElf()) {
-			_originalEr = 0;
+		else if (this.isElf()) {
+			this._originalEr = 0;
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalDex >= 16) {
-				_originalEr = 2;
+				this._originalEr = 2;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalDex == 9) || (originalDex == 10)) {
-				_originalEr = 1;
+				this._originalEr = 1;
 			}
 			else if (originalDex == 11) {
-				_originalEr = 2;
+				this._originalEr = 2;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalDex == 13) || (originalDex == 14)) {
-				_originalEr = 1;
+				this._originalEr = 1;
 			}
 			else if (originalDex >= 15) {
-				_originalEr = 2;
+				this._originalEr = 2;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalDex == 12) || (originalDex == 13)) {
-				_originalEr = 1;
+				this._originalEr = 1;
 			}
 			else if (originalDex >= 14) {
-				_originalEr = 2;
+				this._originalEr = 2;
 			}
 			else {
-				_originalEr = 0;
+				this._originalEr = 0;
 			}
 		}
 	}
 
 	/** 重置原始的最大命中率 */
 	public void resetOriginalHitup() {
-		final int originalStr = getOriginalStr();
-		if (isCrown()) {
+		final int originalStr = this.getOriginalStr();
+		if (this.isCrown()) {
 			if ((originalStr >= 16) && (originalStr <= 18)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if (originalStr >= 19) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalStr == 17) || (originalStr == 18)) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else if (originalStr >= 19) {
-				_originalHitup = 4;
+				this._originalHitup = 4;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalStr == 13) || (originalStr == 14)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if (originalStr >= 15) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalStr >= 15) && (originalStr <= 17)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if (originalStr == 18) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalStr == 11) || (originalStr == 12)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if (originalStr >= 13) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalStr >= 14) && (originalStr <= 16)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if (originalStr >= 17) {
-				_originalHitup = 3;
+				this._originalHitup = 3;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalStr == 12) || (originalStr == 13)) {
-				_originalHitup = 1;
+				this._originalHitup = 1;
 			}
 			else if ((originalStr == 14) || (originalStr == 15)) {
-				_originalHitup = 2;
+				this._originalHitup = 2;
 			}
 			else if (originalStr == 16) {
-				_originalHitup = 3;
+				this._originalHitup = 3;
 			}
 			else if (originalStr >= 17) {
-				_originalHitup = 4;
+				this._originalHitup = 4;
 			}
 			else {
-				_originalHitup = 0;
+				this._originalHitup = 0;
 			}
 		}
 	}
 
 	/** 重置原始的回血 */
 	public void resetOriginalHpr() {
-		final int originalCon = getOriginalCon();
-		if (isCrown()) {
+		final int originalCon = this.getOriginalCon();
+		if (this.isCrown()) {
 			if ((originalCon == 13) || (originalCon == 14)) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if ((originalCon == 15) || (originalCon == 16)) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else if (originalCon == 17) {
-				_originalHpr = 3;
+				this._originalHpr = 3;
 			}
 			else if (originalCon == 18) {
-				_originalHpr = 4;
+				this._originalHpr = 4;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalCon == 16) || (originalCon == 17)) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else if (originalCon == 18) {
-				_originalHpr = 4;
+				this._originalHpr = 4;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalCon == 14) || (originalCon == 15)) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if (originalCon == 16) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else if (originalCon >= 17) {
-				_originalHpr = 3;
+				this._originalHpr = 3;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalCon == 11) || (originalCon == 12)) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if (originalCon >= 13) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalCon == 17) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if (originalCon == 18) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalCon == 16) || (originalCon == 17)) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if (originalCon == 18) {
-				_originalHpr = 3;
+				this._originalHpr = 3;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalCon == 14) || (originalCon == 15)) {
-				_originalHpr = 1;
+				this._originalHpr = 1;
 			}
 			else if (originalCon >= 16) {
-				_originalHpr = 2;
+				this._originalHpr = 2;
 			}
 			else {
-				_originalHpr = 0;
+				this._originalHpr = 0;
 			}
 		}
 	}
@@ -4060,470 +4060,470 @@ public class L1PcInstance extends L1Character {
 	 */
 	/** 重置原始的最大 HP */
 	public void resetOriginalHpup() {
-		final int originalCon = getOriginalCon();
-		if (isCrown()) {
+		final int originalCon = this.getOriginalCon();
+		if (this.isCrown()) {
 			if ((originalCon == 12) || (originalCon == 13)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if ((originalCon == 14) || (originalCon == 15)) {
-				_originalHpup = 2;
+				this._originalHpup = 2;
 			}
 			else if (originalCon >= 16) {
-				_originalHpup = 3;
+				this._originalHpup = 3;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalCon == 15) || (originalCon == 16)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon >= 17) {
-				_originalHpup = 3;
+				this._originalHpup = 3;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalCon >= 13) && (originalCon <= 17)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon == 18) {
-				_originalHpup = 2;
+				this._originalHpup = 2;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalCon == 10) || (originalCon == 11)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon >= 12) {
-				_originalHpup = 2;
+				this._originalHpup = 2;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalCon == 14) || (originalCon == 15)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon >= 16) {
-				_originalHpup = 2;
+				this._originalHpup = 2;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalCon == 15) || (originalCon == 16)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon >= 17) {
-				_originalHpup = 3;
+				this._originalHpup = 3;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalCon == 13) || (originalCon == 14)) {
-				_originalHpup = 1;
+				this._originalHpup = 1;
 			}
 			else if (originalCon >= 15) {
-				_originalHpup = 2;
+				this._originalHpup = 2;
 			}
 			else {
-				_originalHpup = 0;
+				this._originalHpup = 0;
 			}
 		}
 	}
 
 	/** 重置原始的魔力减免 */
 	public void resetOriginalMagicConsumeReduction() {
-		final int originalInt = getOriginalInt();
-		if (isCrown()) {
+		final int originalInt = this.getOriginalInt();
+		if (this.isCrown()) {
 			if ((originalInt == 11) || (originalInt == 12)) {
-				_originalMagicConsumeReduction = 1;
+				this._originalMagicConsumeReduction = 1;
 			}
 			else if (originalInt >= 13) {
-				_originalMagicConsumeReduction = 2;
+				this._originalMagicConsumeReduction = 2;
 			}
 			else {
-				_originalMagicConsumeReduction = 0;
+				this._originalMagicConsumeReduction = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalInt == 9) || (originalInt == 10)) {
-				_originalMagicConsumeReduction = 1;
+				this._originalMagicConsumeReduction = 1;
 			}
 			else if (originalInt >= 11) {
-				_originalMagicConsumeReduction = 2;
+				this._originalMagicConsumeReduction = 2;
 			}
 			else {
-				_originalMagicConsumeReduction = 0;
+				this._originalMagicConsumeReduction = 0;
 			}
 		}
-		else if (isElf()) {
-			_originalMagicConsumeReduction = 0;
+		else if (this.isElf()) {
+			this._originalMagicConsumeReduction = 0;
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalInt == 13) || (originalInt == 14)) {
-				_originalMagicConsumeReduction = 1;
+				this._originalMagicConsumeReduction = 1;
 			}
 			else if (originalInt >= 15) {
-				_originalMagicConsumeReduction = 2;
+				this._originalMagicConsumeReduction = 2;
 			}
 			else {
-				_originalMagicConsumeReduction = 0;
+				this._originalMagicConsumeReduction = 0;
 			}
 		}
-		else if (isWizard()) {
-			_originalMagicConsumeReduction = 0;
+		else if (this.isWizard()) {
+			this._originalMagicConsumeReduction = 0;
 		}
-		else if (isDragonKnight()) {
-			_originalMagicConsumeReduction = 0;
+		else if (this.isDragonKnight()) {
+			this._originalMagicConsumeReduction = 0;
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (originalInt == 14) {
-				_originalMagicConsumeReduction = 1;
+				this._originalMagicConsumeReduction = 1;
 			}
 			else if (originalInt >= 15) {
-				_originalMagicConsumeReduction = 2;
+				this._originalMagicConsumeReduction = 2;
 			}
 			else {
-				_originalMagicConsumeReduction = 0;
+				this._originalMagicConsumeReduction = 0;
 			}
 		}
 	}
 
 	public void resetOriginalMagicCritical() {
-		final int originalInt = getOriginalInt();
-		if (isCrown()) {
-			_originalMagicCritical = 0;
+		final int originalInt = this.getOriginalInt();
+		if (this.isCrown()) {
+			this._originalMagicCritical = 0;
 		}
-		else if (isKnight()) {
-			_originalMagicCritical = 0;
+		else if (this.isKnight()) {
+			this._originalMagicCritical = 0;
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalInt == 14) || (originalInt == 15)) {
-				_originalMagicCritical = 2;
+				this._originalMagicCritical = 2;
 			}
 			else if (originalInt >= 16) {
-				_originalMagicCritical = 4;
+				this._originalMagicCritical = 4;
 			}
 			else {
-				_originalMagicCritical = 0;
+				this._originalMagicCritical = 0;
 			}
 		}
-		else if (isDarkelf()) {
-			_originalMagicCritical = 0;
+		else if (this.isDarkelf()) {
+			this._originalMagicCritical = 0;
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalInt == 15) {
-				_originalMagicCritical = 2;
+				this._originalMagicCritical = 2;
 			}
 			else if (originalInt == 16) {
-				_originalMagicCritical = 4;
+				this._originalMagicCritical = 4;
 			}
 			else if (originalInt == 17) {
-				_originalMagicCritical = 6;
+				this._originalMagicCritical = 6;
 			}
 			else if (originalInt == 18) {
-				_originalMagicCritical = 8;
+				this._originalMagicCritical = 8;
 			}
 			else {
-				_originalMagicCritical = 0;
+				this._originalMagicCritical = 0;
 			}
 		}
-		else if (isDragonKnight()) {
-			_originalMagicCritical = 0;
+		else if (this.isDragonKnight()) {
+			this._originalMagicCritical = 0;
 		}
-		else if (isIllusionist()) {
-			_originalMagicCritical = 0;
+		else if (this.isIllusionist()) {
+			this._originalMagicCritical = 0;
 		}
 	}
 
 	/** 重置原始的魔法伤害 */
 	public void resetOriginalMagicDamage() {
-		final int originalInt = getOriginalInt();
-		if (isCrown()) {
-			_originalMagicDamage = 0;
+		final int originalInt = this.getOriginalInt();
+		if (this.isCrown()) {
+			this._originalMagicDamage = 0;
 		}
-		else if (isKnight()) {
-			_originalMagicDamage = 0;
+		else if (this.isKnight()) {
+			this._originalMagicDamage = 0;
 		}
-		else if (isElf()) {
-			_originalMagicDamage = 0;
+		else if (this.isElf()) {
+			this._originalMagicDamage = 0;
 		}
-		else if (isDarkelf()) {
-			_originalMagicDamage = 0;
+		else if (this.isDarkelf()) {
+			this._originalMagicDamage = 0;
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalInt >= 13) {
-				_originalMagicDamage = 1;
+				this._originalMagicDamage = 1;
 			}
 			else {
-				_originalMagicDamage = 0;
+				this._originalMagicDamage = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalInt == 13) || (originalInt == 14)) {
-				_originalMagicDamage = 1;
+				this._originalMagicDamage = 1;
 			}
 			else if ((originalInt == 15) || (originalInt == 16)) {
-				_originalMagicDamage = 2;
+				this._originalMagicDamage = 2;
 			}
 			else if (originalInt == 17) {
-				_originalMagicDamage = 3;
+				this._originalMagicDamage = 3;
 			}
 			else {
-				_originalMagicDamage = 0;
+				this._originalMagicDamage = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (originalInt == 16) {
-				_originalMagicDamage = 1;
+				this._originalMagicDamage = 1;
 			}
 			else if (originalInt == 17) {
-				_originalMagicDamage = 2;
+				this._originalMagicDamage = 2;
 			}
 			else {
-				_originalMagicDamage = 0;
+				this._originalMagicDamage = 0;
 			}
 		}
 	}
 
 	/** 重置原始的魔法命中率 */
 	public void resetOriginalMagicHit() {
-		final int originalInt = getOriginalInt();
-		if (isCrown()) {
+		final int originalInt = this.getOriginalInt();
+		if (this.isCrown()) {
 			if ((originalInt == 12) || (originalInt == 13)) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else if (originalInt >= 14) {
-				_originalMagicHit = 2;
+				this._originalMagicHit = 2;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalInt == 10) || (originalInt == 11)) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else if (originalInt == 12) {
-				_originalMagicHit = 2;
+				this._originalMagicHit = 2;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalInt == 13) || (originalInt == 14)) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else if (originalInt >= 15) {
-				_originalMagicHit = 2;
+				this._originalMagicHit = 2;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalInt == 12) || (originalInt == 13)) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else if (originalInt >= 14) {
-				_originalMagicHit = 2;
+				this._originalMagicHit = 2;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalInt >= 14) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalInt == 12) || (originalInt == 13)) {
-				_originalMagicHit = 2;
+				this._originalMagicHit = 2;
 			}
 			else if ((originalInt == 14) || (originalInt == 15)) {
-				_originalMagicHit = 3;
+				this._originalMagicHit = 3;
 			}
 			else if (originalInt >= 16) {
-				_originalMagicHit = 4;
+				this._originalMagicHit = 4;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (originalInt >= 13) {
-				_originalMagicHit = 1;
+				this._originalMagicHit = 1;
 			}
 			else {
-				_originalMagicHit = 0;
+				this._originalMagicHit = 0;
 			}
 		}
 	}
 
 	/** 重置原始的回魔 */
 	public void resetOriginalMpr() {
-		final int originalWis = getOriginalWis();
-		if (isCrown()) {
+		final int originalWis = this.getOriginalWis();
+		if (this.isCrown()) {
 			if ((originalWis == 13) || (originalWis == 14)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if (originalWis >= 15) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalWis == 11) || (originalWis == 12)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if (originalWis == 13) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalWis >= 15) && (originalWis <= 17)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if (originalWis == 18) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if (originalWis >= 13) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if ((originalWis == 14) || (originalWis == 15)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if ((originalWis == 16) || (originalWis == 17)) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else if (originalWis == 18) {
-				_originalMpr = 3;
+				this._originalMpr = 3;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if ((originalWis == 15) || (originalWis == 16)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if (originalWis >= 17) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalWis >= 14) && (originalWis <= 16)) {
-				_originalMpr = 1;
+				this._originalMpr = 1;
 			}
 			else if (originalWis >= 17) {
-				_originalMpr = 2;
+				this._originalMpr = 2;
 			}
 			else {
-				_originalMpr = 0;
+				this._originalMpr = 0;
 			}
 		}
 	}
 
 	/** 重置原始的最大 MP */
 	public void resetOriginalMpup() {
-		final int originalWis = getOriginalWis();
+		final int originalWis = this.getOriginalWis();
 		{
-			if (isCrown()) {
+			if (this.isCrown()) {
 				if (originalWis >= 16) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
-			else if (isKnight()) {
-				_originalMpup = 0;
+			else if (this.isKnight()) {
+				this._originalMpup = 0;
 			}
-			else if (isElf()) {
+			else if (this.isElf()) {
 				if ((originalWis >= 14) && (originalWis <= 16)) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else if (originalWis >= 17) {
-					_originalMpup = 2;
+					this._originalMpup = 2;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
-			else if (isDarkelf()) {
+			else if (this.isDarkelf()) {
 				if (originalWis >= 12) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
-			else if (isWizard()) {
+			else if (this.isWizard()) {
 				if ((originalWis >= 13) && (originalWis <= 16)) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else if (originalWis >= 17) {
-					_originalMpup = 2;
+					this._originalMpup = 2;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
-			else if (isDragonKnight()) {
+			else if (this.isDragonKnight()) {
 				if ((originalWis >= 13) && (originalWis <= 15)) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else if (originalWis >= 16) {
-					_originalMpup = 2;
+					this._originalMpup = 2;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
-			else if (isIllusionist()) {
+			else if (this.isIllusionist()) {
 				if ((originalWis >= 13) && (originalWis <= 15)) {
-					_originalMpup = 1;
+					this._originalMpup = 1;
 				}
 				else if (originalWis >= 16) {
-					_originalMpup = 2;
+					this._originalMpup = 2;
 				}
 				else {
-					_originalMpup = 0;
+					this._originalMpup = 0;
 				}
 			}
 		}
@@ -4531,149 +4531,149 @@ public class L1PcInstance extends L1Character {
 
 	/** 重置原始的魔防 */
 	public void resetOriginalMr() {
-		final int originalWis = getOriginalWis();
-		if (isCrown()) {
+		final int originalWis = this.getOriginalWis();
+		if (this.isCrown()) {
 			if ((originalWis == 12) || (originalWis == 13)) {
-				_originalMr = 1;
+				this._originalMr = 1;
 			}
 			else if (originalWis >= 14) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isKnight()) {
+		else if (this.isKnight()) {
 			if ((originalWis == 10) || (originalWis == 11)) {
-				_originalMr = 1;
+				this._originalMr = 1;
 			}
 			else if (originalWis >= 12) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if ((originalWis >= 13) && (originalWis <= 15)) {
-				_originalMr = 1;
+				this._originalMr = 1;
 			}
 			else if (originalWis >= 16) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalWis >= 11) && (originalWis <= 13)) {
-				_originalMr = 1;
+				this._originalMr = 1;
 			}
 			else if (originalWis == 14) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else if (originalWis == 15) {
-				_originalMr = 3;
+				this._originalMr = 3;
 			}
 			else if (originalWis >= 16) {
-				_originalMr = 4;
+				this._originalMr = 4;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalWis >= 15) {
-				_originalMr = 1;
+				this._originalMr = 1;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if (originalWis >= 14) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if ((originalWis >= 15) && (originalWis <= 17)) {
-				_originalMr = 2;
+				this._originalMr = 2;
 			}
 			else if (originalWis == 18) {
-				_originalMr = 4;
+				this._originalMr = 4;
 			}
 			else {
-				_originalMr = 0;
+				this._originalMr = 0;
 			}
 		}
 
-		addMr(_originalMr);
+		this.addMr(this._originalMr);
 	}
 
 	/** 重置原始的 STR 负重减轻 */
 	public void resetOriginalStrWeightReduction() {
-		final int originalStr = getOriginalStr();
-		if (isCrown()) {
+		final int originalStr = this.getOriginalStr();
+		if (this.isCrown()) {
 			if ((originalStr >= 14) && (originalStr <= 16)) {
-				_originalStrWeightReduction = 1;
+				this._originalStrWeightReduction = 1;
 			}
 			else if ((originalStr >= 17) && (originalStr <= 19)) {
-				_originalStrWeightReduction = 2;
+				this._originalStrWeightReduction = 2;
 			}
 			else if (originalStr == 20) {
-				_originalStrWeightReduction = 3;
+				this._originalStrWeightReduction = 3;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
-		else if (isKnight()) {
-			_originalStrWeightReduction = 0;
+		else if (this.isKnight()) {
+			this._originalStrWeightReduction = 0;
 		}
-		else if (isElf()) {
+		else if (this.isElf()) {
 			if (originalStr >= 16) {
-				_originalStrWeightReduction = 2;
+				this._originalStrWeightReduction = 2;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
-		else if (isDarkelf()) {
+		else if (this.isDarkelf()) {
 			if ((originalStr >= 13) && (originalStr <= 15)) {
-				_originalStrWeightReduction = 2;
+				this._originalStrWeightReduction = 2;
 			}
 			else if (originalStr >= 16) {
-				_originalStrWeightReduction = 3;
+				this._originalStrWeightReduction = 3;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
-		else if (isWizard()) {
+		else if (this.isWizard()) {
 			if (originalStr >= 9) {
-				_originalStrWeightReduction = 1;
+				this._originalStrWeightReduction = 1;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
-		else if (isDragonKnight()) {
+		else if (this.isDragonKnight()) {
 			if (originalStr >= 16) {
-				_originalStrWeightReduction = 1;
+				this._originalStrWeightReduction = 1;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
-		else if (isIllusionist()) {
+		else if (this.isIllusionist()) {
 			if (originalStr == 18) {
-				_originalStrWeightReduction = 1;
+				this._originalStrWeightReduction = 1;
 			}
 			else {
-				_originalStrWeightReduction = 0;
+				this._originalStrWeightReduction = 0;
 			}
 		}
 	}
@@ -4682,7 +4682,7 @@ public class L1PcInstance extends L1Character {
 	 * 恢复经验值
 	 */
 	public void resExp() {
-		final int oldLevel = getLevel();
+		final int oldLevel = this.getLevel();
 		final long needExp = ExpTable.getNeedExpNextLevel(oldLevel);
 		long exp = 0;
 		if (oldLevel < 45) {
@@ -4707,7 +4707,7 @@ public class L1PcInstance extends L1Character {
 		if (exp == 0) {
 			return;
 		}
-		addExp(exp);
+		this.addExp(exp);
 	}
 
 	/**
@@ -4716,10 +4716,10 @@ public class L1PcInstance extends L1Character {
 	 * @throws Exception
 	 */
 	public void save() throws Exception {
-		if (isGhost()) {
+		if (this.isGhost()) {
 			return;
 		}
-		if (isInCharReset()) {
+		if (this.isInCharReset()) {
 			return;
 		}
 
@@ -4730,9 +4730,9 @@ public class L1PcInstance extends L1Character {
 	 * 将角色身上道具的状态存入资料库。
 	 */
 	public void saveInventory() {
-		for (final L1ItemInstance item : getInventory().getItems()) {
-			getInventory().saveItem(item, item.getRecordingColumns());
-			getInventory().saveEnchantAccessory(item, item.getRecordingColumnsEnchantAccessory());
+		for (final L1ItemInstance item : this.getInventory().getItems()) {
+			this.getInventory().saveItem(item, item.getRecordingColumns());
+			this.getInventory().saveEnchantAccessory(item, item.getRecordingColumnsEnchantAccessory());
 		}
 	}
 
@@ -4743,12 +4743,12 @@ public class L1PcInstance extends L1Character {
 	 *            封包
 	 */
 	public void sendPackets(final ServerBasePacket serverbasepacket) {
-		if (_out == null) {
+		if (this._out == null) {
 			return;
 		}
 
 		try {
-			_out.sendPacket(serverbasepacket);
+			this._out.sendPacket(serverbasepacket);
 		}
 		catch (final Exception e) {
 		}
@@ -4761,186 +4761,186 @@ public class L1PcInstance extends L1Character {
 		// sendPackets(new S_Emblem(clan.getClanId()));
 		// }
 
-		if (getClanid() != 0) { // 有血盟
-			final L1Clan clan = L1World.getInstance().getClan(getClanname());
+		if (this.getClanid() != 0) { // 有血盟
+			final L1Clan clan = L1World.getInstance().getClan(this.getClanname());
 			if (clan != null) {
-				if (isCrown() && (getId() == clan.getLeaderId()) && // 王族ンスまたは王族ンセス、かつ、血盟主で自クランが城主
+				if (this.isCrown() && (this.getId() == clan.getLeaderId()) && // 王族ンスまたは王族ンセス、かつ、血盟主で自クランが城主
 						(clan.getCastleId() != 0)) {
-					sendPackets(new S_CastleMaster(clan.getCastleId(), getId()));
+					this.sendPackets(new S_CastleMaster(clan.getCastleId(), this.getId()));
 				}
 			}
 		}
 
-		sendVisualEffect();
+		this.sendVisualEffect();
 	}
 
 	/** 发送瞬移视觉效果 */
 	public void sendVisualEffectAtTeleport() {
-		if (isDrink()) { // liquorで醉っている
-			sendPackets(new S_Liquor(getId(), 1));
+		if (this.isDrink()) { // liquorで醉っている
+			this.sendPackets(new S_Liquor(this.getId(), 1));
 		}
 
-		sendVisualEffect();
+		this.sendVisualEffect();
 	}
 
 	/** 设定PK次数 */
 	public void set_PKcount(final int i) {
-		_PKcount = i;
+		this._PKcount = i;
 	}
 
 	/** 设定性别 */
 	public void set_sex(final int i) {
-		_sex = (byte) i;
+		this._sex = (byte) i;
 	}
 
 	/** 设定账号等级 */
 	public void setAccessLevel(final short i) {
-		_accessLevel = i;
+		this._accessLevel = i;
 	}
 
 	/** 设定账号名称 */
 	public void setAccountName(final String s) {
-		_accountName = s;
+		this._accountName = s;
 	}
 
 	/** 设定灵魂升华增加的HP */
 	public void setAdvenHp(final int i) {
-		_advenHp = i;
+		this._advenHp = i;
 	}
 
 	/** 设定灵魂升华增加的MP */
 	public void setAdvenMp(final int i) {
-		_advenMp = i;
+		this._advenMp = i;
 	}
 
 	/** 设定觉醒技能ID */
 	public void setAwakeSkillId(final int i) {
-		_awakeSkillId = i;
+		this._awakeSkillId = i;
 	}
 
 	/** 设定角色封锁 */
 	public void setBanned(final boolean flag) {
-		_banned = flag;
+		this._banned = flag;
 	}
 
 	/**  */
 	public void setBirthday() {
-		_birthday = new Timestamp(System.currentTimeMillis());
+		this._birthday = new Timestamp(System.currentTimeMillis());
 	}
 
 	/** 设定角色生日 */
 	public void setBirthday(final Timestamp time) {
-		_birthday = time;
+		this._birthday = time;
 	}
 
 	/** 设定奖励点分配状况 */
 	public void setBonusStats(final int i) {
-		_bonusStats = i;
+		this._bonusStats = i;
 	}
 
 	/** 设定呼叫血盟名称 */
 	public void setCallClanHeading(final int i) {
-		_callClanHeading = i;
+		this._callClanHeading = i;
 	}
 
 	/** 设定呼叫血盟ID */
 	public void setCallClanId(final int i) {
-		_callClanId = i;
+		this._callClanId = i;
 	}
 
 	/** 设定可以密语 */
 	public void setCanWhisper(final boolean flag) {
-		_isCanWhisper = flag;
+		this._isCanWhisper = flag;
 	}
 
 	/** 设定聊天组队 */
 	public void setChatParty(final L1ChatParty cp) {
-		_chatParty = cp;
+		this._chatParty = cp;
 	}
 
 	/** 设定血盟 ID */
 	public void setClanid(final int i) {
-		_clanid = i;
+		this._clanid = i;
 	}
 
 	/** 设定血盟名称 */
 	public void setClanname(final String s) {
-		clanname = s;
+		this.clanname = s;
 	}
 
 	/** 设定血盟内的阶级(联盟君主、守护骑士、一般、见习) */
 	public void setClanRank(final int i) {
-		_clanRank = i;
+		this._clanRank = i;
 	}
 
 	/** 设定角色的ClassId */
 	public void setClassId(final int i) {
-		_classId = i;
-		_classFeature = L1ClassFeature.newClassFeature(i);
+		this._classId = i;
+		this._classFeature = L1ClassFeature.newClassFeature(i);
 	}
 
 	/** 设定贡献度 */
 	public void setContribution(final int i) {
-		_contribution = i;
+		this._contribution = i;
 	}
 
 	/** 设定烹饪ID */
 	public void setCookingId(final int i) {
-		_cookingId = i;
+		this._cookingId = i;
 	}
 
 	@Override
 	public void setCurrentHp(final int i) {
-		if (getCurrentHp() == i) {
+		if (this.getCurrentHp() == i) {
 			return;
 		}
 		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
+		if (currentHp >= this.getMaxHp()) {
+			currentHp = this.getMaxHp();
 		}
-		setCurrentHpDirect(currentHp);
-		sendPackets(new S_HPUpdate(currentHp, getMaxHp()));
-		if (isInParty()) { // 组队中
-			getParty().updateMiniHP(this);
+		this.setCurrentHpDirect(currentHp);
+		this.sendPackets(new S_HPUpdate(currentHp, this.getMaxHp()));
+		if (this.isInParty()) { // 组队中
+			this.getParty().updateMiniHP(this);
 		}
 	}
 
 	@Override
 	public void setCurrentMp(final int i) {
-		if (getCurrentMp() == i) {
+		if (this.getCurrentMp() == i) {
 			return;
 		}
 		int currentMp = i;
-		if ((currentMp >= getMaxMp()) || isGm()) {
-			currentMp = getMaxMp();
+		if ((currentMp >= this.getMaxMp()) || this.isGm()) {
+			currentMp = this.getMaxMp();
 		}
-		setCurrentMpDirect(currentMp);
-		sendPackets(new S_MPUpdate(currentMp, getMaxMp()));
+		this.setCurrentMpDirect(currentMp);
+		this.sendPackets(new S_MPUpdate(currentMp, this.getMaxMp()));
 	}
 
 	/** 设定当前武器 */
 	public void setCurrentWeapon(final int i) {
-		_currentWeapon = i;
+		this._currentWeapon = i;
 	}
 
 	/** 设定角色删除时间 */
 	public void setDeleteTime(final Timestamp time) {
-		_deleteTime = time;
+		this._deleteTime = time;
 	}
 
 	/** 设定点心ID */
 	public void setDessertId(final int i) {
-		_dessertId = i;
+		this._dessertId = i;
 	}
 
 	/** 设定醉酒状态 */
 	public void setDrink(final boolean flag) {
-		_isDrink = flag;
+		this._isDrink = flag;
 	}
 
 	/** 设定精灵属性 */
 	public void setElfAttr(final int i) {
-		_elfAttr = i;
+		this._elfAttr = i;
 	}
 
 	/**
@@ -4949,7 +4949,7 @@ public class L1PcInstance extends L1Character {
 	 * @param i
 	 */
 	public void setElixirStats(final int i) {
-		_elixirStats = i;
+		this._elixirStats = i;
 	}
 
 	/**
@@ -4964,7 +4964,7 @@ public class L1PcInstance extends L1Character {
 		final int type = armor.getItem().getType();
 
 		// 取回角色背包道具
-		final L1PcInventory pcInventory = getInventory();
+		final L1PcInventory pcInventory = this.getInventory();
 
 		// 装备栏是否有空位
 		boolean equipeSpace;
@@ -4981,7 +4981,7 @@ public class L1PcInstance extends L1Character {
 		if (equipeSpace && !armor.isEquipped()) { // 要安装的装备栏尚未安装物品
 
 			// 取回变身编号
-			final int polyid = getTempCharGfx();
+			final int polyid = this.getTempCharGfx();
 
 			// 在此变身状态不能装备的装备
 			if (!L1PolyMorph.isEquipableArmor(polyid, type)) {
@@ -4990,33 +4990,33 @@ public class L1PcInstance extends L1Character {
 
 			// 已经装备其他东西。
 			if (((type == 13) && (pcInventory.getTypeEquipped(2, 7) >= 1)) || ((type == 7) && (pcInventory.getTypeEquipped(2, 13) >= 1))) {
-				sendPackets(new S_ServerMessage(124)); // 已经装备其他东西。
+				this.sendPackets(new S_ServerMessage(124)); // 已经装备其他东西。
 				return;
 			}
 
 			// 使用双手武器时无法装备盾牌
-			if ((type == 7) && (getWeapon() != null)) {
-				if (getWeapon().getItem().isTwohandedWeapon()) { // 双手武器
-					sendPackets(new S_ServerMessage(129)); // \f1当你使用双手武器时，无法装备盾牌。
+			if ((type == 7) && (this.getWeapon() != null)) {
+				if (this.getWeapon().getItem().isTwohandedWeapon()) { // 双手武器
+					this.sendPackets(new S_ServerMessage(129)); // \f1当你使用双手武器时，无法装备盾牌。
 					return;
 				}
 			}
 
 			// 穿着斗篷时不可穿内衣
 			if ((type == 3) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-				sendPackets(new S_ServerMessage(126, "$224", "$225")); // \f1穿着%1 无法装备 %0%o 。
+				this.sendPackets(new S_ServerMessage(126, "$224", "$225")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 
 			// 穿着盔甲时不可穿内衣
 			else if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
-				sendPackets(new S_ServerMessage(126, "$224", "$226")); // \f1穿着%1 无法装备 %0%o 。
+				this.sendPackets(new S_ServerMessage(126, "$224", "$226")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 
 			// 穿着斗篷时不可穿盔甲
 			else if ((type == 2) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-				sendPackets(new S_ServerMessage(126, "$226", "$225")); // \f1穿着%1 无法装备 %0%o 。
+				this.sendPackets(new S_ServerMessage(126, "$226", "$225")); // \f1穿着%1 无法装备 %0%o 。
 				return;
 			}
 			pcInventory.setEquipped(armor, true);
@@ -5025,7 +5025,7 @@ public class L1PcInstance extends L1Character {
 		// 防具脱除
 		else if (armor.isEquipped()) { // 所选防具穿戴在身上
 			if (armor.getItem().getBless() == 2) { // 被诅咒的装备
-				sendPackets(new S_ServerMessage(150)); // \f1你无法这样做。这个物品已经被诅咒了。
+				this.sendPackets(new S_ServerMessage(150)); // \f1你无法这样做。这个物品已经被诅咒了。
 				return;
 
 			}
@@ -5033,21 +5033,21 @@ public class L1PcInstance extends L1Character {
 
 				// 穿着盔甲时不能脱下内衣
 				if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
-					sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
+					this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
 					return;
 
 				}
 
 				// 穿着斗篷时不能脱下内衣
 				else if (((type == 2) || (type == 3)) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-					sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
+					this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
 					return;
 				}
 
 				// 解除坚固防御
 				if (type == 7) {
-					if (hasSkillEffect(SOLID_CARRIAGE)) {
-						removeSkillEffect(SOLID_CARRIAGE);
+					if (this.hasSkillEffect(SOLID_CARRIAGE)) {
+						this.removeSkillEffect(SOLID_CARRIAGE);
 					}
 				}
 				pcInventory.setEquipped(armor, false);
@@ -5055,20 +5055,20 @@ public class L1PcInstance extends L1Character {
 		}
 		else {
 			if (armor.getItem().getUseType() == 23) {
-				sendPackets(new S_ServerMessage(144)); // \f1你已经戴着二个戒指。
+				this.sendPackets(new S_ServerMessage(144)); // \f1你已经戴着二个戒指。
 				return;
 			}
 			else {
-				sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
+				this.sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
 				return;
 			}
 		}
 
-		setCurrentHp(getCurrentHp()); // 更新角色HP
-		setCurrentMp(getCurrentMp()); // 更新角色MP
-		sendPackets(new S_OwnCharAttrDef(null)); // 更新角色物理防御与四属性防御
-		sendPackets(new S_OwnCharStatus(null)); // 更新角色属性与能力值
-		sendPackets(new S_SPMR(null)); // 更新角色魔法攻击与魔法防御
+		this.setCurrentHp(this.getCurrentHp()); // 更新角色HP
+		this.setCurrentMp(this.getCurrentMp()); // 更新角色MP
+		this.sendPackets(new S_OwnCharAttrDef(null)); // 更新角色物理防御与四属性防御
+		this.sendPackets(new S_OwnCharStatus(null)); // 更新角色属性与能力值
+		this.sendPackets(new S_SPMR(null)); // 更新角色魔法攻击与魔法防御
 	}
 
 	/**
@@ -5080,16 +5080,16 @@ public class L1PcInstance extends L1Character {
 	public void setEquippedWeapon(final L1ItemInstance weapon) {
 
 		// 取回角色背包道具
-		final L1PcInventory pcInventory = getInventory();
+		final L1PcInventory pcInventory = this.getInventory();
 
 		// 没有使用武器或使用武器与所选武器不同
-		if ((getWeapon() == null) || !getWeapon().equals(weapon)) {
+		if ((this.getWeapon() == null) || !this.getWeapon().equals(weapon)) {
 
 			// 取回武器类型
 			final int weapon_type = weapon.getItem().getType();
 
 			// 取回变身编号
-			final int polyid = getTempCharGfx();
+			final int polyid = this.getTempCharGfx();
 
 			// 此变身状态不能使用的武器
 			if (!L1PolyMorph.isEquipableWeapon(polyid, weapon_type)) {
@@ -5098,141 +5098,141 @@ public class L1PcInstance extends L1Character {
 
 			// 装备盾牌时不可再使用双手武器
 			if (weapon.getItem().isTwohandedWeapon() && (pcInventory.getTypeEquipped(2, 7) >= 1)) {
-				sendPackets(new S_ServerMessage(128));
+				this.sendPackets(new S_ServerMessage(128));
 				return;
 			}
 		}
 
 		// 已有装备的状态
-		if (getWeapon() != null) {
+		if (this.getWeapon() != null) {
 
 			// 被诅咒的装备
-			if (getWeapon().getItem().getBless() == 2) {
-				sendPackets(new S_ServerMessage(150)); // \f1你无法这样做。这个物品已经被诅咒了。
+			if (this.getWeapon().getItem().getBless() == 2) {
+				this.sendPackets(new S_ServerMessage(150)); // \f1你无法这样做。这个物品已经被诅咒了。
 				return;
 			}
 
 			// 解除装备
-			if (getWeapon().equals(weapon)) {
-				pcInventory.setEquipped(getWeapon(), false, false, false);
+			if (this.getWeapon().equals(weapon)) {
+				pcInventory.setEquipped(this.getWeapon(), false, false, false);
 				return;
 			}
 			else { // 武器交换
-				pcInventory.setEquipped(getWeapon(), false, false, true);
+				pcInventory.setEquipped(this.getWeapon(), false, false, true);
 			}
 		}
 
 		// 被诅咒的装备
 		if (weapon.getItem().getBless() == 2) {
-			sendPackets(new S_ServerMessage(149, weapon.getLogName())); // \f1%0%s 主动固定在你的手上！
+			this.sendPackets(new S_ServerMessage(149, weapon.getLogName())); // \f1%0%s 主动固定在你的手上！
 		}
 		pcInventory.setEquipped(weapon, true, false, false);
 	}
 
 	@Override
 	public synchronized void setExp(final long i) {
-		_exp = i;
+		this._exp = i;
 	}
 
 	/** 设定恢复EXP */
 	public void setExpRes(final int i) {
-		_expRes = i;
+		this._expRes = i;
 	}
 
 	/** 设定战斗ID */
 	public void setFightId(final int i) {
-		_fightId = i;
+		this._fightId = i;
 	}
 
 	/** 设定钓鱼 */
 	public void setFishing(final boolean flag) {
-		_isFishing = flag;
+		this._isFishing = flag;
 	}
 
 	/** 设定准备好钓鱼 */
 	public void setFishingReady(final boolean flag) {
-		_isFishingReady = flag;
+		this._isFishingReady = flag;
 	}
 
 	/** 设定钓鱼时间 */
 	public void setFishingTime(final long i) {
-		_fishingTime = i;
+		this._fishingTime = i;
 	}
 
 	/** 设定钓鱼坐标X */
 	public void setFishX(final int i) {
-		_fishX = i;
+		this._fishX = i;
 	}
 
 	/** 设定钓鱼坐标Y */
 	public void setFishY(final int i) {
-		_fishY = i;
+		this._fishY = i;
 	}
 
 	/** 设定使用屠宰者判断 */
 	public void setFoeSlayer(final boolean FoeSlayer) {
-		_FoeSlayer = FoeSlayer;
+		this._FoeSlayer = FoeSlayer;
 	}
 
 	/** 设定GM */
 	public void setGm(final boolean flag) {
-		_gm = flag;
+		this._gm = flag;
 	}
 
 	/** 设定GM隐身 */
 	public void setGmInvis(final boolean flag) {
-		_gmInvis = flag;
+		this._gmInvis = flag;
 	}
 
 	/**  */
 	public void setGres(final boolean flag) {
-		_isGres = flag;
+		this._isGres = flag;
 	}
 
 	/** 设定地狱停留时间 (秒) */
 	public void setHellTime(final int i) {
-		_hellTime = i;
+		this._hellTime = i;
 	}
 
 	/** 设定过去最高等级 */
 	public void setHighLevel(final int i) {
-		_highLevel = i;
+		this._highLevel = i;
 	}
 
 	/** 设定所住村镇ID */
 	public void setHomeTownId(final int i) {
-		_homeTownId = i;
+		this._homeTownId = i;
 	}
 
 	/** 设定角色重新开始 */
 	public void setInCharReset(final boolean flag) {
-		_isInCharReset = flag;
+		this._isInCharReset = flag;
 	}
 
 	public void setInOrderList(final boolean bool) {
-		_order_list = bool;
+		this._order_list = bool;
 	}
 
 	@Override
 	public void setKarma(final int i) {
-		_karma.set(i);
+		this._karma.set(i);
 	}
 
 	/** 设定宠物竞速圈数 */
 	public void setLap(final int i) {
-		_lap = i;
+		this._lap = i;
 	}
 
 	/** 设定检查宠物竞速圈数 */
 	public void setLapCheck(final int i) {
-		_lapCheck = i;
+		this._lapCheck = i;
 	}
 
 	/**
 	 * 设定角色的最终PK时间为现在的时刻。
 	 */
 	public void setLastPk() {
-		_lastPk = new Timestamp(System.currentTimeMillis());
+		this._lastPk = new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
@@ -5242,60 +5242,60 @@ public class L1PcInstance extends L1Character {
 	 *            最终PK时间（Timestamp型） 解除する场合はnullを代入
 	 */
 	public void setLastPk(final Timestamp time) {
-		_lastPk = time;
+		this._lastPk = time;
 	}
 
 	public void setLastPkForElf() {
-		_lastPkForElf = new Timestamp(System.currentTimeMillis());
+		this._lastPkForElf = new Timestamp(System.currentTimeMillis());
 	}
 
 	public void setLastPkForElf(final Timestamp time) {
-		_lastPkForElf = time;
+		this._lastPkForElf = time;
 	}
 
 	/** 设定管理者 */
 	public void setMonitor(final boolean flag) {
-		_monitor = flag;
+		this._monitor = flag;
 	}
 
 	/** 设定网络连接状态 */
 	public void setNetConnection(final ClientThread clientthread) {
-		_netConnection = clientthread;
+		this._netConnection = clientthread;
 	}
 
 	/** 设定在线状态 */
 	public void setOnlineStatus(final int i) {
-		_onlineStatus = i;
+		this._onlineStatus = i;
 	}
 
 	/** 设定原始的魅力值 */
 	public void setOriginalCha(final int i) {
-		_originalCha = i;
+		this._originalCha = i;
 	}
 
 	/** 设定原始的体质值 */
 	public void setOriginalCon(final int i) {
-		_originalCon = i;
+		this._originalCon = i;
 	}
 
 	/** 设定原始的敏捷值 */
 	public void setOriginalDex(final int i) {
-		_originalDex = i;
+		this._originalDex = i;
 	}
 
 	/** 设定原始的智力值 */
 	public void setOriginalInt(final int i) {
-		_originalInt = i;
+		this._originalInt = i;
 	}
 
 	/** 设定原始的力量值 */
 	public void setOriginalStr(final int i) {
-		_originalStr = i;
+		this._originalStr = i;
 	}
 
 	/** 设定原始的精神值 */
 	public void setOriginalWis(final int i) {
-		_originalWis = i;
+		this._originalWis = i;
 	}
 
 	/**
@@ -5304,12 +5304,12 @@ public class L1PcInstance extends L1Character {
 	 * @param out
 	 */
 	public void setPacketOutput(final PacketOutput out) {
-		_out = out;
+		this._out = out;
 	}
 
 	/** 设定结婚伴侣ID */
 	public void setPartnerId(final int i) {
-		_partnerId = i;
+		this._partnerId = i;
 	}
 
 	/**
@@ -5318,27 +5318,27 @@ public class L1PcInstance extends L1Character {
 	 * @param i
 	 */
 	public void setPartnersPrivateShopItemCount(final int i) {
-		_partnersPrivateShopItemCount = i;
+		this._partnersPrivateShopItemCount = i;
 	}
 
 	/** 设定组队 */
 	public void setParty(final L1Party p) {
-		_party = p;
+		this._party = p;
 	}
 
 	/** 设定组队ID */
 	public void setPartyID(final int partyID) {
-		_partyID = partyID;
+		this._partyID = partyID;
 	}
 
 	/** 设定组队类型 */
 	public void setPartyType(final int type) {
-		_partyType = type;
+		this._partyType = type;
 	}
 
 	/** 设定村庄福利金 */
 	public void setPay(final int i) {
-		_pay = i;
+		this._pay = i;
 	}
 
 	/**
@@ -5347,7 +5347,7 @@ public class L1PcInstance extends L1Character {
 	 * @param target
 	 */
 	public void setPetTarget(final L1Character target) {
-		final Object[] petList = getPetList().values().toArray();
+		final Object[] petList = this.getPetList().values().toArray();
 		for (final Object pet : petList) {
 			if (pet instanceof L1PetInstance) {
 				final L1PetInstance pets = (L1PetInstance) pet;
@@ -5362,28 +5362,28 @@ public class L1PcInstance extends L1Character {
 
 	/** 设定粉名 */
 	public void setPinkName(final boolean flag) {
-		_isPinkName = flag;
+		this._isPinkName = flag;
 	}
 
 	/** 设定PK次数 (精灵用) */
 	public void setPkCountForElf(final int i) {
-		_PkCountForElf = i;
+		this._PkCountForElf = i;
 	}
 
 	@Override
 	public void setPoisonEffect(final int effectId) {
-		sendPackets(new S_Poison(getId(), effectId));
+		this.sendPackets(new S_Poison(this.getId(), effectId));
 
-		if (!isGmInvis() && !isGhost() && !isInvisble()) {
-			broadcastPacket(new S_Poison(getId(), effectId));
+		if (!this.isGmInvis() && !this.isGhost() && !this.isInvisble()) {
+			this.broadcastPacket(new S_Poison(this.getId(), effectId));
 		}
-		if (isGmInvis() || isGhost()) {
+		if (this.isGmInvis() || this.isGhost()) {
 		}
-		else if (isInvisble()) {
-			broadcastPacketForFindInvis(new S_Poison(getId(), effectId), true);
+		else if (this.isInvisble()) {
+			this.broadcastPacketForFindInvis(new S_Poison(this.getId(), effectId), true);
 		}
 		else {
-			broadcastPacket(new S_Poison(getId(), effectId));
+			this.broadcastPacket(new S_Poison(this.getId(), effectId));
 		}
 	}
 
@@ -5393,69 +5393,69 @@ public class L1PcInstance extends L1Character {
 	 * @param flag
 	 */
 	public void setPrivateShop(final boolean flag) {
-		_isPrivateShop = flag;
+		this._isPrivateShop = flag;
 	}
 
 	public void setRegenState(final int state) {
-		_mpRegen.setState(state);
-		_hpRegen.setState(state);
+		this._mpRegen.setState(state);
+		this._hpRegen.setState(state);
 	}
 
 	/** 设定变身 */
 	public void setShapeChange(final boolean isShapeChange) {
-		_isShapeChange = isShapeChange;
+		this._isShapeChange = isShapeChange;
 	}
 
 	/** 设定商店聊天 */
 	public void setShopChat(final byte[] chat) {
-		_shopChat = chat;
+		this._shopChat = chat;
 	}
 
 	/** 设定显示血盟聊天 */
 	public void setShowClanChat(final boolean flag) {
-		_isShowClanChat = flag;
+		this._isShowClanChat = flag;
 	}
 
 	/** 设定显示组队聊天 */
 	public void setShowPartyChat(final boolean flag) {
-		_isShowPartyChat = flag;
+		this._isShowPartyChat = flag;
 	}
 
 	/** 设定显示交易聊天 */
 	public void setShowTradeChat(final boolean flag) {
-		_isShowTradeChat = flag;
+		this._isShowTradeChat = flag;
 	}
 
 	/** 设定显示世界聊天 */
 	public void setShowWorldChat(final boolean flag) {
-		_isShowWorldChat = flag;
+		this._isShowWorldChat = flag;
 	}
 
 	/** 设定学习技能 */
 	public void setSkillMastery(final int skillid) {
-		if (!skillList.contains(skillid)) {
-			skillList.add(skillid);
+		if (!this.skillList.contains(skillid)) {
+			this.skillList.add(skillid);
 		}
 	}
 
 	/** 设定判断是否无道具施法(召戒清单、变身清单) */
 	public void setSummonMonster(final boolean SummonMonster) {
-		_isSummonMonster = SummonMonster;
+		this._isSummonMonster = SummonMonster;
 	}
 
 	/** 设定瞬移 */
 	public void setTeleport(final boolean flag) {
-		_isTeleport = flag;
+		this._isTeleport = flag;
 	}
 
 	/** 设定传送目的地面向 */
 	public void setTeleportHeading(final int i) {
-		_teleportHeading = i;
+		this._teleportHeading = i;
 	}
 
 	/** 设定传送目的地地图ID */
 	public void setTeleportMapId(final short i) {
-		_teleportMapId = i;
+		this._teleportMapId = i;
 	}
 
 	/**
@@ -5464,7 +5464,7 @@ public class L1PcInstance extends L1Character {
 	 * @param i
 	 */
 	public void setTeleportX(final int i) {
-		_teleportX = i;
+		this._teleportX = i;
 	}
 
 	/**
@@ -5473,27 +5473,27 @@ public class L1PcInstance extends L1Character {
 	 * @param i
 	 */
 	public void setTeleportY(final int i) {
-		_teleportY = i;
+		this._teleportY = i;
 	}
 
 	/** 设定角色死亡时的临时GFX图像 */
 	public void setTempCharGfxAtDead(final int i) {
-		_tempCharGfxAtDead = i;
+		this._tempCharGfxAtDead = i;
 	}
 
 	/** 设定临时ID */
 	public void setTempID(final int tempID) {
-		_tempID = tempID;
+		this._tempID = tempID;
 	}
 
 	/** 设定临时等级 */
 	public void setTempLevel(final int i) {
-		_tempLevel = i;
+		this._tempLevel = i;
 	}
 
 	/** 设定临时最高等级 */
 	public void setTempMaxLevel(final int i) {
-		_tempMaxLevel = i;
+		this._tempMaxLevel = i;
 	}
 
 	/**
@@ -5502,7 +5502,7 @@ public class L1PcInstance extends L1Character {
 	 * @param text
 	 */
 	public void setText(final String text) {
-		_text = text;
+		this._text = text;
 	}
 
 	/**
@@ -5511,17 +5511,17 @@ public class L1PcInstance extends L1Character {
 	 * @param textByte
 	 */
 	public void setTextByte(final byte[] textByte) {
-		_textByte = textByte;
+		this._textByte = textByte;
 	}
 
 	/** 设定交易ID */
 	public void setTradeID(final int tradeID) {
-		_tradeID = tradeID;
+		this._tradeID = tradeID;
 	}
 
 	/** 设定交易OK */
 	public void setTradeOk(final boolean tradeOk) {
-		_tradeOk = tradeOk;
+		this._tradeOk = tradeOk;
 	}
 
 	/**
@@ -5530,12 +5530,12 @@ public class L1PcInstance extends L1Character {
 	 * @param flag
 	 */
 	public void setTradingInPrivateShop(final boolean flag) {
-		_isTradingInPrivateShop = flag;
+		this._isTradingInPrivateShop = flag;
 	}
 
 	/** 设定类型 */
 	public void setType(final int i) {
-		_type = i;
+		this._type = i;
 	}
 
 	/**
@@ -5544,7 +5544,7 @@ public class L1PcInstance extends L1Character {
 	 * @param weapon
 	 */
 	public void setWeapon(final L1ItemInstance weapon) {
-		_weapon = weapon;
+		this._weapon = weapon;
 	}
 
 	/**
@@ -5554,7 +5554,7 @@ public class L1PcInstance extends L1Character {
 	 * @return true:是 false:不是
 	 */
 	public boolean simWarResult(final L1Character lastAttacker) {
-		if (getClanid() == 0) { // 没有血盟
+		if (this.getClanid() == 0) { // 没有血盟
 			return false;
 		}
 		if (Config.SIM_WAR_PENALTY) { // 模拟战中false
@@ -5579,19 +5579,19 @@ public class L1PcInstance extends L1Character {
 
 		// 取得全部战争列表
 		for (final L1War war : L1World.getInstance().getWarList()) {
-			final L1Clan clan = L1World.getInstance().getClan(getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(this.getClanname());
 
 			final int warType = war.GetWarType();
-			final boolean isInWar = war.CheckClanInWar(getClanname());
+			final boolean isInWar = war.CheckClanInWar(this.getClanname());
 			if ((attacker != null) && (attacker.getClanid() != 0)) { // lastAttackerがPC、サモン、ペットでクラン所属中
-				sameWar = war.CheckClanInSameWar(getClanname(), attacker.getClanname());
+				sameWar = war.CheckClanInSameWar(this.getClanname(), attacker.getClanname());
 			}
 
-			if ((getId() == clan.getLeaderId()) && // 血盟主で模拟战中
+			if ((this.getId() == clan.getLeaderId()) && // 血盟主で模拟战中
 					(warType == 2) && (isInWar == true)) {
-				enemyClanName = war.GetEnemyClanName(getClanname());
+				enemyClanName = war.GetEnemyClanName(this.getClanname());
 				if (enemyClanName != null) {
-					war.CeaseWar(getClanname(), enemyClanName); // 终结
+					war.CeaseWar(this.getClanname(), enemyClanName); // 终结
 				}
 			}
 
@@ -5606,10 +5606,10 @@ public class L1PcInstance extends L1Character {
 	public void startHpRegeneration() {
 		final int INTERVAL = 1000;
 
-		if (!_hpRegenActive) {
-			_hpRegen = new HpRegeneration(this);
-			_regenTimer.scheduleAtFixedRate(_hpRegen, INTERVAL, INTERVAL);
-			_hpRegenActive = true;
+		if (!this._hpRegenActive) {
+			this._hpRegen = new HpRegeneration(this);
+			_regenTimer.scheduleAtFixedRate(this._hpRegen, INTERVAL, INTERVAL);
+			this._hpRegenActive = true;
 		}
 	}
 
@@ -5620,10 +5620,10 @@ public class L1PcInstance extends L1Character {
 		if (L1MagicDoll.isHpRegeneration(this)) {
 			isExistHprDoll = true;
 		}
-		if (!_hpRegenActiveByDoll && isExistHprDoll) {
-			_hpRegenByDoll = new HpRegenerationByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_hpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
-			_hpRegenActiveByDoll = true;
+		if (!this._hpRegenActiveByDoll && isExistHprDoll) {
+			this._hpRegenByDoll = new HpRegenerationByDoll(this);
+			_regenTimer.scheduleAtFixedRate(this._hpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
+			this._hpRegenActiveByDoll = true;
 		}
 	}
 
@@ -5634,20 +5634,20 @@ public class L1PcInstance extends L1Character {
 		if (L1MagicDoll.isItemMake(this)) {
 			isExistItemMakeDoll = true;
 		}
-		if (!_ItemMakeActiveByDoll && isExistItemMakeDoll) {
-			_itemMakeByDoll = new ItemMakeByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_itemMakeByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
-			_ItemMakeActiveByDoll = true;
+		if (!this._ItemMakeActiveByDoll && isExistItemMakeDoll) {
+			this._itemMakeByDoll = new ItemMakeByDoll(this);
+			_regenTimer.scheduleAtFixedRate(this._itemMakeByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
+			this._ItemMakeActiveByDoll = true;
 		}
 	}
 
 	/** 开始觉醒恢复玩家魔力 */
 	public void startMpReductionByAwake() {
 		final int INTERVAL_BY_AWAKE = 4000;
-		if (!_mpReductionActiveByAwake) {
-			_mpReductionByAwake = new MpReductionByAwake(this);
-			_regenTimer.scheduleAtFixedRate(_mpReductionByAwake, INTERVAL_BY_AWAKE, INTERVAL_BY_AWAKE);
-			_mpReductionActiveByAwake = true;
+		if (!this._mpReductionActiveByAwake) {
+			this._mpReductionByAwake = new MpReductionByAwake(this);
+			_regenTimer.scheduleAtFixedRate(this._mpReductionByAwake, INTERVAL_BY_AWAKE, INTERVAL_BY_AWAKE);
+			this._mpReductionActiveByAwake = true;
 		}
 	}
 
@@ -5655,10 +5655,10 @@ public class L1PcInstance extends L1Character {
 	public void startMpRegeneration() {
 		final int INTERVAL = 1000;
 
-		if (!_mpRegenActive) {
-			_mpRegen = new MpRegeneration(this);
-			_regenTimer.scheduleAtFixedRate(_mpRegen, INTERVAL, INTERVAL);
-			_mpRegenActive = true;
+		if (!this._mpRegenActive) {
+			this._mpRegen = new MpRegeneration(this);
+			_regenTimer.scheduleAtFixedRate(this._mpRegen, INTERVAL, INTERVAL);
+			this._mpRegenActive = true;
 		}
 	}
 
@@ -5669,17 +5669,17 @@ public class L1PcInstance extends L1Character {
 		if (L1MagicDoll.isMpRegeneration(this)) {
 			isExistMprDoll = true;
 		}
-		if (!_mpRegenActiveByDoll && isExistMprDoll) {
-			_mpRegenByDoll = new MpRegenerationByDoll(this);
-			_regenTimer.scheduleAtFixedRate(_mpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
-			_mpRegenActiveByDoll = true;
+		if (!this._mpRegenActiveByDoll && isExistMprDoll) {
+			this._mpRegenByDoll = new MpRegenerationByDoll(this);
+			_regenTimer.scheduleAtFixedRate(this._mpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
+			this._mpRegenActiveByDoll = true;
 		}
 	}
 
 	/** 开始自动更新物件 */
 	public void startObjectAutoUpdate() {
-		removeAllKnownObjects();
-		_autoUpdateFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcAutoUpdate(getId()), 0L, INTERVAL_AUTO_UPDATE);
+		this.removeAllKnownObjects();
+		this._autoUpdateFuture = GeneralThreadPool.getInstance().pcScheduleAtFixedRate(new L1PcAutoUpdate(this.getId()), 0L, INTERVAL_AUTO_UPDATE);
 	}
 
 	/** 组队更新 3.3C */
@@ -5687,13 +5687,13 @@ public class L1PcInstance extends L1Character {
 
 		final int INTERVAL = 25000;
 
-		if (!_rpActive) {
+		if (!this._rpActive) {
 
-			_rp = new L1PartyRefresh(this);
+			this._rp = new L1PartyRefresh(this);
 
-			_regenTimer.scheduleAtFixedRate(_rp, INTERVAL, INTERVAL);
+			_regenTimer.scheduleAtFixedRate(this._rp, INTERVAL, INTERVAL);
 
-			_rpActive = true;
+			this._rpActive = true;
 
 		}
 
@@ -5703,77 +5703,77 @@ public class L1PcInstance extends L1Character {
 	 * 停止各种监控任务。
 	 */
 	public void stopEtcMonitor() {
-		if (_autoUpdateFuture != null) {
-			_autoUpdateFuture.cancel(true);
-			_autoUpdateFuture = null;
+		if (this._autoUpdateFuture != null) {
+			this._autoUpdateFuture.cancel(true);
+			this._autoUpdateFuture = null;
 		}
-		if (_expMonitorFuture != null) {
-			_expMonitorFuture.cancel(true);
-			_expMonitorFuture = null;
+		if (this._expMonitorFuture != null) {
+			this._expMonitorFuture.cancel(true);
+			this._expMonitorFuture = null;
 		}
-		if (_ghostFuture != null) {
-			_ghostFuture.cancel(true);
-			_ghostFuture = null;
+		if (this._ghostFuture != null) {
+			this._ghostFuture.cancel(true);
+			this._ghostFuture = null;
 		}
 
-		if (_hellFuture != null) {
-			_hellFuture.cancel(true);
-			_hellFuture = null;
+		if (this._hellFuture != null) {
+			this._hellFuture.cancel(true);
+			this._hellFuture = null;
 		}
 
 	}
 
 	/** 停止玩家恢复自身体力 */
 	public void stopHpRegeneration() {
-		if (_hpRegenActive) {
-			_hpRegen.cancel();
-			_hpRegen = null;
-			_hpRegenActive = false;
+		if (this._hpRegenActive) {
+			this._hpRegen.cancel();
+			this._hpRegen = null;
+			this._hpRegenActive = false;
 		}
 	}
 
 	/** 停止娃娃恢复玩家体力 */
 	public void stopHpRegenerationByDoll() {
-		if (_hpRegenActiveByDoll) {
-			_hpRegenByDoll.cancel();
-			_hpRegenByDoll = null;
-			_hpRegenActiveByDoll = false;
+		if (this._hpRegenActiveByDoll) {
+			this._hpRegenByDoll.cancel();
+			this._hpRegenByDoll = null;
+			this._hpRegenActiveByDoll = false;
 		}
 	}
 
 	/** 取得道具停止 */
 	public void stopItemMakeByDoll() {
-		if (_ItemMakeActiveByDoll) {
-			_itemMakeByDoll.cancel();
-			_itemMakeByDoll = null;
-			_ItemMakeActiveByDoll = false;
+		if (this._ItemMakeActiveByDoll) {
+			this._itemMakeByDoll.cancel();
+			this._itemMakeByDoll = null;
+			this._ItemMakeActiveByDoll = false;
 		}
 	}
 
 	/** 停止觉醒恢复玩家魔力 */
 	public void stopMpReductionByAwake() {
-		if (_mpReductionActiveByAwake) {
-			_mpReductionByAwake.cancel();
-			_mpReductionByAwake = null;
-			_mpReductionActiveByAwake = false;
+		if (this._mpReductionActiveByAwake) {
+			this._mpReductionByAwake.cancel();
+			this._mpReductionByAwake = null;
+			this._mpReductionActiveByAwake = false;
 		}
 	}
 
 	/** 停止玩家恢复自身魔力 */
 	public void stopMpRegeneration() {
-		if (_mpRegenActive) {
-			_mpRegen.cancel();
-			_mpRegen = null;
-			_mpRegenActive = false;
+		if (this._mpRegenActive) {
+			this._mpRegen.cancel();
+			this._mpRegen = null;
+			this._mpRegenActive = false;
 		}
 	}
 
 	/** 停止娃娃恢复玩家魔力 */
 	public void stopMpRegenerationByDoll() {
-		if (_mpRegenActiveByDoll) {
-			_mpRegenByDoll.cancel();
-			_mpRegenByDoll = null;
-			_mpRegenActiveByDoll = false;
+		if (this._mpRegenActiveByDoll) {
+			this._mpRegenByDoll.cancel();
+			this._mpRegenByDoll = null;
+			this._mpRegenActiveByDoll = false;
 		}
 	}
 
@@ -5781,56 +5781,56 @@ public class L1PcInstance extends L1Character {
 	 * 复活后移出死亡清单
 	 */
 	public void stopPcDeleteTimer() {
-		if (_pcDeleteTimer != null) {
-			_pcDeleteTimer.cancel();
-			_pcDeleteTimer = null;
+		if (this._pcDeleteTimer != null) {
+			this._pcDeleteTimer.cancel();
+			this._pcDeleteTimer = null;
 		}
 	}
 
 	/** 组队暂停更新 3.3C */
 	public void stopRefreshParty() {
 
-		if (_rpActive) {
+		if (this._rpActive) {
 
-			_rp.cancel();
+			this._rp.cancel();
 
-			_rp = null;
+			this._rp = null;
 
-			_rpActive = false;
+			this._rpActive = false;
 
 		}
 	}
 
 	/** 更新范围内的物件 */
 	public void updateObject() {
-		removeOutOfRangeObjects();
+		this.removeOutOfRangeObjects();
 
-		if (getMapId() <= 10000) {
+		if (this.getMapId() <= 10000) {
 			for (final L1Object visible : L1World.getInstance().getVisibleObjects(this, Config.PC_RECOGNIZE_RANGE)) {
-				if (!knownsObject(visible)) {
+				if (!this.knownsObject(visible)) {
 					visible.onPerceive(this);
 				}
 				else {
 					if (visible instanceof L1NpcInstance) {
 						final L1NpcInstance npc = (L1NpcInstance) visible;
-						if (getLocation().isInScreen(npc.getLocation()) && (npc.getHiddenStatus() != 0)) {
+						if (this.getLocation().isInScreen(npc.getLocation()) && (npc.getHiddenStatus() != 0)) {
 							npc.approachPlayer(this);
 						}
 					}
 				}
-				if (hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
-					sendPackets(new S_HPMeter((L1Character) visible));
+				if (this.hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
+					this.sendPackets(new S_HPMeter((L1Character) visible));
 				}
 			}
 		}
 		else { // 旅馆内判断
 			for (final L1Object visible : L1World.getInstance().getVisiblePlayer(this)) {
-				if (!knownsObject(visible)) {
+				if (!this.knownsObject(visible)) {
 					visible.onPerceive(this);
 				}
-				if (hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
-					if (getInnKeyId() == ((L1Character) visible).getInnKeyId()) {
-						sendPackets(new S_HPMeter((L1Character) visible));
+				if (this.hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
+					if (this.getInnKeyId() == ((L1Character) visible).getInnKeyId()) {
+						this.sendPackets(new S_HPMeter((L1Character) visible));
 					}
 				}
 			}
@@ -5840,11 +5840,11 @@ public class L1PcInstance extends L1Character {
 	/** 惩罚结果 */
 	private void caoPenaltyResult(final int count) {
 		for (int i = 0; i < count; i++) {
-			final L1ItemInstance item = getInventory().CaoPenalty();
+			final L1ItemInstance item = this.getInventory().CaoPenalty();
 
 			if (item != null) {
-				getInventory().tradeItem(item, item.isStackable() ? item.getCount() : 1, L1World.getInstance().getInventory(getX(), getY(), getMapId()));
-				sendPackets(new S_ServerMessage(638, item.getLogName())); // 您损失了 %0。
+				this.getInventory().tradeItem(item, item.isStackable() ? item.getCount() : 1, L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId()));
+				this.sendPackets(new S_ServerMessage(638, item.getLogName())); // 您损失了 %0。
 			}
 			else {
 			}
@@ -5881,38 +5881,38 @@ public class L1PcInstance extends L1Character {
 	 * @param gap
 	 */
 	private void levelDown(final int gap) {
-		resetLevel();
+		this.resetLevel();
 
 		for (int i = 0; i > gap; i--) {
 			// レベルダウン时はランダム值をそのままマイナスする为に、base值に0を设定
-			final short randomHp = CalcStat.calcStatHp(getType(), 0, getBaseCon(), getOriginalHpup());
-			final short randomMp = CalcStat.calcStatMp(getType(), 0, getBaseWis(), getOriginalMpup());
-			addBaseMaxHp((short) -randomHp);
-			addBaseMaxMp((short) -randomMp);
+			final short randomHp = CalcStat.calcStatHp(this.getType(), 0, this.getBaseCon(), this.getOriginalHpup());
+			final short randomMp = CalcStat.calcStatMp(this.getType(), 0, this.getBaseWis(), this.getOriginalMpup());
+			this.addBaseMaxHp((short) -randomHp);
+			this.addBaseMaxMp((short) -randomMp);
 		}
-		resetBaseHitup();
-		resetBaseDmgup();
-		resetBaseAc();
-		resetBaseMr();
+		this.resetBaseHitup();
+		this.resetBaseDmgup();
+		this.resetBaseAc();
+		this.resetBaseMr();
 		if (Config.LEVEL_DOWN_RANGE != 0) {
-			if (getHighLevel() - getLevel() >= Config.LEVEL_DOWN_RANGE) {
-				sendPackets(new S_ServerMessage(64)); // 连线中断。
-				sendPackets(new S_Disconnect());
-				_log.info(String.format("超过允许等级上下限差异的范围，切断 %s的连线。", getName()));
+			if (this.getHighLevel() - this.getLevel() >= Config.LEVEL_DOWN_RANGE) {
+				this.sendPackets(new S_ServerMessage(64)); // 连线中断。
+				this.sendPackets(new S_Disconnect());
+				_log.info(String.format("超过允许等级上下限差异的范围，切断 %s的连线。", this.getName()));
 			}
 		}
 
 		try {
 			// 将资料保存到资料库
-			save();
+			this.save();
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		sendPackets(new S_OwnCharStatus(this));
+		this.sendPackets(new S_OwnCharStatus(this));
 
 		// 处理新手保护系统(遭遇的守护)状态资料的变动
-		checkNoviceType();
+		this.checkNoviceType();
 	}
 
 	/**
@@ -5921,80 +5921,80 @@ public class L1PcInstance extends L1Character {
 	 * @param gap
 	 */
 	private void levelUp(final int gap) {
-		resetLevel();
+		this.resetLevel();
 
 		// 返生药水
-		if ((getLevel() == 99) && Config.ALT_REVIVAL_POTION) {
+		if ((this.getLevel() == 99) && Config.ALT_REVIVAL_POTION) {
 			try {
 				final L1Item l1item = ItemTable.getInstance().getTemplate(43000);
 				if (l1item != null) {
-					getInventory().storeItem(43000, 1);
-					sendPackets(new S_ServerMessage(403, l1item.getName())); // 获得%0%o 。
+					this.getInventory().storeItem(43000, 1);
+					this.sendPackets(new S_ServerMessage(403, l1item.getName())); // 获得%0%o 。
 				}
 				else {
-					sendPackets(new S_SystemMessage("返生药水取得失败。"));
+					this.sendPackets(new S_SystemMessage("返生药水取得失败。"));
 				}
 			}
 			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				sendPackets(new S_SystemMessage("返生药水取得失败。"));
+				this.sendPackets(new S_SystemMessage("返生药水取得失败。"));
 			}
 		}
 
 		for (int i = 0; i < gap; i++) {
-			final short randomHp = CalcStat.calcStatHp(getType(), getBaseMaxHp(), getBaseCon(), getOriginalHpup());
-			final short randomMp = CalcStat.calcStatMp(getType(), getBaseMaxMp(), getBaseWis(), getOriginalMpup());
-			addBaseMaxHp(randomHp);
-			addBaseMaxMp(randomMp);
+			final short randomHp = CalcStat.calcStatHp(this.getType(), this.getBaseMaxHp(), this.getBaseCon(), this.getOriginalHpup());
+			final short randomMp = CalcStat.calcStatMp(this.getType(), this.getBaseMaxMp(), this.getBaseWis(), this.getOriginalMpup());
+			this.addBaseMaxHp(randomHp);
+			this.addBaseMaxMp(randomMp);
 
 			if (Config.LvUpHpMpFull) {
-				setCurrentHp(getMaxHp()); // 升级血满
-				setCurrentMp(getMaxMp()); // 升级魔满
+				this.setCurrentHp(this.getMaxHp()); // 升级血满
+				this.setCurrentMp(this.getMaxMp()); // 升级魔满
 			}
 		}
-		resetBaseHitup();
-		resetBaseDmgup();
-		resetBaseAc();
-		resetBaseMr();
-		if (getLevel() > getHighLevel()) {
-			setHighLevel(getLevel());
+		this.resetBaseHitup();
+		this.resetBaseDmgup();
+		this.resetBaseAc();
+		this.resetBaseMr();
+		if (this.getLevel() > this.getHighLevel()) {
+			this.setHighLevel(this.getLevel());
 		}
 
 		try {
 			// 将资料保存到资料库
-			save();
+			this.save();
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		// 奖励点数
-		if ((getLevel() >= 51) && (getLevel() - 50 > getBonusStats())) {
-			if ((getBaseStr() + getBaseDex() + getBaseCon() + getBaseInt() + getBaseWis() + getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
-				sendPackets(new S_bonusstats(getId(), 1));
+		if ((this.getLevel() >= 51) && (this.getLevel() - 50 > this.getBonusStats())) {
+			if ((this.getBaseStr() + this.getBaseDex() + this.getBaseCon() + this.getBaseInt() + this.getBaseWis() + this.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+				this.sendPackets(new S_bonusstats(this.getId(), 1));
 			}
 		}
-		sendPackets(new S_OwnCharStatus(this)); // 更新角色属性资料
+		this.sendPackets(new S_OwnCharStatus(this)); // 更新角色属性资料
 
 		// 根据等级判断地图限制
-		if (((getMapId() == 2005) || (getMapId() == 86))) { // 新手村
-			if (getLevel() >= 13) { // 等级大于13
-				if (getQuest().get_step(L1Quest.QUEST_TUTOR) != 255) {
-					getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
+		if (((this.getMapId() == 2005) || (this.getMapId() == 86))) { // 新手村
+			if (this.getLevel() >= 13) { // 等级大于13
+				if (this.getQuest().get_step(L1Quest.QUEST_TUTOR) != 255) {
+					this.getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
 				}
 				L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true);// 银骑士村
 			}
 		}
-		else if (getLevel() >= 52) { // 指定等级
-			if (getMapId() == 777) { // 原生魔族抛弃之地地面(影の神殿)
+		else if (this.getLevel() >= 52) { // 指定等级
+			if (this.getMapId() == 777) { // 原生魔族抛弃之地地面(影の神殿)
 				L1Teleport.teleport(this, 34043, 32184, (short) 4, 5, true); // 象牙塔门口前
 			}
-			else if ((getMapId() == 778) || (getMapId() == 779)) { // 原生魔族抛弃之地海底(欲望洞窟)or不死魔族抛弃之地
+			else if ((this.getMapId() == 778) || (this.getMapId() == 779)) { // 原生魔族抛弃之地海底(欲望洞窟)or不死魔族抛弃之地
 				L1Teleport.teleport(this, 32608, 33178, (short) 4, 5, true); // WB
 			}
 		}
 
 		// 处理新手保护系统(遭遇的守护)状态资料的变动
-		checkNoviceType();
+		this.checkNoviceType();
 	}
 
 	/**
@@ -6014,21 +6014,21 @@ public class L1PcInstance extends L1Character {
 
 	/** 删除画面范围外的对象 */
 	private void removeOutOfRangeObjects() {
-		for (final L1Object known : getKnownObjects()) {
+		for (final L1Object known : this.getKnownObjects()) {
 			if (known == null) {
 				continue;
 			}
 
 			if (Config.PC_RECOGNIZE_RANGE == -1) {
-				if (!getLocation().isInScreen(known.getLocation())) { // 画面外
-					removeKnownObject(known);
-					sendPackets(new S_RemoveObject(known));
+				if (!this.getLocation().isInScreen(known.getLocation())) { // 画面外
+					this.removeKnownObject(known);
+					this.sendPackets(new S_RemoveObject(known));
 				}
 			}
 			else {
-				if (getLocation().getTileLineDistance(known.getLocation()) > Config.PC_RECOGNIZE_RANGE) {
-					removeKnownObject(known);
-					sendPackets(new S_RemoveObject(known));
+				if (this.getLocation().getTileLineDistance(known.getLocation()) > Config.PC_RECOGNIZE_RANGE) {
+					this.removeKnownObject(known);
+					this.sendPackets(new S_RemoveObject(known));
 				}
 			}
 		}
@@ -6037,37 +6037,37 @@ public class L1PcInstance extends L1Character {
 	/** 发送视觉效果 */
 	private void sendVisualEffect() {
 		int poisonId = 0;
-		if (getPoison() != null) { // 毒状态
-			poisonId = getPoison().getEffectId();
+		if (this.getPoison() != null) { // 毒状态
+			poisonId = this.getPoison().getEffectId();
 		}
-		if (getParalysis() != null) { // 麻痹状态
+		if (this.getParalysis() != null) { // 麻痹状态
 			// 麻痹エフェクトを优先して送りたい为、poisonIdを上书き。
-			poisonId = getParalysis().getEffectId();
+			poisonId = this.getParalysis().getEffectId();
 		}
 		if (poisonId != 0) { // このifはいらないかもしれない
-			sendPackets(new S_Poison(getId(), poisonId));
-			broadcastPacket(new S_Poison(getId(), poisonId));
+			this.sendPackets(new S_Poison(this.getId(), poisonId));
+			this.broadcastPacket(new S_Poison(this.getId(), poisonId));
 		}
 	}
 
 	/** 设定幽灵状态 */
 	private void setGhost(final boolean flag) {
-		_ghost = flag;
+		this._ghost = flag;
 	}
 
 	/** 设定幽灵状态可以与NPC对话 */
 	private void setGhostCanTalk(final boolean flag) {
-		_ghostCanTalk = flag;
+		this._ghostCanTalk = flag;
 	}
 
 	/** 设定G-RES有效 */
 	private void setGresValid(final boolean valid) {
-		_gresValid = valid;
+		this._gresValid = valid;
 	}
 
 	/** 设定准备解除幽灵状态 */
 	private void setReserveGhost(final boolean flag) {
-		_isReserveGhost = flag;
+		this._isReserveGhost = flag;
 	}
 
 	/**
@@ -6081,7 +6081,7 @@ public class L1PcInstance extends L1Character {
 	private void stopSkillList(final int _skillId, final int[] repeat_skill) {
 		for (final int skillId : repeat_skill) {
 			if (skillId != _skillId) {
-				removeSkillEffect(skillId);
+				this.removeSkillEffect(skillId);
 			}
 		}
 	}

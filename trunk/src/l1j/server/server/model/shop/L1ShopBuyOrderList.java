@@ -37,15 +37,15 @@ public class L1ShopBuyOrderList {
 	private int _totalPriceTaxIncluded = 0;
 
 	L1ShopBuyOrderList(final L1Shop shop) {
-		_shop = shop;
-		_taxCalc = new L1TaxCalculator(shop.getNpcId());
+		this._shop = shop;
+		this._taxCalc = new L1TaxCalculator(shop.getNpcId());
 	}
 
 	public void add(final int orderNumber, final int count) {
-		if (_shop.getSellingItems().size() < orderNumber) {
+		if (this._shop.getSellingItems().size() < orderNumber) {
 			return;
 		}
-		final L1ShopItem shopItem = _shop.getSellingItems().get(orderNumber);
+		final L1ShopItem shopItem = this._shop.getSellingItems().get(orderNumber);
 
 		final int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE);
 		// 溢出检查
@@ -54,41 +54,41 @@ public class L1ShopBuyOrderList {
 				return;
 			}
 		}
-		if (_totalPrice < 0) {
+		if (this._totalPrice < 0) {
 			return;
 		}
-		_totalPrice += price * count;
-		_totalPriceTaxIncluded += _taxCalc.layTax(price) * count;
-		_totalWeight += shopItem.getItem().getWeight() * count * shopItem.getPackCount();
+		this._totalPrice += price * count;
+		this._totalPriceTaxIncluded += this._taxCalc.layTax(price) * count;
+		this._totalWeight += shopItem.getItem().getWeight() * count * shopItem.getPackCount();
 
 		if (shopItem.getItem().isStackable()) {
-			_list.add(new L1ShopBuyOrder(shopItem, count * shopItem.getPackCount()));
+			this._list.add(new L1ShopBuyOrder(shopItem, count * shopItem.getPackCount()));
 			return;
 		}
 
 		for (int i = 0; i < (count * shopItem.getPackCount()); i++) {
-			_list.add(new L1ShopBuyOrder(shopItem, 1));
+			this._list.add(new L1ShopBuyOrder(shopItem, 1));
 		}
 	}
 
 	public int getTotalPrice() {
-		return _totalPrice;
+		return this._totalPrice;
 	}
 
 	public int getTotalPriceTaxIncluded() {
-		return _totalPriceTaxIncluded;
+		return this._totalPriceTaxIncluded;
 	}
 
 	public int getTotalWeight() {
-		return _totalWeight;
+		return this._totalWeight;
 	}
 
 	List<L1ShopBuyOrder> getList() {
-		return _list;
+		return this._list;
 	}
 
 	L1TaxCalculator getTaxCalculator() {
-		return _taxCalc;
+		return this._taxCalc;
 	}
 }
 
@@ -100,15 +100,15 @@ class L1ShopBuyOrder {
 	private final int _count;
 
 	public L1ShopBuyOrder(final L1ShopItem item, final int count) {
-		_item = item;
-		_count = count;
+		this._item = item;
+		this._count = count;
 	}
 
 	public int getCount() {
-		return _count;
+		return this._count;
 	}
 
 	public L1ShopItem getItem() {
-		return _item;
+		return this._item;
 	}
 }

@@ -106,7 +106,7 @@ public class L1EffectSpawn {
 				break;
 			}
 
-			final L1EffectInstance effect = spawnEffect(81157, duration * 1000, x, y, cha.getMapId());
+			final L1EffectInstance effect = this.spawnEffect(81157, duration * 1000, x, y, cha.getMapId());
 			if (effect == null) {
 				break;
 			}
@@ -131,7 +131,7 @@ public class L1EffectSpawn {
 		L1Character base = _user;
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				final L1EffectInstance effect = spawnEffect(81157, 10 * 1000, target.getX() + i, target.getY() + j, target.getMapId());
+				final L1EffectInstance effect = this.spawnEffect(81157, 10 * 1000, target.getX() + i, target.getY() + j, target.getMapId());
 				if (effect == null) {
 					break;
 				}
@@ -171,7 +171,7 @@ public class L1EffectSpawn {
 	 * @return 生成的对象的影响
 	 */
 	public L1EffectInstance spawnEffect(final int npcId, final int time, final int locX, final int locY, final short mapId) {
-		return spawnEffect(npcId, time, locX, locY, mapId, null, 0);
+		return this.spawnEffect(npcId, time, locX, locY, mapId, null, 0);
 	}
 
 	public L1EffectInstance spawnEffect(final int npcId, final int time, final int locX, final int locY, final short mapId, final L1PcInstance user, final int skiiId) {
@@ -185,9 +185,9 @@ public class L1EffectSpawn {
 		final String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
 
 		try {
-			_constructor = Class.forName(className).getConstructors()[0];
+			this._constructor = Class.forName(className).getConstructors()[0];
 			final Object obj[] = { template };
-			effect = (L1EffectInstance) _constructor.newInstance(obj);
+			effect = (L1EffectInstance) this._constructor.newInstance(obj);
 
 			effect.setId(IdFactory.getInstance().nextId());
 			effect.setGfxId(template.get_gfxid());

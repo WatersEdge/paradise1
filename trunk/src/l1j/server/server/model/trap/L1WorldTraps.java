@@ -44,13 +44,13 @@ public class L1WorldTraps {
 		private final L1TrapInstance _targetTrap;
 
 		public TrapSpawnTimer(final L1TrapInstance trap) {
-			_targetTrap = trap;
+			this._targetTrap = trap;
 		}
 
 		@Override
 		public void run() {
-			_targetTrap.resetLocation();
-			_targetTrap.enableTrap();
+			this._targetTrap.resetLocation();
+			this._targetTrap.enableTrap();
 		}
 	}
 
@@ -88,16 +88,16 @@ public class L1WorldTraps {
 	private static L1WorldTraps _instance;
 
 	private L1WorldTraps() {
-		initialize();
+		this.initialize();
 	}
 
 	public void onDetection(final L1PcInstance caster) {
 		final L1Location loc = caster.getLocation();
 
-		for (final L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : this._allTraps) {
 			if (trap.isEnable() && loc.isInScreen(trap.getLocation())) {
 				trap.onDetection(caster);
-				disableTrap(trap);
+				this.disableTrap(trap);
 			}
 		}
 	}
@@ -105,16 +105,16 @@ public class L1WorldTraps {
 	public void onPlayerMoved(final L1PcInstance player) {
 		final L1Location loc = player.getLocation();
 
-		for (final L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : this._allTraps) {
 			if (trap.isEnable() && loc.equals(trap.getLocation())) {
 				trap.onTrod(player);
-				disableTrap(trap);
+				this.disableTrap(trap);
 			}
 		}
 	}
 
 	public void resetAllTraps() {
-		for (final L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : this._allTraps) {
 			trap.resetLocation();
 			trap.enableTrap();
 		}
@@ -124,7 +124,7 @@ public class L1WorldTraps {
 		trap.disableTrap();
 
 		synchronized (this) {
-			_timer.schedule(new TrapSpawnTimer(trap), trap.getSpan());
+			this._timer.schedule(new TrapSpawnTimer(trap), trap.getSpan());
 		}
 	}
 
@@ -156,11 +156,11 @@ public class L1WorldTraps {
 				for (int i = 0; i < count; i++) {
 					final L1TrapInstance trap = new L1TrapInstance(IdFactory.getInstance().nextId(), trapTemp, loc, rndPt, span);
 					L1World.getInstance().addVisibleObject(trap);
-					_allTraps.add(trap);
+					this._allTraps.add(trap);
 				}
 				final L1TrapInstance base = new L1TrapInstance(IdFactory.getInstance().nextId(), loc);
 				L1World.getInstance().addVisibleObject(base);
-				_allBases.add(base);
+				this._allBases.add(base);
 			}
 
 		}
@@ -175,8 +175,8 @@ public class L1WorldTraps {
 
 	private void resetTimer() {
 		synchronized (this) {
-			_timer.cancel();
-			_timer = new Timer();
+			this._timer.cancel();
+			this._timer = new Timer();
 		}
 	}
 }

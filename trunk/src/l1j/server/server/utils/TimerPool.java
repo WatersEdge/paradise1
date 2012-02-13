@@ -31,11 +31,11 @@ public class TimerPool {
 	 * @param numOfTimers
 	 */
 	public TimerPool(final int numOfTimers) {
-		_timers = new Timer[numOfTimers];
+		this._timers = new Timer[numOfTimers];
 		for (int i = 0; i < numOfTimers; i++) {
-			_timers[i] = new Timer();
+			this._timers[i] = new Timer();
 		}
-		_numOfTimers = numOfTimers;
+		this._numOfTimers = numOfTimers;
 	}
 
 	/**
@@ -44,9 +44,9 @@ public class TimerPool {
 	 * @return
 	 */
 	public synchronized Timer getTimer() {
-		if (_numOfTimers <= _pointer) {
-			_pointer = 0;
+		if (this._numOfTimers <= this._pointer) {
+			this._pointer = 0;
 		}
-		return _timers[_pointer++];
+		return this._timers[this._pointer++];
 	}
 }

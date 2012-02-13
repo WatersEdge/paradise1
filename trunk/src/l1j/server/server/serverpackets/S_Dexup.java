@@ -36,16 +36,16 @@ public class S_Dexup extends ServerBasePacket {
 	 *            时间
 	 */
 	public S_Dexup(final L1PcInstance pc, final int type, final int time) {
-		writeC(Opcodes.S_OPCODE_DEXUP);
-		writeH(time);
-		writeC(pc.getDex());
-		writeC(type);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_DEXUP);
+		this.writeH(time);
+		this.writeC(pc.getDex());
+		this.writeC(type);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

@@ -37,50 +37,50 @@ public class L1HateList {
 		/*
 		 * ConcurrentHashMapを利用するより、 全てのメソッドを同期する方がメモリ使用量、速度共に優れていた。 但し、今後このクラスの利用方法が変わった場合、 例えば多くのスレッドから同時に読み出しがかかるようになった場合は、 ConcurrentHashMap使用 可能是更好的。
 		 */
-		_hateMap = Maps.newMap();
+		this._hateMap = Maps.newMap();
 	}
 
 	private L1HateList(final Map<L1Character, Integer> hateMap) {
-		_hateMap = hateMap;
+		this._hateMap = hateMap;
 	}
 
 	public synchronized void add(final L1Character cha, final int hate) {
 		if (cha == null) {
 			return;
 		}
-		if (_hateMap.containsKey(cha)) {
-			_hateMap.put(cha, _hateMap.get(cha) + hate);
+		if (this._hateMap.containsKey(cha)) {
+			this._hateMap.put(cha, this._hateMap.get(cha) + hate);
 		}
 		else {
-			_hateMap.put(cha, hate);
+			this._hateMap.put(cha, hate);
 		}
 	}
 
 	public synchronized void clear() {
-		_hateMap.clear();
+		this._hateMap.clear();
 	}
 
 	public synchronized boolean containsKey(final L1Character cha) {
-		return _hateMap.containsKey(cha);
+		return this._hateMap.containsKey(cha);
 	}
 
 	public synchronized L1HateList copy() {
-		return new L1HateList(new HashMap<L1Character, Integer>(_hateMap));
+		return new L1HateList(new HashMap<L1Character, Integer>(this._hateMap));
 	}
 
 	public synchronized Set<Entry<L1Character, Integer>> entrySet() {
-		return _hateMap.entrySet();
+		return this._hateMap.entrySet();
 	}
 
 	public synchronized int get(final L1Character cha) {
-		return _hateMap.get(cha);
+		return this._hateMap.get(cha);
 	}
 
 	public synchronized L1Character getMaxHateCharacter() {
 		L1Character cha = null;
 		int hate = Integer.MIN_VALUE;
 
-		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : this._hateMap.entrySet()) {
 			if (hate < e.getValue()) {
 				cha = e.getKey();
 				hate = e.getValue();
@@ -92,7 +92,7 @@ public class L1HateList {
 	public synchronized int getPartyHate(final L1Party party) {
 		int partyHate = 0;
 
-		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : this._hateMap.entrySet()) {
 			L1PcInstance pc = null;
 			if (e.getKey() instanceof L1PcInstance) {
 				pc = (L1PcInstance) e.getKey();
@@ -114,7 +114,7 @@ public class L1HateList {
 	public synchronized int getPartyLawfulHate(final L1Party party) {
 		int partyHate = 0;
 
-		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : this._hateMap.entrySet()) {
 			L1PcInstance pc = null;
 			if (e.getKey() instanceof L1PcInstance) {
 				pc = (L1PcInstance) e.getKey();
@@ -129,7 +129,7 @@ public class L1HateList {
 
 	public synchronized int getTotalHate() {
 		int totalHate = 0;
-		for (final int hate : _hateMap.values()) {
+		for (final int hate : this._hateMap.values()) {
 			totalHate += hate;
 		}
 		return totalHate;
@@ -137,7 +137,7 @@ public class L1HateList {
 
 	public synchronized int getTotalLawfulHate() {
 		int totalHate = 0;
-		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : this._hateMap.entrySet()) {
 			if (e.getKey() instanceof L1PcInstance) {
 				totalHate += e.getValue();
 			}
@@ -146,31 +146,31 @@ public class L1HateList {
 	}
 
 	public synchronized boolean isEmpty() {
-		return _hateMap.isEmpty();
+		return this._hateMap.isEmpty();
 	}
 
 	public synchronized void remove(final L1Character cha) {
-		_hateMap.remove(cha);
+		this._hateMap.remove(cha);
 	}
 
 	public synchronized void removeInvalidCharacter(final L1NpcInstance npc) {
 		final List<L1Character> invalidChars = Lists.newList();
-		for (final L1Character cha : _hateMap.keySet()) {
+		for (final L1Character cha : this._hateMap.keySet()) {
 			if ((cha == null) || cha.isDead() || !npc.knownsObject(cha)) {
 				invalidChars.add(cha);
 			}
 		}
 
 		for (final L1Character cha : invalidChars) {
-			_hateMap.remove(cha);
+			this._hateMap.remove(cha);
 		}
 	}
 
 	public synchronized ArrayList<Integer> toHateArrayList() {
-		return new ArrayList<Integer>(_hateMap.values());
+		return new ArrayList<Integer>(this._hateMap.values());
 	}
 
 	public synchronized ArrayList<L1Character> toTargetArrayList() {
-		return new ArrayList<L1Character>(_hateMap.keySet());
+		return new ArrayList<L1Character>(this._hateMap.keySet());
 	}
 }

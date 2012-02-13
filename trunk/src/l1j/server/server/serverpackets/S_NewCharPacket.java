@@ -35,15 +35,15 @@ public class S_NewCharPacket extends ServerBasePacket {
 	 * @param pc
 	 */
 	public S_NewCharPacket(final L1PcInstance pc) {
-		buildPacket(pc);
+		this.buildPacket(pc);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,26 +52,26 @@ public class S_NewCharPacket extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_NEWCHARPACK);
-		writeS(pc.getName());
-		writeS("");
-		writeC(pc.getType());
-		writeC(pc.get_sex());
-		writeH(pc.getLawful());
-		writeH(pc.getMaxHp());
-		writeH(pc.getMaxMp());
-		writeC(pc.getAc());
-		writeC(pc.getLevel());
-		writeC(pc.getStr());
-		writeC(pc.getDex());
-		writeC(pc.getCon());
-		writeC(pc.getWis());
-		writeC(pc.getCha());
-		writeC(pc.getInt());
-		writeC(0);// is Administrator 大于0为GM
+		this.writeC(Opcodes.S_OPCODE_NEWCHARPACK);
+		this.writeS(pc.getName());
+		this.writeS("");
+		this.writeC(pc.getType());
+		this.writeC(pc.get_sex());
+		this.writeH(pc.getLawful());
+		this.writeH(pc.getMaxHp());
+		this.writeH(pc.getMaxMp());
+		this.writeC(pc.getAc());
+		this.writeC(pc.getLevel());
+		this.writeC(pc.getStr());
+		this.writeC(pc.getDex());
+		this.writeC(pc.getCon());
+		this.writeC(pc.getWis());
+		this.writeC(pc.getCha());
+		this.writeC(pc.getInt());
+		this.writeC(0);// is Administrator 大于0为GM
 		/* 生日待后续的实做 */
 		// writeD(Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(pc.getBirthday())));
-		writeD(pc.getSimpleBirthday());
+		this.writeD(pc.getSimpleBirthday());
 	}
 
 }

@@ -53,7 +53,7 @@ public class HouseTaxTimeController implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				checkTaxDeadline();
+				this.checkTaxDeadline();
 				Thread.sleep(600000);
 			}
 		}
@@ -65,8 +65,8 @@ public class HouseTaxTimeController implements Runnable {
 	private void checkTaxDeadline() {
 		for (final L1House house : HouseTable.getInstance().getHouseTableList()) {
 			if (!house.isOnSale()) { // 不检查再拍卖的血盟小屋
-				if (house.getTaxDeadline().before(getRealTime())) {
-					sellHouse(house);
+				if (house.getTaxDeadline().before(this.getRealTime())) {
+					this.sellHouse(house);
 				}
 			}
 		}

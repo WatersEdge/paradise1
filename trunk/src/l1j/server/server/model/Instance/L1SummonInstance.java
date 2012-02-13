@@ -51,16 +51,16 @@ public class L1SummonInstance extends L1NpcInstance {
 	class SummonTimer implements Runnable {
 		@Override
 		public void run() {
-			if (_destroyed) { // 既に破弃されていないかチェック
+			if (L1SummonInstance.this._destroyed) { // 既に破弃されていないかチェック
 				return;
 			}
-			if (_tamed) {
+			if (L1SummonInstance.this._tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
-				liberate();
+				L1SummonInstance.this.liberate();
 			}
 			else {
 				// サモンの解散
-				Death(null);
+				L1SummonInstance.this.Death(null);
 			}
 		}
 	}
@@ -82,24 +82,24 @@ public class L1SummonInstance extends L1NpcInstance {
 	// 对于召唤怪物
 	public L1SummonInstance(final L1Npc template, final L1Character master) {
 		super(template);
-		setId(IdFactory.getInstance().nextId());
+		this.setId(IdFactory.getInstance().nextId());
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
+		this._summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
-		setMaster(master);
-		setX(master.getX() + Random.nextInt(5) - 2);
-		setY(master.getY() + Random.nextInt(5) - 2);
-		setMap(master.getMapId());
-		setHeading(5);
-		setLightSize(template.getLightSize());
+		this.setMaster(master);
+		this.setX(master.getX() + Random.nextInt(5) - 2);
+		this.setY(master.getY() + Random.nextInt(5) - 2);
+		this.setMap(master.getMapId());
+		this.setHeading(5);
+		this.setLightSize(template.getLightSize());
 
-		_currentPetStatus = 3;
-		_tamed = false;
+		this._currentPetStatus = 3;
+		this._tamed = false;
 
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 		master.addPet(this);
 	}
@@ -107,7 +107,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	// 造尸术处理
 	public L1SummonInstance(final L1NpcInstance target, final L1Character master, final boolean isCreateZombie) {
 		super(null);
-		setId(IdFactory.getInstance().nextId());
+		this.setId(IdFactory.getInstance().nextId());
 
 		if (isCreateZombie) { // 造尸
 			int npcId = 45065;
@@ -139,32 +139,32 @@ public class L1SummonInstance extends L1NpcInstance {
 				}
 			}
 			final L1Npc template = NpcTable.getInstance().getTemplate(npcId).clone();
-			setting_template(template);
+			this.setting_template(template);
 		}
 		else { // テイミングモンスター
-			setting_template(target.getNpcTemplate());
-			setCurrentHpDirect(target.getCurrentHp());
-			setCurrentMpDirect(target.getCurrentMp());
+			this.setting_template(target.getNpcTemplate());
+			this.setCurrentHpDirect(target.getCurrentHp());
+			this.setCurrentMpDirect(target.getCurrentMp());
 		}
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
+		this._summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
-		setMaster(master);
-		setX(target.getX());
-		setY(target.getY());
-		setMap(target.getMapId());
-		setHeading(target.getHeading());
-		setLightSize(target.getLightSize());
-		setPetcost(6);
+		this.setMaster(master);
+		this.setX(target.getX());
+		this.setY(target.getY());
+		this.setMap(target.getMapId());
+		this.setHeading(target.getHeading());
+		this.setLightSize(target.getLightSize());
+		this.setPetcost(6);
 
 		if ((target instanceof L1MonsterInstance) && !((L1MonsterInstance) target).is_storeDroped()) {
 			DropTable.getInstance().setDrop(target, target.getInventory());
 		}
-		setInventory(target.getInventory());
+		this.setInventory(target.getInventory());
 		target.setInventory(null);
 
-		_currentPetStatus = 3;
-		_tamed = true;
+		this._currentPetStatus = 3;
+		this._tamed = true;
 
 		// ペットが攻击中だった场合止めさせる
 		for (final L1NpcInstance each : master.getPetList().values()) {
@@ -175,41 +175,41 @@ public class L1SummonInstance extends L1NpcInstance {
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 		master.addPet(this);
 	}
 
 	public synchronized void Death(final L1Character lastAttacker) {
-		if (!isDead()) {
-			setDead(true);
-			setCurrentHp(0);
-			setStatus(ActionCodes.ACTION_Die);
+		if (!this.isDead()) {
+			this.setDead(true);
+			this.setCurrentHp(0);
+			this.setStatus(ActionCodes.ACTION_Die);
 
-			getMap().setPassable(getLocation(), true);
+			this.getMap().setPassable(this.getLocation(), true);
 
 			// 死亡时物品给予主人或掉落地面
-			L1Inventory targetInventory = _master.getInventory();
-			final List<L1ItemInstance> items = _inventory.getItems();
+			L1Inventory targetInventory = this._master.getInventory();
+			final List<L1ItemInstance> items = this._inventory.getItems();
 			for (final L1ItemInstance item : items) {
-				if (_master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
+				if (this._master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory.tradeItem(item, item.getCount(), targetInventory);
+					this._inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+					((L1PcInstance) this._master).sendPackets(new S_ServerMessage(143, this.getName(), item.getLogName()));
 				}
 				else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
-					_inventory.tradeItem(item, item.getCount(), targetInventory);
+					targetInventory = L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId());
+					this._inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
 
-			if (_tamed) {
-				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
-				startDeleteTimer();
+			if (this._tamed) {
+				this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Die));
+				this.startDeleteTimer();
 			}
 			else {
-				deleteMe();
+				this.deleteMe();
 			}
 		}
 	}
@@ -217,35 +217,35 @@ public class L1SummonInstance extends L1NpcInstance {
 	// オブジェクト消去处理
 	@Override
 	public synchronized void deleteMe() {
-		if (_destroyed) {
+		if (this._destroyed) {
 			return;
 		}
-		if (!_tamed && !_isReturnToNature) {
-			broadcastPacket(new S_SkillSound(getId(), 169));
+		if (!this._tamed && !this._isReturnToNature) {
+			this.broadcastPacket(new S_SkillSound(this.getId(), 169));
 		}
 		// if (_master.getPetList().isEmpty()) {
-		final L1PcInstance pc = (L1PcInstance) _master;
+		final L1PcInstance pc = (L1PcInstance) this._master;
 		if (pc instanceof L1PcInstance) {
-			pc.sendPackets(new S_PetCtrlMenu(_master, this, false));// 关闭宠物控制图形介面
+			pc.sendPackets(new S_PetCtrlMenu(this._master, this, false));// 关闭宠物控制图形介面
 		}
 		// }
-		_master.getPetList().remove(getId());
+		this._master.getPetList().remove(this.getId());
 		super.deleteMe();
 
-		if (_summonFuture != null) {
-			_summonFuture.cancel(false);
-			_summonFuture = null;
+		if (this._summonFuture != null) {
+			this._summonFuture.cancel(false);
+			this._summonFuture = null;
 		}
 	}
 
 	public int get_currentPetStatus() {
-		return _currentPetStatus;
+		return this._currentPetStatus;
 	}
 
 	public boolean isExsistMaster() {
 		boolean isExsistMaster = true;
-		if (getMaster() != null) {
-			final String masterName = getMaster().getName();
+		if (this.getMaster() != null) {
+			final String masterName = this.getMaster().getName();
 			if (L1World.getInstance().getPlayer(masterName) == null) {
 				isExsistMaster = false;
 			}
@@ -255,26 +255,26 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	// 迷魅的怪物解散处理
 	public void liberate() {
-		final L1MonsterInstance monster = new L1MonsterInstance(getNpcTemplate());
+		final L1MonsterInstance monster = new L1MonsterInstance(this.getNpcTemplate());
 		monster.setId(IdFactory.getInstance().nextId());
 
-		monster.setX(getX());
-		monster.setY(getY());
-		monster.setMap(getMapId());
-		monster.setHeading(getHeading());
+		monster.setX(this.getX());
+		monster.setY(this.getY());
+		monster.setMap(this.getMapId());
+		monster.setHeading(this.getHeading());
 		monster.set_storeDroped(true);
-		monster.setInventory(getInventory());
-		getInventory().clearItems();
-		monster.setCurrentHpDirect(getCurrentHp());
-		monster.setCurrentMpDirect(getCurrentMp());
+		monster.setInventory(this.getInventory());
+		this.getInventory().clearItems();
+		monster.setCurrentHpDirect(this.getCurrentHp());
+		monster.setCurrentMpDirect(this.getCurrentMp());
 		monster.setExp(0);
 
-		if (!isDead()) { // 原迷魅怪解散时死亡
-			setDead(true);
-			setCurrentHp(0);
-			getMap().setPassable(getLocation(), true);
+		if (!this.isDead()) { // 原迷魅怪解散时死亡
+			this.setDead(true);
+			this.setCurrentHp(0);
+			this.getMap().setPassable(this.getLocation(), true);
 		}
-		deleteMe();
+		this.deleteMe();
 		L1World.getInstance().storeObject(monster);
 		L1World.getInstance().addVisibleObject(monster);
 	}
@@ -282,44 +282,44 @@ public class L1SummonInstance extends L1NpcInstance {
 	// 如果没有目标处理
 	@Override
 	public boolean noTarget() {
-		switch (_currentPetStatus) {
+		switch (this._currentPetStatus) {
 			case 3: // 休息
 				return true;
 			case 4: // 散开
-				if ((_master != null) && (_master.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_master.getLocation()) < 5)) {
-					_dir = targetReverseDirection(_master.getX(), _master.getY());
-					_dir = checkObject(getX(), getY(), getMapId(), _dir);
-					setDirectionMove(_dir);
-					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				if ((this._master != null) && (this._master.getMapId() == this.getMapId()) && (this.getLocation().getTileLineDistance(this._master.getLocation()) < 5)) {
+					this._dir = this.targetReverseDirection(this._master.getX(), this._master.getY());
+					this._dir = checkObject(this.getX(), this.getY(), this.getMapId(), this._dir);
+					this.setDirectionMove(this._dir);
+					this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 				}
 				else {
-					_currentPetStatus = 3;
+					this._currentPetStatus = 3;
 					return true;
 				}
 				return false;
 			case 5:
-				if ((Math.abs(getHomeX() - getX()) > 1) || (Math.abs(getHomeY() - getY()) > 1)) {
-					_dir = moveDirection(getHomeX(), getHomeY());
-					if (_dir == -1) {
-						setHomeX(getX());
-						setHomeY(getY());
+				if ((Math.abs(this.getHomeX() - this.getX()) > 1) || (Math.abs(this.getHomeY() - this.getY()) > 1)) {
+					this._dir = this.moveDirection(this.getHomeX(), this.getHomeY());
+					if (this._dir == -1) {
+						this.setHomeX(this.getX());
+						this.setHomeY(this.getY());
 					}
 					else {
-						setDirectionMove(_dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+						this.setDirectionMove(this._dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				return false;
 			default:
-				if ((_master != null) && (_master.getMapId() == getMapId())) {
-					if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-						_dir = moveDirection(_master.getX(), _master.getY());
-						setDirectionMove(_dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				if ((this._master != null) && (this._master.getMapId() == this.getMapId())) {
+					if (this.getLocation().getTileLineDistance(this._master.getLocation()) > 2) {
+						this._dir = this.moveDirection(this._master.getX(), this._master.getY());
+						this.setDirectionMove(this._dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				else {
-					_currentPetStatus = 3;
+					this._currentPetStatus = 3;
 					return true;
 				}
 				return false;
@@ -328,7 +328,7 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance attacker) {
-		onAction(attacker, 0);
+		this.onAction(attacker, 0);
 	}
 
 	@Override
@@ -337,7 +337,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (attacker == null) {
 			return;
 		}
-		final L1Character cha = getMaster();
+		final L1Character cha = this.getMaster();
 		if (cha == null) {
 			return;
 		}
@@ -346,7 +346,7 @@ public class L1SummonInstance extends L1NpcInstance {
 			// テレポート处理中
 			return;
 		}
-		if (((getZoneType() == 1) || (attacker.getZoneType() == 1)) && isExsistMaster()) {
+		if (((this.getZoneType() == 1) || (attacker.getZoneType() == 1)) && this.isExsistMaster()) {
 			// 攻击される侧がセーフティーゾーン
 			// 攻击モーション送信
 			final L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
@@ -368,19 +368,19 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	@Override
 	public void onFinalAction(final L1PcInstance player, final String action) {
-		final int status = ActionType(action);
+		final int status = this.ActionType(action);
 		if (status == 0) {
 			return;
 		}
 		if (status == 6) {
-			final L1PcInstance petMaster = (L1PcInstance) _master;
-			if (_tamed) {
+			final L1PcInstance petMaster = (L1PcInstance) this._master;
+			if (this._tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
-				liberate();
+				this.liberate();
 			}
 			else {
 				// サモンの解散
-				Death(null);
+				this.Death(null);
 			}
 			// 更新宠物控制介面
 			final Object[] petList = petMaster.getPetList().values().toArray();
@@ -399,7 +399,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		}
 		else {
 			// 同じ主人のペットの状态をすべて更新
-			final Object[] petList = _master.getPetList().values().toArray();
+			final Object[] petList = this._master.getPetList().values().toArray();
 			for (final Object petObject : petList) {
 				if (petObject instanceof L1SummonInstance) {
 					// サモンモンスター
@@ -427,31 +427,31 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	@Override
 	public void onGetItem(final L1ItemInstance item) {
-		if (getNpcTemplate().get_digestitem() > 0) {
-			setDigestItem(item);
+		if (this.getNpcTemplate().get_digestitem() > 0) {
+			this.setDigestItem(item);
 		}
 		Arrays.sort(healPotions);
 		Arrays.sort(haestPotions);
 		if (Arrays.binarySearch(healPotions, item.getItem().getItemId()) >= 0) {
-			if (getCurrentHp() != getMaxHp()) {
-				useItem(USEITEM_HEAL, 100);
+			if (this.getCurrentHp() != this.getMaxHp()) {
+				this.useItem(USEITEM_HEAL, 100);
 			}
 		}
 		else if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
-			useItem(USEITEM_HASTE, 100);
+			this.useItem(USEITEM_HASTE, 100);
 		}
 	}
 
 	@Override
 	public void onItemUse() {
-		if (!isActived()) {
+		if (!this.isActived()) {
 			// １００％の确率でヘイストポーション使用
-			useItem(USEITEM_HASTE, 100);
+			this.useItem(USEITEM_HASTE, 100);
 		}
-		if (getCurrentHp() * 100 / getMaxHp() < 40) {
+		if (this.getCurrentHp() * 100 / this.getMaxHp() < 40) {
 			// ＨＰが４０％きったら
 			// １００％の确率で回复ポーション使用
-			useItem(USEITEM_HEAL, 100);
+			this.useItem(USEITEM_HEAL, 100);
 		}
 	}
 
@@ -463,23 +463,23 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		if (isDead()) {
+		if (this.isDead()) {
 			return;
 		}
-		if (_master.equals(player)) {
+		if (this._master.equals(player)) {
 			player.sendPackets(new S_PetMenuPacket(this, 0));
 		}
 	}
 
 	@Override
 	public void receiveDamage(final L1Character attacker, int damage) { // 攻击でＨＰを减らすときはここを使用
-		if (getCurrentHp() > 0) {
+		if (this.getCurrentHp() > 0) {
 			if (damage > 0) {
-				setHate(attacker, 0); // サモンはヘイト无し
-				removeSkillEffect(FOG_OF_SLEEPING);
-				if (!isExsistMaster()) {
-					_currentPetStatus = 1;
-					setTarget(attacker);
+				this.setHate(attacker, 0); // サモンはヘイト无し
+				this.removeSkillEffect(FOG_OF_SLEEPING);
+				if (!this.isExsistMaster()) {
+					this._currentPetStatus = 1;
+					this.setTarget(attacker);
 				}
 			}
 
@@ -491,72 +491,72 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (attacker instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (pet.getZoneType() == 1)) {
+				if ((this.getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					damage = 0;
 				}
 			}
 			else if (attacker instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (summon.getZoneType() == 1)) {
+				if ((this.getZoneType() == 1) || (summon.getZoneType() == 1)) {
 					damage = 0;
 				}
 			}
 
-			final int newHp = getCurrentHp() - damage;
+			final int newHp = this.getCurrentHp() - damage;
 			if (newHp <= 0) {
-				Death(attacker);
+				this.Death(attacker);
 			}
 			else {
-				setCurrentHp(newHp);
+				this.setCurrentHp(newHp);
 			}
 		}
-		else if (!isDead()) // 念のため
+		else if (!this.isDead()) // 念のため
 		{
 			System.out.println("警告：サモンのＨＰ减少处理が正しく行われていない个所があります。※もしくは最初からＨＰ０");
-			Death(attacker);
+			this.Death(attacker);
 		}
 	}
 
 	public synchronized void returnToNature() {
-		_isReturnToNature = true;
-		if (!_tamed) {
-			getMap().setPassable(getLocation(), true);
+		this._isReturnToNature = true;
+		if (!this._tamed) {
+			this.getMap().setPassable(this.getLocation(), true);
 			// アイテム解放处理
-			L1Inventory targetInventory = _master.getInventory();
-			final List<L1ItemInstance> items = _inventory.getItems();
+			L1Inventory targetInventory = this._master.getInventory();
+			final List<L1ItemInstance> items = this._inventory.getItems();
 			for (final L1ItemInstance item : items) {
-				if (_master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
+				if (this._master.getInventory().checkAddItem( // 容量重量确认及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory.tradeItem(item, item.getCount(), targetInventory);
+					this._inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+					((L1PcInstance) this._master).sendPackets(new S_ServerMessage(143, this.getName(), item.getLogName()));
 				}
 				else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
-					_inventory.tradeItem(item, item.getCount(), targetInventory);
+					targetInventory = L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId());
+					this._inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
-			deleteMe();
+			this.deleteMe();
 		}
 		else {
-			liberate();
+			this.liberate();
 		}
 	}
 
 	public void set_currentPetStatus(final int i) {
-		_currentPetStatus = i;
-		if (_currentPetStatus == 5) {
-			setHomeX(getX());
-			setHomeY(getY());
+		this._currentPetStatus = i;
+		if (this._currentPetStatus == 5) {
+			this.setHomeX(this.getX());
+			this.setHomeY(this.getY());
 		}
 
-		if (_currentPetStatus == 3) {
-			allTargetClear();
+		if (this._currentPetStatus == 3) {
+			this.allTargetClear();
 		}
 		else {
-			if (!isAiRunning()) {
-				startAI();
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}
@@ -564,49 +564,49 @@ public class L1SummonInstance extends L1NpcInstance {
 	@Override
 	public void setCurrentHp(final int i) {
 		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
+		if (currentHp >= this.getMaxHp()) {
+			currentHp = this.getMaxHp();
 		}
-		setCurrentHpDirect(currentHp);
+		this.setCurrentHpDirect(currentHp);
 
-		if (getMaxHp() > getCurrentHp()) {
-			startHpRegeneration();
+		if (this.getMaxHp() > this.getCurrentHp()) {
+			this.startHpRegeneration();
 		}
 
-		if (_master instanceof L1PcInstance) {
-			final int HpRatio = 100 * currentHp / getMaxHp();
-			final L1PcInstance Master = (L1PcInstance) _master;
-			Master.sendPackets(new S_HPMeter(getId(), HpRatio));
+		if (this._master instanceof L1PcInstance) {
+			final int HpRatio = 100 * currentHp / this.getMaxHp();
+			final L1PcInstance Master = (L1PcInstance) this._master;
+			Master.sendPackets(new S_HPMeter(this.getId(), HpRatio));
 		}
 	}
 
 	@Override
 	public void setCurrentMp(final int i) {
 		int currentMp = i;
-		if (currentMp >= getMaxMp()) {
-			currentMp = getMaxMp();
+		if (currentMp >= this.getMaxMp()) {
+			currentMp = this.getMaxMp();
 		}
-		setCurrentMpDirect(currentMp);
+		this.setCurrentMpDirect(currentMp);
 
-		if (getMaxMp() > getCurrentMp()) {
-			startMpRegeneration();
+		if (this.getMaxMp() > this.getCurrentMp()) {
+			this.startMpRegeneration();
 		}
 	}
 
 	public void setMasterTarget(final L1Character target) {
-		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 5))) {
-			setHate(target, 0);
-			if (!isAiRunning()) {
-				startAI();
+		if ((target != null) && ((this._currentPetStatus == 1) || (this._currentPetStatus == 5))) {
+			this.setHate(target, 0);
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}
 
 	public void setTarget(final L1Character target) {
-		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5))) {
-			setHate(target, 0);
-			if (!isAiRunning()) {
-				startAI();
+		if ((target != null) && ((this._currentPetStatus == 1) || (this._currentPetStatus == 2) || (this._currentPetStatus == 5))) {
+			this.setHate(target, 0);
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}

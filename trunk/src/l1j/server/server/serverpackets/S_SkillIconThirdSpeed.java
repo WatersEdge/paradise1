@@ -8,15 +8,15 @@ import l1j.server.server.Opcodes;
 public class S_SkillIconThirdSpeed extends ServerBasePacket {
 
 	public S_SkillIconThirdSpeed(final int j) {
-		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
-		writeC(0x3c);
-		writeC(j); // time / 4
-		writeC(0x8);
+		this.writeC(Opcodes.S_OPCODE_SKILLICONGFX);
+		this.writeC(0x3c);
+		this.writeC(j); // time / 4
+		this.writeC(0x8);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_ServerMessage(final int type) {
-		buildPacket(type, null, null, null, null, null, 0);
+		this.buildPacket(type, null, null, null, null, null, 0);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg1
 	 */
 	public S_ServerMessage(final int type, final String msg1) {
-		buildPacket(type, msg1, null, null, null, null, 1);
+		this.buildPacket(type, msg1, null, null, null, null, 1);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg2
 	 */
 	public S_ServerMessage(final int type, final String msg1, final String msg2) {
-		buildPacket(type, msg1, msg2, null, null, null, 2);
+		this.buildPacket(type, msg1, msg2, null, null, null, 2);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg3
 	 */
 	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3) {
-		buildPacket(type, msg1, msg2, msg3, null, null, 3);
+		this.buildPacket(type, msg1, msg2, msg3, null, null, 3);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg4
 	 */
 	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3, final String msg4) {
-		buildPacket(type, msg1, msg2, msg3, msg4, null, 4);
+		this.buildPacket(type, msg1, msg2, msg3, msg4, null, 4);
 	}
 
 	/**
@@ -108,16 +108,16 @@ public class S_ServerMessage extends ServerBasePacket {
 	 */
 	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3, final String msg4, final String msg5) {
 
-		buildPacket(type, msg1, msg2, msg3, msg4, msg5, 5);
+		this.buildPacket(type, msg1, msg2, msg3, msg4, msg5, 5);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -127,41 +127,41 @@ public class S_ServerMessage extends ServerBasePacket {
 
 	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final String msg4, final String msg5, final int check) {
 
-		writeC(Opcodes.S_OPCODE_SERVERMSG);
-		writeH(type);
+		this.writeC(Opcodes.S_OPCODE_SERVERMSG);
+		this.writeH(type);
 
 		if (check == 0) {
-			writeC(0);
+			this.writeC(0);
 		}
 		else if (check == 1) {
-			writeC(1);
-			writeS(msg1);
+			this.writeC(1);
+			this.writeS(msg1);
 		}
 		else if (check == 2) {
-			writeC(2);
-			writeS(msg1);
-			writeS(msg2);
+			this.writeC(2);
+			this.writeS(msg1);
+			this.writeS(msg2);
 		}
 		else if (check == 3) {
-			writeC(3);
-			writeS(msg1);
-			writeS(msg2);
-			writeS(msg3);
+			this.writeC(3);
+			this.writeS(msg1);
+			this.writeS(msg2);
+			this.writeS(msg3);
 		}
 		else if (check == 4) {
-			writeC(4);
-			writeS(msg1);
-			writeS(msg2);
-			writeS(msg3);
-			writeS(msg4);
+			this.writeC(4);
+			this.writeS(msg1);
+			this.writeS(msg2);
+			this.writeS(msg3);
+			this.writeS(msg4);
 		}
 		else {
-			writeC(5);
-			writeS(msg1);
-			writeS(msg2);
-			writeS(msg3);
-			writeS(msg4);
-			writeS(msg5);
+			this.writeC(5);
+			this.writeS(msg1);
+			this.writeS(msg2);
+			this.writeS(msg3);
+			this.writeS(msg4);
+			this.writeS(msg5);
 		}
 	}
 }

@@ -45,15 +45,15 @@ public class S_CharacterConfig extends ServerBasePacket {
 	 * @param objId
 	 */
 	public S_CharacterConfig(final int objectId) {
-		buildPacket(objectId);
+		this.buildPacket(objectId);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -86,10 +86,10 @@ public class S_CharacterConfig extends ServerBasePacket {
 		}
 
 		if (length != 0) {
-			writeC(Opcodes.S_OPCODE_SKILLICONGFX);
-			writeC(41);
-			writeD(length);
-			writeByte(data);
+			this.writeC(Opcodes.S_OPCODE_SKILLICONGFX);
+			this.writeC(41);
+			this.writeD(length);
+			this.writeByte(data);
 		}
 	}
 }

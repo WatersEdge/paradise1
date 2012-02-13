@@ -30,7 +30,7 @@ public class S_Fishing extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_Fishing() {
-		buildPacket();
+		this.buildPacket();
 	}
 
 	/**
@@ -43,15 +43,15 @@ public class S_Fishing extends ServerBasePacket {
 	 * @param y
 	 */
 	public S_Fishing(final int objectId, final int motionNum, final int x, final int y) {
-		buildPacket(objectId, motionNum, x, y);
+		this.buildPacket(objectId, motionNum, x, y);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -60,19 +60,19 @@ public class S_Fishing extends ServerBasePacket {
 	}
 
 	private void buildPacket() {
-		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
-		writeC(0x37); // ?
-		writeD(0x76002822); // ?
-		writeH(0x8AC3); // ?
+		this.writeC(Opcodes.S_OPCODE_DOACTIONGFX);
+		this.writeC(0x37); // ?
+		this.writeD(0x76002822); // ?
+		this.writeH(0x8AC3); // ?
 	}
 
 	private void buildPacket(final int objectId, final int motionNum, final int x, final int y) {
-		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
-		writeD(objectId);
-		writeC(motionNum);
-		writeH(x);
-		writeH(y);
-		writeD(0);
-		writeH(0);
+		this.writeC(Opcodes.S_OPCODE_DOACTIONGFX);
+		this.writeD(objectId);
+		this.writeC(motionNum);
+		this.writeH(x);
+		this.writeH(y);
+		this.writeD(0);
+		this.writeH(0);
 	}
 }

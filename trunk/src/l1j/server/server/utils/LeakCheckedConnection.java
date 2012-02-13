@@ -33,11 +33,11 @@ public class LeakCheckedConnection {
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 			if (method.getName().equals("close")) {
-				closeAll();
+				LeakCheckedConnection.this.closeAll();
 			}
-			Object o = send(_con, method, args);
+			Object o = LeakCheckedConnection.this.send(LeakCheckedConnection.this._con, method, args);
 			if (o instanceof Statement) {
-				_openedStatements.put((Statement) o, new Throwable());
+				LeakCheckedConnection.this._openedStatements.put((Statement) o, new Throwable());
 				o = new Delegate(o, PreparedStatement.class)._delegateProxy;
 			}
 			return o;
@@ -50,18 +50,18 @@ public class LeakCheckedConnection {
 		private final Object _original;
 
 		Delegate(final Object o, final Class<?> c) {
-			_original = o;
-			_delegateProxy = Proxy.newProxyInstance(c.getClassLoader(), new Class[] { c }, this);
+			this._original = o;
+			this._delegateProxy = Proxy.newProxyInstance(c.getClassLoader(), new Class[] { c }, this);
 		}
 
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 			if (method.getName().equals("close")) {
-				remove(_original);
+				LeakCheckedConnection.this.remove(this._original);
 			}
-			Object o = send(_original, method, args);
+			Object o = LeakCheckedConnection.this.send(this._original, method, args);
 			if (o instanceof ResultSet) {
-				_openedResultSets.put((ResultSet) o, new Throwable());
+				LeakCheckedConnection.this._openedResultSets.put((ResultSet) o, new Throwable());
 				o = new Delegate(o, ResultSet.class)._delegateProxy;
 			}
 			return o;
@@ -83,16 +83,16 @@ public class LeakCheckedConnection {
 	private final Object _proxy;
 
 	private LeakCheckedConnection(final Connection con) {
-		_con = con;
-		_proxy = Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] { Connection.class }, new ConnectionHandler());
+		this._con = con;
+		this._proxy = Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] { Connection.class }, new ConnectionHandler());
 	}
 
 	private void remove(final Object o) {
 		if (o instanceof ResultSet) {
-			_openedResultSets.remove(o);
+			this._openedResultSets.remove(o);
 		}
 		else if (o instanceof Statement) {
-			_openedStatements.remove(o);
+			this._openedStatements.remove(o);
 		}
 		else {
 			throw new IllegalArgumentException("bad class:" + o);
@@ -112,20 +112,20 @@ public class LeakCheckedConnection {
 	}
 
 	void closeAll() {
-		if (!_openedResultSets.isEmpty()) {
-			for (final Throwable t : _openedResultSets.values()) {
+		if (!this._openedResultSets.isEmpty()) {
+			for (final Throwable t : this._openedResultSets.values()) {
 				_log.log(Level.WARNING, "Leaked ResultSets detected.", t);
 			}
 		}
-		if (!_openedStatements.isEmpty()) {
-			for (final Throwable t : _openedStatements.values()) {
+		if (!this._openedStatements.isEmpty()) {
+			for (final Throwable t : this._openedStatements.values()) {
 				_log.log(Level.WARNING, "Leaked Statement detected.", t);
 			}
 		}
-		for (final ResultSet rs : _openedResultSets.keySet()) {
+		for (final ResultSet rs : this._openedResultSets.keySet()) {
 			SQLUtil.close(rs);
 		}
-		for (final Statement ps : _openedStatements.keySet()) {
+		for (final Statement ps : this._openedStatements.keySet()) {
 			SQLUtil.close(ps);
 		}
 	}

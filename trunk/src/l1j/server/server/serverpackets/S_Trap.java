@@ -32,35 +32,35 @@ public class S_Trap extends ServerBasePacket {
 	 */
 	public S_Trap(final L1TrapInstance trap, final String name) {
 
-		writeC(Opcodes.S_OPCODE_DROPITEM);
-		writeH(trap.getX());
-		writeH(trap.getY());
-		writeD(trap.getId());
-		writeH(7); // adena
-		writeC(0); // 物件外观属性
-		writeC(0); // 方向
-		writeC(0); // 亮度 0:normal, 1:fast, 2:slow
-		writeC(0); // 速度
-		writeD(0); // 数量 经验值
-		writeC(0); //
-		writeC(0); //
-		writeS(name); // 名称
-		writeC(0); //
-		writeD(0); //
-		writeD(0); //
-		writeC(255); //
-		writeC(0); //
-		writeC(0); //
-		writeC(0); //
-		writeH(65535); //
+		this.writeC(Opcodes.S_OPCODE_DROPITEM);
+		this.writeH(trap.getX());
+		this.writeH(trap.getY());
+		this.writeD(trap.getId());
+		this.writeH(7); // adena
+		this.writeC(0); // 物件外观属性
+		this.writeC(0); // 方向
+		this.writeC(0); // 亮度 0:normal, 1:fast, 2:slow
+		this.writeC(0); // 速度
+		this.writeD(0); // 数量 经验值
+		this.writeC(0); //
+		this.writeC(0); //
+		this.writeS(name); // 名称
+		this.writeC(0); //
+		this.writeD(0); //
+		this.writeD(0); //
+		this.writeC(255); //
+		this.writeC(0); //
+		this.writeC(0); //
+		this.writeC(0); //
+		this.writeH(65535); //
 		// writeD(0x401799a);
-		writeD(0); //
-		writeC(8); //
-		writeC(0); //
+		this.writeD(0); //
+		this.writeC(8); //
+		this.writeC(0); //
 	}
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 }

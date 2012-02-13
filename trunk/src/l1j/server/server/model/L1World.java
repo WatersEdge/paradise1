@@ -89,28 +89,28 @@ public class L1World {
 
 	@SuppressWarnings("unchecked")
 	private L1World() {
-		_allPlayers = Maps.newConcurrentMap(); // 所有玩家
-		_allPets = Maps.newConcurrentMap(); // 所有宠物
-		_allSummons = Maps.newConcurrentMap(); // 所有召唤怪
-		_allObjects = Maps.newConcurrentMap(); // 所有对象(L1ItemInstance入り、L1Inventoryはなし)
-		_visibleObjects = new Map[MAX_MAP_ID + 1]; // 映射每个对象(L1Inventory入り、L1ItemInstanceはなし)
-		_allWars = Lists.newConcurrentList(); // 所有战争
-		_allClans = Maps.newConcurrentMap(); // 所有血盟(Online/Offline两个)
+		this._allPlayers = Maps.newConcurrentMap(); // 所有玩家
+		this._allPets = Maps.newConcurrentMap(); // 所有宠物
+		this._allSummons = Maps.newConcurrentMap(); // 所有召唤怪
+		this._allObjects = Maps.newConcurrentMap(); // 所有对象(L1ItemInstance入り、L1Inventoryはなし)
+		this._visibleObjects = new Map[MAX_MAP_ID + 1]; // 映射每个对象(L1Inventory入り、L1ItemInstanceはなし)
+		this._allWars = Lists.newConcurrentList(); // 所有战争
+		this._allClans = Maps.newConcurrentMap(); // 所有血盟(Online/Offline两个)
 
 		for (int i = 0; i <= MAX_MAP_ID; i++) {
-			_visibleObjects[i] = Maps.newConcurrentMap();
+			this._visibleObjects[i] = Maps.newConcurrentMap();
 		}
 	}
 
 	public void addVisibleObject(final L1Object object) {
 		if (object.getMapId() <= MAX_MAP_ID) {
-			_visibleObjects[object.getMapId()].put(object.getId(), object);
+			this._visibleObjects[object.getMapId()].put(object.getId(), object);
 		}
 	}
 
 	public void addWar(final L1War war) {
-		if (!_allWars.contains(war)) {
-			_allWars.add(war);
+		if (!this._allWars.contains(war)) {
+			this._allWars.add(war);
 		}
 	}
 
@@ -121,8 +121,8 @@ public class L1World {
 	 *            ServerBasePacket对象，表示要发送的数据包。
 	 */
 	public void broadcastPacketToAll(final ServerBasePacket packet) {
-		_log.finest("玩家通知 : " + getAllPlayers().size());
-		for (final L1PcInstance pc : getAllPlayers()) {
+		_log.finest("玩家通知 : " + this.getAllPlayers().size());
+		for (final L1PcInstance pc : this.getAllPlayers()) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -134,7 +134,7 @@ public class L1World {
 	 *            发送信息
 	 */
 	public void broadcastServerMessage(final String message) {
-		broadcastPacketToAll(new S_SystemMessage(message));
+		this.broadcastPacketToAll(new S_SystemMessage(message));
 	}
 
 	/**
@@ -146,41 +146,41 @@ public class L1World {
 	}
 
 	public L1Object findObject(final int oID) {
-		return _allObjects.get(oID);
+		return this._allObjects.get(oID);
 	}
 
 	public Collection<L1Clan> getAllClans() {
-		final Collection<L1Clan> vs = _allClanValues;
-		return (vs != null) ? vs : (_allClanValues = Collections.unmodifiableCollection(_allClans.values()));
+		final Collection<L1Clan> vs = this._allClanValues;
+		return (vs != null) ? vs : (this._allClanValues = Collections.unmodifiableCollection(this._allClans.values()));
 	}
 
 	public Collection<L1PetInstance> getAllPets() {
-		final Collection<L1PetInstance> vs = _allPetValues;
-		return (vs != null) ? vs : (_allPetValues = Collections.unmodifiableCollection(_allPets.values()));
+		final Collection<L1PetInstance> vs = this._allPetValues;
+		return (vs != null) ? vs : (this._allPetValues = Collections.unmodifiableCollection(this._allPets.values()));
 	}
 
 	public Collection<L1PcInstance> getAllPlayers() {
-		final Collection<L1PcInstance> vs = _allPlayerValues;
-		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
+		final Collection<L1PcInstance> vs = this._allPlayerValues;
+		return (vs != null) ? vs : (this._allPlayerValues = Collections.unmodifiableCollection(this._allPlayers.values()));
 	}
 
 	public Collection<L1SummonInstance> getAllSummons() {
-		final Collection<L1SummonInstance> vs = _allSummonValues;
-		return (vs != null) ? vs : (_allSummonValues = Collections.unmodifiableCollection(_allSummons.values()));
+		final Collection<L1SummonInstance> vs = this._allSummonValues;
+		return (vs != null) ? vs : (this._allSummonValues = Collections.unmodifiableCollection(this._allSummons.values()));
 	}
 
 	public final Map<Integer, L1Object> getAllVisibleObjects() {
-		return _allObjects;
+		return this._allObjects;
 	}
 
 	public L1Clan getClan(final String clan_name) {
-		return _allClans.get(clan_name);
+		return this._allClans.get(clan_name);
 	}
 
 	public L1GroundInventory getInventory(final int x, final int y, final short map) {
 		final int inventoryKey = ((x - 30000) * 10000 + (y - 30000)) * -1; // xyのマイナス値をインベントリキーとして使用
 
-		final Object object = _visibleObjects[map].get(inventoryKey);
+		final Object object = this._visibleObjects[map].get(inventoryKey);
 		if (object == null) {
 			return new L1GroundInventory(inventoryKey, x, y, map);
 		}
@@ -190,12 +190,12 @@ public class L1World {
 	}
 
 	public L1GroundInventory getInventory(final L1Location loc) {
-		return getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
+		return this.getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
 	}
 
 	public Collection<L1Object> getObject() {
-		final Collection<L1Object> vs = _allValues;
-		return (vs != null) ? vs : (_allValues = Collections.unmodifiableCollection(_allObjects.values()));
+		final Collection<L1Object> vs = this._allValues;
+		return (vs != null) ? vs : (this._allValues = Collections.unmodifiableCollection(this._allObjects.values()));
 	}
 
 	/**
@@ -206,10 +206,10 @@ public class L1World {
 	 * @return 指定的名称L1PcInstance。如果没有合适的玩家返回null。
 	 */
 	public L1PcInstance getPlayer(final String name) {
-		if (_allPlayers.containsKey(name)) {
-			return _allPlayers.get(name);
+		if (this._allPlayers.containsKey(name)) {
+			return this._allPlayers.get(name);
 		}
-		for (final L1PcInstance each : getAllPlayers()) {
+		for (final L1PcInstance each : this.getAllPlayers()) {
 			if (each.getName().equalsIgnoreCase(name)) {
 				return each;
 			}
@@ -224,7 +224,7 @@ public class L1World {
 	 * @return
 	 */
 	public List<L1PcInstance> getRecognizePlayer(final L1Object object) {
-		return getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
+		return this.getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
 	}
 
 	public Object getRegion(final Object object) {
@@ -242,7 +242,7 @@ public class L1World {
 		final double sinSita = Math.sin(headingRotate[heading] * Math.PI / 4);
 
 		if (map <= MAX_MAP_ID) {
-			for (final L1Object element : _visibleObjects[map].values()) {
+			for (final L1Object element : this._visibleObjects[map].values()) {
 				if (element.equals(object)) {
 					continue;
 				}
@@ -288,13 +288,13 @@ public class L1World {
 	}
 
 	public List<L1Object> getVisibleLineObjects(final L1Object src, final L1Object target) {
-		final Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
+		final Map<Integer, Integer> lineMap = this.createLineMap(src.getLocation(), target.getLocation());
 
 		final int map = target.getMapId();
 		final List<L1Object> result = Lists.newList();
 
 		if (map <= MAX_MAP_ID) {
-			for (final L1Object element : _visibleObjects[map].values()) {
+			for (final L1Object element : this._visibleObjects[map].values()) {
 				if (element.equals(src)) {
 					continue;
 				}
@@ -310,15 +310,15 @@ public class L1World {
 	}
 
 	public final Map<Integer, L1Object>[] getVisibleObjects() {
-		return _visibleObjects;
+		return this._visibleObjects;
 	}
 
 	public final Map<Integer, L1Object> getVisibleObjects(final int mapId) {
-		return _visibleObjects[mapId];
+		return this._visibleObjects[mapId];
 	}
 
 	public List<L1Object> getVisibleObjects(final L1Object object) {
-		return getVisibleObjects(object, -1);
+		return this.getVisibleObjects(object, -1);
 	}
 
 	public List<L1Object> getVisibleObjects(final L1Object object, final int radius) {
@@ -326,7 +326,7 @@ public class L1World {
 		final Point pt = object.getLocation();
 		final List<L1Object> result = Lists.newList();
 		if (map.getId() <= MAX_MAP_ID) {
-			for (final L1Object element : _visibleObjects[map.getId()].values()) {
+			for (final L1Object element : this._visibleObjects[map.getId()].values()) {
 				if (element.equals(object)) {
 					continue;
 				}
@@ -356,7 +356,7 @@ public class L1World {
 	}
 
 	public List<L1PcInstance> getVisiblePlayer(final L1Object object) {
-		return getVisiblePlayer(object, -1);
+		return this.getVisiblePlayer(object, -1);
 	}
 
 	public List<L1PcInstance> getVisiblePlayer(final L1Object object, final int radius) {
@@ -364,7 +364,7 @@ public class L1World {
 		final Point pt = object.getLocation();
 		final List<L1PcInstance> result = Lists.newList();
 
-		for (final L1PcInstance element : _allPlayers.values()) {
+		for (final L1PcInstance element : this._allPlayers.values()) {
 			if (element.equals(object)) {
 				continue;
 			}
@@ -398,7 +398,7 @@ public class L1World {
 		final Point targetPt = target.getLocation();
 		final List<L1PcInstance> result = Lists.newList();
 
-		for (final L1PcInstance element : _allPlayers.values()) {
+		for (final L1PcInstance element : this._allPlayers.values()) {
 			if (element.equals(object)) {
 				continue;
 			}
@@ -430,7 +430,7 @@ public class L1World {
 		final int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
 
 		if (mapId <= MAX_MAP_ID) {
-			for (final L1Object element : _visibleObjects[mapId].values()) {
+			for (final L1Object element : this._visibleObjects[mapId].values()) {
 				if (mapId != element.getMapId()) {
 					continue;
 				}
@@ -445,38 +445,38 @@ public class L1World {
 	}
 
 	public List<L1War> getWarList() {
-		final List<L1War> vs = _allWarList;
-		return (vs != null) ? vs : (_allWarList = Collections.unmodifiableList(_allWars));
+		final List<L1War> vs = this._allWarList;
+		return (vs != null) ? vs : (this._allWarList = Collections.unmodifiableList(this._allWars));
 	}
 
 	public int getWeather() {
-		return _weather;
+		return this._weather;
 	}
 
 	public boolean isProcessingContributionTotal() {
-		return _processingContributionTotal;
+		return this._processingContributionTotal;
 	}
 
 	public boolean isWorldChatElabled() {
-		return _worldChatEnabled;
+		return this._worldChatEnabled;
 	}
 
 	public void moveVisibleObject(final L1Object object, final int newMap) // set_Mapで新しいMapにするまえに呼ぶこと
 	{
 		if (object.getMapId() != newMap) {
 			if (object.getMapId() <= MAX_MAP_ID) {
-				_visibleObjects[object.getMapId()].remove(object.getId());
+				this._visibleObjects[object.getMapId()].remove(object.getId());
 			}
 			if (newMap <= MAX_MAP_ID) {
-				_visibleObjects[newMap].put(object.getId(), object);
+				this._visibleObjects[newMap].put(object.getId(), object);
 			}
 		}
 	}
 
 	public void removeClan(final L1Clan clan) {
-		final L1Clan temp = getClan(clan.getClanName());
+		final L1Clan temp = this.getClan(clan.getClanName());
 		if (temp != null) {
-			_allClans.remove(clan.getClanName());
+			this._allClans.remove(clan.getClanName());
 		}
 	}
 
@@ -485,46 +485,46 @@ public class L1World {
 			throw new NullPointerException();
 		}
 
-		_allObjects.remove(object.getId());
+		this._allObjects.remove(object.getId());
 		if (object instanceof L1PcInstance) {
-			_allPlayers.remove(((L1PcInstance) object).getName());
+			this._allPlayers.remove(((L1PcInstance) object).getName());
 		}
 		if (object instanceof L1PetInstance) {
-			_allPets.remove(object.getId());
+			this._allPets.remove(object.getId());
 		}
 		if (object instanceof L1SummonInstance) {
-			_allSummons.remove(object.getId());
+			this._allSummons.remove(object.getId());
 		}
 	}
 
 	public void removeVisibleObject(final L1Object object) {
 		if (object.getMapId() <= MAX_MAP_ID) {
-			_visibleObjects[object.getMapId()].remove(object.getId());
+			this._visibleObjects[object.getMapId()].remove(object.getId());
 		}
 	}
 
 	public void removeWar(final L1War war) {
-		if (_allWars.contains(war)) {
-			_allWars.remove(war);
+		if (this._allWars.contains(war)) {
+			this._allWars.remove(war);
 		}
 	}
 
 	public void set_worldChatElabled(final boolean flag) {
-		_worldChatEnabled = flag;
+		this._worldChatEnabled = flag;
 	}
 
 	public void setProcessingContributionTotal(final boolean flag) {
-		_processingContributionTotal = flag;
+		this._processingContributionTotal = flag;
 	}
 
 	public void setWeather(final int weather) {
-		_weather = weather;
+		this._weather = weather;
 	}
 
 	public void storeClan(final L1Clan clan) {
-		final L1Clan temp = getClan(clan.getClanName());
+		final L1Clan temp = this.getClan(clan.getClanName());
 		if (temp == null) {
-			_allClans.put(clan.getClanName(), clan);
+			this._allClans.put(clan.getClanName(), clan);
 		}
 	}
 
@@ -533,15 +533,15 @@ public class L1World {
 			throw new NullPointerException();
 		}
 
-		_allObjects.put(object.getId(), object);
+		this._allObjects.put(object.getId(), object);
 		if (object instanceof L1PcInstance) {
-			_allPlayers.put(((L1PcInstance) object).getName(), (L1PcInstance) object);
+			this._allPlayers.put(((L1PcInstance) object).getName(), (L1PcInstance) object);
 		}
 		if (object instanceof L1PetInstance) {
-			_allPets.put(object.getId(), (L1PetInstance) object);
+			this._allPets.put(object.getId(), (L1PetInstance) object);
 		}
 		if (object instanceof L1SummonInstance) {
-			_allSummons.put(object.getId(), (L1SummonInstance) object);
+			this._allSummons.put(object.getId(), (L1SummonInstance) object);
 		}
 	}
 

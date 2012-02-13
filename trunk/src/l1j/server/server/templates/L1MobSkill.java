@@ -145,28 +145,28 @@ public class L1MobSkill implements Cloneable {
 	int polyId[];
 
 	public L1MobSkill(final int sSize) {
-		skillSize = sSize;
+		this.skillSize = sSize;
 
-		type = new int[skillSize];
-		mpConsume = new int[skillSize];
-		triRnd = new int[skillSize];
-		triHp = new int[skillSize];
-		triCompanionHp = new int[skillSize];
-		triRange = new int[skillSize];
-		triCount = new int[skillSize];
-		changeTarget = new int[skillSize];
-		range = new int[skillSize];
-		areaWidth = new int[skillSize];
-		areaHeight = new int[skillSize];
-		leverage = new int[skillSize];
-		skillId = new int[skillSize];
-		skillArea = new int[skillSize];
-		gfxid = new int[skillSize];
-		actid = new int[skillSize];
-		summon = new int[skillSize];
-		summonMin = new int[skillSize];
-		summonMax = new int[skillSize];
-		polyId = new int[skillSize];
+		this.type = new int[this.skillSize];
+		this.mpConsume = new int[this.skillSize];
+		this.triRnd = new int[this.skillSize];
+		this.triHp = new int[this.skillSize];
+		this.triCompanionHp = new int[this.skillSize];
+		this.triRange = new int[this.skillSize];
+		this.triCount = new int[this.skillSize];
+		this.changeTarget = new int[this.skillSize];
+		this.range = new int[this.skillSize];
+		this.areaWidth = new int[this.skillSize];
+		this.areaHeight = new int[this.skillSize];
+		this.leverage = new int[this.skillSize];
+		this.skillId = new int[this.skillSize];
+		this.skillArea = new int[this.skillSize];
+		this.gfxid = new int[this.skillSize];
+		this.actid = new int[this.skillSize];
+		this.summon = new int[this.skillSize];
+		this.summonMin = new int[this.skillSize];
+		this.summonMax = new int[this.skillSize];
+		this.polyId = new int[this.skillSize];
 	}
 
 	@Override
@@ -181,184 +181,184 @@ public class L1MobSkill implements Cloneable {
 
 	/** 获得MobID */
 	public int get_mobid() {
-		return mobid;
+		return this.mobid;
 	}
 
 	/**  */
 	public int getActid(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return actid[idx];
+		return this.actid[idx];
 	}
 
 	/** 获得范围攻击的高度 */
 	public int getAreaHeight(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return areaHeight[idx];
+		return this.areaHeight[idx];
 	}
 
 	/** 获得范围攻击的宽度 */
 	public int getAreaWidth(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return areaWidth[idx];
+		return this.areaWidth[idx];
 	}
 
 	/** 获得技能发动时、改变目标 */
 	public int getChangeTarget(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return changeTarget[idx];
+		return this.changeTarget[idx];
 	}
 
 	/**  */
 	public int getGfxid(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return gfxid[idx];
+		return this.gfxid[idx];
 	}
 
 	/** 获得伤害倍率 */
 	public int getLeverage(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return leverage[idx];
+		return this.leverage[idx];
 	}
 
 	/** 获得Mob名称 */
 	public String getMobName() {
-		return mobName;
+		return this.mobName;
 	}
 
 	/** 获得魔力消耗判断 */
 	public int getMpConsume(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return mpConsume[idx];
+		return this.mpConsume[idx];
 	}
 
 	/**  */
 	public int getPolyId(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return polyId[idx];
+		return this.polyId[idx];
 	}
 
 	/** 获得范围攻击的距离 */
 	public int getRange(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return range[idx];
+		return this.range[idx];
 	}
 
 	/** 获得技能范围设定 */
 	public int getSkillArea(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return skillArea[idx];
+		return this.skillArea[idx];
 	}
 
 	/** 获得技能ID */
 	public int getSkillId(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return skillId[idx];
+		return this.skillId[idx];
 	}
 
 	/** 获得技能大小 */
 	public int getSkillSize() {
-		return skillSize;
+		return this.skillSize;
 	}
 
 	/**  */
 	public int getSummon(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return summon[idx];
+		return this.summon[idx];
 	}
 
 	/**  */
 	public int getSummonMax(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return summonMax[idx];
+		return this.summonMax[idx];
 	}
 
 	/**  */
 	public int getSummonMin(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return summonMin[idx];
+		return this.summonMin[idx];
 	}
 
 	/** 获得同族のHP%以下发动 */
 	public int getTriggerCompanionHp(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return triCompanionHp[idx];
+		return this.triCompanionHp[idx];
 	}
 
 	/**
 	 * 技能发动条件：技能的发动次数triCount以下发动
 	 */
 	public int getTriggerCount(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return triCount[idx];
+		return this.triCount[idx];
 	}
 
 	/** 获得HP%以下发动 */
 	public int getTriggerHp(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return triHp[idx];
+		return this.triHp[idx];
 	}
 
 	/** 获得随机发动概率（0%～100%） */
 	public int getTriggerRandom(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return triRnd[idx];
+		return this.triRnd[idx];
 	}
 
 	/** 获得技能触发范围 */
 	public int getTriggerRange(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return triRange[idx];
+		return this.triRange[idx];
 	}
 
 	/** 获得技能类型 */
 	public int getType(final int idx) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return 0;
 		}
-		return type[idx];
+		return this.type[idx];
 	}
 
 	/** distance指定idx技能的发动条件 */
 	public boolean isTriggerDistance(final int idx, final int distance) {
-		final int triggerRange = getTriggerRange(idx);
+		final int triggerRange = this.getTriggerRange(idx);
 
 		if (((triggerRange < 0) && (distance <= Math.abs(triggerRange))) || ((triggerRange > 0) && (distance >= triggerRange))) {
 			return true;
@@ -368,171 +368,171 @@ public class L1MobSkill implements Cloneable {
 
 	/** 设置MobID */
 	public void set_mobid(final int i) {
-		mobid = i;
+		this.mobid = i;
 	}
 
 	/**  */
 	public void setActid(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		actid[idx] = i;
+		this.actid[idx] = i;
 	}
 
 	/** 设置范围攻击的高度 */
 	public void setAreaHeight(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		areaHeight[idx] = i;
+		this.areaHeight[idx] = i;
 	}
 
 	/** 设置范围攻击的宽度 */
 	public void setAreaWidth(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		areaWidth[idx] = i;
+		this.areaWidth[idx] = i;
 	}
 
 	/** 设置技能发动时、改变目标 */
 	public void setChangeTarget(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		changeTarget[idx] = i;
+		this.changeTarget[idx] = i;
 	}
 
 	/**  */
 	public void setGfxid(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		gfxid[idx] = i;
+		this.gfxid[idx] = i;
 	}
 
 	/** 设置伤害倍率 */
 	public void setLeverage(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		leverage[idx] = i;
+		this.leverage[idx] = i;
 	}
 
 	/** 设置Mob名称 */
 	public void setMobName(final String s) {
-		mobName = s;
+		this.mobName = s;
 	}
 
 	/** 设置魔力消耗判断 */
 	public void setMpConsume(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		mpConsume[idx] = i;
+		this.mpConsume[idx] = i;
 	}
 
 	/** 设置强制变身ID */
 	public void setPolyId(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		polyId[idx] = i;
+		this.polyId[idx] = i;
 	}
 
 	/** 设置获得范围攻击的距离 */
 	public void setRange(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		range[idx] = i;
+		this.range[idx] = i;
 	}
 
 	/** 设置技能范围设定 */
 	public void setSkillArea(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		skillArea[idx] = i;
+		this.skillArea[idx] = i;
 	}
 
 	/** 设置技能ID */
 	public void setSkillId(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		skillId[idx] = i;
+		this.skillId[idx] = i;
 	}
 
 	/**  */
 	public void setSummon(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		summon[idx] = i;
+		this.summon[idx] = i;
 	}
 
 	/**  */
 	public void setSummonMax(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		summonMax[idx] = i;
+		this.summonMax[idx] = i;
 	}
 
 	/**  */
 	public void setSummonMin(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		summonMin[idx] = i;
+		this.summonMin[idx] = i;
 	}
 
 	/** 设置同族のHP%以下发动 */
 	public void setTriggerCompanionHp(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		triCompanionHp[idx] = i;
+		this.triCompanionHp[idx] = i;
 	}
 
 	/** 设置技能触发次数 */
 	public void setTriggerCount(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		triCount[idx] = i;
+		this.triCount[idx] = i;
 	}
 
 	/** 设置HP%以下发动 */
 	public void setTriggerHp(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		triHp[idx] = i;
+		this.triHp[idx] = i;
 	}
 
 	/** 设置随机发动概率（0%～100%） */
 	public void setTriggerRandom(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		triRnd[idx] = i;
+		this.triRnd[idx] = i;
 	}
 
 	/** 设置技能触发范围 */
 	public void setTriggerRange(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		triRange[idx] = i;
+		this.triRange[idx] = i;
 	}
 
 	/** 设置技能类型 */
 	public void setType(final int idx, final int i) {
-		if ((idx < 0) || (idx >= getSkillSize())) {
+		if ((idx < 0) || (idx >= this.getSkillSize())) {
 			return;
 		}
-		type[idx] = i;
+		this.type[idx] = i;
 	}
 }

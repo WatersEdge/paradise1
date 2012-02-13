@@ -40,7 +40,7 @@ public class C_DeleteChar extends ClientBasePacket {
 
 	public C_DeleteChar(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		final String name = readS();
+		final String name = this.readS();
 
 		try {
 			final L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);

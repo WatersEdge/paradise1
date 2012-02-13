@@ -97,116 +97,116 @@ public class L1ItemInstance extends L1Object {
 		public int m_def;
 
 		public void updateaddHp() {
-			addhp = getaddHp();
+			this.addhp = L1ItemInstance.this.getaddHp();
 		}
 
 		public void updateaddMp() {
-			addmp = getaddMp();
+			this.addmp = L1ItemInstance.this.getaddMp();
 		}
 
 		public void updateAll() {
-			count = getCount();
-			itemId = getItemId();
-			isEquipped = isEquipped();
-			isIdentified = isIdentified();
-			enchantLevel = getEnchantLevel();
-			durability = get_durability();
-			chargeCount = getChargeCount();
-			remainingTime = getRemainingTime();
-			lastUsed = getLastUsed();
-			bless = getBless();
-			attrEnchantKind = getAttrEnchantKind();
-			attrEnchantLevel = getAttrEnchantLevel();
-			firemr = getFireMr();
-			watermr = getWaterMr();
-			earthmr = getEarthMr();
-			windmr = getWindMr();
-			addhp = getaddHp();
-			addmp = getaddMp();
-			addsp = getaddSp();
-			hpr = getHpr();
-			mpr = getMpr();
-			m_def = getM_Def();
+			this.count = L1ItemInstance.this.getCount();
+			this.itemId = L1ItemInstance.this.getItemId();
+			this.isEquipped = L1ItemInstance.this.isEquipped();
+			this.isIdentified = L1ItemInstance.this.isIdentified();
+			this.enchantLevel = L1ItemInstance.this.getEnchantLevel();
+			this.durability = L1ItemInstance.this.get_durability();
+			this.chargeCount = L1ItemInstance.this.getChargeCount();
+			this.remainingTime = L1ItemInstance.this.getRemainingTime();
+			this.lastUsed = L1ItemInstance.this.getLastUsed();
+			this.bless = L1ItemInstance.this.getBless();
+			this.attrEnchantKind = L1ItemInstance.this.getAttrEnchantKind();
+			this.attrEnchantLevel = L1ItemInstance.this.getAttrEnchantLevel();
+			this.firemr = L1ItemInstance.this.getFireMr();
+			this.watermr = L1ItemInstance.this.getWaterMr();
+			this.earthmr = L1ItemInstance.this.getEarthMr();
+			this.windmr = L1ItemInstance.this.getWindMr();
+			this.addhp = L1ItemInstance.this.getaddHp();
+			this.addmp = L1ItemInstance.this.getaddMp();
+			this.addsp = L1ItemInstance.this.getaddSp();
+			this.hpr = L1ItemInstance.this.getHpr();
+			this.mpr = L1ItemInstance.this.getMpr();
+			this.m_def = L1ItemInstance.this.getM_Def();
 		}
 
 		public void updateAttrEnchantKind() {
-			attrEnchantKind = getAttrEnchantKind();
+			this.attrEnchantKind = L1ItemInstance.this.getAttrEnchantKind();
 		}
 
 		public void updateAttrEnchantLevel() {
-			attrEnchantLevel = getAttrEnchantLevel();
+			this.attrEnchantLevel = L1ItemInstance.this.getAttrEnchantLevel();
 		}
 
 		public void updateBless() {
-			bless = getBless();
+			this.bless = L1ItemInstance.this.getBless();
 		}
 
 		public void updateChargeCount() {
-			chargeCount = getChargeCount();
+			this.chargeCount = L1ItemInstance.this.getChargeCount();
 		}
 
 		public void updateCount() {
-			count = getCount();
+			this.count = L1ItemInstance.this.getCount();
 		}
 
 		public void updateDuraility() {
-			durability = get_durability();
+			this.durability = L1ItemInstance.this.get_durability();
 		}
 
 		public void updateEarthMr() {
-			earthmr = getEarthMr();
+			this.earthmr = L1ItemInstance.this.getEarthMr();
 		}
 
 		public void updateEnchantLevel() {
-			enchantLevel = getEnchantLevel();
+			this.enchantLevel = L1ItemInstance.this.getEnchantLevel();
 		}
 
 		public void updateEquipped() {
-			isEquipped = isEquipped();
+			this.isEquipped = L1ItemInstance.this.isEquipped();
 		}
 
 		public void updateFireMr() {
-			firemr = getFireMr();
+			this.firemr = L1ItemInstance.this.getFireMr();
 		}
 
 		public void updateHpr() {
-			hpr = getHpr();
+			this.hpr = L1ItemInstance.this.getHpr();
 		}
 
 		public void updateIdentified() {
-			isIdentified = isIdentified();
+			this.isIdentified = L1ItemInstance.this.isIdentified();
 		}
 
 		public void updateItemId() {
-			itemId = getItemId();
+			this.itemId = L1ItemInstance.this.getItemId();
 		}
 
 		public void updateLastUsed() {
-			lastUsed = getLastUsed();
+			this.lastUsed = L1ItemInstance.this.getLastUsed();
 		}
 
 		public void updateM_Def() {
-			m_def = getM_Def();
+			this.m_def = L1ItemInstance.this.getM_Def();
 		}
 
 		public void updateMpr() {
-			mpr = getMpr();
+			this.mpr = L1ItemInstance.this.getMpr();
 		}
 
 		public void updateRemainingTime() {
-			remainingTime = getRemainingTime();
+			this.remainingTime = L1ItemInstance.this.getRemainingTime();
 		}
 
 		public void updateSp() {
-			addsp = getaddSp();
+			this.addsp = L1ItemInstance.this.getaddSp();
 		}
 
 		public void updateWaterMr() {
-			watermr = getWaterMr();
+			this.watermr = L1ItemInstance.this.getWaterMr();
 		}
 
 		public void updateWindMr() {
-			windmr = getWindMr();
+			this.windmr = L1ItemInstance.this.getWindMr();
 		}
 	}
 
@@ -218,22 +218,22 @@ public class L1ItemInstance extends L1Object {
 		@Override
 		public void run() {
 			try {
-				final int type = getItem().getType();
-				final int type2 = getItem().getType2();
-				final int itemId = getItem().getItemId();
-				if ((_pc != null) && _pc.getInventory().checkItem(itemId)) {
-					if ((type == 2) && (type2 == 2) && isEquipped()) {
-						_pc.addAc(3);
-						_pc.sendPackets(new S_OwnCharStatus(_pc));
+				final int type = L1ItemInstance.this.getItem().getType();
+				final int type2 = L1ItemInstance.this.getItem().getType2();
+				final int itemId = L1ItemInstance.this.getItem().getItemId();
+				if ((L1ItemInstance.this._pc != null) && L1ItemInstance.this._pc.getInventory().checkItem(itemId)) {
+					if ((type == 2) && (type2 == 2) && L1ItemInstance.this.isEquipped()) {
+						L1ItemInstance.this._pc.addAc(3);
+						L1ItemInstance.this._pc.sendPackets(new S_OwnCharStatus(L1ItemInstance.this._pc));
 					}
 				}
-				setAcByMagic(0);
-				setDmgByMagic(0);
-				setHolyDmgByMagic(0);
-				setHitByMagic(0);
-				_pc.sendPackets(new S_ServerMessage(308, getLogName()));
-				_isRunning = false;
-				_timer = null;
+				L1ItemInstance.this.setAcByMagic(0);
+				L1ItemInstance.this.setDmgByMagic(0);
+				L1ItemInstance.this.setHolyDmgByMagic(0);
+				L1ItemInstance.this.setHitByMagic(0);
+				L1ItemInstance.this._pc.sendPackets(new S_ServerMessage(308, L1ItemInstance.this.getLogName()));
+				L1ItemInstance.this._isRunning = false;
+				L1ItemInstance.this._timer = null;
 			}
 			catch (final Exception e) {
 			}
@@ -322,8 +322,8 @@ public class L1ItemInstance extends L1Object {
 	private Timestamp _dueTime;
 
 	public L1ItemInstance() {
-		_count = 1;
-		_enchantLevel = 0;
+		this._count = 1;
+		this._enchantLevel = 0;
 	}
 
 	/**
@@ -334,58 +334,58 @@ public class L1ItemInstance extends L1Object {
 	 */
 	public L1ItemInstance(final L1Item item, final int count) {
 		this();
-		setItem(item);
-		setCount(count);
+		this.setItem(item);
+		this.setCount(count);
 	}
 
 	public boolean checkRoomOrHall() {
-		return _isHall;
+		return this._isHall;
 	}
 
 	/** 取得耐久度 */
 	public int get_durability() {
-		return _durability;
+		return this._durability;
 	}
 
 	/** 动画ID */
 	public int get_gfxid() {
-		return _item.getGfxId();
+		return this._item.getGfxId();
 	}
 
 	public int getAcByMagic() {
-		return _acByMagic;
+		return this._acByMagic;
 	}
 
 	public int getaddHp() {
-		return _addHp;
+		return this._addHp;
 	}
 
 	public int getaddMp() {
-		return _addMp;
+		return this._addMp;
 	}
 
 	public int getaddSp() {
-		return _addSp;
+		return this._addSp;
 	}
 
 	/** 取得属性加成种类 */
 	public int getAttrEnchantKind() {
-		return _attrEnchantKind;
+		return this._attrEnchantKind;
 	}
 
 	/** 取得属性加成级别 */
 	public int getAttrEnchantLevel() {
-		return _attrEnchantLevel;
+		return this._attrEnchantLevel;
 	}
 
 	/** 取得封印 */
 	public int getBless() {
-		return _bless;
+		return this._bless;
 	}
 
 	/**  */
 	public int getChargeCount() {
-		return _chargeCount;
+		return this._chargeCount;
 	}
 
 	/**
@@ -394,47 +394,47 @@ public class L1ItemInstance extends L1Object {
 	 * @return 道具的个数
 	 */
 	public int getCount() {
-		return _count;
+		return this._count;
 	}
 
 	public int getDmgByMagic() {
-		return _dmgByMagic;
+		return this._dmgByMagic;
 	}
 
 	public Timestamp getDueTime() {
-		return _dueTime;
+		return this._dueTime;
 	}
 
 	public int getEarthMr() {
-		return _EarthMr;
+		return this._EarthMr;
 	}
 
 	/** 取得加成等级 */
 	public int getEnchantLevel() {
-		return _enchantLevel;
+		return this._enchantLevel;
 	}
 
 	public int getFireMr() {
-		return _FireMr;
+		return this._FireMr;
 	}
 
 	public int getHitByMagic() {
-		return _hitByMagic;
+		return this._hitByMagic;
 	}
 
 	public int getHolyDmgByMagic() {
-		return _holyDmgByMagic;
+		return this._holyDmgByMagic;
 	}
 
 	public int getHpr() {
-		return _Hpr;
+		return this._Hpr;
 	}
 
 	// 旅馆钥匙
 	public String getInnKeyName() {
 		final StringBuilder name = new StringBuilder();
 		name.append(" #");
-		final String chatText = String.valueOf(getKeyId());
+		final String chatText = String.valueOf(this.getKeyId());
 		String s1 = "";
 		String s2 = "";
 		for (int i = 0; i < chatText.length(); i++) {
@@ -457,39 +457,39 @@ public class L1ItemInstance extends L1Object {
 	}
 
 	public int getInnNpcId() {
-		return _innNpcId;
+		return this._innNpcId;
 	}
 
 	/** 获得道具 */
 	public L1Item getItem() {
-		return _item;
+		return this._item;
 	}
 
 	/** 取得道具ID */
 	public int getItemId() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	public int getItemOwnerId() {
-		return _itemOwnerId;
+		return this._itemOwnerId;
 	}
 
 	public int getKeyId() {
-		return _keyId;
+		return this._keyId;
 	}
 
 	public LastStatus getLastStatus() {
-		return _lastStatus;
+		return this._lastStatus;
 	}
 
 	/** 取得最后使用 */
 	public Timestamp getLastUsed() {
-		return _lastUsed;
+		return this._lastUsed;
 	}
 
 	/** 取得最后重量 */
 	public int getLastWeight() {
-		return _lastWeight;
+		return this._lastWeight;
 	}
 
 	/**
@@ -497,39 +497,39 @@ public class L1ItemInstance extends L1Object {
 	 * 例:Adena（250）/6匕首
 	 */
 	public String getLogName() {
-		return getNumberedName(_count);
+		return this.getNumberedName(this._count);
 	}
 
 	public int getM_Def() {
-		return _M_Def;
+		return this._M_Def;
 	}
 
 	public int getMpr() {
-		return _Mpr;
+		return this._Mpr;
 	}
 
 	/** 取得魔防 */
 	public int getMr() {
-		int mr = _item.get_mdef();
-		if ((getItemId() == L1ArmorId.HELMET_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.CHAIN_MAIL_OF_MAGIC_RESISTANCE) // 抗魔法頭盔、抗魔法鏈甲
-				|| ((getItemId() >= L1ArmorId.ELITE_PLATE_MAIL_OF_LINDVIOR) && (getItemId() <= L1ArmorId.ELITE_SCALE_MAIL_OF_LINDVIOR)) // 林德拜爾的力量、林德拜爾的魅惑、林德拜爾的泉源、林德拜爾的霸氣
-				|| (getItemId() == L1ArmorId.B_HELMET_OF_MAGIC_RESISTANCE)) { // 受祝福的 抗魔法頭盔
-			mr += getEnchantLevel();
+		int mr = this._item.get_mdef();
+		if ((this.getItemId() == L1ArmorId.HELMET_OF_MAGIC_RESISTANCE) || (this.getItemId() == L1ArmorId.CHAIN_MAIL_OF_MAGIC_RESISTANCE) // 抗魔法頭盔、抗魔法鏈甲
+				|| ((this.getItemId() >= L1ArmorId.ELITE_PLATE_MAIL_OF_LINDVIOR) && (this.getItemId() <= L1ArmorId.ELITE_SCALE_MAIL_OF_LINDVIOR)) // 林德拜爾的力量、林德拜爾的魅惑、林德拜爾的泉源、林德拜爾的霸氣
+				|| (this.getItemId() == L1ArmorId.B_HELMET_OF_MAGIC_RESISTANCE)) { // 受祝福的 抗魔法頭盔
+			mr += this.getEnchantLevel();
 		}
-		if ((getItemId() == L1ArmorId.CLOAK_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.B_CLOAK_OF_MAGIC_RESISTANCE) // 抗魔法斗篷、受祝福的 抗魔法斗篷
-				|| (getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
-			mr += getEnchantLevel() * 2;
+		if ((this.getItemId() == L1ArmorId.CLOAK_OF_MAGIC_RESISTANCE) || (this.getItemId() == L1ArmorId.B_CLOAK_OF_MAGIC_RESISTANCE) // 抗魔法斗篷、受祝福的 抗魔法斗篷
+				|| (this.getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
+			mr += this.getEnchantLevel() * 2;
 		}
 		// 饰品强化效果
-		if (getM_Def() != 0) {
-			mr += getM_Def();
+		if (this.getM_Def() != 0) {
+			mr += this.getM_Def();
 		}
 		return mr;
 	}
 
 	/** 获得名称 */
 	public String getName() {
-		return _item.getName();
+		return this._item.getName();
 	}
 
 	/**
@@ -538,12 +538,12 @@ public class L1ItemInstance extends L1Object {
 	public String getNumberedName(final int count) {
 		final StringBuilder name = new StringBuilder();
 
-		if (isIdentified()) {
-			if (getItem().getType2() == 1) { // 武器
-				final int attrEnchantLevel = getAttrEnchantLevel();
+		if (this.isIdentified()) {
+			if (this.getItem().getType2() == 1) { // 武器
+				final int attrEnchantLevel = this.getAttrEnchantLevel();
 				if (attrEnchantLevel > 0) {
 					String attrStr = null;
-					switch (getAttrEnchantKind()) {
+					switch (this.getAttrEnchantKind()) {
 						case 1: // 地
 							if (attrEnchantLevel == 1) {
 								attrStr = "$6124";
@@ -594,40 +594,40 @@ public class L1ItemInstance extends L1Object {
 					name.append(attrStr + " ");
 				}
 			}
-			if ((getItem().getType2() == 1) || (getItem().getType2() == 2)) { // 武器・防具
-				if (getEnchantLevel() >= 0) {
-					name.append("+" + getEnchantLevel() + " ");
+			if ((this.getItem().getType2() == 1) || (this.getItem().getType2() == 2)) { // 武器・防具
+				if (this.getEnchantLevel() >= 0) {
+					name.append("+" + this.getEnchantLevel() + " ");
 				}
-				else if (getEnchantLevel() < 0) {
-					name.append(String.valueOf(getEnchantLevel()) + " ");
+				else if (this.getEnchantLevel() < 0) {
+					name.append(String.valueOf(this.getEnchantLevel()) + " ");
 				}
 			}
 		}
 
 		// 鉴定
-		if (isIdentified()) {
-			name.append(_item.getIdentifiedNameId());
+		if (this.isIdentified()) {
+			name.append(this._item.getIdentifiedNameId());
 		}
 		else {
-			name.append(_item.getUnidentifiedNameId());
+			name.append(this._item.getUnidentifiedNameId());
 		}
 
 		// 如果鉴定过
-		if (isIdentified()) {
-			if (getItem().getMaxChargeCount() > 0) {
-				name.append(" (" + getChargeCount() + ")");
+		if (this.isIdentified()) {
+			if (this.getItem().getMaxChargeCount() > 0) {
+				name.append(" (" + this.getChargeCount() + ")");
 			}
-			if (getItem().getItemId() == 20383) { // 军马头盔
-				name.append(" (" + getChargeCount() + ")");
+			if (this.getItem().getItemId() == 20383) { // 军马头盔
+				name.append(" (" + this.getChargeCount() + ")");
 			}
-			if ((getItem().getMaxUseTime() > 0) && (getItem().getType2() != 0)) { // 有使用时间限制的武器防具
-				name.append(" [" + getRemainingTime() + "]");
+			if ((this.getItem().getMaxUseTime() > 0) && (this.getItem().getType2() != 0)) { // 有使用时间限制的武器防具
+				name.append(" [" + this.getRemainingTime() + "]");
 			}
 		}
 
 		// 旅馆钥匙
-		if ((getItem().getItemId() == 40312) && (getKeyId() != 0)) {
-			name.append(getInnKeyName());
+		if ((this.getItem().getItemId() == 40312) && (this.getKeyId() != 0)) {
+			name.append(this.getInnKeyName());
 		}
 
 		if (count > 1) {
@@ -641,13 +641,13 @@ public class L1ItemInstance extends L1Object {
 	 * 获得道具在仓库和背包内显示的名称与数量。<br>
 	 */
 	public String getNumberedViewName(final int count) {
-		final StringBuilder name = new StringBuilder(getNumberedName(count));
-		final int itemType2 = getItem().getType2();
-		final int itemId = getItem().getItemId();
+		final StringBuilder name = new StringBuilder(this.getNumberedName(count));
+		final int itemType2 = this.getItem().getType2();
+		final int itemId = this.getItem().getItemId();
 
 		// 宠物项圈
 		if ((itemId == 40314) || (itemId == 40316)) {
-			final L1Pet pet = PetTable.getInstance().getTemplate(getId());
+			final L1Pet pet = PetTable.getInstance().getTemplate(this.getId());
 			if (pet != null) {
 				final L1Npc npc = NpcTable.getInstance().getTemplate(pet.get_npcid());
 				// name.append("[Lv." + pet.get_level() + " "
@@ -657,19 +657,19 @@ public class L1ItemInstance extends L1Object {
 		}
 
 		// light系道具(灯)
-		if ((getItem().getType2() == 0) && (getItem().getType() == 2)) {
-			if (isNowLighting()) {
+		if ((this.getItem().getType2() == 0) && (this.getItem().getType() == 2)) {
+			if (this.isNowLighting()) {
 				name.append(" ($10)");
 			}
 			if ((itemId == 40001) || (itemId == 40002)) { // 灯or灯笼
-				if (getRemainingTime() <= 0) {
+				if (this.getRemainingTime() <= 0) {
 					name.append(" ($11)");
 				}
 			}
 		}
 
 		// 已经装备上
-		if (isEquipped()) {
+		if (this.isEquipped()) {
 			if (itemType2 == 1) {
 				name.append(" ($9)"); // 装備(Armed)
 			}
@@ -686,40 +686,40 @@ public class L1ItemInstance extends L1Object {
 	public int getRecordingColumns() {
 		int column = 0;
 
-		if (getCount() != _lastStatus.count) {
+		if (this.getCount() != this._lastStatus.count) {
 			column += L1PcInventory.COL_COUNT;
 		}
-		if (getItemId() != _lastStatus.itemId) {
+		if (this.getItemId() != this._lastStatus.itemId) {
 			column += L1PcInventory.COL_ITEMID;
 		}
-		if (isEquipped() != _lastStatus.isEquipped) {
+		if (this.isEquipped() != this._lastStatus.isEquipped) {
 			column += L1PcInventory.COL_EQUIPPED;
 		}
-		if (getEnchantLevel() != _lastStatus.enchantLevel) {
+		if (this.getEnchantLevel() != this._lastStatus.enchantLevel) {
 			column += L1PcInventory.COL_ENCHANTLVL;
 		}
-		if (get_durability() != _lastStatus.durability) {
+		if (this.get_durability() != this._lastStatus.durability) {
 			column += L1PcInventory.COL_DURABILITY;
 		}
-		if (getChargeCount() != _lastStatus.chargeCount) {
+		if (this.getChargeCount() != this._lastStatus.chargeCount) {
 			column += L1PcInventory.COL_CHARGE_COUNT;
 		}
-		if (getLastUsed() != _lastStatus.lastUsed) {
+		if (this.getLastUsed() != this._lastStatus.lastUsed) {
 			column += L1PcInventory.COL_DELAY_EFFECT;
 		}
-		if (isIdentified() != _lastStatus.isIdentified) {
+		if (this.isIdentified() != this._lastStatus.isIdentified) {
 			column += L1PcInventory.COL_IS_ID;
 		}
-		if (getRemainingTime() != _lastStatus.remainingTime) {
+		if (this.getRemainingTime() != this._lastStatus.remainingTime) {
 			column += L1PcInventory.COL_REMAINING_TIME;
 		}
-		if (getBless() != _lastStatus.bless) {
+		if (this.getBless() != this._lastStatus.bless) {
 			column += L1PcInventory.COL_BLESS;
 		}
-		if (getAttrEnchantKind() != _lastStatus.attrEnchantKind) {
+		if (this.getAttrEnchantKind() != this._lastStatus.attrEnchantKind) {
 			column += L1PcInventory.COL_ATTR_ENCHANT_KIND;
 		}
-		if (getAttrEnchantLevel() != _lastStatus.attrEnchantLevel) {
+		if (this.getAttrEnchantLevel() != this._lastStatus.attrEnchantLevel) {
 			column += L1PcInventory.COL_ATTR_ENCHANT_LEVEL;
 		}
 
@@ -729,34 +729,34 @@ public class L1ItemInstance extends L1Object {
 	public int getRecordingColumnsEnchantAccessory() {
 		int column = 0;
 
-		if (getaddHp() != _lastStatus.addhp) {
+		if (this.getaddHp() != this._lastStatus.addhp) {
 			column += L1PcInventory.COL_ADDHP;
 		}
-		if (getaddMp() != _lastStatus.addmp) {
+		if (this.getaddMp() != this._lastStatus.addmp) {
 			column += L1PcInventory.COL_ADDMP;
 		}
-		if (getHpr() != _lastStatus.hpr) {
+		if (this.getHpr() != this._lastStatus.hpr) {
 			column += L1PcInventory.COL_HPR;
 		}
-		if (getMpr() != _lastStatus.mpr) {
+		if (this.getMpr() != this._lastStatus.mpr) {
 			column += L1PcInventory.COL_MPR;
 		}
-		if (getaddSp() != _lastStatus.addsp) {
+		if (this.getaddSp() != this._lastStatus.addsp) {
 			column += L1PcInventory.COL_ADDSP;
 		}
-		if (getM_Def() != _lastStatus.m_def) {
+		if (this.getM_Def() != this._lastStatus.m_def) {
 			column += L1PcInventory.COL_M_DEF;
 		}
-		if (getEarthMr() != _lastStatus.earthmr) {
+		if (this.getEarthMr() != this._lastStatus.earthmr) {
 			column += L1PcInventory.COL_EARTHMR;
 		}
-		if (getFireMr() != _lastStatus.firemr) {
+		if (this.getFireMr() != this._lastStatus.firemr) {
 			column += L1PcInventory.COL_FIREMR;
 		}
-		if (getWaterMr() != _lastStatus.watermr) {
+		if (this.getWaterMr() != this._lastStatus.watermr) {
 			column += L1PcInventory.COL_WATERMR;
 		}
-		if (getWindMr() != _lastStatus.windmr) {
+		if (this.getWindMr() != this._lastStatus.windmr) {
 			column += L1PcInventory.COL_WINDMR;
 		}
 
@@ -765,15 +765,15 @@ public class L1ItemInstance extends L1Object {
 
 	/** 取得剩余时间 */
 	public int getRemainingTime() {
-		return _remainingTime;
+		return this._remainingTime;
 	}
 
 	/**
 	 * アイテムの状態からサーバーパケットで利用する形式のバイト列を生成し、返す。
 	 */
 	public byte[] getStatusBytes() {
-		final int itemType2 = getItem().getType2();
-		final int itemId = getItemId();
+		final int itemType2 = this.getItem().getType2();
+		final int itemId = this.getItemId();
 		final BinaryOutputStream os = new BinaryOutputStream();
 		final L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
 
@@ -782,8 +782,8 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(7); // 可使用职业：
 				os.writeC(128); // [高等宠物]
 				os.writeC(23); // 材质
-				os.writeC(getItem().getMaterial());
-				os.writeD(getWeight());
+				os.writeC(this.getItem().getMaterial());
+				os.writeD(this.getWeight());
 			}
 			else { // 盔甲
 					// AC
@@ -793,9 +793,9 @@ public class L1ItemInstance extends L1Object {
 					ac = ac - ac - ac;
 				}
 				os.writeC(ac);
-				os.writeC(getItem().getMaterial());
+				os.writeC(this.getItem().getMaterial());
 				os.writeC(-1); // 饰品级别 - 0:上等 1:中等 2:初级 3:特等
-				os.writeD(getWeight());
+				os.writeD(this.getWeight());
 
 				os.writeC(7); // 可使用职业：
 				os.writeC(128); // [高等宠物]
@@ -843,118 +843,118 @@ public class L1ItemInstance extends L1Object {
 			}
 		}
 		else if (itemType2 == 0) { // etcitem
-			switch (getItem().getType()) {
+			switch (this.getItem().getType()) {
 				case 2: // light
 					os.writeC(22); // 亮度
-					os.writeH(getItem().getLightRange());
+					os.writeH(this.getItem().getLightRange());
 					break;
 				case 7: // food
 					os.writeC(21);
 					// 营养
-					os.writeH(getItem().getFoodVolume());
+					os.writeH(this.getItem().getFoodVolume());
 					break;
 				case 0: // arrow
 				case 15: // sting
 					os.writeC(1); // 打击值
-					os.writeC(getItem().getDmgSmall());
-					os.writeC(getItem().getDmgLarge());
+					os.writeC(this.getItem().getDmgSmall());
+					os.writeC(this.getItem().getDmgLarge());
 					break;
 				default:
 					os.writeC(23); // 材质
 					break;
 			}
-			os.writeC(getItem().getMaterial());
-			os.writeD(getWeight());
+			os.writeC(this.getItem().getMaterial());
+			os.writeD(this.getWeight());
 		}
 		else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
 			if (itemType2 == 1) { // weapon
 				// 打击值
 				os.writeC(1);
-				os.writeC(getItem().getDmgSmall());
-				os.writeC(getItem().getDmgLarge());
-				os.writeC(getItem().getMaterial());
-				os.writeD(getWeight());
+				os.writeC(this.getItem().getDmgSmall());
+				os.writeC(this.getItem().getDmgLarge());
+				os.writeC(this.getItem().getMaterial());
+				os.writeD(this.getWeight());
 			}
 			else if (itemType2 == 2) { // armor
 				// AC
 				os.writeC(19);
-				int ac = ((L1Armor) getItem()).get_ac();
+				int ac = ((L1Armor) this.getItem()).get_ac();
 				if (ac < 0) {
 					ac = ac - ac - ac;
 				}
 				os.writeC(ac);
-				os.writeC(getItem().getMaterial());
-				os.writeC(getItem().getGrade()); // 饰品级别 - 0:上等 1:中等 2:初级 3:特等
-				os.writeD(getWeight());
+				os.writeC(this.getItem().getMaterial());
+				os.writeC(this.getItem().getGrade()); // 饰品级别 - 0:上等 1:中等 2:初级 3:特等
+				os.writeD(this.getWeight());
 			}
 			/** 强化数判断 */
-			if (getEnchantLevel() != 0) {
+			if (this.getEnchantLevel() != 0) {
 				os.writeC(2);
 				/** 饰品强化卷轴 */
-				if ((getItem().getType2() == 2) && (getItem().getType() >= 8) && (getItem().getType() <= 12)) { // 8:项链 9:戒指1 10:腰带
+				if ((this.getItem().getType2() == 2) && (this.getItem().getType() >= 8) && (this.getItem().getType() <= 12)) { // 8:项链 9:戒指1 10:腰带
 					// 11:戒指2 12:耳环
 					os.writeC(0);
 				}
 				else {
-					os.writeC(getEnchantLevel());
+					os.writeC(this.getEnchantLevel());
 				}
 			}
 			// 损坏程度
-			if (get_durability() != 0) {
+			if (this.get_durability() != 0) {
 				os.writeC(3);
-				os.writeC(get_durability());
+				os.writeC(this.get_durability());
 			}
 			// 双手武器
-			if (getItem().isTwohandedWeapon()) {
+			if (this.getItem().isTwohandedWeapon()) {
 				os.writeC(4);
 			}
 			// 攻击成功
 			if (itemType2 == 1) { // weapon
-				if (getItem().getHitModifier() != 0) {
+				if (this.getItem().getHitModifier() != 0) {
 					os.writeC(5);
-					os.writeC(getItem().getHitModifier());
+					os.writeC(this.getItem().getHitModifier());
 				}
 			}
 			else if (itemType2 == 2) { // armor
-				if (getItem().getHitModifierByArmor() != 0) {
+				if (this.getItem().getHitModifierByArmor() != 0) {
 					os.writeC(5);
-					os.writeC(getItem().getHitModifierByArmor());
+					os.writeC(this.getItem().getHitModifierByArmor());
 				}
 			}
 			// 追加打击
 			if (itemType2 == 1) { // weapon
-				if (getItem().getDmgModifier() != 0) {
+				if (this.getItem().getDmgModifier() != 0) {
 					os.writeC(6);
-					os.writeC(getItem().getDmgModifier());
+					os.writeC(this.getItem().getDmgModifier());
 				}
 			}
 			else if (itemType2 == 2) { // armor
-				if (getItem().getDmgModifierByArmor() != 0) {
+				if (this.getItem().getDmgModifierByArmor() != 0) {
 					os.writeC(6);
-					os.writeC(getItem().getDmgModifierByArmor());
+					os.writeC(this.getItem().getDmgModifierByArmor());
 				}
 			}
 			// 使用可能
 			int bit = 0;
-			bit |= getItem().isUseRoyal() ? 1 : 0;
-			bit |= getItem().isUseKnight() ? 2 : 0;
-			bit |= getItem().isUseElf() ? 4 : 0;
-			bit |= getItem().isUseMage() ? 8 : 0;
-			bit |= getItem().isUseDarkelf() ? 16 : 0;
-			bit |= getItem().isUseDragonknight() ? 32 : 0;
-			bit |= getItem().isUseIllusionist() ? 64 : 0;
+			bit |= this.getItem().isUseRoyal() ? 1 : 0;
+			bit |= this.getItem().isUseKnight() ? 2 : 0;
+			bit |= this.getItem().isUseElf() ? 4 : 0;
+			bit |= this.getItem().isUseMage() ? 8 : 0;
+			bit |= this.getItem().isUseDarkelf() ? 16 : 0;
+			bit |= this.getItem().isUseDragonknight() ? 32 : 0;
+			bit |= this.getItem().isUseIllusionist() ? 64 : 0;
 			// bit |= getItem().isUseHiPet() ? 64 : 0; // ハイペット
 			os.writeC(7);
 			os.writeC(bit);
 			// 弓の命中率補正
-			if (getItem().getBowHitModifierByArmor() != 0) {
+			if (this.getItem().getBowHitModifierByArmor() != 0) {
 				os.writeC(24);
-				os.writeC(getItem().getBowHitModifierByArmor());
+				os.writeC(this.getItem().getBowHitModifierByArmor());
 			}
 			// 弓の伤害值補正
-			if (getItem().getBowDmgModifierByArmor() != 0) {
+			if (this.getItem().getBowDmgModifierByArmor() != 0) {
 				os.writeC(35);
-				os.writeC(getItem().getBowDmgModifierByArmor());
+				os.writeC(this.getItem().getBowDmgModifierByArmor());
 			}
 			// MP吸収
 			if ((itemId == 126) || (itemId == 127)) { // 玛那魔杖、钢铁玛那魔杖
@@ -965,124 +965,124 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(34);
 			}
 			// STR~CHA
-			if (getItem().get_addstr() != 0) {
+			if (this.getItem().get_addstr() != 0) {
 				os.writeC(8);
-				os.writeC(getItem().get_addstr());
+				os.writeC(this.getItem().get_addstr());
 			}
-			if (getItem().get_adddex() != 0) {
+			if (this.getItem().get_adddex() != 0) {
 				os.writeC(9);
-				os.writeC(getItem().get_adddex());
+				os.writeC(this.getItem().get_adddex());
 			}
-			if (getItem().get_addcon() != 0) {
+			if (this.getItem().get_addcon() != 0) {
 				os.writeC(10);
-				os.writeC(getItem().get_addcon());
+				os.writeC(this.getItem().get_addcon());
 			}
-			if (getItem().get_addwis() != 0) {
+			if (this.getItem().get_addwis() != 0) {
 				os.writeC(11);
-				os.writeC(getItem().get_addwis());
+				os.writeC(this.getItem().get_addwis());
 			}
-			if (getItem().get_addint() != 0) {
+			if (this.getItem().get_addint() != 0) {
 				os.writeC(12);
-				os.writeC(getItem().get_addint());
+				os.writeC(this.getItem().get_addint());
 			}
-			if (getItem().get_addcha() != 0) {
+			if (this.getItem().get_addcha() != 0) {
 				os.writeC(13);
-				os.writeC(getItem().get_addcha());
+				os.writeC(this.getItem().get_addcha());
 			}
 			// HP, MP
-			if ((getItem().get_addhp() != 0) || (getaddHp() != 0)) {
+			if ((this.getItem().get_addhp() != 0) || (this.getaddHp() != 0)) {
 				os.writeC(14);
-				os.writeH(getItem().get_addhp() + getaddHp());
+				os.writeH(this.getItem().get_addhp() + this.getaddHp());
 			}
-			if ((getItem().get_addmp() != 0) || (getaddMp() != 0)) {
+			if ((this.getItem().get_addmp() != 0) || (this.getaddMp() != 0)) {
 				os.writeC(32);
-				os.writeC(getItem().get_addmp() + getaddMp());
+				os.writeC(this.getItem().get_addmp() + this.getaddMp());
 			}
 			// SP(魔力)
-			if ((getItem().get_addsp() != 0) || (getaddSp() != 0)) {
+			if ((this.getItem().get_addsp() != 0) || (this.getaddSp() != 0)) {
 				os.writeC(17);
-				os.writeC(getItem().get_addsp() + getaddSp());
+				os.writeC(this.getItem().get_addsp() + this.getaddSp());
 			}
 			// 加速道具
-			if (getItem().isHasteItem()) {
+			if (this.getItem().isHasteItem()) {
 				os.writeC(18);
 			}
 			// 火の属性
-			if ((getItem().get_defense_fire() != 0) || (getFireMr() != 0)) {
+			if ((this.getItem().get_defense_fire() != 0) || (this.getFireMr() != 0)) {
 				os.writeC(27);
-				os.writeC(getItem().get_defense_fire() + getFireMr());
+				os.writeC(this.getItem().get_defense_fire() + this.getFireMr());
 			}
 			// 水の属性
-			if ((getItem().get_defense_water() != 0) || (getWaterMr() != 0)) {
+			if ((this.getItem().get_defense_water() != 0) || (this.getWaterMr() != 0)) {
 				os.writeC(28);
-				os.writeC(getItem().get_defense_water() + getWaterMr());
+				os.writeC(this.getItem().get_defense_water() + this.getWaterMr());
 			}
 			// 风の属性
-			if ((getItem().get_defense_wind() != 0) || (getWindMr() != 0)) {
+			if ((this.getItem().get_defense_wind() != 0) || (this.getWindMr() != 0)) {
 				os.writeC(29);
-				os.writeC(getItem().get_defense_wind() + getWindMr());
+				os.writeC(this.getItem().get_defense_wind() + this.getWindMr());
 			}
 			// 地の属性
-			if ((getItem().get_defense_earth() != 0) || (getEarthMr() != 0)) {
+			if ((this.getItem().get_defense_earth() != 0) || (this.getEarthMr() != 0)) {
 				os.writeC(30);
-				os.writeC(getItem().get_defense_earth() + getEarthMr());
+				os.writeC(this.getItem().get_defense_earth() + this.getEarthMr());
 			}
 			// 冻结耐性
-			if (getItem().get_regist_freeze() != 0) {
+			if (this.getItem().get_regist_freeze() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_freeze());
+				os.writeH(this.getItem().get_regist_freeze());
 				os.writeC(33);
 				os.writeC(1);
 			}
 			// 石化耐性
-			if (getItem().get_regist_stone() != 0) {
+			if (this.getItem().get_regist_stone() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_stone());
+				os.writeH(this.getItem().get_regist_stone());
 				os.writeC(33);
 				os.writeC(2);
 			}
 			// 睡眠耐性
-			if (getItem().get_regist_sleep() != 0) {
+			if (this.getItem().get_regist_sleep() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_sleep());
+				os.writeH(this.getItem().get_regist_sleep());
 				os.writeC(33);
 				os.writeC(3);
 			}
 			// 暗闇耐性
-			if (getItem().get_regist_blind() != 0) {
+			if (this.getItem().get_regist_blind() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_blind());
+				os.writeH(this.getItem().get_regist_blind());
 				os.writeC(33);
 				os.writeC(4);
 			}
 			// 昏迷耐性
-			if (getItem().get_regist_stun() != 0) {
+			if (this.getItem().get_regist_stun() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_stun());
+				os.writeH(this.getItem().get_regist_stun());
 				os.writeC(33);
 				os.writeC(5);
 			}
 			// 支撑耐性
-			if (getItem().get_regist_sustain() != 0) {
+			if (this.getItem().get_regist_sustain() != 0) {
 				os.writeC(15);
-				os.writeH(getItem().get_regist_sustain());
+				os.writeH(this.getItem().get_regist_sustain());
 				os.writeC(33);
 				os.writeC(6);
 			}
 			// MR
-			if (getMr() != 0) {
+			if (this.getMr() != 0) {
 				os.writeC(15);
-				os.writeH(getMr());
+				os.writeH(this.getMr());
 			}
 			// 体力恢复率
-			if ((getItem().get_addhpr() != 0) || (getHpr() != 0)) {
+			if ((this.getItem().get_addhpr() != 0) || (this.getHpr() != 0)) {
 				os.writeC(37);
-				os.writeC(getItem().get_addhpr() + getHpr());
+				os.writeC(this.getItem().get_addhpr() + this.getHpr());
 			}
 			// 魔力恢复率
-			if ((getItem().get_addmpr() != 0) || (getMpr() != 0)) {
+			if ((this.getItem().get_addmpr() != 0) || (this.getMpr() != 0)) {
 				os.writeC(38);
-				os.writeC(getItem().get_addmpr() + getMpr());
+				os.writeC(this.getItem().get_addmpr() + this.getMpr());
 			}
 			// 幸运
 			// if (getItem.getLuck() != 0) {
@@ -1108,25 +1108,25 @@ public class L1ItemInstance extends L1Object {
 	 * 例:+10 武士刀 (装备)
 	 */
 	public String getViewName() {
-		return getNumberedViewName(_count);
+		return this.getNumberedViewName(this._count);
 	}
 
 	public int getWaterMr() {
-		return _WaterMr;
+		return this._WaterMr;
 	}
 
 	/** 获得重量 */
 	public int getWeight() {
-		if (getItem().getWeight() == 0) {
+		if (this.getItem().getWeight() == 0) {
 			return 0;
 		}
 		else {
-			return Math.max(getCount() * getItem().getWeight() / 1000, 1);
+			return Math.max(this.getCount() * this.getItem().getWeight() / 1000, 1);
 		}
 	}
 
 	public int getWindMr() {
-		return _WindMr;
+		return this._WindMr;
 	}
 
 	/**
@@ -1135,7 +1135,7 @@ public class L1ItemInstance extends L1Object {
 	 * @return 如果已经装备true、没有装备false。
 	 */
 	public boolean isEquipped() {
-		return _isEquipped;
+		return this._isEquipped;
 	}
 
 	/**
@@ -1144,16 +1144,16 @@ public class L1ItemInstance extends L1Object {
 	 * @return 鉴定true、未鉴定false。
 	 */
 	public boolean isIdentified() {
-		return _isIdentified;
+		return this._isIdentified;
 	}
 
 	public boolean isNowLighting() {
-		return _isNowLighting;
+		return this._isNowLighting;
 	}
 
 	/** 是可堆叠 */
 	public boolean isStackable() {
-		return _item.isStackable();
+		return this._item.isStackable();
 	}
 
 	@Override
@@ -1171,43 +1171,43 @@ public class L1ItemInstance extends L1Object {
 		if (i > 127) {
 			i = 127;
 		}
-		_durability = i;
+		this._durability = i;
 	}
 
 	public void setAcByMagic(final int i) {
-		_acByMagic = i;
+		this._acByMagic = i;
 	}
 
 	public void setaddHp(final int i) {
-		_addHp = i;
+		this._addHp = i;
 	}
 
 	public void setaddMp(final int i) {
-		_addMp = i;
+		this._addMp = i;
 	}
 
 	public void setaddSp(final int i) {
-		_addSp = i;
+		this._addSp = i;
 	}
 
 	/** 设定属性加成种类 */
 	public void setAttrEnchantKind(final int i) {
-		_attrEnchantKind = i;
+		this._attrEnchantKind = i;
 	}
 
 	/** 设定属性加成级别 */
 	public void setAttrEnchantLevel(final int i) {
-		_attrEnchantLevel = i;
+		this._attrEnchantLevel = i;
 	}
 
 	/** 设定封印 */
 	public void setBless(final int i) {
-		_bless = i;
+		this._bless = i;
 	}
 
 	/**  */
 	public void setChargeCount(final int i) {
-		_chargeCount = i;
+		this._chargeCount = i;
 	}
 
 	/**
@@ -1217,24 +1217,24 @@ public class L1ItemInstance extends L1Object {
 	 *            道具的个数
 	 */
 	public void setCount(final int count) {
-		_count = count;
+		this._count = count;
 	}
 
 	public void setDmgByMagic(final int i) {
-		_dmgByMagic = i;
+		this._dmgByMagic = i;
 	}
 
 	public void setDueTime(final Timestamp i) {
-		_dueTime = i;
+		this._dueTime = i;
 	}
 
 	public void setEarthMr(final int i) {
-		_EarthMr = i;
+		this._EarthMr = i;
 	}
 
 	/** 设定加成等级 */
 	public void setEnchantLevel(final int enchantLevel) {
-		_enchantLevel = enchantLevel;
+		this._enchantLevel = enchantLevel;
 	}
 
 	/**
@@ -1244,27 +1244,27 @@ public class L1ItemInstance extends L1Object {
 	 *            如果已经装备true、没有装备false。
 	 */
 	public void setEquipped(final boolean equipped) {
-		_isEquipped = equipped;
+		this._isEquipped = equipped;
 	}
 
 	public void setFireMr(final int i) {
-		_FireMr = i;
+		this._FireMr = i;
 	}
 
 	public void setHall(final boolean i) {
-		_isHall = i;
+		this._isHall = i;
 	}
 
 	public void setHitByMagic(final int i) {
-		_hitByMagic = i;
+		this._hitByMagic = i;
 	}
 
 	public void setHolyDmgByMagic(final int i) {
-		_holyDmgByMagic = i;
+		this._holyDmgByMagic = i;
 	}
 
 	public void setHpr(final int i) {
-		_Hpr = i;
+		this._Hpr = i;
 	}
 
 	/**
@@ -1274,155 +1274,155 @@ public class L1ItemInstance extends L1Object {
 	 *            鉴定true、未鉴定false。
 	 */
 	public void setIdentified(final boolean identified) {
-		_isIdentified = identified;
+		this._isIdentified = identified;
 	}
 
 	public void setInnNpcId(final int i) {
-		_innNpcId = i;
+		this._innNpcId = i;
 	}
 
 	/** 设置道具 */
 	public void setItem(final L1Item item) {
-		_item = item;
-		_itemId = item.getItemId();
+		this._item = item;
+		this._itemId = item.getItemId();
 	}
 
 	/** 设定道具ID */
 	public void setItemId(final int itemId) {
-		_itemId = itemId;
+		this._itemId = itemId;
 	}
 
 	public void setItemOwnerId(final int i) {
-		_itemOwnerId = i;
+		this._itemOwnerId = i;
 	}
 
 	public void setKeyId(final int i) {
-		_keyId = i;
+		this._keyId = i;
 	}
 
 	/** 设定最后使用 */
 	public void setLastUsed(final Timestamp t) {
-		_lastUsed = t;
+		this._lastUsed = t;
 	}
 
 	/** 设定最后重量 */
 	public void setLastWeight(final int weight) {
-		_lastWeight = weight;
+		this._lastWeight = weight;
 	}
 
 	public void setM_Def(final int i) {
-		_M_Def = i;
+		this._M_Def = i;
 	}
 
 	public void setMpr(final int i) {
-		_Mpr = i;
+		this._Mpr = i;
 	}
 
 	public void setNowLighting(final boolean flag) {
-		_isNowLighting = flag;
+		this._isNowLighting = flag;
 	}
 
 	/** 设定剩余时间 */
 	public void setRemainingTime(final int i) {
-		_remainingTime = i;
+		this._remainingTime = i;
 	}
 
 	public void setSkillArmorEnchant(final L1PcInstance pc, final int skillId, final int skillTime) {
-		final int type = getItem().getType();
-		final int type2 = getItem().getType2();
-		if (_isRunning) {
-			_timer.cancel();
-			final int itemId = getItem().getItemId();
+		final int type = this.getItem().getType();
+		final int type2 = this.getItem().getType2();
+		if (this._isRunning) {
+			this._timer.cancel();
+			final int itemId = this.getItem().getItemId();
 			if ((pc != null) && pc.getInventory().checkItem(itemId)) {
-				if ((type == 2) && (type2 == 2) && isEquipped()) {
+				if ((type == 2) && (type2 == 2) && this.isEquipped()) {
 					pc.addAc(3);
 					pc.sendPackets(new S_OwnCharStatus(pc));
 				}
 			}
-			setAcByMagic(0);
-			_isRunning = false;
-			_timer = null;
+			this.setAcByMagic(0);
+			this._isRunning = false;
+			this._timer = null;
 		}
 
-		if ((type == 2) && (type2 == 2) && isEquipped()) {
+		if ((type == 2) && (type2 == 2) && this.isEquipped()) {
 			pc.addAc(-3);
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
-		setAcByMagic(3);
-		_pc = pc;
-		_timer = new EnchantTimer();
-		(new Timer()).schedule(_timer, skillTime);
-		_isRunning = true;
+		this.setAcByMagic(3);
+		this._pc = pc;
+		this._timer = new EnchantTimer();
+		(new Timer()).schedule(this._timer, skillTime);
+		this._isRunning = true;
 	}
 
 	public void setSkillWeaponEnchant(final L1PcInstance pc, final int skillId, final int skillTime) {
-		if (getItem().getType2() != 1) {
+		if (this.getItem().getType2() != 1) {
 			return;
 		}
-		if (_isRunning) {
-			_timer.cancel();
-			setDmgByMagic(0);
-			setHolyDmgByMagic(0);
-			setHitByMagic(0);
-			_isRunning = false;
-			_timer = null;
+		if (this._isRunning) {
+			this._timer.cancel();
+			this.setDmgByMagic(0);
+			this.setHolyDmgByMagic(0);
+			this.setHitByMagic(0);
+			this._isRunning = false;
+			this._timer = null;
 		}
 
 		switch (skillId) {
 			case HOLY_WEAPON:
-				setHolyDmgByMagic(1);
-				setHitByMagic(1);
+				this.setHolyDmgByMagic(1);
+				this.setHitByMagic(1);
 				break;
 
 			case ENCHANT_WEAPON:
-				setDmgByMagic(2);
+				this.setDmgByMagic(2);
 				break;
 
 			case BLESS_WEAPON:
-				setDmgByMagic(2);
-				setHitByMagic(2);
+				this.setDmgByMagic(2);
+				this.setHitByMagic(2);
 				break;
 
 			case SHADOW_FANG:
-				setDmgByMagic(5);
+				this.setDmgByMagic(5);
 				break;
 
 			default:
 				break;
 		}
 
-		_pc = pc;
-		_timer = new EnchantTimer();
-		(new Timer()).schedule(_timer, skillTime);
-		_isRunning = true;
+		this._pc = pc;
+		this._timer = new EnchantTimer();
+		(new Timer()).schedule(this._timer, skillTime);
+		this._isRunning = true;
 	}
 
 	public void setWaterMr(final int i) {
-		_WaterMr = i;
+		this._WaterMr = i;
 	}
 
 	public void setWindMr(final int i) {
-		_WindMr = i;
+		this._WindMr = i;
 	}
 
 	public void startEquipmentTimer(final L1PcInstance pc) {
-		if (getRemainingTime() > 0) {
-			_equipmentTimer = new L1EquipmentTimer(pc, this);
+		if (this.getRemainingTime() > 0) {
+			this._equipmentTimer = new L1EquipmentTimer(pc, this);
 			final Timer timer = new Timer(true);
-			timer.scheduleAtFixedRate(_equipmentTimer, 1000, 1000);
+			timer.scheduleAtFixedRate(this._equipmentTimer, 1000, 1000);
 		}
 	}
 
 	public void startItemOwnerTimer(final L1PcInstance pc) {
-		setItemOwnerId(pc.getId());
+		this.setItemOwnerId(pc.getId());
 		final L1ItemOwnerTimer timer = new L1ItemOwnerTimer(this, 10000);
 		timer.begin();
 	}
 
 	public void stopEquipmentTimer(final L1PcInstance pc) {
-		if (getRemainingTime() > 0) {
-			_equipmentTimer.cancel();
-			_equipmentTimer = null;
+		if (this.getRemainingTime() > 0) {
+			this._equipmentTimer.cancel();
+			this._equipmentTimer = null;
 		}
 	}
 }

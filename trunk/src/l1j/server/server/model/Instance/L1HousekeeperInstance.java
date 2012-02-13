@@ -43,7 +43,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -64,9 +64,9 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 
 	@Override
 	public void onTalkAction(final L1PcInstance pc) {
-		final int objid = getId();
-		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		final int npcid = getNpcTemplate().get_npcId();
+		final int objid = this.getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(this.getNpcTemplate().get_npcId());
+		final int npcid = this.getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
 		boolean isOwner = false;

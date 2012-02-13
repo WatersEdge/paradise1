@@ -48,9 +48,9 @@ public class C_Result extends ClientBasePacket {
 
 	public C_Result(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		final int npcObjectId = readD();
-		final int resultType = readC();
-		final int size = readH();
+		final int npcObjectId = this.readD();
+		final int resultType = this.readC();
+		final int size = this.readH();
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 		final int level = pc.getLevel();
@@ -81,7 +81,7 @@ public class C_Result extends ClientBasePacket {
 			final L1Shop shop = ShopTable.getInstance().get(npcId);
 			final L1ShopBuyOrderList orderList = shop.newBuyOrderList();
 			for (int i = 0; i < size; i++) {
-				orderList.add(readD(), readD());
+				orderList.add(this.readD(), this.readD());
 			}
 			shop.sellItems(pc, orderList);
 		}
@@ -89,7 +89,7 @@ public class C_Result extends ClientBasePacket {
 			final L1Shop shop = ShopTable.getInstance().get(npcId);
 			final L1ShopSellOrderList orderList = shop.newSellOrderList(pc);
 			for (int i = 0; i < size; i++) {
-				orderList.add(readD(), readD());
+				orderList.add(this.readD(), this.readD());
 			}
 			shop.buyItems(orderList);
 		}
@@ -97,8 +97,8 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
-				objectId = readD();
-				count = readD();
+				objectId = this.readD();
+				count = this.readD();
 				final L1Object object = pc.getInventory().getItem(objectId);
 				final L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
@@ -139,8 +139,8 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
-				objectId = readD();
-				count = readD();
+				objectId = this.readD();
+				count = this.readD();
 				item = pc.getDwarfInventory().getItem(objectId);
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) // 检查重量与容量
 				{
@@ -163,8 +163,8 @@ public class C_Result extends ClientBasePacket {
 			if (pc.getClanid() != 0) { // 有血盟
 				for (int i = 0; i < size; i++) {
 					tradable = true;
-					objectId = readD();
-					count = readD();
+					objectId = this.readD();
+					count = this.readD();
 					final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 					final L1Object object = pc.getInventory().getItem(objectId);
 					final L1ItemInstance item = (L1ItemInstance) object;
@@ -221,8 +221,8 @@ public class C_Result extends ClientBasePacket {
 			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				for (int i = 0; i < size; i++) {
-					objectId = readD();
-					count = readD();
+					objectId = this.readD();
+					count = this.readD();
 					item = clan.getDwarfForClanInventory().getItem(objectId);
 					if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量确认及びメッセージ送信
 						if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
@@ -251,8 +251,8 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
-				objectId = readD();
-				count = readD();
+				objectId = this.readD();
+				count = this.readD();
 				final L1Object object = pc.getInventory().getItem(objectId);
 				final L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
@@ -294,8 +294,8 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
-				objectId = readD();
-				count = readD();
+				objectId = this.readD();
+				count = this.readD();
 				item = pc.getDwarfForElfInventory().getItem(objectId);
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量确认及びメッセージ送信
 					if (pc.getInventory().consumeItem(40494, 2)) { // 纯粹的米索莉块
@@ -345,8 +345,8 @@ public class C_Result extends ClientBasePacket {
 				targetPc.setTradingInPrivateShop(true);
 
 				for (int i = 0; i < size; i++) { // 购入予定の商品
-					order = readD();
-					count = readD();
+					order = this.readD();
+					count = this.readD();
 					pssl = sellList.get(order);
 					itemObjectId = pssl.getItemObjectId();
 					sellPrice = pssl.getSellPrice();
@@ -433,9 +433,9 @@ public class C_Result extends ClientBasePacket {
 			buyList = targetPc.getBuyList();
 
 			for (int i = 0; i < size; i++) {
-				itemObjectId = readD();
-				count = readCH();
-				order = readC();
+				itemObjectId = this.readD();
+				count = this.readCH();
+				order = this.readC();
 				item = pc.getInventory().getItem(itemObjectId);
 				if (item == null) {
 					continue;
@@ -502,8 +502,8 @@ public class C_Result extends ClientBasePacket {
 				petCost = 0;
 				petCount = 0;
 				divisor = 6;
-				itemObjectId = readD();
-				itemCount = readD();
+				itemObjectId = this.readD();
+				itemCount = this.readD();
 
 				if (itemCount == 0) {
 					continue;

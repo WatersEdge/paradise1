@@ -32,16 +32,16 @@ public class S_Bookmarks extends ServerBasePacket {
 	 * @param id
 	 */
 	public S_Bookmarks(final String name, final int map, final int id) {
-		buildPacket(name, map, id);
+		this.buildPacket(name, map, id);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -50,9 +50,9 @@ public class S_Bookmarks extends ServerBasePacket {
 	}
 
 	private void buildPacket(final String name, final int map, final int id) {
-		writeC(Opcodes.S_OPCODE_BOOKMARKS);
-		writeS(name);
-		writeH(map);
-		writeD(id);
+		this.writeC(Opcodes.S_OPCODE_BOOKMARKS);
+		this.writeS(name);
+		this.writeH(map);
+		this.writeD(id);
 	}
 }

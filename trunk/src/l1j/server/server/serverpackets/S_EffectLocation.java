@@ -36,11 +36,11 @@ public class S_EffectLocation extends ServerBasePacket {
 	 *            - 动画ID
 	 */
 	public S_EffectLocation(final int x, final int y, final int gfxId) {
-		writeC(Opcodes.S_OPCODE_EFFECTLOCATION);
-		writeH(x);
-		writeH(y);
-		writeH(gfxId);
-		writeC(0);
+		this.writeC(Opcodes.S_OPCODE_EFFECTLOCATION);
+		this.writeH(x);
+		this.writeH(y);
+		this.writeH(gfxId);
+		this.writeC(0);
 	}
 
 	/**
@@ -69,10 +69,10 @@ public class S_EffectLocation extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 }

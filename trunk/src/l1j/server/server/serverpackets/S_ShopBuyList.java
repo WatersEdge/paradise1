@@ -54,20 +54,20 @@ public class S_ShopBuyList extends ServerBasePacket {
 			return;
 		}
 
-		writeC(Opcodes.S_OPCODE_SHOWSHOPSELLLIST);
-		writeD(objid);
-		writeH(assessedItems.size());
+		this.writeC(Opcodes.S_OPCODE_SHOWSHOPSELLLIST);
+		this.writeD(objid);
+		this.writeH(assessedItems.size());
 
 		for (final L1AssessedItem item : assessedItems) {
-			writeD(item.getTargetId());
-			writeD(item.getAssessedPrice());
+			this.writeD(item.getTargetId());
+			this.writeD(item.getAssessedPrice());
 		}
-		writeH(0x0007); // 7 = 金币为单位 显示总金额
+		this.writeH(0x0007); // 7 = 金币为单位 显示总金额
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

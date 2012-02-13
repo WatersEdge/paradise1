@@ -32,7 +32,7 @@ public class S_SkillSound extends ServerBasePacket {
 	 * @param gfxid
 	 */
 	public S_SkillSound(final int objid, final int gfxid) {
-		buildPacket(objid, gfxid, 0);
+		this.buildPacket(objid, gfxid, 0);
 	}
 
 	/**
@@ -43,16 +43,16 @@ public class S_SkillSound extends ServerBasePacket {
 	 * @param aid
 	 */
 	public S_SkillSound(final int objid, final int gfxid, final int aid) {
-		buildPacket(objid, gfxid, aid);
+		this.buildPacket(objid, gfxid, aid);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class S_SkillSound extends ServerBasePacket {
 
 	private void buildPacket(final int objid, final int gfxid, final int aid) {
 		// 不使用aid
-		writeC(Opcodes.S_OPCODE_SKILLSOUNDGFX);
-		writeD(objid);
-		writeH(gfxid);
-		writeH(0);
-		writeD(0x00000000);
+		this.writeC(Opcodes.S_OPCODE_SKILLSOUNDGFX);
+		this.writeD(objid);
+		this.writeH(gfxid);
+		this.writeH(0);
+		this.writeD(0x00000000);
 	}
 }

@@ -40,82 +40,82 @@ public class L1Pet {
 	}
 
 	public int get_exp() {
-		return _exp;
+		return this._exp;
 	}
 
 	public int get_food() {
-		return _food;
+		return this._food;
 	}
 
 	public int get_hp() {
-		return _hp;
+		return this._hp;
 	}
 
 	public int get_itemobjid() {
-		return _itemobjid;
+		return this._itemobjid;
 	}
 
 	public int get_lawful() {
-		return _lawful;
+		return this._lawful;
 	}
 
 	public int get_level() {
-		return _level;
+		return this._level;
 	}
 
 	public int get_mp() {
-		return _mp;
+		return this._mp;
 	}
 
 	public String get_name() {
-		return _name;
+		return this._name;
 	}
 
 	public int get_npcid() {
-		return _npcid;
+		return this._npcid;
 	}
 
 	public int get_objid() {
-		return _objid;
+		return this._objid;
 	}
 
 	public void set_exp(final int i) {
-		_exp = i;
+		this._exp = i;
 	}
 
 	public void set_food(final int i) {
-		_food = i;
+		this._food = i;
 	}
 
 	public void set_hp(final int i) {
-		_hp = i;
+		this._hp = i;
 	}
 
 	public void set_itemobjid(final int i) {
-		_itemobjid = i;
+		this._itemobjid = i;
 	}
 
 	public void set_lawful(final int i) {
-		_lawful = i;
+		this._lawful = i;
 	}
 
 	public void set_level(final int i) {
-		_level = i;
+		this._level = i;
 	}
 
 	public void set_mp(final int i) {
-		_mp = i;
+		this._mp = i;
 	}
 
 	public void set_name(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 	public void set_npcid(final int i) {
-		_npcid = i;
+		this._npcid = i;
 	}
 
 	public void set_objid(final int i) {
-		_objid = i;
+		this._objid = i;
 	}
 }

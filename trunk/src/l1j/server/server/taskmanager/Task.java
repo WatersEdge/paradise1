@@ -31,7 +31,7 @@ public abstract class Task {
 
 	public void initializate() {
 		if (Config.DEBUG) {
-			_log.info("Task" + getName() + " inializate");
+			_log.info("Task" + this.getName() + " inializate");
 		}
 	}
 

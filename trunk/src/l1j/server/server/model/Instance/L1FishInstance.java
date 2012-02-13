@@ -33,18 +33,18 @@ public class L1FishInstance extends L1NpcInstance {
 		private final L1FishInstance _fish;
 
 		public fishTimer(final L1FishInstance fish) {
-			_fish = fish;
+			this._fish = fish;
 		}
 
 		@Override
 		public void run() {
-			if (_fish != null) {
-				_fish.setHeading(Random.nextInt(8)); // 随机面向
-				_fish.broadcastPacket(new S_ChangeHeading(_fish)); // 更新面向
-				_fish.broadcastPacket(new S_DoActionGFX(_fish.getId(), 0)); // 动作
+			if (this._fish != null) {
+				this._fish.setHeading(Random.nextInt(8)); // 随机面向
+				this._fish.broadcastPacket(new S_ChangeHeading(this._fish)); // 更新面向
+				this._fish.broadcastPacket(new S_DoActionGFX(this._fish.getId(), 0)); // 动作
 			}
 			else {
-				cancel();
+				this.cancel();
 			}
 		}
 	}
@@ -55,9 +55,9 @@ public class L1FishInstance extends L1NpcInstance {
 
 	public L1FishInstance(final L1Npc template) {
 		super(template);
-		_fishTimer = new fishTimer(this);
+		this._fishTimer = new fishTimer(this);
 		final Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(_fishTimer, 1000, (Random.nextInt(30, 30) * 1000));
+		timer.scheduleAtFixedRate(this._fishTimer, 1000, (Random.nextInt(30, 30) * 1000));
 	}
 
 	@Override

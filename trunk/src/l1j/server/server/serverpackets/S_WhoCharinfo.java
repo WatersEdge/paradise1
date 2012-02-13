@@ -50,8 +50,8 @@ public class S_WhoCharinfo extends ServerBasePacket {
 			lawfulness = "(Lawful)"; // 正义者
 		}
 
-		writeC(Opcodes.S_OPCODE_SYSMSG);
-		writeC(0x08);
+		this.writeC(Opcodes.S_OPCODE_SYSMSG);
+		this.writeC(0x08);
 
 		String title = "";
 		String clan = "";
@@ -64,17 +64,17 @@ public class S_WhoCharinfo extends ServerBasePacket {
 			clan = "[" + pc.getClanname() + "]";
 		}
 
-		writeS(title + pc.getName() + " " + lawfulness + " " + clan);
+		this.writeS(title + pc.getName() + " " + lawfulness + " " + clan);
 		// writeD(0x80157FE4);
-		writeD(0);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

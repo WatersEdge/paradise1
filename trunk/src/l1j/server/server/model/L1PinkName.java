@@ -34,7 +34,7 @@ public class L1PinkName {
 
 		/** 粉名计时器 */
 		public PinkNameTimer(final L1PcInstance attacker) {
-			_attacker = attacker;
+			this._attacker = attacker;
 		}
 
 		@Override
@@ -47,18 +47,18 @@ public class L1PinkName {
 					break;
 				}
 				// 死亡、或 对手杀死红名 结束
-				if (_attacker.isDead()) {
+				if (this._attacker.isDead()) {
 					// setPinkName(false);はL1PcInstance#death()で行う
 					break;
 				}
 
 				// 正义值小于零 不粉名
-				if (_attacker.getLawful() < 0) {
-					_attacker.setPinkName(false);
+				if (this._attacker.getLawful() < 0) {
+					this._attacker.setPinkName(false);
 					break;
 				}
 			}
-			stopPinkName(_attacker);
+			this.stopPinkName(this._attacker);
 		}
 
 		/** 结束粉名 */

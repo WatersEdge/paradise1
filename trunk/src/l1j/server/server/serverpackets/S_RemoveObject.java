@@ -30,15 +30,15 @@ public class S_RemoveObject extends ServerBasePacket {
 	 * @param obj
 	 */
 	public S_RemoveObject(final L1Object obj) {
-		writeC(Opcodes.S_OPCODE_REMOVE_OBJECT);
-		writeD(obj.getId());
+		this.writeC(Opcodes.S_OPCODE_REMOVE_OBJECT);
+		this.writeD(obj.getId());
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 }

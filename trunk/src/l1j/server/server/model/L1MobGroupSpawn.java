@@ -60,8 +60,8 @@ public class L1MobGroupSpawn {
 		}
 
 		L1NpcInstance mob;
-		_isRespawnScreen = isRespawnScreen;
-		_isInitSpawn = isInitSpawn;
+		this._isRespawnScreen = isRespawnScreen;
+		this._isInitSpawn = isInitSpawn;
 
 		final L1MobGroupInfo mobGroupInfo = new L1MobGroupInfo();
 
@@ -73,7 +73,7 @@ public class L1MobGroupSpawn {
 				continue;
 			}
 			for (int i = 0; i < minion.getCount(); i++) {
-				mob = spawn(leader, minion.getId());
+				mob = this.spawn(leader, minion.getId());
 				if (mob != null) {
 					mobGroupInfo.addMember(mob);
 				}
@@ -83,7 +83,7 @@ public class L1MobGroupSpawn {
 
 	private boolean canSpawn(final L1NpcInstance mob) {
 		if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
-			if (_isRespawnScreen) {
+			if (this._isRespawnScreen) {
 				return true;
 			}
 			if (L1World.getInstance().getVisiblePlayer(mob).isEmpty()) {
@@ -108,7 +108,7 @@ public class L1MobGroupSpawn {
 			mob.setX(leader.getX() + Random.nextInt(5) - 2);
 			mob.setY(leader.getY() + Random.nextInt(5) - 2);
 			// 地图外、障碍物上、同画面内有PC、与领导者相同的坐标
-			if (!canSpawn(mob)) {
+			if (!this.canSpawn(mob)) {
 				mob.setX(leader.getX());
 				mob.setY(leader.getY());
 			}
@@ -133,7 +133,7 @@ public class L1MobGroupSpawn {
 			L1World.getInstance().addVisibleObject(mob);
 
 			if (mob instanceof L1MonsterInstance) {
-				if (!_isInitSpawn && (mob.getHiddenStatus() == 0)) {
+				if (!this._isInitSpawn && (mob.getHiddenStatus() == 0)) {
 					mob.onNpcAI(); // 开始怪物AI
 				}
 			}

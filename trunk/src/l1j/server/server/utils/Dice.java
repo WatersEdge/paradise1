@@ -29,7 +29,7 @@ public class Dice {
 	 *            基础值
 	 */
 	public Dice(final int faces) {
-		_faces = faces;
+		this._faces = faces;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class Dice {
 	 * @return faces 基础值
 	 */
 	public int getFaces() {
-		return _faces;
+		return this._faces;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class Dice {
 	 * @return
 	 */
 	public int roll() {
-		return Random.nextInt(_faces) + 1;
+		return Random.nextInt(this._faces) + 1;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Dice {
 	public int roll(final int count) {
 		int n = 0;
 		for (int i = 0; i < count; i++) {
-			n += roll();
+			n += this.roll();
 		}
 		return n;
 	}

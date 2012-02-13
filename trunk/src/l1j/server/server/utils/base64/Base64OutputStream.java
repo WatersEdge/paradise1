@@ -38,42 +38,42 @@ public class Base64OutputStream extends OutputStream {
 
 	public Base64OutputStream(final OutputStream outputStream, final int wrapAt) {
 		this.outputStream = outputStream;
-		linelength = wrapAt;
+		this.linelength = wrapAt;
 	}
 
 	@Override
 	public void close() throws IOException {
-		commit();
-		outputStream.close();
+		this.commit();
+		this.outputStream.close();
 	}
 
 	@Override
 	public void write(final int b) throws IOException {
-		final int value = (b & 0xFF) << (16 - (bytecounter * 8));
-		buffer = buffer | value;
-		bytecounter++;
-		if (bytecounter == 3) {
-			commit();
+		final int value = (b & 0xFF) << (16 - (this.bytecounter * 8));
+		this.buffer = this.buffer | value;
+		this.bytecounter++;
+		if (this.bytecounter == 3) {
+			this.commit();
 		}
 	}
 
 	protected void commit() throws IOException {
-		if (bytecounter > 0) {
-			if ((linelength > 0) && (linecounter == linelength)) {
-				outputStream.write("\r\n".getBytes());
-				linecounter = 0;
+		if (this.bytecounter > 0) {
+			if ((this.linelength > 0) && (this.linecounter == this.linelength)) {
+				this.outputStream.write("\r\n".getBytes());
+				this.linecounter = 0;
 			}
-			final char b1 = Base64.Shared.chars.charAt((buffer << 8) >>> 26);
-			final char b2 = Base64.Shared.chars.charAt((buffer << 14) >>> 26);
-			final char b3 = (bytecounter < 2) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 20) >>> 26);
-			final char b4 = (bytecounter < 3) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 26) >>> 26);
-			outputStream.write(b1);
-			outputStream.write(b2);
-			outputStream.write(b3);
-			outputStream.write(b4);
-			linecounter += 4;
-			bytecounter = 0;
-			buffer = 0;
+			final char b1 = Base64.Shared.chars.charAt((this.buffer << 8) >>> 26);
+			final char b2 = Base64.Shared.chars.charAt((this.buffer << 14) >>> 26);
+			final char b3 = (this.bytecounter < 2) ? Base64.Shared.pad : Base64.Shared.chars.charAt((this.buffer << 20) >>> 26);
+			final char b4 = (this.bytecounter < 3) ? Base64.Shared.pad : Base64.Shared.chars.charAt((this.buffer << 26) >>> 26);
+			this.outputStream.write(b1);
+			this.outputStream.write(b2);
+			this.outputStream.write(b3);
+			this.outputStream.write(b4);
+			this.linecounter += 4;
+			this.bytecounter = 0;
+			this.buffer = 0;
 		}
 	}
 

@@ -22,14 +22,14 @@ import l1j.server.server.Opcodes;
 public class S_SkillIconShield extends ServerBasePacket {
 
 	public S_SkillIconShield(final int type, final int time) {
-		writeC(Opcodes.S_OPCODE_SKILLICONSHIELD);
-		writeH(time);
-		writeC(type);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_SKILLICONSHIELD);
+		this.writeH(time);
+		this.writeC(type);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

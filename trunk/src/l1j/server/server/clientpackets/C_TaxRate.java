@@ -33,8 +33,8 @@ public class C_TaxRate extends ClientBasePacket {
 
 	public C_TaxRate(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		final int i = readD();
-		final int j = readC();
+		final int i = this.readD();
+		final int j = this.readC();
 
 		final L1PcInstance player = clientthread.getActiveChar();
 		if (i == player.getId()) {

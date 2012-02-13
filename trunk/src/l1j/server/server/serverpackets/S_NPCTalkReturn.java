@@ -34,7 +34,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param html
 	 */
 	public S_NPCTalkReturn(final int objid, final L1NpcHtml html) {
-		buildPacket(objid, html.getName(), html.getArgs());
+		this.buildPacket(objid, html.getName(), html.getArgs());
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param htmlid
 	 */
 	public S_NPCTalkReturn(final int objid, final String htmlid) {
-		buildPacket(objid, htmlid, null);
+		this.buildPacket(objid, htmlid, null);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param data
 	 */
 	public S_NPCTalkReturn(final int objid, final String htmlid, final String[] data) {
-		buildPacket(objid, htmlid, data);
+		this.buildPacket(objid, htmlid, data);
 	}
 
 	/**
@@ -91,15 +91,15 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 			throw new IllegalArgumentException();
 		}
 
-		buildPacket(objid, htmlid, data);
+		this.buildPacket(objid, htmlid, data);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -109,19 +109,19 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 
 	private void buildPacket(final int objid, final String htmlid, final String[] data) {
 
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS(htmlid);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS(htmlid);
 		if ((data != null) && (1 <= data.length)) {
-			writeH(0x01); // 如果有人知道请修复未知字节
-			writeH(data.length); // 数的参数
+			this.writeH(0x01); // 如果有人知道请修复未知字节
+			this.writeH(data.length); // 数的参数
 			for (final String datum : data) {
-				writeS(datum);
+				this.writeS(datum);
 			}
 		}
 		else {
-			writeH(0x00);
-			writeH(0x00);
+			this.writeH(0x00);
+			this.writeH(0x00);
 		}
 	}
 }

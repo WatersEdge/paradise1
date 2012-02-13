@@ -43,11 +43,11 @@ public class C_CommonClick {
 	private static Logger _log = Logger.getLogger(C_CommonClick.class.getName());
 
 	public C_CommonClick(final ClientThread client) {
-		deleteCharacter(client); // 到达删除期限，删除角色
+		this.deleteCharacter(client); // 到达删除期限，删除角色
 		final int amountOfChars = client.getAccount().countCharacters();
 		client.sendPacket(new S_CharAmount(amountOfChars, client));
 		if (amountOfChars > 0) {
-			sendCharPacks(client);
+			this.sendCharPacks(client);
 		}
 	}
 

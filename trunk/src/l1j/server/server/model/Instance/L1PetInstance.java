@@ -90,40 +90,40 @@ public class L1PetInstance extends L1NpcInstance {
 	public L1PetInstance(final L1Npc template, final L1PcInstance master, final L1Pet l1pet) {
 		super(template);
 
-		_petMaster = master;
-		_itemObjId = l1pet.get_itemobjid();
-		_type = PetTypeTable.getInstance().get(template.get_npcId());
+		this._petMaster = master;
+		this._itemObjId = l1pet.get_itemobjid();
+		this._type = PetTypeTable.getInstance().get(template.get_npcId());
 
 		// 覆盖状态
-		setId(l1pet.get_objid());
-		setName(l1pet.get_name());
-		setLevel(l1pet.get_level());
+		this.setId(l1pet.get_objid());
+		this.setName(l1pet.get_name());
+		this.setLevel(l1pet.get_level());
 		// HPMPはMAXとする
-		setMaxHp(l1pet.get_hp());
-		setCurrentHpDirect(l1pet.get_hp());
-		setMaxMp(l1pet.get_mp());
-		setCurrentMpDirect(l1pet.get_mp());
-		setExp(l1pet.get_exp());
-		setExpPercent(ExpTable.getExpPercentage(l1pet.get_level(), l1pet.get_exp()));
-		setLawful(l1pet.get_lawful());
-		setTempLawful(l1pet.get_lawful());
-		set_food(l1pet.get_food());
+		this.setMaxHp(l1pet.get_hp());
+		this.setCurrentHpDirect(l1pet.get_hp());
+		this.setMaxMp(l1pet.get_mp());
+		this.setCurrentMpDirect(l1pet.get_mp());
+		this.setExp(l1pet.get_exp());
+		this.setExpPercent(ExpTable.getExpPercentage(l1pet.get_level(), l1pet.get_exp()));
+		this.setLawful(l1pet.get_lawful());
+		this.setTempLawful(l1pet.get_lawful());
+		this.set_food(l1pet.get_food());
 		// 执行饱食度计时器
-		startFoodTimer(this);
+		this.startFoodTimer(this);
 
-		setMaster(master);
-		setX(master.getX() + Random.nextInt(5) - 2);
-		setY(master.getY() + Random.nextInt(5) - 2);
-		setMap(master.getMapId());
-		setHeading(5);
-		setLightSize(template.getLightSize());
+		this.setMaster(master);
+		this.setX(master.getX() + Random.nextInt(5) - 2);
+		this.setY(master.getY() + Random.nextInt(5) - 2);
+		this.setMap(master.getMapId());
+		this.setHeading(5);
+		this.setLightSize(template.getLightSize());
 
-		_currentPetStatus = 3;
+		this._currentPetStatus = 3;
 
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 		master.addPet(this);
 	}
@@ -132,75 +132,75 @@ public class L1PetInstance extends L1NpcInstance {
 	public L1PetInstance(final L1NpcInstance target, final L1PcInstance master, final int itemid) {
 		super(null);
 
-		_petMaster = master;
-		_itemObjId = itemid;
-		_type = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
+		this._petMaster = master;
+		this._itemObjId = itemid;
+		this._type = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
 
 		// 覆盖状态
-		setId(IdFactory.getInstance().nextId());
-		setting_template(target.getNpcTemplate());
-		setCurrentHpDirect(target.getCurrentHp());
-		setCurrentMpDirect(target.getCurrentMp());
-		setExp(750); // Lv.5のEXP
-		setExpPercent(0);
-		setLawful(0);
-		setTempLawful(0);
-		set_food(50); // 饱食度：普通
-		startFoodTimer(this); // 执行饱食度计时器
+		this.setId(IdFactory.getInstance().nextId());
+		this.setting_template(target.getNpcTemplate());
+		this.setCurrentHpDirect(target.getCurrentHp());
+		this.setCurrentMpDirect(target.getCurrentMp());
+		this.setExp(750); // Lv.5のEXP
+		this.setExpPercent(0);
+		this.setLawful(0);
+		this.setTempLawful(0);
+		this.set_food(50); // 饱食度：普通
+		this.startFoodTimer(this); // 执行饱食度计时器
 
-		setMaster(master);
-		setX(target.getX());
-		setY(target.getY());
-		setMap(target.getMapId());
-		setHeading(target.getHeading());
-		setLightSize(target.getLightSize());
-		setPetcost(6);
-		setInventory(target.getInventory());
+		this.setMaster(master);
+		this.setX(target.getX());
+		this.setY(target.getY());
+		this.setMap(target.getMapId());
+		this.setHeading(target.getHeading());
+		this.setLightSize(target.getLightSize());
+		this.setPetcost(6);
+		this.setInventory(target.getInventory());
 		target.setInventory(null);
 
-		_currentPetStatus = 3;
+		this._currentPetStatus = 3;
 		/* 修正驯养后回血&回魔 */
-		stopHpRegeneration();
-		if (getMaxHp() > getCurrentHp()) {
-			startHpRegeneration();
+		this.stopHpRegeneration();
+		if (this.getMaxHp() > this.getCurrentHp()) {
+			this.startHpRegeneration();
 		}
-		stopMpRegeneration();
-		if (getMaxMp() > getCurrentMp()) {
-			startMpRegeneration();
+		this.stopMpRegeneration();
+		if (this.getMaxMp() > this.getCurrentMp()) {
+			this.startMpRegeneration();
 		}
 		target.deleteMe();
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 
 		master.addPet(this);
-		PetTable.getInstance().storeNewPet(target, getId(), itemid);
+		PetTable.getInstance().storeNewPet(target, this.getId(), itemid);
 	}
 
 	/** 哨子呼叫宠物 */
 	public void call() {
-		int id = _type.getMessageId(L1PetType.getMessageNumber(getLevel()));
-		if ((id != 0) && !isDead()) {
-			if (get_food() == 0) {
-				id = _type.getDefyMessageId();
+		int id = this._type.getMessageId(L1PetType.getMessageNumber(this.getLevel()));
+		if ((id != 0) && !this.isDead()) {
+			if (this.get_food() == 0) {
+				id = this._type.getDefyMessageId();
 			}
-			broadcastPacket(new S_NpcChatPacket(this, "$" + id, 0));
+			this.broadcastPacket(new S_NpcChatPacket(this, "$" + id, 0));
 		}
 
-		if (get_food() > 0) {
-			setCurrentPetStatus(7); // 前往主人身边并休息
+		if (this.get_food() > 0) {
+			this.setCurrentPetStatus(7); // 前往主人身边并休息
 		}
 		else {
-			setCurrentPetStatus(3); // 休息
+			this.setCurrentPetStatus(3); // 休息
 		}
 	}
 
 	/** 收集宠物身上道具 */
 	public void collect(final boolean isDepositnpc) {
-		L1Inventory targetInventory = _petMaster.getInventory();
-		final List<L1ItemInstance> itemList = getInventory().getItems();
+		L1Inventory targetInventory = this._petMaster.getInventory();
+		final List<L1ItemInstance> itemList = this.getInventory().getItems();
 		for (final Object itemObject : itemList) {
 			final L1ItemInstance item = (L1ItemInstance) itemObject;
 			if (item == null) {
@@ -213,93 +213,93 @@ public class L1PetInstance extends L1NpcInstance {
 				else {
 					final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
 					if (petItem.getUseType() == 1) { // 牙齿
-						setWeapon(null);
+						this.setWeapon(null);
 					}
 					else if (petItem.getUseType() == 0) { // 盔甲
-						setArmor(null);
+						this.setArmor(null);
 					}
 					item.setEquipped(false);
 				}
 			}
-			if (_petMaster.getInventory().checkAddItem( // 主人可否拿取判断
+			if (this._petMaster.getInventory().checkAddItem( // 主人可否拿取判断
 					item, item.getCount()) == L1Inventory.OK) {
-				getInventory().tradeItem(item, item.getCount(), targetInventory);
-				_petMaster.sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+				this.getInventory().tradeItem(item, item.getCount(), targetInventory);
+				this._petMaster.sendPackets(new S_ServerMessage(143, this.getName(), item.getLogName()));
 			}
 			else { // 掉落地面
-				targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
-				getInventory().tradeItem(item, item.getCount(), targetInventory);
+				targetInventory = L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId());
+				this.getInventory().tradeItem(item, item.getCount(), targetInventory);
 			}
 		}
 	}
 
 	public synchronized void death(final L1Character lastAttacker) {
-		if (!isDead()) {
-			setDead(true);
+		if (!this.isDead()) {
+			this.setDead(true);
 			// 停止饱食度计时器
-			stopFoodTimer(this);
-			setStatus(ActionCodes.ACTION_Die);
-			setCurrentHp(0);
+			this.stopFoodTimer(this);
+			this.setStatus(ActionCodes.ACTION_Die);
+			this.setCurrentHp(0);
 
-			getMap().setPassable(getLocation(), true);
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
+			this.getMap().setPassable(this.getLocation(), true);
+			this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Die));
 		}
 	}
 
 	/** 重登时宠物身上道具掉落地面 */
 	public void dropItem() {
-		final L1Inventory targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
-		final List<L1ItemInstance> items = _inventory.getItems();
-		final int size = _inventory.getSize();
+		final L1Inventory targetInventory = L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId());
+		final List<L1ItemInstance> items = this._inventory.getItems();
+		final int size = this._inventory.getSize();
 		for (int i = 0; i < size; i++) {
 			final L1ItemInstance item = items.get(0);
 			if (item.isEquipped()) { // 装备中
 				final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
 				if (petItem.getUseType() == 1) { // 牙齿
-					setWeapon(null);
+					this.setWeapon(null);
 				}
 				else if (petItem.getUseType() == 0) { // 盔甲
-					setArmor(null);
+					this.setArmor(null);
 				}
 				item.setEquipped(false);
 			}
-			_inventory.tradeItem(item, item.getCount(), targetInventory);
+			this._inventory.tradeItem(item, item.getCount(), targetInventory);
 		}
 	}
 
 	/** 宠物进化 */
 	public void evolvePet(final int new_itemobjid) {
 
-		final L1Pet l1pet = PetTable.getInstance().getTemplate(_itemObjId);
+		final L1Pet l1pet = PetTable.getInstance().getTemplate(this._itemObjId);
 		if (l1pet == null) {
 			return;
 		}
 
-		final int newNpcId = _type.getNpcIdForEvolving();
-		final int evolvItem = _type.getEvolvItemId();
+		final int newNpcId = this._type.getNpcIdForEvolving();
+		final int evolvItem = this._type.getEvolvItemId();
 		// 取得进化前最大血魔
-		final int tmpMaxHp = getMaxHp();
-		final int tmpMaxMp = getMaxMp();
+		final int tmpMaxHp = this.getMaxHp();
+		final int tmpMaxMp = this.getMaxMp();
 
-		transform(newNpcId);
-		_type = PetTypeTable.getInstance().get(newNpcId);
+		this.transform(newNpcId);
+		this._type = PetTypeTable.getInstance().get(newNpcId);
 
-		setLevel(1);
+		this.setLevel(1);
 		// 进化后血魔减半
-		setMaxHp(tmpMaxHp / 2);
-		setMaxMp(tmpMaxMp / 2);
-		setCurrentHpDirect(getMaxHp());
-		setCurrentMpDirect(getMaxMp());
-		setExp(0);
-		setExpPercent(0);
-		getInventory().consumeItem(evolvItem, 1); // 吃掉进化道具
+		this.setMaxHp(tmpMaxHp / 2);
+		this.setMaxMp(tmpMaxMp / 2);
+		this.setCurrentHpDirect(this.getMaxHp());
+		this.setCurrentMpDirect(this.getMaxMp());
+		this.setExp(0);
+		this.setExpPercent(0);
+		this.getInventory().consumeItem(evolvItem, 1); // 吃掉进化道具
 
 		// 将原宠物身上道具移交到进化后的宠物身上
 		final L1Object obj = L1World.getInstance().findObject(l1pet.get_objid());
 		if ((obj != null) && (obj instanceof L1NpcInstance)) {
 			final L1PetInstance new_pet = (L1PetInstance) obj;
 			L1Inventory new_petInventory = new_pet.getInventory();
-			final List<L1ItemInstance> itemList = getInventory().getItems();
+			final List<L1ItemInstance> itemList = this.getInventory().getItems();
 			for (final Object itemObject : itemList) {
 				final L1ItemInstance item = (L1ItemInstance) itemObject;
 				if (item == null) {
@@ -309,180 +309,180 @@ public class L1PetInstance extends L1NpcInstance {
 					item.setEquipped(false);
 					final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
 					if (petItem.getUseType() == 1) { // 牙齿
-						setWeapon(null);
+						this.setWeapon(null);
 						new_pet.usePetWeapon(this, item);
 					}
 					else if (petItem.getUseType() == 0) { // 盔甲
-						setArmor(null);
+						this.setArmor(null);
 						new_pet.usePetArmor(this, item);
 					}
 				}
 				if (new_pet.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
-					getInventory().tradeItem(item, item.getCount(), new_petInventory);
+					this.getInventory().tradeItem(item, item.getCount(), new_petInventory);
 				}
 				else { // 掉落地面
-					new_petInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
-					getInventory().tradeItem(item, item.getCount(), new_petInventory);
+					new_petInventory = L1World.getInstance().getInventory(this.getX(), this.getY(), this.getMapId());
+					this.getInventory().tradeItem(item, item.getCount(), new_petInventory);
 				}
 			}
 			new_pet.broadcastPacket(new S_SkillSound(new_pet.getId(), 2127)); // 升级光芒
 		}
 
 		// 删除原宠物资料
-		PetTable.getInstance().deletePet(_itemObjId);
+		PetTable.getInstance().deletePet(this._itemObjId);
 
 		// 纪录新宠物资料
 		l1pet.set_itemobjid(new_itemobjid);
 		l1pet.set_npcid(newNpcId);
-		l1pet.set_name(getName());
-		l1pet.set_level(getLevel());
-		l1pet.set_hp(getMaxHp());
-		l1pet.set_mp(getMaxMp());
-		l1pet.set_exp((int) getExp());
-		l1pet.set_food(get_food());
+		l1pet.set_name(this.getName());
+		l1pet.set_level(this.getLevel());
+		l1pet.set_hp(this.getMaxHp());
+		l1pet.set_mp(this.getMaxMp());
+		l1pet.set_exp((int) this.getExp());
+		l1pet.set_food(this.get_food());
 
-		PetTable.getInstance().storeNewPet(this, getId(), new_itemobjid);
+		PetTable.getInstance().storeNewPet(this, this.getId(), new_itemobjid);
 
-		_itemObjId = new_itemobjid;
+		this._itemObjId = new_itemobjid;
 		// 执行饱食度计时器
 		if ((obj != null) && (obj instanceof L1NpcInstance)) {
 			final L1PetInstance new_pet = (L1PetInstance) obj;
-			startFoodTimer(new_pet);
+			this.startFoodTimer(new_pet);
 		}
 	}
 
 	/** 获得防具 */
 	public L1ItemInstance getArmor() {
-		return _armor;
+		return this._armor;
 	}
 
 	/** 获得宠物目前状态 */
 	public int getCurrentPetStatus() {
-		return _currentPetStatus;
+		return this._currentPetStatus;
 	}
 
 	/** 获得武器的损坏 */
 	public int getDamageByWeapon() {
-		return _damageByWeapon;
+		return this._damageByWeapon;
 	}
 
 	/** 获得EXP的百分比 */
 	public int getExpPercent() {
-		return _expPercent;
+		return this._expPercent;
 	}
 
 	/** 获得武器的命中率 */
 	public int getHitByWeapon() {
-		return _hitByWeapon;
+		return this._hitByWeapon;
 	}
 
 	/** 获得道具的唯一ID */
 	public int getItemObjId() {
-		return _itemObjId;
+		return this._itemObjId;
 	}
 
 	/** 获得宠物类型 */
 	public L1PetType getPetType() {
-		return _type;
+		return this._type;
 	}
 
 	/** 获得武器 */
 	public L1ItemInstance getWeapon() {
-		return _weapon;
+		return this._weapon;
 	}
 
 	/** 解放宠物 */
 	public void liberate() {
-		final L1MonsterInstance monster = new L1MonsterInstance(getNpcTemplate());
+		final L1MonsterInstance monster = new L1MonsterInstance(this.getNpcTemplate());
 		monster.setId(IdFactory.getInstance().nextId());
 
-		monster.setX(getX());
-		monster.setY(getY());
-		monster.setMap(getMapId());
-		monster.setHeading(getHeading());
+		monster.setX(this.getX());
+		monster.setY(this.getY());
+		monster.setMap(this.getMapId());
+		monster.setHeading(this.getHeading());
 		monster.set_storeDroped(true);
-		monster.setInventory(getInventory());
-		setInventory(null);
-		monster.setLevel(getLevel());
-		monster.setMaxHp(getMaxHp());
-		monster.setCurrentHpDirect(getCurrentHp());
-		monster.setMaxMp(getMaxMp());
-		monster.setCurrentMpDirect(getCurrentMp());
+		monster.setInventory(this.getInventory());
+		this.setInventory(null);
+		monster.setLevel(this.getLevel());
+		monster.setMaxHp(this.getMaxHp());
+		monster.setCurrentHpDirect(this.getCurrentHp());
+		monster.setMaxMp(this.getMaxMp());
+		monster.setCurrentMpDirect(this.getCurrentMp());
 
-		_petMaster.getPetList().remove(getId());
-		if (_petMaster.getPetList().isEmpty()) {
-			_petMaster.sendPackets(new S_PetCtrlMenu(_master, monster, false)); // 关闭宠物控制图形介面
+		this._petMaster.getPetList().remove(this.getId());
+		if (this._petMaster.getPetList().isEmpty()) {
+			this._petMaster.sendPackets(new S_PetCtrlMenu(this._master, monster, false)); // 关闭宠物控制图形介面
 		}
 
-		deleteMe();
+		this.deleteMe();
 
 		// 删除PetTable和DB、丢弃宠物
-		_petMaster.getInventory().removeItem(_itemObjId, 1);
-		PetTable.getInstance().deletePet(_itemObjId);
+		this._petMaster.getInventory().removeItem(this._itemObjId, 1);
+		PetTable.getInstance().deletePet(this._itemObjId);
 
 		L1World.getInstance().storeObject(monster);
 		L1World.getInstance().addVisibleObject(monster);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(monster)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 	}
 
 	// 没有目标处理的场合
 	@Override
 	public boolean noTarget() {
-		switch (_currentPetStatus) {
+		switch (this._currentPetStatus) {
 			case 3: // 休息
 				return true;
 			case 4: // 散开
-				if ((_petMaster != null) && (_petMaster.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_petMaster.getLocation()) < 5)) {
-					_dir = targetReverseDirection(_petMaster.getX(), _petMaster.getY());
-					_dir = checkObject(getX(), getY(), getMapId(), _dir);
-					setDirectionMove(_dir);
-					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				if ((this._petMaster != null) && (this._petMaster.getMapId() == this.getMapId()) && (this.getLocation().getTileLineDistance(this._petMaster.getLocation()) < 5)) {
+					this._dir = this.targetReverseDirection(this._petMaster.getX(), this._petMaster.getY());
+					this._dir = checkObject(this.getX(), this.getY(), this.getMapId(), this._dir);
+					this.setDirectionMove(this._dir);
+					this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 				}
 				else { // 距离主人 5格以上休息
-					_currentPetStatus = 3;
+					this._currentPetStatus = 3;
 					return true;
 				}
 				return false;
 			case 5: // 警戒
-				if ((Math.abs(getHomeX() - getX()) > 1) || (Math.abs(getHomeY() - getY()) > 1)) {
-					final int dir = moveDirection(getHomeX(), getHomeY());
+				if ((Math.abs(this.getHomeX() - this.getX()) > 1) || (Math.abs(this.getHomeY() - this.getY()) > 1)) {
+					final int dir = this.moveDirection(this.getHomeX(), this.getHomeY());
 					if (dir == -1) {
-						setHomeX(getX());
-						setHomeY(getY());
+						this.setHomeX(this.getX());
+						this.setHomeY(this.getY());
 					}
 					else {
-						setDirectionMove(dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+						this.setDirectionMove(dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				return false;
 			case 7: // 哨子呼叫
-				if ((_petMaster != null) && (_petMaster.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_petMaster.getLocation()) <= 1)) {
-					_currentPetStatus = 3;
+				if ((this._petMaster != null) && (this._petMaster.getMapId() == this.getMapId()) && (this.getLocation().getTileLineDistance(this._petMaster.getLocation()) <= 1)) {
+					this._currentPetStatus = 3;
 					return true;
 				}
-				final int locx = _petMaster.getX() + Random.nextInt(1);
-				final int locy = _petMaster.getY() + Random.nextInt(1);
-				_dir = moveDirection(locx, locy);
-				if (_dir == -1) {
-					_currentPetStatus = 3;
+				final int locx = this._petMaster.getX() + Random.nextInt(1);
+				final int locy = this._petMaster.getY() + Random.nextInt(1);
+				this._dir = this.moveDirection(locx, locy);
+				if (this._dir == -1) {
+					this._currentPetStatus = 3;
 					return true;
 				}
-				setDirectionMove(_dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				this.setDirectionMove(this._dir);
+				this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 				return false;
 			default:
-				if ((_petMaster != null) && (_petMaster.getMapId() == getMapId())) {
-					if (getLocation().getTileLineDistance(_petMaster.getLocation()) > 2) {
-						_dir = moveDirection(_petMaster.getX(), _petMaster.getY());
-						setDirectionMove(_dir);
-						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+				if ((this._petMaster != null) && (this._petMaster.getMapId() == this.getMapId())) {
+					if (this.getLocation().getTileLineDistance(this._petMaster.getLocation()) > 2) {
+						this._dir = this.moveDirection(this._petMaster.getX(), this._petMaster.getY());
+						this.setDirectionMove(this._dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 				else { // 与主人走失则休息
-					_currentPetStatus = 3;
+					this._currentPetStatus = 3;
 					return true;
 				}
 				return false;
@@ -491,17 +491,17 @@ public class L1PetInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
 	public void onAction(final L1PcInstance pc, final int skillId) {
-		final L1Character cha = getMaster();
+		final L1Character cha = this.getMaster();
 		final L1PcInstance master = (L1PcInstance) cha;
 		if (master.isTeleport()) { // 瞬移处理中
 			return;
 		}
-		if (getZoneType() == 1) { // 攻击在安全区
+		if (this.getZoneType() == 1) { // 攻击在安全区
 			final L1Attack attack_mortion = new L1Attack(pc, this, skillId); // 发送攻击动作
 			attack_mortion.action();
 			return;
@@ -521,13 +521,13 @@ public class L1PetInstance extends L1NpcInstance {
 
 	@Override
 	public void onFinalAction(final L1PcInstance player, final String action) {
-		final int status = actionType(action);
+		final int status = this.actionType(action);
 		if (status == 0) {
 			return;
 		}
 		if (status == 6) {
-			final L1PcInstance petMaster = (L1PcInstance) _master;
-			liberate(); // 释放宠物
+			final L1PcInstance petMaster = (L1PcInstance) this._master;
+			this.liberate(); // 释放宠物
 			// 更新宠物控制介面
 			final Object[] petList = petMaster.getPetList().values().toArray();
 			for (final Object petObject : petList) {
@@ -545,11 +545,11 @@ public class L1PetInstance extends L1NpcInstance {
 		}
 		else {
 			// 同じ主人のペットの状态をすべて更新
-			final Object[] petList = _petMaster.getPetList().values().toArray();
+			final Object[] petList = this._petMaster.getPetList().values().toArray();
 			for (final Object petObject : petList) {
 				if (petObject instanceof L1PetInstance) { // 宠物
 					final L1PetInstance pet = (L1PetInstance) petObject;
-					if ((_petMaster != null) && (_petMaster.getLevel() >= pet.getLevel()) && (pet.get_food() > 0)) {
+					if ((this._petMaster != null) && (this._petMaster.getLevel() >= pet.getLevel()) && (pet.get_food() > 0)) {
 						pet.setCurrentPetStatus(status);
 					}
 					else {
@@ -572,28 +572,28 @@ public class L1PetInstance extends L1NpcInstance {
 
 	@Override
 	public void onGetItem(final L1ItemInstance item) {
-		if (getNpcTemplate().get_digestitem() > 0) {
-			setDigestItem(item);
+		if (this.getNpcTemplate().get_digestitem() > 0) {
+			this.setDigestItem(item);
 		}
 		Arrays.sort(healPotions);
 		Arrays.sort(haestPotions);
 		if (Arrays.binarySearch(healPotions, item.getItem().getItemId()) >= 0) {
-			if (getCurrentHp() != getMaxHp()) {
-				useItem(USEITEM_HEAL, 100);
+			if (this.getCurrentHp() != this.getMaxHp()) {
+				this.useItem(USEITEM_HEAL, 100);
 			}
 		}
 		else if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
-			useItem(USEITEM_HASTE, 100);
+			this.useItem(USEITEM_HASTE, 100);
 		}
 	}
 
 	@Override
 	public void onItemUse() {
-		if (!isActived()) {
-			useItem(USEITEM_HASTE, 100); // １００％の确率でヘイストポーション使用
+		if (!this.isActived()) {
+			this.useItem(USEITEM_HASTE, 100); // １００％の确率でヘイストポーション使用
 		}
-		if (getCurrentHp() * 100 / getMaxHp() < 40) { // ＨＰが４０％きったら
-			useItem(USEITEM_HEAL, 100); // １００％の确率で回复ポーション使用
+		if (this.getCurrentHp() * 100 / this.getMaxHp() < 40) { // ＨＰが４０％きったら
+			this.useItem(USEITEM_HEAL, 100); // １００％の确率で回复ポーション使用
 		}
 	}
 
@@ -601,26 +601,26 @@ public class L1PetInstance extends L1NpcInstance {
 	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_PetPack(this, perceivedFrom)); // PET的物体识别
-		if (isDead()) {
-			perceivedFrom.sendPackets(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
+		if (this.isDead()) {
+			perceivedFrom.sendPackets(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Die));
 		}
 	}
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		if (isDead()) {
+		if (this.isDead()) {
 			return;
 		}
-		if (_petMaster.equals(player)) {
-			player.sendPackets(new S_PetMenuPacket(this, getExpPercent()));
-			final L1Pet l1pet = PetTable.getInstance().getTemplate(_itemObjId);
+		if (this._petMaster.equals(player)) {
+			player.sendPackets(new S_PetMenuPacket(this, this.getExpPercent()));
+			final L1Pet l1pet = PetTable.getInstance().getTemplate(this._itemObjId);
 			// XXX ペットに话しかけるたびにDBに书き迂む必要はない
 			if (l1pet != null) {
-				l1pet.set_exp((int) getExp());
-				l1pet.set_level(getLevel());
-				l1pet.set_hp(getMaxHp());
-				l1pet.set_mp(getMaxMp());
-				l1pet.set_food(get_food());
+				l1pet.set_exp((int) this.getExp());
+				l1pet.set_level(this.getLevel());
+				l1pet.set_hp(this.getMaxHp());
+				l1pet.set_mp(this.getMaxMp());
+				l1pet.set_food(this.get_food());
 				PetTable.getInstance().storePet(l1pet); // DBに书き迂み
 			}
 		}
@@ -629,10 +629,10 @@ public class L1PetInstance extends L1NpcInstance {
 	// 攻击でＨＰを减らすときはここを使用
 	@Override
 	public void receiveDamage(final L1Character attacker, int damage) {
-		if (getCurrentHp() > 0) {
+		if (this.getCurrentHp() > 0) {
 			if (damage > 0) { // 回复の场合は攻击しない。
-				setHate(attacker, 0); // ペットはヘイト无し
-				removeSkillEffect(FOG_OF_SLEEPING);
+				this.setHate(attacker, 0); // ペットはヘイト无し
+				this.removeSkillEffect(FOG_OF_SLEEPING);
 			}
 
 			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
@@ -643,156 +643,156 @@ public class L1PetInstance extends L1NpcInstance {
 			if (attacker instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (pet.getZoneType() == 1)) {
+				if ((this.getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					damage = 0;
 				}
 			}
 			else if (attacker instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) attacker;
 				// 目标在安区、攻击者在安区、NOPVP
-				if ((getZoneType() == 1) || (summon.getZoneType() == 1)) {
+				if ((this.getZoneType() == 1) || (summon.getZoneType() == 1)) {
 					damage = 0;
 				}
 			}
 
-			final int newHp = getCurrentHp() - damage;
+			final int newHp = this.getCurrentHp() - damage;
 			if (newHp <= 0) {
-				death(attacker);
+				this.death(attacker);
 			}
 			else {
-				setCurrentHp(newHp);
+				this.setCurrentHp(newHp);
 			}
 		}
-		else if (!isDead()) { // 念のため
-			death(attacker);
+		else if (!this.isDead()) { // 念のため
+			this.death(attacker);
 		}
 	}
 
 	/** 设置防具 */
 	public void setArmor(final L1ItemInstance armor) {
-		_armor = armor;
+		this._armor = armor;
 	}
 
 	@Override
 	public void setCurrentHp(final int i) {
 		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
+		if (currentHp >= this.getMaxHp()) {
+			currentHp = this.getMaxHp();
 		}
-		setCurrentHpDirect(currentHp);
+		this.setCurrentHpDirect(currentHp);
 
-		if (getMaxHp() > getCurrentHp()) {
-			startHpRegeneration();
+		if (this.getMaxHp() > this.getCurrentHp()) {
+			this.startHpRegeneration();
 		}
 
-		if (_petMaster != null) {
-			final int HpRatio = 100 * currentHp / getMaxHp();
-			final L1PcInstance Master = _petMaster;
-			Master.sendPackets(new S_HPMeter(getId(), HpRatio));
+		if (this._petMaster != null) {
+			final int HpRatio = 100 * currentHp / this.getMaxHp();
+			final L1PcInstance Master = this._petMaster;
+			Master.sendPackets(new S_HPMeter(this.getId(), HpRatio));
 		}
 	}
 
 	@Override
 	public void setCurrentMp(final int i) {
 		int currentMp = i;
-		if (currentMp >= getMaxMp()) {
-			currentMp = getMaxMp();
+		if (currentMp >= this.getMaxMp()) {
+			currentMp = this.getMaxMp();
 		}
-		setCurrentMpDirect(currentMp);
+		this.setCurrentMpDirect(currentMp);
 
-		if (getMaxMp() > getCurrentMp()) {
-			startMpRegeneration();
+		if (this.getMaxMp() > this.getCurrentMp()) {
+			this.startMpRegeneration();
 		}
 	}
 
 	/** 设置宠物目前状态 */
 	public void setCurrentPetStatus(final int i) {
-		_currentPetStatus = i;
-		if (_currentPetStatus == 5) {
-			setHomeX(getX());
-			setHomeY(getY());
+		this._currentPetStatus = i;
+		if (this._currentPetStatus == 5) {
+			this.setHomeX(this.getX());
+			this.setHomeY(this.getY());
 		}
-		if (_currentPetStatus == 7) {
-			allTargetClear();
+		if (this._currentPetStatus == 7) {
+			this.allTargetClear();
 		}
 
-		if (_currentPetStatus == 3) {
-			allTargetClear();
+		if (this._currentPetStatus == 3) {
+			this.allTargetClear();
 		}
 		else {
-			if (!isAiRunning()) {
-				startAI();
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}
 
 	/** 设置武器的损坏 */
 	public void setDamageByWeapon(final int i) {
-		_damageByWeapon = i;
+		this._damageByWeapon = i;
 	}
 
 	/** 设置EXP的百分比 */
 	public void setExpPercent(final int expPercent) {
-		_expPercent = expPercent;
+		this._expPercent = expPercent;
 	}
 
 	/** 设置武器的命中率 */
 	public void setHitByWeapon(final int i) {
-		_hitByWeapon = i;
+		this._hitByWeapon = i;
 	}
 
 	/** 设置宠物的主目标 */
 	public void setMasterTarget(final L1Character target) {
-		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 5)) && (get_food() > 0)) {
-			setHate(target, 0);
-			if (!isAiRunning()) {
-				startAI();
+		if ((target != null) && ((this._currentPetStatus == 1) || (this._currentPetStatus == 5)) && (this.get_food() > 0)) {
+			this.setHate(target, 0);
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}
 
 	/** 设置宠物的目标 */
 	public void setTarget(final L1Character target) {
-		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5)) && (get_food() > 0)) {
-			setHate(target, 0);
-			if (!isAiRunning()) {
-				startAI();
+		if ((target != null) && ((this._currentPetStatus == 1) || (this._currentPetStatus == 2) || (this._currentPetStatus == 5)) && (this.get_food() > 0)) {
+			this.setHate(target, 0);
+			if (!this.isAiRunning()) {
+				this.startAI();
 			}
 		}
 	}
 
 	/** 设置武器 */
 	public void setWeapon(final L1ItemInstance weapon) {
-		_weapon = weapon;
+		this._weapon = weapon;
 	}
 
 	/** 开始宠物饱食度计时器 */
 	public void startFoodTimer(final L1PetInstance pet) {
-		_petFood = new L1PetFood(pet, _itemObjId);
+		this._petFood = new L1PetFood(pet, this._itemObjId);
 		final Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(_petFood, 1000, 200000); // 每 X秒减少
+		timer.scheduleAtFixedRate(this._petFood, 1000, 200000); // 每 X秒减少
 	}
 
 	/** 停止宠物饱食度计时器 */
 	public void stopFoodTimer(final L1PetInstance pet) {
-		if (_petFood != null) {
-			_petFood.cancel();
-			_petFood = null;
+		if (this._petFood != null) {
+			this._petFood.cancel();
+			this._petFood = null;
 		}
 	}
 
 	/** 使用宠物装备(防具) */
 	public void usePetArmor(final L1PetInstance pet, final L1ItemInstance armor) {
 		if (pet.getArmor() == null) {
-			setPetArmor(pet, armor);
+			this.setPetArmor(pet, armor);
 		}
 		else { // 如果你有一些已经装备，删除以前的装备
 			if (pet.getArmor().equals(armor)) {
-				removePetArmor(pet, pet.getArmor());
+				this.removePetArmor(pet, pet.getArmor());
 			}
 			else {
-				removePetArmor(pet, pet.getArmor());
-				setPetArmor(pet, armor);
+				this.removePetArmor(pet, pet.getArmor());
+				this.setPetArmor(pet, armor);
 			}
 		}
 	}
@@ -800,15 +800,15 @@ public class L1PetInstance extends L1NpcInstance {
 	/** 使用宠物装备(武器) */
 	public void usePetWeapon(final L1PetInstance pet, final L1ItemInstance weapon) {
 		if (pet.getWeapon() == null) {
-			setPetWeapon(pet, weapon);
+			this.setPetWeapon(pet, weapon);
 		}
 		else { // 如果你有一些已经装备，删除以前的装备
 			if (pet.getWeapon().equals(weapon)) {
-				removePetWeapon(pet, pet.getWeapon());
+				this.removePetWeapon(pet, pet.getWeapon());
 			}
 			else {
-				removePetWeapon(pet, pet.getWeapon());
-				setPetWeapon(pet, weapon);
+				this.removePetWeapon(pet, pet.getWeapon());
+				this.setPetWeapon(pet, weapon);
 			}
 		}
 	}
@@ -835,7 +835,7 @@ public class L1PetInstance extends L1NpcInstance {
 			status = 6;
 		}
 		else if (action.equalsIgnoreCase("getitem")) { // 收集
-			collect(false);
+			this.collect(false);
 		}
 		return status;
 	}

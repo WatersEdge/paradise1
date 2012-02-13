@@ -50,20 +50,20 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	public L1DoorInstance(final int doorId, final L1DoorGfx gfx, final L1Location loc, final int hp, final int keeper, final boolean isOpening) {
 		super(NpcTable.getInstance().getTemplate(DOOR_NPC_ID));
-		setDoorId(doorId);
-		setMaxHp(hp);
-		setCurrentHp(hp);
-		setGfxId(gfx.getGfxId());
-		setLocation(loc);
-		setHomeX(loc.getX());
-		setHomeY(loc.getY());
-		setDirection(gfx.getDirection());
+		this.setDoorId(doorId);
+		this.setMaxHp(hp);
+		this.setCurrentHp(hp);
+		this.setGfxId(gfx.getGfxId());
+		this.setLocation(loc);
+		this.setHomeX(loc.getX());
+		this.setHomeY(loc.getY());
+		this.setDirection(gfx.getDirection());
 		final int baseLoc = gfx.getDirection() == 0 ? loc.getX() : loc.getY();
-		setLeftEdgeLocation(baseLoc + gfx.getLeftEdgeOffset());
-		setRightEdgeLocation(baseLoc + gfx.getRightEdgeOffset());
-		setKeeperId(keeper);
+		this.setLeftEdgeLocation(baseLoc + gfx.getLeftEdgeOffset());
+		this.setRightEdgeLocation(baseLoc + gfx.getRightEdgeOffset());
+		this.setKeeperId(keeper);
 		if (isOpening) {
-			open();
+			this.open();
 		}
 	}
 
@@ -72,89 +72,89 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	public void close() {
-		if (isDead() || (getOpenStatus() == ActionCodes.ACTION_Close)) {
+		if (this.isDead() || (this.getOpenStatus() == ActionCodes.ACTION_Close)) {
 			return;
 		}
 
-		setOpenStatus(ActionCodes.ACTION_Close);
-		broadcastPacket(new S_DoorPack(this));
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Close));
-		sendDoorPacket(null);
+		this.setOpenStatus(ActionCodes.ACTION_Close);
+		this.broadcastPacket(new S_DoorPack(this));
+		this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Close));
+		this.sendDoorPacket(null);
 	}
 
 	@Override
 	public void deleteMe() {
-		setDead(true);
-		sendDoorPacket(null);
+		this.setDead(true);
+		this.sendDoorPacket(null);
 
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
-		allTargetClear();
-		_master = null;
+		this.allTargetClear();
+		this._master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 	}
 
 	public int getDirection() {
-		return _direction;
+		return this._direction;
 	}
 
 	public int getDoorId() {
-		return _doorId;
+		return this._doorId;
 	}
 
 	public int getEntranceX() {
 		int entranceX = 0;
-		if (getDirection() == 0) { // ／向き
-			entranceX = getX();
+		if (this.getDirection() == 0) { // ／向き
+			entranceX = this.getX();
 		}
 		else { // ＼向き
-			entranceX = getX() - 1;
+			entranceX = this.getX() - 1;
 		}
 		return entranceX;
 	}
 
 	public int getEntranceY() {
 		int entranceY = 0;
-		if (getDirection() == 0) { // ／向き
-			entranceY = getY() + 1;
+		if (this.getDirection() == 0) { // ／向き
+			entranceY = this.getY() + 1;
 		}
 		else { // ＼向き
-			entranceY = getY();
+			entranceY = this.getY();
 		}
 		return entranceY;
 	}
 
 	public int getKeeperId() {
-		return _keeperId;
+		return this._keeperId;
 	}
 
 	public int getLeftEdgeLocation() {
-		return _leftEdgeLocation;
+		return this._leftEdgeLocation;
 	}
 
 	public int getOpenStatus() {
-		return _openStatus;
+		return this._openStatus;
 	}
 
 	public int getRightEdgeLocation() {
-		return _rightEdgeLocation;
+		return this._rightEdgeLocation;
 	}
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		if (getMaxHp() == 0) { // 破壊不可能なドアは対象外
+		if (this.getMaxHp() == 0) { // 破壊不可能なドアは対象外
 			return;
 		}
 
-		if ((getCurrentHp() > 0) && !isDead()) {
+		if ((this.getCurrentHp() > 0) && !this.isDead()) {
 			final L1Attack attack = new L1Attack(pc, this);
 			if (attack.calcHit()) {
 				attack.calcDamage();
@@ -170,70 +170,70 @@ public class L1DoorInstance extends L1NpcInstance {
 	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_DoorPack(this));
-		sendDoorPacket(perceivedFrom);
+		this.sendDoorPacket(perceivedFrom);
 	}
 
 	public void open() {
-		if (isDead() || (getOpenStatus() == ActionCodes.ACTION_Open)) {
+		if (this.isDead() || (this.getOpenStatus() == ActionCodes.ACTION_Open)) {
 			return;
 		}
 
-		setOpenStatus(ActionCodes.ACTION_Open);
-		broadcastPacket(new S_DoorPack(this));
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Open));
-		sendDoorPacket(null);
+		this.setOpenStatus(ActionCodes.ACTION_Open);
+		this.broadcastPacket(new S_DoorPack(this));
+		this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Open));
+		this.sendDoorPacket(null);
 	}
 
 	@Override
 	public void receiveDamage(final L1Character attacker, final int damage) {
-		if (getMaxHp() == 0) { // 破壊不可能なドアは対象外
+		if (this.getMaxHp() == 0) { // 破壊不可能なドアは対象外
 			return;
 		}
-		if ((getCurrentHp() <= 0) || isDead()) {
-			return;
-		}
-
-		final int newHp = getCurrentHp() - damage;
-		if ((newHp <= 0) && !isDead()) {
-			die();
+		if ((this.getCurrentHp() <= 0) || this.isDead()) {
 			return;
 		}
 
-		setCurrentHpDirect(newHp);
-		updateStatus();
+		final int newHp = this.getCurrentHp() - damage;
+		if ((newHp <= 0) && !this.isDead()) {
+			this.die();
+			return;
+		}
+
+		this.setCurrentHpDirect(newHp);
+		this.updateStatus();
 	}
 
 	public void repairGate() {
-		if (getMaxHp() <= 1) {
+		if (this.getMaxHp() <= 1) {
 			return;
 		}
 
-		setDead(false);
-		setCurrentHp(getMaxHp());
-		setStatus(0);
-		setOpenStatus(ActionCodes.ACTION_Open);
-		close();
+		this.setDead(false);
+		this.setCurrentHp(this.getMaxHp());
+		this.setStatus(0);
+		this.setOpenStatus(ActionCodes.ACTION_Open);
+		this.close();
 	}
 
 	public void sendDoorPacket(final L1PcInstance pc) {
-		final int entranceX = getEntranceX();
-		final int entranceY = getEntranceY();
-		final int leftEdgeLocation = getLeftEdgeLocation();
-		final int rightEdgeLocation = getRightEdgeLocation();
+		final int entranceX = this.getEntranceX();
+		final int entranceY = this.getEntranceY();
+		final int leftEdgeLocation = this.getLeftEdgeLocation();
+		final int rightEdgeLocation = this.getRightEdgeLocation();
 
 		final int size = rightEdgeLocation - leftEdgeLocation;
 		if (size == 0) { // 1マス分の幅のドア
-			sendPacket(pc, entranceX, entranceY);
+			this.sendPacket(pc, entranceX, entranceY);
 		}
 		else { // 2マス分以上の幅があるドア
-			if (getDirection() == 0) { // ／向き
+			if (this.getDirection() == 0) { // ／向き
 				for (int x = leftEdgeLocation; x <= rightEdgeLocation; x++) {
-					sendPacket(pc, x, entranceY);
+					this.sendPacket(pc, x, entranceY);
 				}
 			}
 			else { // ＼向き
 				for (int y = leftEdgeLocation; y <= rightEdgeLocation; y++) {
-					sendPacket(pc, entranceX, y);
+					this.sendPacket(pc, entranceX, y);
 				}
 			}
 		}
@@ -242,60 +242,60 @@ public class L1DoorInstance extends L1NpcInstance {
 	@Override
 	public void setCurrentHp(final int i) {
 		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
+		if (currentHp >= this.getMaxHp()) {
+			currentHp = this.getMaxHp();
 		}
-		setCurrentHpDirect(currentHp);
+		this.setCurrentHpDirect(currentHp);
 	}
 
 	public void setDirection(final int i) {
 		if ((i != 0) && (i != 1)) {
 			throw new IllegalArgumentException();
 		}
-		_direction = i;
+		this._direction = i;
 	}
 
 	public void setDoorId(final int i) {
-		_doorId = i;
+		this._doorId = i;
 	}
 
 	public void setKeeperId(final int i) {
-		_keeperId = i;
+		this._keeperId = i;
 	}
 
 	public void setLeftEdgeLocation(final int i) {
-		_leftEdgeLocation = i;
+		this._leftEdgeLocation = i;
 	}
 
 	public void setRightEdgeLocation(final int i) {
-		_rightEdgeLocation = i;
+		this._rightEdgeLocation = i;
 	}
 
 	private void die() {
-		setCurrentHpDirect(0);
-		setDead(true);
-		setStatus(ActionCodes.ACTION_DoorDie);
+		this.setCurrentHpDirect(0);
+		this.setDead(true);
+		this.setStatus(ActionCodes.ACTION_DoorDie);
 
-		getMap().setPassable(getLocation(), true);
+		this.getMap().setPassable(this.getLocation(), true);
 
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorDie));
-		sendDoorPacket(null);
+		this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_DoorDie));
+		this.sendDoorPacket(null);
 	}
 
 	private boolean isPassable() {
-		return isDead() || (getOpenStatus() == ActionCodes.ACTION_Open);
+		return this.isDead() || (this.getOpenStatus() == ActionCodes.ACTION_Open);
 	}
 
 	private void sendPacket(final L1PcInstance pc, final int x, final int y) {
-		final S_Door packet = new S_Door(x, y, getDirection(), isPassable());
+		final S_Door packet = new S_Door(x, y, this.getDirection(), this.isPassable());
 		if (pc != null) { // onPerceive()経由の場合
 			// 開いている場合は通行不可パケット送信不要
-			if (getOpenStatus() == ActionCodes.ACTION_Close) {
+			if (this.getOpenStatus() == ActionCodes.ACTION_Close) {
 				pc.sendPackets(packet);
 			}
 		}
 		else {
-			broadcastPacket(packet);
+			this.broadcastPacket(packet);
 		}
 	}
 
@@ -303,30 +303,30 @@ public class L1DoorInstance extends L1NpcInstance {
 		if ((newStatus != ActionCodes.ACTION_Open) && (newStatus != ActionCodes.ACTION_Close)) {
 			throw new IllegalArgumentException();
 		}
-		_openStatus = newStatus;
+		this._openStatus = newStatus;
 	}
 
 	private void updateStatus() {
 		int newStatus = 0;
-		if ((getMaxHp() * 1 / 6) > getCurrentHp()) {
+		if ((this.getMaxHp() * 1 / 6) > this.getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction5;
 		}
-		else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
+		else if ((this.getMaxHp() * 2 / 6) > this.getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction4;
 		}
-		else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
+		else if ((this.getMaxHp() * 3 / 6) > this.getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction3;
 		}
-		else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
+		else if ((this.getMaxHp() * 4 / 6) > this.getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction2;
 		}
-		else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
+		else if ((this.getMaxHp() * 5 / 6) > this.getCurrentHp()) {
 			newStatus = ActionCodes.ACTION_DoorAction1;
 		}
-		if (getStatus() == newStatus) {
+		if (this.getStatus() == newStatus) {
 			return;
 		}
-		setStatus(newStatus);
-		broadcastPacket(new S_DoActionGFX(getId(), newStatus));
+		this.setStatus(newStatus);
+		this.broadcastPacket(new S_DoActionGFX(this.getId(), newStatus));
 	}
 }

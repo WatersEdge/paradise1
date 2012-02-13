@@ -250,10 +250,10 @@ public class ItemTable {
 	}
 
 	private ItemTable() {
-		_etcitems = allEtcItem();
-		_weapons = allWeapon();
-		_armors = allArmor();
-		buildFastLookupTable();
+		this._etcitems = this.allEtcItem();
+		this._weapons = this.allWeapon();
+		this._armors = this.allArmor();
+		this.buildFastLookupTable();
 	}
 
 	/**
@@ -263,7 +263,7 @@ public class ItemTable {
 	 * @return
 	 */
 	public L1ItemInstance createItem(final int itemId) {
-		final L1Item temp = getTemplate(itemId);
+		final L1Item temp = this.getTemplate(itemId);
 		if (temp == null) {
 			return null;
 		}
@@ -282,7 +282,7 @@ public class ItemTable {
 	 */
 	public int findItemIdByName(final String name) {
 		int itemid = 0;
-		for (final L1Item item : _allTemplates) {
+		for (final L1Item item : this._allTemplates) {
 			if ((item != null) && item.getName().equals(name)) {
 				itemid = item.getItemId();
 				break;
@@ -299,7 +299,7 @@ public class ItemTable {
 	 */
 	public int findItemIdByNameWithoutSpace(final String name) {
 		int itemid = 0;
-		for (final L1Item item : _allTemplates) {
+		for (final L1Item item : this._allTemplates) {
 			if ((item != null) && item.getName().replace(" ", "").equals(name)) {
 				itemid = item.getItemId();
 				break;
@@ -315,7 +315,7 @@ public class ItemTable {
 	 * @return
 	 */
 	public L1Item getTemplate(final int id) {
-		return _allTemplates[id];
+		return this._allTemplates[id];
 	}
 
 	/**
@@ -325,7 +325,7 @@ public class ItemTable {
 	 * @return
 	 */
 	public L1Item getTemplate(final String nameid) {
-		for (final L1Item item : _allTemplates) {
+		for (final L1Item item : this._allTemplates) {
 			if ((item != null) && item.getNameId().equals(nameid)) {
 				return item;
 			}
@@ -599,42 +599,42 @@ public class ItemTable {
 	private void buildFastLookupTable() {
 		int highestId = 0;
 
-		final Collection<L1EtcItem> items = _etcitems.values();
+		final Collection<L1EtcItem> items = this._etcitems.values();
 		for (final L1EtcItem item : items) {
 			if (item.getItemId() > highestId) {
 				highestId = item.getItemId();
 			}
 		}
 
-		final Collection<L1Weapon> weapons = _weapons.values();
+		final Collection<L1Weapon> weapons = this._weapons.values();
 		for (final L1Weapon weapon : weapons) {
 			if (weapon.getItemId() > highestId) {
 				highestId = weapon.getItemId();
 			}
 		}
 
-		final Collection<L1Armor> armors = _armors.values();
+		final Collection<L1Armor> armors = this._armors.values();
 		for (final L1Armor armor : armors) {
 			if (armor.getItemId() > highestId) {
 				highestId = armor.getItemId();
 			}
 		}
 
-		_allTemplates = new L1Item[highestId + 1];
+		this._allTemplates = new L1Item[highestId + 1];
 
-		for (final Integer id : _etcitems.keySet()) {
-			final L1EtcItem item = _etcitems.get(id);
-			_allTemplates[id.intValue()] = item;
+		for (final Integer id : this._etcitems.keySet()) {
+			final L1EtcItem item = this._etcitems.get(id);
+			this._allTemplates[id.intValue()] = item;
 		}
 
-		for (final Integer id : _weapons.keySet()) {
-			final L1Weapon item = _weapons.get(id);
-			_allTemplates[id.intValue()] = item;
+		for (final Integer id : this._weapons.keySet()) {
+			final L1Weapon item = this._weapons.get(id);
+			this._allTemplates[id.intValue()] = item;
 		}
 
-		for (final Integer id : _armors.keySet()) {
-			final L1Armor item = _armors.get(id);
-			_allTemplates[id.intValue()] = item;
+		for (final Integer id : this._armors.keySet()) {
+			final L1Armor item = this._armors.get(id);
+			this._allTemplates[id.intValue()] = item;
 		}
 	}
 }

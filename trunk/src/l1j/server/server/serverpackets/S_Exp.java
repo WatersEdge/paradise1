@@ -31,9 +31,9 @@ public class S_Exp extends ServerBasePacket {
 	 *            - PC
 	 */
 	public S_Exp(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_EXP);
-		writeC(pc.getLevel());
-		writeExp(pc.getExp());
+		this.writeC(Opcodes.S_OPCODE_EXP);
+		this.writeC(pc.getLevel());
+		this.writeExp(pc.getExp());
 
 		// writeC(Opcodes.S_OPCODE_EXP);
 		// writeC(0x39);// level
@@ -45,7 +45,7 @@ public class S_Exp extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

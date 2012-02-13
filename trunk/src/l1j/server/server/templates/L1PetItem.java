@@ -48,115 +48,115 @@ public class L1PetItem {
 	}
 
 	public int getAddAc() {
-		return _AddAc;
+		return this._AddAc;
 	}
 
 	public int getAddCon() {
-		return _addCon;
+		return this._addCon;
 	}
 
 	public int getAddDex() {
-		return _addDex;
+		return this._addDex;
 	}
 
 	public int getAddHp() {
-		return _addHp;
+		return this._addHp;
 	}
 
 	public int getAddInt() {
-		return _addInt;
+		return this._addInt;
 	}
 
 	public int getAddMp() {
-		return _addMp;
+		return this._addMp;
 	}
 
 	public int getAddMr() {
-		return _addMr;
+		return this._addMr;
 	}
 
 	public int getAddSp() {
-		return _addSp;
+		return this._addSp;
 	}
 
 	public int getAddStr() {
-		return _addStr;
+		return this._addStr;
 	}
 
 	public int getAddWis() {
-		return _addWis;
+		return this._addWis;
 	}
 
 	public int getDamageModifier() {
-		return _damageModifier;
+		return this._damageModifier;
 	}
 
 	public int getHitModifier() {
-		return _hitModifier;
+		return this._hitModifier;
 	}
 
 	public int getItemId() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	public int getUseType() {
-		return _useType;
+		return this._useType;
 	}
 
 	public void setAddAc(final int i) {
-		_AddAc = i;
+		this._AddAc = i;
 	}
 
 	public void setAddCon(final int i) {
-		_addCon = i;
+		this._addCon = i;
 	}
 
 	public void setAddDex(final int i) {
-		_addDex = i;
+		this._addDex = i;
 	}
 
 	public void setAddHp(final int i) {
-		_addHp = i;
+		this._addHp = i;
 	}
 
 	public void setAddInt(final int i) {
-		_addInt = i;
+		this._addInt = i;
 	}
 
 	public void setAddMp(final int i) {
-		_addMp = i;
+		this._addMp = i;
 	}
 
 	public void setAddMr(final int i) {
-		_addMr = i;
+		this._addMr = i;
 	}
 
 	public void setAddSp(final int i) {
-		_addSp = i;
+		this._addSp = i;
 	}
 
 	public void setAddStr(final int i) {
-		_addStr = i;
+		this._addStr = i;
 	}
 
 	public void setAddWis(final int i) {
-		_addWis = i;
+		this._addWis = i;
 	}
 
 	public void setDamageModifier(final int i) {
-		_damageModifier = i;
+		this._damageModifier = i;
 	}
 
 	public void setHitModifier(final int i) {
-		_hitModifier = i;
+		this._hitModifier = i;
 	}
 
 	public void setItemId(final int i) {
-		_itemId = i;
+		this._itemId = i;
 	}
 
 	public void setUseType(final int i) {
-		_useType = i;
+		this._useType = i;
 	}
 
 }

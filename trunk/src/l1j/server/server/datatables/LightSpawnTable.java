@@ -47,7 +47,7 @@ public class LightSpawnTable {
 	}
 
 	private LightSpawnTable() {
-		FillLightSpawnTable();
+		this.FillLightSpawnTable();
 	}
 
 	/**

@@ -62,7 +62,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		super(abyte0);
 
 		// 使用物件的OBJID
-		final int itemObjid = readD();
+		final int itemObjid = this.readD();
 
 		// 取得使用者
 		final L1PcInstance pc = client.getActiveChar();
@@ -191,8 +191,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case -7: // 料理书
 					if (isClass) {
 						final int[] newData = new int[2];
-						newData[0] = readC();
-						newData[1] = readC();
+						newData[0] = this.readC();
+						newData[1] = this.readC();
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -268,9 +268,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 5: // 魔杖类型 (须选取目标/坐标)地面 / 选择对象(远距离)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = readD(); // 选取目标的OBJID
-						newData[1] = readH(); // X坐标
-						newData[2] = readH(); // Y坐标
+						newData[0] = this.readD(); // 选取目标的OBJID
+						newData[1] = this.readH(); // X坐标
+						newData[2] = this.readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -279,8 +279,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 29: // 瞬间移动卷轴(祝福)
 					if (isClass) {
 						final int[] newData = new int[2];
-						newData[1] = readH(); // 所在地图编号
-						newData[0] = readD(); // 选取目标的OBJID
+						newData[1] = this.readH(); // 所在地图编号
+						newData[0] = this.readD(); // 选取目标的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -288,7 +288,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 7: // 鉴定卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readD(); // 选取物件的OBJID
+						newData[0] = this.readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -296,7 +296,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 8: // 复活卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readD(); // 选取物件的OBJID
+						newData[0] = this.readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -307,9 +307,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 35: // 白色情人节卡片
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readH();
-						pc.setText(readS());
-						pc.setTextByte(readByte());
+						newData[0] = this.readH();
+						pc.setText(this.readS());
+						pc.setTextByte(this.readByte());
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -326,7 +326,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 14: // 请选择一个物品 (道具栏位) 灯油/磨刀石/胶水/龙之魔眼等
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readD(); // 选取物件的OBJID
+						newData[0] = this.readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -345,7 +345,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						return;
 					}
 					if (isClass) {
-						final String cmd = readS();
+						final String cmd = this.readS();
 						pc.setText(cmd); // 选取的变身命令
 						ItemClass.getInstance().item(null, pc, useItem);
 					}
@@ -354,9 +354,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 17: // 选取目标 地面 (近距离)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = readD(); // 选取目标的OBJID
-						newData[1] = readH(); // X坐标
-						newData[2] = readH(); // Y坐标
+						newData[0] = this.readD(); // 选取目标的OBJID
+						newData[1] = this.readH(); // X坐标
+						newData[2] = this.readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -366,7 +366,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 46: // 饰品强化卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readD(); // 选取物件的OBJID
+						newData[0] = this.readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -374,14 +374,14 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 28: // 空的魔法卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = readC();
+						newData[0] = this.readC();
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
 
 				case 30: // 选取目标 (对NPC需要Ctrl 远距离 无XY坐标传回)
 					if (isClass) {
-						final int obj = readD(); // 选取目标的OBJID
+						final int obj = this.readD(); // 选取目标的OBJID
 						final int[] newData = new int[] { obj };
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
@@ -390,8 +390,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 42: // 钓鱼杆 (魔法钓竿)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = readH(); // X坐标
-						newData[1] = readH(); // Y坐标
+						newData[0] = this.readH(); // X坐标
+						newData[1] = this.readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;

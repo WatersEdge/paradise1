@@ -34,15 +34,15 @@ public class S_CharAmount extends ServerBasePacket {
 	 * @param client
 	 */
 	public S_CharAmount(final int value, final ClientThread client) {
-		buildPacket(value, client);
+		this.buildPacket(value, client);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	private void buildPacket(final int value, final ClientThread client) {
@@ -50,8 +50,8 @@ public class S_CharAmount extends ServerBasePacket {
 		final int characterSlot = account.getCharacterSlot();
 		final int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
 
-		writeC(Opcodes.S_OPCODE_CHARAMOUNT);
-		writeC(value);
-		writeC(maxAmount); // max amount
+		this.writeC(Opcodes.S_OPCODE_CHARAMOUNT);
+		this.writeC(value);
+		this.writeC(maxAmount); // max amount
 	}
 }

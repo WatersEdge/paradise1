@@ -39,7 +39,7 @@ public class Fishing_Rod extends ItemExecutor {
 		final int itemId = item.getItemId();
 		final int fishX = data[0];
 		final int fishY = data[1];
-		startFishing(pc, itemId, fishX, fishY);
+		this.startFishing(pc, itemId, fishX, fishY);
 	}
 
 	// 钓鱼

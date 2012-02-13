@@ -40,15 +40,15 @@ public class L1FollowerInstance extends L1NpcInstance {
 	public L1FollowerInstance(final L1Npc template, final L1NpcInstance target, final L1Character master) {
 		super(template);
 
-		_master = master;
-		setId(IdFactory.getInstance().nextId());
+		this._master = master;
+		this.setId(IdFactory.getInstance().nextId());
 
-		setMaster(master);
-		setX(target.getX());
-		setY(target.getY());
-		setMap(target.getMapId());
-		setHeading(target.getHeading());
-		setLightSize(target.getLightSize());
+		this.setMaster(master);
+		this.setX(target.getX());
+		this.setY(target.getY());
+		this.setMap(target.getMapId());
+		this.setHeading(target.getHeading());
+		this.setLightSize(target.getLightSize());
 
 		target.setParalyzed(true);
 		target.setDead(true);
@@ -57,17 +57,17 @@ public class L1FollowerInstance extends L1NpcInstance {
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
+			this.onPerceive(pc);
 		}
 
-		startAI();
+		this.startAI();
 		master.addFollower(this);
 	}
 
 	@Override
 	public synchronized void deleteMe() {
-		_master.getFollowerList().remove(getId());
-		getMap().setPassable(getLocation(), true);
+		this._master.getFollowerList().remove(this.getId());
+		this.getMap().setPassable(this.getLocation(), true);
 		super.deleteMe();
 	}
 
@@ -78,84 +78,84 @@ public class L1FollowerInstance extends L1NpcInstance {
 				final L1NpcInstance npc = (L1NpcInstance) object;
 				if ((npc.getNpcTemplate().get_npcId() == 70740 // 公爵的士兵
 						)
-						&& (getNpcTemplate().get_npcId() == 71093)) { // 调查员
-					setParalyzed(true);
-					final L1PcInstance pc = (L1PcInstance) _master;
+						&& (this.getNpcTemplate().get_npcId() == 71093)) { // 调查员
+					this.setParalyzed(true);
+					final L1PcInstance pc = (L1PcInstance) this._master;
 					if (!pc.getInventory().checkItem(40593)) {
-						createNewItem(pc, 40593, 1);
+						this.createNewItem(pc, 40593, 1);
 					}
-					deleteMe();
+					this.deleteMe();
 					return true;
 				}
 				else if ((npc.getNpcTemplate().get_npcId() == 70811 // 莱拉
 						)
-						&& (getNpcTemplate().get_npcId() == 71094)) { // 安迪亚
-					setParalyzed(true);
-					final L1PcInstance pc = (L1PcInstance) _master;
+						&& (this.getNpcTemplate().get_npcId() == 71094)) { // 安迪亚
+					this.setParalyzed(true);
+					final L1PcInstance pc = (L1PcInstance) this._master;
 					if (!pc.getInventory().checkItem(40582) && !pc.getInventory().checkItem(40583)) { // 身上无安迪亚之袋、安迪亚之信
-						createNewItem(pc, 40582, 1);
+						this.createNewItem(pc, 40582, 1);
 					}
-					deleteMe();
+					this.deleteMe();
 					return true;
 				}
 				else if ((npc.getNpcTemplate().get_npcId() == 71061 // カドモス
 						)
-						&& (getNpcTemplate().get_npcId() == 71062)) { // カミット
-					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						final L1PcInstance pc = (L1PcInstance) _master;
+						&& (this.getNpcTemplate().get_npcId() == 71062)) { // カミット
+					if (this.getLocation().getTileLineDistance(this._master.getLocation()) < 3) {
+						final L1PcInstance pc = (L1PcInstance) this._master;
 						if (((pc.getX() >= 32448) && (pc.getX() <= 32452)) // カドモス周辺座标
 								&& ((pc.getY() >= 33048) && (pc.getY() <= 33052)) && (pc.getMapId() == 440)) {
-							setParalyzed(true);
+							this.setParalyzed(true);
 							if (!pc.getInventory().checkItem(40711)) {
-								createNewItem(pc, 40711, 1);
+								this.createNewItem(pc, 40711, 1);
 								pc.getQuest().set_step(L1Quest.QUEST_CADMUS, 3);
 							}
-							deleteMe();
+							this.deleteMe();
 							return true;
 						}
 					}
 				}
 				else if ((npc.getNpcTemplate().get_npcId() == 71074 // リザードマンの长老
 						)
-						&& (getNpcTemplate().get_npcId() == 71075)) {
+						&& (this.getNpcTemplate().get_npcId() == 71075)) {
 					// 疲れ果てたリザードマンファイター
-					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						final L1PcInstance pc = (L1PcInstance) _master;
+					if (this.getLocation().getTileLineDistance(this._master.getLocation()) < 3) {
+						final L1PcInstance pc = (L1PcInstance) this._master;
 						if (((pc.getX() >= 32731) && (pc.getX() <= 32735)) // リザードマン长老周辺座标
 								&& ((pc.getY() >= 32854) && (pc.getY() <= 32858)) && (pc.getMapId() == 480)) {
-							setParalyzed(true);
+							this.setParalyzed(true);
 							if (!pc.getInventory().checkItem(40633)) {
-								createNewItem(pc, 40633, 1);
+								this.createNewItem(pc, 40633, 1);
 								pc.getQuest().set_step(L1Quest.QUEST_LIZARD, 2);
 							}
-							deleteMe();
+							this.deleteMe();
 							return true;
 						}
 					}
 				}
 				else if ((npc.getNpcTemplate().get_npcId() == 70964 // バッシュ
 						)
-						&& (getNpcTemplate().get_npcId() == 70957)) { // ロイ
-					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						final L1PcInstance pc = (L1PcInstance) _master;
+						&& (this.getNpcTemplate().get_npcId() == 70957)) { // ロイ
+					if (this.getLocation().getTileLineDistance(this._master.getLocation()) < 3) {
+						final L1PcInstance pc = (L1PcInstance) this._master;
 						if (((pc.getX() >= 32917) && (pc.getX() <= 32921)) // バッシュ周辺座标
 								&& ((pc.getY() >= 32974) && (pc.getY() <= 32978)) && (pc.getMapId() == 410)) {
-							setParalyzed(true);
-							createNewItem(pc, 41003, 1);
+							this.setParalyzed(true);
+							this.createNewItem(pc, 41003, 1);
 							pc.getQuest().set_step(L1Quest.QUEST_ROI, 0);
-							deleteMe();
+							this.deleteMe();
 							return true;
 						}
 					}
 				}
-				else if ((npc.getNpcTemplate().get_npcId() == 71114) && (getNpcTemplate().get_npcId() == 81350)) { // 迪嘉勒廷的女间谍
-					if (getLocation().getTileLineDistance(_master.getLocation()) < 15) {
-						final L1PcInstance pc = (L1PcInstance) _master;
+				else if ((npc.getNpcTemplate().get_npcId() == 71114) && (this.getNpcTemplate().get_npcId() == 81350)) { // 迪嘉勒廷的女间谍
+					if (this.getLocation().getTileLineDistance(this._master.getLocation()) < 15) {
+						final L1PcInstance pc = (L1PcInstance) this._master;
 						if (((pc.getX() >= 32542) && (pc.getX() <= 32585)) && ((pc.getY() >= 32656) && (pc.getY() <= 32698)) && (pc.getMapId() == 400)) {
-							setParalyzed(true);
-							createNewItem(pc, 49163, 1);
+							this.setParalyzed(true);
+							this.createNewItem(pc, 49163, 1);
 							pc.getQuest().set_step(4, 4);
-							deleteMe();
+							this.deleteMe();
 							return true;
 						}
 					}
@@ -163,16 +163,16 @@ public class L1FollowerInstance extends L1NpcInstance {
 			}
 		}
 
-		if (_master.isDead() || (getLocation().getTileLineDistance(_master.getLocation()) > 10)) {
-			setParalyzed(true);
-			spawn(getNpcTemplate().get_npcId(), getX(), getY(), getHeading(), getMapId());
-			deleteMe();
+		if (this._master.isDead() || (this.getLocation().getTileLineDistance(this._master.getLocation()) > 10)) {
+			this.setParalyzed(true);
+			this.spawn(this.getNpcTemplate().get_npcId(), this.getX(), this.getY(), this.getHeading(), this.getMapId());
+			this.deleteMe();
 			return true;
 		}
-		else if ((_master != null) && (_master.getMapId() == getMapId())) {
-			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-				setDirectionMove(moveDirection(_master.getX(), _master.getY()));
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+		else if ((this._master != null) && (this._master.getMapId() == this.getMapId())) {
+			if (this.getLocation().getTileLineDistance(this._master.getLocation()) > 2) {
+				this.setDirectionMove(this.moveDirection(this._master.getX(), this._master.getY()));
+				this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 			}
 		}
 		return false;
@@ -180,7 +180,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -204,55 +204,55 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		if (isDead()) {
+		if (this.isDead()) {
 			return;
 		}
-		if (getNpcTemplate().get_npcId() == 71093) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "searcherk2"));
+		if (this.getNpcTemplate().get_npcId() == 71093) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "searcherk2"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "searcherk4"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "searcherk4"));
 			}
 		}
-		else if (getNpcTemplate().get_npcId() == 71094) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "endiaq2"));
+		else if (this.getNpcTemplate().get_npcId() == 71094) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "endiaq2"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "endiaq4"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "endiaq4"));
 			}
 		}
-		else if (getNpcTemplate().get_npcId() == 71062) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "kamit2"));
+		else if (this.getNpcTemplate().get_npcId() == 71062) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "kamit2"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "kamit1"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "kamit1"));
 			}
 		}
-		else if (getNpcTemplate().get_npcId() == 71075) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "llizard2"));
+		else if (this.getNpcTemplate().get_npcId() == 71075) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "llizard2"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "llizard1a"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "llizard1a"));
 			}
 		}
-		else if (getNpcTemplate().get_npcId() == 70957) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
+		else if (this.getNpcTemplate().get_npcId() == 70957) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "roi2"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "roi2"));
 			}
 		}
-		else if (getNpcTemplate().get_npcId() == 81350) {
-			if (_master.equals(player)) {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "dspy3"));
+		else if (this.getNpcTemplate().get_npcId() == 81350) {
+			if (this._master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "dspy3"));
 			}
 			else {
-				player.sendPackets(new S_NPCTalkReturn(getId(), "dspy3"));
+				player.sendPackets(new S_NPCTalkReturn(this.getId(), "dspy3"));
 			}
 		}
 

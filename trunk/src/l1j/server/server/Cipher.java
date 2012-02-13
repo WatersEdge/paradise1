@@ -68,8 +68,8 @@ public class Cipher {
 		keys[1] ^= keys[0] ^ _3;
 
 		for (int i = 0; i < keys.length; i++) {
-			for (int j = 0; j < tb.length; j++) {
-				eb[(i * 4) + j] = db[(i * 4) + j] = (byte) (keys[i] >> (j * 8) & 0xff);
+			for (int j = 0; j < this.tb.length; j++) {
+				this.eb[(i * 4) + j] = this.db[(i * 4) + j] = (byte) (keys[i] >> (j * 8) & 0xff);
 			}
 		}
 	}
@@ -82,17 +82,17 @@ public class Cipher {
 	 * @return data, 原始的资料
 	 */
 	public byte[] decrypt(final byte[] data) {
-		data[0] ^= db[5] ^ data[1];
-		data[1] ^= db[4] ^ data[2];
-		data[2] ^= db[3] ^ data[3];
-		data[3] ^= db[2];
+		data[0] ^= this.db[5] ^ data[1];
+		data[1] ^= this.db[4] ^ data[2];
+		data[2] ^= this.db[3] ^ data[3];
+		data[3] ^= this.db[2];
 
 		for (int i = data.length - 1; i >= 1; i--) {
-			data[i] ^= data[i - 1] ^ db[i & 7];
+			data[i] ^= data[i - 1] ^ this.db[i & 7];
 		}
 
-		data[0] ^= db[0];
-		update(db, data);
+		data[0] ^= this.db[0];
+		this.update(this.db, data);
 		return data;
 	}
 
@@ -104,21 +104,21 @@ public class Cipher {
 	 * @return data, 受保护的资料
 	 */
 	public byte[] encrypt(final byte[] data) {
-		for (int i = 0; i < tb.length; i++) {
-			tb[i] = data[i];
+		for (int i = 0; i < this.tb.length; i++) {
+			this.tb[i] = data[i];
 		}
 
-		data[0] ^= eb[0];
+		data[0] ^= this.eb[0];
 
 		for (int i = 1; i < data.length; i++) {
-			data[i] ^= data[i - 1] ^ eb[i & 7];
+			data[i] ^= data[i - 1] ^ this.eb[i & 7];
 		}
 
-		data[3] ^= eb[2];
-		data[2] ^= eb[3] ^ data[3];
-		data[1] ^= eb[4] ^ data[2];
-		data[0] ^= eb[5] ^ data[1];
-		update(eb, tb);
+		data[3] ^= this.eb[2];
+		data[2] ^= this.eb[3] ^ data[3];
+		data[1] ^= this.eb[4] ^ data[2];
+		data[0] ^= this.eb[5] ^ data[1];
+		this.update(this.eb, this.tb);
 		return data;
 	}
 
@@ -130,13 +130,13 @@ public class Cipher {
 	 * @return data, 原始的资料
 	 */
 	private void update(final byte[] data, final byte[] ref) {
-		for (int i = 0; i < tb.length; i++) {
+		for (int i = 0; i < this.tb.length; i++) {
 			data[i] ^= ref[i];
 		}
 
 		final int int32 = (((data[7] & 0xFF) << 24) | ((data[6] & 0xFF) << 16) | ((data[5] & 0xFF) << 8) | (data[4] & 0xFF)) + _4;
 
-		for (int i = 0; i < tb.length; i++) {
+		for (int i = 0; i < this.tb.length; i++) {
 			data[i + 4] = (byte) (int32 >> (i * 8) & 0xff);
 		}
 	}

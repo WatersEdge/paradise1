@@ -46,13 +46,13 @@ public class ThreadPoolManager {
 		private final ThreadGroup _group;
 
 		public PriorityThreadFactory(final String name, final int prio) {
-			_prio = prio;
-			_name = name;
-			_group = new ThreadGroup(_name);
+			this._prio = prio;
+			this._name = name;
+			this._group = new ThreadGroup(this._name);
 		}
 
 		public ThreadGroup getGroup() {
-			return _group;
+			return this._group;
 		}
 
 		/*
@@ -62,9 +62,9 @@ public class ThreadPoolManager {
 		 */
 		@Override
 		public Thread newThread(final Runnable r) {
-			final Thread t = new Thread(_group, r);
-			t.setName(_name + "-" + _threadNumber.getAndIncrement());
-			t.setPriority(_prio);
+			final Thread t = new Thread(this._group, r);
+			t.setName(this._name + "-" + this._threadNumber.getAndIncrement());
+			t.setPriority(this._prio);
 			return t;
 		}
 	}
@@ -108,24 +108,24 @@ public class ThreadPoolManager {
 
 	/** 线程池管理器 */
 	private ThreadPoolManager() {
-		_effectsScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.THREAD_P_EFFECTS, new PriorityThreadFactory("EffectsSTPool", Thread.MIN_PRIORITY));
-		_generalScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.THREAD_P_GENERAL, new PriorityThreadFactory("GerenalSTPool", Thread.NORM_PRIORITY));
+		this._effectsScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.THREAD_P_EFFECTS, new PriorityThreadFactory("EffectsSTPool", Thread.MIN_PRIORITY));
+		this._generalScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.THREAD_P_GENERAL, new PriorityThreadFactory("GerenalSTPool", Thread.NORM_PRIORITY));
 
-		_ioPacketsThreadPool = new ThreadPoolExecutor(2, Integer.MAX_VALUE, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("I/O Packet Pool", Thread.NORM_PRIORITY + 1));
+		this._ioPacketsThreadPool = new ThreadPoolExecutor(2, Integer.MAX_VALUE, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("I/O Packet Pool", Thread.NORM_PRIORITY + 1));
 
-		_generalPacketsThreadPool = new ThreadPoolExecutor(4, 6, 15L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("Normal Packet Pool", Thread.NORM_PRIORITY + 1));
+		this._generalPacketsThreadPool = new ThreadPoolExecutor(4, 6, 15L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("Normal Packet Pool", Thread.NORM_PRIORITY + 1));
 
-		_generalThreadPool = new ThreadPoolExecutor(2, 4, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("General Pool", Thread.NORM_PRIORITY));
+		this._generalThreadPool = new ThreadPoolExecutor(2, 4, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new PriorityThreadFactory("General Pool", Thread.NORM_PRIORITY));
 
 		// 将真正用在未来的AI实施。
-		_aiThreadPool = new ThreadPoolExecutor(1, Config.AI_MAX_THREAD, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+		this._aiThreadPool = new ThreadPoolExecutor(1, Config.AI_MAX_THREAD, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
-		_aiScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.AI_MAX_THREAD, new PriorityThreadFactory("AISTPool", Thread.NORM_PRIORITY));
+		this._aiScheduledThreadPool = new ScheduledThreadPoolExecutor(Config.AI_MAX_THREAD, new PriorityThreadFactory("AISTPool", Thread.NORM_PRIORITY));
 	}
 
 	/** 执行AI */
 	public void executeAi(final Runnable r) {
-		_aiThreadPool.execute(r);
+		this._aiThreadPool.execute(r);
 	}
 
 	/*
@@ -135,16 +135,16 @@ public class ThreadPoolManager {
 	 */
 	/** 执行任务 */
 	public void executeTask(final Runnable r) {
-		_generalThreadPool.execute(r);
+		this._generalThreadPool.execute(r);
 	}
 
 	/** 获得常规统​​计 */
 	public String getGeneralStats() {
 		final TextBuilder tb = new TextBuilder();
-		final ThreadFactory tf = _generalThreadPool.getThreadFactory();
+		final ThreadFactory tf = this._generalThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("General Thread Pool:\r\n");
-			tb.append("Tasks in the queue: " + _generalThreadPool.getQueue().size() + "\r\n");
+			tb.append("Tasks in the queue: " + this._generalThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
 			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
 			final int count = ptf.getGroup().activeCount();
@@ -169,10 +169,10 @@ public class ThreadPoolManager {
 	/** 得到的IO包统计 */
 	public String getIOPacketStats() {
 		final TextBuilder tb = new TextBuilder();
-		final ThreadFactory tf = _ioPacketsThreadPool.getThreadFactory();
+		final ThreadFactory tf = this._ioPacketsThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("I/O Packet Thread Pool:\r\n");
-			tb.append("Tasks in the queue: " + _ioPacketsThreadPool.getQueue().size() + "\r\n");
+			tb.append("Tasks in the queue: " + this._ioPacketsThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
 			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
 			final int count = ptf.getGroup().activeCount();
@@ -199,10 +199,10 @@ public class ThreadPoolManager {
 	 */
 	public String getPacketStats() {
 		final TextBuilder tb = new TextBuilder();
-		final ThreadFactory tf = _generalPacketsThreadPool.getThreadFactory();
+		final ThreadFactory tf = this._generalPacketsThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("General Packet Thread Pool:\r\n");
-			tb.append("Tasks in the queue: " + _generalPacketsThreadPool.getQueue().size() + "\r\n");
+			tb.append("Tasks in the queue: " + this._generalPacketsThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
 			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
 			final int count = ptf.getGroup().activeCount();
@@ -226,38 +226,39 @@ public class ThreadPoolManager {
 
 	/** 得到统计 */
 	public String[] getStats() {
-		return new String[] { "STP:", " + Effects:", " |- ActiveThreads:   " + _effectsScheduledThreadPool.getActiveCount(), " |- getCorePoolSize: " + _effectsScheduledThreadPool.getCorePoolSize(), " |- PoolSize:        " + _effectsScheduledThreadPool.getPoolSize(),
-				" |- MaximumPoolSize: " + _effectsScheduledThreadPool.getMaximumPoolSize(), " |- CompletedTasks:  " + _effectsScheduledThreadPool.getCompletedTaskCount(),
-				" |- ScheduledTasks:  " + (_effectsScheduledThreadPool.getTaskCount() - _effectsScheduledThreadPool.getCompletedTaskCount()), " | -------", " + General:", " |- ActiveThreads:   " + _generalScheduledThreadPool.getActiveCount(),
-				" |- getCorePoolSize: " + _generalScheduledThreadPool.getCorePoolSize(), " |- PoolSize:        " + _generalScheduledThreadPool.getPoolSize(), " |- MaximumPoolSize: " + _generalScheduledThreadPool.getMaximumPoolSize(),
-				" |- CompletedTasks:  " + _generalScheduledThreadPool.getCompletedTaskCount(), " |- ScheduledTasks:  " + (_generalScheduledThreadPool.getTaskCount() - _generalScheduledThreadPool.getCompletedTaskCount()), " | -------", " + AI:",
-				" |- ActiveThreads:   " + _aiScheduledThreadPool.getActiveCount(), " |- getCorePoolSize: " + _aiScheduledThreadPool.getCorePoolSize(), " |- PoolSize:        " + _aiScheduledThreadPool.getPoolSize(),
-				" |- MaximumPoolSize: " + _aiScheduledThreadPool.getMaximumPoolSize(), " |- CompletedTasks:  " + _aiScheduledThreadPool.getCompletedTaskCount(), " |- ScheduledTasks:  " + (_aiScheduledThreadPool.getTaskCount() - _aiScheduledThreadPool.getCompletedTaskCount()),
-				"TP:", " + Packets:", " |- ActiveThreads:   " + _generalPacketsThreadPool.getActiveCount(), " |- getCorePoolSize: " + _generalPacketsThreadPool.getCorePoolSize(), " |- MaximumPoolSize: " + _generalPacketsThreadPool.getMaximumPoolSize(),
-				" |- LargestPoolSize: " + _generalPacketsThreadPool.getLargestPoolSize(), " |- PoolSize:        " + _generalPacketsThreadPool.getPoolSize(), " |- CompletedTasks:  " + _generalPacketsThreadPool.getCompletedTaskCount(),
-				" |- QueuedTasks:     " + _generalPacketsThreadPool.getQueue().size(), " | -------", " + I/O Packets:", " |- ActiveThreads:   " + _ioPacketsThreadPool.getActiveCount(), " |- getCorePoolSize: " + _ioPacketsThreadPool.getCorePoolSize(),
-				" |- MaximumPoolSize: " + _ioPacketsThreadPool.getMaximumPoolSize(), " |- LargestPoolSize: " + _ioPacketsThreadPool.getLargestPoolSize(), " |- PoolSize:        " + _ioPacketsThreadPool.getPoolSize(),
-				" |- CompletedTasks:  " + _ioPacketsThreadPool.getCompletedTaskCount(), " |- QueuedTasks:     " + _ioPacketsThreadPool.getQueue().size(), " | -------", " + General Tasks:", " |- ActiveThreads:   " + _generalThreadPool.getActiveCount(),
-				" |- getCorePoolSize: " + _generalThreadPool.getCorePoolSize(), " |- MaximumPoolSize: " + _generalThreadPool.getMaximumPoolSize(), " |- LargestPoolSize: " + _generalThreadPool.getLargestPoolSize(), " |- PoolSize:        " + _generalThreadPool.getPoolSize(),
-				" |- CompletedTasks:  " + _generalThreadPool.getCompletedTaskCount(), " |- QueuedTasks:     " + _generalThreadPool.getQueue().size(), " | -------", " + AI:", " |- Not Done" };
+		return new String[] { "STP:", " + Effects:", " |- ActiveThreads:   " + this._effectsScheduledThreadPool.getActiveCount(), " |- getCorePoolSize: " + this._effectsScheduledThreadPool.getCorePoolSize(),
+				" |- PoolSize:        " + this._effectsScheduledThreadPool.getPoolSize(), " |- MaximumPoolSize: " + this._effectsScheduledThreadPool.getMaximumPoolSize(), " |- CompletedTasks:  " + this._effectsScheduledThreadPool.getCompletedTaskCount(),
+				" |- ScheduledTasks:  " + (this._effectsScheduledThreadPool.getTaskCount() - this._effectsScheduledThreadPool.getCompletedTaskCount()), " | -------", " + General:", " |- ActiveThreads:   " + this._generalScheduledThreadPool.getActiveCount(),
+				" |- getCorePoolSize: " + this._generalScheduledThreadPool.getCorePoolSize(), " |- PoolSize:        " + this._generalScheduledThreadPool.getPoolSize(), " |- MaximumPoolSize: " + this._generalScheduledThreadPool.getMaximumPoolSize(),
+				" |- CompletedTasks:  " + this._generalScheduledThreadPool.getCompletedTaskCount(), " |- ScheduledTasks:  " + (this._generalScheduledThreadPool.getTaskCount() - this._generalScheduledThreadPool.getCompletedTaskCount()), " | -------", " + AI:",
+				" |- ActiveThreads:   " + this._aiScheduledThreadPool.getActiveCount(), " |- getCorePoolSize: " + this._aiScheduledThreadPool.getCorePoolSize(), " |- PoolSize:        " + this._aiScheduledThreadPool.getPoolSize(),
+				" |- MaximumPoolSize: " + this._aiScheduledThreadPool.getMaximumPoolSize(), " |- CompletedTasks:  " + this._aiScheduledThreadPool.getCompletedTaskCount(),
+				" |- ScheduledTasks:  " + (this._aiScheduledThreadPool.getTaskCount() - this._aiScheduledThreadPool.getCompletedTaskCount()), "TP:", " + Packets:", " |- ActiveThreads:   " + this._generalPacketsThreadPool.getActiveCount(),
+				" |- getCorePoolSize: " + this._generalPacketsThreadPool.getCorePoolSize(), " |- MaximumPoolSize: " + this._generalPacketsThreadPool.getMaximumPoolSize(), " |- LargestPoolSize: " + this._generalPacketsThreadPool.getLargestPoolSize(),
+				" |- PoolSize:        " + this._generalPacketsThreadPool.getPoolSize(), " |- CompletedTasks:  " + this._generalPacketsThreadPool.getCompletedTaskCount(), " |- QueuedTasks:     " + this._generalPacketsThreadPool.getQueue().size(), " | -------", " + I/O Packets:",
+				" |- ActiveThreads:   " + this._ioPacketsThreadPool.getActiveCount(), " |- getCorePoolSize: " + this._ioPacketsThreadPool.getCorePoolSize(), " |- MaximumPoolSize: " + this._ioPacketsThreadPool.getMaximumPoolSize(),
+				" |- LargestPoolSize: " + this._ioPacketsThreadPool.getLargestPoolSize(), " |- PoolSize:        " + this._ioPacketsThreadPool.getPoolSize(), " |- CompletedTasks:  " + this._ioPacketsThreadPool.getCompletedTaskCount(),
+				" |- QueuedTasks:     " + this._ioPacketsThreadPool.getQueue().size(), " | -------", " + General Tasks:", " |- ActiveThreads:   " + this._generalThreadPool.getActiveCount(), " |- getCorePoolSize: " + this._generalThreadPool.getCorePoolSize(),
+				" |- MaximumPoolSize: " + this._generalThreadPool.getMaximumPoolSize(), " |- LargestPoolSize: " + this._generalThreadPool.getLargestPoolSize(), " |- PoolSize:        " + this._generalThreadPool.getPoolSize(),
+				" |- CompletedTasks:  " + this._generalThreadPool.getCompletedTaskCount(), " |- QueuedTasks:     " + this._generalThreadPool.getQueue().size(), " | -------", " + AI:", " |- Not Done" };
 	}
 
 	/** 正在关机 */
 	public boolean isShutdown() {
-		return _shutdown;
+		return this._shutdown;
 	}
 
 	/**
 	 * 清除
 	 */
 	public void purge() {
-		_effectsScheduledThreadPool.purge();
-		_generalScheduledThreadPool.purge();
-		_aiScheduledThreadPool.purge();
-		_ioPacketsThreadPool.purge();
-		_generalPacketsThreadPool.purge();
-		_generalThreadPool.purge();
-		_aiThreadPool.purge();
+		this._effectsScheduledThreadPool.purge();
+		this._generalScheduledThreadPool.purge();
+		this._aiScheduledThreadPool.purge();
+		this._ioPacketsThreadPool.purge();
+		this._generalPacketsThreadPool.purge();
+		this._generalThreadPool.purge();
+		this._aiThreadPool.purge();
 	}
 
 	/** AI时间表 */
@@ -266,7 +267,7 @@ public class ThreadPoolManager {
 			if (delay < 0) {
 				delay = 0;
 			}
-			return _aiScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
+			return this._aiScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -282,7 +283,7 @@ public class ThreadPoolManager {
 			if (initial < 0) {
 				initial = 0;
 			}
-			return _aiScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
+			return this._aiScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -295,7 +296,7 @@ public class ThreadPoolManager {
 			if (delay < 0) {
 				delay = 0;
 			}
-			return _effectsScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
+			return this._effectsScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -311,7 +312,7 @@ public class ThreadPoolManager {
 			if (initial < 0) {
 				initial = 0;
 			}
-			return _effectsScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
+			return this._effectsScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -324,7 +325,7 @@ public class ThreadPoolManager {
 			if (delay < 0) {
 				delay = 0;
 			}
-			return _generalScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
+			return this._generalScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -340,7 +341,7 @@ public class ThreadPoolManager {
 			if (initial < 0) {
 				initial = 0;
 			}
-			return _generalScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
+			return this._generalScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
@@ -351,20 +352,20 @@ public class ThreadPoolManager {
 	 * 关机
 	 */
 	public void shutdown() {
-		_shutdown = true;
+		this._shutdown = true;
 		try {
-			_effectsScheduledThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_generalScheduledThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_generalPacketsThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_ioPacketsThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_generalThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_aiThreadPool.awaitTermination(1, TimeUnit.SECONDS);
-			_effectsScheduledThreadPool.shutdown();
-			_generalScheduledThreadPool.shutdown();
-			_generalPacketsThreadPool.shutdown();
-			_ioPacketsThreadPool.shutdown();
-			_generalThreadPool.shutdown();
-			_aiThreadPool.shutdown();
+			this._effectsScheduledThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._generalScheduledThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._generalPacketsThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._ioPacketsThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._generalThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._aiThreadPool.awaitTermination(1, TimeUnit.SECONDS);
+			this._effectsScheduledThreadPool.shutdown();
+			this._generalScheduledThreadPool.shutdown();
+			this._generalPacketsThreadPool.shutdown();
+			this._ioPacketsThreadPool.shutdown();
+			this._generalThreadPool.shutdown();
+			this._aiThreadPool.shutdown();
 			System.out.println("现在清空所有的线程池。");
 
 		}

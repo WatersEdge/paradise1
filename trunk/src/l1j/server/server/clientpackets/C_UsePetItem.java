@@ -46,9 +46,9 @@ public class C_UsePetItem extends ClientBasePacket {
 	public C_UsePetItem(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		final int data = readC();
-		final int petId = readD();
-		final int listNo = readC();
+		final int data = this.readC();
+		final int petId = this.readD();
+		final int listNo = this.readC();
 
 		final L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
 		final L1PcInstance pc = clientthread.getActiveChar();

@@ -20,19 +20,19 @@ import l1j.server.server.Opcodes;
 
 public class S_HowManyMake extends ServerBasePacket {
 	public S_HowManyMake(final int objId, final int max, final String htmlId) {
-		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
-		writeD(objId);
-		writeD(0); // ?
-		writeD(0); // スピンコントロールの初期価格
-		writeD(0); // 価格の下限
-		writeD(max); // 価格の上限
-		writeH(0); // ?
-		writeS("request");
-		writeS(htmlId);
+		this.writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
+		this.writeD(objId);
+		this.writeD(0); // ?
+		this.writeD(0); // スピンコントロールの初期価格
+		this.writeD(0); // 価格の下限
+		this.writeD(max); // 価格の上限
+		this.writeH(0); // ?
+		this.writeS("request");
+		this.writeS(htmlId);
 	}
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 }

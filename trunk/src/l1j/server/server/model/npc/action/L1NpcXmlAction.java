@@ -57,31 +57,31 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 	}
 
 	public L1NpcXmlAction(final Element element) {
-		_name = element.getAttribute("Name");
-		_name = _name.equals("") ? null : _name;
-		_npcIds = parseNpcIds(element.getAttribute("NpcId"));
-		_level = parseLevel(element);
-		_questId = L1NpcXmlParser.parseQuestId(element.getAttribute("QuestId"));
-		_questStep = L1NpcXmlParser.parseQuestStep(element.getAttribute("QuestStep"));
+		this._name = element.getAttribute("Name");
+		this._name = this._name.equals("") ? null : this._name;
+		this._npcIds = this.parseNpcIds(element.getAttribute("NpcId"));
+		this._level = this.parseLevel(element);
+		this._questId = L1NpcXmlParser.parseQuestId(element.getAttribute("QuestId"));
+		this._questStep = L1NpcXmlParser.parseQuestStep(element.getAttribute("QuestStep"));
 
-		_classes = parseClasses(element);
+		this._classes = this.parseClasses(element);
 	}
 
 	@Override
 	public boolean acceptsRequest(final String actionName, final L1PcInstance pc, final L1Object obj) {
-		if (!acceptsNpcId(obj)) {
+		if (!this.acceptsNpcId(obj)) {
 			return false;
 		}
-		if (!acceptsLevel(pc.getLevel())) {
+		if (!this.acceptsLevel(pc.getLevel())) {
 			return false;
 		}
-		if (!acceptsQuest(pc)) {
+		if (!this.acceptsQuest(pc)) {
 			return false;
 		}
-		if (!acceptsCharType(pc.getType())) {
+		if (!this.acceptsCharType(pc.getType())) {
 			return false;
 		}
-		if (!acceptsActionName(actionName)) {
+		if (!this.acceptsActionName(actionName)) {
 			return false;
 		}
 		return true;
@@ -96,15 +96,15 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 	}
 
 	private boolean acceptsActionName(final String name) {
-		if (_name == null) {
+		if (this._name == null) {
 			return true;
 		}
-		return name.equals(_name);
+		return name.equals(this._name);
 	}
 
 	private boolean acceptsCharType(final int type) {
-		if (0 < _classes.length) {
-			if (Arrays.binarySearch(_classes, type) < 0) {
+		if (0 < this._classes.length) {
+			if (Arrays.binarySearch(this._classes, type) < 0) {
 				return false;
 			}
 		}
@@ -112,17 +112,17 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 	}
 
 	private boolean acceptsLevel(final int level) {
-		return _level.includes(level);
+		return this._level.includes(level);
 	}
 
 	private boolean acceptsNpcId(final L1Object obj) {
-		if (0 < _npcIds.length) {
+		if (0 < this._npcIds.length) {
 			if (!(obj instanceof L1NpcInstance)) {
 				return false;
 			}
 			final int npcId = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
 
-			if (Arrays.binarySearch(_npcIds, npcId) < 0) {
+			if (Arrays.binarySearch(this._npcIds, npcId) < 0) {
 				return false;
 			}
 		}
@@ -130,13 +130,13 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 	}
 
 	private boolean acceptsQuest(final L1PcInstance pc) {
-		if (_questId == -1) {
+		if (this._questId == -1) {
 			return true;
 		}
-		if (_questStep == -1) {
-			return 0 < pc.getQuest().get_step(_questId);
+		if (this._questStep == -1) {
+			return 0 < pc.getQuest().get_step(this._questId);
 		}
-		return pc.getQuest().get_step(_questId) == _questStep;
+		return pc.getQuest().get_step(this._questId) == this._questStep;
 	}
 
 	private int[] parseClasses(final Element element) {

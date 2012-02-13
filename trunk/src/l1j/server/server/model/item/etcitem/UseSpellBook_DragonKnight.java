@@ -28,7 +28,7 @@ public class UseSpellBook_DragonKnight implements UniversalUseItem {
 			case 49105:
 			case 49106:
 				if (level >= 15) {
-					DragonKnightSpellBook(pc, item);
+					this.DragonKnightSpellBook(pc, item);
 				}
 				break;
 
@@ -38,7 +38,7 @@ public class UseSpellBook_DragonKnight implements UniversalUseItem {
 			case 49110:
 			case 49111:
 				if (level >= 30) {
-					DragonKnightSpellBook(pc, item);
+					this.DragonKnightSpellBook(pc, item);
 				}
 				break;
 
@@ -48,7 +48,7 @@ public class UseSpellBook_DragonKnight implements UniversalUseItem {
 			case 49115:
 			case 49116:
 				if (level >= 45) {
-					DragonKnightSpellBook(pc, item);
+					this.DragonKnightSpellBook(pc, item);
 				}
 				break;
 

@@ -41,8 +41,8 @@ public class C_War extends ClientBasePacket {
 	 */
 	public C_War(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		final int type = readC();
-		final String s = readS();
+		final int type = this.readC();
+		final String s = this.readS();
 
 		final L1PcInstance player = clientthread.getActiveChar(); // 线上角色
 		final String playerName = player.getName(); // 角色名称

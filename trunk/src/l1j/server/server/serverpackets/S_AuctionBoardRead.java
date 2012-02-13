@@ -40,15 +40,15 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_AuctionBoardRead(final int objectId, final String house_number) {
-		buildPacket(objectId, house_number);
+		this.buildPacket(objectId, house_number);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -67,24 +67,24 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				writeC(Opcodes.S_OPCODE_SHOWHTML);
-				writeD(objectId);
-				writeS("agsel"); // 对话档名称
-				writeS(house_number); // 盟屋编号
-				writeH(9); // 以下显示数字个数
-				writeS(rs.getString(2)); // 盟屋名称
-				writeS(rs.getString(6)); // 盟屋位置
-				writeS(String.valueOf(rs.getString(3))); // 盟屋面积
-				writeS(rs.getString(7)); // 前任屋主
-				writeS(rs.getString(9)); // 现任屋主
-				writeS(String.valueOf(rs.getInt(5))); // 售屋价格
-				final Calendar cal = timestampToCalendar((Timestamp) rs.getObject(4));
+				this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+				this.writeD(objectId);
+				this.writeS("agsel"); // 对话档名称
+				this.writeS(house_number); // 盟屋编号
+				this.writeH(9); // 以下显示数字个数
+				this.writeS(rs.getString(2)); // 盟屋名称
+				this.writeS(rs.getString(6)); // 盟屋位置
+				this.writeS(String.valueOf(rs.getString(3))); // 盟屋面积
+				this.writeS(rs.getString(7)); // 前任屋主
+				this.writeS(rs.getString(9)); // 现任屋主
+				this.writeS(String.valueOf(rs.getInt(5))); // 售屋价格
+				final Calendar cal = this.timestampToCalendar((Timestamp) rs.getObject(4));
 				final int month = cal.get(Calendar.MONTH) + 1;
 				final int day = cal.get(Calendar.DATE);
 				final int hour = cal.get(Calendar.HOUR_OF_DAY);
-				writeS(String.valueOf(month)); // 截止月
-				writeS(String.valueOf(day)); // 截止日
-				writeS(String.valueOf(hour)); // 截止时
+				this.writeS(String.valueOf(month)); // 截止月
+				this.writeS(String.valueOf(day)); // 截止日
+				this.writeS(String.valueOf(hour)); // 截止时
 			}
 		}
 		catch (final SQLException e) {

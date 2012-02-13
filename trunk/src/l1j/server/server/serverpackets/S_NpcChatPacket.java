@@ -23,15 +23,15 @@ public class S_NpcChatPacket extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_NpcChatPacket(final L1NpcInstance npc, final String chat, final int type) {
-		buildPacket(npc, chat, type);
+		this.buildPacket(npc, chat, type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -42,26 +42,26 @@ public class S_NpcChatPacket extends ServerBasePacket {
 	private void buildPacket(final L1NpcInstance npc, final String chat, final int type) {
 		switch (type) {
 			case 0: // normal chat
-				writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
-													// desc-?.tbl
-				writeC(type); // Color
-				writeD(npc.getId());
-				writeS(npc.getName() + ": " + chat);
+				this.writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
+				// desc-?.tbl
+				this.writeC(type); // Color
+				this.writeD(npc.getId());
+				this.writeS(npc.getName() + ": " + chat);
 				break;
 
 			case 2: // shout
-				writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
-													// desc-?.tbl
-				writeC(type); // Color
-				writeD(npc.getId());
-				writeS("<" + npc.getName() + "> " + chat);
+				this.writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
+				// desc-?.tbl
+				this.writeC(type); // Color
+				this.writeD(npc.getId());
+				this.writeS("<" + npc.getName() + "> " + chat);
 				break;
 
 			case 3: // world chat
-				writeC(Opcodes.S_OPCODE_NPCSHOUT);
-				writeC(type); // XXX 白色になる
-				writeD(npc.getId());
-				writeS("[" + npc.getName() + "] " + chat);
+				this.writeC(Opcodes.S_OPCODE_NPCSHOUT);
+				this.writeC(type); // XXX 白色になる
+				this.writeD(npc.getId());
+				this.writeS("[" + npc.getName() + "] " + chat);
 				break;
 
 			default:

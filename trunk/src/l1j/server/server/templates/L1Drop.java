@@ -25,30 +25,30 @@ public class L1Drop {
 	int _chance;
 
 	public L1Drop(final int mobId, final int itemId, final int min, final int max, final int chance) {
-		_mobId = mobId;
-		_itemId = itemId;
-		_min = min;
-		_max = max;
-		_chance = chance;
+		this._mobId = mobId;
+		this._itemId = itemId;
+		this._min = min;
+		this._max = max;
+		this._chance = chance;
 	}
 
 	public int getChance() {
-		return _chance;
+		return this._chance;
 	}
 
 	public int getItemid() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	public int getMax() {
-		return _max;
+		return this._max;
 	}
 
 	public int getMin() {
-		return _min;
+		return this._min;
 	}
 
 	public int getMobid() {
-		return _mobId;
+		return this._mobId;
 	}
 }

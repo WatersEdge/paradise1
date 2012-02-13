@@ -37,67 +37,67 @@ public class L1House {
 	}
 
 	public int getHouseArea() {
-		return _houseArea;
+		return this._houseArea;
 	}
 
 	public int getHouseId() {
-		return _houseId;
+		return this._houseId;
 	}
 
 	public String getHouseName() {
-		return _houseName;
+		return this._houseName;
 	}
 
 	public int getKeeperId() {
-		return _keeperId;
+		return this._keeperId;
 	}
 
 	public String getLocation() {
-		return _location;
+		return this._location;
 	}
 
 	public Calendar getTaxDeadline() {
-		return _taxDeadline;
+		return this._taxDeadline;
 	}
 
 	public boolean isOnSale() {
-		return _isOnSale;
+		return this._isOnSale;
 	}
 
 	public boolean isPurchaseBasement() {
-		return _isPurchaseBasement;
+		return this._isPurchaseBasement;
 	}
 
 	public void setHouseArea(final int i) {
-		_houseArea = i;
+		this._houseArea = i;
 	}
 
 	public void setHouseId(final int i) {
-		_houseId = i;
+		this._houseId = i;
 	}
 
 	public void setHouseName(final String s) {
-		_houseName = s;
+		this._houseName = s;
 	}
 
 	public void setKeeperId(final int i) {
-		_keeperId = i;
+		this._keeperId = i;
 	}
 
 	public void setLocation(final String s) {
-		_location = s;
+		this._location = s;
 	}
 
 	public void setOnSale(final boolean flag) {
-		_isOnSale = flag;
+		this._isOnSale = flag;
 	}
 
 	public void setPurchaseBasement(final boolean flag) {
-		_isPurchaseBasement = flag;
+		this._isPurchaseBasement = flag;
 	}
 
 	public void setTaxDeadline(final Calendar i) {
-		_taxDeadline = i;
+		this._taxDeadline = i;
 	}
 
 }

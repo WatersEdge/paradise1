@@ -56,9 +56,9 @@ public class L1ItemDelay {
 		 *            延迟时间 (毫秒)
 		 */
 		public ItemDelayTimer(final L1Character cha, final int id, final int delayTime) {
-			_cha = cha;
-			_delayId = id;
-			_delayTime = delayTime;
+			this._cha = cha;
+			this._delayId = id;
+			this._delayTime = delayTime;
 		}
 
 		/**
@@ -67,12 +67,12 @@ public class L1ItemDelay {
 		 * @return 延迟时间 (毫秒)
 		 */
 		public int get_delayTime() {
-			return _delayTime;
+			return this._delayTime;
 		}
 
 		@Override
 		public void run() {
-			stopDelayTimer(_delayId);
+			this.stopDelayTimer(this._delayId);
 		}
 
 		/**
@@ -82,7 +82,7 @@ public class L1ItemDelay {
 		 *            延迟ID
 		 */
 		public void stopDelayTimer(final int delayId) {
-			_cha.removeItemDelay(delayId);
+			this._cha.removeItemDelay(delayId);
 		}
 	}
 
@@ -101,12 +101,12 @@ public class L1ItemDelay {
 		 *            角色
 		 */
 		public TeleportUnlockTimer(final L1PcInstance pc) {
-			_pc = pc;
+			this._pc = pc;
 		}
 
 		@Override
 		public void run() {
-			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
+			this._pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 		}
 	}
 

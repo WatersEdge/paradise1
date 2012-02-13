@@ -32,44 +32,44 @@ public class S_SignboardPack extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_SignboardPack(final L1SignboardInstance signboard) {
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(signboard.getX());
-		writeH(signboard.getY());
-		writeD(signboard.getId());
-		writeH(signboard.getGfxId());
-		writeC(0);
-		writeC(getDirection(signboard.getHeading()));
-		writeC(0);
-		writeC(0);
-		writeD(0);
-		writeH(0);
-		writeS(null);
-		writeS(signboard.getNameId());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(signboard.getX());
+		this.writeH(signboard.getY());
+		this.writeD(signboard.getId());
+		this.writeH(signboard.getGfxId());
+		this.writeC(0);
+		this.writeC(this.getDirection(signboard.getHeading()));
+		this.writeC(0);
+		this.writeC(0);
+		this.writeD(0);
+		this.writeH(0);
+		this.writeS(null);
+		this.writeS(signboard.getNameId());
 		int status = 0;
 		if (signboard.getPoison() != null) { // 毒状态
 			if (signboard.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
 		}
-		writeC(status);
-		writeD(0);
-		writeS(null);
-		writeS(null);
-		writeC(0);
-		writeC(0xFF);
-		writeC(0);
-		writeC(0);
-		writeS(null);
-		writeH(0xFFFF);
+		this.writeC(status);
+		this.writeD(0);
+		this.writeS(null);
+		this.writeS(null);
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeS(null);
+		this.writeH(0xFFFF);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

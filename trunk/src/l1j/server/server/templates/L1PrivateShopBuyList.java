@@ -34,34 +34,34 @@ public class L1PrivateShopBuyList {
 	}
 
 	public int getBuyCount() {
-		return _buyCount;
+		return this._buyCount;
 	}
 
 	public int getBuyPrice() {
-		return _buyPrice;
+		return this._buyPrice;
 	}
 
 	public int getBuyTotalCount() {
-		return _buyTotalCount;
+		return this._buyTotalCount;
 	}
 
 	public int getItemObjectId() {
-		return _itemObjectId;
+		return this._itemObjectId;
 	}
 
 	public void setBuyCount(final int i) {
-		_buyCount = i;
+		this._buyCount = i;
 	}
 
 	public void setBuyPrice(final int i) {
-		_buyPrice = i;
+		this._buyPrice = i;
 	}
 
 	public void setBuyTotalCount(final int i) {
-		_buyTotalCount = i;
+		this._buyTotalCount = i;
 	}
 
 	public void setItemObjectId(final int i) {
-		_itemObjectId = i;
+		this._itemObjectId = i;
 	}
 }

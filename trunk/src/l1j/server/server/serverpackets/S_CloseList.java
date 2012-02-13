@@ -27,13 +27,13 @@ public class S_CloseList extends ServerBasePacket {
 	 * @param objid
 	 */
 	public S_CloseList(final int objid) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS("");
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS("");
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

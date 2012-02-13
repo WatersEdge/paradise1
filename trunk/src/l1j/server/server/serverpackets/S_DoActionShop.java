@@ -29,14 +29,14 @@ public class S_DoActionShop extends ServerBasePacket {
 	 * @param message
 	 */
 	public S_DoActionShop(final int object, final int gfxid, final byte[] message) {
-		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
-		writeD(object);
-		writeC(gfxid); // 动作编号
-		writeByte(message); // 文字内容
+		this.writeC(Opcodes.S_OPCODE_DOACTIONGFX);
+		this.writeD(object);
+		this.writeC(gfxid); // 动作编号
+		this.writeByte(message); // 文字内容
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

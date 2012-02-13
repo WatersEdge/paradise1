@@ -84,8 +84,8 @@ public class NpcTable {
 	}
 
 	private NpcTable() {
-		loadNpcData();
-		_initialized = true;
+		this.loadNpcData();
+		this._initialized = true;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class NpcTable {
 	 * @return
 	 */
 	public int findNpcIdByName(final String name) {
-		for (final L1Npc npc : _npcs.values()) {
+		for (final L1Npc npc : this._npcs.values()) {
 			if (npc.get_name().equals(name)) {
 				return npc.get_npcId();
 			}
@@ -112,7 +112,7 @@ public class NpcTable {
 	 * @return
 	 */
 	public int findNpcIdByNameWithoutSpace(final String name) {
-		for (final L1Npc npc : _npcs.values()) {
+		for (final L1Npc npc : this._npcs.values()) {
 			if (npc.get_name().replace(" ", "").equals(name)) {
 				return npc.get_npcId();
 			}
@@ -127,11 +127,11 @@ public class NpcTable {
 	 * @return
 	 */
 	public L1Npc getTemplate(final int id) {
-		return _npcs.get(id);
+		return this._npcs.get(id);
 	}
 
 	public boolean isInitialized() {
-		return _initialized;
+		return this._initialized;
 	}
 
 	/**
@@ -142,11 +142,11 @@ public class NpcTable {
 	 * @return
 	 */
 	public L1NpcInstance newNpcInstance(final int id) {
-		final L1Npc npcTemp = getTemplate(id);
+		final L1Npc npcTemp = this.getTemplate(id);
 		if (npcTemp == null) {
 			throw new IllegalArgumentException(String.format("NpcTemplate: %d not found", id));
 		}
-		return newNpcInstance(npcTemp);
+		return this.newNpcInstance(npcTemp);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class NpcTable {
 	 */
 	public L1NpcInstance newNpcInstance(final L1Npc template) {
 		try {
-			final Constructor<?> con = _constructorCache.get(template.getImpl());
+			final Constructor<?> con = this._constructorCache.get(template.getImpl());
 			return (L1NpcInstance) con.newInstance(new Object[] { template });
 		}
 		catch (final Exception e) {
@@ -272,8 +272,8 @@ public class NpcTable {
 				npc.setChangeHead(rs.getBoolean("change_head"));
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
 
-				registerConstructorCache(npc.getImpl());
-				_npcs.put(npcId, npc);
+				this.registerConstructorCache(npc.getImpl());
+				this._npcs.put(npcId, npc);
 			}
 		}
 		catch (final SQLException e) {
@@ -291,9 +291,9 @@ public class NpcTable {
 	 * @param implName
 	 */
 	private void registerConstructorCache(final String implName) {
-		if (implName.isEmpty() || _constructorCache.containsKey(implName)) {
+		if (implName.isEmpty() || this._constructorCache.containsKey(implName)) {
 			return;
 		}
-		_constructorCache.put(implName, getConstructor(implName));
+		this._constructorCache.put(implName, this.getConstructor(implName));
 	}
 }

@@ -46,92 +46,92 @@ public class L1EtcItem extends L1Item {
 
 	/** 取得延迟效果 */
 	public int get_delayEffect() {
-		return _delay_effect;
+		return this._delay_effect;
 	}
 
 	@Override
 	public int get_delayid() {
-		return _delay_id;
+		return this._delay_id;
 	}
 
 	@Override
 	public int get_delaytime() {
-		return _delay_time;
+		return this._delay_time;
 	}
 
 	@Override
 	public int get_locx() {
-		return _locx;
+		return this._locx;
 	}
 
 	@Override
 	public int get_locy() {
-		return _locy;
+		return this._locy;
 	}
 
 	@Override
 	public short get_mapid() {
-		return _mapid;
+		return this._mapid;
 	}
 
 	@Override
 	public int getMaxChargeCount() {
-		return _maxChargeCount;
+		return this._maxChargeCount;
 	}
 
 	@Override
 	public boolean isCanSeal() {
-		return _isCanSeal;
+		return this._isCanSeal;
 	}
 
 	@Override
 	public boolean isStackable() {
-		return _stackable;
+		return this._stackable;
 	}
 
 	/** 设定延迟效果 */
 	public void set_delayEffect(final int delay_effect) {
-		_delay_effect = delay_effect;
+		this._delay_effect = delay_effect;
 	}
 
 	/** 设定延迟ID */
 	public void set_delayid(final int delay_id) {
-		_delay_id = delay_id;
+		this._delay_id = delay_id;
 	}
 
 	/** 设定延迟时间 */
 	public void set_delaytime(final int delay_time) {
-		_delay_time = delay_time;
+		this._delay_time = delay_time;
 	}
 
 	/** 设定X坐标 */
 	public void set_locx(final int locx) {
-		_locx = locx;
+		this._locx = locx;
 	}
 
 	/** 设定Y坐标 */
 	public void set_locy(final int locy) {
-		_locy = locy;
+		this._locy = locy;
 	}
 
 	/** 设定地图ID */
 	public void set_mapid(final short mapid) {
-		_mapid = mapid;
+		this._mapid = mapid;
 	}
 
 	/** 设定可堆叠 */
 	public void set_stackable(final boolean stackable) {
-		_stackable = stackable;
+		this._stackable = stackable;
 	}
 
 	/** 设定可以封印 */
 	public void setCanSeal(final boolean flag) {
-		_isCanSeal = flag;
+		this._isCanSeal = flag;
 	}
 
 	/** 设定最高使用次数 */
 	public void setMaxChargeCount(final int i) {
-		_maxChargeCount = i;
+		this._maxChargeCount = i;
 	}
 
 }

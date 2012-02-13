@@ -19,24 +19,24 @@ public class ByteArrayUtil {
 	private final byte[] _byteArray;
 
 	public ByteArrayUtil(final byte[] byteArray) {
-		_byteArray = byteArray;
+		this._byteArray = byteArray;
 	}
 
 	public String dumpToString() {
 		final StringBuffer stringbuffer = new StringBuffer();
 		int j = 0;
-		for (int k = 0; k < _byteArray.length; k++) {
+		for (int k = 0; k < this._byteArray.length; k++) {
 			if (j % 16 == 0) {
-				stringbuffer.append((new StringBuilder()).append(fillHex(k, 4)).append(": ").toString());
+				stringbuffer.append((new StringBuilder()).append(this.fillHex(k, 4)).append(": ").toString());
 			}
-			stringbuffer.append((new StringBuilder()).append(fillHex(_byteArray[k] & 0xff, 2)).append(" ").toString());
+			stringbuffer.append((new StringBuilder()).append(this.fillHex(this._byteArray[k] & 0xff, 2)).append(" ").toString());
 			if (++j != 16) {
 				continue;
 			}
 			stringbuffer.append("   ");
 			int i1 = k - 15;
 			for (int l1 = 0; l1 < 16; l1++) {
-				final byte byte0 = _byteArray[i1++];
+				final byte byte0 = this._byteArray[i1++];
 				if ((byte0 > 31) && (byte0 < 128)) {
 					stringbuffer.append((char) byte0);
 				}
@@ -49,15 +49,15 @@ public class ByteArrayUtil {
 			j = 0;
 		}
 
-		final int l = _byteArray.length % 16;
+		final int l = this._byteArray.length % 16;
 		if (l > 0) {
 			for (int j1 = 0; j1 < 17 - l; j1++) {
 				stringbuffer.append("   ");
 			}
 
-			int k1 = _byteArray.length - l;
+			int k1 = this._byteArray.length - l;
 			for (int i2 = 0; i2 < l; i2++) {
-				final byte byte1 = _byteArray[k1++];
+				final byte byte1 = this._byteArray[k1++];
 				if ((byte1 > 31) && (byte1 < 128)) {
 					stringbuffer.append((char) byte1);
 				}
@@ -73,8 +73,8 @@ public class ByteArrayUtil {
 
 	public String getTerminatedString(final int i) {
 		final StringBuffer stringbuffer = new StringBuffer();
-		for (int j = i; (j < _byteArray.length) && (_byteArray[j] != 0); j++) {
-			stringbuffer.append((char) _byteArray[j]);
+		for (int j = i; (j < this._byteArray.length) && (this._byteArray[j] != 0); j++) {
+			stringbuffer.append((char) this._byteArray[j]);
 		}
 
 		return stringbuffer.toString();

@@ -44,9 +44,9 @@ public class C_MoveChar extends ClientBasePacket {
 	// 移动
 	public C_MoveChar(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		int locx = readH();
-		int locy = readH();
-		int heading = readC();
+		int locx = this.readH();
+		int locy = this.readH();
+		int heading = this.readC();
 
 		final L1PcInstance pc = client.getActiveChar();
 

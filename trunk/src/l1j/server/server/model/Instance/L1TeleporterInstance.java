@@ -45,13 +45,13 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		@Override
 		public void run() {
 			try {
-				_isNowDely = true;
+				L1TeleporterInstance.this._isNowDely = true;
 				Thread.sleep(900000); // 15分
 			}
 			catch (final Exception e) {
-				_isNowDely = false;
+				L1TeleporterInstance.this._isNowDely = false;
 			}
-			_isNowDely = false;
+			L1TeleporterInstance.this._isNowDely = false;
 		}
 	}
 
@@ -67,7 +67,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -84,8 +84,8 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	@Override
 	public void onFinalAction(final L1PcInstance player, final String action) {
-		final int objid = getId();
-		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final int objid = this.getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(this.getNpcTemplate().get_npcId());
 		if (action.equalsIgnoreCase("teleportURL")) {
 			final L1NpcHtml html = new L1NpcHtml(talking.getTeleportURL());
 			player.sendPackets(new S_NPCTalkReturn(objid, html));
@@ -96,15 +96,15 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		}
 		if (action.startsWith("teleport ")) {
 			_log.finest((new StringBuilder()).append("Setting action to : ").append(action).toString());
-			doFinalAction(player, action);
+			this.doFinalAction(player, action);
 		}
 	}
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		final int objid = getId();
-		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		final int npcid = getNpcTemplate().get_npcId();
+		final int objid = this.getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(this.getNpcTemplate().get_npcId());
+		final int npcid = this.getNpcTemplate().get_npcId();
 		final L1Quest quest = player.getQuest();
 		String htmlid = null;
 
@@ -171,7 +171,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				}
 				else if (quest.get_step(L1Quest.QUEST_LEVEL50) == 1) { // ディガルディン同意济み
 					if (player.isCrown()) { // 君主
-						if (_isNowDely) { // 瞬移延迟中
+						if (this._isNowDely) { // 瞬移延迟中
 							htmlid = "ramuda4";
 						}
 						else {
@@ -294,9 +294,9 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	/** 做最后的动作 */
 	private void doFinalAction(final L1PcInstance player, final String action) {
-		final int objid = getId();
+		final int objid = this.getId();
 
-		final int npcid = getNpcTemplate().get_npcId();
+		final int npcid = this.getNpcTemplate().get_npcId();
 		String htmlid = null;
 		boolean isTeleport = true;
 
@@ -307,12 +307,12 @@ public class L1TeleporterInstance extends L1NpcInstance {
 			}
 		}
 		else if (npcid == 50043) { // 拉姆塔(50级任务)
-			if (_isNowDely) { // 瞬移延迟中
+			if (this._isNowDely) { // 瞬移延迟中
 				isTeleport = false;
 			}
 		}
 		else if (npcid == 50625) { // 古代人（Lv50级任务古代人空间2F）
-			if (_isNowDely) { // 瞬移延迟中
+			if (this._isNowDely) { // 瞬移延迟中
 				isTeleport = false;
 			}
 		}

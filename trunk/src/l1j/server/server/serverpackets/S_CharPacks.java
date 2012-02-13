@@ -49,29 +49,29 @@ public class S_CharPacks extends ServerBasePacket {
 	 */
 	public S_CharPacks(final String name, final String clanName, final int type, final int sex, final int lawful, final int hp, final int mp, final int ac, final int lv, final int str, final int dex, final int con, final int wis, final int cha, final int intel,
 			final int accessLevel, final int birthday) {
-		writeC(Opcodes.S_OPCODE_CHARLIST);
-		writeS(name);
-		writeS(clanName);
-		writeC(type);
-		writeC(sex);
-		writeH(lawful);
-		writeH(hp);
-		writeH(mp);
-		writeC(ac);
-		writeC(lv);
-		writeC(str);
-		writeC(dex);
-		writeC(con);
-		writeC(wis);
-		writeC(cha);
-		writeC(intel);
-		writeC(0);// is Administrator
-		writeD(birthday);
+		this.writeC(Opcodes.S_OPCODE_CHARLIST);
+		this.writeS(name);
+		this.writeS(clanName);
+		this.writeC(type);
+		this.writeC(sex);
+		this.writeH(lawful);
+		this.writeH(hp);
+		this.writeH(mp);
+		this.writeC(ac);
+		this.writeC(lv);
+		this.writeC(str);
+		this.writeC(dex);
+		this.writeC(con);
+		this.writeC(wis);
+		this.writeC(cha);
+		this.writeC(intel);
+		this.writeC(0);// is Administrator
+		this.writeD(birthday);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

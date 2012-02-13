@@ -40,7 +40,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 	private final L1Clan _clan;
 
 	public L1DwarfForClanInventory(final L1Clan clan) {
-		_clan = clan;
+		this._clan = clan;
 	}
 
 	/** DBの删除血盟仓库内的所有道具(血盟解散时使用) */
@@ -50,7 +50,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("DELETE FROM clan_warehouse WHERE clan_name = ?");
-			pstm.setString(1, _clan.getClanName());
+			pstm.setString(1, this._clan.getClanName());
 			pstm.execute();
 		}
 		catch (final SQLException e) {
@@ -78,7 +78,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-		_items.remove(_items.indexOf(item));
+		this._items.remove(this._items.indexOf(item));
 	}
 
 	// ＤＢのclan_warehouseへ登録
@@ -91,7 +91,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm = con
 					.prepareStatement("INSERT INTO clan_warehouse SET id = ?, clan_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id= ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
 			pstm.setInt(1, item.getId());
-			pstm.setString(2, _clan.getClanName());
+			pstm.setString(2, this._clan.getClanName());
 			pstm.setInt(3, item.getItemId());
 			pstm.setString(4, item.getName());
 			pstm.setInt(5, item.getCount());
@@ -133,7 +133,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM clan_warehouse WHERE clan_name = ?");
-			pstm.setString(1, _clan.getClanName());
+			pstm.setString(1, this._clan.getClanName());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				final L1ItemInstance item = new L1ItemInstance();
@@ -170,7 +170,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 				if (item.getItem().getItemId() == 40312) {
 					InnKeyTable.checkey(item);
 				}
-				_items.add(item);
+				this._items.add(item);
 				L1World.getInstance().storeObject(item);
 			}
 		}

@@ -29,30 +29,30 @@ public class L1AssessedItem {
 	private int _assessedPrice;
 
 	L1AssessedItem(final int targetId, final int assessedPrice) {
-		_targetId = targetId;
-		final L1ItemInstance item = (L1ItemInstance) L1World.getInstance().findObject(getTargetId());
+		this._targetId = targetId;
+		final L1ItemInstance item = (L1ItemInstance) L1World.getInstance().findObject(this.getTargetId());
 
 		if (item.getItemId() == 40309) { // Race Tickets(食人妖精竞赛票)
-			final L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(_targetId);
+			final L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(this._targetId);
 
 			int price = 0;
 			if (ticket != null) {
 				price = (int) (assessedPrice * ticket.get_allotment_percentage() * ticket.get_victory());
 			}
-			_assessedPrice = price;
+			this._assessedPrice = price;
 		}
 		else {
-			_assessedPrice = assessedPrice;
+			this._assessedPrice = assessedPrice;
 		}
 	}
 
 	/** 获得评估价格 */
 	public int getAssessedPrice() {
-		return _assessedPrice;
+		return this._assessedPrice;
 	}
 
 	/** 获得目标ID */
 	public int getTargetId() {
-		return _targetId;
+		return this._targetId;
 	}
 }

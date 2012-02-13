@@ -35,15 +35,15 @@ public class S_Light extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_Light(final int objid, final int type) {
-		buildPacket(objid, type);
+		this.buildPacket(objid, type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,8 +52,8 @@ public class S_Light extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int objid, final int type) {
-		writeC(Opcodes.S_OPCODE_LIGHT);
-		writeD(objid);
-		writeC(type);
+		this.writeC(Opcodes.S_OPCODE_LIGHT);
+		this.writeD(objid);
+		this.writeC(type);
 	}
 }

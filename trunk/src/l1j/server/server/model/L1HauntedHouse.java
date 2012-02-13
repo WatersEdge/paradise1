@@ -43,7 +43,7 @@ public class L1HauntedHouse {
 
 		@Override
 		public void run() {
-			startHauntedHouse();
+			L1HauntedHouse.this.startHauntedHouse();
 			final L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
 			hhTimer.begin();
 		}
@@ -62,8 +62,8 @@ public class L1HauntedHouse {
 
 		@Override
 		public void run() {
-			endHauntedHouse();
-			cancel();
+			L1HauntedHouse.this.endHauntedHouse();
+			this.cancel();
 		}
 
 	}
@@ -92,30 +92,30 @@ public class L1HauntedHouse {
 	}
 
 	public void addMember(final L1PcInstance pc) {
-		if (!_members.contains(pc)) {
-			_members.add(pc);
+		if (!this._members.contains(pc)) {
+			this._members.add(pc);
 		}
-		if ((getMembersCount() == 1) && (getHauntedHouseStatus() == STATUS_NONE)) {
-			readyHauntedHouse();
+		if ((this.getMembersCount() == 1) && (this.getHauntedHouseStatus() == STATUS_NONE)) {
+			this.readyHauntedHouse();
 		}
 	}
 
 	public void clearMembers() {
-		_members.clear();
+		this._members.clear();
 	}
 
 	public void endHauntedHouse() {
-		setHauntedHouseStatus(STATUS_NONE);
-		setWinnersCount(0);
-		setGoalCount(0);
-		for (final L1PcInstance pc : getMembersArray()) {
+		this.setHauntedHouseStatus(STATUS_NONE);
+		this.setWinnersCount(0);
+		this.setGoalCount(0);
+		for (final L1PcInstance pc : this.getMembersArray()) {
 			if (pc.getMapId() == 5140) {
 				final L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 				L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
 			}
 		}
-		clearMembers();
+		this.clearMembers();
 		for (final L1Object object : L1World.getInstance().getObject()) {
 			if (object instanceof L1DoorInstance) {
 				final L1DoorInstance door = (L1DoorInstance) object;
@@ -127,79 +127,79 @@ public class L1HauntedHouse {
 	}
 
 	public int getGoalCount() {
-		return _goalCount;
+		return this._goalCount;
 	}
 
 	public int getHauntedHouseStatus() {
-		return _hauntedHouseStatus;
+		return this._hauntedHouseStatus;
 	}
 
 	public L1PcInstance[] getMembersArray() {
-		return _members.toArray(new L1PcInstance[_members.size()]);
+		return this._members.toArray(new L1PcInstance[this._members.size()]);
 	}
 
 	public int getMembersCount() {
-		return _members.size();
+		return this._members.size();
 	}
 
 	public int getWinnersCount() {
-		return _winnersCount;
+		return this._winnersCount;
 	}
 
 	public boolean isMember(final L1PcInstance pc) {
-		return _members.contains(pc);
+		return this._members.contains(pc);
 	}
 
 	public void removeMember(final L1PcInstance pc) {
-		_members.remove(pc);
+		this._members.remove(pc);
 	}
 
 	public void removeRetiredMembers() {
-		final L1PcInstance[] temp = getMembersArray();
+		final L1PcInstance[] temp = this.getMembersArray();
 		for (final L1PcInstance element : temp) {
 			if (element.getMapId() != 5140) {
-				removeMember(element);
+				this.removeMember(element);
 			}
 		}
 	}
 
 	public void sendMessage(final int type, final String msg) {
-		for (final L1PcInstance pc : getMembersArray()) {
+		for (final L1PcInstance pc : this.getMembersArray()) {
 			pc.sendPackets(new S_ServerMessage(type, msg));
 		}
 	}
 
 	public void setGoalCount(final int i) {
-		_goalCount = i;
+		this._goalCount = i;
 	}
 
 	private void readyHauntedHouse() {
-		setHauntedHouseStatus(STATUS_READY);
+		this.setHauntedHouseStatus(STATUS_READY);
 		final L1HauntedHouseReadyTimer hhrTimer = new L1HauntedHouseReadyTimer();
 		hhrTimer.begin();
 	}
 
 	private void setHauntedHouseStatus(final int i) {
-		_hauntedHouseStatus = i;
+		this._hauntedHouseStatus = i;
 	}
 
 	private void setWinnersCount(final int i) {
-		_winnersCount = i;
+		this._winnersCount = i;
 	}
 
 	private void startHauntedHouse() {
-		setHauntedHouseStatus(STATUS_PLAYING);
-		final int membersCount = getMembersCount();
+		this.setHauntedHouseStatus(STATUS_PLAYING);
+		final int membersCount = this.getMembersCount();
 		if (membersCount <= 4) {
-			setWinnersCount(1);
+			this.setWinnersCount(1);
 		}
 		else if ((5 >= membersCount) && (membersCount <= 7)) {
-			setWinnersCount(2);
+			this.setWinnersCount(2);
 		}
 		else if ((8 >= membersCount) && (membersCount <= 10)) {
-			setWinnersCount(3);
+			this.setWinnersCount(3);
 		}
-		for (final L1PcInstance pc : getMembersArray()) {
+		for (final L1PcInstance pc : this.getMembersArray()) {
 			final L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 			L1PolyMorph.doPoly(pc, 6284, 300, L1PolyMorph.MORPH_BY_NPC);

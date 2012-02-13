@@ -68,195 +68,195 @@ public class L1ArmorSets {
 	}
 
 	public int getAc() {
-		return _ac;
+		return this._ac;
 	}
 
 	public int getBowDmgModifier() {
-		return _bowDmgModifier;
+		return this._bowDmgModifier;
 	}
 
 	public int getBowHitModifier() {
-		return _bowHitModifier;
+		return this._bowHitModifier;
 	}
 
 	public int getCha() {
-		return _cha;
+		return this._cha;
 	}
 
 	public int getCon() {
-		return _con;
+		return this._con;
 	}
 
 	public int getDefenseEarth() {
-		return _defenseEarth;
+		return this._defenseEarth;
 	}
 
 	public int getDefenseFire() {
-		return _defenseFire;
+		return this._defenseFire;
 	}
 
 	public int getDefenseWater() {
-		return _defenseWater;
+		return this._defenseWater;
 	}
 
 	public int getDefenseWind() {
-		return _defenseWind;
+		return this._defenseWind;
 	}
 
 	public int getDex() {
-		return _dex;
+		return this._dex;
 	}
 
 	public int getDmgModifier() {
-		return _dmgModifier;
+		return this._dmgModifier;
 	}
 
 	public int getHitModifier() {
-		return _hitModifier;
+		return this._hitModifier;
 	}
 
 	public int getHp() {
-		return _hp;
+		return this._hp;
 	}
 
 	public int getHpr() {
-		return _hpr;
+		return this._hpr;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getIntl() {
-		return _intl;
+		return this._intl;
 	}
 
 	public int getMp() {
-		return _mp;
+		return this._mp;
 	}
 
 	public int getMpr() {
-		return _mpr;
+		return this._mpr;
 	}
 
 	public int getMr() {
-		return _mr;
+		return this._mr;
 	}
 
 	public int getPolyId() {
-		return _polyId;
+		return this._polyId;
 	}
 
 	public String getSets() {
-		return _sets;
+		return this._sets;
 	}
 
 	public int getSp() {
-		return _sp;
+		return this._sp;
 	}
 
 	public int getStr() {
-		return _str;
+		return this._str;
 	}
 
 	public int getWis() {
-		return _wis;
+		return this._wis;
 	}
 
 	public void setAc(final int i) {
-		_ac = i;
+		this._ac = i;
 	}
 
 	public void setBowDmgModifier(final int i) {
-		_bowDmgModifier = i;
+		this._bowDmgModifier = i;
 	}
 
 	public void setBowHitModifier(final int i) {
-		_bowHitModifier = i;
+		this._bowHitModifier = i;
 	}
 
 	public void setCha(final int i) {
-		_cha = i;
+		this._cha = i;
 	}
 
 	public void setCon(final int i) {
-		_con = i;
+		this._con = i;
 	}
 
 	public void setDefenseEarth(final int i) {
-		_defenseEarth = i;
+		this._defenseEarth = i;
 	}
 
 	public void setDefenseFire(final int i) {
-		_defenseFire = i;
+		this._defenseFire = i;
 	}
 
 	public void setDefenseWater(final int i) {
-		_defenseWater = i;
+		this._defenseWater = i;
 	}
 
 	public void setDefenseWind(final int i) {
-		_defenseWind = i;
+		this._defenseWind = i;
 	}
 
 	public void setDex(final int i) {
-		_dex = i;
+		this._dex = i;
 	}
 
 	public void setDmgModifier(final int i) {
-		_dmgModifier = i;
+		this._dmgModifier = i;
 	}
 
 	public void setHitModifier(final int i) {
-		_hitModifier = i;
+		this._hitModifier = i;
 	}
 
 	public void setHp(final int i) {
-		_hp = i;
+		this._hp = i;
 	}
 
 	public void setHpr(final int i) {
-		_hpr = i;
+		this._hpr = i;
 	}
 
 	public void setId(final int i) {
-		_id = i;
+		this._id = i;
 	}
 
 	public void setIntl(final int i) {
-		_intl = i;
+		this._intl = i;
 	}
 
 	public void setMp(final int i) {
-		_mp = i;
+		this._mp = i;
 	}
 
 	public void setMpr(final int i) {
-		_mpr = i;
+		this._mpr = i;
 	}
 
 	public void setMr(final int i) {
-		_mr = i;
+		this._mr = i;
 	}
 
 	public void setPolyId(final int i) {
-		_polyId = i;
+		this._polyId = i;
 	}
 
 	public void setSets(final String s) {
-		_sets = s;
+		this._sets = s;
 	}
 
 	public void setSp(final int i) {
-		_sp = i;
+		this._sp = i;
 	}
 
 	public void setStr(final int i) {
-		_str = i;
+		this._str = i;
 	}
 
 	public void setWis(final int i) {
-		_wis = i;
+		this._wis = i;
 	}
 
 }

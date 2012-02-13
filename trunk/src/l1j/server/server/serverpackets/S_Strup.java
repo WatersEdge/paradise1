@@ -36,17 +36,17 @@ public class S_Strup extends ServerBasePacket {
 	 *            时间
 	 */
 	public S_Strup(final L1PcInstance pc, final int type, final int time) {
-		writeC(Opcodes.S_OPCODE_STRUP);
-		writeH(time);
-		writeC(pc.getStr());
-		writeC(pc.getInventory().getWeight242());
-		writeC(type);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_STRUP);
+		this.writeH(time);
+		this.writeC(pc.getStr());
+		this.writeC(pc.getInventory().getWeight242());
+		this.writeC(type);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

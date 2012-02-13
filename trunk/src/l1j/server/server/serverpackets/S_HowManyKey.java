@@ -36,22 +36,22 @@ public class S_HowManyKey extends ServerBasePacket {
 	 * @param htmlId
 	 */
 	public S_HowManyKey(final L1NpcInstance npc, final int price, final int min, final int max, final String htmlId) {
-		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
-		writeD(npc.getId());
-		writeD(price); // 价钱
-		writeD(min); // 起始数量
-		writeD(min); // 起始数量
-		writeD(max); // 购买上限
-		writeH(0); // ?
-		writeS(htmlId); // 对话档档名
-		writeH(1); // ?
-		writeH(0x02); // writeS 数量
-		writeS(npc.getName()); // 显示NPC名称
-		writeS(String.valueOf(price)); // 显示价钱
+		this.writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
+		this.writeD(npc.getId());
+		this.writeD(price); // 价钱
+		this.writeD(min); // 起始数量
+		this.writeD(min); // 起始数量
+		this.writeD(max); // 购买上限
+		this.writeH(0); // ?
+		this.writeS(htmlId); // 对话档档名
+		this.writeH(1); // ?
+		this.writeH(0x02); // writeS 数量
+		this.writeS(npc.getName()); // 显示NPC名称
+		this.writeS(String.valueOf(price)); // 显示价钱
 	}
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 }

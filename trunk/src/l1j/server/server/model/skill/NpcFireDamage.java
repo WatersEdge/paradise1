@@ -30,12 +30,12 @@ public class NpcFireDamage {
 		public void run() {
 			for (int findObjecCounts = 0; findObjecCounts < 8; findObjecCounts++) {
 				try {
-					for (final L1Object objects : L1World.getInstance().getVisibleObjects(user, 15)) { // 玩家视线范围15格
+					for (final L1Object objects : L1World.getInstance().getVisibleObjects(NpcFireDamage.this.user, 15)) { // 玩家视线范围15格
 
 						// 对PC
 						if (objects instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) objects;
-							if (pc.getLocation().equals(fire.getLocation())) {
+							if (pc.getLocation().equals(NpcFireDamage.this.fire.getLocation())) {
 
 								// 火牢伤害无效的状态
 								if (pc.isDead() || pc.hasSkillEffect(ICE_LANCE) // 冰矛围篱
@@ -47,7 +47,7 @@ public class NpcFireDamage {
 
 								pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage)); // 发送伤害动作
 								pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
-								pc.receiveDamage(user, 25, 0); // 伤害
+								pc.receiveDamage(NpcFireDamage.this.user, 25, 0); // 伤害
 								pc.removeSkillEffect(66);
 							}
 						}
@@ -58,7 +58,7 @@ public class NpcFireDamage {
 							// 对宠物或召唤怪
 							if ((objects instanceof L1PetInstance) || (objects instanceof L1SummonInstance)) {
 								final L1NpcInstance npc = (L1NpcInstance) objects;
-								if (npc.getLocation().equals(fire.getLocation())) {
+								if (npc.getLocation().equals(NpcFireDamage.this.fire.getLocation())) {
 
 									// 火牢伤害无效的状态
 									if (npc.isDead() || (npc.getHiddenStatus() != 0 // 隐藏状态
@@ -70,7 +70,7 @@ public class NpcFireDamage {
 									}
 
 									npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Damage));
-									npc.receiveDamage(user, 25); // 伤害
+									npc.receiveDamage(NpcFireDamage.this.user, 25); // 伤害
 									npc.removeSkillEffect(66);
 								}
 							}
@@ -98,8 +98,8 @@ public class NpcFireDamage {
 	 * @param firewall
 	 */
 	public NpcFireDamage(final L1Character cha, final L1NpcInstance firewall) {
-		user = cha;
-		fire = (L1EffectInstance) firewall;
+		this.user = cha;
+		this.fire = (L1EffectInstance) firewall;
 	}
 
 	public void onDamageAction() {

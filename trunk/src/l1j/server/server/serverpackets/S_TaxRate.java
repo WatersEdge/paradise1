@@ -25,15 +25,15 @@ import l1j.server.server.Opcodes;
 public class S_TaxRate extends ServerBasePacket {
 
 	public S_TaxRate(final int objecId) {
-		writeC(Opcodes.S_OPCODE_TAXRATE);
-		writeD(objecId);
-		writeC(10); // 10 10%~50%
-		writeC(50); // 50
+		this.writeC(Opcodes.S_OPCODE_TAXRATE);
+		this.writeD(objecId);
+		this.writeC(10); // 10 10%~50%
+		this.writeC(50); // 50
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

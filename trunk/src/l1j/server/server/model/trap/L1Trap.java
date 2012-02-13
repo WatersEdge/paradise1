@@ -35,38 +35,38 @@ public abstract class L1Trap {
 	protected final boolean _isDetectionable;
 
 	public L1Trap(final int id, final int gfxId, final boolean detectionable) {
-		_id = id;
-		_gfxId = gfxId;
-		_isDetectionable = detectionable;
+		this._id = id;
+		this._gfxId = gfxId;
+		this._isDetectionable = detectionable;
 	}
 
 	public L1Trap(final TrapStorage storage) {
-		_id = storage.getInt("id");
-		_gfxId = storage.getInt("gfxId");
-		_isDetectionable = storage.getBoolean("isDetectionable");
+		this._id = storage.getInt("id");
+		this._gfxId = storage.getInt("gfxId");
+		this._isDetectionable = storage.getBoolean("isDetectionable");
 	}
 
 	public int getGfxId() {
-		return _gfxId;
+		return this._gfxId;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public void onDetection(final L1PcInstance caster, final L1Object trapObj) {
-		if (_isDetectionable) {
-			sendEffect(trapObj);
+		if (this._isDetectionable) {
+			this.sendEffect(trapObj);
 		}
 	}
 
 	public abstract void onTrod(L1PcInstance trodFrom, L1Object trapObj);
 
 	protected void sendEffect(final L1Object trapObj) {
-		if (getGfxId() == 0) {
+		if (this.getGfxId() == 0) {
 			return;
 		}
-		final S_EffectLocation effect = new S_EffectLocation(trapObj.getLocation(), getGfxId());
+		final S_EffectLocation effect = new S_EffectLocation(trapObj.getLocation(), this.getGfxId());
 
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(trapObj)) {
 			pc.sendPackets(effect);

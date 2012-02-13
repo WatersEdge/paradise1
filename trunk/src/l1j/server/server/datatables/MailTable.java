@@ -75,7 +75,7 @@ public class MailTable {
 	}
 
 	private MailTable() {
-		loadMail();
+		this.loadMail();
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class MailTable {
 			pstm.setInt(1, mailId);
 			pstm.execute();
 
-			delMail(mailId);
+			this.delMail(mailId);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -121,7 +121,7 @@ public class MailTable {
 				pstm.setInt(1, type);
 				pstm.execute();
 
-				changeMailType(mailId, type);
+				this.changeMailType(mailId, type);
 			}
 		}
 		catch (final SQLException e) {
@@ -150,7 +150,7 @@ public class MailTable {
 				pstm.setInt(1, 1);
 				pstm.execute();
 
-				changeMailStatus(mailId);
+				this.changeMailStatus(mailId);
 			}
 		}
 		catch (final SQLException e) {
