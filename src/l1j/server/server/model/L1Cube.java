@@ -61,35 +61,10 @@ public class L1Cube extends TimerTask {
 		_skillId = skillId;
 	}
 
-	@Override
-	public void run() {
-		try {
-			if (_cha.isDead()) {
-				stop();
-				return;
-			}
-			if (!_cha.hasSkillEffect(_skillId)) {
-				stop();
-				return;
-			}
-			_timeCounter++;
-			giveEffect();
-		}
-		catch (Throwable e) {
-			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
-		}
-	}
-
 	public void begin() {
 		// 效果时间持续8秒、事实上，在考虑每4秒技能效果处理时间只出现一次
 		// 设置0.9秒的启动时间
 		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 900, 1000);
-	}
-
-	public void stop() {
-		if (_future != null) {
-			_future.cancel(false);
-		}
 	}
 
 	/** 给予效果 */
@@ -192,6 +167,31 @@ public class L1Cube extends TimerTask {
 					mob.receiveDamage(_effect, 25);
 				}
 			}
+		}
+	}
+
+	@Override
+	public void run() {
+		try {
+			if (_cha.isDead()) {
+				stop();
+				return;
+			}
+			if (!_cha.hasSkillEffect(_skillId)) {
+				stop();
+				return;
+			}
+			_timeCounter++;
+			giveEffect();
+		}
+		catch (Throwable e) {
+			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
+		}
+	}
+
+	public void stop() {
+		if (_future != null) {
+			_future.cancel(false);
 		}
 	}
 

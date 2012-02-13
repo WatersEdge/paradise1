@@ -15,11 +15,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicDice_LV4 extends ItemExecutor {
 
-	private MagicDice_LV4() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicDice_LV4();
+	}
+
+	private MagicDice_LV4() {
 	}
 
 	/**

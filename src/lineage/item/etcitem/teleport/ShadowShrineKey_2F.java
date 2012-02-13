@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class ShadowShrineKey_2F extends ItemExecutor {
 
-	private ShadowShrineKey_2F() {
-	}
-
 	public static ItemExecutor get() {
 		return new ShadowShrineKey_2F();
+	}
+
+	private ShadowShrineKey_2F() {
 	}
 
 	/**

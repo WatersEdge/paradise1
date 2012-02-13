@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class KaoYumi extends ItemExecutor {
 
-	private KaoYumi() {
-	}
-
 	public static ItemExecutor get() {
 		return new KaoYumi();
+	}
+
+	private KaoYumi() {
 	}
 
 	/**

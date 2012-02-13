@@ -32,11 +32,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Long extends ItemExecutor {
 
-	private MagicScroll_Long() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Long();
+	}
+
+	private MagicScroll_Long() {
 	}
 
 	/**

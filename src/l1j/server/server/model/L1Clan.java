@@ -58,66 +58,6 @@ public class L1Clan {
 	/** 成员名单 */
 	private final List<String> membersNameList = Lists.newList();
 
-	/** 获得血盟ID */
-	public int getClanId() {
-		return _clanId;
-	}
-
-	/** 设置血盟ID */
-	public void setClanId(int clan_id) {
-		_clanId = clan_id;
-	}
-
-	/** 获得血盟名称 */
-	public String getClanName() {
-		return _clanName;
-	}
-
-	/** 设置血盟名称 */
-	public void setClanName(String clan_name) {
-		_clanName = clan_name;
-	}
-
-	/** 获得领导者的ID */
-	public int getLeaderId() {
-		return _leaderId;
-	}
-
-	/** 设置领导者的ID */
-	public void setLeaderId(int leader_id) {
-		_leaderId = leader_id;
-	}
-
-	/** 获得领导者的名称 */
-	public String getLeaderName() {
-		return _leaderName;
-	}
-
-	/** 设置领导者的名称 */
-	public void setLeaderName(String leader_name) {
-		_leaderName = leader_name;
-	}
-
-	/** 获得城堡ID */
-	public int getCastleId() {
-		return _castleId;
-	}
-
-	/** 设置城堡ID */
-	public void setCastleId(int hasCastle) {
-		_castleId = hasCastle;
-	}
-
-	/** 获得盟屋ID */
-	public int getHouseId() {
-		return _houseId;
-	}
-
-	/** 设置盟屋ID */
-	public void setHouseId(int hasHideout) {
-		_houseId = hasHideout;
-	}
-
 	/** 增加成员名称 */
 	public void addMemberName(String member_name) {
 		if (!membersNameList.contains(member_name)) {
@@ -130,6 +70,72 @@ public class L1Clan {
 		if (membersNameList.contains(member_name)) {
 			membersNameList.remove(member_name);
 		}
+	}
+
+	/** 取得所有成员 */
+	public String[] getAllMembers() {
+		return membersNameList.toArray(new String[membersNameList.size()]);
+	}
+
+	/** 获得所有成员FP */
+	public String getAllMembersFP() {
+		String result = "";
+		for (String name : membersNameList) {
+			result = result + name + " ";
+		}
+		return result;
+	}
+
+	/** 获得所有成员FP排名 */
+	public String getAllMembersFPWithRank() {
+		String result = "";
+		try {
+			for (String name : membersNameList) {
+				L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
+				if (pc != null) {
+					result = result + name + getRankString(pc) + " ";
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+		return result;
+	}
+
+	/** 获得城堡ID */
+	public int getCastleId() {
+		return _castleId;
+	}
+
+	/** 获得血盟ID */
+	public int getClanId() {
+		return _clanId;
+	}
+
+	/** 获得血盟名称 */
+	public String getClanName() {
+		return _clanName;
+	}
+
+	/**  */
+	public L1DwarfForClanInventory getDwarfForClanInventory() {
+		return _dwarfForClan;
+	}
+
+	/** 获得盟屋ID */
+	public int getHouseId() {
+		return _houseId;
+	}
+
+	/** 获得领导者的ID */
+	public int getLeaderId() {
+		return _leaderId;
+	}
+
+	/** 获得领导者的名称 */
+	public String getLeaderName() {
+		return _leaderName;
 	}
 
 	/** 获得在线血盟成员 */
@@ -156,15 +162,6 @@ public class L1Clan {
 		return result;
 	}
 
-	/** 获得所有成员FP */
-	public String getAllMembersFP() {
-		String result = "";
-		for (String name : membersNameList) {
-			result = result + name + " ";
-		}
-		return result;
-	}
-
 	/** 获得在线成员FP排名 */
 	public String getOnlineMembersFPWithRank() {
 		String result = "";
@@ -177,21 +174,44 @@ public class L1Clan {
 		return result;
 	}
 
-	/** 获得所有成员FP排名 */
-	public String getAllMembersFPWithRank() {
-		String result = "";
-		try {
-			for (String name : membersNameList) {
-				L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
-				if (pc != null) {
-					result = result + name + getRankString(pc) + " ";
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		return result;
+	/** 取得使用仓库的角色 */
+	public int getWarehouseUsingChar() {
+		return _warehouse;
+	}
+
+	/** 设置城堡ID */
+	public void setCastleId(int hasCastle) {
+		_castleId = hasCastle;
+	}
+
+	/** 设置血盟ID */
+	public void setClanId(int clan_id) {
+		_clanId = clan_id;
+	}
+
+	/** 设置血盟名称 */
+	public void setClanName(String clan_name) {
+		_clanName = clan_name;
+	}
+
+	/** 设置盟屋ID */
+	public void setHouseId(int hasHideout) {
+		_houseId = hasHideout;
+	}
+
+	/** 设置领导者的ID */
+	public void setLeaderId(int leader_id) {
+		_leaderId = leader_id;
+	}
+
+	/** 设置领导者的名称 */
+	public void setLeaderName(String leader_name) {
+		_leaderName = leader_name;
+	}
+
+	/** 设定使用仓库的角色 */
+	public void setWarehouseUsingChar(int objid) {
+		_warehouse = objid;
 	}
 
 	/** 获得排名字符串 */
@@ -224,25 +244,5 @@ public class L1Clan {
 
 		}
 		return rank;
-	}
-
-	/** 取得所有成员 */
-	public String[] getAllMembers() {
-		return membersNameList.toArray(new String[membersNameList.size()]);
-	}
-
-	/**  */
-	public L1DwarfForClanInventory getDwarfForClanInventory() {
-		return _dwarfForClan;
-	}
-
-	/** 取得使用仓库的角色 */
-	public int getWarehouseUsingChar() {
-		return _warehouse;
-	}
-
-	/** 设定使用仓库的角色 */
-	public void setWarehouseUsingChar(int objid) {
-		_warehouse = objid;
 	}
 }

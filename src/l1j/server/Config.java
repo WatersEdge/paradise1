@@ -29,9 +29,6 @@ import l1j.server.server.utils.IntRange;
  */
 public final class Config {
 
-	private Config() {
-	}
-
 	/** 提示信息 */
 	private static final Logger _log = Logger.getLogger(Config.class.getName());
 
@@ -41,6 +38,7 @@ public final class Config {
 	// 线程设定
 	/**  */
 	public static int THREAD_P_EFFECTS;
+
 	/**  */
 	public static int THREAD_P_GENERAL;
 	/**  */
@@ -49,12 +47,12 @@ public final class Config {
 	public static int THREAD_P_TYPE_GENERAL;
 	/**  */
 	public static int THREAD_P_SIZE_GENERAL;
-
 	// -----------------------------------------------------------------------------
 	// 游戏伺服器相关 /** Server Settings */
 	// -----------------------------------------------------------------------------
 	/** 伺服器 listen 的 host name */
 	public static String GAME_SERVER_HOST_NAME;
+
 	/** 伺服器 listen 的 Port */
 	public static int GAME_SERVER_PORT;
 	/** 数据库驱动程序 */
@@ -129,12 +127,12 @@ public final class Config {
 	public static int Announcements_Cycle_Time;
 	/** 自动显示公告修改时间 */
 	public static boolean Announcements_Cycle_Modify_Time;
-
 	// -----------------------------------------------------------------------------
 	// 游戏倍率相关 /** Rates Settings */
 	// -----------------------------------------------------------------------------
 	/** 经验值倍率 */
 	public static double RATE_XP;
+
 	/** 正义值倍率 */
 	public static double RATE_LA;
 	/** 友好度倍率 */
@@ -177,12 +175,12 @@ public final class Config {
 	public static int MAGIC_STONE_TYPE;
 	/** 附魔石阶级 */
 	public static int MAGIC_STONE_LEVEL;
-
 	// -----------------------------------------------------------------------------
 	// 游戏进阶相关 /** AltSettings Settings */
 	// -----------------------------------------------------------------------------
 	/** 全体聊天最低等级限制 */
 	public static short GLOBAL_CHAT_LEVEL;
+
 	/** 密语最低等级限制 */
 	public static short WHISPER_CHAT_LEVEL;
 	/** 自动取得道具的方式 */
@@ -271,12 +269,12 @@ public final class Config {
 	public static int DEFAULT_CHARACTER_SLOT;
 	/** 妖精森林NPC道具重置时间 */
 	public static int GDROPITEM_TIME;
-
 	// -----------------------------------------------------------------------------
 	// 游戏角色相关 /** Character Settings */
 	// -----------------------------------------------------------------------------
 	/** 王族 HP 上限 */
 	public static int PRINCE_MAX_HP;
+
 	/** 王族 MP 上限 */
 	public static int PRINCE_MAX_MP;
 	/** 骑士 HP 上限 */
@@ -303,7 +301,6 @@ public final class Config {
 	public static int ILLUSIONIST_MAX_HP;
 	/** 幻术师 MP 上限 */
 	public static int ILLUSIONIST_MAX_MP;
-
 	public static int LV50_EXP;
 
 	public static int LV51_EXP;
@@ -431,18 +428,19 @@ public final class Config {
 	// -----------------------------------------------------------------------------
 	/** 启动战斗特化系统 */
 	public static boolean FIGHT_IS_ACTIVE;
+
 	/** 新手保护系统(遭遇的守护) */
 	public static boolean NOVICE_PROTECTION_IS_ACTIVE;
 	/** 被归类为新手的等级上限 */
 	public static int NOVICE_MAX_LEVEL;
 	/** 启动新手保护机制 */
 	public static int NOVICE_PROTECTION_LEVEL_RANGE;
-
 	// -----------------------------------------------------------------------------
 	// 游戏记录相关 /** Record Settings */
 	// -----------------------------------------------------------------------------
 	/** 武器强化 */
 	public static byte LOGGING_WEAPON_ENCHANT;
+
 	/** 防具强化 */
 	public static byte LOGGING_ARMOR_ENCHANT;
 	/** 一般频道 */
@@ -471,12 +469,12 @@ public final class Config {
 	public static int MysqlAutoBackup;
 	/** 备份的输出SQL是否启用GZip压缩 */
 	public static boolean CompressGzip;
-
 	// -----------------------------------------------------------------------------
 	// 其他设置相关 /** OtherSettings Settings */
 	// -----------------------------------------------------------------------------
 	/** 是否新建角色即为GM */
 	public static boolean NewCreateRoleSetGM;
+
 	/** 是否显示NpcId */
 	public static boolean ShowNpcId;
 	/** 升级血魔满 */
@@ -492,13 +490,13 @@ public final class Config {
 	public static int BONUS_STATS2;
 	/** 能力值上限调整 */
 	public static int BONUS_STATS3;
-
 	// 配置文件
 	// -----------------------------------------------------------------------------
 	// 设定档路径 /** Configuration files */
 	// -----------------------------------------------------------------------------
 	/** 伺服器设定档路径 */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
+
 	/** 倍率设定档路径 */
 	public static final String RATES_CONFIG_FILE = "./config/rates.properties";
 	/** 进阶设定档路径 */
@@ -511,15 +509,14 @@ public final class Config {
 	public static final String RECORD_SETTINGS_CONFIG_FILE = "./config/record.properties";
 	/** 其他设定档路径 */
 	public static final String OTHER_SETTINGS_CONFIG_FILE = "./config/othersettings.properties";
-
 	// -----------------------------------------------------------------------------
 	// 其他设定 /** Other files */
 	// -----------------------------------------------------------------------------
 	/** 吸收每个 NPC 的 MP 上限 */
 	public static final int MANA_DRAIN_LIMIT_PER_NPC = 40;
+
 	/** 每一次攻击吸收的 MP 上限(玛那、钢铁玛那） */
 	public static final int MANA_DRAIN_LIMIT_PER_SOM_ATTACK = 9;
-
 	/**
 	 * 读取设定档中的设定
 	 */
@@ -857,17 +854,6 @@ public final class Config {
 		}
 
 		validate();
-	}
-
-	// 验证
-	private static void validate() {
-		if (!IntRange.includes(Config.ALT_ITEM_DELETION_RANGE, 0, 5)) {
-			throw new IllegalStateException("ItemDeletionRange 的设定值超出( 0 ~ 5 )范围。");
-		}
-
-		if (!IntRange.includes(Config.ALT_ITEM_DELETION_TIME, 1, 35791)) {
-			throw new IllegalStateException("ItemDeletionTime 的设定值超出( 1 ~ 35791 )范围。");
-		}
 	}
 
 	/**
@@ -1306,5 +1292,19 @@ public final class Config {
 			return false;
 		}
 		return true;
+	}
+
+	// 验证
+	private static void validate() {
+		if (!IntRange.includes(Config.ALT_ITEM_DELETION_RANGE, 0, 5)) {
+			throw new IllegalStateException("ItemDeletionRange 的设定值超出( 0 ~ 5 )范围。");
+		}
+
+		if (!IntRange.includes(Config.ALT_ITEM_DELETION_TIME, 1, 35791)) {
+			throw new IllegalStateException("ItemDeletionTime 的设定值超出( 1 ~ 35791 )范围。");
+		}
+	}
+
+	private Config() {
 	}
 }

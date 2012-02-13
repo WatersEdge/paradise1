@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Grindstone extends ItemExecutor {
 
-	private Grindstone() {
-	}
-
 	public static ItemExecutor get() {
 		return new Grindstone();
+	}
+
+	private Grindstone() {
 	}
 
 	/**

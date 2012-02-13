@@ -18,11 +18,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class RemoveCurse extends ItemExecutor {
 
-	private RemoveCurse() {
-	}
-
 	public static ItemExecutor get() {
 		return new RemoveCurse();
+	}
+
+	private RemoveCurse() {
 	}
 
 	/**

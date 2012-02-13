@@ -21,27 +21,6 @@ import l1j.server.server.model.L1TaxCalculator;
 import l1j.server.server.templates.L1ShopItem;
 import l1j.server.server.utils.collections.Lists;
 
-/** 商店购买 */
-class L1ShopBuyOrder {
-
-	private final L1ShopItem _item;
-
-	private final int _count;
-
-	public L1ShopBuyOrder(L1ShopItem item, int count) {
-		_item = item;
-		_count = count;
-	}
-
-	public L1ShopItem getItem() {
-		return _item;
-	}
-
-	public int getCount() {
-		return _count;
-	}
-}
-
 /** 商店购买顺序名单 */
 public class L1ShopBuyOrderList {
 
@@ -92,14 +71,6 @@ public class L1ShopBuyOrderList {
 		}
 	}
 
-	List<L1ShopBuyOrder> getList() {
-		return _list;
-	}
-
-	public int getTotalWeight() {
-		return _totalWeight;
-	}
-
 	public int getTotalPrice() {
 		return _totalPrice;
 	}
@@ -108,7 +79,36 @@ public class L1ShopBuyOrderList {
 		return _totalPriceTaxIncluded;
 	}
 
+	public int getTotalWeight() {
+		return _totalWeight;
+	}
+
+	List<L1ShopBuyOrder> getList() {
+		return _list;
+	}
+
 	L1TaxCalculator getTaxCalculator() {
 		return _taxCalc;
+	}
+}
+
+/** 商店购买 */
+class L1ShopBuyOrder {
+
+	private final L1ShopItem _item;
+
+	private final int _count;
+
+	public L1ShopBuyOrder(L1ShopItem item, int count) {
+		_item = item;
+		_count = count;
+	}
+
+	public int getCount() {
+		return _count;
+	}
+
+	public L1ShopItem getItem() {
+		return _item;
 	}
 }

@@ -33,6 +33,15 @@ public class MpReductionByAwake extends TimerTask {
 		_pc = pc;
 	}
 
+	public void decreaseMp() {
+		int newMp = _pc.getCurrentMp() - 8;
+		if (newMp < 0) {
+			newMp = 0;
+			L1Awake.stop(_pc);
+		}
+		_pc.setCurrentMp(newMp);
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -44,15 +53,6 @@ public class MpReductionByAwake extends TimerTask {
 		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
-	}
-
-	public void decreaseMp() {
-		int newMp = _pc.getCurrentMp() - 8;
-		if (newMp < 0) {
-			newMp = 0;
-			L1Awake.stop(_pc);
-		}
-		_pc.setCurrentMp(newMp);
 	}
 
 }

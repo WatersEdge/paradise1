@@ -41,6 +41,16 @@ public class S_FixWeaponList extends ServerBasePacket {
 		buildPacket(pc);
 	}
 
+	@Override
+	public byte[] getContent() {
+		return getBytes();
+	}
+
+	@Override
+	public String getType() {
+		return S_FIX_WEAPON_LIST;
+	}
+
 	private void buildPacket(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SELECTLIST);
 		writeD(0x000000c8); // Price
@@ -66,15 +76,5 @@ public class S_FixWeaponList extends ServerBasePacket {
 			writeD(weapon.getId()); // Item ID
 			writeC(weapon.get_durability()); // Fix Level
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		return getBytes();
-	}
-
-	@Override
-	public String getType() {
-		return S_FIX_WEAPON_LIST;
 	}
 }

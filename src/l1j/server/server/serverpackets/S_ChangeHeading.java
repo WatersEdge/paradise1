@@ -33,12 +33,6 @@ public class S_ChangeHeading extends ServerBasePacket {
 		buildPacket(cha);
 	}
 
-	private void buildPacket(L1Character cha) {
-		writeC(Opcodes.S_OPCODE_CHANGEHEADING);
-		writeD(cha.getId());
-		writeC(cha.getHeading());
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -50,5 +44,11 @@ public class S_ChangeHeading extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return "[S] S_ChangeHeading";
+	}
+
+	private void buildPacket(L1Character cha) {
+		writeC(Opcodes.S_OPCODE_CHANGEHEADING);
+		writeD(cha.getId());
+		writeC(cha.getHeading());
 	}
 }

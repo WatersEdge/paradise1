@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class AcidicLiquids extends ItemExecutor {
 
-	private AcidicLiquids() {
-	}
-
 	public static ItemExecutor get() {
 		return new AcidicLiquids();
+	}
+
+	private AcidicLiquids() {
 	}
 
 	/**

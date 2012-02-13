@@ -34,14 +34,6 @@ public class S_ItemColor extends ServerBasePacket {
 		buildPacket(item);
 	}
 
-	private void buildPacket(L1ItemInstance item) {
-		writeC(Opcodes.S_OPCODE_ITEMCOLOR);
-		writeD(item.getId());
-		// 0:祝福 1:一般 2:诅咒 3:未鉴定
-		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鉴定&封印
-		writeC(item.getBless());
-	}
-
 	@Override
 	public byte[] getContent() {
 		return getBytes();
@@ -50,6 +42,14 @@ public class S_ItemColor extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_ITEM_COLOR;
+	}
+
+	private void buildPacket(L1ItemInstance item) {
+		writeC(Opcodes.S_OPCODE_ITEMCOLOR);
+		writeD(item.getId());
+		// 0:祝福 1:一般 2:诅咒 3:未鉴定
+		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鉴定&封印
+		writeC(item.getBless());
 	}
 
 }

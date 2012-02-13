@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Kerosene extends ItemExecutor {
 
-	private Kerosene() {
-	}
-
 	public static ItemExecutor get() {
 		return new Kerosene();
+	}
+
+	private Kerosene() {
 	}
 
 	/**

@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SilverWhistle extends ItemExecutor {
 
-	private SilverWhistle() {
-	}
-
 	public static ItemExecutor get() {
 		return new SilverWhistle();
+	}
+
+	private SilverWhistle() {
 	}
 
 	/**

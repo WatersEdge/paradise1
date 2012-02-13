@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_RestorationMp;
  */
 public class BluePotion extends ItemExecutor {
 
-	private BluePotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new BluePotion();
+	}
+
+	private BluePotion() {
 	}
 
 	/**

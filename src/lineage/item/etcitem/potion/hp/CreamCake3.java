@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class CreamCake3 extends ItemExecutor {
 
-	private CreamCake3() {
-	}
-
 	public static ItemExecutor get() {
 		return new CreamCake3();
+	}
+
+	private CreamCake3() {
 	}
 
 	/**

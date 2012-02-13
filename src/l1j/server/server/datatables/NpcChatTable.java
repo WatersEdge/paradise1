@@ -37,6 +37,13 @@ public class NpcChatTable {
 
 	private static NpcChatTable _instance;
 
+	public static NpcChatTable getInstance() {
+		if (_instance == null) {
+			_instance = new NpcChatTable();
+		}
+		return _instance;
+	}
+
 	private final Map<Integer, L1NpcChat> _npcChatAppearance = Maps.newMap();
 
 	private final Map<Integer, L1NpcChat> _npcChatDead = Maps.newMap();
@@ -45,15 +52,61 @@ public class NpcChatTable {
 
 	private final Map<Integer, L1NpcChat> _npcChatGameTime = Maps.newMap();
 
-	public static NpcChatTable getInstance() {
-		if (_instance == null) {
-			_instance = new NpcChatTable();
-		}
-		return _instance;
-	}
-
 	private NpcChatTable() {
 		FillNpcChatTable();
+	}
+
+	/**
+	 * 取得全部NPC喊话时间
+	 * 
+	 * @return
+	 */
+	public L1NpcChat[] getAllGameTime() {
+		return _npcChatGameTime.values().toArray(new L1NpcChat[_npcChatGameTime.size()]);
+	}
+
+	/**
+	 * 取得NPC出现时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
+	public L1NpcChat getTemplateAppearance(int i) {
+		return _npcChatAppearance.get(new Integer(i));
+	}
+
+	/**
+	 * 取得NPC死亡时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
+	public L1NpcChat getTemplateDead(int i) {
+		return _npcChatDead.get(new Integer(i));
+	}
+
+	/**
+	 * 取得NPC定时喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
+	public L1NpcChat getTemplateGameTime(int i) {
+		return _npcChatGameTime.get(new Integer(i));
+	}
+
+	/**
+	 * 取得NPC取消隐藏状态时的喊话
+	 * 
+	 * @param i
+	 *            NPCID
+	 * @return
+	 */
+	public L1NpcChat getTemplateHide(int i) {
+		return _npcChatHide.get(new Integer(i));
 	}
 
 	private void FillNpcChatTable() {
@@ -103,58 +156,5 @@ public class NpcChatTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 取得NPC出现时的喊话
-	 * 
-	 * @param i
-	 *            NPCID
-	 * @return
-	 */
-	public L1NpcChat getTemplateAppearance(int i) {
-		return _npcChatAppearance.get(new Integer(i));
-	}
-
-	/**
-	 * 取得NPC死亡时的喊话
-	 * 
-	 * @param i
-	 *            NPCID
-	 * @return
-	 */
-	public L1NpcChat getTemplateDead(int i) {
-		return _npcChatDead.get(new Integer(i));
-	}
-
-	/**
-	 * 取得NPC取消隐藏状态时的喊话
-	 * 
-	 * @param i
-	 *            NPCID
-	 * @return
-	 */
-	public L1NpcChat getTemplateHide(int i) {
-		return _npcChatHide.get(new Integer(i));
-	}
-
-	/**
-	 * 取得NPC定时喊话
-	 * 
-	 * @param i
-	 *            NPCID
-	 * @return
-	 */
-	public L1NpcChat getTemplateGameTime(int i) {
-		return _npcChatGameTime.get(new Integer(i));
-	}
-
-	/**
-	 * 取得全部NPC喊话时间
-	 * 
-	 * @return
-	 */
-	public L1NpcChat[] getAllGameTime() {
-		return _npcChatGameTime.values().toArray(new L1NpcChat[_npcChatGameTime.size()]);
 	}
 }

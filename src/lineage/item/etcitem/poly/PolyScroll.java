@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyScroll;
  */
 public class PolyScroll extends ItemExecutor {
 
-	private PolyScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScroll();
+	}
+
+	private PolyScroll() {
 	}
 
 	/**

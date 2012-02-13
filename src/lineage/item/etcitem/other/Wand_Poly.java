@@ -30,11 +30,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Wand_Poly extends ItemExecutor {
 
-	private Wand_Poly() {
-	}
-
 	public static ItemExecutor get() {
 		return new Wand_Poly();
+	}
+
+	private Wand_Poly() {
 	}
 
 	/**

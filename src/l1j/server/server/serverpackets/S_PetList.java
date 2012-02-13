@@ -39,6 +39,19 @@ public class S_PetList extends ServerBasePacket {
 		buildPacket(npcObjId, pc);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_PETLIST;
+	}
+
 	private void buildPacket(int npcObjId, L1PcInstance pc) {
 		List<L1ItemInstance> amuletList = Lists.newList();
 		// 判断身上是否有宠物项圈！
@@ -81,18 +94,5 @@ public class S_PetList extends ServerBasePacket {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_PETLIST;
 	}
 }

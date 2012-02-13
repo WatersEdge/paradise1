@@ -48,11 +48,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Meat extends ItemExecutor {
 
-	private Meat() {
-	}
-
 	public static ItemExecutor get() {
 		return new Meat();
+	}
+
+	private Meat() {
 	}
 
 	/**

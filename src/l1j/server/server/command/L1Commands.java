@@ -33,8 +33,28 @@ import l1j.server.server.utils.collections.Lists;
 public class L1Commands {
 	private static Logger _log = Logger.getLogger(L1Commands.class.getName());
 
-	private static L1Command fromResultSet(ResultSet rs) throws SQLException {
-		return new L1Command(rs.getString("name"), rs.getInt("access_level"), rs.getString("class_name"));
+	public static List<L1Command> availableCommandList(int accessLevel) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<L1Command> result = Lists.newList();
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM commands WHERE access_level <= ?");
+			pstm.setInt(1, accessLevel);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				result.add(fromResultSet(rs));
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "错误的指令", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return result;
 	}
 
 	public static L1Command get(String name) {
@@ -64,27 +84,7 @@ public class L1Commands {
 		return null;
 	}
 
-	public static List<L1Command> availableCommandList(int accessLevel) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<L1Command> result = Lists.newList();
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM commands WHERE access_level <= ?");
-			pstm.setInt(1, accessLevel);
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				result.add(fromResultSet(rs));
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "错误的指令", e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		return result;
+	private static L1Command fromResultSet(ResultSet rs) throws SQLException {
+		return new L1Command(rs.getString("name"), rs.getInt("access_level"), rs.getString("class_name"));
 	}
 }

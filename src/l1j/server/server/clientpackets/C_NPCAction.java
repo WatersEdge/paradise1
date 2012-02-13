@@ -5376,57 +5376,9 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 	}
 
-	//
-	private String karmaLevelToHtmlId(int level) {
-		if ((level == 0) || (level < -7) || (7 < level)) {
-			return "";
-		}
-		String htmlid = "";
-		if (0 < level) {
-			htmlid = "vbk" + level;
-		}
-		else if (level < 0) {
-			htmlid = "vyk" + Math.abs(level);
-		}
-		return htmlid;
-	}
-
-	// 观看竞技场
-	private String watchUb(L1PcInstance pc, int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
-		L1Location loc = ub.getLocation();
-		if (pc.getInventory().consumeItem(L1ItemId.ADENA, 100)) {
-			try {
-				pc.save();
-				pc.beginGhost(loc.getX(), loc.getY(), (short) loc.getMapId(), true);
-			}
-			catch (Exception e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-		}
-		else {
-			pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
-		}
-		return "";
-	}
-
-	// 进入竞技场
-	private String enterUb(L1PcInstance pc, int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
-		if (!ub.isActive() || !ub.canPcEnter(pc)) { // 时间外
-			return "colos2";
-		}
-		if (ub.isNowUb()) { // 竞技中
-			return "colos1";
-		}
-		if (ub.getMembersCount() >= ub.getMaxPlayer()) { // 最高人员数量
-			return "colos4";
-		}
-
-		ub.addMember(pc); // 人员加入
-		L1Location loc = ub.getLocation().randomLocation(10, false);
-		L1Teleport.teleport(pc, loc.getX(), loc.getY(), ub.getMapId(), 5, true);
-		return "";
+	@Override
+	public String getType() {
+		return C_NPC_ACTION;
 	}
 
 	// 进入幽灵之家
@@ -5457,166 +5409,304 @@ public class C_NPCAction extends ClientBasePacket {
 		return "";
 	}
 
-	// 召唤怪物
-	private void summonMonster(L1PcInstance pc, String s) {
-		String[] summonstr_list;
-		int[] summonid_list;
-		int[] summonlvl_list;
-		int[] summoncha_list;
-		int summonid = 0;
-		int levelrange = 0;
-		int summoncost = 0;
-
-		// 对话档对应名称
-		summonstr_list = new String[] { "7", "263", "519", "8", "264", "520", "9", "265", "521", "10", "266", "522", "11", "267", "523", "12", "268", "524", "13", "269", "525", "14", "270", "526", "15", "271", "527", "16", "17", "18", "274" };
-
-		// 怪物ID
-		summonid_list = new int[] { 81210, 81211, 81212, // 哈柏哥布林`艾多伦`安普
-				81213, 81214, 81215, // 甘地妖魔`都达玛拉妖魔`妖魔巡守
-				81216, 81217, 81218, // 狂野毒牙`狂野之毒`狂野之魔
-				81219, 81220, 81221, // 食人妖精`食人妖精王`冰人
-				81222, 81223, 81224, // 狂暴蜥蜴人`重装蜥蜴人`高等蜥蜴人
-				81225, 81226, 81227, // 火蜥蜴`火焰战士`火焰弓箭手
-				81228, 81229, 81230, // 魔熊`魔狼`魔蝙蝠
-				81231, 81232, 81233, // 巨大守护蚂蚁`强化白蚂蚁群`巨大强化白蚂蚁
-				81234, 81235, 81236, // 地狱奴隶`闇精灵王`食腐兽
-				81237, 81238, 81239, 81240 // 地狱束缚犬`变形怪首领`巨大牛人`黑豹
-		};
-
-		// 所需等级
-		summonlvl_list = new int[] { 28, 28, 28, 32, 32, 32, 36, 36, 36, 40, 40, 40, 44, 44, 44, 48, 48, 48, 52, 52, 52, 56, 56, 56, 60, 60, 60, 64, 68, 72, 72 };
-
-		// 召唤宠物所需魅力值
-		summoncha_list = new int[] { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, // 28 ~ 44
-				8, 8, 8, 8, 8, 8, 10, 10, 10, 12, 12, 12, // 48 ~ 60
-				20, 36, 36, 44 // 64,68,72,72
-		};
-		// サモンの种类、必要Lv、必要条件(CHA)
-		for (int loop = 0; loop < summonstr_list.length; loop++) {
-			if (s.equalsIgnoreCase(summonstr_list[loop])) {
-				summonid = summonid_list[loop];
-				levelrange = summonlvl_list[loop];
-				summoncost = summoncha_list[loop];
-				break;
-			}
+	// 进入竞技场
+	private String enterUb(L1PcInstance pc, int npcId) {
+		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+		if (!ub.isActive() || !ub.canPcEnter(pc)) { // 时间外
+			return "colos2";
 		}
-		// Lv不足
-		if (pc.getLevel() < levelrange) {
-			pc.sendPackets(new S_ServerMessage(743)); // 等级太低而无法召唤怪物
-			return;
+		if (ub.isNowUb()) { // 竞技中
+			return "colos1";
+		}
+		if (ub.getMembersCount() >= ub.getMaxPlayer()) { // 最高人员数量
+			return "colos4";
 		}
 
-		int petcost = 0;
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
-			// 现在のペットコスト
-			petcost += petNpc.getPetcost();
-		}
-
-		/*
-		 * // 既にペットがいる场合は、ドッペルゲンガーボス、クーガーは呼び出せない if ((summonid == 81103 || summonid == 81104) && petcost != 0) { pc.sendPackets(new S_CloseList(pc.getId())); return; } int charisma = pc.getCha() + 6 - petcost; int summoncount = charisma / summoncost;
-		 */
-		int pcCha = pc.getCha();
-		int charisma = 0;
-		int summoncount = 0;
-		if ((levelrange <= 56 // max count = 5
-				)
-				|| (levelrange == 64)) { // max count = 2
-			if (pcCha > 34) {
-				pcCha = 34;
-			}
-		}
-		else if (levelrange == 60) {
-			if (pcCha > 30) { // max count = 3
-				pcCha = 30;
-			}
-		}
-		else if (levelrange > 64) {
-			if (pcCha > 44) { // max count = 1
-				pcCha = 44;
-			}
-		}
-		charisma = pcCha + 6 - petcost;
-		summoncount = charisma / summoncost;
-
-		L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
-		for (int cnt = 0; cnt < summoncount; cnt++) {
-			L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
-			// if (summonid == 81103 || summonid == 81104) {
-			// summon.setPetcost(pc.getCha() + 7);
-			// } else {
-			summon.setPetcost(summoncost);
-			// }
-		}
-		pc.sendPackets(new S_CloseList(pc.getId()));
+		ub.addMember(pc); // 人员加入
+		L1Location loc = ub.getLocation().randomLocation(10, false);
+		L1Teleport.teleport(pc, loc.getX(), loc.getY(), ub.getMapId(), 5, true);
+		return "";
 	}
 
-	// 变身
-	private void poly(ClientThread clientthread, int polyId) {
-		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
+	// 排除其他血盟
+	private void expelOtherClan(L1PcInstance clanPc, int keeperId) {
+		int houseId = 0;
+		for (L1House house : HouseTable.getInstance().getHouseTableList()) {
+			if (house.getKeeperId() == keeperId) {
+				houseId = house.getHouseId();
+			}
+		}
+		if (houseId == 0) {
 			return;
 		}
 
-		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
-			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
+		int[] loc = new int[3];
+		for (L1Object object : L1World.getInstance().getObject()) {
+			if (object instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) object;
+				if (L1HouseLocation.isInHouseLoc(houseId, pc.getX(), pc.getY(), pc.getMapId()) && (clanPc.getClanid() != pc.getClanid())) {
+					loc = L1HouseLocation.getHouseTeleportLoc(houseId, 0);
+					if (pc != null) {
+						L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
+					}
+				}
+			}
+		}
+	}
 
-			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
+	// 炎魔耳环
+	private String getBarlogEarring(L1PcInstance pc, L1NpcInstance npc, String s) {
+		int[] earringIdList = { 21020, 21021, 21022, 21023, // 舞动耳环`双子耳环`庆典耳环`绝顶耳环
+				21024, 21025, 21026, 21027 // 暴走耳环`幻魔耳环`族群耳环`奴隶耳环
+		};
+		int earringId = 0; // 耳环ID
+		L1ItemInstance item = null;
+		String htmlid = null;
+		if (s.equalsIgnoreCase("1")) {
+			earringId = earringIdList[0];
 		}
-		else {
-			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
+		else if (s.equalsIgnoreCase("2")) {
+			earringId = earringIdList[1];
 		}
+		else if (s.equalsIgnoreCase("3")) {
+			earringId = earringIdList[2];
+		}
+		else if (s.equalsIgnoreCase("4")) {
+			earringId = earringIdList[3];
+		}
+		else if (s.equalsIgnoreCase("5")) {
+			earringId = earringIdList[4];
+		}
+		else if (s.equalsIgnoreCase("6")) {
+			earringId = earringIdList[5];
+		}
+		else if (s.equalsIgnoreCase("7")) {
+			earringId = earringIdList[6];
+		}
+		else if (s.equalsIgnoreCase("8")) {
+			earringId = earringIdList[7];
+		}
+		if (earringId != 0) {
+			item = pc.getInventory().storeItem(earringId, 1);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			for (int id : earringIdList) {
+				if (id == earringId) {
+					break;
+				}
+				if (pc.getInventory().checkItem(id)) {
+					pc.getInventory().consumeItem(id, 1);
+				}
+			}
+			htmlid = "";
+		}
+		return htmlid;
+	}
+
+	// 获得火焰之影友好度
+	private void getBloodCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
+		L1ItemInstance item = null;
+
+		// “血石碎片1个”
+		if (s.equalsIgnoreCase("1")) {
+			pc.addKarma((int) (500 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40718, 1);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
+		}
+		// “血石碎片10个”
+		else if (s.equalsIgnoreCase("2")) {
+			pc.addKarma((int) (5000 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40718, 10);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
+		}
+		// “血石碎片100个”
+		else if (s.equalsIgnoreCase("3")) {
+			pc.addKarma((int) (50000 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40718, 100);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
+		}
+	}
+
+	// 获得获得炎魔友好度
+	private void getSoulCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
+		L1ItemInstance item = null;
+
+		// “灵魂石碎片1个”
+		if (s.equalsIgnoreCase("1")) {
+			pc.addKarma((int) (-500 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40678, 1);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
+		}
+		// “灵魂石碎片10个”
+		else if (s.equalsIgnoreCase("2")) {
+			pc.addKarma((int) (-5000 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40678, 10);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
+		}
+		// “灵魂石碎片100个”
+		else if (s.equalsIgnoreCase("3")) {
+			pc.addKarma((int) (-50000 * Config.RATE_KARMA));
+			item = pc.getInventory().storeItem(40678, 100);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
+		}
+	}
+
+	// 火焰之影项链
+	private String getYaheeAmulet(L1PcInstance pc, L1NpcInstance npc, String s) {
+		int[] amuletIdList = { 20358, 20359, 20360, 20361, // 奴隶项链`约定项链`解放项链`猎犬项链
+				20362, 20363, 20364, 20365 // 魔族项链`勇士项链`将军项链`大将军项链
+		};
+		int amuletId = 0;
+		L1ItemInstance item = null;
+		String htmlid = null;
+		if (s.equalsIgnoreCase("1")) {
+			amuletId = amuletIdList[0];
+		}
+		else if (s.equalsIgnoreCase("2")) {
+			amuletId = amuletIdList[1];
+		}
+		else if (s.equalsIgnoreCase("3")) {
+			amuletId = amuletIdList[2];
+		}
+		else if (s.equalsIgnoreCase("4")) {
+			amuletId = amuletIdList[3];
+		}
+		else if (s.equalsIgnoreCase("5")) {
+			amuletId = amuletIdList[4];
+		}
+		else if (s.equalsIgnoreCase("6")) {
+			amuletId = amuletIdList[5];
+		}
+		else if (s.equalsIgnoreCase("7")) {
+			amuletId = amuletIdList[6];
+		}
+		else if (s.equalsIgnoreCase("8")) {
+			amuletId = amuletIdList[7];
+		}
+		if (amuletId != 0) {
+			item = pc.getInventory().storeItem(amuletId, 1);
+			if (item != null) {
+				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+			}
+			for (int id : amuletIdList) {
+				if (id == amuletId) {
+					break;
+				}
+				if (pc.getInventory().checkItem(id)) {
+					pc.getInventory().consumeItem(id, 1);
+				}
+			}
+			htmlid = "";
+		}
+		return htmlid;
 	}
 
 	//
-	private void polyByKeplisha(ClientThread clientthread, int polyId) {
-		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
-			return;
+	private boolean isExistDefenseClan(int castleId) {
+		boolean isExistDefenseClan = false;
+		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+			if (castleId == clan.getCastleId()) {
+				isExistDefenseClan = true;
+				break;
+			}
 		}
-
-		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
-			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
-
-			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_KEPLISHA);
-		}
-		else {
-			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
-		}
+		return isExistDefenseClan;
 	}
 
-	// 出售盟屋
-	private String sellHouse(L1PcInstance pc, int objectId, int npcId) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
-		if (clan == null) {
-			return ""; // 关闭窗口
+	// 只有出售的Npc
+	private boolean isNpcSellOnly(L1NpcInstance npc) {
+		int npcId = npc.getNpcTemplate().get_npcId();
+		String npcName = npc.getNpcTemplate().get_name();
+		if ((npcId == 70027 // 迪欧
+				)
+				|| "亚丁商团".equals(npcName)) {
+			return true;
 		}
-		int houseId = clan.getHouseId();
-		if (houseId == 0) {
-			return ""; // 关闭窗口
-		}
-		L1House house = HouseTable.getInstance().getHouseTable(houseId);
-		int keeperId = house.getKeeperId();
-		if (npcId != keeperId) {
-			return ""; // 关闭窗口
-		}
-		if (!pc.isCrown()) {
-			pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
-			return ""; // 关闭窗口
-		}
-		if (pc.getId() != clan.getLeaderId()) {
-			pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
-			return ""; // 关闭窗口
-		}
-		if (house.isOnSale()) {
-			return "agonsale";
-		}
+		return false;
+	}
 
-		pc.sendPackets(new S_SellHouse(objectId, String.valueOf(houseId)));
-		return null;
+	//
+	private String karmaLevelToHtmlId(int level) {
+		if ((level == 0) || (level < -7) || (7 < level)) {
+			return "";
+		}
+		String htmlid = "";
+		if (0 < level) {
+			htmlid = "vbk" + level;
+		}
+		else if (level < 0) {
+			htmlid = "vyk" + Math.abs(level);
+		}
+		return htmlid;
+	}
+
+	// 构造房屋税字符串
+	private String[] makeHouseTaxStrings(L1PcInstance pc, L1NpcInstance npc) {
+		String name = npc.getNpcTemplate().get_name();
+		String[] result;
+		result = new String[] { name, "2000", "1", "1", "00" };
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (clan != null) {
+			int houseId = clan.getHouseId();
+			if (houseId != 0) {
+				L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				int keeperId = house.getKeeperId();
+				if (npc.getNpcTemplate().get_npcId() == keeperId) {
+					Calendar cal = house.getTaxDeadline();
+					int month = cal.get(Calendar.MONTH) + 1;
+					int day = cal.get(Calendar.DATE);
+					int hour = cal.get(Calendar.HOUR_OF_DAY);
+					result = new String[] { name, "2000", String.valueOf(month), String.valueOf(day), String.valueOf(hour) };
+				}
+			}
+		}
+		return result;
+	}
+
+	private String[] makeUbInfoStrings(int npcId) {
+		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+		return ub.makeUbInfoStrings();
+	}
+
+	// 构造战争时间字符串
+	private String[] makeWarTimeStrings(int castleId) {
+		L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
+		if (castle == null) {
+			return null;
+		}
+		Calendar warTime = castle.getWarTime();
+		int year = warTime.get(Calendar.YEAR);
+		int month = warTime.get(Calendar.MONTH) + 1;
+		int day = warTime.get(Calendar.DATE);
+		int hour = warTime.get(Calendar.HOUR_OF_DAY);
+		int minute = warTime.get(Calendar.MINUTE);
+		String[] result;
+		if (castleId == L1CastleLocation.OT_CASTLE_ID) {
+			result = new String[] { String.valueOf(year), String.valueOf(month), String.valueOf(day), String.valueOf(hour), String.valueOf(minute) };
+		}
+		else {
+			result = new String[] { "", String.valueOf(year), String.valueOf(month), String.valueOf(day), String.valueOf(hour), String.valueOf(minute) };
+		}
+		return result;
 	}
 
 	// 打开关闭 门
@@ -5772,66 +5862,6 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 	}
 
-	//
-	private boolean isExistDefenseClan(int castleId) {
-		boolean isExistDefenseClan = false;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
-			if (castleId == clan.getCastleId()) {
-				isExistDefenseClan = true;
-				break;
-			}
-		}
-		return isExistDefenseClan;
-	}
-
-	// 排除其他血盟
-	private void expelOtherClan(L1PcInstance clanPc, int keeperId) {
-		int houseId = 0;
-		for (L1House house : HouseTable.getInstance().getHouseTableList()) {
-			if (house.getKeeperId() == keeperId) {
-				houseId = house.getHouseId();
-			}
-		}
-		if (houseId == 0) {
-			return;
-		}
-
-		int[] loc = new int[3];
-		for (L1Object object : L1World.getInstance().getObject()) {
-			if (object instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) object;
-				if (L1HouseLocation.isInHouseLoc(houseId, pc.getX(), pc.getY(), pc.getMapId()) && (clanPc.getClanid() != pc.getClanid())) {
-					loc = L1HouseLocation.getHouseTeleportLoc(houseId, 0);
-					if (pc != null) {
-						L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
-					}
-				}
-			}
-		}
-	}
-
-	// 修复城门
-	private void repairGate(L1PcInstance pc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
-		if (clan != null) {
-			int castleId = clan.getCastleId();
-			if (castleId != 0) { // 血盟城主
-				if (!WarTimeController.getInstance().isNowWar(castleId)) {
-					// 修复城门
-					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-						if (L1CastleLocation.checkInWarArea(castleId, door)) {
-							door.repairGate();
-						}
-					}
-					pc.sendPackets(new S_ServerMessage(990)); // 下令城门自动修复功能。
-				}
-				else {
-					pc.sendPackets(new S_ServerMessage(991)); // 取消城门自动修复功能。
-				}
-			}
-		}
-	}
-
 	// 支付费用
 	private boolean payFee(L1PcInstance pc, L1NpcInstance npc) {
 		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
@@ -5868,154 +5898,188 @@ public class C_NPCAction extends ClientBasePacket {
 		return false;
 	}
 
-	// 构造房屋税字符串
-	private String[] makeHouseTaxStrings(L1PcInstance pc, L1NpcInstance npc) {
-		String name = npc.getNpcTemplate().get_name();
-		String[] result;
-		result = new String[] { name, "2000", "1", "1", "00" };
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
-		if (clan != null) {
-			int houseId = clan.getHouseId();
-			if (houseId != 0) {
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
-				int keeperId = house.getKeeperId();
-				if (npc.getNpcTemplate().get_npcId() == keeperId) {
-					Calendar cal = house.getTaxDeadline();
-					int month = cal.get(Calendar.MONTH) + 1;
-					int day = cal.get(Calendar.DATE);
-					int hour = cal.get(Calendar.HOUR_OF_DAY);
-					result = new String[] { name, "2000", String.valueOf(month), String.valueOf(day), String.valueOf(hour) };
-				}
-			}
+	// 变身
+	private void poly(ClientThread clientthread, int polyId) {
+		L1PcInstance pc = clientthread.getActiveChar();
+		int awakeSkillId = pc.getAwakeSkillId();
+		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
+			return;
 		}
-		return result;
-	}
 
-	// 构造战争时间字符串
-	private String[] makeWarTimeStrings(int castleId) {
-		L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
-		if (castle == null) {
-			return null;
-		}
-		Calendar warTime = castle.getWarTime();
-		int year = warTime.get(Calendar.YEAR);
-		int month = warTime.get(Calendar.MONTH) + 1;
-		int day = warTime.get(Calendar.DATE);
-		int hour = warTime.get(Calendar.HOUR_OF_DAY);
-		int minute = warTime.get(Calendar.MINUTE);
-		String[] result;
-		if (castleId == L1CastleLocation.OT_CASTLE_ID) {
-			result = new String[] { String.valueOf(year), String.valueOf(month), String.valueOf(day), String.valueOf(hour), String.valueOf(minute) };
+		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
+			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
+
+			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
 		}
 		else {
-			result = new String[] { "", String.valueOf(year), String.valueOf(month), String.valueOf(day), String.valueOf(hour), String.valueOf(minute) };
+			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
 		}
-		return result;
 	}
 
-	// 火焰之影项链
-	private String getYaheeAmulet(L1PcInstance pc, L1NpcInstance npc, String s) {
-		int[] amuletIdList = { 20358, 20359, 20360, 20361, // 奴隶项链`约定项链`解放项链`猎犬项链
-				20362, 20363, 20364, 20365 // 魔族项链`勇士项链`将军项链`大将军项链
+	//
+	private void polyByKeplisha(ClientThread clientthread, int polyId) {
+		L1PcInstance pc = clientthread.getActiveChar();
+		int awakeSkillId = pc.getAwakeSkillId();
+		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
+			return;
+		}
+
+		if (pc.getInventory().checkItem(L1ItemId.ADENA, 100)) { // check
+			pc.getInventory().consumeItem(L1ItemId.ADENA, 100); // del
+
+			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_KEPLISHA);
+		}
+		else {
+			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
+		}
+	}
+
+	// 修复城门
+	private void repairGate(L1PcInstance pc) {
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (clan != null) {
+			int castleId = clan.getCastleId();
+			if (castleId != 0) { // 血盟城主
+				if (!WarTimeController.getInstance().isNowWar(castleId)) {
+					// 修复城门
+					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+						if (L1CastleLocation.checkInWarArea(castleId, door)) {
+							door.repairGate();
+						}
+					}
+					pc.sendPackets(new S_ServerMessage(990)); // 下令城门自动修复功能。
+				}
+				else {
+					pc.sendPackets(new S_ServerMessage(991)); // 取消城门自动修复功能。
+				}
+			}
+		}
+	}
+
+	// 出售盟屋
+	private String sellHouse(L1PcInstance pc, int objectId, int npcId) {
+		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		if (clan == null) {
+			return ""; // 关闭窗口
+		}
+		int houseId = clan.getHouseId();
+		if (houseId == 0) {
+			return ""; // 关闭窗口
+		}
+		L1House house = HouseTable.getInstance().getHouseTable(houseId);
+		int keeperId = house.getKeeperId();
+		if (npcId != keeperId) {
+			return ""; // 关闭窗口
+		}
+		if (!pc.isCrown()) {
+			pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
+			return ""; // 关闭窗口
+		}
+		if (pc.getId() != clan.getLeaderId()) {
+			pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
+			return ""; // 关闭窗口
+		}
+		if (house.isOnSale()) {
+			return "agonsale";
+		}
+
+		pc.sendPackets(new S_SellHouse(objectId, String.valueOf(houseId)));
+		return null;
+	}
+
+	// 召唤怪物
+	private void summonMonster(L1PcInstance pc, String s) {
+		String[] summonstr_list;
+		int[] summonid_list;
+		int[] summonlvl_list;
+		int[] summoncha_list;
+		int summonid = 0;
+		int levelrange = 0;
+		int summoncost = 0;
+
+		// 对话档对应名称
+		summonstr_list = new String[] { "7", "263", "519", "8", "264", "520", "9", "265", "521", "10", "266", "522", "11", "267", "523", "12", "268", "524", "13", "269", "525", "14", "270", "526", "15", "271", "527", "16", "17", "18", "274" };
+
+		// 怪物ID
+		summonid_list = new int[] { 81210, 81211, 81212, // 哈柏哥布林`艾多伦`安普
+				81213, 81214, 81215, // 甘地妖魔`都达玛拉妖魔`妖魔巡守
+				81216, 81217, 81218, // 狂野毒牙`狂野之毒`狂野之魔
+				81219, 81220, 81221, // 食人妖精`食人妖精王`冰人
+				81222, 81223, 81224, // 狂暴蜥蜴人`重装蜥蜴人`高等蜥蜴人
+				81225, 81226, 81227, // 火蜥蜴`火焰战士`火焰弓箭手
+				81228, 81229, 81230, // 魔熊`魔狼`魔蝙蝠
+				81231, 81232, 81233, // 巨大守护蚂蚁`强化白蚂蚁群`巨大强化白蚂蚁
+				81234, 81235, 81236, // 地狱奴隶`闇精灵王`食腐兽
+				81237, 81238, 81239, 81240 // 地狱束缚犬`变形怪首领`巨大牛人`黑豹
 		};
-		int amuletId = 0;
-		L1ItemInstance item = null;
-		String htmlid = null;
-		if (s.equalsIgnoreCase("1")) {
-			amuletId = amuletIdList[0];
-		}
-		else if (s.equalsIgnoreCase("2")) {
-			amuletId = amuletIdList[1];
-		}
-		else if (s.equalsIgnoreCase("3")) {
-			amuletId = amuletIdList[2];
-		}
-		else if (s.equalsIgnoreCase("4")) {
-			amuletId = amuletIdList[3];
-		}
-		else if (s.equalsIgnoreCase("5")) {
-			amuletId = amuletIdList[4];
-		}
-		else if (s.equalsIgnoreCase("6")) {
-			amuletId = amuletIdList[5];
-		}
-		else if (s.equalsIgnoreCase("7")) {
-			amuletId = amuletIdList[6];
-		}
-		else if (s.equalsIgnoreCase("8")) {
-			amuletId = amuletIdList[7];
-		}
-		if (amuletId != 0) {
-			item = pc.getInventory().storeItem(amuletId, 1);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			for (int id : amuletIdList) {
-				if (id == amuletId) {
-					break;
-				}
-				if (pc.getInventory().checkItem(id)) {
-					pc.getInventory().consumeItem(id, 1);
-				}
-			}
-			htmlid = "";
-		}
-		return htmlid;
-	}
 
-	// 炎魔耳环
-	private String getBarlogEarring(L1PcInstance pc, L1NpcInstance npc, String s) {
-		int[] earringIdList = { 21020, 21021, 21022, 21023, // 舞动耳环`双子耳环`庆典耳环`绝顶耳环
-				21024, 21025, 21026, 21027 // 暴走耳环`幻魔耳环`族群耳环`奴隶耳环
+		// 所需等级
+		summonlvl_list = new int[] { 28, 28, 28, 32, 32, 32, 36, 36, 36, 40, 40, 40, 44, 44, 44, 48, 48, 48, 52, 52, 52, 56, 56, 56, 60, 60, 60, 64, 68, 72, 72 };
+
+		// 召唤宠物所需魅力值
+		summoncha_list = new int[] { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, // 28 ~ 44
+				8, 8, 8, 8, 8, 8, 10, 10, 10, 12, 12, 12, // 48 ~ 60
+				20, 36, 36, 44 // 64,68,72,72
 		};
-		int earringId = 0; // 耳环ID
-		L1ItemInstance item = null;
-		String htmlid = null;
-		if (s.equalsIgnoreCase("1")) {
-			earringId = earringIdList[0];
-		}
-		else if (s.equalsIgnoreCase("2")) {
-			earringId = earringIdList[1];
-		}
-		else if (s.equalsIgnoreCase("3")) {
-			earringId = earringIdList[2];
-		}
-		else if (s.equalsIgnoreCase("4")) {
-			earringId = earringIdList[3];
-		}
-		else if (s.equalsIgnoreCase("5")) {
-			earringId = earringIdList[4];
-		}
-		else if (s.equalsIgnoreCase("6")) {
-			earringId = earringIdList[5];
-		}
-		else if (s.equalsIgnoreCase("7")) {
-			earringId = earringIdList[6];
-		}
-		else if (s.equalsIgnoreCase("8")) {
-			earringId = earringIdList[7];
-		}
-		if (earringId != 0) {
-			item = pc.getInventory().storeItem(earringId, 1);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
+		// サモンの种类、必要Lv、必要条件(CHA)
+		for (int loop = 0; loop < summonstr_list.length; loop++) {
+			if (s.equalsIgnoreCase(summonstr_list[loop])) {
+				summonid = summonid_list[loop];
+				levelrange = summonlvl_list[loop];
+				summoncost = summoncha_list[loop];
+				break;
 			}
-			for (int id : earringIdList) {
-				if (id == earringId) {
-					break;
-				}
-				if (pc.getInventory().checkItem(id)) {
-					pc.getInventory().consumeItem(id, 1);
-				}
-			}
-			htmlid = "";
 		}
-		return htmlid;
-	}
+		// Lv不足
+		if (pc.getLevel() < levelrange) {
+			pc.sendPackets(new S_ServerMessage(743)); // 等级太低而无法召唤怪物
+			return;
+		}
 
-	private String[] makeUbInfoStrings(int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
-		return ub.makeUbInfoStrings();
+		int petcost = 0;
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			// 现在のペットコスト
+			petcost += petNpc.getPetcost();
+		}
+
+		/*
+		 * // 既にペットがいる场合は、ドッペルゲンガーボス、クーガーは呼び出せない if ((summonid == 81103 || summonid == 81104) && petcost != 0) { pc.sendPackets(new S_CloseList(pc.getId())); return; } int charisma = pc.getCha() + 6 - petcost; int summoncount = charisma / summoncost;
+		 */
+		int pcCha = pc.getCha();
+		int charisma = 0;
+		int summoncount = 0;
+		if ((levelrange <= 56 // max count = 5
+				)
+				|| (levelrange == 64)) { // max count = 2
+			if (pcCha > 34) {
+				pcCha = 34;
+			}
+		}
+		else if (levelrange == 60) {
+			if (pcCha > 30) { // max count = 3
+				pcCha = 30;
+			}
+		}
+		else if (levelrange > 64) {
+			if (pcCha > 44) { // max count = 1
+				pcCha = 44;
+			}
+		}
+		charisma = pcCha + 6 - petcost;
+		summoncount = charisma / summoncost;
+
+		L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
+		for (int cnt = 0; cnt < summoncount; cnt++) {
+			L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
+			// if (summonid == 81103 || summonid == 81104) {
+			// summon.setPetcost(pc.getCha() + 7);
+			// } else {
+			summon.setPetcost(summoncost);
+			// }
+		}
+		pc.sendPackets(new S_CloseList(pc.getId()));
 	}
 
 	// 四大领域传送门
@@ -6098,84 +6162,6 @@ public class C_NPCAction extends ClientBasePacket {
 		return htmlid;
 	}
 
-	// 只有出售的Npc
-	private boolean isNpcSellOnly(L1NpcInstance npc) {
-		int npcId = npc.getNpcTemplate().get_npcId();
-		String npcName = npc.getNpcTemplate().get_name();
-		if ((npcId == 70027 // 迪欧
-				)
-				|| "亚丁商团".equals(npcName)) {
-			return true;
-		}
-		return false;
-	}
-
-	// 获得火焰之影友好度
-	private void getBloodCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
-		L1ItemInstance item = null;
-
-		// “血石碎片1个”
-		if (s.equalsIgnoreCase("1")) {
-			pc.addKarma((int) (500 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40718, 1);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
-		}
-		// “血石碎片10个”
-		else if (s.equalsIgnoreCase("2")) {
-			pc.addKarma((int) (5000 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40718, 10);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
-		}
-		// “血石碎片100个”
-		else if (s.equalsIgnoreCase("3")) {
-			pc.addKarma((int) (50000 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40718, 100);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1081)); // 我已经开始遗忘火焰之影了。
-		}
-	}
-
-	// 获得获得炎魔友好度
-	private void getSoulCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
-		L1ItemInstance item = null;
-
-		// “灵魂石碎片1个”
-		if (s.equalsIgnoreCase("1")) {
-			pc.addKarma((int) (-500 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40678, 1);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
-		}
-		// “灵魂石碎片10个”
-		else if (s.equalsIgnoreCase("2")) {
-			pc.addKarma((int) (-5000 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40678, 10);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
-		}
-		// “灵魂石碎片100个”
-		else if (s.equalsIgnoreCase("3")) {
-			pc.addKarma((int) (-50000 * Config.RATE_KARMA));
-			item = pc.getInventory().storeItem(40678, 100);
-			if (item != null) {
-				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
-			}
-			pc.sendPackets(new S_ServerMessage(1080)); // 炎魔的冷笑激起一阵寒意。
-		}
-	}
-
 	// 使用变形卷轴
 	private boolean usePolyScroll(L1PcInstance pc, int itemId, String s) {
 		int time = 0;
@@ -6213,9 +6199,23 @@ public class C_NPCAction extends ClientBasePacket {
 		return isUseItem;
 	}
 
-	@Override
-	public String getType() {
-		return C_NPC_ACTION;
+	// 观看竞技场
+	private String watchUb(L1PcInstance pc, int npcId) {
+		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+		L1Location loc = ub.getLocation();
+		if (pc.getInventory().consumeItem(L1ItemId.ADENA, 100)) {
+			try {
+				pc.save();
+				pc.beginGhost(loc.getX(), loc.getY(), (short) loc.getMapId(), true);
+			}
+			catch (Exception e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
+		}
+		else {
+			pc.sendPackets(new S_ServerMessage(189)); // \f1金币不足。
+		}
+		return "";
 	}
 
 }

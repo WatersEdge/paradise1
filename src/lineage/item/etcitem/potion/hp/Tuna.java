@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Tuna extends ItemExecutor {
 
-	private Tuna() {
-	}
-
 	public static ItemExecutor get() {
 		return new Tuna();
+	}
+
+	private Tuna() {
 	}
 
 	/**

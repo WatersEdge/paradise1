@@ -32,34 +32,22 @@ public class LogRecorder {
 	/* BufferedWriter */
 	static BufferedWriter out;
 
-	/** base */
-	public static void writeLog(String messenge) {
-		try {
-			out = new BufferedWriter(new FileWriter("log\\Log.log", true));
-			out.write(messenge + "\r\n");
-			out.close();
-		}
-		catch (IOException e) {
-			System.out.println("以下是错误讯息: " + e.getMessage());
-		}
-	}
-
 	/**
-	 * Weapon Log
+	 * Armor Log
 	 * 
 	 * @param pc
 	 *            玩家
 	 */
-	public static void writeWeaponLog(String messenge, L1PcInstance pc) {
+	public static void writeArmorLog(String messenge, L1PcInstance pc) {
 		try {
-			File WeaponLog = new File("log\\WeaponLog.log");
-			if (WeaponLog.createNewFile()) {
-				out = new BufferedWriter(new FileWriter("log\\WeaponLog.log", false));
-				out.write("※以下是[冲升武器]的所有纪录※" + "\r\n");
+			File ArmorLog = new File("log\\ArmorLog.log");
+			if (ArmorLog.createNewFile()) {
+				out = new BufferedWriter(new FileWriter("log\\ArmorLog.log", false));
+				out.write("※以下是[冲升防具]的所有纪录※" + "\r\n");
 				out.close();
 			}
-			out = new BufferedWriter(new FileWriter("log\\WeaponLog.log", true));// true:从尾端写起
-			out.write("\r\n");// 每次填写资料都控一行 // |false:从头写
+			out = new BufferedWriter(new FileWriter("log\\ArmorLog.log", true));
+			out.write("\r\n");// 每次填写资料都控一行
 			out.write("来自帐号: " + pc.getAccountName() + ", 来自玩家: " + pc.getName() + ", " + messenge + "。" + "\r\n");
 			out.close();
 		}
@@ -95,22 +83,58 @@ public class LogRecorder {
 	}
 
 	/**
-	 * Armor Log
+	 * 丢弃物品纪录
 	 * 
-	 * @param pc
-	 *            玩家
+	 * @param player
 	 */
-	public static void writeArmorLog(String messenge, L1PcInstance pc) {
+	public static void writeDropLog(L1PcInstance player, L1ItemInstance item) {
 		try {
-			File ArmorLog = new File("log\\ArmorLog.log");
-			if (ArmorLog.createNewFile()) {
-				out = new BufferedWriter(new FileWriter("log\\ArmorLog.log", false));
-				out.write("※以下是[冲升防具]的所有纪录※" + "\r\n");
+			File DropLog = new File("log\\DropLog.log");
+			if (DropLog.createNewFile()) {
+				out = new BufferedWriter(new FileWriter("log\\DropLog.log", false));
+				out.write("※以下是玩家[丢弃物品]的所有纪录※" + "\r\n");
 				out.close();
 			}
-			out = new BufferedWriter(new FileWriter("log\\ArmorLog.log", true));
+			out = new BufferedWriter(new FileWriter("log\\DropLog.log", true));
 			out.write("\r\n");// 每次填写资料都控一行
-			out.write("来自帐号: " + pc.getAccountName() + ", 来自玩家: " + pc.getName() + ", " + messenge + "。" + "\r\n");
+			out.write("来自帐号: " + player.getAccountName() + "来自ip: " + player.getNetConnection().getIp() + ",来自玩家: " + player.getName() + ",地点: " + item.getLocation() + ",〈时间〉" + TimeInform.getNowTime(3, 0) + ",丢弃了: " + item.getCount() + " 个 " + item.getName() + ",是否受祝福: "
+					+ item.getBless() + ",加成值: " + item.getEnchantLevel() + ",属性强化类型: " + item.getAttrEnchantKind() + ",属性强化等级: " + item.getAttrEnchantLevel() + "\r\n");
+			out.close();
+		}
+		catch (IOException e) {
+			System.out.println("以下是错误讯息: " + e.getMessage());
+		}
+	}
+
+	/** base */
+	public static void writeLog(String messenge) {
+		try {
+			out = new BufferedWriter(new FileWriter("log\\Log.log", true));
+			out.write(messenge + "\r\n");
+			out.close();
+		}
+		catch (IOException e) {
+			System.out.println("以下是错误讯息: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Robots Log
+	 * 
+	 * @param player
+	 *            使用外挂或加速器的玩家
+	 */
+	public static void writeRobotsLog(L1PcInstance player) {
+		try {
+			File RobotsLog = new File("log\\RobotsLog.log");
+			if (RobotsLog.createNewFile()) {
+				out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", false));
+				out.write("※以下是玩家[使用加速器&外挂]的所有纪录※" + "\r\n");
+				out.close();
+			}
+			out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", true));
+			out.write("\r\n");// 每次填写资料都控一行
+			out.write("加速器纪录 → 来自帐号: " + player.getAccountName() + ", 来自玩家: " + player.getName() + ", 〈时间〉" + TimeInform.getNowTime(3, 0) + "\r\n");
 			out.close();
 		}
 		catch (IOException e) {
@@ -149,46 +173,22 @@ public class LogRecorder {
 	}
 
 	/**
-	 * Robots Log
+	 * Weapon Log
 	 * 
-	 * @param player
-	 *            使用外挂或加速器的玩家
+	 * @param pc
+	 *            玩家
 	 */
-	public static void writeRobotsLog(L1PcInstance player) {
+	public static void writeWeaponLog(String messenge, L1PcInstance pc) {
 		try {
-			File RobotsLog = new File("log\\RobotsLog.log");
-			if (RobotsLog.createNewFile()) {
-				out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", false));
-				out.write("※以下是玩家[使用加速器&外挂]的所有纪录※" + "\r\n");
+			File WeaponLog = new File("log\\WeaponLog.log");
+			if (WeaponLog.createNewFile()) {
+				out = new BufferedWriter(new FileWriter("log\\WeaponLog.log", false));
+				out.write("※以下是[冲升武器]的所有纪录※" + "\r\n");
 				out.close();
 			}
-			out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", true));
-			out.write("\r\n");// 每次填写资料都控一行
-			out.write("加速器纪录 → 来自帐号: " + player.getAccountName() + ", 来自玩家: " + player.getName() + ", 〈时间〉" + TimeInform.getNowTime(3, 0) + "\r\n");
-			out.close();
-		}
-		catch (IOException e) {
-			System.out.println("以下是错误讯息: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * 丢弃物品纪录
-	 * 
-	 * @param player
-	 */
-	public static void writeDropLog(L1PcInstance player, L1ItemInstance item) {
-		try {
-			File DropLog = new File("log\\DropLog.log");
-			if (DropLog.createNewFile()) {
-				out = new BufferedWriter(new FileWriter("log\\DropLog.log", false));
-				out.write("※以下是玩家[丢弃物品]的所有纪录※" + "\r\n");
-				out.close();
-			}
-			out = new BufferedWriter(new FileWriter("log\\DropLog.log", true));
-			out.write("\r\n");// 每次填写资料都控一行
-			out.write("来自帐号: " + player.getAccountName() + "来自ip: " + player.getNetConnection().getIp() + ",来自玩家: " + player.getName() + ",地点: " + item.getLocation() + ",〈时间〉" + TimeInform.getNowTime(3, 0) + ",丢弃了: " + item.getCount() + " 个 " + item.getName() + ",是否受祝福: "
-					+ item.getBless() + ",加成值: " + item.getEnchantLevel() + ",属性强化类型: " + item.getAttrEnchantKind() + ",属性强化等级: " + item.getAttrEnchantLevel() + "\r\n");
+			out = new BufferedWriter(new FileWriter("log\\WeaponLog.log", true));// true:从尾端写起
+			out.write("\r\n");// 每次填写资料都控一行 // |false:从头写
+			out.write("来自帐号: " + pc.getAccountName() + ", 来自玩家: " + pc.getName() + ", " + messenge + "。" + "\r\n");
 			out.close();
 		}
 		catch (IOException e) {

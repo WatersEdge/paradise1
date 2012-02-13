@@ -30,10 +30,9 @@ public class S_SkillSound extends ServerBasePacket {
 	 * 
 	 * @param objid
 	 * @param gfxid
-	 * @param aid
 	 */
-	public S_SkillSound(int objid, int gfxid, int aid) {
-		buildPacket(objid, gfxid, aid);
+	public S_SkillSound(int objid, int gfxid) {
+		buildPacket(objid, gfxid, 0);
 	}
 
 	/**
@@ -41,18 +40,10 @@ public class S_SkillSound extends ServerBasePacket {
 	 * 
 	 * @param objid
 	 * @param gfxid
+	 * @param aid
 	 */
-	public S_SkillSound(int objid, int gfxid) {
-		buildPacket(objid, gfxid, 0);
-	}
-
-	private void buildPacket(int objid, int gfxid, int aid) {
-		// 不使用aid
-		writeC(Opcodes.S_OPCODE_SKILLSOUNDGFX);
-		writeD(objid);
-		writeH(gfxid);
-		writeH(0);
-		writeD(0x00000000);
+	public S_SkillSound(int objid, int gfxid, int aid) {
+		buildPacket(objid, gfxid, aid);
 	}
 
 	@Override
@@ -67,5 +58,14 @@ public class S_SkillSound extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_SKILL_SOUND;
+	}
+
+	private void buildPacket(int objid, int gfxid, int aid) {
+		// 不使用aid
+		writeC(Opcodes.S_OPCODE_SKILLSOUNDGFX);
+		writeD(objid);
+		writeH(gfxid);
+		writeH(0);
+		writeD(0x00000000);
 	}
 }

@@ -27,9 +27,6 @@ import l1j.server.server.serverpackets.S_PinkName;
  */
 public class L1PinkName {
 
-	private L1PinkName() {
-	}
-
 	static class PinkNameTimer implements Runnable {
 
 		/** 攻击者 */
@@ -109,5 +106,8 @@ public class L1PinkName {
 				GeneralThreadPool.getInstance().execute(pink);
 			}
 		}
+	}
+
+	private L1PinkName() {
 	}
 }

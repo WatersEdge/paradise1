@@ -21,8 +21,6 @@ public class MagicDollTable {
 
 	private static MagicDollTable _instance;
 
-	private final HashMap<Integer, L1MagicDoll> _dolls = new HashMap<Integer, L1MagicDoll>();
-
 	public static MagicDollTable getInstance() {
 		if (_instance == null) {
 			_instance = new MagicDollTable();
@@ -30,8 +28,17 @@ public class MagicDollTable {
 		return _instance;
 	}
 
+	private final HashMap<Integer, L1MagicDoll> _dolls = new HashMap<Integer, L1MagicDoll>();
+
 	private MagicDollTable() {
 		load();
+	}
+
+	public L1MagicDoll getTemplate(int itemId) {
+		if (_dolls.containsKey(itemId)) {
+			return _dolls.get(itemId);
+		}
+		return null;
 	}
 
 	private void load() {
@@ -82,13 +89,6 @@ public class MagicDollTable {
 			SQLUtil.close(con);
 
 		}
-	}
-
-	public L1MagicDoll getTemplate(int itemId) {
-		if (_dolls.containsKey(itemId)) {
-			return _dolls.get(itemId);
-		}
-		return null;
 	}
 
 }

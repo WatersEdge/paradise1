@@ -59,6 +59,15 @@ public class S_ActiveSpells extends ServerBasePacket {
 		writeByte(randBox);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
 	// 登入时给于角色状态剩余时间
 	private int[] activeSpells(L1PcInstance pc) {
 		int[] data = new int[104];
@@ -145,14 +154,5 @@ public class S_ActiveSpells extends ServerBasePacket {
 		}
 
 		return data;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
 	}
 }

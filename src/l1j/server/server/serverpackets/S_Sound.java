@@ -38,12 +38,6 @@ public class S_Sound extends ServerBasePacket {
 		buildPacket(sound);
 	}
 
-	private void buildPacket(int sound) {
-		writeC(Opcodes.S_OPCODE_SOUND);
-		writeC(0); // repeat
-		writeH(sound);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -55,5 +49,11 @@ public class S_Sound extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_SOUND;
+	}
+
+	private void buildPacket(int sound) {
+		writeC(Opcodes.S_OPCODE_SOUND);
+		writeC(0); // repeat
+		writeH(sound);
 	}
 }

@@ -41,211 +41,6 @@ import l1j.server.server.utils.collections.Maps;
 /** 安塔瑞斯、法利昂副本 */
 public class L1DragonSlayer {
 
-	private static Logger _log = Logger.getLogger(L1DragonSlayer.class.getName());
-
-	private static L1DragonSlayer _instance;
-
-	public static final int STATUS_DRAGONSLAYER_NONE = 0;
-	public static final int STATUS_DRAGONSLAYER_READY_1RD = 1;
-	public static final int STATUS_DRAGONSLAYER_READY_2RD = 2;
-	public static final int STATUS_DRAGONSLAYER_READY_3RD = 3;
-	public static final int STATUS_DRAGONSLAYER_READY_4RD = 4;
-	public static final int STATUS_DRAGONSLAYER_START_1RD = 5;
-	public static final int STATUS_DRAGONSLAYER_START_2RD = 6;
-	public static final int STATUS_DRAGONSLAYER_START_2RD_1 = 7;
-	public static final int STATUS_DRAGONSLAYER_START_2RD_2 = 8;
-	public static final int STATUS_DRAGONSLAYER_START_2RD_3 = 9;
-	public static final int STATUS_DRAGONSLAYER_START_2RD_4 = 10;
-	public static final int STATUS_DRAGONSLAYER_START_3RD = 11;
-	public static final int STATUS_DRAGONSLAYER_START_3RD_1 = 12;
-	public static final int STATUS_DRAGONSLAYER_START_3RD_2 = 13;
-	public static final int STATUS_DRAGONSLAYER_START_3RD_3 = 14;
-	public static final int STATUS_DRAGONSLAYER_END_1 = 15;
-	public static final int STATUS_DRAGONSLAYER_END_2 = 16;
-	public static final int STATUS_DRAGONSLAYER_END_3 = 17;
-	public static final int STATUS_DRAGONSLAYER_END_4 = 18;
-	public static final int STATUS_DRAGONSLAYER_END_5 = 19;
-	public static final int STATUS_DRAGONSLAYER_END = 20;
-
-	public static final int STATUS_NONE = 0;
-	public static final int STATUS_READY_SPAWN = 1;
-	public static final int STATUS_SPAWN = 2;
-
-	private static class DragonSlayer {
-		private ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
-	}
-
-	private static final Map<Integer, DragonSlayer> _dataMap = Maps.newMap();
-
-	public static L1DragonSlayer getInstance() {
-		if (_instance == null) {
-			_instance = new L1DragonSlayer();
-		}
-		return _instance;
-	}
-
-	// 判断龙之门扉是否开启 ,最多12个龙门
-	private boolean[] _portalNumber = new boolean[12];
-
-	public boolean[] getPortalNumber() {
-		return _portalNumber;
-	}
-
-	public void setPortalNumber(int number, boolean i) {
-		_portalNumber[number] = i;
-	}
-
-	// 判断龙之钥匙显示可开启的龙门
-	private boolean[] _checkDragonPortal = new boolean[4];
-
-	public boolean[] checkDragonPortal() {
-		_checkDragonPortal[0] = false; // 安塔瑞斯
-		_checkDragonPortal[1] = false; // 法利昂
-		_checkDragonPortal[2] = false; // 林德拜尔
-		_checkDragonPortal[3] = false; // 巴拉卡斯
-
-		for (int i = 0; i < 12; i++) {
-			if (!getPortalNumber()[i]) {
-				if (i < 6) { // 前6个安塔瑞斯
-					_checkDragonPortal[0] = true;
-				}
-				else { // 后6个法利昂
-					_checkDragonPortal[1] = true;
-				}
-			}
-		}
-		return _checkDragonPortal;
-	}
-
-	// 龙之门扉物件
-	private L1NpcInstance[] _portal = new L1NpcInstance[12];
-
-	public L1NpcInstance[] portalPack() {
-		return _portal;
-	}
-
-	public void setPortalPack(int number, L1NpcInstance portal) {
-		_portal[number] = portal;
-	}
-
-	// 副本目前状态
-	private int[] _DragonSlayerStatus = new int[12];
-
-	public int[] getDragonSlayerStatus() {
-		return _DragonSlayerStatus;
-	}
-
-	public void setDragonSlayerStatus(int portalNum, int i) {
-		_DragonSlayerStatus[portalNum] = i;
-	}
-
-	// 判断隐匿的巨龙谷入口是否已出现
-	private int _hiddenDragonValleyStstus = 0;
-
-	public int checkHiddenDragonValleyStstus() {
-		return _hiddenDragonValleyStstus;
-	}
-
-	public void setHiddenDragonValleyStstus(int i) {
-		_hiddenDragonValleyStstus = i;
-	}
-
-	// 加入玩家
-	public void addPlayerList(L1PcInstance pc, int portalNum) {
-		if (_dataMap.containsKey(portalNum)) {
-			if (!_dataMap.get(portalNum)._members.contains(pc)) {
-				_dataMap.get(portalNum)._members.add(pc);
-			}
-		}
-	}
-
-	// 移除玩家
-	public void removePlayer(L1PcInstance pc, int portalNum) {
-		if (_dataMap.containsKey(portalNum)) {
-			if (_dataMap.get(portalNum)._members.contains(pc)) {
-				_dataMap.get(portalNum)._members.remove(pc);
-			}
-		}
-	}
-
-	// 清除玩家
-	private void clearPlayerList(int portalNum) {
-		if (_dataMap.containsKey(portalNum)) {
-			_dataMap.get(portalNum)._members.clear();
-		}
-	}
-
-	// 取得参加人数
-	public int getPlayersCount(int num) {
-		DragonSlayer _DragonSlayer = null;
-		if (!_dataMap.containsKey(num)) {
-			_DragonSlayer = new DragonSlayer();
-			_dataMap.put(num, _DragonSlayer);
-		}
-		return _dataMap.get(num)._members.size();
-	}
-
-	private L1PcInstance[] getPlayersArray(int num) {
-		return _dataMap.get(num)._members.toArray(new L1PcInstance[_dataMap.get(num)._members.size()]);
-	}
-
-	// 开始第一阶段
-	public void startDragonSlayer(int portalNum) {
-		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_NONE) {
-			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_READY_1RD);
-			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_READY_1RD, 150000);
-			timer.begin();
-		}
-	}
-
-	// 开始第二阶段
-	public void startDragonSlayer2rd(int portalNum) {
-		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_1RD) {
-			if (portalNum >= 6 && portalNum <= 11) {
-				sendMessage(portalNum, 1661, null); // 法利昂：可怜啊！他们就是和你一样，注定要当我的祭品！
-			}
-			else {
-				sendMessage(portalNum, 1573, null); // 安塔瑞斯：你这顽固的家伙！你又激起我的愤怒了！
-			}
-			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_2RD);
-			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_2RD, 10000);
-			timer.begin();
-		}
-	}
-
-	// 开始第三阶段
-	public void startDragonSlayer3rd(int portalNum) {
-		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_2RD_4) {
-			if (portalNum >= 6 && portalNum <= 11) {
-				sendMessage(portalNum, 1665, null); // 巫女莎尔：法利昂的力量好像削弱了不少！ 勇士们啊，再接再厉吧！
-			}
-			else {
-				sendMessage(portalNum, 1577, null); // 卡瑞：呜啊！你有听到那些冤魂的惨叫声吗！受死吧！！
-			}
-			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_3RD);
-			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_3RD, 10000);
-			timer.begin();
-		}
-	}
-
-	// 副本完成
-	public void endDragonSlayer(int portalNum) {
-		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_3RD_3) {
-			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_1);
-			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_1, 10000);
-			timer.begin();
-		}
-	}
-
-	// 门扉存在时间结束
-	public void endDragonPortal(int portalNum) {
-		if (getDragonSlayerStatus()[portalNum] != STATUS_DRAGONSLAYER_END_5) {
-			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_5);
-			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_5, 5000);
-			timer.begin();
-		}
-	}
-
 	// 计时器
 	public class DragonSlayerTimer extends TimerTask {
 
@@ -257,6 +52,11 @@ public class L1DragonSlayer {
 			_num = num;
 			_status = status;
 			_time = time;
+		}
+
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, _time); // 延迟时间
 		}
 
 		@Override
@@ -413,23 +213,143 @@ public class L1DragonSlayer {
 			}
 			cancel();
 		}
+	}
 
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, _time); // 延迟时间
+	private static class DragonSlayer {
+		private ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
+	}
+
+	private static Logger _log = Logger.getLogger(L1DragonSlayer.class.getName());
+	private static L1DragonSlayer _instance;
+	public static final int STATUS_DRAGONSLAYER_NONE = 0;
+	public static final int STATUS_DRAGONSLAYER_READY_1RD = 1;
+	public static final int STATUS_DRAGONSLAYER_READY_2RD = 2;
+	public static final int STATUS_DRAGONSLAYER_READY_3RD = 3;
+	public static final int STATUS_DRAGONSLAYER_READY_4RD = 4;
+	public static final int STATUS_DRAGONSLAYER_START_1RD = 5;
+	public static final int STATUS_DRAGONSLAYER_START_2RD = 6;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_1 = 7;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_2 = 8;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_3 = 9;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_4 = 10;
+	public static final int STATUS_DRAGONSLAYER_START_3RD = 11;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_1 = 12;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_2 = 13;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_3 = 14;
+	public static final int STATUS_DRAGONSLAYER_END_1 = 15;
+	public static final int STATUS_DRAGONSLAYER_END_2 = 16;
+	public static final int STATUS_DRAGONSLAYER_END_3 = 17;
+	public static final int STATUS_DRAGONSLAYER_END_4 = 18;
+
+	public static final int STATUS_DRAGONSLAYER_END_5 = 19;
+	public static final int STATUS_DRAGONSLAYER_END = 20;
+	public static final int STATUS_NONE = 0;
+
+	public static final int STATUS_READY_SPAWN = 1;
+
+	public static final int STATUS_SPAWN = 2;
+
+	private static final Map<Integer, DragonSlayer> _dataMap = Maps.newMap();
+
+	public static L1DragonSlayer getInstance() {
+		if (_instance == null) {
+			_instance = new L1DragonSlayer();
+		}
+		return _instance;
+	}
+
+	// 判断龙之门扉是否开启 ,最多12个龙门
+	private boolean[] _portalNumber = new boolean[12];
+
+	// 判断龙之钥匙显示可开启的龙门
+	private boolean[] _checkDragonPortal = new boolean[4];
+
+	// 龙之门扉物件
+	private L1NpcInstance[] _portal = new L1NpcInstance[12];
+
+	// 副本目前状态
+	private int[] _DragonSlayerStatus = new int[12];
+
+	// 判断隐匿的巨龙谷入口是否已出现
+	private int _hiddenDragonValleyStstus = 0;
+
+	// 加入玩家
+	public void addPlayerList(L1PcInstance pc, int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			if (!_dataMap.get(portalNum)._members.contains(pc)) {
+				_dataMap.get(portalNum)._members.add(pc);
+			}
 		}
 	}
 
-	// 讯息发送
-	public void sendMessage(int portalNum, int type, String msg) {
-		short mapId = (short) (1005 + portalNum);
-		L1PcInstance[] temp = getPlayersArray(portalNum);
-		for (L1PcInstance element : temp) {
-			if ((element.getMapId() == mapId) && (element.getX() >= 32740 && element.getX() <= 32827) && (element.getY() >= 32652 && element.getY() <= 32727) && (portalNum >= 0 && portalNum <= 5)) { // 安塔瑞斯栖息地
-				element.sendPackets(new S_ServerMessage(type, msg));
+	public boolean[] checkDragonPortal() {
+		_checkDragonPortal[0] = false; // 安塔瑞斯
+		_checkDragonPortal[1] = false; // 法利昂
+		_checkDragonPortal[2] = false; // 林德拜尔
+		_checkDragonPortal[3] = false; // 巴拉卡斯
+
+		for (int i = 0; i < 12; i++) {
+			if (!getPortalNumber()[i]) {
+				if (i < 6) { // 前6个安塔瑞斯
+					_checkDragonPortal[0] = true;
+				}
+				else { // 后6个法利昂
+					_checkDragonPortal[1] = true;
+				}
 			}
-			else if ((element.getMapId() == mapId) && (element.getX() >= 32921 && element.getX() <= 33009) && (element.getY() >= 32799 && element.getY() <= 32869) && (portalNum >= 6 && portalNum <= 11)) { // 法利昂栖息地
-				element.sendPackets(new S_ServerMessage(type, msg));
+		}
+		return _checkDragonPortal;
+	}
+
+	public int checkHiddenDragonValleyStstus() {
+		return _hiddenDragonValleyStstus;
+	}
+
+	// 门扉存在时间结束
+	public void endDragonPortal(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] != STATUS_DRAGONSLAYER_END_5) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_5);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_5, 5000);
+			timer.begin();
+		}
+	}
+
+	// 副本完成
+	public void endDragonSlayer(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_3RD_3) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_1);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_1, 10000);
+			timer.begin();
+		}
+	}
+
+	public int[] getDragonSlayerStatus() {
+		return _DragonSlayerStatus;
+	}
+
+	// 取得参加人数
+	public int getPlayersCount(int num) {
+		DragonSlayer _DragonSlayer = null;
+		if (!_dataMap.containsKey(num)) {
+			_DragonSlayer = new DragonSlayer();
+			_dataMap.put(num, _DragonSlayer);
+		}
+		return _dataMap.get(num)._members.size();
+	}
+
+	public boolean[] getPortalNumber() {
+		return _portalNumber;
+	}
+
+	public L1NpcInstance[] portalPack() {
+		return _portal;
+	}
+
+	// 移除玩家
+	public void removePlayer(L1PcInstance pc, int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			if (_dataMap.get(portalNum)._members.contains(pc)) {
+				_dataMap.get(portalNum)._members.remove(pc);
 			}
 		}
 	}
@@ -476,33 +396,34 @@ public class L1DragonSlayer {
 		clearPlayerList(portalNumber);
 	}
 
-	// 副本内死亡的玩家重新开始
-	private void reStartPlayer(L1PcInstance pc) {
-		pc.stopPcDeleteTimer();
-
-		int[] loc = Getback.GetBack_Location(pc, true);
-
-		pc.removeAllKnownObjects();
-		pc.broadcastPacket(new S_RemoveObject(pc));
-
-		pc.setCurrentHp(pc.getLevel());
-		pc.set_food(40);
-		pc.setDead(false);
-		pc.setStatus(0);
-		L1World.getInstance().moveVisibleObject(pc, loc[2]);
-		pc.setX(loc[0]);
-		pc.setY(loc[1]);
-		pc.setMap((short) loc[2]);
-		pc.sendPackets(new S_MapID(pc.getMapId(), pc.getMap().isUnderwater()));
-		pc.broadcastPacket(new S_OtherCharPacks(pc));
-		pc.sendPackets(new S_OwnCharPack(pc));
-		pc.sendPackets(new S_CharVisualUpdate(pc));
-		pc.startHpRegeneration();
-		pc.startMpRegeneration();
-		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
-		if (pc.getHellTime() > 0) {
-			pc.beginHell(false);
+	// 讯息发送
+	public void sendMessage(int portalNum, int type, String msg) {
+		short mapId = (short) (1005 + portalNum);
+		L1PcInstance[] temp = getPlayersArray(portalNum);
+		for (L1PcInstance element : temp) {
+			if ((element.getMapId() == mapId) && (element.getX() >= 32740 && element.getX() <= 32827) && (element.getY() >= 32652 && element.getY() <= 32727) && (portalNum >= 0 && portalNum <= 5)) { // 安塔瑞斯栖息地
+				element.sendPackets(new S_ServerMessage(type, msg));
+			}
+			else if ((element.getMapId() == mapId) && (element.getX() >= 32921 && element.getX() <= 33009) && (element.getY() >= 32799 && element.getY() <= 32869) && (portalNum >= 6 && portalNum <= 11)) { // 法利昂栖息地
+				element.sendPackets(new S_ServerMessage(type, msg));
+			}
 		}
+	}
+
+	public void setDragonSlayerStatus(int portalNum, int i) {
+		_DragonSlayerStatus[portalNum] = i;
+	}
+
+	public void setHiddenDragonValleyStstus(int i) {
+		_hiddenDragonValleyStstus = i;
+	}
+
+	public void setPortalNumber(int number, boolean i) {
+		_portalNumber[number] = i;
+	}
+
+	public void setPortalPack(int number, L1NpcInstance portal) {
+		_portal[number] = portal;
 	}
 
 	// 召唤用
@@ -562,6 +483,85 @@ public class L1DragonSlayer {
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+	}
+
+	// 开始第一阶段
+	public void startDragonSlayer(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_NONE) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_READY_1RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_READY_1RD, 150000);
+			timer.begin();
+		}
+	}
+
+	// 开始第二阶段
+	public void startDragonSlayer2rd(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_1RD) {
+			if (portalNum >= 6 && portalNum <= 11) {
+				sendMessage(portalNum, 1661, null); // 法利昂：可怜啊！他们就是和你一样，注定要当我的祭品！
+			}
+			else {
+				sendMessage(portalNum, 1573, null); // 安塔瑞斯：你这顽固的家伙！你又激起我的愤怒了！
+			}
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_2RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_2RD, 10000);
+			timer.begin();
+		}
+	}
+
+	// 开始第三阶段
+	public void startDragonSlayer3rd(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_2RD_4) {
+			if (portalNum >= 6 && portalNum <= 11) {
+				sendMessage(portalNum, 1665, null); // 巫女莎尔：法利昂的力量好像削弱了不少！ 勇士们啊，再接再厉吧！
+			}
+			else {
+				sendMessage(portalNum, 1577, null); // 卡瑞：呜啊！你有听到那些冤魂的惨叫声吗！受死吧！！
+			}
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_3RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_3RD, 10000);
+			timer.begin();
+		}
+	}
+
+	// 清除玩家
+	private void clearPlayerList(int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			_dataMap.get(portalNum)._members.clear();
+		}
+	}
+
+	private L1PcInstance[] getPlayersArray(int num) {
+		return _dataMap.get(num)._members.toArray(new L1PcInstance[_dataMap.get(num)._members.size()]);
+	}
+
+	// 副本内死亡的玩家重新开始
+	private void reStartPlayer(L1PcInstance pc) {
+		pc.stopPcDeleteTimer();
+
+		int[] loc = Getback.GetBack_Location(pc, true);
+
+		pc.removeAllKnownObjects();
+		pc.broadcastPacket(new S_RemoveObject(pc));
+
+		pc.setCurrentHp(pc.getLevel());
+		pc.set_food(40);
+		pc.setDead(false);
+		pc.setStatus(0);
+		L1World.getInstance().moveVisibleObject(pc, loc[2]);
+		pc.setX(loc[0]);
+		pc.setY(loc[1]);
+		pc.setMap((short) loc[2]);
+		pc.sendPackets(new S_MapID(pc.getMapId(), pc.getMap().isUnderwater()));
+		pc.broadcastPacket(new S_OtherCharPacks(pc));
+		pc.sendPackets(new S_OwnCharPack(pc));
+		pc.sendPackets(new S_CharVisualUpdate(pc));
+		pc.startHpRegeneration();
+		pc.startMpRegeneration();
+		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
+		if (pc.getHellTime() > 0) {
+			pc.beginHell(false);
 		}
 	}
 }

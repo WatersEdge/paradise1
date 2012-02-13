@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SXYK_SoulOcarina extends ItemExecutor {
 
-	private SXYK_SoulOcarina() {
-	}
-
 	public static ItemExecutor get() {
 		return new SXYK_SoulOcarina();
+	}
+
+	private SXYK_SoulOcarina() {
 	}
 
 	/**

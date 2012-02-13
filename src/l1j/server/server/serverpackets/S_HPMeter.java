@@ -51,12 +51,6 @@ public class S_HPMeter extends ServerBasePacket {
 		buildPacket(objId, hpRatio);
 	}
 
-	private void buildPacket(int objId, int hpRatio) {
-		writeC(Opcodes.S_OPCODE_HPMETER);
-		writeD(objId);
-		writeC(hpRatio);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -69,5 +63,11 @@ public class S_HPMeter extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return _typeString;
+	}
+
+	private void buildPacket(int objId, int hpRatio) {
+		writeC(Opcodes.S_OPCODE_HPMETER);
+		writeD(objId);
+		writeC(hpRatio);
 	}
 }

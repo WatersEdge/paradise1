@@ -30,15 +30,15 @@ public class L1WorldMap {
 
 	private static L1WorldMap _instance;
 
-	/** MAPID MAP信息 */
-	private Map<Integer, L1Map> _maps;
-
 	public static L1WorldMap getInstance() {
 		if (_instance == null) {
 			_instance = new L1WorldMap();
 		}
 		return _instance;
 	}
+
+	/** MAPID MAP信息 */
+	private Map<Integer, L1Map> _maps;
 
 	private L1WorldMap() {
 		PerformanceTimer timer = new PerformanceTimer();

@@ -23,51 +23,16 @@ public class Rectangle {
 	private int _right;
 	private int _bottom;
 
-	public Rectangle(Rectangle rect) {
-		set(rect);
+	public Rectangle() {
+		this(0, 0, 0, 0);
 	}
 
 	public Rectangle(int left, int top, int right, int bottom) {
 		set(left, top, right, bottom);
 	}
 
-	public Rectangle() {
-		this(0, 0, 0, 0);
-	}
-
-	public void set(Rectangle rect) {
-		set(rect.getLeft(), rect.getTop(), rect.getWidth(), rect.getHeight());
-	}
-
-	public void set(int left, int top, int right, int bottom) {
-		_left = left;
-		_top = top;
-		_right = right;
-		_bottom = bottom;
-	}
-
-	public int getLeft() {
-		return _left;
-	}
-
-	public int getTop() {
-		return _top;
-	}
-
-	public int getRight() {
-		return _right;
-	}
-
-	public int getBottom() {
-		return _bottom;
-	}
-
-	public int getWidth() {
-		return _right - _left;
-	}
-
-	public int getHeight() {
-		return _bottom - _top;
+	public Rectangle(Rectangle rect) {
+		set(rect);
 	}
 
 	/**
@@ -92,5 +57,40 @@ public class Rectangle {
 	 */
 	public boolean contains(Point pt) {
 		return contains(pt.getX(), pt.getY());
+	}
+
+	public int getBottom() {
+		return _bottom;
+	}
+
+	public int getHeight() {
+		return _bottom - _top;
+	}
+
+	public int getLeft() {
+		return _left;
+	}
+
+	public int getRight() {
+		return _right;
+	}
+
+	public int getTop() {
+		return _top;
+	}
+
+	public int getWidth() {
+		return _right - _left;
+	}
+
+	public void set(int left, int top, int right, int bottom) {
+		_left = left;
+		_top = top;
+		_right = right;
+		_bottom = bottom;
+	}
+
+	public void set(Rectangle rect) {
+		set(rect.getLeft(), rect.getTop(), rect.getWidth(), rect.getHeight());
 	}
 }

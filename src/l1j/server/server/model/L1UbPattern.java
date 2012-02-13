@@ -57,15 +57,15 @@ public class L1UbPattern {
 		_isFrozen = true;
 	}
 
-	public boolean isFrozen() {
-		return _isFrozen;
-	}
-
 	public List<L1UbSpawn> getSpawnList(int groupNumber) {
 		if (!_isFrozen) {
 			return null;
 		}
 
 		return _groups.get(groupNumber);
+	}
+
+	public boolean isFrozen() {
+		return _isFrozen;
 	}
 }

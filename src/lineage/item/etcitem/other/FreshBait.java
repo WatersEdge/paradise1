@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class FreshBait extends ItemExecutor {
 
-	private FreshBait() {
-	}
-
 	public static ItemExecutor get() {
 		return new FreshBait();
+	}
+
+	private FreshBait() {
 	}
 
 	/**

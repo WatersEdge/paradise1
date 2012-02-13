@@ -54,56 +54,6 @@ public class L1MonsterTrap extends L1Trap {
 		_count = storage.getInt("monsterCount");
 	}
 
-	private void addListIfPassable(List<Point> list, L1Map map, Point pt) {
-		if (map.isPassable(pt)) {
-			list.add(pt);
-		}
-	}
-
-	private List<Point> getSpawnablePoints(L1Location loc, int d) {
-		List<Point> result = Lists.newList();
-		L1Map m = loc.getMap();
-		int x = loc.getX();
-		int y = loc.getY();
-		// locを中心に、1辺dタイルの正方形を描くPointリストを作る
-		for (int i = 0; i < d; i++) {
-			addListIfPassable(result, m, new Point(d - i + x, i + y));
-			addListIfPassable(result, m, new Point(-(d - i) + x, -i + y));
-			addListIfPassable(result, m, new Point(-i + x, d - i + y));
-			addListIfPassable(result, m, new Point(i + x, -(d - i) + y));
-		}
-		return result;
-	}
-
-	private Constructor<?> getConstructor(L1Npc npc) throws ClassNotFoundException {
-		return Class.forName("l1j.server.server.model.Instance." + npc.getImpl() + "Instance").getConstructors()[0];
-	}
-
-	private L1NpcInstance createNpc() throws Exception {
-		if (_npcTemp == null) {
-			_npcTemp = NpcTable.getInstance().getTemplate(_npcId);
-		}
-		if (_constructor == null) {
-			_constructor = getConstructor(_npcTemp);
-		}
-
-		return (L1NpcInstance) _constructor.newInstance(new Object[] { _npcTemp });
-	}
-
-	private void spawn(L1Location loc) throws Exception {
-		L1NpcInstance npc = createNpc();
-		npc.setId(IdFactory.getInstance().nextId());
-		npc.getLocation().set(loc);
-		npc.setHomeX(loc.getX());
-		npc.setHomeY(loc.getY());
-		L1World.getInstance().storeObject(npc);
-		L1World.getInstance().addVisibleObject(npc);
-
-		npc.onNpcAI();
-		npc.turnOnOffLight();
-		npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
-	}
-
 	@Override
 	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
 		sendEffect(trapObj);
@@ -130,5 +80,55 @@ public class L1MonsterTrap extends L1Trap {
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
+	}
+
+	private void addListIfPassable(List<Point> list, L1Map map, Point pt) {
+		if (map.isPassable(pt)) {
+			list.add(pt);
+		}
+	}
+
+	private L1NpcInstance createNpc() throws Exception {
+		if (_npcTemp == null) {
+			_npcTemp = NpcTable.getInstance().getTemplate(_npcId);
+		}
+		if (_constructor == null) {
+			_constructor = getConstructor(_npcTemp);
+		}
+
+		return (L1NpcInstance) _constructor.newInstance(new Object[] { _npcTemp });
+	}
+
+	private Constructor<?> getConstructor(L1Npc npc) throws ClassNotFoundException {
+		return Class.forName("l1j.server.server.model.Instance." + npc.getImpl() + "Instance").getConstructors()[0];
+	}
+
+	private List<Point> getSpawnablePoints(L1Location loc, int d) {
+		List<Point> result = Lists.newList();
+		L1Map m = loc.getMap();
+		int x = loc.getX();
+		int y = loc.getY();
+		// locを中心に、1辺dタイルの正方形を描くPointリストを作る
+		for (int i = 0; i < d; i++) {
+			addListIfPassable(result, m, new Point(d - i + x, i + y));
+			addListIfPassable(result, m, new Point(-(d - i) + x, -i + y));
+			addListIfPassable(result, m, new Point(-i + x, d - i + y));
+			addListIfPassable(result, m, new Point(i + x, -(d - i) + y));
+		}
+		return result;
+	}
+
+	private void spawn(L1Location loc) throws Exception {
+		L1NpcInstance npc = createNpc();
+		npc.setId(IdFactory.getInstance().nextId());
+		npc.getLocation().set(loc);
+		npc.setHomeX(loc.getX());
+		npc.setHomeY(loc.getY());
+		L1World.getInstance().storeObject(npc);
+		L1World.getInstance().addVisibleObject(npc);
+
+		npc.onNpcAI();
+		npc.turnOnOffLight();
+		npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 	}
 }

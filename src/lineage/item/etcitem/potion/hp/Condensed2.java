@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Condensed2 extends ItemExecutor {
 
-	private Condensed2() {
-	}
-
 	public static ItemExecutor get() {
 		return new Condensed2();
+	}
+
+	private Condensed2() {
 	}
 
 	/**

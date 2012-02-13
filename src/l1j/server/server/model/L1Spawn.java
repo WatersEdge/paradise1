@@ -43,6 +43,22 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class L1Spawn extends L1GameTimeAdapter {
 
+	private class SpawnTask implements Runnable {
+		private int _spawnNumber;
+
+		private int _objectId;
+
+		private SpawnTask(int spawnNumber, int objectId) {
+			_spawnNumber = spawnNumber;
+			_objectId = objectId;
+		}
+
+		@Override
+		public void run() {
+			doSpawn(_spawnNumber, _objectId);
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(L1Spawn.class.getName());
 
 	private final L1Npc _template;
@@ -99,19 +115,33 @@ public class L1Spawn extends L1GameTimeAdapter {
 
 	private String _name;
 
-	private class SpawnTask implements Runnable {
-		private int _spawnNumber;
+	private boolean _initSpawn = false;
 
-		private int _objectId;
+	private boolean _spawnHomePoint;
 
-		private SpawnTask(int spawnNumber, int objectId) {
-			_spawnNumber = spawnNumber;
-			_objectId = objectId;
+	private static final int SPAWN_TYPE_PC_AROUND = 1;
+
+	private static final int PC_AROUND_DISTANCE = 30;
+
+	public static void doCrystalCave(int npcId) {
+		int[] npcId2 = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150, 46151, 46152 };
+		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009, 5010 };
+
+		for (int i = 0; i < npcId2.length; i++) {
+			if (npcId == npcId2[i]) {
+				closeDoorInCrystalCave(doorId[i]);
+			}
 		}
+	}
 
-		@Override
-		public void run() {
-			doSpawn(_spawnNumber, _objectId);
+	private static void closeDoorInCrystalCave(int doorId) {
+		for (L1Object object : L1World.getInstance().getObject()) {
+			if (object instanceof L1DoorInstance) {
+				L1DoorInstance door = (L1DoorInstance) object;
+				if (door.getDoorId() == doorId) {
+					door.close();
+				}
+			}
 		}
 	}
 
@@ -119,36 +149,15 @@ public class L1Spawn extends L1GameTimeAdapter {
 		_template = mobTemplate;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public short getMapId() {
-		return _mapid;
-	}
-
-	public void setMapId(short _mapid) {
-		this._mapid = _mapid;
-	}
-
-	public boolean isRespawnScreen() {
-		return _respaenScreen;
-	}
-
-	public void setRespawnScreen(boolean flag) {
-		_respaenScreen = flag;
-	}
-
-	public int getMovementDistance() {
-		return _movementDistance;
-	}
-
-	public void setMovementDistance(int i) {
-		_movementDistance = i;
+	/**
+	 * SpawnTask启动。
+	 * 
+	 * @param spawnNumber
+	 *            L1Spawn管理者的数字。ホームポイントが無ければ何を指定しても良い。
+	 */
+	public void executeSpawnTask(int spawnNumber, int objectId) {
+		SpawnTask task = new SpawnTask(spawnNumber, objectId);
+		GeneralThreadPool.getInstance().schedule(task, calcRespawnDelay());
 	}
 
 	public int getAmount() {
@@ -157,6 +166,10 @@ public class L1Spawn extends L1GameTimeAdapter {
 
 	public int getGroupId() {
 		return _groupId;
+	}
+
+	public int getHeading() {
+		return _heading;
 	}
 
 	public int getId() {
@@ -171,16 +184,48 @@ public class L1Spawn extends L1GameTimeAdapter {
 		return _locx;
 	}
 
+	public int getLocX1() {
+		return _locx1;
+	}
+
+	public int getLocX2() {
+		return _locx2;
+	}
+
 	public int getLocY() {
 		return _locy;
 	}
 
-	public int getNpcId() {
-		return _npcid;
+	public int getLocY1() {
+		return _locy1;
 	}
 
-	public int getHeading() {
-		return _heading;
+	public int getLocY2() {
+		return _locy2;
+	}
+
+	public short getMapId() {
+		return _mapid;
+	}
+
+	public int getMaxRespawnDelay() {
+		return _maxRespawnDelay;
+	}
+
+	public int getMinRespawnDelay() {
+		return _minRespawnDelay;
+	}
+
+	public int getMovementDistance() {
+		return _movementDistance;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public int getNpcId() {
+		return _npcid;
 	}
 
 	public int getRandomx() {
@@ -191,125 +236,9 @@ public class L1Spawn extends L1GameTimeAdapter {
 		return Randomy;
 	}
 
-	public int getLocX1() {
-		return _locx1;
+	public L1SpawnTime getTime() {
+		return _time;
 	}
-
-	public int getLocY1() {
-		return _locy1;
-	}
-
-	public int getLocX2() {
-		return _locx2;
-	}
-
-	public int getLocY2() {
-		return _locy2;
-	}
-
-	public int getMinRespawnDelay() {
-		return _minRespawnDelay;
-	}
-
-	public int getMaxRespawnDelay() {
-		return _maxRespawnDelay;
-	}
-
-	public void setAmount(int amount) {
-		_maximumCount = amount;
-	}
-
-	public void setId(int id) {
-		_id = id;
-	}
-
-	public void setGroupId(int i) {
-		_groupId = i;
-	}
-
-	public void setLocation(String location) {
-		_location = location;
-	}
-
-	public void setLocX(int locx) {
-		_locx = locx;
-	}
-
-	public void setLocY(int locy) {
-		_locy = locy;
-	}
-
-	public void setNpcid(int npcid) {
-		_npcid = npcid;
-	}
-
-	public void setHeading(int heading) {
-		_heading = heading;
-	}
-
-	public void setRandomx(int randomx) {
-		Randomx = randomx;
-	}
-
-	public void setRandomy(int randomy) {
-		Randomy = randomy;
-	}
-
-	public void setLocX1(int locx1) {
-		_locx1 = locx1;
-	}
-
-	public void setLocY1(int locy1) {
-		_locy1 = locy1;
-	}
-
-	public void setLocX2(int locx2) {
-		_locx2 = locx2;
-	}
-
-	public void setLocY2(int locy2) {
-		_locy2 = locy2;
-	}
-
-	public void setMinRespawnDelay(int i) {
-		_minRespawnDelay = i;
-	}
-
-	public void setMaxRespawnDelay(int i) {
-		_maxRespawnDelay = i;
-	}
-
-	private int calcRespawnDelay() {
-		int respawnDelay = _minRespawnDelay * 1000;
-		if (_delayInterval > 0) {
-			respawnDelay += Random.nextInt(_delayInterval) * 1000;
-		}
-		L1GameTime currentTime = L1GameTimeClock.getInstance().currentTime();
-		if ((_time != null) && !_time.getTimePeriod().includes(currentTime)) { // 指定時間外なら指定時間までの時間を足す
-			long diff = (_time.getTimeStart().getTime() - currentTime.toTime().getTime());
-			if (diff < 0) {
-				diff += 24 * 1000L * 3600L;
-			}
-			diff /= 6; // real time to game time
-			respawnDelay = (int) diff;
-		}
-		return respawnDelay;
-	}
-
-	/**
-	 * SpawnTask启动。
-	 * 
-	 * @param spawnNumber
-	 *            L1Spawn管理者的数字。ホームポイントが無ければ何を指定しても良い。
-	 */
-	public void executeSpawnTask(int spawnNumber, int objectId) {
-		SpawnTask task = new SpawnTask(spawnNumber, objectId);
-		GeneralThreadPool.getInstance().schedule(task, calcRespawnDelay());
-	}
-
-	private boolean _initSpawn = false;
-
-	private boolean _spawnHomePoint;
 
 	public void init() {
 		if ((_time != null) && _time.isDeleteAtEndTime()) {
@@ -330,6 +259,155 @@ public class L1Spawn extends L1GameTimeAdapter {
 			doSpawn(++spawnNum);
 		}
 		_initSpawn = false;
+	}
+
+	public boolean isRespawnScreen() {
+		return _respaenScreen;
+	}
+
+	public boolean isRest() {
+		return _rest;
+	}
+
+	@Override
+	public void onMinuteChanged(L1GameTime time) {
+		if (_time.getTimePeriod().includes(time)) {
+			return;
+		}
+		synchronized (_mobs) {
+			if (_mobs.isEmpty()) {
+				return;
+			}
+			// 不在指定的时间删除
+			for (L1NpcInstance mob : _mobs) {
+				mob.setCurrentHpDirect(0);
+				mob.setDead(true);
+				mob.setStatus(ActionCodes.ACTION_Die);
+				mob.deleteMe();
+			}
+			_mobs.clear();
+		}
+	}
+
+	public void setAmount(int amount) {
+		_maximumCount = amount;
+	}
+
+	public void setGroupId(int i) {
+		_groupId = i;
+	}
+
+	public void setHeading(int heading) {
+		_heading = heading;
+	}
+
+	public void setId(int id) {
+		_id = id;
+	}
+
+	public void setLocation(String location) {
+		_location = location;
+	}
+
+	public void setLocX(int locx) {
+		_locx = locx;
+	}
+
+	public void setLocX1(int locx1) {
+		_locx1 = locx1;
+	}
+
+	public void setLocX2(int locx2) {
+		_locx2 = locx2;
+	}
+
+	public void setLocY(int locy) {
+		_locy = locy;
+	}
+
+	public void setLocY1(int locy1) {
+		_locy1 = locy1;
+	}
+
+	public void setLocY2(int locy2) {
+		_locy2 = locy2;
+	}
+
+	public void setMapId(short _mapid) {
+		this._mapid = _mapid;
+	}
+
+	public void setMaxRespawnDelay(int i) {
+		_maxRespawnDelay = i;
+	}
+
+	public void setMinRespawnDelay(int i) {
+		_minRespawnDelay = i;
+	}
+
+	public void setMovementDistance(int i) {
+		_movementDistance = i;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setNpcid(int npcid) {
+		_npcid = npcid;
+	}
+
+	public void setRandomx(int randomx) {
+		Randomx = randomx;
+	}
+
+	public void setRandomy(int randomy) {
+		Randomy = randomy;
+	}
+
+	public void setRespawnScreen(boolean flag) {
+		_respaenScreen = flag;
+	}
+
+	public void setRest(boolean flag) {
+		_rest = flag;
+	}
+
+	public void setSpawnType(int type) {
+		_spawnType = type;
+	}
+
+	public void setTime(L1SpawnTime time) {
+		_time = time;
+	}
+
+	private int calcRespawnDelay() {
+		int respawnDelay = _minRespawnDelay * 1000;
+		if (_delayInterval > 0) {
+			respawnDelay += Random.nextInt(_delayInterval) * 1000;
+		}
+		L1GameTime currentTime = L1GameTimeClock.getInstance().currentTime();
+		if ((_time != null) && !_time.getTimePeriod().includes(currentTime)) { // 指定時間外なら指定時間までの時間を足す
+			long diff = (_time.getTimeStart().getTime() - currentTime.toTime().getTime());
+			if (diff < 0) {
+				diff += 24 * 1000L * 3600L;
+			}
+			diff /= 6; // real time to game time
+			respawnDelay = (int) diff;
+		}
+		return respawnDelay;
+	}
+
+	private int getSpawnType() {
+		return _spawnType;
+	}
+
+	private boolean isAreaSpawn() {
+		return (getLocX1() != 0) && (getLocY1() != 0) && (getLocX2() != 0) && (getLocY2() != 0);
+	}
+
+	private boolean isRandomSpawn() {
+		return (getRandomx() != 0) || (getRandomy() != 0);
 	}
 
 	/**
@@ -513,84 +591,6 @@ public class L1Spawn extends L1GameTimeAdapter {
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-	}
-
-	public void setRest(boolean flag) {
-		_rest = flag;
-	}
-
-	public boolean isRest() {
-		return _rest;
-	}
-
-	private static final int SPAWN_TYPE_PC_AROUND = 1;
-
-	private static final int PC_AROUND_DISTANCE = 30;
-
-	private int getSpawnType() {
-		return _spawnType;
-	}
-
-	public void setSpawnType(int type) {
-		_spawnType = type;
-	}
-
-	private boolean isAreaSpawn() {
-		return (getLocX1() != 0) && (getLocY1() != 0) && (getLocX2() != 0) && (getLocY2() != 0);
-	}
-
-	private boolean isRandomSpawn() {
-		return (getRandomx() != 0) || (getRandomy() != 0);
-	}
-
-	public L1SpawnTime getTime() {
-		return _time;
-	}
-
-	public void setTime(L1SpawnTime time) {
-		_time = time;
-	}
-
-	@Override
-	public void onMinuteChanged(L1GameTime time) {
-		if (_time.getTimePeriod().includes(time)) {
-			return;
-		}
-		synchronized (_mobs) {
-			if (_mobs.isEmpty()) {
-				return;
-			}
-			// 不在指定的时间删除
-			for (L1NpcInstance mob : _mobs) {
-				mob.setCurrentHpDirect(0);
-				mob.setDead(true);
-				mob.setStatus(ActionCodes.ACTION_Die);
-				mob.deleteMe();
-			}
-			_mobs.clear();
-		}
-	}
-
-	public static void doCrystalCave(int npcId) {
-		int[] npcId2 = { 46143, 46144, 46145, 46146, 46147, 46148, 46149, 46150, 46151, 46152 };
-		int[] doorId = { 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009, 5010 };
-
-		for (int i = 0; i < npcId2.length; i++) {
-			if (npcId == npcId2[i]) {
-				closeDoorInCrystalCave(doorId[i]);
-			}
-		}
-	}
-
-	private static void closeDoorInCrystalCave(int doorId) {
-		for (L1Object object : L1World.getInstance().getObject()) {
-			if (object instanceof L1DoorInstance) {
-				L1DoorInstance door = (L1DoorInstance) object;
-				if (door.getDoorId() == doorId) {
-					door.close();
-				}
-			}
 		}
 	}
 }

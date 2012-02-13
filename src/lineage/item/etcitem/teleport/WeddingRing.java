@@ -23,11 +23,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class WeddingRing extends ItemExecutor {
 
-	private WeddingRing() {
-	}
-
 	public static ItemExecutor get() {
 		return new WeddingRing();
+	}
+
+	private WeddingRing() {
 	}
 
 	/**

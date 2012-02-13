@@ -33,14 +33,65 @@ public class CharacterConfigTable {
 
 	private static CharacterConfigTable _instance;
 
-	public CharacterConfigTable() {
-	}
-
 	public static CharacterConfigTable getInstance() {
 		if (_instance == null) {
 			_instance = new CharacterConfigTable();
 		}
 		return _instance;
+	}
+
+	public CharacterConfigTable() {
+	}
+
+	/**
+	 * 角色配置数量
+	 * 
+	 * @param objectId
+	 */
+	public int countCharacterConfig(int objectId) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT count(*) as cnt FROM character_config WHERE object_id=?");
+			pstm.setInt(1, objectId);
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("cnt");
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return result;
+	}
+
+	/**
+	 * 删除角色配置
+	 * 
+	 * @param objectId
+	 */
+	public void deleteCharacterConfig(int objectId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM character_config WHERE object_id=?");
+			pstm.setInt(1, objectId);
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	/**
@@ -93,57 +144,6 @@ public class CharacterConfigTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 删除角色配置
-	 * 
-	 * @param objectId
-	 */
-	public void deleteCharacterConfig(int objectId) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM character_config WHERE object_id=?");
-			pstm.setInt(1, objectId);
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 角色配置数量
-	 * 
-	 * @param objectId
-	 */
-	public int countCharacterConfig(int objectId) {
-		int result = 0;
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT count(*) as cnt FROM character_config WHERE object_id=?");
-			pstm.setInt(1, objectId);
-			rs = pstm.executeQuery();
-			if (rs.next()) {
-				result = rs.getInt("cnt");
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		return result;
 	}
 
 }

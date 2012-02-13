@@ -28,23 +28,6 @@ import l1j.server.server.utils.Random;
  */
 public class L1FishInstance extends L1NpcInstance {
 
-	private static final long serialVersionUID = 1L;
-
-	private fishTimer _fishTimer;
-
-	public L1FishInstance(L1Npc template) {
-		super(template);
-		_fishTimer = new fishTimer(this);
-		Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(_fishTimer, 1000, (Random.nextInt(30, 30) * 1000));
-	}
-
-	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
-		perceivedFrom.addKnownObject(this);
-		perceivedFrom.sendPackets(new S_NPCPack(this));
-	}
-
 	private class fishTimer extends TimerTask {
 
 		private L1FishInstance _fish;
@@ -64,6 +47,23 @@ public class L1FishInstance extends L1NpcInstance {
 				cancel();
 			}
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private fishTimer _fishTimer;
+
+	public L1FishInstance(L1Npc template) {
+		super(template);
+		_fishTimer = new fishTimer(this);
+		Timer timer = new Timer(true);
+		timer.scheduleAtFixedRate(_fishTimer, 1000, (Random.nextInt(30, 30) * 1000));
+	}
+
+	@Override
+	public void onPerceive(L1PcInstance perceivedFrom) {
+		perceivedFrom.addKnownObject(this);
+		perceivedFrom.sendPackets(new S_NPCPack(this));
 	}
 
 }

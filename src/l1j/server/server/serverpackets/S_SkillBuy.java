@@ -58,6 +58,19 @@ public class S_SkillBuy extends ServerBasePacket {
 		}
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S_SKILL_BUY;
+	}
+
 	public int Scount(L1PcInstance pc) {
 		int RC = 0;
 		switch (pc.getType()) {
@@ -113,19 +126,6 @@ public class S_SkillBuy extends ServerBasePacket {
 			break;
 		}
 		return RC;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S_SKILL_BUY;
 	}
 
 }

@@ -46,6 +46,11 @@ public class C_JoinClan extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_JOIN_CLAN;
+	}
+
 	// 加入血盟
 	private void JoinClan(L1PcInstance player, L1PcInstance target) {
 		if (!target.isCrown()) { // 如果面对的对象不是王族
@@ -97,10 +102,5 @@ public class C_JoinClan extends ClientBasePacket {
 
 		target.setTempID(player.getId()); // 暂时保存面对的人的ID
 		target.sendPackets(new S_Message_YN(97, player.getName())); // \f3%0%s 想加入你的血盟。你接受吗。(Y/N)
-	}
-
-	@Override
-	public String getType() {
-		return C_JOIN_CLAN;
 	}
 }

@@ -33,14 +33,14 @@ public class LetterTable {
 
 	private static LetterTable _instance;
 
-	public LetterTable() {
-	}
-
 	public static LetterTable getInstance() {
 		if (_instance == null) {
 			_instance = new LetterTable();
 		}
 		return _instance;
+	}
+
+	public LetterTable() {
 	}
 
 	// 列表模板ID
@@ -59,6 +59,28 @@ public class LetterTable {
 	// 208:あなたの血盟が所有している家は、本領主の領地に帰属しているため、今後利用したいのなら当方に税金を収めなければなりません。
 	// 224:あなたは、あなたの家に課せられた税金%0アデナをまだ納めていません。
 	// 240:あなたは、結局あなたの家に課された税金%0を納めなかったので、警告どおりにあなたの家に対する所有権を剥奪します。
+
+	/**
+	 * 删除信件
+	 * 
+	 * @param itemObjectId
+	 */
+	public void deleteLetter(int itemObjectId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM letter WHERE item_object_id=?");
+			pstm.setInt(1, itemObjectId);
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
 
 	/**
 	 * 写信
@@ -99,28 +121,6 @@ public class LetterTable {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm1);
 			SQLUtil.close(pstm2);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 删除信件
-	 * 
-	 * @param itemObjectId
-	 */
-	public void deleteLetter(int itemObjectId) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM letter WHERE item_object_id=?");
-			pstm.setInt(1, itemObjectId);
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}

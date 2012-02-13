@@ -31,6 +31,13 @@ import l1j.server.server.utils.collections.Maps;
  * 城堡的位置
  */
 public class L1CastleLocation {
+	private static class L1CastleTaxRateListener extends L1GameTimeAdapter {
+		@Override
+		public void onDayChanged(L1GameTime time) {
+			L1CastleLocation.setCastleTaxRate();
+		}
+	}
+
 	// castle_id
 	public static final int KENT_CASTLE_ID = 1;
 
@@ -259,7 +266,38 @@ public class L1CastleLocation {
 		_subTowers.put(4, new L1Location(ADEN_SUB_TOWER4_X, ADEN_SUB_TOWER4_Y, ADEN_TOWER_MAP));
 	}
 
-	private L1CastleLocation() {
+	// 各城の税率を保管しておくHashMap(ショップ用)
+	private static Map<Integer, Integer> _castleTaxRate = Maps.newMap();
+
+	private static L1CastleTaxRateListener _listener;
+
+	/**
+	 * 检查是否在一个战争区（旗内）
+	 */
+	public static boolean checkInAllWarArea(int locx, int locy, short mapid) {
+		return checkInAllWarArea(new L1Location(locx, locy, mapid));
+	}
+
+	public static boolean checkInAllWarArea(L1Location loc) {
+		return 0 != getCastleIdByArea(loc);
+	}
+
+	/**
+	 * 返回指定的城战地区（旗内）
+	 */
+	public static boolean checkInWarArea(int castleId, L1Character cha) {
+		return checkInWarArea(castleId, cha.getLocation());
+	}
+
+	public static boolean checkInWarArea(int castleId, L1Location loc) {
+		return castleId == getCastleIdByArea(loc);
+	}
+
+	/**
+	 * 守护者之塔、返回王冠的坐标castle_id
+	 */
+	public static int getCastleId(int locx, int locy, short mapid) {
+		return getCastleId(new L1Location(locx, locy, mapid));
 	}
 
 	public static int getCastleId(L1Location loc) {
@@ -272,10 +310,10 @@ public class L1CastleLocation {
 	}
 
 	/**
-	 * 守护者之塔、返回王冠的坐标castle_id
+	 * 返回战争区（旗内）的坐标castle_id
 	 */
-	public static int getCastleId(int locx, int locy, short mapid) {
-		return getCastleId(new L1Location(locx, locy, mapid));
+	public static int getCastleIdByArea(L1Character cha) {
+		return getCastleIdByArea(cha.getLocation());
 	}
 
 	public static int getCastleIdByArea(L1Location loc) {
@@ -293,32 +331,186 @@ public class L1CastleLocation {
 	}
 
 	/**
-	 * 返回战争区（旗内）的坐标castle_id
+	 * npcidからcastle_idを返す
+	 * 
+	 * @param npcid
+	 * @return
 	 */
-	public static int getCastleIdByArea(L1Character cha) {
-		return getCastleIdByArea(cha.getLocation());
+	public static int getCastleIdByNpcid(int npcid) {
+		// 亚丁城：アデン王国全域
+		// 肯特城：ケント、グルーディン
+		// ウィンダウッド城：ウッドベック、オアシス、シルバーナイトタウン
+		// ギラン城：ギラン、话せる岛
+		// 海音城：ハイネ
+		// 侏儒城：ウェルダン、象牙の塔、象牙の塔の村
+		// オーク砦：火田村
+		// 狄亚得要塞：战争税の一部
+
+		int castle_id = 0;
+
+		int town_id = L1TownLocation.getTownIdByNpcid(npcid);
+
+		switch (town_id) {
+		case L1TownLocation.TOWNID_KENT:
+		case L1TownLocation.TOWNID_GLUDIO:
+			castle_id = KENT_CASTLE_ID; // 肯特城
+			break;
+
+		case L1TownLocation.TOWNID_ORCISH_FOREST:
+			castle_id = OT_CASTLE_ID; // オークの森
+			break;
+
+		case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
+		case L1TownLocation.TOWNID_WINDAWOOD:
+			castle_id = WW_CASTLE_ID; // ウィンダウッド城
+			break;
+
+		case L1TownLocation.TOWNID_TALKING_ISLAND:
+		case L1TownLocation.TOWNID_GIRAN:
+			castle_id = GIRAN_CASTLE_ID; // ギラン城
+			break;
+
+		case L1TownLocation.TOWNID_HEINE:
+			castle_id = HEINE_CASTLE_ID; // 海音城
+			break;
+
+		case L1TownLocation.TOWNID_WERLDAN:
+		case L1TownLocation.TOWNID_OREN:
+			castle_id = DOWA_CASTLE_ID; // 侏儒城
+			break;
+
+		case L1TownLocation.TOWNID_ADEN:
+			castle_id = ADEN_CASTLE_ID; // 亚丁城
+			break;
+
+		case L1TownLocation.TOWNID_OUM_DUNGEON:
+			castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
+			break;
+
+		default:
+			break;
+		}
+		return castle_id;
 	}
 
-	public static boolean checkInWarArea(int castleId, L1Location loc) {
-		return castleId == getCastleIdByArea(loc);
+	public static int[] getCastleLoc(int castle_id) { // castle_idから城内の座标を返す
+		int[] loc = new int[3];
+		if (castle_id == KENT_CASTLE_ID) { // 肯特城
+			loc[0] = 32731;
+			loc[1] = 32810;
+			loc[2] = 15;
+		}
+		else if (castle_id == OT_CASTLE_ID) { // オークの森
+			loc[0] = 32800;
+			loc[1] = 32277;
+			loc[2] = 4;
+		}
+		else if (castle_id == WW_CASTLE_ID) { // ウィンダウッド城
+			loc[0] = 32730;
+			loc[1] = 32814;
+			loc[2] = 29;
+		}
+		else if (castle_id == GIRAN_CASTLE_ID) { // ギラン城
+			loc[0] = 32724;
+			loc[1] = 32827;
+			loc[2] = 52;
+		}
+		else if (castle_id == HEINE_CASTLE_ID) { // 海音城
+			loc[0] = 32568;
+			loc[1] = 32855;
+			loc[2] = 64;
+		}
+		else if (castle_id == DOWA_CASTLE_ID) { // 侏儒城
+			loc[0] = 32853;
+			loc[1] = 32810;
+			loc[2] = 66;
+		}
+		else if (castle_id == ADEN_CASTLE_ID) { // 亚丁城
+			loc[0] = 32892;
+			loc[1] = 32572;
+			loc[2] = 300;
+		}
+		else if (castle_id == DIAD_CASTLE_ID) { // 狄亚得要塞
+			loc[0] = 32733;
+			loc[1] = 32985;
+			loc[2] = 330;
+		}
+		return loc;
+	}
+
+	// このメソッドはアデン时间で一日每に更新される税率を返却する。(リアルタイムな税率ではない)
+	public static int getCastleTaxRateByNpcId(int npcId) {
+		int castleId = getCastleIdByNpcid(npcId);
+		if (castleId != 0) {
+			return _castleTaxRate.get(castleId);
+		}
+		return 0;
+	}
+
+	/*
+	 * castle_idから归还先の座标をランダムに返す
+	 */
+	public static int[] getGetBackLoc(int castle_id) {
+		int[] loc;
+		if (castle_id == KENT_CASTLE_ID) { // 肯特城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_KENT);
+		}
+		else if (castle_id == OT_CASTLE_ID) { // オークの森
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ORCISH_FOREST);
+		}
+		else if (castle_id == WW_CASTLE_ID) { // ウィンダウッド城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_WINDAWOOD);
+		}
+		else if (castle_id == GIRAN_CASTLE_ID) { // ギラン城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_GIRAN);
+		}
+		else if (castle_id == HEINE_CASTLE_ID) { // 海音城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_HEINE);
+		}
+		else if (castle_id == DOWA_CASTLE_ID) { // 侏儒城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_WERLDAN);
+		}
+		else if (castle_id == ADEN_CASTLE_ID) { // 亚丁城
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ADEN);
+		}
+		else if (castle_id == DIAD_CASTLE_ID) { // 狄亚得要塞
+			// 狄亚得要塞の归还先は未调查
+			int rnd = Random.nextInt(3);
+			loc = new int[3];
+			if (rnd == 0) {
+				loc[0] = 32792;
+				loc[1] = 32807;
+				loc[2] = 310;
+			}
+			else if (rnd == 1) {
+				loc[0] = 32816;
+				loc[1] = 32820;
+				loc[2] = 310;
+			}
+			else if (rnd == 2) {
+				loc[0] = 32823;
+				loc[1] = 32797;
+				loc[2] = 310;
+			}
+		}
+		else { // 存在しないcastle_idが指定された场合はSKT
+			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN);
+		}
+		return loc;
 	}
 
 	/**
-	 * 返回指定的城战地区（旗内）
+	 * サブタワー番号からサブタワーの座标を返す
 	 */
-	public static boolean checkInWarArea(int castleId, L1Character cha) {
-		return checkInWarArea(castleId, cha.getLocation());
-	}
-
-	public static boolean checkInAllWarArea(L1Location loc) {
-		return 0 != getCastleIdByArea(loc);
-	}
-
-	/**
-	 * 检查是否在一个战争区（旗内）
-	 */
-	public static boolean checkInAllWarArea(int locx, int locy, short mapid) {
-		return checkInAllWarArea(new L1Location(locx, locy, mapid));
+	public static int[] getSubTowerLoc(int no) {
+		int[] result = new int[3];
+		L1Location loc = _subTowers.get(no);
+		if (loc != null) {
+			result[0] = loc.getX();
+			result[1] = loc.getY();
+			result[2] = loc.getMapId();
+		}
+		return result;
 	}
 
 	/**
@@ -399,180 +591,6 @@ public class L1CastleLocation {
 		return loc;
 	}
 
-	public static int[] getCastleLoc(int castle_id) { // castle_idから城内の座标を返す
-		int[] loc = new int[3];
-		if (castle_id == KENT_CASTLE_ID) { // 肯特城
-			loc[0] = 32731;
-			loc[1] = 32810;
-			loc[2] = 15;
-		}
-		else if (castle_id == OT_CASTLE_ID) { // オークの森
-			loc[0] = 32800;
-			loc[1] = 32277;
-			loc[2] = 4;
-		}
-		else if (castle_id == WW_CASTLE_ID) { // ウィンダウッド城
-			loc[0] = 32730;
-			loc[1] = 32814;
-			loc[2] = 29;
-		}
-		else if (castle_id == GIRAN_CASTLE_ID) { // ギラン城
-			loc[0] = 32724;
-			loc[1] = 32827;
-			loc[2] = 52;
-		}
-		else if (castle_id == HEINE_CASTLE_ID) { // 海音城
-			loc[0] = 32568;
-			loc[1] = 32855;
-			loc[2] = 64;
-		}
-		else if (castle_id == DOWA_CASTLE_ID) { // 侏儒城
-			loc[0] = 32853;
-			loc[1] = 32810;
-			loc[2] = 66;
-		}
-		else if (castle_id == ADEN_CASTLE_ID) { // 亚丁城
-			loc[0] = 32892;
-			loc[1] = 32572;
-			loc[2] = 300;
-		}
-		else if (castle_id == DIAD_CASTLE_ID) { // 狄亚得要塞
-			loc[0] = 32733;
-			loc[1] = 32985;
-			loc[2] = 330;
-		}
-		return loc;
-	}
-
-	/*
-	 * castle_idから归还先の座标をランダムに返す
-	 */
-	public static int[] getGetBackLoc(int castle_id) {
-		int[] loc;
-		if (castle_id == KENT_CASTLE_ID) { // 肯特城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_KENT);
-		}
-		else if (castle_id == OT_CASTLE_ID) { // オークの森
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ORCISH_FOREST);
-		}
-		else if (castle_id == WW_CASTLE_ID) { // ウィンダウッド城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_WINDAWOOD);
-		}
-		else if (castle_id == GIRAN_CASTLE_ID) { // ギラン城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_GIRAN);
-		}
-		else if (castle_id == HEINE_CASTLE_ID) { // 海音城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_HEINE);
-		}
-		else if (castle_id == DOWA_CASTLE_ID) { // 侏儒城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_WERLDAN);
-		}
-		else if (castle_id == ADEN_CASTLE_ID) { // 亚丁城
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ADEN);
-		}
-		else if (castle_id == DIAD_CASTLE_ID) { // 狄亚得要塞
-			// 狄亚得要塞の归还先は未调查
-			int rnd = Random.nextInt(3);
-			loc = new int[3];
-			if (rnd == 0) {
-				loc[0] = 32792;
-				loc[1] = 32807;
-				loc[2] = 310;
-			}
-			else if (rnd == 1) {
-				loc[0] = 32816;
-				loc[1] = 32820;
-				loc[2] = 310;
-			}
-			else if (rnd == 2) {
-				loc[0] = 32823;
-				loc[1] = 32797;
-				loc[2] = 310;
-			}
-		}
-		else { // 存在しないcastle_idが指定された场合はSKT
-			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN);
-		}
-		return loc;
-	}
-
-	/**
-	 * npcidからcastle_idを返す
-	 * 
-	 * @param npcid
-	 * @return
-	 */
-	public static int getCastleIdByNpcid(int npcid) {
-		// 亚丁城：アデン王国全域
-		// 肯特城：ケント、グルーディン
-		// ウィンダウッド城：ウッドベック、オアシス、シルバーナイトタウン
-		// ギラン城：ギラン、话せる岛
-		// 海音城：ハイネ
-		// 侏儒城：ウェルダン、象牙の塔、象牙の塔の村
-		// オーク砦：火田村
-		// 狄亚得要塞：战争税の一部
-
-		int castle_id = 0;
-
-		int town_id = L1TownLocation.getTownIdByNpcid(npcid);
-
-		switch (town_id) {
-		case L1TownLocation.TOWNID_KENT:
-		case L1TownLocation.TOWNID_GLUDIO:
-			castle_id = KENT_CASTLE_ID; // 肯特城
-			break;
-
-		case L1TownLocation.TOWNID_ORCISH_FOREST:
-			castle_id = OT_CASTLE_ID; // オークの森
-			break;
-
-		case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
-		case L1TownLocation.TOWNID_WINDAWOOD:
-			castle_id = WW_CASTLE_ID; // ウィンダウッド城
-			break;
-
-		case L1TownLocation.TOWNID_TALKING_ISLAND:
-		case L1TownLocation.TOWNID_GIRAN:
-			castle_id = GIRAN_CASTLE_ID; // ギラン城
-			break;
-
-		case L1TownLocation.TOWNID_HEINE:
-			castle_id = HEINE_CASTLE_ID; // 海音城
-			break;
-
-		case L1TownLocation.TOWNID_WERLDAN:
-		case L1TownLocation.TOWNID_OREN:
-			castle_id = DOWA_CASTLE_ID; // 侏儒城
-			break;
-
-		case L1TownLocation.TOWNID_ADEN:
-			castle_id = ADEN_CASTLE_ID; // 亚丁城
-			break;
-
-		case L1TownLocation.TOWNID_OUM_DUNGEON:
-			castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
-			break;
-
-		default:
-			break;
-		}
-		return castle_id;
-	}
-
-	// このメソッドはアデン时间で一日每に更新される税率を返却する。(リアルタイムな税率ではない)
-	public static int getCastleTaxRateByNpcId(int npcId) {
-		int castleId = getCastleIdByNpcid(npcId);
-		if (castleId != 0) {
-			return _castleTaxRate.get(castleId);
-		}
-		return 0;
-	}
-
-	// 各城の税率を保管しておくHashMap(ショップ用)
-	private static Map<Integer, Integer> _castleTaxRate = Maps.newMap();
-
-	private static L1CastleTaxRateListener _listener;
-
 	// GameServer#initialize,L1CastleTaxRateListener#onDayChangedだけに呼び出される予定。
 	public static void setCastleTaxRate() {
 		for (L1Castle castle : CastleTable.getInstance().getCastleTableList()) {
@@ -584,25 +602,7 @@ public class L1CastleLocation {
 		}
 	}
 
-	private static class L1CastleTaxRateListener extends L1GameTimeAdapter {
-		@Override
-		public void onDayChanged(L1GameTime time) {
-			L1CastleLocation.setCastleTaxRate();
-		}
-	}
-
-	/**
-	 * サブタワー番号からサブタワーの座标を返す
-	 */
-	public static int[] getSubTowerLoc(int no) {
-		int[] result = new int[3];
-		L1Location loc = _subTowers.get(no);
-		if (loc != null) {
-			result[0] = loc.getX();
-			result[1] = loc.getY();
-			result[2] = loc.getMapId();
-		}
-		return result;
+	private L1CastleLocation() {
 	}
 
 }

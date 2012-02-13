@@ -22,11 +22,11 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1ShowTrap implements L1CommandExecutor {
-	private L1ShowTrap() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1ShowTrap();
+	}
+
+	private L1ShowTrap() {
 	}
 
 	@Override

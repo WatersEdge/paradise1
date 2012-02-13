@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class HomeScroll extends ItemExecutor {
 
-	private HomeScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new HomeScroll();
+	}
+
+	private HomeScroll() {
 	}
 
 	/**

@@ -35,16 +35,6 @@ public class S_BoardRead extends ServerBasePacket {
 		buildPacket(number);
 	}
 
-	private void buildPacket(int number) {
-		L1BoardTopic topic = L1BoardTopic.findById(number);
-		writeC(Opcodes.S_OPCODE_BOARDREAD);
-		writeD(number);
-		writeS(topic.getName());
-		writeS(topic.getTitle());
-		writeS(topic.getDate());
-		writeS(topic.getContent());
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -56,5 +46,15 @@ public class S_BoardRead extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_BoardRead;
+	}
+
+	private void buildPacket(int number) {
+		L1BoardTopic topic = L1BoardTopic.findById(number);
+		writeC(Opcodes.S_OPCODE_BOARDREAD);
+		writeD(number);
+		writeS(topic.getName());
+		writeS(topic.getTitle());
+		writeS(topic.getDate());
+		writeS(topic.getContent());
 	}
 }

@@ -15,11 +15,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class DragonKey extends ItemExecutor {
 
-	private DragonKey() {
-	}
-
 	public static ItemExecutor get() {
 		return new DragonKey();
+	}
+
+	private DragonKey() {
 	}
 
 	/**

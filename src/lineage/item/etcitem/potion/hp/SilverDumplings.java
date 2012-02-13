@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class SilverDumplings extends ItemExecutor {
 
-	private SilverDumplings() {
-	}
-
 	public static ItemExecutor get() {
 		return new SilverDumplings();
+	}
+
+	private SilverDumplings() {
 	}
 
 	/**

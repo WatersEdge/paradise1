@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Appraisal extends ItemExecutor {
 
-	private Appraisal() {
-	}
-
 	public static ItemExecutor get() {
 		return new Appraisal();
+	}
+
+	private Appraisal() {
 	}
 
 	/**

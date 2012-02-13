@@ -25,15 +25,13 @@ import l1j.server.server.storage.TrapStorage;
  */
 public abstract class L1Trap {
 
+	public static L1Trap newNull() {
+		return new L1NullTrap();
+	}
 	protected final int _id;
 	protected final int _gfxId;
-	protected final boolean _isDetectionable;
 
-	public L1Trap(TrapStorage storage) {
-		_id = storage.getInt("id");
-		_gfxId = storage.getInt("gfxId");
-		_isDetectionable = storage.getBoolean("isDetectionable");
-	}
+	protected final boolean _isDetectionable;
 
 	public L1Trap(int id, int gfxId, boolean detectionable) {
 		_id = id;
@@ -41,13 +39,27 @@ public abstract class L1Trap {
 		_isDetectionable = detectionable;
 	}
 
-	public int getId() {
-		return _id;
+	public L1Trap(TrapStorage storage) {
+		_id = storage.getInt("id");
+		_gfxId = storage.getInt("gfxId");
+		_isDetectionable = storage.getBoolean("isDetectionable");
 	}
 
 	public int getGfxId() {
 		return _gfxId;
 	}
+
+	public int getId() {
+		return _id;
+	}
+
+	public void onDetection(L1PcInstance caster, L1Object trapObj) {
+		if (_isDetectionable) {
+			sendEffect(trapObj);
+		}
+	}
+
+	public abstract void onTrod(L1PcInstance trodFrom, L1Object trapObj);
 
 	protected void sendEffect(L1Object trapObj) {
 		if (getGfxId() == 0) {
@@ -58,18 +70,6 @@ public abstract class L1Trap {
 		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(trapObj)) {
 			pc.sendPackets(effect);
 		}
-	}
-
-	public abstract void onTrod(L1PcInstance trodFrom, L1Object trapObj);
-
-	public void onDetection(L1PcInstance caster, L1Object trapObj) {
-		if (_isDetectionable) {
-			sendEffect(trapObj);
-		}
-	}
-
-	public static L1Trap newNull() {
-		return new L1NullTrap();
 	}
 }
 

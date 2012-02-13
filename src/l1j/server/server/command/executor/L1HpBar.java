@@ -24,11 +24,27 @@ import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1HpBar implements L1CommandExecutor {
-	private L1HpBar() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1HpBar();
+	}
+
+	public static boolean isHpBarTarget(L1Object obj) {
+		if (obj instanceof L1MonsterInstance) {
+			return true;
+		}
+		if (obj instanceof L1PcInstance) {
+			return true;
+		}
+		if (obj instanceof L1SummonInstance) {
+			return true;
+		}
+		if (obj instanceof L1PetInstance) {
+			return true;
+		}
+		return false;
+	}
+
+	private L1HpBar() {
 	}
 
 	@Override
@@ -48,21 +64,5 @@ public class L1HpBar implements L1CommandExecutor {
 		else {
 			pc.sendPackets(new S_SystemMessage("請輸入 : " + cmdName + " on|off 。"));
 		}
-	}
-
-	public static boolean isHpBarTarget(L1Object obj) {
-		if (obj instanceof L1MonsterInstance) {
-			return true;
-		}
-		if (obj instanceof L1PcInstance) {
-			return true;
-		}
-		if (obj instanceof L1SummonInstance) {
-			return true;
-		}
-		if (obj instanceof L1PetInstance) {
-			return true;
-		}
-		return false;
 	}
 }

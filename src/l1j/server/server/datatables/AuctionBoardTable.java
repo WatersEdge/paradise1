@@ -39,12 +39,6 @@ public class AuctionBoardTable {
 
 	private final Map<Integer, L1AuctionBoard> _boards = Maps.newConcurrentMap();
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ts.getTime());
-		return cal;
-	}
-
 	/**
 	 * 盟屋拍卖资料表
 	 */
@@ -81,12 +75,28 @@ public class AuctionBoardTable {
 	}
 
 	/**
-	 * 取得盟屋拍卖列表清单
+	 * 删除拍卖盟屋
 	 * 
-	 * @return
+	 * @param houseId
+	 *            盟屋ID
 	 */
-	public L1AuctionBoard[] getAuctionBoardTableList() {
-		return _boards.values().toArray(new L1AuctionBoard[_boards.size()]);
+	public void deleteAuctionBoard(int houseId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM board_auction WHERE house_id=?");
+			pstm.setInt(1, houseId);
+			pstm.execute();
+
+			_boards.remove(houseId);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	/**
@@ -98,6 +108,15 @@ public class AuctionBoardTable {
 	 */
 	public L1AuctionBoard getAuctionBoardTable(int houseId) {
 		return _boards.get(houseId);
+	}
+
+	/**
+	 * 取得盟屋拍卖列表清单
+	 * 
+	 * @return
+	 */
+	public L1AuctionBoard[] getAuctionBoardTableList() {
+		return _boards.values().toArray(new L1AuctionBoard[_boards.size()]);
 	}
 
 	/**
@@ -170,29 +189,10 @@ public class AuctionBoardTable {
 		}
 	}
 
-	/**
-	 * 删除拍卖盟屋
-	 * 
-	 * @param houseId
-	 *            盟屋ID
-	 */
-	public void deleteAuctionBoard(int houseId) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM board_auction WHERE house_id=?");
-			pstm.setInt(1, houseId);
-			pstm.execute();
-
-			_boards.remove(houseId);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	private Calendar timestampToCalendar(Timestamp ts) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(ts.getTime());
+		return cal;
 	}
 
 }

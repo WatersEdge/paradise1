@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpellBook;
  */
 public class WizardSpellBook extends ItemExecutor {
 
-	private WizardSpellBook() {
-	}
-
 	public static ItemExecutor get() {
 		return new WizardSpellBook();
+	}
+
+	private WizardSpellBook() {
 	}
 
 	/**

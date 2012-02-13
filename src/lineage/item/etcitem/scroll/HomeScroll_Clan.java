@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class HomeScroll_Clan extends ItemExecutor {
 
-	private HomeScroll_Clan() {
-	}
-
 	public static ItemExecutor get() {
 		return new HomeScroll_Clan();
+	}
+
+	private HomeScroll_Clan() {
 	}
 
 	/**

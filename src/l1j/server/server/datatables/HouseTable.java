@@ -41,8 +41,37 @@ public class HouseTable {
 
 	private static HouseTable _instance;
 
-	/** 盟屋 */
-	private final Map<Integer, L1House> _house = Maps.newConcurrentMap();
+	/**
+	 * 取得盟屋ID列表
+	 * 
+	 * @return
+	 */
+	public static List<Integer> getHouseIdList() {
+		List<Integer> houseIdList = Lists.newList();
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				int houseId = rs.getInt("house_id");
+				houseIdList.add(Integer.valueOf(houseId));
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+
+		return houseIdList;
+	}
 
 	public static HouseTable getInstance() {
 		if (_instance == null) {
@@ -51,11 +80,8 @@ public class HouseTable {
 		return _instance;
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ts.getTime());
-		return cal;
-	}
+	/** 盟屋 */
+	private final Map<Integer, L1House> _house = Maps.newConcurrentMap();
 
 	public HouseTable() {
 		Connection con = null;
@@ -89,21 +115,21 @@ public class HouseTable {
 	}
 
 	/**
-	 * 取得盟屋表列表
-	 * 
-	 * @return
-	 */
-	public L1House[] getHouseTableList() {
-		return _house.values().toArray(new L1House[_house.size()]);
-	}
-
-	/**
 	 * 取得盟屋表
 	 * 
 	 * @return
 	 */
 	public L1House getHouseTable(int houseId) {
 		return _house.get(houseId);
+	}
+
+	/**
+	 * 取得盟屋表列表
+	 * 
+	 * @return
+	 */
+	public L1House[] getHouseTableList() {
+		return _house.values().toArray(new L1House[_house.size()]);
 	}
 
 	/**
@@ -135,35 +161,9 @@ public class HouseTable {
 		}
 	}
 
-	/**
-	 * 取得盟屋ID列表
-	 * 
-	 * @return
-	 */
-	public static List<Integer> getHouseIdList() {
-		List<Integer> houseIdList = Lists.newList();
-
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				int houseId = rs.getInt("house_id");
-				houseIdList.add(Integer.valueOf(houseId));
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-
-		return houseIdList;
+	private Calendar timestampToCalendar(Timestamp ts) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(ts.getTime());
+		return cal;
 	}
 }

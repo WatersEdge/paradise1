@@ -374,11 +374,9 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.checkNoviceType();
 	}
 
-	private void items(final L1PcInstance pc) {
-		// 从资料库中读取角色的道具
-		CharacterTable.getInstance().restoreInventory(pc);
-
-		pc.sendPackets(new S_InvList(pc.getInventory().getItems()));
+	@Override
+	public String getType() {
+		return C_LOGIN_TO_SERVER;
 	}
 
 	// 读取角色的记忆坐标
@@ -414,6 +412,133 @@ public class C_LoginToServer extends ClientBasePacket {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
+		}
+	}
+
+	// 读取角色的状态
+	private void buff(final ClientThread clientthread, final L1PcInstance pc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
+			pstm.setInt(1, pc.getId());
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				final int skillid = rs.getInt("skill_id");
+				int remaining_time = rs.getInt("remaining_time");
+				int time = 0;
+				switch (skillid) {
+					case SHAPE_CHANGE: // 变身
+						final int poly_id = rs.getInt("poly_id");
+						L1PolyMorph.doPoly(pc, poly_id, remaining_time, L1PolyMorph.MORPH_BY_LOGIN);
+						break;
+					case STATUS_BRAVE: // 勇敢药水
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 1, remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
+						pc.setBraveSpeed(1);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_ELFBRAVE: // 精灵饼干
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 3, remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
+						pc.setBraveSpeed(3);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_BRAVE2: // 超级加速
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 5, remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 5, 0));
+						pc.setBraveSpeed(5);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_HASTE: // 加速
+						pc.sendPackets(new S_SkillHaste(pc.getId(), 1, remaining_time));
+						pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+						pc.setMoveSpeed(1);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_BLUE_POTION: // 蓝色药水
+						pc.sendPackets(new S_SkillIconGFX(34, remaining_time));
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_CHAT_PROHIBITED: // 禁言
+						pc.sendPackets(new S_SkillIconGFX(36, remaining_time));
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_THIRD_SPEED: // 三段加速
+						time = remaining_time / 4;
+						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+						pc.sendPackets(new S_SkillIconThirdSpeed(time));
+						pc.setSkillEffect(skillid, time * 4 * 1000);
+						break;
+					case MIRROR_IMAGE: // 镜像
+					case UNCANNY_DODGE: // 暗影闪避
+						time = remaining_time / 16;
+						pc.addDodge((byte) 5); // 闪避率 + 50%
+						// 更新闪避率显示
+						pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+						pc.sendPackets(new S_PacketBox(21, time));
+						pc.setSkillEffect(skillid, time * 16 * 1000);
+						break;
+					case EFFECT_BLOODSTAIN_OF_ANTHARAS: // 安塔瑞斯的血痕
+						remaining_time = remaining_time / 60;
+						if (remaining_time != 0) {
+							L1BuffUtil.bloodstain(pc, (byte) 0, remaining_time, false);
+						}
+						break;
+					case EFFECT_BLOODSTAIN_OF_FAFURION: // 法利昂的血痕
+						remaining_time = remaining_time / 60;
+						if (remaining_time != 0) {
+							L1BuffUtil.bloodstain(pc, (byte) 1, remaining_time, false);
+						}
+						break;
+					default:
+						// 魔法料理
+						if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N)) || ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S)) || ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N)) || ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
+								|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N)) || ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
+							L1Cooking.eatCooking(pc, skillid, remaining_time);
+						}
+						// 生命之树果实、商城道具
+						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END) || skillid == COOKING_WONDER_DRUG) {
+							;
+						}
+						else {
+							final L1SkillUse l1skilluse = new L1SkillUse();
+							l1skilluse.handleCommands(clientthread.getActiveChar(), skillid, pc.getId(), pc.getX(), pc.getY(), null, remaining_time, L1SkillUse.TYPE_LOGIN);
+						}
+						break;
+				}
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	private void items(final L1PcInstance pc) {
+		// 从资料库中读取角色的道具
+		CharacterTable.getInstance().restoreInventory(pc);
+
+		pc.sendPackets(new S_InvList(pc.getInventory().getItems()));
+	}
+
+	// 读取角色的召唤物
+	private void serchSummon(final L1PcInstance pc) {
+		for (L1SummonInstance summon : L1World.getInstance().getAllSummons()) {
+			if (summon.getMaster().getId() == pc.getId()) {
+				summon.setMaster(pc);
+				pc.addPet(summon);
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
+					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
+				}
+			}
 		}
 	}
 
@@ -589,130 +714,5 @@ public class C_LoginToServer extends ClientBasePacket {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	// 读取角色的召唤物
-	private void serchSummon(final L1PcInstance pc) {
-		for (L1SummonInstance summon : L1World.getInstance().getAllSummons()) {
-			if (summon.getMaster().getId() == pc.getId()) {
-				summon.setMaster(pc);
-				pc.addPet(summon);
-				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
-					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
-				}
-			}
-		}
-	}
-
-	// 读取角色的状态
-	private void buff(final ClientThread clientthread, final L1PcInstance pc) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
-			pstm.setInt(1, pc.getId());
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				final int skillid = rs.getInt("skill_id");
-				int remaining_time = rs.getInt("remaining_time");
-				int time = 0;
-				switch (skillid) {
-					case SHAPE_CHANGE: // 变身
-						final int poly_id = rs.getInt("poly_id");
-						L1PolyMorph.doPoly(pc, poly_id, remaining_time, L1PolyMorph.MORPH_BY_LOGIN);
-						break;
-					case STATUS_BRAVE: // 勇敢药水
-						pc.sendPackets(new S_SkillBrave(pc.getId(), 1, remaining_time));
-						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
-						pc.setBraveSpeed(1);
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_ELFBRAVE: // 精灵饼干
-						pc.sendPackets(new S_SkillBrave(pc.getId(), 3, remaining_time));
-						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
-						pc.setBraveSpeed(3);
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_BRAVE2: // 超级加速
-						pc.sendPackets(new S_SkillBrave(pc.getId(), 5, remaining_time));
-						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 5, 0));
-						pc.setBraveSpeed(5);
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_HASTE: // 加速
-						pc.sendPackets(new S_SkillHaste(pc.getId(), 1, remaining_time));
-						pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-						pc.setMoveSpeed(1);
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_BLUE_POTION: // 蓝色药水
-						pc.sendPackets(new S_SkillIconGFX(34, remaining_time));
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_CHAT_PROHIBITED: // 禁言
-						pc.sendPackets(new S_SkillIconGFX(36, remaining_time));
-						pc.setSkillEffect(skillid, remaining_time * 1000);
-						break;
-					case STATUS_THIRD_SPEED: // 三段加速
-						time = remaining_time / 4;
-						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-						pc.sendPackets(new S_SkillIconThirdSpeed(time));
-						pc.setSkillEffect(skillid, time * 4 * 1000);
-						break;
-					case MIRROR_IMAGE: // 镜像
-					case UNCANNY_DODGE: // 暗影闪避
-						time = remaining_time / 16;
-						pc.addDodge((byte) 5); // 闪避率 + 50%
-						// 更新闪避率显示
-						pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
-						pc.sendPackets(new S_PacketBox(21, time));
-						pc.setSkillEffect(skillid, time * 16 * 1000);
-						break;
-					case EFFECT_BLOODSTAIN_OF_ANTHARAS: // 安塔瑞斯的血痕
-						remaining_time = remaining_time / 60;
-						if (remaining_time != 0) {
-							L1BuffUtil.bloodstain(pc, (byte) 0, remaining_time, false);
-						}
-						break;
-					case EFFECT_BLOODSTAIN_OF_FAFURION: // 法利昂的血痕
-						remaining_time = remaining_time / 60;
-						if (remaining_time != 0) {
-							L1BuffUtil.bloodstain(pc, (byte) 1, remaining_time, false);
-						}
-						break;
-					default:
-						// 魔法料理
-						if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N)) || ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S)) || ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N)) || ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
-								|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N)) || ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
-							L1Cooking.eatCooking(pc, skillid, remaining_time);
-						}
-						// 生命之树果实、商城道具
-						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END) || skillid == COOKING_WONDER_DRUG) {
-							;
-						}
-						else {
-							final L1SkillUse l1skilluse = new L1SkillUse();
-							l1skilluse.handleCommands(clientthread.getActiveChar(), skillid, pc.getId(), pc.getX(), pc.getY(), null, remaining_time, L1SkillUse.TYPE_LOGIN);
-						}
-						break;
-				}
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	@Override
-	public String getType() {
-		return C_LOGIN_TO_SERVER;
 	}
 }

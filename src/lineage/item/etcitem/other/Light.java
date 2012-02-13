@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Light extends ItemExecutor {
 
-	private Light() {
-	}
-
 	public static ItemExecutor get() {
 		return new Light();
+	}
+
+	private Light() {
 	}
 
 	/**

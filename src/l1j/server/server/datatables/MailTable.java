@@ -44,6 +44,15 @@ public class MailTable {
 
 	private static List<L1Mail> _allMail = Lists.newList();
 
+	/**
+	 * 取得所有邮件
+	 * 
+	 * @return
+	 */
+	public static List<L1Mail> getAllMail() {
+		return _allMail;
+	}
+
 	public static MailTable getInstance() {
 		if (_instance == null) {
 			_instance = new MailTable();
@@ -51,34 +60,72 @@ public class MailTable {
 		return _instance;
 	}
 
+	/**
+	 * 取得邮件
+	 * 
+	 * @param mailId
+	 */
+	public static L1Mail getMail(int mailId) {
+		for (L1Mail mail : _allMail) {
+			if (mail.getId() == mailId) {
+				return mail;
+			}
+		}
+		return null;
+	}
+
 	private MailTable() {
 		loadMail();
 	}
 
-	private void loadMail() {
+	/**
+	 * 删除邮件
+	 * 
+	 * @param mailId
+	 */
+	public void deleteMail(int mailId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM mail WHERE id=?");
+			pstm.setInt(1, mailId);
+			pstm.execute();
+
+			delMail(mailId);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+
+	}
+
+	/**
+	 * 设置邮件类型
+	 * 
+	 * @param mailId
+	 * @param type
+	 */
+	public void setMailType(int mailId, int type) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM mail");
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				L1Mail mail = new L1Mail();
-				mail.setId(rs.getInt("id"));
-				mail.setType(rs.getInt("type"));
-				mail.setSenderName(rs.getString("sender"));
-				mail.setReceiverName(rs.getString("receiver"));
-				mail.setDate(rs.getString("date"));
-				mail.setReadStatus(rs.getInt("read_status"));
-				mail.setSubject(rs.getBytes("subject"));
-				mail.setContent(rs.getBytes("content"));
+			rs = con.createStatement().executeQuery("SELECT * FROM mail WHERE id=" + mailId);
+			if ((rs != null) && rs.next()) {
+				pstm = con.prepareStatement("UPDATE mail SET type=? WHERE id=" + mailId);
+				pstm.setInt(1, type);
+				pstm.execute();
 
-				_allMail.add(mail);
+				changeMailType(mailId, type);
 			}
 		}
 		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建邮件表时出现错误", e);
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
@@ -113,61 +160,6 @@ public class MailTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 设置邮件类型
-	 * 
-	 * @param mailId
-	 * @param type
-	 */
-	public void setMailType(int mailId, int type) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			rs = con.createStatement().executeQuery("SELECT * FROM mail WHERE id=" + mailId);
-			if ((rs != null) && rs.next()) {
-				pstm = con.prepareStatement("UPDATE mail SET type=? WHERE id=" + mailId);
-				pstm.setInt(1, type);
-				pstm.execute();
-
-				changeMailType(mailId, type);
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 删除邮件
-	 * 
-	 * @param mailId
-	 */
-	public void deleteMail(int mailId) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM mail WHERE id=?");
-			pstm.setInt(1, mailId);
-			pstm.execute();
-
-			delMail(mailId);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-
 	}
 
 	/**
@@ -248,29 +240,6 @@ public class MailTable {
 	}
 
 	/**
-	 * 取得所有邮件
-	 * 
-	 * @return
-	 */
-	public static List<L1Mail> getAllMail() {
-		return _allMail;
-	}
-
-	/**
-	 * 取得邮件
-	 * 
-	 * @param mailId
-	 */
-	public static L1Mail getMail(int mailId) {
-		for (L1Mail mail : _allMail) {
-			if (mail.getId() == mailId) {
-				return mail;
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * 更改邮件状态
 	 * 
 	 * @param mailId
@@ -318,6 +287,37 @@ public class MailTable {
 				_allMail.remove(mail);
 				break;
 			}
+		}
+	}
+
+	private void loadMail() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM mail");
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				L1Mail mail = new L1Mail();
+				mail.setId(rs.getInt("id"));
+				mail.setType(rs.getInt("type"));
+				mail.setSenderName(rs.getString("sender"));
+				mail.setReceiverName(rs.getString("receiver"));
+				mail.setDate(rs.getString("date"));
+				mail.setReadStatus(rs.getInt("read_status"));
+				mail.setSubject(rs.getBytes("subject"));
+				mail.setContent(rs.getBytes("content"));
+
+				_allMail.add(mail);
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建邮件表时出现错误", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
 		}
 	}
 

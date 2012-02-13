@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Amulet_ProvincetownKyle extends ItemExecutor {
 
-	private Amulet_ProvincetownKyle() {
-	}
-
 	public static ItemExecutor get() {
 		return new Amulet_ProvincetownKyle();
+	}
+
+	private Amulet_ProvincetownKyle() {
 	}
 
 	/**

@@ -61,30 +61,6 @@ public class L1ItemCheck {
 		return isCheat;
 	}
 
-	private boolean findWeapon() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		boolean inWeapon = false;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM weapon WHERE item_id = ?");
-			pstm.setInt(1, itemId);
-			rs = pstm.executeQuery();
-			if (rs != null) {
-				if (rs.next()) {
-					inWeapon = true;
-				}
-			}
-		}
-		catch (Exception e) {
-		} finally {
-			SQLUtil.close(rs, pstm, con);
-		}
-		return inWeapon;
-	}
-
 	private boolean findArmor() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -130,5 +106,29 @@ public class L1ItemCheck {
 			SQLUtil.close(rs, pstm, con);
 		}
 		return inEtcitem;
+	}
+
+	private boolean findWeapon() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		boolean inWeapon = false;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM weapon WHERE item_id = ?");
+			pstm.setInt(1, itemId);
+			rs = pstm.executeQuery();
+			if (rs != null) {
+				if (rs.next()) {
+					inWeapon = true;
+				}
+			}
+		}
+		catch (Exception e) {
+		} finally {
+			SQLUtil.close(rs, pstm, con);
+		}
+		return inWeapon;
 	}
 }

@@ -38,6 +38,13 @@ public class L1World {
 
 	private static Logger _log = Logger.getLogger(L1World.class.getName());
 
+	public static L1World getInstance() {
+		if (_instance == null) {
+			_instance = new L1World();
+		}
+		return _instance;
+	}
+
 	private final Map<String, L1PcInstance> _allPlayers;
 
 	private final Map<Integer, L1PetInstance> _allPets;
@@ -62,6 +69,24 @@ public class L1World {
 
 	private static L1World _instance;
 
+	// _allObjectsのビュー
+	private Collection<L1Object> _allValues;
+
+	// _allPlayers查看
+	private Collection<L1PcInstance> _allPlayerValues;
+
+	// _allPets查看
+	private Collection<L1PetInstance> _allPetValues;
+
+	// _allSummonsのビュー
+	private Collection<L1SummonInstance> _allSummonValues;
+
+	// _allWars查看
+	private List<L1War> _allWarList;
+
+	// _allClans查看
+	private Collection<L1Clan> _allClanValues;
+
 	@SuppressWarnings("unchecked")
 	private L1World() {
 		_allPlayers = Maps.newConcurrentMap(); // 所有玩家
@@ -77,11 +102,39 @@ public class L1World {
 		}
 	}
 
-	public static L1World getInstance() {
-		if (_instance == null) {
-			_instance = new L1World();
+	public void addVisibleObject(L1Object object) {
+		if (object.getMapId() <= MAX_MAP_ID) {
+			_visibleObjects[object.getMapId()].put(object.getId(), object);
 		}
-		return _instance;
+	}
+
+	public void addWar(L1War war) {
+		if (!_allWars.contains(war)) {
+			_allWars.add(war);
+		}
+	}
+
+	/**
+	 * 给所有在世界上的玩家发送数据包。
+	 * 
+	 * @param packet
+	 *            ServerBasePacket对象，表示要发送的数据包。
+	 */
+	public void broadcastPacketToAll(ServerBasePacket packet) {
+		_log.finest("玩家通知 : " + getAllPlayers().size());
+		for (L1PcInstance pc : getAllPlayers()) {
+			pc.sendPackets(packet);
+		}
+	}
+
+	/**
+	 * 给所有在世界上的玩家发送发送服务器信息。
+	 * 
+	 * @param message
+	 *            发送信息
+	 */
+	public void broadcastServerMessage(String message) {
+		broadcastPacketToAll(new S_SystemMessage(message));
 	}
 
 	/**
@@ -92,50 +145,36 @@ public class L1World {
 		_instance = new L1World();
 	}
 
-	public void storeObject(L1Object object) {
-		if (object == null) {
-			throw new NullPointerException();
-		}
-
-		_allObjects.put(object.getId(), object);
-		if (object instanceof L1PcInstance) {
-			_allPlayers.put(((L1PcInstance) object).getName(), (L1PcInstance) object);
-		}
-		if (object instanceof L1PetInstance) {
-			_allPets.put(object.getId(), (L1PetInstance) object);
-		}
-		if (object instanceof L1SummonInstance) {
-			_allSummons.put(object.getId(), (L1SummonInstance) object);
-		}
-	}
-
-	public void removeObject(L1Object object) {
-		if (object == null) {
-			throw new NullPointerException();
-		}
-
-		_allObjects.remove(object.getId());
-		if (object instanceof L1PcInstance) {
-			_allPlayers.remove(((L1PcInstance) object).getName());
-		}
-		if (object instanceof L1PetInstance) {
-			_allPets.remove(object.getId());
-		}
-		if (object instanceof L1SummonInstance) {
-			_allSummons.remove(object.getId());
-		}
-	}
-
 	public L1Object findObject(int oID) {
 		return _allObjects.get(oID);
 	}
 
-	// _allObjectsのビュー
-	private Collection<L1Object> _allValues;
+	public Collection<L1Clan> getAllClans() {
+		Collection<L1Clan> vs = _allClanValues;
+		return (vs != null) ? vs : (_allClanValues = Collections.unmodifiableCollection(_allClans.values()));
+	}
 
-	public Collection<L1Object> getObject() {
-		Collection<L1Object> vs = _allValues;
-		return (vs != null) ? vs : (_allValues = Collections.unmodifiableCollection(_allObjects.values()));
+	public Collection<L1PetInstance> getAllPets() {
+		Collection<L1PetInstance> vs = _allPetValues;
+		return (vs != null) ? vs : (_allPetValues = Collections.unmodifiableCollection(_allPets.values()));
+	}
+
+	public Collection<L1PcInstance> getAllPlayers() {
+		Collection<L1PcInstance> vs = _allPlayerValues;
+		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
+	}
+
+	public Collection<L1SummonInstance> getAllSummons() {
+		Collection<L1SummonInstance> vs = _allSummonValues;
+		return (vs != null) ? vs : (_allSummonValues = Collections.unmodifiableCollection(_allSummons.values()));
+	}
+
+	public final Map<Integer, L1Object> getAllVisibleObjects() {
+		return _allObjects;
+	}
+
+	public L1Clan getClan(String clan_name) {
+		return _allClans.get(clan_name);
 	}
 
 	public L1GroundInventory getInventory(int x, int y, short map) {
@@ -154,104 +193,42 @@ public class L1World {
 		return getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
 	}
 
-	public void addVisibleObject(L1Object object) {
-		if (object.getMapId() <= MAX_MAP_ID) {
-			_visibleObjects[object.getMapId()].put(object.getId(), object);
-		}
+	public Collection<L1Object> getObject() {
+		Collection<L1Object> vs = _allValues;
+		return (vs != null) ? vs : (_allValues = Collections.unmodifiableCollection(_allObjects.values()));
 	}
 
-	public void removeVisibleObject(L1Object object) {
-		if (object.getMapId() <= MAX_MAP_ID) {
-			_visibleObjects[object.getMapId()].remove(object.getId());
+	/**
+	 * 取得在世界上制定名称的玩家。
+	 * 
+	 * @param name
+	 *            - 玩家名称(大写小写字符将被忽略)
+	 * @return 指定的名称L1PcInstance。如果没有合适的玩家返回null。
+	 */
+	public L1PcInstance getPlayer(String name) {
+		if (_allPlayers.containsKey(name)) {
+			return _allPlayers.get(name);
 		}
+		for (L1PcInstance each : getAllPlayers()) {
+			if (each.getName().equalsIgnoreCase(name)) {
+				return each;
+			}
+		}
+		return null;
 	}
 
-	public void moveVisibleObject(L1Object object, int newMap) // set_Mapで新しいMapにするまえに呼ぶこと
-	{
-		if (object.getMapId() != newMap) {
-			if (object.getMapId() <= MAX_MAP_ID) {
-				_visibleObjects[object.getMapId()].remove(object.getId());
-			}
-			if (newMap <= MAX_MAP_ID) {
-				_visibleObjects[newMap].put(object.getId(), object);
-			}
-		}
+	/**
+	 * 取得object认识范围内的玩家
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public List<L1PcInstance> getRecognizePlayer(L1Object object) {
+		return getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
 	}
 
-	private Map<Integer, Integer> createLineMap(Point src, Point target) {
-		Map<Integer, Integer> lineMap = Maps.newConcurrentMap();
-
-		/*
-		 * http://www2.starcat.ne.jp/~fussy/algo/algo1-1.htmより
-		 */
-		int E;
-		int x;
-		int y;
-		int key;
-		int i;
-		int x0 = src.getX();
-		int y0 = src.getY();
-		int x1 = target.getX();
-		int y1 = target.getY();
-		int sx = (x1 > x0) ? 1 : -1;
-		int dx = (x1 > x0) ? x1 - x0 : x0 - x1;
-		int sy = (y1 > y0) ? 1 : -1;
-		int dy = (y1 > y0) ? y1 - y0 : y0 - y1;
-
-		x = x0;
-		y = y0;
-		/* 傾きが1以下の場合 */
-		if (dx >= dy) {
-			E = -dx;
-			for (i = 0; i <= dx; i++) {
-				key = (x << 16) + y;
-				lineMap.put(key, key);
-				x += sx;
-				E += 2 * dy;
-				if (E >= 0) {
-					y += sy;
-					E -= 2 * dx;
-				}
-			}
-			/* 傾きが1より大きい場合 */
-		}
-		else {
-			E = -dy;
-			for (i = 0; i <= dy; i++) {
-				key = (x << 16) + y;
-				lineMap.put(key, key);
-				y += sy;
-				E += 2 * dx;
-				if (E >= 0) {
-					x += sx;
-					E -= 2 * dy;
-				}
-			}
-		}
-
-		return lineMap;
-	}
-
-	public List<L1Object> getVisibleLineObjects(L1Object src, L1Object target) {
-		Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
-
-		int map = target.getMapId();
-		List<L1Object> result = Lists.newList();
-
-		if (map <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[map].values()) {
-				if (element.equals(src)) {
-					continue;
-				}
-
-				int key = (element.getX() << 16) + element.getY();
-				if (lineMap.containsKey(key)) {
-					result.add(element);
-				}
-			}
-		}
-
-		return result;
+	public Object getRegion(Object object) {
+		return null;
 	}
 
 	public List<L1Object> getVisibleBoxObjects(L1Object object, int heading, int width, int height) {
@@ -310,6 +287,36 @@ public class L1World {
 		return result;
 	}
 
+	public List<L1Object> getVisibleLineObjects(L1Object src, L1Object target) {
+		Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
+
+		int map = target.getMapId();
+		List<L1Object> result = Lists.newList();
+
+		if (map <= MAX_MAP_ID) {
+			for (L1Object element : _visibleObjects[map].values()) {
+				if (element.equals(src)) {
+					continue;
+				}
+
+				int key = (element.getX() << 16) + element.getY();
+				if (lineMap.containsKey(key)) {
+					result.add(element);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public final Map<Integer, L1Object>[] getVisibleObjects() {
+		return _visibleObjects;
+	}
+
+	public final Map<Integer, L1Object> getVisibleObjects(int mapId) {
+		return _visibleObjects[mapId];
+	}
+
 	public List<L1Object> getVisibleObjects(L1Object object) {
 		return getVisibleObjects(object, -1);
 	}
@@ -341,25 +348,6 @@ public class L1World {
 					if (pt.getTileLineDistance(element.getLocation()) <= radius) {
 						result.add(element);
 					}
-				}
-			}
-		}
-
-		return result;
-	}
-
-	public List<L1Object> getVisiblePoint(L1Location loc, int radius) {
-		List<L1Object> result = Lists.newList();
-		int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
-
-		if (mapId <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[mapId].values()) {
-				if (mapId != element.getMapId()) {
-					continue;
-				}
-
-				if (loc.getTileLineDistance(element.getLocation()) <= radius) {
-					result.add(element);
 				}
 			}
 		}
@@ -437,99 +425,51 @@ public class L1World {
 		return result;
 	}
 
-	/**
-	 * 取得object认识范围内的玩家
-	 * 
-	 * @param object
-	 * @return
-	 */
-	public List<L1PcInstance> getRecognizePlayer(L1Object object) {
-		return getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
-	}
+	public List<L1Object> getVisiblePoint(L1Location loc, int radius) {
+		List<L1Object> result = Lists.newList();
+		int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
 
-	// _allPlayers查看
-	private Collection<L1PcInstance> _allPlayerValues;
+		if (mapId <= MAX_MAP_ID) {
+			for (L1Object element : _visibleObjects[mapId].values()) {
+				if (mapId != element.getMapId()) {
+					continue;
+				}
 
-	public Collection<L1PcInstance> getAllPlayers() {
-		Collection<L1PcInstance> vs = _allPlayerValues;
-		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
-	}
-
-	/**
-	 * 取得在世界上制定名称的玩家。
-	 * 
-	 * @param name
-	 *            - 玩家名称(大写小写字符将被忽略)
-	 * @return 指定的名称L1PcInstance。如果没有合适的玩家返回null。
-	 */
-	public L1PcInstance getPlayer(String name) {
-		if (_allPlayers.containsKey(name)) {
-			return _allPlayers.get(name);
-		}
-		for (L1PcInstance each : getAllPlayers()) {
-			if (each.getName().equalsIgnoreCase(name)) {
-				return each;
+				if (loc.getTileLineDistance(element.getLocation()) <= radius) {
+					result.add(element);
+				}
 			}
 		}
-		return null;
+
+		return result;
 	}
-
-	// _allPets查看
-	private Collection<L1PetInstance> _allPetValues;
-
-	public Collection<L1PetInstance> getAllPets() {
-		Collection<L1PetInstance> vs = _allPetValues;
-		return (vs != null) ? vs : (_allPetValues = Collections.unmodifiableCollection(_allPets.values()));
-	}
-
-	// _allSummonsのビュー
-	private Collection<L1SummonInstance> _allSummonValues;
-
-	public Collection<L1SummonInstance> getAllSummons() {
-		Collection<L1SummonInstance> vs = _allSummonValues;
-		return (vs != null) ? vs : (_allSummonValues = Collections.unmodifiableCollection(_allSummons.values()));
-	}
-
-	public final Map<Integer, L1Object> getAllVisibleObjects() {
-		return _allObjects;
-	}
-
-	public final Map<Integer, L1Object>[] getVisibleObjects() {
-		return _visibleObjects;
-	}
-
-	public final Map<Integer, L1Object> getVisibleObjects(int mapId) {
-		return _visibleObjects[mapId];
-	}
-
-	public Object getRegion(Object object) {
-		return null;
-	}
-
-	public void addWar(L1War war) {
-		if (!_allWars.contains(war)) {
-			_allWars.add(war);
-		}
-	}
-
-	public void removeWar(L1War war) {
-		if (_allWars.contains(war)) {
-			_allWars.remove(war);
-		}
-	}
-
-	// _allWars查看
-	private List<L1War> _allWarList;
 
 	public List<L1War> getWarList() {
 		List<L1War> vs = _allWarList;
 		return (vs != null) ? vs : (_allWarList = Collections.unmodifiableList(_allWars));
 	}
 
-	public void storeClan(L1Clan clan) {
-		L1Clan temp = getClan(clan.getClanName());
-		if (temp == null) {
-			_allClans.put(clan.getClanName(), clan);
+	public int getWeather() {
+		return _weather;
+	}
+
+	public boolean isProcessingContributionTotal() {
+		return _processingContributionTotal;
+	}
+
+	public boolean isWorldChatElabled() {
+		return _worldChatEnabled;
+	}
+
+	public void moveVisibleObject(L1Object object, int newMap) // set_Mapで新しいMapにするまえに呼ぶこと
+	{
+		if (object.getMapId() != newMap) {
+			if (object.getMapId() <= MAX_MAP_ID) {
+				_visibleObjects[object.getMapId()].remove(object.getId());
+			}
+			if (newMap <= MAX_MAP_ID) {
+				_visibleObjects[newMap].put(object.getId(), object);
+			}
 		}
 	}
 
@@ -540,62 +480,122 @@ public class L1World {
 		}
 	}
 
-	public L1Clan getClan(String clan_name) {
-		return _allClans.get(clan_name);
+	public void removeObject(L1Object object) {
+		if (object == null) {
+			throw new NullPointerException();
+		}
+
+		_allObjects.remove(object.getId());
+		if (object instanceof L1PcInstance) {
+			_allPlayers.remove(((L1PcInstance) object).getName());
+		}
+		if (object instanceof L1PetInstance) {
+			_allPets.remove(object.getId());
+		}
+		if (object instanceof L1SummonInstance) {
+			_allSummons.remove(object.getId());
+		}
 	}
 
-	// _allClans查看
-	private Collection<L1Clan> _allClanValues;
-
-	public Collection<L1Clan> getAllClans() {
-		Collection<L1Clan> vs = _allClanValues;
-		return (vs != null) ? vs : (_allClanValues = Collections.unmodifiableCollection(_allClans.values()));
+	public void removeVisibleObject(L1Object object) {
+		if (object.getMapId() <= MAX_MAP_ID) {
+			_visibleObjects[object.getMapId()].remove(object.getId());
+		}
 	}
 
-	public void setWeather(int weather) {
-		_weather = weather;
-	}
-
-	public int getWeather() {
-		return _weather;
+	public void removeWar(L1War war) {
+		if (_allWars.contains(war)) {
+			_allWars.remove(war);
+		}
 	}
 
 	public void set_worldChatElabled(boolean flag) {
 		_worldChatEnabled = flag;
 	}
 
-	public boolean isWorldChatElabled() {
-		return _worldChatEnabled;
-	}
-
 	public void setProcessingContributionTotal(boolean flag) {
 		_processingContributionTotal = flag;
 	}
 
-	public boolean isProcessingContributionTotal() {
-		return _processingContributionTotal;
+	public void setWeather(int weather) {
+		_weather = weather;
 	}
 
-	/**
-	 * 给所有在世界上的玩家发送数据包。
-	 * 
-	 * @param packet
-	 *            ServerBasePacket对象，表示要发送的数据包。
-	 */
-	public void broadcastPacketToAll(ServerBasePacket packet) {
-		_log.finest("玩家通知 : " + getAllPlayers().size());
-		for (L1PcInstance pc : getAllPlayers()) {
-			pc.sendPackets(packet);
+	public void storeClan(L1Clan clan) {
+		L1Clan temp = getClan(clan.getClanName());
+		if (temp == null) {
+			_allClans.put(clan.getClanName(), clan);
 		}
 	}
 
-	/**
-	 * 给所有在世界上的玩家发送发送服务器信息。
-	 * 
-	 * @param message
-	 *            发送信息
-	 */
-	public void broadcastServerMessage(String message) {
-		broadcastPacketToAll(new S_SystemMessage(message));
+	public void storeObject(L1Object object) {
+		if (object == null) {
+			throw new NullPointerException();
+		}
+
+		_allObjects.put(object.getId(), object);
+		if (object instanceof L1PcInstance) {
+			_allPlayers.put(((L1PcInstance) object).getName(), (L1PcInstance) object);
+		}
+		if (object instanceof L1PetInstance) {
+			_allPets.put(object.getId(), (L1PetInstance) object);
+		}
+		if (object instanceof L1SummonInstance) {
+			_allSummons.put(object.getId(), (L1SummonInstance) object);
+		}
+	}
+
+	private Map<Integer, Integer> createLineMap(Point src, Point target) {
+		Map<Integer, Integer> lineMap = Maps.newConcurrentMap();
+
+		/*
+		 * http://www2.starcat.ne.jp/~fussy/algo/algo1-1.htmより
+		 */
+		int E;
+		int x;
+		int y;
+		int key;
+		int i;
+		int x0 = src.getX();
+		int y0 = src.getY();
+		int x1 = target.getX();
+		int y1 = target.getY();
+		int sx = (x1 > x0) ? 1 : -1;
+		int dx = (x1 > x0) ? x1 - x0 : x0 - x1;
+		int sy = (y1 > y0) ? 1 : -1;
+		int dy = (y1 > y0) ? y1 - y0 : y0 - y1;
+
+		x = x0;
+		y = y0;
+		/* 傾きが1以下の場合 */
+		if (dx >= dy) {
+			E = -dx;
+			for (i = 0; i <= dx; i++) {
+				key = (x << 16) + y;
+				lineMap.put(key, key);
+				x += sx;
+				E += 2 * dy;
+				if (E >= 0) {
+					y += sy;
+					E -= 2 * dx;
+				}
+			}
+			/* 傾きが1より大きい場合 */
+		}
+		else {
+			E = -dy;
+			for (i = 0; i <= dy; i++) {
+				key = (x << 16) + y;
+				lineMap.put(key, key);
+				y += sy;
+				E += 2 * dx;
+				if (E >= 0) {
+					x += sx;
+					E -= 2 * dy;
+				}
+			}
+		}
+
+		return lineMap;
 	}
 }

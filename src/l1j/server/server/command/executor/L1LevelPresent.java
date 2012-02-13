@@ -23,11 +23,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.templates.L1Item;
 
 public class L1LevelPresent implements L1CommandExecutor {
-	private L1LevelPresent() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1LevelPresent();
+	}
+
+	private L1LevelPresent() {
 	}
 
 	@Override

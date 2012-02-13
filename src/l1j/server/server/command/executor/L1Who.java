@@ -22,11 +22,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_WhoAmount;
 
 public class L1Who implements L1CommandExecutor {
-	private L1Who() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Who();
+	}
+
+	private L1Who() {
 	}
 
 	@Override

@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Map extends ItemExecutor {
 
-	private Map() {
-	}
-
 	public static ItemExecutor get() {
 		return new Map();
+	}
+
+	private Map() {
 	}
 
 	/**

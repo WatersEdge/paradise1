@@ -32,10 +32,6 @@ public class L1NpcActionFactory {
 
 	private static Map<String, Constructor<? extends L1NpcXmlAction>> _actions = Maps.newMap();
 
-	private static Constructor<? extends L1NpcXmlAction> loadConstructor(Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
-		return c.getConstructor(new Class[] { Element.class });
-	}
-
 	static {
 		try {
 			_actions.put("Action", loadConstructor(L1NpcListedAction.class));
@@ -61,5 +57,9 @@ public class L1NpcActionFactory {
 			_log.log(Level.SEVERE, "NpcAction类加载失败", e);
 		}
 		return null;
+	}
+
+	private static Constructor<? extends L1NpcXmlAction> loadConstructor(Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
+		return c.getConstructor(new Class[] { Element.class });
 	}
 }

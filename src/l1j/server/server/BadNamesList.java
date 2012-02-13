@@ -36,14 +36,14 @@ public class BadNamesList {
 
 	private static BadNamesList _instance;
 
-	private final List<String> _nameList = Lists.newList();
-
 	public static BadNamesList getInstance() {
 		if (_instance == null) {
 			_instance = new BadNamesList();
 		}
 		return _instance;
 	}
+
+	private final List<String> _nameList = Lists.newList();
 
 	private BadNamesList() {
 		LineNumberReader lnr = null;
@@ -76,6 +76,10 @@ public class BadNamesList {
 		}
 	}
 
+	public String[] getAllBadNames() {
+		return _nameList.toArray(new String[_nameList.size()]);
+	}
+
 	public boolean isBadName(String name) {
 		for (String badName : _nameList) {
 			if (name.toLowerCase().contains(badName.toLowerCase())) {
@@ -83,9 +87,5 @@ public class BadNamesList {
 			}
 		}
 		return false;
-	}
-
-	public String[] getAllBadNames() {
-		return _nameList.toArray(new String[_nameList.size()]);
 	}
 }

@@ -34,6 +34,10 @@ public class L1RequestInstance extends L1NpcInstance {
 		super(template);
 	}
 
+	public void doFinalAction(L1PcInstance player) {
+
+	}
+
 	@Override
 	public void onAction(L1PcInstance player) {
 		int objid = getId();
@@ -55,10 +59,6 @@ public class L1RequestInstance extends L1NpcInstance {
 
 	@Override
 	public void onFinalAction(L1PcInstance player, String action) {
-
-	}
-
-	public void doFinalAction(L1PcInstance player) {
 
 	}
 }

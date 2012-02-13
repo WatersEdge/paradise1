@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_BlessOfEva;
  */
 public class BlessOfEva extends ItemExecutor {
 
-	private BlessOfEva() {
-	}
-
 	public static ItemExecutor get() {
 		return new BlessOfEva();
+	}
+
+	private BlessOfEva() {
 	}
 
 	/**

@@ -22,11 +22,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.utils.IntRange;
 
 public class L1Level implements L1CommandExecutor {
-	private L1Level() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Level();
+	}
+
+	private L1Level() {
 	}
 
 	@Override

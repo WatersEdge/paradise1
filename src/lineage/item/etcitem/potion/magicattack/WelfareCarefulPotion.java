@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_Wisdom;
  */
 public class WelfareCarefulPotion extends ItemExecutor {
 
-	private WelfareCarefulPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new WelfareCarefulPotion();
+	}
+
+	private WelfareCarefulPotion() {
 	}
 
 	/**

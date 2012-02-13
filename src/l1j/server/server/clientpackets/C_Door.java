@@ -34,6 +34,27 @@ import l1j.server.server.templates.L1House;
  */
 public class C_Door extends ClientBasePacket {
 
+	public class CloseTimer extends TimerTask {
+
+		private L1DoorInstance _door;
+
+		public CloseTimer(L1DoorInstance door) {
+			_door = door;
+		}
+
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, 5 * 1000);
+		}
+
+		@Override
+		public void run() {
+			if (_door.getOpenStatus() == ActionCodes.ACTION_Open) {
+				_door.close();
+			}
+		}
+	}
+
 	private static final String C_DOOR = "[C] C_Door";
 
 	public C_Door(byte abyte0[], ClientThread client) throws Exception {
@@ -81,6 +102,11 @@ public class C_Door extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_DOOR;
+	}
+
 	private boolean isExistKeeper(L1PcInstance pc, int keeperId) {
 		if (keeperId == 0) {
 			return false;
@@ -97,31 +123,5 @@ public class C_Door extends ClientBasePacket {
 			}
 		}
 		return true;
-	}
-
-	public class CloseTimer extends TimerTask {
-
-		private L1DoorInstance _door;
-
-		public CloseTimer(L1DoorInstance door) {
-			_door = door;
-		}
-
-		@Override
-		public void run() {
-			if (_door.getOpenStatus() == ActionCodes.ACTION_Open) {
-				_door.close();
-			}
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, 5 * 1000);
-		}
-	}
-
-	@Override
-	public String getType() {
-		return C_DOOR;
 	}
 }

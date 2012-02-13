@@ -58,12 +58,21 @@ public class ItemTable {
 	private static final Map<String, Integer> _useTypes = Maps.newMap();
 	/**  */
 	private static ItemTable _instance;
+	/**
+	 * 取得序列版本UID
+	 * 
+	 * @return
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	/** 所有模板 */
 	private L1Item _allTemplates[];
 	/** 道具 */
 	private final Map<Integer, L1EtcItem> _etcitems;
 	/** 防具 */
 	private final Map<Integer, L1Armor> _armors;
+
 	/** 武器 */
 	private final Map<Integer, L1Weapon> _weapons;
 
@@ -246,6 +255,182 @@ public class ItemTable {
 	}
 
 	/**
+	 * 产生新物件
+	 * 
+	 * @param itemId
+	 * @return
+	 */
+	public L1ItemInstance createItem(int itemId) {
+		L1Item temp = getTemplate(itemId);
+		if (temp == null) {
+			return null;
+		}
+		L1ItemInstance item = new L1ItemInstance();
+		item.setId(IdFactory.getInstance().nextId());
+		item.setItem(temp);
+		L1World.getInstance().storeObject(item);
+		return item;
+	}
+
+	/**
+	 * 依名称 (NameId)找回itemid
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public int findItemIdByName(String name) {
+		int itemid = 0;
+		for (L1Item item : _allTemplates) {
+			if ((item != null) && item.getName().equals(name)) {
+				itemid = item.getItemId();
+				break;
+			}
+		}
+		return itemid;
+	}
+
+	/**
+	 * 依名称 (中文)找回itemid
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public int findItemIdByNameWithoutSpace(String name) {
+		int itemid = 0;
+		for (L1Item item : _allTemplates) {
+			if ((item != null) && item.getName().replace(" ", "").equals(name)) {
+				itemid = item.getItemId();
+				break;
+			}
+		}
+		return itemid;
+	}
+
+	/**
+	 * 传回指定编号物品资料
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public L1Item getTemplate(int id) {
+		return _allTemplates[id];
+	}
+
+	/**
+	 * 传回指定名称物品资料
+	 * 
+	 * @param nameid
+	 * @return
+	 */
+	public L1Item getTemplate(final String nameid) {
+		for (final L1Item item : this._allTemplates) {
+			if ((item != null) && item.getNameId().equals(nameid)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 防具载入
+	 * 
+	 * @return
+	 */
+	private Map<Integer, L1Armor> allArmor() {
+		Map<Integer, L1Armor> result = Maps.newMap();
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		L1Armor armor = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM armor");
+
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				armor = new L1Armor();
+				final int item_id = rs.getInt("item_id");
+				armor.setItemId(item_id);
+				armor.setName(rs.getString("name"));
+				final String class_name = rs.getString("class_name");
+				armor.setClassName(class_name);
+				armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
+				armor.setIdentifiedNameId(rs.getString("identified_name_id"));
+				armor.setType((_armorTypes.get(rs.getString("type"))).intValue());
+				// armor.setType1((_armorId
+				// .get(rs.getString("armor_type"))).intValue()); // 使わない
+				armor.setType2(2);
+				armor.setUseType((_useTypes.get(rs.getString("type"))).intValue());
+				armor.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
+				armor.setWeight(rs.getInt("weight"));
+				armor.setGfxId(rs.getInt("invgfx"));
+				armor.setGroundGfxId(rs.getInt("grdgfx"));
+				armor.setItemDescId(rs.getInt("itemdesc_id"));
+				armor.set_ac(rs.getInt("ac"));
+				armor.set_safeenchant(rs.getInt("safenchant"));
+				armor.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
+				armor.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
+				armor.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
+				armor.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
+				armor.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
+				armor.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
+				armor.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);
+				armor.set_addstr(rs.getByte("add_str"));
+				armor.set_addcon(rs.getByte("add_con"));
+				armor.set_adddex(rs.getByte("add_dex"));
+				armor.set_addint(rs.getByte("add_int"));
+				armor.set_addwis(rs.getByte("add_wis"));
+				armor.set_addcha(rs.getByte("add_cha"));
+				armor.set_addhp(rs.getInt("add_hp"));
+				armor.set_addmp(rs.getInt("add_mp"));
+				armor.set_addhpr(rs.getInt("add_hpr"));
+				armor.set_addmpr(rs.getInt("add_mpr"));
+				armor.set_addsp(rs.getInt("add_sp"));
+				armor.setMinLevel(rs.getInt("min_lvl"));
+				armor.setMaxLevel(rs.getInt("max_lvl"));
+				armor.set_mdef(rs.getInt("m_def"));
+				armor.setDamageReduction(rs.getInt("damage_reduction"));
+				armor.setWeightReduction(rs.getInt("weight_reduction"));
+				armor.setHitModifierByArmor(rs.getInt("hit_modifier"));
+				armor.setDmgModifierByArmor(rs.getInt("dmg_modifier"));
+				armor.setBowHitModifierByArmor(rs.getInt("bow_hit_modifier"));
+				armor.setBowDmgModifierByArmor(rs.getInt("bow_dmg_modifier"));
+				armor.setHasteItem(rs.getInt("haste_item") == 0 ? false : true);
+				armor.setBless(rs.getInt("bless"));
+				armor.setTradable(rs.getInt("trade") == 0 ? true : false);
+				armor.setCantDelete(rs.getInt("cant_delete") == 1 ? true : false);
+				armor.set_defense_earth(rs.getInt("defense_earth"));
+				armor.set_defense_water(rs.getInt("defense_water"));
+				armor.set_defense_wind(rs.getInt("defense_wind"));
+				armor.set_defense_fire(rs.getInt("defense_fire"));
+				armor.set_regist_stun(rs.getInt("regist_stun"));
+				armor.set_regist_stone(rs.getInt("regist_stone"));
+				armor.set_regist_sleep(rs.getInt("regist_sleep"));
+				armor.set_regist_freeze(rs.getInt("regist_freeze"));
+				armor.set_regist_sustain(rs.getInt("regist_sustain"));
+				armor.set_regist_blind(rs.getInt("regist_blind"));
+				armor.setMaxUseTime(rs.getInt("max_use_time"));
+				armor.setGrade(rs.getInt("grade"));
+
+				ItemClass.getInstance().addList(item_id, class_name, 2);
+				result.put(new Integer(armor.getItemId()), armor);
+			}
+		}
+		catch (NullPointerException e) {
+			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName()).append("(" + armor.getItemId() + ")").append("无法加载。").toString());
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+
+		}
+		return result;
+	}
+
+	/**
 	 * 道具载入
 	 * 
 	 * @return
@@ -407,105 +592,6 @@ public class ItemTable {
 	}
 
 	/**
-	 * 防具载入
-	 * 
-	 * @return
-	 */
-	private Map<Integer, L1Armor> allArmor() {
-		Map<Integer, L1Armor> result = Maps.newMap();
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		L1Armor armor = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM armor");
-
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				armor = new L1Armor();
-				final int item_id = rs.getInt("item_id");
-				armor.setItemId(item_id);
-				armor.setName(rs.getString("name"));
-				final String class_name = rs.getString("class_name");
-				armor.setClassName(class_name);
-				armor.setUnidentifiedNameId(rs.getString("unidentified_name_id"));
-				armor.setIdentifiedNameId(rs.getString("identified_name_id"));
-				armor.setType((_armorTypes.get(rs.getString("type"))).intValue());
-				// armor.setType1((_armorId
-				// .get(rs.getString("armor_type"))).intValue()); // 使わない
-				armor.setType2(2);
-				armor.setUseType((_useTypes.get(rs.getString("type"))).intValue());
-				armor.setMaterial((_materialTypes.get(rs.getString("material"))).intValue());
-				armor.setWeight(rs.getInt("weight"));
-				armor.setGfxId(rs.getInt("invgfx"));
-				armor.setGroundGfxId(rs.getInt("grdgfx"));
-				armor.setItemDescId(rs.getInt("itemdesc_id"));
-				armor.set_ac(rs.getInt("ac"));
-				armor.set_safeenchant(rs.getInt("safenchant"));
-				armor.setUseRoyal(rs.getInt("use_royal") == 0 ? false : true);
-				armor.setUseKnight(rs.getInt("use_knight") == 0 ? false : true);
-				armor.setUseElf(rs.getInt("use_elf") == 0 ? false : true);
-				armor.setUseMage(rs.getInt("use_mage") == 0 ? false : true);
-				armor.setUseDarkelf(rs.getInt("use_darkelf") == 0 ? false : true);
-				armor.setUseDragonknight(rs.getInt("use_dragonknight") == 0 ? false : true);
-				armor.setUseIllusionist(rs.getInt("use_illusionist") == 0 ? false : true);
-				armor.set_addstr(rs.getByte("add_str"));
-				armor.set_addcon(rs.getByte("add_con"));
-				armor.set_adddex(rs.getByte("add_dex"));
-				armor.set_addint(rs.getByte("add_int"));
-				armor.set_addwis(rs.getByte("add_wis"));
-				armor.set_addcha(rs.getByte("add_cha"));
-				armor.set_addhp(rs.getInt("add_hp"));
-				armor.set_addmp(rs.getInt("add_mp"));
-				armor.set_addhpr(rs.getInt("add_hpr"));
-				armor.set_addmpr(rs.getInt("add_mpr"));
-				armor.set_addsp(rs.getInt("add_sp"));
-				armor.setMinLevel(rs.getInt("min_lvl"));
-				armor.setMaxLevel(rs.getInt("max_lvl"));
-				armor.set_mdef(rs.getInt("m_def"));
-				armor.setDamageReduction(rs.getInt("damage_reduction"));
-				armor.setWeightReduction(rs.getInt("weight_reduction"));
-				armor.setHitModifierByArmor(rs.getInt("hit_modifier"));
-				armor.setDmgModifierByArmor(rs.getInt("dmg_modifier"));
-				armor.setBowHitModifierByArmor(rs.getInt("bow_hit_modifier"));
-				armor.setBowDmgModifierByArmor(rs.getInt("bow_dmg_modifier"));
-				armor.setHasteItem(rs.getInt("haste_item") == 0 ? false : true);
-				armor.setBless(rs.getInt("bless"));
-				armor.setTradable(rs.getInt("trade") == 0 ? true : false);
-				armor.setCantDelete(rs.getInt("cant_delete") == 1 ? true : false);
-				armor.set_defense_earth(rs.getInt("defense_earth"));
-				armor.set_defense_water(rs.getInt("defense_water"));
-				armor.set_defense_wind(rs.getInt("defense_wind"));
-				armor.set_defense_fire(rs.getInt("defense_fire"));
-				armor.set_regist_stun(rs.getInt("regist_stun"));
-				armor.set_regist_stone(rs.getInt("regist_stone"));
-				armor.set_regist_sleep(rs.getInt("regist_sleep"));
-				armor.set_regist_freeze(rs.getInt("regist_freeze"));
-				armor.set_regist_sustain(rs.getInt("regist_sustain"));
-				armor.set_regist_blind(rs.getInt("regist_blind"));
-				armor.setMaxUseTime(rs.getInt("max_use_time"));
-				armor.setGrade(rs.getInt("grade"));
-
-				ItemClass.getInstance().addList(item_id, class_name, 2);
-				result.put(new Integer(armor.getItemId()), armor);
-			}
-		}
-		catch (NullPointerException e) {
-			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName()).append("(" + armor.getItemId() + ")").append("无法加载。").toString());
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-
-		}
-		return result;
-	}
-
-	/**
 	 * 构建快速查找表
 	 */
 	private void buildFastLookupTable() {
@@ -548,91 +634,5 @@ public class ItemTable {
 			L1Armor item = _armors.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
-	}
-
-	/**
-	 * 传回指定编号物品资料
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public L1Item getTemplate(int id) {
-		return _allTemplates[id];
-	}
-
-	/**
-	 * 传回指定名称物品资料
-	 * 
-	 * @param nameid
-	 * @return
-	 */
-	public L1Item getTemplate(final String nameid) {
-		for (final L1Item item : this._allTemplates) {
-			if ((item != null) && item.getNameId().equals(nameid)) {
-				return item;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 产生新物件
-	 * 
-	 * @param itemId
-	 * @return
-	 */
-	public L1ItemInstance createItem(int itemId) {
-		L1Item temp = getTemplate(itemId);
-		if (temp == null) {
-			return null;
-		}
-		L1ItemInstance item = new L1ItemInstance();
-		item.setId(IdFactory.getInstance().nextId());
-		item.setItem(temp);
-		L1World.getInstance().storeObject(item);
-		return item;
-	}
-
-	/**
-	 * 依名称 (NameId)找回itemid
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public int findItemIdByName(String name) {
-		int itemid = 0;
-		for (L1Item item : _allTemplates) {
-			if ((item != null) && item.getName().equals(name)) {
-				itemid = item.getItemId();
-				break;
-			}
-		}
-		return itemid;
-	}
-
-	/**
-	 * 依名称 (中文)找回itemid
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public int findItemIdByNameWithoutSpace(String name) {
-		int itemid = 0;
-		for (L1Item item : _allTemplates) {
-			if ((item != null) && item.getName().replace(" ", "").equals(name)) {
-				itemid = item.getItemId();
-				break;
-			}
-		}
-		return itemid;
-	}
-
-	/**
-	 * 取得序列版本UID
-	 * 
-	 * @return
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 }

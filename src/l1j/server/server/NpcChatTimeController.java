@@ -42,6 +42,13 @@ public class NpcChatTimeController implements Runnable {
 		return _instance;
 	}
 
+	// 获得现实时间
+	private static Calendar getRealTime() {
+		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		Calendar cal = Calendar.getInstance(_tz);
+		return cal;
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -78,13 +85,6 @@ public class NpcChatTimeController implements Runnable {
 		Calendar realTime = getRealTime();
 		int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
 		return (nowTime == chatTime);
-	}
-
-	// 获得现实时间
-	private static Calendar getRealTime() {
-		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(_tz);
-		return cal;
 	}
 
 }

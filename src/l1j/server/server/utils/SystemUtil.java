@@ -21,13 +21,19 @@ import java.io.File;
  */
 public class SystemUtil {
 	/**
-	 * 返回兆字节的可用系统堆大小。<br>
-	 * 栈的大小是不包括在这个值。
+	 * 取得目前的作业系统
 	 * 
-	 * @return 使用中的堆大小
+	 * @return Linux or Windows
 	 */
-	public static long getUsedMemoryMB() {
-		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024L / 1024L;
+	public static String gerOs() {
+		String Os = "", OsName = System.getProperty("os.name");
+		if (OsName.toLowerCase().indexOf("windows") >= 0) {
+			Os = "Windows";
+		}
+		else if (OsName.toLowerCase().indexOf("linux") >= 0) {
+			Os = "Linux";
+		}
+		return Os;
 	}
 
 	/**
@@ -46,18 +52,12 @@ public class SystemUtil {
 	}
 
 	/**
-	 * 取得目前的作业系统
+	 * 返回兆字节的可用系统堆大小。<br>
+	 * 栈的大小是不包括在这个值。
 	 * 
-	 * @return Linux or Windows
+	 * @return 使用中的堆大小
 	 */
-	public static String gerOs() {
-		String Os = "", OsName = System.getProperty("os.name");
-		if (OsName.toLowerCase().indexOf("windows") >= 0) {
-			Os = "Windows";
-		}
-		else if (OsName.toLowerCase().indexOf("linux") >= 0) {
-			Os = "Linux";
-		}
-		return Os;
+	public static long getUsedMemoryMB() {
+		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024L / 1024L;
 	}
 }

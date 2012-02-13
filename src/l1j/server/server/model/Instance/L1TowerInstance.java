@@ -35,11 +35,33 @@ import l1j.server.server.templates.L1Npc;
  */
 public class L1TowerInstance extends L1NpcInstance {
 
-	private static final long serialVersionUID = 1L;
+	class Death implements Runnable {
+		L1Character lastAttacker = _lastattacker;
 
-	public L1TowerInstance(L1Npc template) {
-		super(template);
+		L1Object object = L1World.getInstance().findObject(getId());
+
+		L1TowerInstance npc = (L1TowerInstance) object;
+
+		@Override
+		public void run() {
+			setCurrentHpDirect(0);
+			setDead(true);
+			setStatus(ActionCodes.ACTION_TowerDie);
+			int targetobjid = npc.getId();
+
+			npc.getMap().setPassable(npc.getLocation(), true);
+
+			npc.broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_TowerDie));
+
+			// クラウンをspawnする
+			if (!isSubTower()) {
+				L1WarSpawn warspawn = new L1WarSpawn();
+				warspawn.SpawnCrown(_castle_id);
+			}
+		}
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private L1Character _lastattacker;
 
@@ -47,10 +69,34 @@ public class L1TowerInstance extends L1NpcInstance {
 
 	private int _crackStatus;
 
+	public L1TowerInstance(L1Npc template) {
+		super(template);
+	}
+
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
-		perceivedFrom.addKnownObject(this);
-		perceivedFrom.sendPackets(new S_NPCPack(this));
+	public void deleteMe() {
+		_destroyed = true;
+		if (getInventory() != null) {
+			getInventory().clearItems();
+		}
+		allTargetClear();
+		_master = null;
+		L1World.getInstance().removeVisibleObject(this);
+		L1World.getInstance().removeObject(this);
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+			pc.removeKnownObject(this);
+			pc.sendPackets(new S_RemoveObject(this));
+		}
+		removeAllKnownObjects();
+	}
+
+	public boolean isSubTower() {
+		return ((getNpcTemplate().get_npcId() == 81190 // 守护塔:伊娃
+				)
+				|| (getNpcTemplate().get_npcId() == 81191 // 守护塔:帕格里奥
+				) || (getNpcTemplate().get_npcId() == 81192 // 守护塔:马普勒
+				) || (getNpcTemplate().get_npcId() == 81193 // 守护塔:沙哈
+		));
 	}
 
 	@Override
@@ -70,6 +116,12 @@ public class L1TowerInstance extends L1NpcInstance {
 			attack.action();
 			attack.commit();
 		}
+	}
+
+	@Override
+	public void onPerceive(L1PcInstance perceivedFrom) {
+		perceivedFrom.addKnownObject(this);
+		perceivedFrom.sendPackets(new S_NPCPack(this));
 	}
 
 	@Override
@@ -194,58 +246,6 @@ public class L1TowerInstance extends L1NpcInstance {
 			currentHp = getMaxHp();
 		}
 		setCurrentHpDirect(currentHp);
-	}
-
-	class Death implements Runnable {
-		L1Character lastAttacker = _lastattacker;
-
-		L1Object object = L1World.getInstance().findObject(getId());
-
-		L1TowerInstance npc = (L1TowerInstance) object;
-
-		@Override
-		public void run() {
-			setCurrentHpDirect(0);
-			setDead(true);
-			setStatus(ActionCodes.ACTION_TowerDie);
-			int targetobjid = npc.getId();
-
-			npc.getMap().setPassable(npc.getLocation(), true);
-
-			npc.broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_TowerDie));
-
-			// クラウンをspawnする
-			if (!isSubTower()) {
-				L1WarSpawn warspawn = new L1WarSpawn();
-				warspawn.SpawnCrown(_castle_id);
-			}
-		}
-	}
-
-	@Override
-	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
-		}
-		allTargetClear();
-		_master = null;
-		L1World.getInstance().removeVisibleObject(this);
-		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			pc.removeKnownObject(this);
-			pc.sendPackets(new S_RemoveObject(this));
-		}
-		removeAllKnownObjects();
-	}
-
-	public boolean isSubTower() {
-		return ((getNpcTemplate().get_npcId() == 81190 // 守护塔:伊娃
-				)
-				|| (getNpcTemplate().get_npcId() == 81191 // 守护塔:帕格里奥
-				) || (getNpcTemplate().get_npcId() == 81192 // 守护塔:马普勒
-				) || (getNpcTemplate().get_npcId() == 81193 // 守护塔:沙哈
-		));
 	}
 
 }

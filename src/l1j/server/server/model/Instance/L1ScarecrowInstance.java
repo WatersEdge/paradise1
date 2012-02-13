@@ -34,6 +34,9 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 		super(template);
 	}
 
+	public void doFinalAction() {
+	}
+
 	@Override
 	public void onAction(L1PcInstance pc) {
 		onAction(pc, 0);
@@ -50,6 +53,15 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 		}
 		attack.action();
 		attack.commit();
+	}
+
+	public void onFinalAction() {
+
+	}
+
+	@Override
+	public void onTalkAction(L1PcInstance l1pcinstance) {
+
 	}
 
 	@Override
@@ -78,17 +90,5 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onTalkAction(L1PcInstance l1pcinstance) {
-
-	}
-
-	public void onFinalAction() {
-
-	}
-
-	public void doFinalAction() {
 	}
 }

@@ -37,14 +37,63 @@ public class UBTable {
 
 	private static UBTable _instance = new UBTable();
 
-	private final Map<Integer, L1UltimateBattle> _ub = Maps.newMap();
-
 	public static UBTable getInstance() {
 		return _instance;
 	}
 
+	private final Map<Integer, L1UltimateBattle> _ub = Maps.newMap();
+
 	private UBTable() {
 		loadTable();
+	}
+
+	public Collection<L1UltimateBattle> getAllUb() {
+		return Collections.unmodifiableCollection(_ub.values());
+	}
+
+	/**
+	 * 返回给定UBID的模式的最大数量。
+	 * 
+	 * @param ubId
+	 *            检查UBID。
+	 * @return 模式的最大数量。
+	 */
+	public int getMaxPattern(int ubId) {
+		int n = 0;
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawnlist_ub WHERE ub_id=?");
+			pstm.setInt(1, ubId);
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				n = rs.getInt(1);
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return n;
+	}
+
+	public L1UltimateBattle getUb(int ubId) {
+		return _ub.get(ubId);
+	}
+
+	public L1UltimateBattle getUbForNpcId(int npcId) {
+		for (L1UltimateBattle ub : _ub.values()) {
+			if (ub.containsManager(npcId)) {
+				return ub;
+			}
+		}
+		return null;
 	}
 
 	private void loadTable() {
@@ -131,55 +180,6 @@ public class UBTable {
 			SQLUtil.close(rs, pstm, con);
 		}
 		_log.config("UB名单 " + _ub.size() + "件");
-	}
-
-	public L1UltimateBattle getUb(int ubId) {
-		return _ub.get(ubId);
-	}
-
-	public Collection<L1UltimateBattle> getAllUb() {
-		return Collections.unmodifiableCollection(_ub.values());
-	}
-
-	public L1UltimateBattle getUbForNpcId(int npcId) {
-		for (L1UltimateBattle ub : _ub.values()) {
-			if (ub.containsManager(npcId)) {
-				return ub;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 返回给定UBID的模式的最大数量。
-	 * 
-	 * @param ubId
-	 *            检查UBID。
-	 * @return 模式的最大数量。
-	 */
-	public int getMaxPattern(int ubId) {
-		int n = 0;
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawnlist_ub WHERE ub_id=?");
-			pstm.setInt(1, ubId);
-			rs = pstm.executeQuery();
-			if (rs.next()) {
-				n = rs.getInt(1);
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		return n;
 	}
 
 }

@@ -31,6 +31,10 @@ import l1j.server.server.utils.LogRecorder;
  */
 public class AcceleratorChecker {
 
+	public static enum ACT_TYPE {
+		MOVE, ATTACK, SPELL_DIR, SPELL_NODIR
+	}
+
 	private static final Logger _log = Logger.getLogger(AcceleratorChecker.class.getName());
 
 	private final L1PcInstance _pc;
@@ -56,10 +60,6 @@ public class AcceleratorChecker {
 	private final EnumMap<ACT_TYPE, Long> _actTimers = new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
 
 	private final EnumMap<ACT_TYPE, Long> _checkTimers = new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
-
-	public static enum ACT_TYPE {
-		MOVE, ATTACK, SPELL_DIR, SPELL_NODIR
-	}
 
 	// 检查结果
 	public static final int R_OK = 0;

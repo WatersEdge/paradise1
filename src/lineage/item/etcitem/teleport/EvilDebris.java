@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class EvilDebris extends ItemExecutor {
 
-	private EvilDebris() {
-	}
-
 	public static ItemExecutor get() {
 		return new EvilDebris();
+	}
+
+	private EvilDebris() {
 	}
 
 	/**

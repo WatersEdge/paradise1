@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class Mooncake extends ItemExecutor {
 
-	private Mooncake() {
-	}
-
 	public static ItemExecutor get() {
 		return new Mooncake();
+	}
+
+	private Mooncake() {
 	}
 
 	/**

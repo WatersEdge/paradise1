@@ -18,11 +18,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MysteriousPotion extends ItemExecutor {
 
-	private MysteriousPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new MysteriousPotion();
+	}
+
+	private MysteriousPotion() {
 	}
 
 	/**

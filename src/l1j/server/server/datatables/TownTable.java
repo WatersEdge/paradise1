@@ -37,8 +37,6 @@ public class TownTable {
 
 	private static TownTable _instance;
 
-	private final Map<Integer, L1Town> _towns = Maps.newConcurrentMap();
-
 	public static TownTable getInstance() {
 		if (_instance == null) {
 			_instance = new TownTable();
@@ -47,8 +45,62 @@ public class TownTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1Town> _towns = Maps.newConcurrentMap();
+
 	private TownTable() {
 		load();
+	}
+
+	public synchronized void addSalesMoney(int town_id, int salesMoney) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+
+		L1Town town = TownTable.getInstance().getTownTable(town_id);
+		int townTaxRate = town.get_tax_rate();
+
+		int townTax = salesMoney / 100 * townTaxRate;
+		int townFixTax = salesMoney / 100 * 2;
+
+		if ((townTax <= 0) && (townTaxRate > 0)) {
+			townTax = 1;
+		}
+		if ((townFixTax <= 0) && (townTaxRate > 0)) {
+			townFixTax = 1;
+		}
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE town SET sales_money = sales_money + ?, town_tax = town_tax + ?, town_fix_tax = town_fix_tax + ? WHERE town_id = ?");
+			pstm.setInt(1, salesMoney);
+			pstm.setInt(2, townTax);
+			pstm.setInt(3, townFixTax);
+			pstm.setInt(4, town_id);
+			pstm.execute();
+
+			town.set_sales_money(town.get_sales_money() + salesMoney);
+			town.set_town_tax(town.get_town_tax() + townTax);
+			town.set_town_fix_tax(town.get_town_fix_tax() + townFixTax);
+
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	public L1Town getTownTable(int id) {
+		return _towns.get(id);
+	}
+
+	public L1Town[] getTownTableList() {
+		return _towns.values().toArray(new L1Town[_towns.size()]);
+	}
+
+	public boolean isLeader(L1PcInstance pc, int town_id) {
+		L1Town town = getTownTable(town_id);
+		return (town.get_leader_id() == pc.getId());
 	}
 
 	public void load() {
@@ -91,49 +143,14 @@ public class TownTable {
 		}
 	}
 
-	public L1Town[] getTownTableList() {
-		return _towns.values().toArray(new L1Town[_towns.size()]);
-	}
-
-	public L1Town getTownTable(int id) {
-		return _towns.get(id);
-	}
-
-	public boolean isLeader(L1PcInstance pc, int town_id) {
-		L1Town town = getTownTable(town_id);
-		return (town.get_leader_id() == pc.getId());
-	}
-
-	public synchronized void addSalesMoney(int town_id, int salesMoney) {
+	public void updateSalesMoneyYesterday() {
 		Connection con = null;
 		PreparedStatement pstm = null;
 
-		L1Town town = TownTable.getInstance().getTownTable(town_id);
-		int townTaxRate = town.get_tax_rate();
-
-		int townTax = salesMoney / 100 * townTaxRate;
-		int townFixTax = salesMoney / 100 * 2;
-
-		if ((townTax <= 0) && (townTaxRate > 0)) {
-			townTax = 1;
-		}
-		if ((townFixTax <= 0) && (townTaxRate > 0)) {
-			townFixTax = 1;
-		}
-
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE town SET sales_money = sales_money + ?, town_tax = town_tax + ?, town_fix_tax = town_fix_tax + ? WHERE town_id = ?");
-			pstm.setInt(1, salesMoney);
-			pstm.setInt(2, townTax);
-			pstm.setInt(3, townFixTax);
-			pstm.setInt(4, town_id);
+			pstm = con.prepareStatement("UPDATE town SET sales_money_yesterday = sales_money, sales_money = 0");
 			pstm.execute();
-
-			town.set_sales_money(town.get_sales_money() + salesMoney);
-			town.set_town_tax(town.get_town_tax() + townTax);
-			town.set_town_fix_tax(town.get_town_fix_tax() + townFixTax);
-
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -150,23 +167,6 @@ public class TownTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE town SET tax_rate = tax_rate_reserved");
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public void updateSalesMoneyYesterday() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE town SET sales_money_yesterday = sales_money, sales_money = 0");
 			pstm.execute();
 		}
 		catch (SQLException e) {

@@ -35,6 +35,16 @@ public class HpRegenerationByDoll extends TimerTask {
 		_pc = pc;
 	}
 
+	public void regenHp() {
+		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHpByDoll(_pc);
+		if (newHp < 0) {
+			newHp = 0;
+		}
+		_pc.sendPackets(new S_SkillSound(_pc.getId(), 744));
+		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 744));
+		_pc.setCurrentHp(newHp);
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -46,15 +56,5 @@ public class HpRegenerationByDoll extends TimerTask {
 		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
-	}
-
-	public void regenHp() {
-		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHpByDoll(_pc);
-		if (newHp < 0) {
-			newHp = 0;
-		}
-		_pc.sendPackets(new S_SkillSound(_pc.getId(), 744));
-		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 744));
-		_pc.setCurrentHp(newHp);
 	}
 }

@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class ScrollOfDestroyArmor extends ItemExecutor {
 
-	private ScrollOfDestroyArmor() {
-	}
-
 	public static ItemExecutor get() {
 		return new ScrollOfDestroyArmor();
+	}
+
+	private ScrollOfDestroyArmor() {
 	}
 
 	/**

@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Mystery3 extends ItemExecutor {
 
-	private Mystery3() {
-	}
-
 	public static ItemExecutor get() {
 		return new Mystery3();
+	}
+
+	private Mystery3() {
 	}
 
 	/**

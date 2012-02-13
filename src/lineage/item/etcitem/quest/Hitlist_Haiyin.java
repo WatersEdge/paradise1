@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_Haiyin extends ItemExecutor {
 
-	private Hitlist_Haiyin() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_Haiyin();
+	}
+
+	private Hitlist_Haiyin() {
 	}
 
 	/**

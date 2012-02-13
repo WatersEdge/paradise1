@@ -26,6 +26,19 @@ public class S_NpcChatPacket extends ServerBasePacket {
 		buildPacket(npc, chat, type);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_NPC_CHAT_PACKET;
+	}
+
 	private void buildPacket(L1NpcInstance npc, String chat, int type) {
 		switch (type) {
 		case 0: // normal chat
@@ -54,18 +67,5 @@ public class S_NpcChatPacket extends ServerBasePacket {
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_NPC_CHAT_PACKET;
 	}
 }

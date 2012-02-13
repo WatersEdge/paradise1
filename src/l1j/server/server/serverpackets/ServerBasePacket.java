@@ -35,77 +35,6 @@ public abstract class ServerBasePacket {
 	protected ServerBasePacket() {
 	}
 
-	protected void writeD(int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
-		_bao.write(value >> 16 & 0xff);
-		_bao.write(value >> 24 & 0xff);
-	}
-
-	protected void writeH(int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
-	}
-
-	protected void writeC(int value) {
-		_bao.write(value & 0xff);
-	}
-
-	protected void writeP(int value) {
-		_bao.write(value);
-	}
-
-	protected void writeL(long value) {
-		_bao.write((int) (value & 0xff));
-	}
-
-	protected void writeF(double org) {
-		long value = Double.doubleToRawLongBits(org);
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) (value >> 8 & 0xff));
-		_bao.write((int) (value >> 16 & 0xff));
-		_bao.write((int) (value >> 24 & 0xff));
-		_bao.write((int) (value >> 32 & 0xff));
-		_bao.write((int) (value >> 40 & 0xff));
-		_bao.write((int) (value >> 48 & 0xff));
-		_bao.write((int) (value >> 56 & 0xff));
-	}
-
-	protected void writeExp(final long value) {
-		this._bao.write((int) (value & 0xff));
-		this._bao.write((int) (value >> 8 & 0xff));
-		this._bao.write((int) (value >> 16 & 0xff));
-		this._bao.write((int) (value >> 24 & 0xff));
-	}
-
-	protected void writeS(String text) {
-		try {
-			if (text != null) {
-				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
-			}
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-
-		_bao.write(0);
-	}
-
-	protected void writeByte(byte[] text) {
-		try {
-			if (text != null) {
-				_bao.write(text);
-			}
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-	}
-
-	public int getLength() {
-		return _bao.size() + 2;
-	}
-
 	public byte[] getBytes() {
 		int padding = _bao.size() % 4;
 
@@ -120,10 +49,81 @@ public abstract class ServerBasePacket {
 
 	public abstract byte[] getContent() throws IOException;
 
+	public int getLength() {
+		return _bao.size() + 2;
+	}
+
 	/**
 	 * 返回服务器数据包类型的文字信息。("[S] S_WhoAmount" 等)
 	 */
 	public String getType() {
 		return "[S] " + this.getClass().getSimpleName();
+	}
+
+	protected void writeByte(byte[] text) {
+		try {
+			if (text != null) {
+				_bao.write(text);
+			}
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+	}
+
+	protected void writeC(int value) {
+		_bao.write(value & 0xff);
+	}
+
+	protected void writeD(int value) {
+		_bao.write(value & 0xff);
+		_bao.write(value >> 8 & 0xff);
+		_bao.write(value >> 16 & 0xff);
+		_bao.write(value >> 24 & 0xff);
+	}
+
+	protected void writeExp(final long value) {
+		this._bao.write((int) (value & 0xff));
+		this._bao.write((int) (value >> 8 & 0xff));
+		this._bao.write((int) (value >> 16 & 0xff));
+		this._bao.write((int) (value >> 24 & 0xff));
+	}
+
+	protected void writeF(double org) {
+		long value = Double.doubleToRawLongBits(org);
+		_bao.write((int) (value & 0xff));
+		_bao.write((int) (value >> 8 & 0xff));
+		_bao.write((int) (value >> 16 & 0xff));
+		_bao.write((int) (value >> 24 & 0xff));
+		_bao.write((int) (value >> 32 & 0xff));
+		_bao.write((int) (value >> 40 & 0xff));
+		_bao.write((int) (value >> 48 & 0xff));
+		_bao.write((int) (value >> 56 & 0xff));
+	}
+
+	protected void writeH(int value) {
+		_bao.write(value & 0xff);
+		_bao.write(value >> 8 & 0xff);
+	}
+
+	protected void writeL(long value) {
+		_bao.write((int) (value & 0xff));
+	}
+
+	protected void writeP(int value) {
+		_bao.write(value);
+	}
+
+	protected void writeS(String text) {
+		try {
+			if (text != null) {
+				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
+			}
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+
+		_bao.write(0);
 	}
 }

@@ -48,286 +48,6 @@ import l1j.server.server.utils.BinaryOutputStream;
  */
 public class L1ItemInstance extends L1Object {
 
-	private static final long serialVersionUID = 1L;
-
-	private int _count;
-
-	private int _itemId;
-
-	private L1Item _item;
-
-	private boolean _isEquipped = false;
-
-	private int _enchantLevel;
-
-	private boolean _isIdentified = false;
-
-	private int _durability;
-
-	private int _chargeCount;
-
-	private int _remainingTime;
-
-	private Timestamp _lastUsed = null;
-
-	private int _lastWeight;
-
-	private final LastStatus _lastStatus = new LastStatus();
-
-	private L1PcInstance _pc;
-
-	private boolean _isRunning = false;
-
-	private EnchantTimer _timer;
-
-	private int _bless;
-
-	private int _attrEnchantKind;
-
-	private int _attrEnchantLevel;
-
-	public L1ItemInstance() {
-		_count = 1;
-		_enchantLevel = 0;
-	}
-
-	/**
-	 * 道具类控制项
-	 * 
-	 * @param item
-	 * @param count
-	 */
-	public L1ItemInstance(L1Item item, int count) {
-		this();
-		setItem(item);
-		setCount(count);
-	}
-
-	/**
-	 * 返回道具的状态(鉴定)。
-	 * 
-	 * @return 鉴定true、未鉴定false。
-	 */
-	public boolean isIdentified() {
-		return _isIdentified;
-	}
-
-	/**
-	 * 设置道具的状态(鉴定)。
-	 * 
-	 * @param identified
-	 *            鉴定true、未鉴定false。
-	 */
-	public void setIdentified(boolean identified) {
-		_isIdentified = identified;
-	}
-
-	/** 获得名称 */
-	public String getName() {
-		return _item.getName();
-	}
-
-	/**
-	 * 返回道具的个数。
-	 * 
-	 * @return 道具的个数
-	 */
-	public int getCount() {
-		return _count;
-	}
-
-	/**
-	 * 设置道具的个数。
-	 * 
-	 * @param count
-	 *            道具的个数
-	 */
-	public void setCount(int count) {
-		_count = count;
-	}
-
-	/**
-	 * 返回道具是否已装备。
-	 * 
-	 * @return 如果已经装备true、没有装备false。
-	 */
-	public boolean isEquipped() {
-		return _isEquipped;
-	}
-
-	/**
-	 * 设置道具是否已装备。
-	 * 
-	 * @param equipped
-	 *            如果已经装备true、没有装备false。
-	 */
-	public void setEquipped(boolean equipped) {
-		_isEquipped = equipped;
-	}
-
-	/** 获得道具 */
-	public L1Item getItem() {
-		return _item;
-	}
-
-	/** 设置道具 */
-	public void setItem(L1Item item) {
-		_item = item;
-		_itemId = item.getItemId();
-	}
-
-	/** 取得道具ID */
-	public int getItemId() {
-		return _itemId;
-	}
-
-	/** 设定道具ID */
-	public void setItemId(int itemId) {
-		_itemId = itemId;
-	}
-
-	/** 是可堆叠 */
-	public boolean isStackable() {
-		return _item.isStackable();
-	}
-
-	@Override
-	public void onAction(L1PcInstance player) {
-	}
-
-	/** 取得加成等级 */
-	public int getEnchantLevel() {
-		return _enchantLevel;
-	}
-
-	/** 设定加成等级 */
-	public void setEnchantLevel(int enchantLevel) {
-		_enchantLevel = enchantLevel;
-	}
-
-	/** 动画ID */
-	public int get_gfxid() {
-		return _item.getGfxId();
-	}
-
-	/** 取得耐久度 */
-	public int get_durability() {
-		return _durability;
-	}
-
-	/**  */
-	public int getChargeCount() {
-		return _chargeCount;
-	}
-
-	/**  */
-	public void setChargeCount(int i) {
-		_chargeCount = i;
-	}
-
-	/** 取得剩余时间 */
-	public int getRemainingTime() {
-		return _remainingTime;
-	}
-
-	/** 设定剩余时间 */
-	public void setRemainingTime(int i) {
-		_remainingTime = i;
-	}
-
-	/** 设定最后使用 */
-	public void setLastUsed(Timestamp t) {
-		_lastUsed = t;
-	}
-
-	/** 取得最后使用 */
-	public Timestamp getLastUsed() {
-		return _lastUsed;
-	}
-
-	/** 取得最后重量 */
-	public int getLastWeight() {
-		return _lastWeight;
-	}
-
-	/** 设定最后重量 */
-	public void setLastWeight(int weight) {
-		_lastWeight = weight;
-	}
-
-	/** 设定封印 */
-	public void setBless(int i) {
-		_bless = i;
-	}
-
-	/** 取得封印 */
-	public int getBless() {
-		return _bless;
-	}
-
-	/** 设定属性加成种类 */
-	public void setAttrEnchantKind(int i) {
-		_attrEnchantKind = i;
-	}
-
-	/** 取得属性加成种类 */
-	public int getAttrEnchantKind() {
-		return _attrEnchantKind;
-	}
-
-	/** 设定属性加成级别 */
-	public void setAttrEnchantLevel(int i) {
-		_attrEnchantLevel = i;
-	}
-
-	/** 取得属性加成级别 */
-	public int getAttrEnchantLevel() {
-		return _attrEnchantLevel;
-	}
-
-	/** 取得魔防 */
-	public int getMr() {
-		int mr = _item.get_mdef();
-		if ((getItemId() == L1ArmorId.HELMET_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.CHAIN_MAIL_OF_MAGIC_RESISTANCE) // 抗魔法頭盔、抗魔法鏈甲
-				|| (getItemId() >= L1ArmorId.ELITE_PLATE_MAIL_OF_LINDVIOR && getItemId() <= L1ArmorId.ELITE_SCALE_MAIL_OF_LINDVIOR) // 林德拜爾的力量、林德拜爾的魅惑、林德拜爾的泉源、林德拜爾的霸氣
-				|| (getItemId() == L1ArmorId.B_HELMET_OF_MAGIC_RESISTANCE)) { // 受祝福的 抗魔法頭盔
-			mr += getEnchantLevel();
-		}
-		if ((getItemId() == L1ArmorId.CLOAK_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.B_CLOAK_OF_MAGIC_RESISTANCE) // 抗魔法斗篷、受祝福的 抗魔法斗篷
-				|| (getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
-			mr += getEnchantLevel() * 2;
-		}
-		// 饰品强化效果
-		if (getM_Def() != 0) {
-			mr += getM_Def();
-		}
-		return mr;
-	}
-
-	/**
-	 * 耐久性、许可的范围值0~127。
-	 */
-	public void set_durability(int i) {
-		if (i < 0) {
-			i = 0;
-		}
-
-		if (i > 127) {
-			i = 127;
-		}
-		_durability = i;
-	}
-
-	/** 获得重量 */
-	public int getWeight() {
-		if (getItem().getWeight() == 0) {
-			return 0;
-		}
-		else {
-			return Math.max(getCount() * getItem().getWeight() / 1000, 1);
-		}
-	}
-
 	/**
 	 * 前回DBへ保存した際のアイテムのステータスを格納するクラス
 	 */
@@ -376,6 +96,14 @@ public class L1ItemInstance extends L1Object {
 
 		public int m_def;
 
+		public void updateaddHp() {
+			addhp = getaddHp();
+		}
+
+		public void updateaddMp() {
+			addmp = getaddMp();
+		}
+
 		public void updateAll() {
 			count = getCount();
 			itemId = getItemId();
@@ -401,46 +129,6 @@ public class L1ItemInstance extends L1Object {
 			m_def = getM_Def();
 		}
 
-		public void updateCount() {
-			count = getCount();
-		}
-
-		public void updateItemId() {
-			itemId = getItemId();
-		}
-
-		public void updateEquipped() {
-			isEquipped = isEquipped();
-		}
-
-		public void updateIdentified() {
-			isIdentified = isIdentified();
-		}
-
-		public void updateEnchantLevel() {
-			enchantLevel = getEnchantLevel();
-		}
-
-		public void updateDuraility() {
-			durability = get_durability();
-		}
-
-		public void updateChargeCount() {
-			chargeCount = getChargeCount();
-		}
-
-		public void updateRemainingTime() {
-			remainingTime = getRemainingTime();
-		}
-
-		public void updateLastUsed() {
-			lastUsed = getLastUsed();
-		}
-
-		public void updateBless() {
-			bless = getBless();
-		}
-
 		public void updateAttrEnchantKind() {
 			attrEnchantKind = getAttrEnchantKind();
 		}
@@ -449,183 +137,359 @@ public class L1ItemInstance extends L1Object {
 			attrEnchantLevel = getAttrEnchantLevel();
 		}
 
-		public void updateFireMr() {
-			firemr = getFireMr();
+		public void updateBless() {
+			bless = getBless();
 		}
 
-		public void updateWaterMr() {
-			watermr = getWaterMr();
+		public void updateChargeCount() {
+			chargeCount = getChargeCount();
+		}
+
+		public void updateCount() {
+			count = getCount();
+		}
+
+		public void updateDuraility() {
+			durability = get_durability();
 		}
 
 		public void updateEarthMr() {
 			earthmr = getEarthMr();
 		}
 
-		public void updateWindMr() {
-			windmr = getWindMr();
+		public void updateEnchantLevel() {
+			enchantLevel = getEnchantLevel();
 		}
 
-		public void updateSp() {
-			addsp = getaddSp();
+		public void updateEquipped() {
+			isEquipped = isEquipped();
 		}
 
-		public void updateaddHp() {
-			addhp = getaddHp();
-		}
-
-		public void updateaddMp() {
-			addmp = getaddMp();
+		public void updateFireMr() {
+			firemr = getFireMr();
 		}
 
 		public void updateHpr() {
 			hpr = getHpr();
 		}
 
-		public void updateMpr() {
-			mpr = getMpr();
+		public void updateIdentified() {
+			isIdentified = isIdentified();
+		}
+
+		public void updateItemId() {
+			itemId = getItemId();
+		}
+
+		public void updateLastUsed() {
+			lastUsed = getLastUsed();
 		}
 
 		public void updateM_Def() {
 			m_def = getM_Def();
 		}
+
+		public void updateMpr() {
+			mpr = getMpr();
+		}
+
+		public void updateRemainingTime() {
+			remainingTime = getRemainingTime();
+		}
+
+		public void updateSp() {
+			addsp = getaddSp();
+		}
+
+		public void updateWaterMr() {
+			watermr = getWaterMr();
+		}
+
+		public void updateWindMr() {
+			windmr = getWindMr();
+		}
+	}
+
+	class EnchantTimer extends TimerTask {
+
+		public EnchantTimer() {
+		}
+
+		@Override
+		public void run() {
+			try {
+				int type = getItem().getType();
+				int type2 = getItem().getType2();
+				int itemId = getItem().getItemId();
+				if ((_pc != null) && _pc.getInventory().checkItem(itemId)) {
+					if ((type == 2) && (type2 == 2) && isEquipped()) {
+						_pc.addAc(3);
+						_pc.sendPackets(new S_OwnCharStatus(_pc));
+					}
+				}
+				setAcByMagic(0);
+				setDmgByMagic(0);
+				setHolyDmgByMagic(0);
+				setHitByMagic(0);
+				_pc.sendPackets(new S_ServerMessage(308, getLogName()));
+				_isRunning = false;
+				_timer = null;
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private int _count;
+
+	private int _itemId;
+
+	private L1Item _item;
+
+	private boolean _isEquipped = false;
+
+	private int _enchantLevel;
+
+	private boolean _isIdentified = false;
+
+	private int _durability;
+
+	private int _chargeCount;
+
+	private int _remainingTime;
+
+	private Timestamp _lastUsed = null;
+
+	private int _lastWeight;
+
+	private final LastStatus _lastStatus = new LastStatus();
+
+	private L1PcInstance _pc;
+
+	private boolean _isRunning = false;
+
+	private EnchantTimer _timer;
+
+	private int _bless;
+
+	private int _attrEnchantKind;
+
+	private int _attrEnchantLevel;
+
+	private int _acByMagic = 0;
+
+	private int _dmgByMagic = 0;
+
+	private int _holyDmgByMagic = 0;
+
+	private int _hitByMagic = 0;
+
+	private int _FireMr = 0;
+
+	private int _WaterMr = 0;
+
+	private int _EarthMr = 0;
+
+	private int _WindMr = 0;
+
+	private int _M_Def = 0;
+
+	private int _Mpr = 0;
+
+	private int _Hpr = 0;
+
+	private int _addHp = 0;
+
+	private int _addMp = 0;
+
+	private int _addSp = 0;
+
+	private int _itemOwnerId = 0;
+
+	private L1EquipmentTimer _equipmentTimer;
+
+	private boolean _isNowLighting = false;
+
+	// 旅馆钥匙
+	private int _keyId = 0;
+
+	private int _innNpcId = 0;
+
+	private boolean _isHall;
+
+	private Timestamp _dueTime;
+
+	public L1ItemInstance() {
+		_count = 1;
+		_enchantLevel = 0;
+	}
+
+	/**
+	 * 道具类控制项
+	 * 
+	 * @param item
+	 * @param count
+	 */
+	public L1ItemInstance(L1Item item, int count) {
+		this();
+		setItem(item);
+		setCount(count);
+	}
+
+	public boolean checkRoomOrHall() {
+		return _isHall;
+	}
+
+	/** 取得耐久度 */
+	public int get_durability() {
+		return _durability;
+	}
+
+	/** 动画ID */
+	public int get_gfxid() {
+		return _item.getGfxId();
+	}
+
+	public int getAcByMagic() {
+		return _acByMagic;
+	}
+
+	public int getaddHp() {
+		return _addHp;
+	}
+
+	public int getaddMp() {
+		return _addMp;
+	}
+
+	public int getaddSp() {
+		return _addSp;
+	}
+
+	/** 取得属性加成种类 */
+	public int getAttrEnchantKind() {
+		return _attrEnchantKind;
+	}
+
+	/** 取得属性加成级别 */
+	public int getAttrEnchantLevel() {
+		return _attrEnchantLevel;
+	}
+
+	/** 取得封印 */
+	public int getBless() {
+		return _bless;
+	}
+
+	/**  */
+	public int getChargeCount() {
+		return _chargeCount;
+	}
+
+	/**
+	 * 返回道具的个数。
+	 * 
+	 * @return 道具的个数
+	 */
+	public int getCount() {
+		return _count;
+	}
+
+	public int getDmgByMagic() {
+		return _dmgByMagic;
+	}
+
+	public Timestamp getDueTime() {
+		return _dueTime;
+	}
+
+	public int getEarthMr() {
+		return _EarthMr;
+	}
+
+	/** 取得加成等级 */
+	public int getEnchantLevel() {
+		return _enchantLevel;
+	}
+
+	public int getFireMr() {
+		return _FireMr;
+	}
+
+	public int getHitByMagic() {
+		return _hitByMagic;
+	}
+
+	public int getHolyDmgByMagic() {
+		return _holyDmgByMagic;
+	}
+
+	public int getHpr() {
+		return _Hpr;
+	}
+
+	// 旅馆钥匙
+	public String getInnKeyName() {
+		StringBuilder name = new StringBuilder();
+		name.append(" #");
+		String chatText = String.valueOf(getKeyId());
+		String s1 = "";
+		String s2 = "";
+		for (int i = 0; i < chatText.length(); i++) {
+			if (i >= 5) {
+				break;
+			}
+			s1 = s1 + String.valueOf(chatText.charAt(i));
+		}
+		name.append(s1);
+		for (int i = 0; i < chatText.length(); i++) {
+			if ((i % 2) == 0) {
+				s1 = String.valueOf(chatText.charAt(i));
+			}
+			else {
+				s2 = s1 + String.valueOf(chatText.charAt(i));
+				name.append(Integer.toHexString(Integer.valueOf(s2)).toLowerCase()); // 转成16进位
+			}
+		}
+		return name.toString();
+	}
+
+	public int getInnNpcId() {
+		return _innNpcId;
+	}
+
+	/** 获得道具 */
+	public L1Item getItem() {
+		return _item;
+	}
+
+	/** 取得道具ID */
+	public int getItemId() {
+		return _itemId;
+	}
+
+	public int getItemOwnerId() {
+		return _itemOwnerId;
+	}
+
+	public int getKeyId() {
+		return _keyId;
 	}
 
 	public LastStatus getLastStatus() {
 		return _lastStatus;
 	}
 
-	/**
-	 * 前回DBに保存した時から変化しているカラムをビット集合として返す。
-	 */
-	public int getRecordingColumns() {
-		int column = 0;
-
-		if (getCount() != _lastStatus.count) {
-			column += L1PcInventory.COL_COUNT;
-		}
-		if (getItemId() != _lastStatus.itemId) {
-			column += L1PcInventory.COL_ITEMID;
-		}
-		if (isEquipped() != _lastStatus.isEquipped) {
-			column += L1PcInventory.COL_EQUIPPED;
-		}
-		if (getEnchantLevel() != _lastStatus.enchantLevel) {
-			column += L1PcInventory.COL_ENCHANTLVL;
-		}
-		if (get_durability() != _lastStatus.durability) {
-			column += L1PcInventory.COL_DURABILITY;
-		}
-		if (getChargeCount() != _lastStatus.chargeCount) {
-			column += L1PcInventory.COL_CHARGE_COUNT;
-		}
-		if (getLastUsed() != _lastStatus.lastUsed) {
-			column += L1PcInventory.COL_DELAY_EFFECT;
-		}
-		if (isIdentified() != _lastStatus.isIdentified) {
-			column += L1PcInventory.COL_IS_ID;
-		}
-		if (getRemainingTime() != _lastStatus.remainingTime) {
-			column += L1PcInventory.COL_REMAINING_TIME;
-		}
-		if (getBless() != _lastStatus.bless) {
-			column += L1PcInventory.COL_BLESS;
-		}
-		if (getAttrEnchantKind() != _lastStatus.attrEnchantKind) {
-			column += L1PcInventory.COL_ATTR_ENCHANT_KIND;
-		}
-		if (getAttrEnchantLevel() != _lastStatus.attrEnchantLevel) {
-			column += L1PcInventory.COL_ATTR_ENCHANT_LEVEL;
-		}
-
-		return column;
+	/** 取得最后使用 */
+	public Timestamp getLastUsed() {
+		return _lastUsed;
 	}
 
-	public int getRecordingColumnsEnchantAccessory() {
-		int column = 0;
-
-		if (getaddHp() != _lastStatus.addhp) {
-			column += L1PcInventory.COL_ADDHP;
-		}
-		if (getaddMp() != _lastStatus.addmp) {
-			column += L1PcInventory.COL_ADDMP;
-		}
-		if (getHpr() != _lastStatus.hpr) {
-			column += L1PcInventory.COL_HPR;
-		}
-		if (getMpr() != _lastStatus.mpr) {
-			column += L1PcInventory.COL_MPR;
-		}
-		if (getaddSp() != _lastStatus.addsp) {
-			column += L1PcInventory.COL_ADDSP;
-		}
-		if (getM_Def() != _lastStatus.m_def) {
-			column += L1PcInventory.COL_M_DEF;
-		}
-		if (getEarthMr() != _lastStatus.earthmr) {
-			column += L1PcInventory.COL_EARTHMR;
-		}
-		if (getFireMr() != _lastStatus.firemr) {
-			column += L1PcInventory.COL_FIREMR;
-		}
-		if (getWaterMr() != _lastStatus.watermr) {
-			column += L1PcInventory.COL_WATERMR;
-		}
-		if (getWindMr() != _lastStatus.windmr) {
-			column += L1PcInventory.COL_WINDMR;
-		}
-
-		return column;
-	}
-
-	/**
-	 * 获得道具在仓库和背包内显示的名称与数量。<br>
-	 */
-	public String getNumberedViewName(int count) {
-		StringBuilder name = new StringBuilder(getNumberedName(count));
-		int itemType2 = getItem().getType2();
-		int itemId = getItem().getItemId();
-
-		// 宠物项圈
-		if ((itemId == 40314) || (itemId == 40316)) {
-			L1Pet pet = PetTable.getInstance().getTemplate(getId());
-			if (pet != null) {
-				L1Npc npc = NpcTable.getInstance().getTemplate(pet.get_npcid());
-				// name.append("[Lv." + pet.get_level() + " "
-				// + npc.get_nameid() + "]");
-				name.append("[Lv." + pet.get_level() + " " + pet.get_name() + "]HP" + pet.get_hp() + " " + npc.get_nameid());
-			}
-		}
-
-		// light系道具(灯)
-		if ((getItem().getType2() == 0) && (getItem().getType() == 2)) {
-			if (isNowLighting()) {
-				name.append(" ($10)");
-			}
-			if ((itemId == 40001) || (itemId == 40002)) { // 灯or灯笼
-				if (getRemainingTime() <= 0) {
-					name.append(" ($11)");
-				}
-			}
-		}
-
-		// 已经装备上
-		if (isEquipped()) {
-			if (itemType2 == 1) {
-				name.append(" ($9)"); // 装備(Armed)
-			}
-			else if (itemType2 == 2) {
-				name.append(" ($117)"); // 装備(Worn)
-			}
-		}
-		return name.toString();
-	}
-
-	/**
-	 * 返回道具在仓库与背包内显示的名称。<br>
-	 * 例:+10 武士刀 (装备)
-	 */
-	public String getViewName() {
-		return getNumberedViewName(_count);
+	/** 取得最后重量 */
+	public int getLastWeight() {
+		return _lastWeight;
 	}
 
 	/**
@@ -634,6 +498,38 @@ public class L1ItemInstance extends L1Object {
 	 */
 	public String getLogName() {
 		return getNumberedName(_count);
+	}
+
+	public int getM_Def() {
+		return _M_Def;
+	}
+
+	public int getMpr() {
+		return _Mpr;
+	}
+
+	/** 取得魔防 */
+	public int getMr() {
+		int mr = _item.get_mdef();
+		if ((getItemId() == L1ArmorId.HELMET_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.CHAIN_MAIL_OF_MAGIC_RESISTANCE) // 抗魔法頭盔、抗魔法鏈甲
+				|| (getItemId() >= L1ArmorId.ELITE_PLATE_MAIL_OF_LINDVIOR && getItemId() <= L1ArmorId.ELITE_SCALE_MAIL_OF_LINDVIOR) // 林德拜爾的力量、林德拜爾的魅惑、林德拜爾的泉源、林德拜爾的霸氣
+				|| (getItemId() == L1ArmorId.B_HELMET_OF_MAGIC_RESISTANCE)) { // 受祝福的 抗魔法頭盔
+			mr += getEnchantLevel();
+		}
+		if ((getItemId() == L1ArmorId.CLOAK_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.B_CLOAK_OF_MAGIC_RESISTANCE) // 抗魔法斗篷、受祝福的 抗魔法斗篷
+				|| (getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
+			mr += getEnchantLevel() * 2;
+		}
+		// 饰品强化效果
+		if (getM_Def() != 0) {
+			mr += getM_Def();
+		}
+		return mr;
+	}
+
+	/** 获得名称 */
+	public String getName() {
+		return _item.getName();
 	}
 
 	/**
@@ -741,30 +637,135 @@ public class L1ItemInstance extends L1Object {
 		return name.toString();
 	}
 
-	// 旅馆钥匙
-	public String getInnKeyName() {
-		StringBuilder name = new StringBuilder();
-		name.append(" #");
-		String chatText = String.valueOf(getKeyId());
-		String s1 = "";
-		String s2 = "";
-		for (int i = 0; i < chatText.length(); i++) {
-			if (i >= 5) {
-				break;
+	/**
+	 * 获得道具在仓库和背包内显示的名称与数量。<br>
+	 */
+	public String getNumberedViewName(int count) {
+		StringBuilder name = new StringBuilder(getNumberedName(count));
+		int itemType2 = getItem().getType2();
+		int itemId = getItem().getItemId();
+
+		// 宠物项圈
+		if ((itemId == 40314) || (itemId == 40316)) {
+			L1Pet pet = PetTable.getInstance().getTemplate(getId());
+			if (pet != null) {
+				L1Npc npc = NpcTable.getInstance().getTemplate(pet.get_npcid());
+				// name.append("[Lv." + pet.get_level() + " "
+				// + npc.get_nameid() + "]");
+				name.append("[Lv." + pet.get_level() + " " + pet.get_name() + "]HP" + pet.get_hp() + " " + npc.get_nameid());
 			}
-			s1 = s1 + String.valueOf(chatText.charAt(i));
 		}
-		name.append(s1);
-		for (int i = 0; i < chatText.length(); i++) {
-			if ((i % 2) == 0) {
-				s1 = String.valueOf(chatText.charAt(i));
+
+		// light系道具(灯)
+		if ((getItem().getType2() == 0) && (getItem().getType() == 2)) {
+			if (isNowLighting()) {
+				name.append(" ($10)");
 			}
-			else {
-				s2 = s1 + String.valueOf(chatText.charAt(i));
-				name.append(Integer.toHexString(Integer.valueOf(s2)).toLowerCase()); // 转成16进位
+			if ((itemId == 40001) || (itemId == 40002)) { // 灯or灯笼
+				if (getRemainingTime() <= 0) {
+					name.append(" ($11)");
+				}
+			}
+		}
+
+		// 已经装备上
+		if (isEquipped()) {
+			if (itemType2 == 1) {
+				name.append(" ($9)"); // 装備(Armed)
+			}
+			else if (itemType2 == 2) {
+				name.append(" ($117)"); // 装備(Worn)
 			}
 		}
 		return name.toString();
+	}
+
+	/**
+	 * 前回DBに保存した時から変化しているカラムをビット集合として返す。
+	 */
+	public int getRecordingColumns() {
+		int column = 0;
+
+		if (getCount() != _lastStatus.count) {
+			column += L1PcInventory.COL_COUNT;
+		}
+		if (getItemId() != _lastStatus.itemId) {
+			column += L1PcInventory.COL_ITEMID;
+		}
+		if (isEquipped() != _lastStatus.isEquipped) {
+			column += L1PcInventory.COL_EQUIPPED;
+		}
+		if (getEnchantLevel() != _lastStatus.enchantLevel) {
+			column += L1PcInventory.COL_ENCHANTLVL;
+		}
+		if (get_durability() != _lastStatus.durability) {
+			column += L1PcInventory.COL_DURABILITY;
+		}
+		if (getChargeCount() != _lastStatus.chargeCount) {
+			column += L1PcInventory.COL_CHARGE_COUNT;
+		}
+		if (getLastUsed() != _lastStatus.lastUsed) {
+			column += L1PcInventory.COL_DELAY_EFFECT;
+		}
+		if (isIdentified() != _lastStatus.isIdentified) {
+			column += L1PcInventory.COL_IS_ID;
+		}
+		if (getRemainingTime() != _lastStatus.remainingTime) {
+			column += L1PcInventory.COL_REMAINING_TIME;
+		}
+		if (getBless() != _lastStatus.bless) {
+			column += L1PcInventory.COL_BLESS;
+		}
+		if (getAttrEnchantKind() != _lastStatus.attrEnchantKind) {
+			column += L1PcInventory.COL_ATTR_ENCHANT_KIND;
+		}
+		if (getAttrEnchantLevel() != _lastStatus.attrEnchantLevel) {
+			column += L1PcInventory.COL_ATTR_ENCHANT_LEVEL;
+		}
+
+		return column;
+	}
+
+	public int getRecordingColumnsEnchantAccessory() {
+		int column = 0;
+
+		if (getaddHp() != _lastStatus.addhp) {
+			column += L1PcInventory.COL_ADDHP;
+		}
+		if (getaddMp() != _lastStatus.addmp) {
+			column += L1PcInventory.COL_ADDMP;
+		}
+		if (getHpr() != _lastStatus.hpr) {
+			column += L1PcInventory.COL_HPR;
+		}
+		if (getMpr() != _lastStatus.mpr) {
+			column += L1PcInventory.COL_MPR;
+		}
+		if (getaddSp() != _lastStatus.addsp) {
+			column += L1PcInventory.COL_ADDSP;
+		}
+		if (getM_Def() != _lastStatus.m_def) {
+			column += L1PcInventory.COL_M_DEF;
+		}
+		if (getEarthMr() != _lastStatus.earthmr) {
+			column += L1PcInventory.COL_EARTHMR;
+		}
+		if (getFireMr() != _lastStatus.firemr) {
+			column += L1PcInventory.COL_FIREMR;
+		}
+		if (getWaterMr() != _lastStatus.watermr) {
+			column += L1PcInventory.COL_WATERMR;
+		}
+		if (getWindMr() != _lastStatus.windmr) {
+			column += L1PcInventory.COL_WINDMR;
+		}
+
+		return column;
+	}
+
+	/** 取得剩余时间 */
+	public int getRemainingTime() {
+		return _remainingTime;
 	}
 
 	/**
@@ -1102,174 +1103,228 @@ public class L1ItemInstance extends L1Object {
 		return os.getBytes();
 	}
 
-	class EnchantTimer extends TimerTask {
+	/**
+	 * 返回道具在仓库与背包内显示的名称。<br>
+	 * 例:+10 武士刀 (装备)
+	 */
+	public String getViewName() {
+		return getNumberedViewName(_count);
+	}
 
-		public EnchantTimer() {
+	public int getWaterMr() {
+		return _WaterMr;
+	}
+
+	/** 获得重量 */
+	public int getWeight() {
+		if (getItem().getWeight() == 0) {
+			return 0;
 		}
-
-		@Override
-		public void run() {
-			try {
-				int type = getItem().getType();
-				int type2 = getItem().getType2();
-				int itemId = getItem().getItemId();
-				if ((_pc != null) && _pc.getInventory().checkItem(itemId)) {
-					if ((type == 2) && (type2 == 2) && isEquipped()) {
-						_pc.addAc(3);
-						_pc.sendPackets(new S_OwnCharStatus(_pc));
-					}
-				}
-				setAcByMagic(0);
-				setDmgByMagic(0);
-				setHolyDmgByMagic(0);
-				setHitByMagic(0);
-				_pc.sendPackets(new S_ServerMessage(308, getLogName()));
-				_isRunning = false;
-				_timer = null;
-			}
-			catch (Exception e) {
-			}
+		else {
+			return Math.max(getCount() * getItem().getWeight() / 1000, 1);
 		}
 	}
 
-	private int _acByMagic = 0;
+	public int getWindMr() {
+		return _WindMr;
+	}
 
-	public int getAcByMagic() {
-		return _acByMagic;
+	/**
+	 * 返回道具是否已装备。
+	 * 
+	 * @return 如果已经装备true、没有装备false。
+	 */
+	public boolean isEquipped() {
+		return _isEquipped;
+	}
+
+	/**
+	 * 返回道具的状态(鉴定)。
+	 * 
+	 * @return 鉴定true、未鉴定false。
+	 */
+	public boolean isIdentified() {
+		return _isIdentified;
+	}
+
+	public boolean isNowLighting() {
+		return _isNowLighting;
+	}
+
+	/** 是可堆叠 */
+	public boolean isStackable() {
+		return _item.isStackable();
+	}
+
+	@Override
+	public void onAction(L1PcInstance player) {
+	}
+
+	/**
+	 * 耐久性、许可的范围值0~127。
+	 */
+	public void set_durability(int i) {
+		if (i < 0) {
+			i = 0;
+		}
+
+		if (i > 127) {
+			i = 127;
+		}
+		_durability = i;
 	}
 
 	public void setAcByMagic(int i) {
 		_acByMagic = i;
 	}
 
-	private int _dmgByMagic = 0;
-
-	public int getDmgByMagic() {
-		return _dmgByMagic;
-	}
-
-	public void setDmgByMagic(int i) {
-		_dmgByMagic = i;
-	}
-
-	private int _holyDmgByMagic = 0;
-
-	public int getHolyDmgByMagic() {
-		return _holyDmgByMagic;
-	}
-
-	public void setHolyDmgByMagic(int i) {
-		_holyDmgByMagic = i;
-	}
-
-	private int _hitByMagic = 0;
-
-	public int getHitByMagic() {
-		return _hitByMagic;
-	}
-
-	public void setHitByMagic(int i) {
-		_hitByMagic = i;
-	}
-
-	private int _FireMr = 0;
-
-	public int getFireMr() {
-		return _FireMr;
-	}
-
-	public void setFireMr(int i) {
-		_FireMr = i;
-	}
-
-	private int _WaterMr = 0;
-
-	public int getWaterMr() {
-		return _WaterMr;
-	}
-
-	public void setWaterMr(int i) {
-		_WaterMr = i;
-	}
-
-	private int _EarthMr = 0;
-
-	public int getEarthMr() {
-		return _EarthMr;
-	}
-
-	public void setEarthMr(int i) {
-		_EarthMr = i;
-	}
-
-	private int _WindMr = 0;
-
-	public int getWindMr() {
-		return _WindMr;
-	}
-
-	public void setWindMr(int i) {
-		_WindMr = i;
-	}
-
-	private int _M_Def = 0;
-
-	public int getM_Def() {
-		return _M_Def;
-	}
-
-	public void setM_Def(int i) {
-		_M_Def = i;
-	}
-
-	private int _Mpr = 0;
-
-	public int getMpr() {
-		return _Mpr;
-	}
-
-	public void setMpr(int i) {
-		_Mpr = i;
-	}
-
-	private int _Hpr = 0;
-
-	public int getHpr() {
-		return _Hpr;
-	}
-
-	public void setHpr(int i) {
-		_Hpr = i;
-	}
-
-	private int _addHp = 0;
-
-	public int getaddHp() {
-		return _addHp;
-	}
-
 	public void setaddHp(int i) {
 		_addHp = i;
-	}
-
-	private int _addMp = 0;
-
-	public int getaddMp() {
-		return _addMp;
 	}
 
 	public void setaddMp(int i) {
 		_addMp = i;
 	}
 
-	private int _addSp = 0;
-
-	public int getaddSp() {
-		return _addSp;
-	}
-
 	public void setaddSp(int i) {
 		_addSp = i;
+	}
+
+	/** 设定属性加成种类 */
+	public void setAttrEnchantKind(int i) {
+		_attrEnchantKind = i;
+	}
+
+	/** 设定属性加成级别 */
+	public void setAttrEnchantLevel(int i) {
+		_attrEnchantLevel = i;
+	}
+
+	/** 设定封印 */
+	public void setBless(int i) {
+		_bless = i;
+	}
+
+	/**  */
+	public void setChargeCount(int i) {
+		_chargeCount = i;
+	}
+
+	/**
+	 * 设置道具的个数。
+	 * 
+	 * @param count
+	 *            道具的个数
+	 */
+	public void setCount(int count) {
+		_count = count;
+	}
+
+	public void setDmgByMagic(int i) {
+		_dmgByMagic = i;
+	}
+
+	public void setDueTime(Timestamp i) {
+		_dueTime = i;
+	}
+
+	public void setEarthMr(int i) {
+		_EarthMr = i;
+	}
+
+	/** 设定加成等级 */
+	public void setEnchantLevel(int enchantLevel) {
+		_enchantLevel = enchantLevel;
+	}
+
+	/**
+	 * 设置道具是否已装备。
+	 * 
+	 * @param equipped
+	 *            如果已经装备true、没有装备false。
+	 */
+	public void setEquipped(boolean equipped) {
+		_isEquipped = equipped;
+	}
+
+	public void setFireMr(int i) {
+		_FireMr = i;
+	}
+
+	public void setHall(boolean i) {
+		_isHall = i;
+	}
+
+	public void setHitByMagic(int i) {
+		_hitByMagic = i;
+	}
+
+	public void setHolyDmgByMagic(int i) {
+		_holyDmgByMagic = i;
+	}
+
+	public void setHpr(int i) {
+		_Hpr = i;
+	}
+
+	/**
+	 * 设置道具的状态(鉴定)。
+	 * 
+	 * @param identified
+	 *            鉴定true、未鉴定false。
+	 */
+	public void setIdentified(boolean identified) {
+		_isIdentified = identified;
+	}
+
+	public void setInnNpcId(int i) {
+		_innNpcId = i;
+	}
+
+	/** 设置道具 */
+	public void setItem(L1Item item) {
+		_item = item;
+		_itemId = item.getItemId();
+	}
+
+	/** 设定道具ID */
+	public void setItemId(int itemId) {
+		_itemId = itemId;
+	}
+
+	public void setItemOwnerId(int i) {
+		_itemOwnerId = i;
+	}
+
+	public void setKeyId(int i) {
+		_keyId = i;
+	}
+
+	/** 设定最后使用 */
+	public void setLastUsed(Timestamp t) {
+		_lastUsed = t;
+	}
+
+	/** 设定最后重量 */
+	public void setLastWeight(int weight) {
+		_lastWeight = weight;
+	}
+
+	public void setM_Def(int i) {
+		_M_Def = i;
+	}
+
+	public void setMpr(int i) {
+		_Mpr = i;
+	}
+
+	public void setNowLighting(boolean flag) {
+		_isNowLighting = flag;
+	}
+
+	/** 设定剩余时间 */
+	public void setRemainingTime(int i) {
+		_remainingTime = i;
 	}
 
 	public void setSkillArmorEnchant(L1PcInstance pc, int skillId, int skillTime) {
@@ -1342,23 +1397,13 @@ public class L1ItemInstance extends L1Object {
 		_isRunning = true;
 	}
 
-	private int _itemOwnerId = 0;
-
-	public int getItemOwnerId() {
-		return _itemOwnerId;
+	public void setWaterMr(int i) {
+		_WaterMr = i;
 	}
 
-	public void setItemOwnerId(int i) {
-		_itemOwnerId = i;
+	public void setWindMr(int i) {
+		_WindMr = i;
 	}
-
-	public void startItemOwnerTimer(L1PcInstance pc) {
-		setItemOwnerId(pc.getId());
-		L1ItemOwnerTimer timer = new L1ItemOwnerTimer(this, 10000);
-		timer.begin();
-	}
-
-	private L1EquipmentTimer _equipmentTimer;
 
 	public void startEquipmentTimer(L1PcInstance pc) {
 		if (getRemainingTime() > 0) {
@@ -1368,61 +1413,16 @@ public class L1ItemInstance extends L1Object {
 		}
 	}
 
+	public void startItemOwnerTimer(L1PcInstance pc) {
+		setItemOwnerId(pc.getId());
+		L1ItemOwnerTimer timer = new L1ItemOwnerTimer(this, 10000);
+		timer.begin();
+	}
+
 	public void stopEquipmentTimer(L1PcInstance pc) {
 		if (getRemainingTime() > 0) {
 			_equipmentTimer.cancel();
 			_equipmentTimer = null;
 		}
-	}
-
-	private boolean _isNowLighting = false;
-
-	public boolean isNowLighting() {
-		return _isNowLighting;
-	}
-
-	public void setNowLighting(boolean flag) {
-		_isNowLighting = flag;
-	}
-
-	// 旅馆钥匙
-	private int _keyId = 0;
-
-	public int getKeyId() {
-		return _keyId;
-	}
-
-	public void setKeyId(int i) {
-		_keyId = i;
-	}
-
-	private int _innNpcId = 0;
-
-	public int getInnNpcId() {
-		return _innNpcId;
-	}
-
-	public void setInnNpcId(int i) {
-		_innNpcId = i;
-	}
-
-	private boolean _isHall;
-
-	public boolean checkRoomOrHall() {
-		return _isHall;
-	}
-
-	public void setHall(boolean i) {
-		_isHall = i;
-	}
-
-	private Timestamp _dueTime;
-
-	public Timestamp getDueTime() {
-		return _dueTime;
-	}
-
-	public void setDueTime(Timestamp i) {
-		_dueTime = i;
 	}
 }

@@ -46,14 +46,6 @@ public class L1V2Map extends L1Map {
 	 */
 	private static final byte BITFLAG_IS_IMPASSABLE = (byte) 128; // 1000 0000
 
-	private int offset(int x, int y) {
-		return ((y - _yLoc) * _width * 2) + ((x - _xLoc) * 2);
-	}
-
-	private int accessOriginalTile(int x, int y) {
-		return _map[offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
-	}
-
 	public L1V2Map(int id, byte map[], int xLoc, int yLoc, int width, int height, boolean underwater, boolean markable, boolean teleportable, boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
 			boolean usableItem, boolean usableSkill) {
 		_id = id;
@@ -114,18 +106,8 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isArrowPassable(Point pt) {
-		return isArrowPassable(pt.getX(), pt.getY());
-	}
-
-	@Override
 	public boolean isArrowPassable(int x, int y) {
 		return (accessOriginalTile(x, y) != 1);
-	}
-
-	@Override
-	public boolean isArrowPassable(Point pt, int heading) {
-		return isArrowPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
@@ -187,8 +169,13 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isCombatZone(Point pt) {
-		return isCombatZone(pt.getX(), pt.getY());
+	public boolean isArrowPassable(Point pt) {
+		return isArrowPassable(pt.getX(), pt.getY());
+	}
+
+	@Override
+	public boolean isArrowPassable(Point pt, int heading) {
+		return isArrowPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
@@ -197,8 +184,60 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isInMap(Point pt) {
-		return isInMap(pt.getX(), pt.getY());
+	public boolean isCombatZone(Point pt) {
+		return isCombatZone(pt.getX(), pt.getY());
+	}
+
+	@Override
+	public boolean isEnabledDeathPenalty() {
+		return _isEnabledDeathPenalty;
+	}
+
+	@Override
+	public boolean isEscapable() {
+		return _isEscapable;
+	}
+
+	@Override
+	public boolean isExistDoor(int x, int y) {
+		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
+				continue;
+			}
+			if (door.isDead()) {
+				continue;
+			}
+			int leftEdgeLocation = door.getLeftEdgeLocation();
+			int rightEdgeLocation = door.getRightEdgeLocation();
+			int size = rightEdgeLocation - leftEdgeLocation;
+			if (size == 0) { // 1マス分の幅のドア
+				if (x == door.getX() && y == door.getY()) {
+					return true;
+				}
+			}
+			else { // 2マス分以上の幅があるドア
+				if (door.getDirection() == 0) { // ／向き
+					for (int doorX = leftEdgeLocation; doorX <= rightEdgeLocation; doorX++) {
+						if (x == doorX && y == door.getY()) {
+							return true;
+						}
+					}
+				}
+				else { // ＼向き
+					for (int doorY = leftEdgeLocation; doorY <= rightEdgeLocation; doorY++) {
+						if (x == door.getX() && y == doorY) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isFishingZone(int x, int y) {
+		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
 	}
 
 	@Override
@@ -207,8 +246,13 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isNormalZone(Point pt) {
-		return isNormalZone(pt.getX(), pt.getY());
+	public boolean isInMap(Point pt) {
+		return isInMap(pt.getX(), pt.getY());
+	}
+
+	@Override
+	public boolean isMarkable() {
+		return _isMarkable;
 	}
 
 	@Override
@@ -217,8 +261,8 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isPassable(Point pt) {
-		return isPassable(pt.getX(), pt.getY());
+	public boolean isNormalZone(Point pt) {
+		return isNormalZone(pt.getX(), pt.getY());
 	}
 
 	@Override
@@ -231,11 +275,6 @@ public class L1V2Map extends L1Map {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public boolean isPassable(Point pt, int heading) {
-		return isPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
@@ -279,8 +318,18 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isSafetyZone(Point pt) {
-		return isSafetyZone(pt.getX(), pt.getY());
+	public boolean isPassable(Point pt) {
+		return isPassable(pt.getX(), pt.getY());
+	}
+
+	@Override
+	public boolean isPassable(Point pt, int heading) {
+		return isPassable(pt.getX(), pt.getY(), heading);
+	}
+
+	@Override
+	public boolean isRecallPets() {
+		return _isRecallPets;
 	}
 
 	@Override
@@ -289,53 +338,8 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public void setPassable(Point pt, boolean isPassable) {
-		setPassable(pt.getX(), pt.getY(), isPassable);
-	}
-
-	@Override
-	public void setPassable(int x, int y, boolean isPassable) {
-		if (isPassable) {
-			_map[offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
-		}
-		else {
-			_map[offset(x, y)] |= BITFLAG_IS_IMPASSABLE;
-		}
-	}
-
-	@Override
-	public boolean isUnderwater() {
-		return _isUnderwater;
-	}
-
-	@Override
-	public boolean isMarkable() {
-		return _isMarkable;
-	}
-
-	@Override
-	public boolean isTeleportable() {
-		return _isTeleportable;
-	}
-
-	@Override
-	public boolean isEscapable() {
-		return _isEscapable;
-	}
-
-	@Override
-	public boolean isUseResurrection() {
-		return _isUseResurrection;
-	}
-
-	@Override
-	public boolean isUsePainwand() {
-		return _isUsePainwand;
-	}
-
-	@Override
-	public boolean isEnabledDeathPenalty() {
-		return _isEnabledDeathPenalty;
+	public boolean isSafetyZone(Point pt) {
+		return isSafetyZone(pt.getX(), pt.getY());
 	}
 
 	@Override
@@ -344,8 +348,13 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isRecallPets() {
-		return _isRecallPets;
+	public boolean isTeleportable() {
+		return _isTeleportable;
+	}
+
+	@Override
+	public boolean isUnderwater() {
+		return _isUnderwater;
 	}
 
 	@Override
@@ -359,45 +368,28 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isFishingZone(int x, int y) {
-		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
+	public boolean isUsePainwand() {
+		return _isUsePainwand;
 	}
 
 	@Override
-	public boolean isExistDoor(int x, int y) {
-		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
-				continue;
-			}
-			if (door.isDead()) {
-				continue;
-			}
-			int leftEdgeLocation = door.getLeftEdgeLocation();
-			int rightEdgeLocation = door.getRightEdgeLocation();
-			int size = rightEdgeLocation - leftEdgeLocation;
-			if (size == 0) { // 1マス分の幅のドア
-				if (x == door.getX() && y == door.getY()) {
-					return true;
-				}
-			}
-			else { // 2マス分以上の幅があるドア
-				if (door.getDirection() == 0) { // ／向き
-					for (int doorX = leftEdgeLocation; doorX <= rightEdgeLocation; doorX++) {
-						if (x == doorX && y == door.getY()) {
-							return true;
-						}
-					}
-				}
-				else { // ＼向き
-					for (int doorY = leftEdgeLocation; doorY <= rightEdgeLocation; doorY++) {
-						if (x == door.getX() && y == doorY) {
-							return true;
-						}
-					}
-				}
-			}
+	public boolean isUseResurrection() {
+		return _isUseResurrection;
+	}
+
+	@Override
+	public void setPassable(int x, int y, boolean isPassable) {
+		if (isPassable) {
+			_map[offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
 		}
-		return false;
+		else {
+			_map[offset(x, y)] |= BITFLAG_IS_IMPASSABLE;
+		}
+	}
+
+	@Override
+	public void setPassable(Point pt, boolean isPassable) {
+		setPassable(pt.getX(), pt.getY(), isPassable);
 	}
 
 	@Override
@@ -405,5 +397,13 @@ public class L1V2Map extends L1Map {
 		int tile = getOriginalTile(pt.getX(), pt.getY());
 
 		return (tile & 0xFF) + " " + ((tile >> 8) & 0xFF);
+	}
+
+	private int accessOriginalTile(int x, int y) {
+		return _map[offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
+	}
+
+	private int offset(int x, int y) {
+		return ((y - _yLoc) * _width * 2) + ((x - _xLoc) * 2);
 	}
 }

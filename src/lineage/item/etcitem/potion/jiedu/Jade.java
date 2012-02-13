@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Jade extends ItemExecutor {
 
-	private Jade() {
-	}
-
 	public static ItemExecutor get() {
 		return new Jade();
+	}
+
+	private Jade() {
 	}
 
 	/**

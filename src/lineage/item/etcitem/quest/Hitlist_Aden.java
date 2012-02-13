@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_Aden extends ItemExecutor {
 
-	private Hitlist_Aden() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_Aden();
+	}
+
+	private Hitlist_Aden() {
 	}
 
 	/**

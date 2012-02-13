@@ -49,6 +49,19 @@ public class S_Board extends ServerBasePacket {
 		buildPacket(boardObjId, number);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_BOARD;
+	}
+
 	private void buildPacket(int boardObjId, int number) {
 		List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
 		writeC(Opcodes.S_OPCODE_BOARD);
@@ -71,18 +84,5 @@ public class S_Board extends ServerBasePacket {
 			writeS(topic.getDate());
 			writeS(topic.getTitle());
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_BOARD;
 	}
 }

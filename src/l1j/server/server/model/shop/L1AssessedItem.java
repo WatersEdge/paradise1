@@ -46,13 +46,13 @@ public class L1AssessedItem {
 		}
 	}
 
-	/** 获得目标ID */
-	public int getTargetId() {
-		return _targetId;
-	}
-
 	/** 获得评估价格 */
 	public int getAssessedPrice() {
 		return _assessedPrice;
+	}
+
+	/** 获得目标ID */
+	public int getTargetId() {
+		return _targetId;
 	}
 }

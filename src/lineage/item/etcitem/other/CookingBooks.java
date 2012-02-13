@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class CookingBooks extends ItemExecutor {
 
-	private CookingBooks() {
-	}
-
 	public static ItemExecutor get() {
 		return new CookingBooks();
+	}
+
+	private CookingBooks() {
 	}
 
 	/**

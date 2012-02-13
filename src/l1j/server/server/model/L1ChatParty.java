@@ -50,37 +50,12 @@ public class L1ChatParty {
 		pc.setChatParty(this);
 	}
 
-	private void removeMember(L1PcInstance pc) {
-		if (!_membersList.contains(pc)) {
-			return;
-		}
-
-		_membersList.remove(pc);
-		pc.setChatParty(null);
-	}
-
-	public boolean isVacancy() {
-		return _membersList.size() < Config.MAX_CHAT_PT;
-	}
-
-	public int getVacancy() {
-		return Config.MAX_CHAT_PT - _membersList.size();
-	}
-
-	public boolean isMember(L1PcInstance pc) {
-		return _membersList.contains(pc);
-	}
-
-	private void setLeader(L1PcInstance pc) {
-		_leader = pc;
-	}
-
 	public L1PcInstance getLeader() {
 		return _leader;
 	}
 
-	public boolean isLeader(L1PcInstance pc) {
-		return pc.getId() == _leader.getId();
+	public L1PcInstance[] getMembers() {
+		return _membersList.toArray(new L1PcInstance[_membersList.size()]);
 	}
 
 	public String getMembersNameList() {
@@ -91,13 +66,38 @@ public class L1ChatParty {
 		return _result;
 	}
 
-	private void breakup() {
-		L1PcInstance[] members = getMembers();
+	public int getNumOfMembers() {
+		return _membersList.size();
+	}
 
-		for (L1PcInstance member : members) {
-			removeMember(member);
-			member.sendPackets(new S_ServerMessage(418)); // 您解散您的队伍了!!
+	public int getVacancy() {
+		return Config.MAX_CHAT_PT - _membersList.size();
+	}
+
+	public boolean isLeader(L1PcInstance pc) {
+		return pc.getId() == _leader.getId();
+	}
+
+	public boolean isMember(L1PcInstance pc) {
+		return _membersList.contains(pc);
+	}
+
+	public boolean isVacancy() {
+		return _membersList.size() < Config.MAX_CHAT_PT;
+	}
+
+	public void kickMember(L1PcInstance pc) {
+		if (getNumOfMembers() == 2) {
+			// 自己是队长
+			removeMember(pc);
+			L1PcInstance leader = getLeader();
+			removeMember(leader);
 		}
+		else {
+			// 组队的剩余成员超过两个以上
+			removeMember(pc);
+		}
+		pc.sendPackets(new S_ServerMessage(419)); // 您从队伍中被驱逐了。
 	}
 
 	public void leaveMember(L1PcInstance pc) {
@@ -128,30 +128,30 @@ public class L1ChatParty {
 		}
 	}
 
-	public void kickMember(L1PcInstance pc) {
-		if (getNumOfMembers() == 2) {
-			// 自己是队长
-			removeMember(pc);
-			L1PcInstance leader = getLeader();
-			removeMember(leader);
+	private void breakup() {
+		L1PcInstance[] members = getMembers();
+
+		for (L1PcInstance member : members) {
+			removeMember(member);
+			member.sendPackets(new S_ServerMessage(418)); // 您解散您的队伍了!!
 		}
-		else {
-			// 组队的剩余成员超过两个以上
-			removeMember(pc);
-		}
-		pc.sendPackets(new S_ServerMessage(419)); // 您从队伍中被驱逐了。
 	}
 
-	public L1PcInstance[] getMembers() {
-		return _membersList.toArray(new L1PcInstance[_membersList.size()]);
-	}
+	private void removeMember(L1PcInstance pc) {
+		if (!_membersList.contains(pc)) {
+			return;
+		}
 
-	public int getNumOfMembers() {
-		return _membersList.size();
+		_membersList.remove(pc);
+		pc.setChatParty(null);
 	}
 
 	private void sendLeftMessage(L1PcInstance sendTo, L1PcInstance left) {
 		sendTo.sendPackets(new S_ServerMessage(420, left.getName())); // %0%s 离开了队伍。
+	}
+
+	private void setLeader(L1PcInstance pc) {
+		_leader = pc;
 	}
 
 }

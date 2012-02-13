@@ -18,11 +18,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Wand_RemoveFurniture extends ItemExecutor {
 
-	private Wand_RemoveFurniture() {
-	}
-
 	public static ItemExecutor get() {
 		return new Wand_RemoveFurniture();
+	}
+
+	private Wand_RemoveFurniture() {
 	}
 
 	/**

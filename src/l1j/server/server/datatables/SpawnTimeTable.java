@@ -36,14 +36,14 @@ public class SpawnTimeTable {
 
 	private static SpawnTimeTable _instance;
 
-	private final Map<Integer, L1SpawnTime> _times = Maps.newMap();
-
 	public static SpawnTimeTable getInstance() {
 		if (_instance == null) {
 			_instance = new SpawnTimeTable();
 		}
 		return _instance;
 	}
+
+	private final Map<Integer, L1SpawnTime> _times = Maps.newMap();
 
 	private SpawnTimeTable() {
 		load();

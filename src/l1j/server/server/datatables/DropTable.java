@@ -51,9 +51,6 @@ public class DropTable {
 
 	private static DropTable _instance;
 
-	/** 每个怪物掉宝列表 */
-	private final Map<Integer, List<L1Drop>> _droplists;
-
 	public static DropTable getInstance() {
 		if (_instance == null) {
 			_instance = new DropTable();
@@ -61,126 +58,11 @@ public class DropTable {
 		return _instance;
 	}
 
+	/** 每个怪物掉宝列表 */
+	private final Map<Integer, List<L1Drop>> _droplists;
+
 	private DropTable() {
 		_droplists = allDropList();
-	}
-
-	/**
-	 * 所有掉宝列表
-	 */
-	private Map<Integer, List<L1Drop>> allDropList() {
-		Map<Integer, List<L1Drop>> droplistMap = Maps.newMap();
-
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("select * from droplist");
-			rs = pstm.executeQuery();
-			while (rs.next()) {
-				int mobId = rs.getInt("mobId"); // 怪物ID
-				int itemId = rs.getInt("itemId"); // 道具ID
-				int min = rs.getInt("min"); // 最大数量
-				int max = rs.getInt("max"); // 最小数量
-				int chance = rs.getInt("chance"); // 几率
-
-				L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
-
-				List<L1Drop> dropList = droplistMap.get(drop.getMobid());
-				if (dropList == null) {
-					dropList = Lists.newList();
-					droplistMap.put(new Integer(drop.getMobid()), dropList);
-				}
-				dropList.add(drop);
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		return droplistMap;
-	}
-
-	/**
-	 * 设定掉落
-	 * 
-	 * @param npc
-	 * @param inventory
-	 */
-	public void setDrop(L1NpcInstance npc, L1Inventory inventory) {
-
-		// 取得掉落列表
-		int mobId = npc.getNpcTemplate().get_npcId();
-		List<L1Drop> dropList = _droplists.get(mobId);
-		if (dropList == null) {
-			return;
-		}
-
-		// 取得掉落倍率
-		double droprate = Config.RATE_DROP_ITEMS; // 道具
-		if (droprate <= 0) {
-			droprate = 0;
-		}
-		double adenarate = Config.RATE_DROP_ADENA; // 金币
-		if (adenarate <= 0) {
-			adenarate = 0;
-		}
-		if ((droprate <= 0) && (adenarate <= 0)) {
-			return;
-		}
-
-		int itemId;
-		int itemCount;
-		int addCount;
-		int randomChance;
-		L1ItemInstance item;
-
-		for (L1Drop drop : dropList) {
-			// 获得掉落物品
-			itemId = drop.getItemid();
-			if ((adenarate == 0) && (itemId == L1ItemId.ADENA)) {
-				continue; // 掉落金币倍率为0的情况
-			}
-
-			// 掉落几率判定
-			randomChance = Random.nextInt(0xf4240) + 1;
-			double rateOfMapId = MapsTable.getInstance().getDropRate(npc.getMapId());
-			double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
-			if ((droprate == 0) || (drop.getChance() * droprate * rateOfMapId * rateOfItem < randomChance)) {
-				continue;
-			}
-
-			// 设定掉落数量
-			double amount = DropItemTable.getInstance().getDropAmount(itemId);
-			int min = (int) (drop.getMin() * amount);
-			int max = (int) (drop.getMax() * amount);
-
-			itemCount = min;
-			addCount = max - min + 1;
-			if (addCount > 1) {
-				itemCount += Random.nextInt(addCount);
-			}
-			if (itemId == L1ItemId.ADENA) { // 掉落金币数量 + 掉落金币倍率
-				itemCount *= adenarate;
-			}
-			if (itemCount < 0) {
-				itemCount = 0;
-			}
-			if (itemCount > 2000000000) { // 最高20亿
-				itemCount = 2000000000;
-			}
-
-			// 道具生成
-			item = ItemTable.getInstance().createItem(itemId);
-			item.setCount(itemCount);
-
-			// 储存道具
-			inventory.storeItem(item);
-		}
 	}
 
 	/**
@@ -386,6 +268,124 @@ public class DropTable {
 			inventory.tradeItem(item, item.getCount(), targetInventory);
 		}
 		npc.turnOnOffLight();
+	}
+
+	/**
+	 * 设定掉落
+	 * 
+	 * @param npc
+	 * @param inventory
+	 */
+	public void setDrop(L1NpcInstance npc, L1Inventory inventory) {
+
+		// 取得掉落列表
+		int mobId = npc.getNpcTemplate().get_npcId();
+		List<L1Drop> dropList = _droplists.get(mobId);
+		if (dropList == null) {
+			return;
+		}
+
+		// 取得掉落倍率
+		double droprate = Config.RATE_DROP_ITEMS; // 道具
+		if (droprate <= 0) {
+			droprate = 0;
+		}
+		double adenarate = Config.RATE_DROP_ADENA; // 金币
+		if (adenarate <= 0) {
+			adenarate = 0;
+		}
+		if ((droprate <= 0) && (adenarate <= 0)) {
+			return;
+		}
+
+		int itemId;
+		int itemCount;
+		int addCount;
+		int randomChance;
+		L1ItemInstance item;
+
+		for (L1Drop drop : dropList) {
+			// 获得掉落物品
+			itemId = drop.getItemid();
+			if ((adenarate == 0) && (itemId == L1ItemId.ADENA)) {
+				continue; // 掉落金币倍率为0的情况
+			}
+
+			// 掉落几率判定
+			randomChance = Random.nextInt(0xf4240) + 1;
+			double rateOfMapId = MapsTable.getInstance().getDropRate(npc.getMapId());
+			double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
+			if ((droprate == 0) || (drop.getChance() * droprate * rateOfMapId * rateOfItem < randomChance)) {
+				continue;
+			}
+
+			// 设定掉落数量
+			double amount = DropItemTable.getInstance().getDropAmount(itemId);
+			int min = (int) (drop.getMin() * amount);
+			int max = (int) (drop.getMax() * amount);
+
+			itemCount = min;
+			addCount = max - min + 1;
+			if (addCount > 1) {
+				itemCount += Random.nextInt(addCount);
+			}
+			if (itemId == L1ItemId.ADENA) { // 掉落金币数量 + 掉落金币倍率
+				itemCount *= adenarate;
+			}
+			if (itemCount < 0) {
+				itemCount = 0;
+			}
+			if (itemCount > 2000000000) { // 最高20亿
+				itemCount = 2000000000;
+			}
+
+			// 道具生成
+			item = ItemTable.getInstance().createItem(itemId);
+			item.setCount(itemCount);
+
+			// 储存道具
+			inventory.storeItem(item);
+		}
+	}
+
+	/**
+	 * 所有掉宝列表
+	 */
+	private Map<Integer, List<L1Drop>> allDropList() {
+		Map<Integer, List<L1Drop>> droplistMap = Maps.newMap();
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("select * from droplist");
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				int mobId = rs.getInt("mobId"); // 怪物ID
+				int itemId = rs.getInt("itemId"); // 道具ID
+				int min = rs.getInt("min"); // 最大数量
+				int max = rs.getInt("max"); // 最小数量
+				int chance = rs.getInt("chance"); // 几率
+
+				L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
+
+				List<L1Drop> dropList = droplistMap.get(drop.getMobid());
+				if (dropList == null) {
+					dropList = Lists.newList();
+					droplistMap.put(new Integer(drop.getMobid()), dropList);
+				}
+				dropList.add(drop);
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return droplistMap;
 	}
 
 }

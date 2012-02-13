@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class PetCollar extends ItemExecutor {
 
-	private PetCollar() {
-	}
-
 	public static ItemExecutor get() {
 		return new PetCollar();
+	}
+
+	private PetCollar() {
 	}
 
 	/**

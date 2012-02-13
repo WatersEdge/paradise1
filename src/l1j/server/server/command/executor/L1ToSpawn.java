@@ -28,11 +28,11 @@ import l1j.server.server.utils.collections.Maps;
 public class L1ToSpawn implements L1CommandExecutor {
 	private static final Map<Integer, Integer> _spawnId = Maps.newMap();
 
-	private L1ToSpawn() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1ToSpawn();
+	}
+
+	private L1ToSpawn() {
 	}
 
 	@Override

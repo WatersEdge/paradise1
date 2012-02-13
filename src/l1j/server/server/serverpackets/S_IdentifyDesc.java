@@ -31,6 +31,14 @@ public class S_IdentifyDesc extends ServerBasePacket {
 		buildPacket(item);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
 	private void buildPacket(L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_IDENTIFYDESC);
 		writeH(item.getItem().getItemDescId());
@@ -101,13 +109,5 @@ public class S_IdentifyDesc extends ServerBasePacket {
 			}
 			writeS(String.valueOf(item.getWeight()));
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
 	}
 }

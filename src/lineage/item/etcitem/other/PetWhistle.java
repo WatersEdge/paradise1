@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class PetWhistle extends ItemExecutor {
 
-	private PetWhistle() {
-	}
-
 	public static ItemExecutor get() {
 		return new PetWhistle();
+	}
+
+	private PetWhistle() {
 	}
 
 	/**

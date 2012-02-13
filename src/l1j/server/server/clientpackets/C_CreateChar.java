@@ -62,87 +62,13 @@ public class C_CreateChar extends ClientBasePacket {
 
 	private static final String CLIENT_LANGUAGE_CODE = Config.CLIENT_LANGUAGE_CODE;
 
-	public C_CreateChar(byte[] abyte0, ClientThread client) throws Exception {
-		super(abyte0);
-		L1PcInstance pc = new L1PcInstance();
-		String name = readS();
-
-		Account account = Account.load(client.getAccountName());
-		int characterSlot = account.getCharacterSlot();
-		int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
-
-		name = name.replaceAll("\\s", "");
-		name = name.replaceAll("　", "");
-		if (name.length() == 0) {
-			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
-			client.sendPacket(s_charcreatestatus);
-			return;
-		}
-
-		if (isInvalidName(name)) {
-			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
-			client.sendPacket(s_charcreatestatus);
-			return;
-		}
-
-		if (CharacterTable.doesCharNameExist(name)) {
-			_log.fine("角色名称: " + pc.getName() + " 已经存在。创建失败。");
-			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_ALREADY_EXSISTS);
-			client.sendPacket(s_charcreatestatus1);
-			return;
-		}
-
-		if (client.getAccount().countCharacters() >= maxAmount) {
-			_log.fine("账号: " + client.getAccountName() + " 超过角色上限数目: " + maxAmount + "。");
-			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
-			client.sendPacket(s_charcreatestatus1);
-			return;
-		}
-
-		pc.setName(name);
-		pc.setType(readC());
-		pc.set_sex(readC());
-		pc.addBaseStr((byte) readC());
-		pc.addBaseDex((byte) readC());
-		pc.addBaseCon((byte) readC());
-		pc.addBaseWis((byte) readC());
-		pc.addBaseCha((byte) readC());
-		pc.addBaseInt((byte) readC());
-
-		boolean isStatusError = false;
-		int originalStr = ORIGINAL_STR[pc.getType()];
-		int originalDex = ORIGINAL_DEX[pc.getType()];
-		int originalCon = ORIGINAL_CON[pc.getType()];
-		int originalWis = ORIGINAL_WIS[pc.getType()];
-		int originalCha = ORIGINAL_CHA[pc.getType()];
-		int originalInt = ORIGINAL_INT[pc.getType()];
-		int originalAmount = ORIGINAL_AMOUNT[pc.getType()];
-
-		if (((pc.getBaseStr() < originalStr) || (pc.getBaseDex() < originalDex) || (pc.getBaseCon() < originalCon) || (pc.getBaseWis() < originalWis) || (pc.getBaseCha() < originalCha) || (pc.getBaseInt() < originalInt))
-				|| ((pc.getBaseStr() > originalStr + originalAmount) || (pc.getBaseDex() > originalDex + originalAmount) || (pc.getBaseCon() > originalCon + originalAmount) || (pc.getBaseWis() > originalWis + originalAmount) || (pc.getBaseCha() > originalCha + originalAmount) || (pc
-						.getBaseInt() > originalInt + originalAmount))) {
-			isStatusError = true;
-		}
-
-		int statusAmount = pc.getDex() + pc.getCha() + pc.getCon() + pc.getInt() + pc.getStr() + pc.getWis();
-
-		if ((statusAmount != 75) || isStatusError) {
-			_log.finest("角色有错误的能力值");
-			S_CharCreateStatus s_charcreatestatus3 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
-			client.sendPacket(s_charcreatestatus3);
-			return;
-		}
-
-		_log.fine("角色名称: " + pc.getName() + " classId: " + pc.getClassId());
-		S_CharCreateStatus s_charcreatestatus2 = new S_CharCreateStatus(S_CharCreateStatus.REASON_OK);
-		client.sendPacket(s_charcreatestatus2);
-		initNewChar(client, pc);
-	}
-
 	/** 男classId */
 	private static final int[] MALE_LIST = new int[] { 0, 61, 138, 734, 2786, 6658, 6671 };
+
 	/** 女classId */
 	private static final int[] FEMALE_LIST = new int[] { 1, 48, 37, 1186, 2796, 6661, 6650 };
+	// 台版 3.3C
+	private static final int[] LOCX_LIST = new int[] { 32691, 32691, 32691, 32691, 32691, 32691, 32691 };
 
 	/*
 	 * private static final int[] LOCX_LIST = new int[] { 32734, 32734, 32734, 32734, 32734, 32734, 32734 }; private static final int[] LOCY_LIST = new int[] { 32798, 32798, 32798, 32798, 32798, 32798, 32798 }; private static final short[] MAPID_LIST = new short[] { 8013, 8013,
@@ -155,9 +81,6 @@ public class C_CreateChar extends ClientBasePacket {
 	 * 
 	 * private static final short[] MAPID_LIST = new short[] { 68, 69, 69, 68, 69, 69, 69 };
 	 */
-
-	// 台版 3.3C
-	private static final int[] LOCX_LIST = new int[] { 32691, 32691, 32691, 32691, 32691, 32691, 32691 };
 
 	private static final int[] LOCY_LIST = new int[] { 32864, 32864, 32864, 32864, 32864, 32864, 32864 };
 
@@ -284,6 +207,83 @@ public class C_CreateChar extends ClientBasePacket {
 			return false;
 		}
 		return true;
+	}
+
+	public C_CreateChar(byte[] abyte0, ClientThread client) throws Exception {
+		super(abyte0);
+		L1PcInstance pc = new L1PcInstance();
+		String name = readS();
+
+		Account account = Account.load(client.getAccountName());
+		int characterSlot = account.getCharacterSlot();
+		int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
+
+		name = name.replaceAll("\\s", "");
+		name = name.replaceAll("　", "");
+		if (name.length() == 0) {
+			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
+			client.sendPacket(s_charcreatestatus);
+			return;
+		}
+
+		if (isInvalidName(name)) {
+			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
+			client.sendPacket(s_charcreatestatus);
+			return;
+		}
+
+		if (CharacterTable.doesCharNameExist(name)) {
+			_log.fine("角色名称: " + pc.getName() + " 已经存在。创建失败。");
+			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_ALREADY_EXSISTS);
+			client.sendPacket(s_charcreatestatus1);
+			return;
+		}
+
+		if (client.getAccount().countCharacters() >= maxAmount) {
+			_log.fine("账号: " + client.getAccountName() + " 超过角色上限数目: " + maxAmount + "。");
+			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
+			client.sendPacket(s_charcreatestatus1);
+			return;
+		}
+
+		pc.setName(name);
+		pc.setType(readC());
+		pc.set_sex(readC());
+		pc.addBaseStr((byte) readC());
+		pc.addBaseDex((byte) readC());
+		pc.addBaseCon((byte) readC());
+		pc.addBaseWis((byte) readC());
+		pc.addBaseCha((byte) readC());
+		pc.addBaseInt((byte) readC());
+
+		boolean isStatusError = false;
+		int originalStr = ORIGINAL_STR[pc.getType()];
+		int originalDex = ORIGINAL_DEX[pc.getType()];
+		int originalCon = ORIGINAL_CON[pc.getType()];
+		int originalWis = ORIGINAL_WIS[pc.getType()];
+		int originalCha = ORIGINAL_CHA[pc.getType()];
+		int originalInt = ORIGINAL_INT[pc.getType()];
+		int originalAmount = ORIGINAL_AMOUNT[pc.getType()];
+
+		if (((pc.getBaseStr() < originalStr) || (pc.getBaseDex() < originalDex) || (pc.getBaseCon() < originalCon) || (pc.getBaseWis() < originalWis) || (pc.getBaseCha() < originalCha) || (pc.getBaseInt() < originalInt))
+				|| ((pc.getBaseStr() > originalStr + originalAmount) || (pc.getBaseDex() > originalDex + originalAmount) || (pc.getBaseCon() > originalCon + originalAmount) || (pc.getBaseWis() > originalWis + originalAmount) || (pc.getBaseCha() > originalCha + originalAmount) || (pc
+						.getBaseInt() > originalInt + originalAmount))) {
+			isStatusError = true;
+		}
+
+		int statusAmount = pc.getDex() + pc.getCha() + pc.getCon() + pc.getInt() + pc.getStr() + pc.getWis();
+
+		if ((statusAmount != 75) || isStatusError) {
+			_log.finest("角色有错误的能力值");
+			S_CharCreateStatus s_charcreatestatus3 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
+			client.sendPacket(s_charcreatestatus3);
+			return;
+		}
+
+		_log.fine("角色名称: " + pc.getName() + " classId: " + pc.getClassId());
+		S_CharCreateStatus s_charcreatestatus2 = new S_CharCreateStatus(S_CharCreateStatus.REASON_OK);
+		client.sendPacket(s_charcreatestatus2);
+		initNewChar(client, pc);
 	}
 
 	@Override

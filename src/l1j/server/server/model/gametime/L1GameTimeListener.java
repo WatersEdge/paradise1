@@ -31,14 +31,6 @@ package l1j.server.server.model.gametime;
  */
 public interface L1GameTimeListener {
 	/**
-	 * 呼出时间的月变化。
-	 * 
-	 * @param time
-	 *            最新的时间
-	 */
-	public void onMonthChanged(L1GameTime time);
-
-	/**
 	 * 呼出时间的日变化。
 	 * 
 	 * @param time
@@ -61,4 +53,12 @@ public interface L1GameTimeListener {
 	 *            最新的时间
 	 */
 	public void onMinuteChanged(L1GameTime time);
+
+	/**
+	 * 呼出时间的月变化。
+	 * 
+	 * @param time
+	 *            最新的时间
+	 */
+	public void onMonthChanged(L1GameTime time);
 }

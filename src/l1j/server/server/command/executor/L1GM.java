@@ -18,11 +18,11 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1GM implements L1CommandExecutor {
-	private L1GM() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1GM();
+	}
+
+	private L1GM() {
 	}
 
 	@Override

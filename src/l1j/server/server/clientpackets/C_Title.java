@@ -113,6 +113,11 @@ public class C_Title extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_TITLE;
+	}
+
 	private void changeTitle(L1PcInstance pc, String title) {
 		int objectId = pc.getId();
 		pc.setTitle(title);
@@ -137,11 +142,6 @@ public class C_Title extends ClientBasePacket {
 			}
 		}
 		return isClanLeader;
-	}
-
-	@Override
-	public String getType() {
-		return C_TITLE;
 	}
 
 }

@@ -19,11 +19,11 @@ import l1j.server.server.model.trap.L1WorldTraps;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1ResetTrap implements L1CommandExecutor {
-	private L1ResetTrap() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1ResetTrap();
+	}
+
+	private L1ResetTrap() {
 	}
 
 	@Override

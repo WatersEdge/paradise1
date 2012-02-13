@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SwireYuxi extends ItemExecutor {
 
-	private SwireYuxi() {
-	}
-
 	public static ItemExecutor get() {
 		return new SwireYuxi();
+	}
+
+	private SwireYuxi() {
 	}
 
 	/**

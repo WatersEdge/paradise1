@@ -32,10 +32,6 @@ public class L1FurnitureInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
-	}
-
-	@Override
 	public void deleteMe() {
 		_destroyed = true;
 		if (getInventory() != null) {
@@ -52,6 +48,10 @@ public class L1FurnitureInstance extends L1NpcInstance {
 
 	public int getItemObjId() {
 		return _itemObjId;
+	}
+
+	@Override
+	public void onAction(L1PcInstance player) {
 	}
 
 	public void setItemObjId(int i) {

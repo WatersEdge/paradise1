@@ -37,6 +37,14 @@ public class S_CharAmount extends ServerBasePacket {
 		buildPacket(value, client);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
 	private void buildPacket(int value, ClientThread client) {
 		Account account = Account.load(client.getAccountName());
 		int characterSlot = account.getCharacterSlot();
@@ -45,13 +53,5 @@ public class S_CharAmount extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_CHARAMOUNT);
 		writeC(value);
 		writeC(maxAmount); // max amount
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
 	}
 }

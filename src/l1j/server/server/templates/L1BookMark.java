@@ -34,92 +34,6 @@ public class L1BookMark {
 
 	private static Logger _log = Logger.getLogger(L1BookMark.class.getName());
 
-	private int _charId;
-
-	private int _id;
-
-	private String _name;
-
-	private int _locX;
-
-	private int _locY;
-
-	private short _mapId;
-
-	public L1BookMark() {
-	}
-
-	public int getId() {
-		return _id;
-	}
-
-	public void setId(int i) {
-		_id = i;
-	}
-
-	public int getCharId() {
-		return _charId;
-	}
-
-	public void setCharId(int i) {
-		_charId = i;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String s) {
-		_name = s;
-	}
-
-	public int getLocX() {
-		return _locX;
-	}
-
-	public void setLocX(int i) {
-		_locX = i;
-	}
-
-	public int getLocY() {
-		return _locY;
-	}
-
-	public void setLocY(int i) {
-		_locY = i;
-	}
-
-	public short getMapId() {
-		return _mapId;
-	}
-
-	public void setMapId(short i) {
-		_mapId = i;
-	}
-
-	/** 删除记忆的坐标 */
-	public static void deleteBookmark(L1PcInstance player, String s) {
-		L1BookMark book = player.getBookMark(s);
-		if (book != null) {
-			Connection con = null;
-			PreparedStatement pstm = null;
-			try {
-
-				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con.prepareStatement("DELETE FROM character_teleport WHERE id=?");
-				pstm.setInt(1, book.getId());
-				pstm.execute();
-				player.removeBookMark(book);
-			}
-			catch (SQLException e) {
-				_log.log(Level.SEVERE, "删除记忆坐标时发生错误。", e);
-			} finally {
-				SQLUtil.close(pstm);
-				SQLUtil.close(con);
-			}
-		}
-	}
-
 	/** 增加记忆坐标 */
 	public static void addBookmark(L1PcInstance pc, String s) {
 		// クライアント側でチェックされるため不要
@@ -176,6 +90,92 @@ public class L1BookMark {
 		else {
 			pc.sendPackets(new S_ServerMessage(327)); // 同样的名称已经存在。
 		}
+	}
+
+	/** 删除记忆的坐标 */
+	public static void deleteBookmark(L1PcInstance player, String s) {
+		L1BookMark book = player.getBookMark(s);
+		if (book != null) {
+			Connection con = null;
+			PreparedStatement pstm = null;
+			try {
+
+				con = L1DatabaseFactory.getInstance().getConnection();
+				pstm = con.prepareStatement("DELETE FROM character_teleport WHERE id=?");
+				pstm.setInt(1, book.getId());
+				pstm.execute();
+				player.removeBookMark(book);
+			}
+			catch (SQLException e) {
+				_log.log(Level.SEVERE, "删除记忆坐标时发生错误。", e);
+			} finally {
+				SQLUtil.close(pstm);
+				SQLUtil.close(con);
+			}
+		}
+	}
+
+	private int _charId;
+
+	private int _id;
+
+	private String _name;
+
+	private int _locX;
+
+	private int _locY;
+
+	private short _mapId;
+
+	public L1BookMark() {
+	}
+
+	public int getCharId() {
+		return _charId;
+	}
+
+	public int getId() {
+		return _id;
+	}
+
+	public int getLocX() {
+		return _locX;
+	}
+
+	public int getLocY() {
+		return _locY;
+	}
+
+	public short getMapId() {
+		return _mapId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setCharId(int i) {
+		_charId = i;
+	}
+
+	public void setId(int i) {
+		_id = i;
+	}
+
+	public void setLocX(int i) {
+		_locX = i;
+	}
+
+	public void setLocY(int i) {
+		_locY = i;
+	}
+
+	public void setMapId(short i) {
+		_mapId = i;
+	}
+
+	public void setName(String s) {
+		_name = s;
 	}
 
 }

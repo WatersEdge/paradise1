@@ -36,12 +36,25 @@ public class S_OtherCharPacks extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	public S_OtherCharPacks(L1PcInstance pc) {
+		buildPacket(pc, false);
+	}
+
 	public S_OtherCharPacks(L1PcInstance pc, boolean isFindInvis) {
 		buildPacket(pc, isFindInvis);
 	}
 
-	public S_OtherCharPacks(L1PcInstance pc) {
-		buildPacket(pc, false);
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_OTHER_CHAR_PACKS;
 	}
 
 	private void buildPacket(L1PcInstance pc, boolean isFindInvis) {
@@ -107,19 +120,6 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		writeC(0); // ？
 		writeC(0xFF);
 		writeC(0xFF);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_OTHER_CHAR_PACKS;
 	}
 
 }

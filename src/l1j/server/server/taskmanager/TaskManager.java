@@ -36,17 +36,6 @@ import l1j.server.server.utils.collections.Maps;
  */
 public final class TaskManager {
 
-	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
-
-	private static TaskManager _instance;
-
-	protected static final String[] SQL_STATEMENTS = { "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks", "UPDATE global_tasks SET last_activation=? WHERE id=?", "SELECT id FROM global_tasks WHERE task=?",
-			"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)" };
-
-	private final Map<Integer, Task> _tasks = Maps.newMap();
-
-	protected final List<ExecutedTask> _currentTasks = Lists.newList();
-
 	public class ExecutedTask implements Runnable {
 		int _id;
 
@@ -66,6 +55,31 @@ public final class TaskManager {
 			_id = rset.getInt("id");
 			_lastActivation = rset.getLong("last_activation");
 			_params = new String[] { rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			return _id == ((ExecutedTask) object)._id;
+		}
+
+		public int getId() {
+			return _id;
+		}
+
+		public long getLastActivation() {
+			return _lastActivation;
+		}
+
+		public String[] getParams() {
+			return _params;
+		}
+
+		public Task getTask() {
+			return _task;
+		}
+
+		public TaskTypes getType() {
+			return _type;
 		}
 
 		@Override
@@ -92,31 +106,6 @@ public final class TaskManager {
 
 		}
 
-		@Override
-		public boolean equals(Object object) {
-			return _id == ((ExecutedTask) object)._id;
-		}
-
-		public Task getTask() {
-			return _task;
-		}
-
-		public TaskTypes getType() {
-			return _type;
-		}
-
-		public int getId() {
-			return _id;
-		}
-
-		public String[] getParams() {
-			return _params;
-		}
-
-		public long getLastActivation() {
-			return _lastActivation;
-		}
-
 		public void stopTask() {
 			_task.onDestroy();
 
@@ -129,6 +118,83 @@ public final class TaskManager {
 
 	}
 
+	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
+
+	private static TaskManager _instance;
+
+	protected static final String[] SQL_STATEMENTS = { "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks", "UPDATE global_tasks SET last_activation=? WHERE id=?", "SELECT id FROM global_tasks WHERE task=?",
+			"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)" };
+
+	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3) {
+		return addTask(task, type, param1, param2, param3, 0);
+	}
+
+	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement(SQL_STATEMENTS[3]);
+			pstm.setString(1, task);
+			pstm.setString(2, type.toString());
+			pstm.setLong(3, lastActivation);
+			pstm.setString(4, param1);
+			pstm.setString(5, param2);
+			pstm.setString(6, param3);
+			pstm.execute();
+
+			return true;
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "cannot add the task", e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+
+		return false;
+	}
+
+	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3) {
+		return addUniqueTask(task, type, param1, param2, param3, 0);
+	}
+
+	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement(SQL_STATEMENTS[2]);
+			pstm.setString(1, task);
+			rs = pstm.executeQuery();
+
+			if (!rs.next()) {
+				pstm = con.prepareStatement(SQL_STATEMENTS[3]);
+				pstm.setString(1, task);
+				pstm.setString(2, type.toString());
+				pstm.setLong(3, lastActivation);
+				pstm.setString(4, param1);
+				pstm.setString(5, param2);
+				pstm.setString(6, param3);
+				pstm.execute();
+			}
+
+			return true;
+		}
+		catch (SQLException e) {
+			_log.warning("cannot add the unique task: " + e.getMessage());
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+
+		return false;
+	}
+
 	public static TaskManager getInstance() {
 		if (_instance == null) {
 			_instance = new TaskManager();
@@ -136,14 +202,13 @@ public final class TaskManager {
 		return _instance;
 	}
 
+	private final Map<Integer, Task> _tasks = Maps.newMap();
+
+	protected final List<ExecutedTask> _currentTasks = Lists.newList();
+
 	public TaskManager() {
 		initializate();
 		startAllTasks();
-	}
-
-	private void initializate() {
-		registerTask(new TaskRestart());
-		registerTask(new TaskShutdown());
 	}
 
 	public void registerTask(Task task) {
@@ -152,6 +217,11 @@ public final class TaskManager {
 			_tasks.put(key, task);
 			task.initializate();
 		}
+	}
+
+	private void initializate() {
+		registerTask(new TaskRestart());
+		registerTask(new TaskShutdown());
 	}
 
 	private void startAllTasks() {
@@ -207,76 +277,6 @@ public final class TaskManager {
 			}
 		}
 
-	}
-
-	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3) {
-		return addUniqueTask(task, type, param1, param2, param3, 0);
-	}
-
-	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement(SQL_STATEMENTS[2]);
-			pstm.setString(1, task);
-			rs = pstm.executeQuery();
-
-			if (!rs.next()) {
-				pstm = con.prepareStatement(SQL_STATEMENTS[3]);
-				pstm.setString(1, task);
-				pstm.setString(2, type.toString());
-				pstm.setLong(3, lastActivation);
-				pstm.setString(4, param1);
-				pstm.setString(5, param2);
-				pstm.setString(6, param3);
-				pstm.execute();
-			}
-
-			return true;
-		}
-		catch (SQLException e) {
-			_log.warning("cannot add the unique task: " + e.getMessage());
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-
-		return false;
-	}
-
-	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3) {
-		return addTask(task, type, param1, param2, param3, 0);
-	}
-
-	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement(SQL_STATEMENTS[3]);
-			pstm.setString(1, task);
-			pstm.setString(2, type.toString());
-			pstm.setLong(3, lastActivation);
-			pstm.setString(4, param1);
-			pstm.setString(5, param2);
-			pstm.setString(6, param3);
-			pstm.execute();
-
-			return true;
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "cannot add the task", e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-
-		return false;
 	}
 
 }

@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_WindWood extends ItemExecutor {
 
-	private Hitlist_WindWood() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_WindWood();
+	}
+
+	private Hitlist_WindWood() {
 	}
 
 	/**

@@ -19,16 +19,14 @@ package l1j.server.server;
  */
 public class Opcodes {
 
-	public Opcodes() {
-	}
+	// 3.5C Client Packet （客户端代码）
+	/** 请求驱逐队伍 */
+	public static final int C_OPCODE_BANPARTY = 0;
 
 	/**
 	 * @3.5C Taiwan Server <b>2011.08.09 Lin.bin
 	 */
 
-	// 3.5C Client Packet （客户端代码）
-	/** 请求驱逐队伍 */
-	public static final int C_OPCODE_BANPARTY = 0;
 	/** 请求下船 */
 	public static final int C_OPCODE_SHIP = 1;
 	/** 玩家传送锁定(回溯检测用) */
@@ -211,10 +209,10 @@ public class Opcodes {
 	public static final int C_OPCODE_CREATEPARTY = 130;
 	/** 请求聊天队伍 */
 	public static final int C_OPCODE_CAHTPARTY = 131;
-
 	// 3.5C Server Packet （服务端代码）
 	/** 配置已的雇用佣兵 */
 	public static final int S_OPCODE_PUTSOLDIER = 0;
+
 	/** 学习魔法 (何仑) */
 	public static final int S_OPCODE_SKILLBUY_2 = 1;
 	/** 商店收购清单 */
@@ -468,18 +466,20 @@ public class Opcodes {
 	public static final int S_OPCODE_LIQUOR = 126;
 	/** 血盟小屋名单 */
 	public static final int S_OPCODE_HOUSELIST = 127;
-
 	/** 3.2C ServerPacket (3.5C 未抓取) id非正确 */
 	public static final int S_OPCODE_USEMAP = 130;
-	public static final int S_LETTER = 131;
 
+	public static final int S_LETTER = 131;
 	/** 3.3C Client Packet (3.5C 未抓取) id非正确 */
 	public static final int C_OPCODE_RETURNTOLOGIN = 140;// 要求回到选人画面
+
 	public static final int C_OPCODE_HIRESOLDIER = 141;// 要求雇佣佣兵列表(购买)
 	public static final int C_OPCODE_CLAN = 142;// //要求血盟数据(例如盟标)**[未抓取]
 	public static final int C_OPCODE_CHANGEWARTIME = 144;// 修正城堡总管全部功能
 	public static final int C_OPCODE_PUTSOLDIER = 145;// 要求配置已雇用士兵
 	public static final int C_OPCODE_SELECTWARTIME = 146;// 要求选择 变更攻城时间(but3.3C无使用)
 	public static final int C_OPCODE_PUTBOWSOLDIER = 147;// 要求配置城墙上弓手
+	public Opcodes() {
+	}
 
 }

@@ -36,8 +36,6 @@ public class WeaponSkillTable {
 
 	private static WeaponSkillTable _instance;
 
-	private final Map<Integer, L1WeaponSkill> _weaponIdIndex = Maps.newMap();
-
 	public static WeaponSkillTable getInstance() {
 		if (_instance == null) {
 			_instance = new WeaponSkillTable();
@@ -45,28 +43,14 @@ public class WeaponSkillTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1WeaponSkill> _weaponIdIndex = Maps.newMap();
+
 	private WeaponSkillTable() {
 		loadWeaponSkill();
 	}
 
-	private void loadWeaponSkill() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM weapon_skill");
-			rs = pstm.executeQuery();
-			fillWeaponSkillTable(rs);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	public L1WeaponSkill getTemplate(int weaponId) {
+		return _weaponIdIndex.get(weaponId);
 	}
 
 	private void fillWeaponSkillTable(ResultSet rs) throws SQLException {
@@ -88,8 +72,24 @@ public class WeaponSkillTable {
 		_log.config("魔法武器列表 " + _weaponIdIndex.size() + "件");
 	}
 
-	public L1WeaponSkill getTemplate(int weaponId) {
-		return _weaponIdIndex.get(weaponId);
+	private void loadWeaponSkill() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM weapon_skill");
+			rs = pstm.executeQuery();
+			fillWeaponSkillTable(rs);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 }

@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：castgfxid
  */
 public class L1CastGfx implements L1CommandExecutor {
-	private L1CastGfx() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1CastGfx();
+	}
+
+	private L1CastGfx() {
 	}
 
 	@Override

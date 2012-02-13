@@ -38,19 +38,6 @@ public class S_Ability extends ServerBasePacket {
 		buildPacket(type, equipped);
 	}
 
-	private void buildPacket(int type, boolean equipped) {
-		writeC(Opcodes.S_OPCODE_ABILITY);
-		writeC(type); // 1:ROTC 5:ROSC
-		if (equipped) {
-			writeC(0x01);
-		}
-		else {
-			writeC(0x00);
-		}
-		writeC(0x02);
-		writeH(0x0000);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -62,5 +49,18 @@ public class S_Ability extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_ABILITY;
+	}
+
+	private void buildPacket(int type, boolean equipped) {
+		writeC(Opcodes.S_OPCODE_ABILITY);
+		writeC(type); // 1:ROTC 5:ROSC
+		if (equipped) {
+			writeC(0x01);
+		}
+		else {
+			writeC(0x00);
+		}
+		writeC(0x02);
+		writeH(0x0000);
 	}
 }

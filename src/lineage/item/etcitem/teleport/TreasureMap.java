@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class TreasureMap extends ItemExecutor {
 
-	private TreasureMap() {
-	}
-
 	public static ItemExecutor get() {
 		return new TreasureMap();
+	}
+
+	private TreasureMap() {
 	}
 
 	/**

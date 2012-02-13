@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Firework extends ItemExecutor {
 
-	private Firework() {
-	}
-
 	public static ItemExecutor get() {
 		return new Firework();
+	}
+
+	private Firework() {
 	}
 
 	/**

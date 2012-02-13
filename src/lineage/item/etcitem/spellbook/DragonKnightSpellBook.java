@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpellBook_DragonKnight;
  */
 public class DragonKnightSpellBook extends ItemExecutor {
 
-	private DragonKnightSpellBook() {
-	}
-
 	public static ItemExecutor get() {
 		return new DragonKnightSpellBook();
+	}
+
+	private DragonKnightSpellBook() {
 	}
 
 	/**

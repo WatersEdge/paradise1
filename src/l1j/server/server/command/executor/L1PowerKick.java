@@ -21,11 +21,11 @@ import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1PowerKick implements L1CommandExecutor {
-	private L1PowerKick() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1PowerKick();
+	}
+
+	private L1PowerKick() {
 	}
 
 	@Override

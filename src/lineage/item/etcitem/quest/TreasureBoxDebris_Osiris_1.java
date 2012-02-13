@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class TreasureBoxDebris_Osiris_1 extends ItemExecutor {
 
-	private TreasureBoxDebris_Osiris_1() {
-	}
-
 	public static ItemExecutor get() {
 		return new TreasureBoxDebris_Osiris_1();
+	}
+
+	private TreasureBoxDebris_Osiris_1() {
 	}
 
 	/**

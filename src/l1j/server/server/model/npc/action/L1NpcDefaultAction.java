@@ -10,8 +10,6 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class L1NpcDefaultAction {
 
-	static Logger _log = Logger.getLogger(L1NpcDefaultAction.class.getName());
-
 	private static class Action {
 		private int defaultAttack = 1; // 预设攻击
 		private int specialAttack = 0; // 特殊攻击
@@ -19,16 +17,46 @@ public class L1NpcDefaultAction {
 		private int status = 0; // 状态
 	}
 
+	static Logger _log = Logger.getLogger(L1NpcDefaultAction.class.getName());
+
 	private static final Map<Integer, Action> _dataMap = Maps.newMap();
 
 	private static final L1NpcDefaultAction _instance = new L1NpcDefaultAction();
+
+	public static L1NpcDefaultAction getInstance() {
+		return _instance;
+	}
 
 	private L1NpcDefaultAction() {
 		loadAction();
 	}
 
-	public static L1NpcDefaultAction getInstance() {
-		return _instance;
+	public int getDefaultAttack(int gfxid) {
+		if (_dataMap.containsKey(gfxid)) {
+			return _dataMap.get(gfxid).defaultAttack;
+		}
+		return 1;
+	}
+
+	public int getRangedAttack(int gfxid) {
+		if (_dataMap.containsKey(gfxid)) {
+			return _dataMap.get(gfxid).rangedAttack;
+		}
+		return 1;
+	}
+
+	public int getSpecialAttack(int gfxid) {
+		if (_dataMap.containsKey(gfxid)) {
+			return _dataMap.get(gfxid).specialAttack;
+		}
+		return 0;
+	}
+
+	public int getStatus(int gfxid) {
+		if (_dataMap.containsKey(gfxid)) {
+			return _dataMap.get(gfxid).status;
+		}
+		return 0;
 	}
 
 	public void loadAction() {
@@ -240,33 +268,5 @@ public class L1NpcDefaultAction {
 			action.rangedAttack = 1; // 远距攻击
 			action.status = 0; // 状态
 		}
-	}
-
-	public int getDefaultAttack(int gfxid) {
-		if (_dataMap.containsKey(gfxid)) {
-			return _dataMap.get(gfxid).defaultAttack;
-		}
-		return 1;
-	}
-
-	public int getSpecialAttack(int gfxid) {
-		if (_dataMap.containsKey(gfxid)) {
-			return _dataMap.get(gfxid).specialAttack;
-		}
-		return 0;
-	}
-
-	public int getRangedAttack(int gfxid) {
-		if (_dataMap.containsKey(gfxid)) {
-			return _dataMap.get(gfxid).rangedAttack;
-		}
-		return 1;
-	}
-
-	public int getStatus(int gfxid) {
-		if (_dataMap.containsKey(gfxid)) {
-			return _dataMap.get(gfxid).status;
-		}
-		return 0;
 	}
 }

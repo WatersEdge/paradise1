@@ -38,14 +38,6 @@ public class S_HouseMap extends ServerBasePacket {
 		buildPacket(objectId, house_number);
 	}
 
-	private void buildPacket(int objectId, String house_number) {
-		int number = Integer.valueOf(house_number);
-
-		writeC(Opcodes.S_OPCODE_HOUSEMAP);
-		writeD(objectId);
-		writeD(number);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -57,5 +49,13 @@ public class S_HouseMap extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_HOUSEMAP;
+	}
+
+	private void buildPacket(int objectId, String house_number) {
+		int number = Integer.valueOf(house_number);
+
+		writeC(Opcodes.S_OPCODE_HOUSEMAP);
+		writeD(objectId);
+		writeD(number);
 	}
 }

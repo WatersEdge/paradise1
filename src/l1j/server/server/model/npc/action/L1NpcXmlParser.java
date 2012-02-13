@@ -30,46 +30,8 @@ import org.w3c.dom.NodeList;
  */
 public class L1NpcXmlParser {
 
-	public static List<L1NpcAction> listActions(Element element) {
-		List<L1NpcAction> result = Lists.newList();
-		NodeList list = element.getChildNodes();
-		for (Element elem : new IterableElementList(list)) {
-			L1NpcAction action = L1NpcActionFactory.newAction(elem);
-			if (action != null) {
-				result.add(action);
-			}
-		}
-		return result;
-	}
-
-	public static Element getFirstChildElementByTagName(Element element, String tagName) {
-		IterableElementList list = new IterableElementList(element.getElementsByTagName(tagName));
-		for (Element elem : list) {
-			return elem;
-		}
-		return null;
-	}
-
-	public static int getIntAttribute(Element element, String name, int defaultValue) {
-		int result = defaultValue;
-		try {
-			result = Integer.valueOf(element.getAttribute(name));
-		}
-		catch (NumberFormatException e) {
-		}
-		return result;
-	}
-
-	public static boolean getBoolAttribute(Element element, String name, boolean defaultValue) {
-		boolean result = defaultValue;
-		String value = element.getAttribute(name);
-		if (!value.equals("")) {
-			result = Boolean.valueOf(value);
-		}
-		return result;
-	}
-
 	private final static Map<String, Integer> _questIds = Maps.newMap();
+
 	static {
 		_questIds.put("level15", L1Quest.QUEST_LEVEL15);
 		_questIds.put("level30", L1Quest.QUEST_LEVEL30);
@@ -92,6 +54,44 @@ public class L1NpcXmlParser {
 		_questIds.put("toscroll", L1Quest.QUEST_TOSCROLL);
 		_questIds.put("moonoflongbow", L1Quest.QUEST_MOONOFLONGBOW);
 		_questIds.put("Generalhamelofresentment", L1Quest.QUEST_GENERALHAMELOFRESENTMENT);
+	}
+
+	public static boolean getBoolAttribute(Element element, String name, boolean defaultValue) {
+		boolean result = defaultValue;
+		String value = element.getAttribute(name);
+		if (!value.equals("")) {
+			result = Boolean.valueOf(value);
+		}
+		return result;
+	}
+
+	public static Element getFirstChildElementByTagName(Element element, String tagName) {
+		IterableElementList list = new IterableElementList(element.getElementsByTagName(tagName));
+		for (Element elem : list) {
+			return elem;
+		}
+		return null;
+	}
+
+	public static int getIntAttribute(Element element, String name, int defaultValue) {
+		int result = defaultValue;
+		try {
+			result = Integer.valueOf(element.getAttribute(name));
+		}
+		catch (NumberFormatException e) {
+		}
+		return result;
+	}
+	public static List<L1NpcAction> listActions(Element element) {
+		List<L1NpcAction> result = Lists.newList();
+		NodeList list = element.getChildNodes();
+		for (Element elem : new IterableElementList(list)) {
+			L1NpcAction action = L1NpcActionFactory.newAction(elem);
+			if (action != null) {
+				result.add(action);
+			}
+		}
+		return result;
 	}
 
 	public static int parseQuestId(String questId) {

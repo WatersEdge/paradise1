@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyScale_Rebel extends ItemExecutor {
 
-	private PolyScale_Rebel() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScale_Rebel();
+	}
+
+	private PolyScale_Rebel() {
 	}
 
 	/**

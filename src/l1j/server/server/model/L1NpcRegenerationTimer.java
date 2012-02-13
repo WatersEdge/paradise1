@@ -24,14 +24,14 @@ public class L1NpcRegenerationTimer extends Timer {
 
 	private static L1NpcRegenerationTimer _instance = null;
 
-	private L1NpcRegenerationTimer() {
-	}
-
 	public static L1NpcRegenerationTimer getInstance() {
 		if (_instance == null) {
 			_instance = new L1NpcRegenerationTimer();
 		}
 		return _instance;
+	}
+
+	private L1NpcRegenerationTimer() {
 	}
 
 }

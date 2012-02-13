@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class PurificationPotion extends ItemExecutor {
 
-	private PurificationPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new PurificationPotion();
+	}
+
+	private PurificationPotion() {
 	}
 
 	/**

@@ -38,18 +38,6 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 		buildpacket(cha, npcObjectId, type);
 	}
 
-	private void buildpacket(L1Character cha, int npcObjectId, int type) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(type);
-		writeD(npcObjectId);
-		writeD(cha.getId());
-		writeH(0x01); // 3.3C damage
-		writeC(cha.getHeading());
-		writeH(0x0000); // target x
-		writeH(0x0000); // target y
-		writeC(0x00); // 0x00:none 0x04:Claw 0x08:CounterMirror
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -62,5 +50,17 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_ATTACK_PACKET_FOR_NPC;
+	}
+
+	private void buildpacket(L1Character cha, int npcObjectId, int type) {
+		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		writeC(type);
+		writeD(npcObjectId);
+		writeD(cha.getId());
+		writeH(0x01); // 3.3C damage
+		writeC(cha.getHeading());
+		writeH(0x0000); // target x
+		writeH(0x0000); // target y
+		writeC(0x00); // 0x00:none 0x04:Claw 0x08:CounterMirror
 	}
 }

@@ -56,6 +56,18 @@ public class Shutdown extends Thread {
 	private static String[] _modeText = { "【经由‘黑盒子’ 关闭伺服器】", "【‘游戏管理员’执行 关闭伺服器 动作】", "【‘游戏管理员’执行 重启伺服器 动作】", "【中断动作】" };
 
 	/**
+	 * 关机-hook的实例被创建，得到关机-hook的实例 第一次调用此功能，但它已被registrered externaly。
+	 * 
+	 * @return 例如关机，关闭hook被用作
+	 */
+	public static Shutdown getInstance() {
+		if (_instance == null) {
+			_instance = new Shutdown();
+		}
+		return _instance;
+	}
+
+	/**
 	 * 默认constucter是只用于内部创建关机-hook <br>
 	 * instance
 	 * 
@@ -88,15 +100,19 @@ public class Shutdown extends Thread {
 	}
 
 	/**
-	 * 关机-hook的实例被创建，得到关机-hook的实例 第一次调用此功能，但它已被registrered externaly。
+	 * 此功能将中止正在运行的倒计时
 	 * 
-	 * @return 例如关机，关闭hook被用作
+	 * @param activeChar
+	 *            GM who 发出中止命令
 	 */
-	public static Shutdown getInstance() {
-		if (_instance == null) {
-			_instance = new Shutdown();
+	public void abort(L1PcInstance activeChar) {
+		Announcements _an = Announcements.getInstance();
+		_log.warning("‘游戏管理员’: " + activeChar.getName() + " 使用指令中断之前的行为。");
+		_an.announceToAll("伺服器【中断关机】 并维持正常运作！");
+
+		if (_counterInstance != null) {
+			_counterInstance._abort();
 		}
-		return _instance;
 	}
 
 	/**
@@ -165,40 +181,34 @@ public class Shutdown extends Thread {
 		GeneralThreadPool.getInstance().execute(_counterInstance);
 	}
 
-	/**
-	 * 此功能将中止正在运行的倒计时
-	 * 
-	 * @param activeChar
-	 *            GM who 发出中止命令
-	 */
-	public void abort(L1PcInstance activeChar) {
+	public void startTelnetShutdown(String IP, int seconds, boolean restart) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning("‘游戏管理员’: " + activeChar.getName() + " 使用指令中断之前的行为。");
-		_an.announceToAll("伺服器【中断关机】 并维持正常运作！");
+		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
+		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
 		}
+		_counterInstance = new Shutdown(seconds, restart);
+		GeneralThreadPool.getInstance().execute(_counterInstance);
 	}
 
 	/**
-	 * 设置关机模式
+	 * 此功能将中止正在运行的倒计时
 	 * 
-	 * @param mode
-	 *            应设置什么样的模式
+	 * @param IP
+	 * <br>
+	 * <br>
+	 *            IP 发出关机指令
 	 */
-	private void setMode(int mode) {
-		shutdownMode = mode;
-	}
+	public void Telnetabort(String IP) {
+		Announcements _an = Announcements.getInstance();
+		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[shutdownMode] + " 已停止！");
+		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode] + " 并维持正常运作！");
 
-	/**
-	 * 设置关机模式
-	 * 
-	 * @param mode
-	 *            应设置什么样的模式
-	 */
-	int getMode() {
-		return shutdownMode;
+		if (_counterInstance != null) {
+			_counterInstance._abort();
+		}
 	}
 
 	/**
@@ -304,33 +314,23 @@ public class Shutdown extends Thread {
 		}
 	}
 
-	public void startTelnetShutdown(String IP, int seconds, boolean restart) {
-		Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
-		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
-
-		if (_counterInstance != null) {
-			_counterInstance._abort();
-		}
-		_counterInstance = new Shutdown(seconds, restart);
-		GeneralThreadPool.getInstance().execute(_counterInstance);
+	/**
+	 * 设置关机模式
+	 * 
+	 * @param mode
+	 *            应设置什么样的模式
+	 */
+	private void setMode(int mode) {
+		shutdownMode = mode;
 	}
 
 	/**
-	 * 此功能将中止正在运行的倒计时
+	 * 设置关机模式
 	 * 
-	 * @param IP
-	 * <br>
-	 * <br>
-	 *            IP 发出关机指令
+	 * @param mode
+	 *            应设置什么样的模式
 	 */
-	public void Telnetabort(String IP) {
-		Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[shutdownMode] + " 已停止！");
-		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode] + " 并维持正常运作！");
-
-		if (_counterInstance != null) {
-			_counterInstance._abort();
-		}
+	int getMode() {
+		return shutdownMode;
 	}
 }

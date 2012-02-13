@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class OrangeJuice1 extends ItemExecutor {
 
-	private OrangeJuice1() {
-	}
-
 	public static ItemExecutor get() {
 		return new OrangeJuice1();
+	}
+
+	private OrangeJuice1() {
 	}
 
 	/**

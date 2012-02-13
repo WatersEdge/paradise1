@@ -25,14 +25,10 @@ import l1j.server.server.serverpackets.S_Disconnect;
  */
 public class L1PcDeleteTimer extends TimerTask {
 
+	private final L1PcInstance _pc;
+
 	public L1PcDeleteTimer(L1PcInstance pc) {
 		_pc = pc;
-	}
-
-	@Override
-	public void run() {
-		_pc.sendPackets(new S_Disconnect());
-		cancel();
 	}
 
 	public void begin() {
@@ -40,6 +36,10 @@ public class L1PcDeleteTimer extends TimerTask {
 		timer.schedule(this, 10 * 60 * 1000);
 	}
 
-	private final L1PcInstance _pc;
+	@Override
+	public void run() {
+		_pc.sendPackets(new S_Disconnect());
+		cancel();
+	}
 
 }

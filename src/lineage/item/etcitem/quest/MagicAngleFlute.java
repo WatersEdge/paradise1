@@ -17,11 +17,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicAngleFlute extends ItemExecutor {
 
-	private MagicAngleFlute() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicAngleFlute();
+	}
+
+	private MagicAngleFlute() {
 	}
 
 	/**

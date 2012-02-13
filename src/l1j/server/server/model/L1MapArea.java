@@ -26,21 +26,6 @@ public class L1MapArea extends Rectangle {
 	/** 地图 */
 	private L1Map _map = L1Map.newNull();
 
-	/** 取得地图 */
-	public L1Map getMap() {
-		return _map;
-	}
-
-	/** 设定地图 */
-	public void setMap(L1Map map) {
-		_map = map;
-	}
-
-	/** 取得地图ID */
-	public int getMapId() {
-		return _map.getId();
-	}
-
 	/** 地图区域 */
 	public L1MapArea(int left, int top, int right, int bottom, int mapId) {
 		super(left, top, right, bottom);
@@ -51,5 +36,20 @@ public class L1MapArea extends Rectangle {
 	/** 包含 */
 	public boolean contains(L1Location loc) {
 		return (_map.getId() == loc.getMap().getId()) && super.contains(loc);
+	}
+
+	/** 取得地图 */
+	public L1Map getMap() {
+		return _map;
+	}
+
+	/** 取得地图ID */
+	public int getMapId() {
+		return _map.getId();
+	}
+
+	/** 设定地图 */
+	public void setMap(L1Map map) {
+		_map = map;
 	}
 }

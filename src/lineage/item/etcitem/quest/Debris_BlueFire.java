@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Debris_BlueFire extends ItemExecutor {
 
-	private Debris_BlueFire() {
-	}
-
 	public static ItemExecutor get() {
 		return new Debris_BlueFire();
+	}
+
+	private Debris_BlueFire() {
 	}
 
 	/**

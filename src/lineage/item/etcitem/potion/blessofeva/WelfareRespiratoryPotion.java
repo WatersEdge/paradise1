@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_BlessOfEva;
  */
 public class WelfareRespiratoryPotion extends ItemExecutor {
 
-	private WelfareRespiratoryPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new WelfareRespiratoryPotion();
+	}
+
+	private WelfareRespiratoryPotion() {
 	}
 
 	/**

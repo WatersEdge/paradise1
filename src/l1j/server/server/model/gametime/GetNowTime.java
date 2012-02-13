@@ -13,22 +13,6 @@ import java.util.Calendar;
  */
 public class GetNowTime {
 
-	/** 传回取得现年之值 */
-	public static int GetNowYear() {
-		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
-		int nowYear;
-		nowYear = rightNow.get(Calendar.YEAR); // 取得现年之值
-		return nowYear; // 传回取得现年之值
-	}
-
-	/** 传回取得现月之值 */
-	public static int GetNowMonth() {
-		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
-		int nowMonth;
-		nowMonth = rightNow.get(Calendar.MONTH); // 取得现月之值
-		return nowMonth; // 传回取得现月之值
-	}
-
 	/** 传回取得今日之值 */
 	public static int GetNowDay() {
 		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
@@ -53,11 +37,27 @@ public class GetNowTime {
 		return nowMinute; // 传回取得此分之值
 	}
 
+	/** 传回取得现月之值 */
+	public static int GetNowMonth() {
+		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
+		int nowMonth;
+		nowMonth = rightNow.get(Calendar.MONTH); // 取得现月之值
+		return nowMonth; // 传回取得现月之值
+	}
+
 	/** 传回取得此秒之值 */
 	public static int GetNowSecond() {
 		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
 		int nowSecond;
 		nowSecond = rightNow.get(Calendar.SECOND); // 取得此秒之值
 		return nowSecond; // 传回取得此秒之值
+	}
+
+	/** 传回取得现年之值 */
+	public static int GetNowYear() {
+		Calendar rightNow = Calendar.getInstance(); // 取得预设月历物件
+		int nowYear;
+		nowYear = rightNow.get(Calendar.YEAR); // 取得现年之值
+		return nowYear; // 传回取得现年之值
 	}
 }

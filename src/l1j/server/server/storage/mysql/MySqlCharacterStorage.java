@@ -33,139 +33,6 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 	private static Logger _log = Logger.getLogger(MySqlCharacterStorage.class.getName());
 
-	@Override
-	public L1PcInstance loadCharacter(String charName) {
-		L1PcInstance pc = null;
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM characters WHERE char_name=?");
-			pstm.setString(1, charName);
-
-			rs = pstm.executeQuery();
-			if (!rs.next()) {
-				/*
-				 * SELECT返回任何结果。
-				 */
-				return null;
-			}
-			pc = new L1PcInstance();
-			pc.setAccountName(rs.getString("account_name"));
-			pc.setId(rs.getInt("objid"));
-			pc.setName(rs.getString("char_name"));
-			pc.setBirthday(rs.getTimestamp("birthday"));
-			pc.setHighLevel(rs.getInt("HighLevel"));
-			pc.setExp(rs.getLong("Exp"));
-			pc.addBaseMaxHp(rs.getShort("MaxHp"));
-			short currentHp = rs.getShort("CurHp");
-			if (currentHp < 1) {
-				currentHp = 1;
-			}
-			pc.setCurrentHpDirect(currentHp);
-			pc.setDead(false);
-			pc.setStatus(0);
-			pc.addBaseMaxMp(rs.getShort("MaxMp"));
-			pc.setCurrentMpDirect(rs.getShort("CurMp"));
-			pc.addBaseStr(rs.getShort("Str"));
-			pc.addBaseCon(rs.getShort("Con"));
-			pc.addBaseDex(rs.getShort("Dex"));
-			pc.addBaseCha(rs.getShort("Cha"));
-			pc.addBaseInt(rs.getShort("Intel"));
-			pc.addBaseWis(rs.getShort("Wis"));
-			int status = rs.getInt("Status");
-			pc.setCurrentWeapon(status);
-			int classId = rs.getInt("Class");
-			pc.setClassId(classId);
-			pc.setTempCharGfx(classId);
-			pc.setGfxId(classId);
-			pc.set_sex(rs.getInt("Sex"));
-			pc.setType(rs.getInt("Type"));
-			int head = rs.getInt("Heading");
-			if (head > 7) {
-				head = 0;
-			}
-			pc.setHeading(head);
-			/*
-			 * int locX = resultset.getInt("locX"); int locY = resultset.getInt("locY"); short map = resultset.getShort("MapID"); if (locX < 30000 || locX > 40000 || locY < 30000 || locY > 40000) { locX = 32564; locY = 32955; } if (map == 70) { locX = 32828; locY = 32848; } //
-			 * 強制移動 short moveflag = Config.RANGE_RACE_RECOGNIT; if (moveflag != 1) { Random random = new Random(); // 強制移動 int rndmap = 1 + random.nextInt(5); switch (rndmap) { case 1: // skt locX = 33080; locY = 33392; map = 4; break;
-			 * 
-			 * case 2: // ti locX = 32580; locY = 32931; map = 0; break;
-			 * 
-			 * case 3: // wb locX = 32621; locY = 33169; map = 4; break;
-			 * 
-			 * case 4: // kent locX = 33050; locY = 32780; map = 4; break;
-			 * 
-			 * case 5: // h locX = 33612; locY = 33268; map = 4; break;
-			 * 
-			 * default: // skt locX = 33080; locY = 33392; map = 4; break; } } pc.set_x(locX); pc.set_y(locY); pc.set_map(map);
-			 */
-			pc.setX(rs.getInt("locX"));
-			pc.setY(rs.getInt("locY"));
-			pc.setMap(rs.getShort("MapID"));
-			pc.set_food(rs.getInt("Food"));
-			pc.setLawful(rs.getInt("Lawful"));
-			pc.setTitle(rs.getString("Title"));
-			pc.setClanid(rs.getInt("ClanID"));
-			pc.setClanname(rs.getString("Clanname"));
-			pc.setClanRank(rs.getInt("ClanRank"));
-			pc.setBonusStats(rs.getInt("BonusStatus"));
-			pc.setElixirStats(rs.getInt("ElixirStatus"));
-			pc.setElfAttr(rs.getInt("ElfAttr"));
-			pc.set_PKcount(rs.getInt("PKcount"));
-			pc.setPkCountForElf(rs.getInt("PkCountForElf"));
-			pc.setExpRes(rs.getInt("ExpRes"));
-			pc.setPartnerId(rs.getInt("PartnerID"));
-			pc.setAccessLevel(rs.getShort("AccessLevel"));
-			if (pc.getAccessLevel() == 200) {
-				pc.setGm(true);
-				pc.setMonitor(false);
-			}
-			else if (pc.getAccessLevel() == 100) {
-				pc.setGm(false);
-				pc.setMonitor(true);
-			}
-			else {
-				pc.setGm(false);
-				pc.setMonitor(false);
-			}
-			pc.setOnlineStatus(rs.getInt("OnlineStatus"));
-			pc.setHomeTownId(rs.getInt("HomeTownID"));
-			pc.setContribution(rs.getInt("Contribution"));
-			pc.setPay(rs.getInt("Pay")); // 村长福利金 此栏位由 HomeTownTimeController 处理 update
-			pc.setHellTime(rs.getInt("HellTime"));
-			pc.setBanned(rs.getBoolean("Banned"));
-			pc.setKarma(rs.getInt("Karma"));
-			pc.setLastPk(rs.getTimestamp("LastPk"));
-			pc.setLastPkForElf(rs.getTimestamp("LastPkForElf"));
-			pc.setDeleteTime(rs.getTimestamp("DeleteTime"));
-			pc.setOriginalStr(rs.getInt("OriginalStr"));
-			pc.setOriginalCon(rs.getInt("OriginalCon"));
-			pc.setOriginalDex(rs.getInt("OriginalDex"));
-			pc.setOriginalCha(rs.getInt("OriginalCha"));
-			pc.setOriginalInt(rs.getInt("OriginalInt"));
-			pc.setOriginalWis(rs.getInt("OriginalWis"));
-
-			pc.refresh();
-			pc.setMoveSpeed(0);
-			pc.setBraveSpeed(0);
-			pc.setGmInvis(false);
-
-			_log.finest("restored char data: ");
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			return null;
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		return pc;
-	}
-
 	/** 创建角色 */
 	@Override
 	public void createCharacter(L1PcInstance pc) {
@@ -298,6 +165,139 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			SQLUtil.close(con);
 
 		}
+	}
+
+	@Override
+	public L1PcInstance loadCharacter(String charName) {
+		L1PcInstance pc = null;
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM characters WHERE char_name=?");
+			pstm.setString(1, charName);
+
+			rs = pstm.executeQuery();
+			if (!rs.next()) {
+				/*
+				 * SELECT返回任何结果。
+				 */
+				return null;
+			}
+			pc = new L1PcInstance();
+			pc.setAccountName(rs.getString("account_name"));
+			pc.setId(rs.getInt("objid"));
+			pc.setName(rs.getString("char_name"));
+			pc.setBirthday(rs.getTimestamp("birthday"));
+			pc.setHighLevel(rs.getInt("HighLevel"));
+			pc.setExp(rs.getLong("Exp"));
+			pc.addBaseMaxHp(rs.getShort("MaxHp"));
+			short currentHp = rs.getShort("CurHp");
+			if (currentHp < 1) {
+				currentHp = 1;
+			}
+			pc.setCurrentHpDirect(currentHp);
+			pc.setDead(false);
+			pc.setStatus(0);
+			pc.addBaseMaxMp(rs.getShort("MaxMp"));
+			pc.setCurrentMpDirect(rs.getShort("CurMp"));
+			pc.addBaseStr(rs.getShort("Str"));
+			pc.addBaseCon(rs.getShort("Con"));
+			pc.addBaseDex(rs.getShort("Dex"));
+			pc.addBaseCha(rs.getShort("Cha"));
+			pc.addBaseInt(rs.getShort("Intel"));
+			pc.addBaseWis(rs.getShort("Wis"));
+			int status = rs.getInt("Status");
+			pc.setCurrentWeapon(status);
+			int classId = rs.getInt("Class");
+			pc.setClassId(classId);
+			pc.setTempCharGfx(classId);
+			pc.setGfxId(classId);
+			pc.set_sex(rs.getInt("Sex"));
+			pc.setType(rs.getInt("Type"));
+			int head = rs.getInt("Heading");
+			if (head > 7) {
+				head = 0;
+			}
+			pc.setHeading(head);
+			/*
+			 * int locX = resultset.getInt("locX"); int locY = resultset.getInt("locY"); short map = resultset.getShort("MapID"); if (locX < 30000 || locX > 40000 || locY < 30000 || locY > 40000) { locX = 32564; locY = 32955; } if (map == 70) { locX = 32828; locY = 32848; } //
+			 * 強制移動 short moveflag = Config.RANGE_RACE_RECOGNIT; if (moveflag != 1) { Random random = new Random(); // 強制移動 int rndmap = 1 + random.nextInt(5); switch (rndmap) { case 1: // skt locX = 33080; locY = 33392; map = 4; break;
+			 * 
+			 * case 2: // ti locX = 32580; locY = 32931; map = 0; break;
+			 * 
+			 * case 3: // wb locX = 32621; locY = 33169; map = 4; break;
+			 * 
+			 * case 4: // kent locX = 33050; locY = 32780; map = 4; break;
+			 * 
+			 * case 5: // h locX = 33612; locY = 33268; map = 4; break;
+			 * 
+			 * default: // skt locX = 33080; locY = 33392; map = 4; break; } } pc.set_x(locX); pc.set_y(locY); pc.set_map(map);
+			 */
+			pc.setX(rs.getInt("locX"));
+			pc.setY(rs.getInt("locY"));
+			pc.setMap(rs.getShort("MapID"));
+			pc.set_food(rs.getInt("Food"));
+			pc.setLawful(rs.getInt("Lawful"));
+			pc.setTitle(rs.getString("Title"));
+			pc.setClanid(rs.getInt("ClanID"));
+			pc.setClanname(rs.getString("Clanname"));
+			pc.setClanRank(rs.getInt("ClanRank"));
+			pc.setBonusStats(rs.getInt("BonusStatus"));
+			pc.setElixirStats(rs.getInt("ElixirStatus"));
+			pc.setElfAttr(rs.getInt("ElfAttr"));
+			pc.set_PKcount(rs.getInt("PKcount"));
+			pc.setPkCountForElf(rs.getInt("PkCountForElf"));
+			pc.setExpRes(rs.getInt("ExpRes"));
+			pc.setPartnerId(rs.getInt("PartnerID"));
+			pc.setAccessLevel(rs.getShort("AccessLevel"));
+			if (pc.getAccessLevel() == 200) {
+				pc.setGm(true);
+				pc.setMonitor(false);
+			}
+			else if (pc.getAccessLevel() == 100) {
+				pc.setGm(false);
+				pc.setMonitor(true);
+			}
+			else {
+				pc.setGm(false);
+				pc.setMonitor(false);
+			}
+			pc.setOnlineStatus(rs.getInt("OnlineStatus"));
+			pc.setHomeTownId(rs.getInt("HomeTownID"));
+			pc.setContribution(rs.getInt("Contribution"));
+			pc.setPay(rs.getInt("Pay")); // 村长福利金 此栏位由 HomeTownTimeController 处理 update
+			pc.setHellTime(rs.getInt("HellTime"));
+			pc.setBanned(rs.getBoolean("Banned"));
+			pc.setKarma(rs.getInt("Karma"));
+			pc.setLastPk(rs.getTimestamp("LastPk"));
+			pc.setLastPkForElf(rs.getTimestamp("LastPkForElf"));
+			pc.setDeleteTime(rs.getTimestamp("DeleteTime"));
+			pc.setOriginalStr(rs.getInt("OriginalStr"));
+			pc.setOriginalCon(rs.getInt("OriginalCon"));
+			pc.setOriginalDex(rs.getInt("OriginalDex"));
+			pc.setOriginalCha(rs.getInt("OriginalCha"));
+			pc.setOriginalInt(rs.getInt("OriginalInt"));
+			pc.setOriginalWis(rs.getInt("OriginalWis"));
+
+			pc.refresh();
+			pc.setMoveSpeed(0);
+			pc.setBraveSpeed(0);
+			pc.setGmInvis(false);
+
+			_log.finest("restored char data: ");
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			return null;
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return pc;
 	}
 
 	/** 储存角色 */

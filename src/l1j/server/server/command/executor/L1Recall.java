@@ -23,11 +23,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.utils.collections.Lists;
 
 public class L1Recall implements L1CommandExecutor {
-	private L1Recall() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Recall();
+	}
+
+	private L1Recall() {
 	}
 
 	@Override

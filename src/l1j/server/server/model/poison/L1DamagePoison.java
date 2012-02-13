@@ -25,25 +25,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class L1DamagePoison extends L1Poison {
 
-	private Thread _timer;
-
-	private final L1Character _attacker;
-
-	private final L1Character _target;
-
-	private final int _damageSpan;
-
-	private final int _damage;
-
-	private L1DamagePoison(L1Character attacker, L1Character cha, int damageSpan, int damage) {
-		_attacker = attacker;
-		_target = cha;
-		_damageSpan = damageSpan;
-		_damage = damage;
-
-		doInfection();
-	}
-
 	private class NormalPoisonTimer extends Thread {
 		@Override
 		public void run() {
@@ -77,8 +58,48 @@ public class L1DamagePoison extends L1Poison {
 		}
 	}
 
-	boolean isDamageTarget(L1Character cha) {
-		return (cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance);
+	public static boolean doInfection(L1Character attacker, L1Character cha, int damageSpan, int damage) {
+		if (!isValidTarget(cha)) {
+			return false;
+		}
+
+		cha.setPoison(new L1DamagePoison(attacker, cha, damageSpan, damage));
+		return true;
+	}
+
+	private Thread _timer;
+
+	private final L1Character _attacker;
+
+	private final L1Character _target;
+
+	private final int _damageSpan;
+
+	private final int _damage;
+
+	private L1DamagePoison(L1Character attacker, L1Character cha, int damageSpan, int damage) {
+		_attacker = attacker;
+		_target = cha;
+		_damageSpan = damageSpan;
+		_damage = damage;
+
+		doInfection();
+	}
+
+	@Override
+	public void cure() {
+		if (_timer != null) {
+			_timer.interrupt(); // 解毒计时器
+		}
+
+		_target.setPoisonEffect(0);
+		_target.killSkillEffectTimer(STATUS_POISON);
+		_target.setPoison(null);
+	}
+
+	@Override
+	public int getEffectId() {
+		return 1;
 	}
 
 	private void doInfection() {
@@ -91,28 +112,7 @@ public class L1DamagePoison extends L1Poison {
 		}
 	}
 
-	public static boolean doInfection(L1Character attacker, L1Character cha, int damageSpan, int damage) {
-		if (!isValidTarget(cha)) {
-			return false;
-		}
-
-		cha.setPoison(new L1DamagePoison(attacker, cha, damageSpan, damage));
-		return true;
-	}
-
-	@Override
-	public int getEffectId() {
-		return 1;
-	}
-
-	@Override
-	public void cure() {
-		if (_timer != null) {
-			_timer.interrupt(); // 解毒计时器
-		}
-
-		_target.setPoisonEffect(0);
-		_target.killSkillEffectTimer(STATUS_POISON);
-		_target.setPoison(null);
+	boolean isDamageTarget(L1Character cha) {
+		return (cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance);
 	}
 }

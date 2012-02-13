@@ -51,16 +51,27 @@ public abstract class ClientBasePacket {
 	}
 
 	/**
-	 * 由byte[]中取回一个 int
+	 * 返回一个字符串，表示客户端的数据包类型。("[C] C_DropItem" 等)
+	 */
+	public String getType() {
+		return "[C] " + this.getClass().getSimpleName();
+	}
+
+	/**
+	 * 由byte[]中取回一组byte[]
 	 * 
 	 * @return
 	 */
-	public int readD() {
-		int i = _decrypt[_off++] & 0xff;
-		i |= _decrypt[_off++] << 8 & 0xff00;
-		i |= _decrypt[_off++] << 16 & 0xff0000;
-		i |= _decrypt[_off++] << 24 & 0xff000000;
-		return i;
+	public byte[] readByte() {
+		byte[] result = new byte[_decrypt.length - _off];
+		try {
+			System.arraycopy(_decrypt, _off, result, 0, _decrypt.length - _off);
+			_off = _decrypt.length;
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
+		}
+		return result;
 	}
 
 	/**
@@ -78,21 +89,23 @@ public abstract class ClientBasePacket {
 	 * 
 	 * @return
 	 */
-	public int readH() {
-		int i = _decrypt[_off++] & 0xff;
-		i |= _decrypt[_off++] << 8 & 0xff00;
-		return i;
-	}
-
-	/**
-	 * 由byte[]中取回一个 short
-	 * 
-	 * @return
-	 */
 	public int readCH() {
 		int i = _decrypt[_off++] & 0xff;
 		i |= _decrypt[_off++] << 8 & 0xff00;
 		i |= _decrypt[_off++] << 16 & 0xff0000;
+		return i;
+	}
+
+	/**
+	 * 由byte[]中取回一个 int
+	 * 
+	 * @return
+	 */
+	public int readD() {
+		int i = _decrypt[_off++] & 0xff;
+		i |= _decrypt[_off++] << 8 & 0xff00;
+		i |= _decrypt[_off++] << 16 & 0xff0000;
+		i |= _decrypt[_off++] << 24 & 0xff000000;
 		return i;
 	}
 
@@ -114,6 +127,17 @@ public abstract class ClientBasePacket {
 	}
 
 	/**
+	 * 由byte[]中取回一个 short
+	 * 
+	 * @return
+	 */
+	public int readH() {
+		int i = _decrypt[_off++] & 0xff;
+		i |= _decrypt[_off++] << 8 & 0xff00;
+		return i;
+	}
+
+	/**
 	 * 由byte[]中取回一个 String
 	 * 
 	 * @return
@@ -129,29 +153,5 @@ public abstract class ClientBasePacket {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
 		return s;
-	}
-
-	/**
-	 * 由byte[]中取回一组byte[]
-	 * 
-	 * @return
-	 */
-	public byte[] readByte() {
-		byte[] result = new byte[_decrypt.length - _off];
-		try {
-			System.arraycopy(_decrypt, _off, result, 0, _decrypt.length - _off);
-			_off = _decrypt.length;
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
-		}
-		return result;
-	}
-
-	/**
-	 * 返回一个字符串，表示客户端的数据包类型。("[C] C_DropItem" 等)
-	 */
-	public String getType() {
-		return "[C] " + this.getClass().getSimpleName();
 	}
 }

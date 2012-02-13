@@ -56,24 +56,8 @@ public class PetItemTable {
 		loadPetItem();
 	}
 
-	private void loadPetItem() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM petitem");
-			rs = pstm.executeQuery();
-			fillPetItemTable(rs);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建etcitem_petitem表时出现错误", e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	public L1PetItem getTemplate(int itemId) {
+		return _petItemIdIndex.get(itemId);
 	}
 
 	private void fillPetItemTable(ResultSet rs) throws SQLException {
@@ -97,8 +81,24 @@ public class PetItemTable {
 		}
 	}
 
-	public L1PetItem getTemplate(int itemId) {
-		return _petItemIdIndex.get(itemId);
+	private void loadPetItem() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM petitem");
+			rs = pstm.executeQuery();
+			fillPetItemTable(rs);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建etcitem_petitem表时出现错误", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 }

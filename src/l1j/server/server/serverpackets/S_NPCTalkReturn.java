@@ -30,6 +30,48 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	/**
 	 * NPC对话视窗
 	 * 
+	 * @param objid
+	 * @param html
+	 */
+	public S_NPCTalkReturn(int objid, L1NpcHtml html) {
+		buildPacket(objid, html.getName(), html.getArgs());
+	}
+
+	/**
+	 * NPC对话视窗
+	 * 
+	 * @param objid
+	 * @param htmlid
+	 */
+	public S_NPCTalkReturn(int objid, String htmlid) {
+		buildPacket(objid, htmlid, null);
+	}
+
+	/**
+	 * NPC对话视窗
+	 * 
+	 * @param objid
+	 * @param htmlid
+	 * @param data
+	 */
+	public S_NPCTalkReturn(int objid, String htmlid, String[] data) {
+		buildPacket(objid, htmlid, data);
+	}
+
+	/**
+	 * NPC对话视窗
+	 * 
+	 * @param npc
+	 * @param objid
+	 * @param action
+	 */
+	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action) {
+		this(npc, objid, action, null);
+	}
+
+	/**
+	 * NPC对话视窗
+	 * 
 	 * @param npc
 	 * @param objid
 	 * @param action
@@ -52,46 +94,17 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 		buildPacket(objid, htmlid, data);
 	}
 
-	/**
-	 * NPC对话视窗
-	 * 
-	 * @param npc
-	 * @param objid
-	 * @param action
-	 */
-	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action) {
-		this(npc, objid, action, null);
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
 	}
 
-	/**
-	 * NPC对话视窗
-	 * 
-	 * @param objid
-	 * @param htmlid
-	 * @param data
-	 */
-	public S_NPCTalkReturn(int objid, String htmlid, String[] data) {
-		buildPacket(objid, htmlid, data);
-	}
-
-	/**
-	 * NPC对话视窗
-	 * 
-	 * @param objid
-	 * @param htmlid
-	 */
-	public S_NPCTalkReturn(int objid, String htmlid) {
-		buildPacket(objid, htmlid, null);
-	}
-
-	/**
-	 * NPC对话视窗
-	 * 
-	 * @param objid
-	 * @param html
-	 */
-	public S_NPCTalkReturn(int objid, L1NpcHtml html) {
-		buildPacket(objid, html.getName(), html.getArgs());
+	@Override
+	public String getType() {
+		return _S__25_TalkReturn;
 	}
 
 	private void buildPacket(int objid, String htmlid, String[] data) {
@@ -110,18 +123,5 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 			writeH(0x00);
 			writeH(0x00);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__25_TalkReturn;
 	}
 }

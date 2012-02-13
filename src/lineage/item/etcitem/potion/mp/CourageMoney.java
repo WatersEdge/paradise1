@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class CourageMoney extends ItemExecutor {
 
-	private CourageMoney() {
-	}
-
 	public static ItemExecutor get() {
 		return new CourageMoney();
+	}
+
+	private CourageMoney() {
 	}
 
 	/**

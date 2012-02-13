@@ -66,12 +66,12 @@ public class S_SystemMessage extends ServerBasePacket {
 	}
 
 	@Override
-	public String toString() {
-		return String.format("%s: %s", S_SYSTEM_MESSAGE, _msg);
+	public String getType() {
+		return S_SYSTEM_MESSAGE;
 	}
 
 	@Override
-	public String getType() {
-		return S_SYSTEM_MESSAGE;
+	public String toString() {
+		return String.format("%s: %s", S_SYSTEM_MESSAGE, _msg);
 	}
 }

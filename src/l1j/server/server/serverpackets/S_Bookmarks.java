@@ -35,13 +35,6 @@ public class S_Bookmarks extends ServerBasePacket {
 		buildPacket(name, map, id);
 	}
 
-	private void buildPacket(String name, int map, int id) {
-		writeC(Opcodes.S_OPCODE_BOOKMARKS);
-		writeS(name);
-		writeH(map);
-		writeD(id);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -54,5 +47,12 @@ public class S_Bookmarks extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return _S__1F_S_Bookmarks;
+	}
+
+	private void buildPacket(String name, int map, int id) {
+		writeC(Opcodes.S_OPCODE_BOOKMARKS);
+		writeS(name);
+		writeH(map);
+		writeD(id);
 	}
 }

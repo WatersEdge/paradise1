@@ -20,11 +20,11 @@ import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Kick implements L1CommandExecutor {
-	private L1Kick() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Kick();
+	}
+
+	private L1Kick() {
 	}
 
 	@Override

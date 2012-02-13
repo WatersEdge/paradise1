@@ -18,11 +18,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Stationery_Open extends ItemExecutor {
 
-	private Stationery_Open() {
-	}
-
 	public static ItemExecutor get() {
 		return new Stationery_Open();
+	}
+
+	private Stationery_Open() {
 	}
 
 	/**

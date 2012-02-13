@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class GoldDumplings extends ItemExecutor {
 
-	private GoldDumplings() {
-	}
-
 	public static ItemExecutor get() {
 		return new GoldDumplings();
+	}
+
+	private GoldDumplings() {
 	}
 
 	/**

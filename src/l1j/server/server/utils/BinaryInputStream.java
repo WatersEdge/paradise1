@@ -33,11 +33,6 @@ public class BinaryInputStream extends InputStream {
 	}
 
 	@Override
-	public long skip(long n) throws IOException {
-		return _in.skip(n);
-	}
-
-	@Override
 	public int available() throws IOException {
 		return _in.available();
 	}
@@ -56,11 +51,16 @@ public class BinaryInputStream extends InputStream {
 		return _in.read();
 	}
 
+	public int readInt() throws IOException {
+		return readShort() | ((readShort() << 16) & 0xFFFF0000);
+	}
+
 	public int readShort() throws IOException {
 		return _in.read() | ((_in.read() << 8) & 0xFF00);
 	}
 
-	public int readInt() throws IOException {
-		return readShort() | ((readShort() << 16) & 0xFFFF0000);
+	@Override
+	public long skip(long n) throws IOException {
+		return _in.skip(n);
 	}
 }

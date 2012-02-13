@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：执行玩家/NPC动作
  */
 public class L1Action implements L1CommandExecutor {
-	private L1Action() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Action();
+	}
+
+	private L1Action() {
 	}
 
 	@Override

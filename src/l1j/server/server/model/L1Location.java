@@ -24,125 +24,6 @@ import l1j.server.server.utils.Random;
  */
 public class L1Location extends Point {
 
-	protected L1Map _map = L1Map.newNull();
-
-	public L1Location() {
-		super();
-	}
-
-	public L1Location(L1Location loc) {
-		this(loc._x, loc._y, loc._map);
-	}
-
-	public L1Location(int x, int y, int mapId) {
-		super(x, y);
-		setMap(mapId);
-	}
-
-	public L1Location(int x, int y, L1Map map) {
-		super(x, y);
-		_map = map;
-	}
-
-	public L1Location(Point pt, int mapId) {
-		super(pt);
-		setMap(mapId);
-	}
-
-	public L1Location(Point pt, L1Map map) {
-		super(pt);
-		_map = map;
-	}
-
-	public void set(L1Location loc) {
-		_map = loc._map;
-		_x = loc._x;
-		_y = loc._y;
-	}
-
-	public void set(int x, int y, int mapId) {
-		set(x, y);
-		setMap(mapId);
-	}
-
-	public void set(int x, int y, L1Map map) {
-		set(x, y);
-		_map = map;
-	}
-
-	public void set(Point pt, int mapId) {
-		set(pt);
-		setMap(mapId);
-	}
-
-	public void set(Point pt, L1Map map) {
-		set(pt);
-		_map = map;
-	}
-
-	public L1Map getMap() {
-		return _map;
-	}
-
-	public int getMapId() {
-		return _map.getId();
-	}
-
-	public void setMap(L1Map map) {
-		_map = map;
-	}
-
-	public void setMap(int mapId) {
-		_map = L1WorldMap.getInstance().getMap((short) mapId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof L1Location)) {
-			return false;
-		}
-		L1Location loc = (L1Location) obj;
-		return (getMap() == loc.getMap()) && (getX() == loc.getX()) && (getY() == loc.getY());
-	}
-
-	@Override
-	public int hashCode() {
-		return 7 * _map.getId() + super.hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return String.format("(%d, %d) on %d", _x, _y, _map.getId());
-	}
-
-	/**
-	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
-	 * 
-	 * @param max
-	 *            随机范围的最大值
-	 * @param isRandomTeleport
-	 *            汇报随机
-	 * @return 新Location
-	 */
-	public L1Location randomLocation(int max, boolean isRandomTeleport) {
-		return randomLocation(0, max, isRandomTeleport);
-	}
-
-	/**
-	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
-	 * 
-	 * @param min
-	 *            随机范围的最小值(0包含自身的坐标)
-	 * @param max
-	 *            随机范围的最大值
-	 * @param isRandomTeleport
-	 *            汇报随机
-	 * @return 新Location
-	 */
-	public L1Location randomLocation(int min, int max, boolean isRandomTeleport) {
-		return L1Location.randomLocation(this, min, max, isRandomTeleport);
-	}
-
 	/**
 	 * 对于参数的Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
 	 * 
@@ -243,5 +124,124 @@ public class L1Location extends Point {
 			}
 		}
 		return newLocation;
+	}
+
+	protected L1Map _map = L1Map.newNull();
+
+	public L1Location() {
+		super();
+	}
+
+	public L1Location(int x, int y, int mapId) {
+		super(x, y);
+		setMap(mapId);
+	}
+
+	public L1Location(int x, int y, L1Map map) {
+		super(x, y);
+		_map = map;
+	}
+
+	public L1Location(L1Location loc) {
+		this(loc._x, loc._y, loc._map);
+	}
+
+	public L1Location(Point pt, int mapId) {
+		super(pt);
+		setMap(mapId);
+	}
+
+	public L1Location(Point pt, L1Map map) {
+		super(pt);
+		_map = map;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof L1Location)) {
+			return false;
+		}
+		L1Location loc = (L1Location) obj;
+		return (getMap() == loc.getMap()) && (getX() == loc.getX()) && (getY() == loc.getY());
+	}
+
+	public L1Map getMap() {
+		return _map;
+	}
+
+	public int getMapId() {
+		return _map.getId();
+	}
+
+	@Override
+	public int hashCode() {
+		return 7 * _map.getId() + super.hashCode();
+	}
+
+	/**
+	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
+	 * 
+	 * @param max
+	 *            随机范围的最大值
+	 * @param isRandomTeleport
+	 *            汇报随机
+	 * @return 新Location
+	 */
+	public L1Location randomLocation(int max, boolean isRandomTeleport) {
+		return randomLocation(0, max, isRandomTeleport);
+	}
+
+	/**
+	 * 对于这个Location、返回随机移动范围的Location。 对于随机传送、城堡区域、藏身处のLocation将不返回。
+	 * 
+	 * @param min
+	 *            随机范围的最小值(0包含自身的坐标)
+	 * @param max
+	 *            随机范围的最大值
+	 * @param isRandomTeleport
+	 *            汇报随机
+	 * @return 新Location
+	 */
+	public L1Location randomLocation(int min, int max, boolean isRandomTeleport) {
+		return L1Location.randomLocation(this, min, max, isRandomTeleport);
+	}
+
+	public void set(int x, int y, int mapId) {
+		set(x, y);
+		setMap(mapId);
+	}
+
+	public void set(int x, int y, L1Map map) {
+		set(x, y);
+		_map = map;
+	}
+
+	public void set(L1Location loc) {
+		_map = loc._map;
+		_x = loc._x;
+		_y = loc._y;
+	}
+
+	public void set(Point pt, int mapId) {
+		set(pt);
+		setMap(mapId);
+	}
+
+	public void set(Point pt, L1Map map) {
+		set(pt);
+		_map = map;
+	}
+
+	public void setMap(int mapId) {
+		_map = L1WorldMap.getInstance().getMap((short) mapId);
+	}
+
+	public void setMap(L1Map map) {
+		_map = map;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("(%d, %d) on %d", _x, _y, _map.getId());
 	}
 }

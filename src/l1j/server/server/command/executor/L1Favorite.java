@@ -32,11 +32,11 @@ public class L1Favorite implements L1CommandExecutor {
 
 	private static final Map<Integer, String> _faviCom = Maps.newMap();
 
-	private L1Favorite() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Favorite();
+	}
+
+	private L1Favorite() {
 	}
 
 	@Override

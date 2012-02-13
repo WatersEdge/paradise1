@@ -22,8 +22,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class IterableElementList implements Iterable<Element> {
-	IterableNodeList _list;
-
 	private class MyIterator implements Iterator<Element> {
 		private Iterator<Node> _itr;
 		private Element _next = null;
@@ -31,17 +29,6 @@ public class IterableElementList implements Iterable<Element> {
 		public MyIterator(Iterator<Node> itr) {
 			_itr = itr;
 			updateNextElement();
-		}
-
-		private void updateNextElement() {
-			while (_itr.hasNext()) {
-				Node node = _itr.next();
-				if (node instanceof Element) {
-					_next = (Element) node;
-					return;
-				}
-			}
-			_next = null;
 		}
 
 		@Override
@@ -63,7 +50,20 @@ public class IterableElementList implements Iterable<Element> {
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+
+		private void updateNextElement() {
+			while (_itr.hasNext()) {
+				Node node = _itr.next();
+				if (node instanceof Element) {
+					_next = (Element) node;
+					return;
+				}
+			}
+			_next = null;
+		}
 	}
+
+	IterableNodeList _list;
 
 	public IterableElementList(NodeList list) {
 		_list = new IterableNodeList(list);

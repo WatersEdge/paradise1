@@ -31,16 +31,6 @@ public class L1ParalysisPoison extends L1Poison {
 	// 蟻穴ムカデ 14 30
 	// D-グール 39 45
 
-	private final L1Character _target;
-
-	private Thread _timer;
-
-	private final int _delay;
-
-	private final int _time;
-
-	private int _effectId = 1;
-
 	private class ParalysisPoisonTimer extends Thread {
 		@Override
 		public void run() {
@@ -94,14 +84,6 @@ public class L1ParalysisPoison extends L1Poison {
 		}
 	}
 
-	private L1ParalysisPoison(L1Character cha, int delay, int time) {
-		_target = cha;
-		_delay = delay;
-		_time = time;
-
-		doInfection();
-	}
-
 	public static boolean doInfection(L1Character cha, int delay, int time) {
 		if (!L1Poison.isValidTarget(cha)) {
 			return false;
@@ -111,19 +93,22 @@ public class L1ParalysisPoison extends L1Poison {
 		return true;
 	}
 
-	private void doInfection() {
-		sendMessageIfPlayer(_target, 212);
-		_target.setPoisonEffect(1);
+	private final L1Character _target;
 
-		if (_target instanceof L1PcInstance) {
-			_timer = new ParalysisPoisonTimer();
-			GeneralThreadPool.getInstance().execute(_timer);
-		}
-	}
+	private Thread _timer;
 
-	@Override
-	public int getEffectId() {
-		return _effectId;
+	private final int _delay;
+
+	private final int _time;
+
+	private int _effectId = 1;
+
+	private L1ParalysisPoison(L1Character cha, int delay, int time) {
+		_target = cha;
+		_delay = delay;
+		_time = time;
+
+		doInfection();
 	}
 
 	@Override
@@ -134,5 +119,20 @@ public class L1ParalysisPoison extends L1Poison {
 
 		_target.setPoisonEffect(0);
 		_target.setPoison(null);
+	}
+
+	@Override
+	public int getEffectId() {
+		return _effectId;
+	}
+
+	private void doInfection() {
+		sendMessageIfPlayer(_target, 212);
+		_target.setPoisonEffect(1);
+
+		if (_target instanceof L1PcInstance) {
+			_timer = new ParalysisPoisonTimer();
+			GeneralThreadPool.getInstance().execute(_timer);
+		}
 	}
 }

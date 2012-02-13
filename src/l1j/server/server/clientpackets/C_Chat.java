@@ -211,6 +211,11 @@ public class C_Chat extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_CHAT;
+	}
+
 	/** 世界聊天 */
 	private void chatWorld(L1PcInstance pc, String chatText, int chatType) {
 		if (pc.isGm()) {
@@ -245,10 +250,5 @@ public class C_Chat extends ClientBasePacket {
 		else {
 			pc.sendPackets(new S_ServerMessage(195, String.valueOf(Config.GLOBAL_CHAT_LEVEL))); // 等级 %0 以下的角色无法使用公频或买卖频道。
 		}
-	}
-
-	@Override
-	public String getType() {
-		return C_CHAT;
 	}
 }

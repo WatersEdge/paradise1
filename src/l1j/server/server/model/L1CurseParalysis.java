@@ -27,14 +27,6 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class L1CurseParalysis extends L1Paralysis {
 
-	private final L1Character _target;
-
-	private final int _delay;
-
-	private final int _time;
-
-	private Thread _timer;
-
 	private class ParalysisDelayTimer extends Thread {
 		@Override
 		public void run() {
@@ -86,26 +78,6 @@ public class L1CurseParalysis extends L1Paralysis {
 		}
 	}
 
-	private L1CurseParalysis(L1Character cha, int delay, int time) {
-		_target = cha;
-		_delay = delay;
-		_time = time;
-
-		curse();
-	}
-
-	private void curse() {
-		if (_target instanceof L1PcInstance) {
-			L1PcInstance player = (L1PcInstance) _target;
-			player.sendPackets(new S_ServerMessage(212)); // \f1你的身体渐渐麻痹。
-		}
-
-		_target.setPoisonEffect(2);
-
-		_timer = new ParalysisDelayTimer();
-		GeneralThreadPool.getInstance().execute(_timer);
-	}
-
 	public static boolean curse(L1Character cha, int delay, int time) {
 		if (!((cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance))) {
 			return false;
@@ -118,9 +90,20 @@ public class L1CurseParalysis extends L1Paralysis {
 		return true;
 	}
 
-	@Override
-	public int getEffectId() {
-		return 2;
+	private final L1Character _target;
+
+	private final int _delay;
+
+	private final int _time;
+
+	private Thread _timer;
+
+	private L1CurseParalysis(L1Character cha, int delay, int time) {
+		_target = cha;
+		_delay = delay;
+		_time = time;
+
+		curse();
 	}
 
 	@Override
@@ -131,5 +114,22 @@ public class L1CurseParalysis extends L1Paralysis {
 
 		_target.setPoisonEffect(0);
 		_target.setParalaysis(null);
+	}
+
+	@Override
+	public int getEffectId() {
+		return 2;
+	}
+
+	private void curse() {
+		if (_target instanceof L1PcInstance) {
+			L1PcInstance player = (L1PcInstance) _target;
+			player.sendPackets(new S_ServerMessage(212)); // \f1你的身体渐渐麻痹。
+		}
+
+		_target.setPoisonEffect(2);
+
+		_timer = new ParalysisDelayTimer();
+		GeneralThreadPool.getInstance().execute(_timer);
 	}
 }

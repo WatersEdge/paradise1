@@ -35,6 +35,35 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	private static AtomicInteger _sequentialNumber = new AtomicInteger(0);
 
+	private static int calcheading(int myx, int myy, int tx, int ty) {
+		int newheading = 0;
+		if ((tx > myx) && (ty > myy)) {
+			newheading = 3;
+		}
+		if ((tx < myx) && (ty < myy)) {
+			newheading = 7;
+		}
+		if ((tx > myx) && (ty == myy)) {
+			newheading = 2;
+		}
+		if ((tx < myx) && (ty == myy)) {
+			newheading = 6;
+		}
+		if ((tx == myx) && (ty < myy)) {
+			newheading = 0;
+		}
+		if ((tx == myx) && (ty > myy)) {
+			newheading = 4;
+		}
+		if ((tx < myx) && (ty > myy)) {
+			newheading = 5;
+		}
+		if ((tx > myx) && (ty < myy)) {
+			newheading = 1;
+		}
+		return newheading;
+	}
+
 	private byte[] _byte = null;
 
 	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data) {
@@ -43,6 +72,30 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
 		buildPacket(cha, targetobj, x, y, data, withCastMotion);
+	}
+
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		else {
+			int seq = 0;
+			synchronized (this) {
+				seq = _sequentialNumber.incrementAndGet();
+			}
+			_byte[13] = (byte) (seq & 0xff);
+			_byte[14] = (byte) (seq >> 8 & 0xff);
+			_byte[15] = (byte) (seq >> 16 & 0xff);
+			_byte[16] = (byte) (seq >> 24 & 0xff);
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_USE_ATTACK_SKILL;
 	}
 
 	private void buildPacket(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
@@ -83,59 +136,6 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		writeC(0);
 		writeC(0);
 		writeC(0); // 0:none 2:爪痕 4:双击 8:镜返射
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		else {
-			int seq = 0;
-			synchronized (this) {
-				seq = _sequentialNumber.incrementAndGet();
-			}
-			_byte[13] = (byte) (seq & 0xff);
-			_byte[14] = (byte) (seq >> 8 & 0xff);
-			_byte[15] = (byte) (seq >> 16 & 0xff);
-			_byte[16] = (byte) (seq >> 24 & 0xff);
-		}
-
-		return _byte;
-	}
-
-	private static int calcheading(int myx, int myy, int tx, int ty) {
-		int newheading = 0;
-		if ((tx > myx) && (ty > myy)) {
-			newheading = 3;
-		}
-		if ((tx < myx) && (ty < myy)) {
-			newheading = 7;
-		}
-		if ((tx > myx) && (ty == myy)) {
-			newheading = 2;
-		}
-		if ((tx < myx) && (ty == myy)) {
-			newheading = 6;
-		}
-		if ((tx == myx) && (ty < myy)) {
-			newheading = 0;
-		}
-		if ((tx == myx) && (ty > myy)) {
-			newheading = 4;
-		}
-		if ((tx < myx) && (ty > myy)) {
-			newheading = 5;
-		}
-		if ((tx > myx) && (ty < myy)) {
-			newheading = 1;
-		}
-		return newheading;
-	}
-
-	@Override
-	public String getType() {
-		return S_USE_ATTACK_SKILL;
 	}
 
 }

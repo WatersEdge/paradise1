@@ -24,11 +24,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Buff extends ItemExecutor {
 
-	private MagicScroll_Buff() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Buff();
+	}
+
+	private MagicScroll_Buff() {
 	}
 
 	/**

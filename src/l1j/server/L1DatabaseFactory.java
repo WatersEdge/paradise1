@@ -51,6 +51,19 @@ public class L1DatabaseFactory {
 	private static String _password;
 
 	/**
+	 * 取得资料库的实例（第一次实例为 null 的时候才新建立一个).
+	 * 
+	 * @return L1DatabaseFactory
+	 * @throws SQLException
+	 */
+	public static L1DatabaseFactory getInstance() throws SQLException {
+		if (_instance == null) {
+			_instance = new L1DatabaseFactory();
+		}
+		return _instance;
+	}
+
+	/**
 	 * 设定资料库登入的相关资讯
 	 * 
 	 * @param driver
@@ -98,37 +111,6 @@ public class L1DatabaseFactory {
 	}
 
 	/**
-	 * 伺服器关闭的时候要关闭与资料库的连结
-	 */
-	public void shutdown() {
-		try {
-			_source.close();
-		}
-		catch (Exception e) {
-			_log.log(Level.INFO, "", e);
-		}
-		try {
-			_source = null;
-		}
-		catch (Exception e) {
-			_log.log(Level.INFO, "", e);
-		}
-	}
-
-	/**
-	 * 取得资料库的实例（第一次实例为 null 的时候才新建立一个).
-	 * 
-	 * @return L1DatabaseFactory
-	 * @throws SQLException
-	 */
-	public static L1DatabaseFactory getInstance() throws SQLException {
-		if (_instance == null) {
-			_instance = new L1DatabaseFactory();
-		}
-		return _instance;
-	}
-
-	/**
 	 * 取得资料库连结时的连线
 	 * 
 	 * @return Connection 连结对象
@@ -146,5 +128,23 @@ public class L1DatabaseFactory {
 			}
 		}
 		return Config.DETECT_DB_RESOURCE_LEAKS ? LeakCheckedConnection.create(con) : con;
+	}
+
+	/**
+	 * 伺服器关闭的时候要关闭与资料库的连结
+	 */
+	public void shutdown() {
+		try {
+			_source.close();
+		}
+		catch (Exception e) {
+			_log.log(Level.INFO, "", e);
+		}
+		try {
+			_source = null;
+		}
+		catch (Exception e) {
+			_log.log(Level.INFO, "", e);
+		}
 	}
 }

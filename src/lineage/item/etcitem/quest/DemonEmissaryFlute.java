@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class DemonEmissaryFlute extends ItemExecutor {
 
-	private DemonEmissaryFlute() {
-	}
-
 	public static ItemExecutor get() {
 		return new DemonEmissaryFlute();
+	}
+
+	private DemonEmissaryFlute() {
 	}
 
 	/**

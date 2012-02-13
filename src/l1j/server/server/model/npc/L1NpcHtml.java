@@ -36,11 +36,11 @@ public class L1NpcHtml {
 		_args = args;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	public String[] getArgs() {
 		return _args;
+	}
+
+	public String getName() {
+		return _name;
 	}
 }

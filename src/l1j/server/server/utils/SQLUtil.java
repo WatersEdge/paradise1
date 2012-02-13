@@ -36,18 +36,6 @@ public class SQLUtil {
 		return null;
 	}
 
-	public static SQLException close(Statement ps) {
-		try {
-			if (ps != null) {
-				ps.close();
-			}
-		}
-		catch (SQLException e) {
-			return e;
-		}
-		return null;
-	}
-
 	public static SQLException close(ResultSet rs) {
 		try {
 			if (rs != null) {
@@ -64,5 +52,17 @@ public class SQLUtil {
 		close(rs);
 		close(pstm);
 		close(con);
+	}
+
+	public static SQLException close(Statement ps) {
+		try {
+			if (ps != null) {
+				ps.close();
+			}
+		}
+		catch (SQLException e) {
+			return e;
+		}
+		return null;
 	}
 }

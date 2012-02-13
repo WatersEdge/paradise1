@@ -41,20 +41,6 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 @SuppressWarnings("unused")
 public class L1GameReStart {
 
-	private static Logger _log = Logger.getLogger(L1GameReStart.class.getName());
-
-	private static L1GameReStart _instance;
-
-	private volatile L1GameTime _currentTime = new L1GameTime();
-
-	private L1GameTime _previousTime = null;
-
-	private List<L1GameTimeListener> _listeners = new CopyOnWriteArrayList<L1GameTimeListener>();
-
-	private static int willRestartTime;
-
-	public int _remnant;
-
 	private class TimeUpdaterRestar implements Runnable {
 
 		@Override
@@ -182,6 +168,40 @@ public class L1GameReStart {
 		}
 	}
 
+	private static Logger _log = Logger.getLogger(L1GameReStart.class.getName());
+
+	private static L1GameReStart _instance;
+
+	public static L1GameReStart getInstance() {
+		return _instance;
+	}
+
+	public static void init() {
+		_instance = new L1GameReStart();
+	}
+
+	private volatile L1GameTime _currentTime = new L1GameTime();
+
+	private L1GameTime _previousTime = null;
+
+	private List<L1GameTimeListener> _listeners = new CopyOnWriteArrayList<L1GameTimeListener>();
+
+	private static int willRestartTime;
+
+	public static int getWillRestartTime() {
+		return willRestartTime;
+	}
+
+	public int _remnant;
+
+	private L1GameReStart() {
+		GeneralThreadPool.getInstance().execute(new TimeUpdaterRestar());
+	}
+
+	public void addListener(L1GameTimeListener listener) {
+		_listeners.add(listener);
+	}
+
 	/**
 	 * 踢掉世界地图中所有的玩家与储存资料。
 	 */
@@ -200,8 +220,20 @@ public class L1GameReStart {
 		}
 	}
 
-	private int GetRestartTime() {
-		return Config.REST_TIME;
+	public L1GameTime getGameTime() {
+		return _currentTime;
+	}
+
+	public int GetRemnant() {
+		return _remnant;
+	}
+
+	public void removeListener(L1GameTimeListener listener) {
+		_listeners.remove(listener);
+	}
+
+	public void SetRemnant(int remnant) {
+		_remnant = remnant;
 	}
 
 	private void BroadCastToAll(String string) {
@@ -210,16 +242,8 @@ public class L1GameReStart {
 			pc.sendPackets(new S_SystemMessage(string));
 	}
 
-	public void SetRemnant(int remnant) {
-		_remnant = remnant;
-	}
-
-	public static int getWillRestartTime() {
-		return willRestartTime;
-	}
-
-	public int GetRemnant() {
-		return _remnant;
+	private int GetRestartTime() {
+		return Config.REST_TIME;
 	}
 
 	private boolean isFieldChanged(int field) {
@@ -247,30 +271,6 @@ public class L1GameReStart {
 				listener.onMinuteChanged(_currentTime);
 			}
 		}
-	}
-
-	private L1GameReStart() {
-		GeneralThreadPool.getInstance().execute(new TimeUpdaterRestar());
-	}
-
-	public static void init() {
-		_instance = new L1GameReStart();
-	}
-
-	public static L1GameReStart getInstance() {
-		return _instance;
-	}
-
-	public L1GameTime getGameTime() {
-		return _currentTime;
-	}
-
-	public void addListener(L1GameTimeListener listener) {
-		_listeners.add(listener);
-	}
-
-	public void removeListener(L1GameTimeListener listener) {
-		_listeners.remove(listener);
 	}
 
 }

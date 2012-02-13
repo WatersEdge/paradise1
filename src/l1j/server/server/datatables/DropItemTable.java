@@ -43,9 +43,6 @@ public final class DropItemTable {
 
 	private static DropItemTable _instance;
 
-	/** 掉落物品 */
-	private final Map<Integer, dropItemData> _dropItem = Maps.newMap();
-
 	public static DropItemTable getInstance() {
 		if (_instance == null) {
 			_instance = new DropItemTable();
@@ -53,8 +50,37 @@ public final class DropItemTable {
 		return _instance;
 	}
 
+	/** 掉落物品 */
+	private final Map<Integer, dropItemData> _dropItem = Maps.newMap();
+
 	private DropItemTable() {
 		loadMapsFromDatabase();
+	}
+
+	/**
+	 * 取得掉落数量
+	 * 
+	 * @param itemId
+	 */
+	public double getDropAmount(int itemId) {
+		dropItemData data = _dropItem.get(itemId);
+		if (data == null) {
+			return 1;
+		}
+		return data.dropAmount;
+	}
+
+	/**
+	 * 取得掉落倍率
+	 * 
+	 * @param itemId
+	 */
+	public double getDropRate(int itemId) {
+		dropItemData data = _dropItem.get(itemId);
+		if (data == null) {
+			return 1;
+		}
+		return data.dropRate;
 	}
 
 	/**
@@ -86,32 +112,6 @@ public final class DropItemTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 取得掉落倍率
-	 * 
-	 * @param itemId
-	 */
-	public double getDropRate(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
-		if (data == null) {
-			return 1;
-		}
-		return data.dropRate;
-	}
-
-	/**
-	 * 取得掉落数量
-	 * 
-	 * @param itemId
-	 */
-	public double getDropAmount(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
-		if (data == null) {
-			return 1;
-		}
-		return data.dropAmount;
 	}
 
 }

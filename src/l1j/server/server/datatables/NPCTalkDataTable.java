@@ -35,8 +35,6 @@ public class NPCTalkDataTable {
 
 	private static NPCTalkDataTable _instance;
 
-	private final Map<Integer, L1NpcTalkData> _datatable = Maps.newMap();
-
 	public static NPCTalkDataTable getInstance() {
 		if (_instance == null) {
 			_instance = new NPCTalkDataTable();
@@ -44,8 +42,14 @@ public class NPCTalkDataTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1NpcTalkData> _datatable = Maps.newMap();
+
 	private NPCTalkDataTable() {
 		parseList();
+	}
+
+	public L1NpcTalkData getTemplate(int i) {
+		return _datatable.get(new Integer(i));
 	}
 
 	private void parseList() {
@@ -76,10 +80,6 @@ public class NPCTalkDataTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	public L1NpcTalkData getTemplate(int i) {
-		return _datatable.get(new Integer(i));
 	}
 
 }

@@ -21,11 +21,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class ArrogantTower_Amulet extends ItemExecutor {
 
-	private ArrogantTower_Amulet() {
-	}
-
 	public static ItemExecutor get() {
 		return new ArrogantTower_Amulet();
+	}
+
+	private ArrogantTower_Amulet() {
 	}
 
 	/**

@@ -78,6 +78,45 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		_actionOnFail = elem == null ? null : new L1NpcListedAction(elem);
 	}
 
+	@Override
+	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
+		int numOfMaterials = countNumOfMaterials(pc.getInventory());
+		if ((1 < numOfMaterials) && _isAmountInputable) {
+			pc.sendPackets(new S_HowManyMake(obj.getId(), numOfMaterials, actionName));
+			return null;
+		}
+		return executeWithAmount(actionName, pc, obj, 1);
+	}
+
+	@Override
+	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
+		L1NpcInstance npc = (L1NpcInstance) obj;
+		L1NpcHtml result = null;
+		if (makeItems(pc, npc.getNpcTemplate().get_name(), amount)) {
+			if (_actionOnSucceed != null) {
+				result = _actionOnSucceed.execute(actionName, pc, obj, new byte[0]);
+			}
+		}
+		else {
+			if (_actionOnFail != null) {
+				result = _actionOnFail.execute(actionName, pc, obj, new byte[0]);
+			}
+		}
+		return result == null ? L1NpcHtml.HTML_CLOSE : result;
+	}
+
+	/**
+	 * 指定されたインベントリ内に、素材が何セットあるか数える
+	 */
+	private int countNumOfMaterials(L1PcInventory inv) {
+		int count = Integer.MAX_VALUE;
+		for (L1ObjectAmount<Integer> material : _materials) {
+			int numOfSet = inv.countItems(material.getObject()) / material.getAmount();
+			count = Math.min(count, numOfSet);
+		}
+		return count;
+	}
+
 	private boolean makeItems(L1PcInstance pc, String npcName, int amount) {
 		if (amount <= 0) {
 			return false;
@@ -138,45 +177,6 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * 指定されたインベントリ内に、素材が何セットあるか数える
-	 */
-	private int countNumOfMaterials(L1PcInventory inv) {
-		int count = Integer.MAX_VALUE;
-		for (L1ObjectAmount<Integer> material : _materials) {
-			int numOfSet = inv.countItems(material.getObject()) / material.getAmount();
-			count = Math.min(count, numOfSet);
-		}
-		return count;
-	}
-
-	@Override
-	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
-		int numOfMaterials = countNumOfMaterials(pc.getInventory());
-		if ((1 < numOfMaterials) && _isAmountInputable) {
-			pc.sendPackets(new S_HowManyMake(obj.getId(), numOfMaterials, actionName));
-			return null;
-		}
-		return executeWithAmount(actionName, pc, obj, 1);
-	}
-
-	@Override
-	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
-		L1NpcInstance npc = (L1NpcInstance) obj;
-		L1NpcHtml result = null;
-		if (makeItems(pc, npc.getNpcTemplate().get_name(), amount)) {
-			if (_actionOnSucceed != null) {
-				result = _actionOnSucceed.execute(actionName, pc, obj, new byte[0]);
-			}
-		}
-		else {
-			if (_actionOnFail != null) {
-				result = _actionOnFail.execute(actionName, pc, obj, new byte[0]);
-			}
-		}
-		return result == null ? L1NpcHtml.HTML_CLOSE : result;
 	}
 
 }

@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Wand_SummonMonster extends ItemExecutor {
 
-	private Wand_SummonMonster() {
-	}
-
 	public static ItemExecutor get() {
 		return new Wand_SummonMonster();
+	}
+
+	private Wand_SummonMonster() {
 	}
 
 	/**

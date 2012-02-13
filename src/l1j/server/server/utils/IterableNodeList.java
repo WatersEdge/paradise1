@@ -25,8 +25,6 @@ import org.w3c.dom.NodeList;
  */
 // 標準ライブラリに同じものが用意されているようなら置換してください。
 public class IterableNodeList implements Iterable<Node> {
-	private final NodeList _list;
-
 	private class MyIterator implements Iterator<Node> {
 		private int _idx = 0;
 
@@ -48,6 +46,8 @@ public class IterableNodeList implements Iterable<Node> {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	private final NodeList _list;
 
 	public IterableNodeList(NodeList list) {
 		_list = list;

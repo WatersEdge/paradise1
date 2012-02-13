@@ -48,34 +48,6 @@ public class MpRegeneration extends TimerTask {
 		_pc = pc;
 	}
 
-	public void setState(int state) {
-		if (_curPoint < state) {
-			return;
-		}
-
-		_curPoint = state;
-	}
-
-	@Override
-	public void run() {
-		try {
-			if (_pc.isDead()) {
-				return;
-			}
-
-			_regenPoint += _curPoint;
-			_curPoint = 4;
-
-			if (64 <= _regenPoint) {
-				_regenPoint = 0;
-				regenMp();
-			}
-		}
-		catch (Throwable e) {
-			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
-		}
-	}
-
 	public void regenMp() {
 		int baseMpr = 1;
 		int wis = _pc.getWis();
@@ -127,6 +99,34 @@ public class MpRegeneration extends TimerTask {
 			newMp = 0;
 		}
 		_pc.setCurrentMp(newMp);
+	}
+
+	@Override
+	public void run() {
+		try {
+			if (_pc.isDead()) {
+				return;
+			}
+
+			_regenPoint += _curPoint;
+			_curPoint = 4;
+
+			if (64 <= _regenPoint) {
+				_regenPoint = 0;
+				regenMp();
+			}
+		}
+		catch (Throwable e) {
+			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
+		}
+	}
+
+	public void setState(int state) {
+		if (_curPoint < state) {
+			return;
+		}
+
+		_curPoint = state;
 	}
 
 	private boolean isOverWeight(L1PcInstance pc) {

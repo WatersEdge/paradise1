@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_BlessOfEva;
  */
 public class MermaidScales extends ItemExecutor {
 
-	private MermaidScales() {
-	}
-
 	public static ItemExecutor get() {
 		return new MermaidScales();
+	}
+
+	private MermaidScales() {
 	}
 
 	/**

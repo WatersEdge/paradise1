@@ -28,11 +28,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：禁言
  */
 public class L1ChatNG implements L1CommandExecutor {
-	private L1ChatNG() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1ChatNG();
+	}
+
+	private L1ChatNG() {
 	}
 
 	@Override

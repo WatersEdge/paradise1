@@ -32,11 +32,11 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class InnTable {
 
-	private static Logger _log = Logger.getLogger(InnTable.class.getName());
-
 	private static class Inn {
 		private final Map<Integer, L1Inn> _inn = Maps.newMap();
 	}
+
+	private static Logger _log = Logger.getLogger(InnTable.class.getName());
 
 	private static final Map<Integer, Inn> _dataMap = Maps.newMap();
 
@@ -51,6 +51,41 @@ public class InnTable {
 
 	private InnTable() {
 		load();
+	}
+
+	public L1Inn getTemplate(int npcid, int roomNumber) {
+		if (_dataMap.containsKey(npcid)) {
+			return _dataMap.get(npcid)._inn.get(roomNumber);
+		}
+		return null;
+	}
+
+	/**
+	 * 更新旅馆
+	 * 
+	 * @param inn
+	 */
+	public void updateInn(L1Inn inn) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE inn SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npcid=? and room_number=?");
+
+			pstm.setInt(1, inn.getKeyId());
+			pstm.setInt(2, inn.getLodgerId());
+			pstm.setBoolean(3, inn.isHall());
+			pstm.setTimestamp(4, inn.getDueTime());
+			pstm.setInt(5, inn.getInnNpcId());
+			pstm.setInt(6, inn.getRoomNumber());
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	private void load() {
@@ -95,40 +130,5 @@ public class InnTable {
 			SQLUtil.close(con);
 
 		}
-	}
-
-	/**
-	 * 更新旅馆
-	 * 
-	 * @param inn
-	 */
-	public void updateInn(L1Inn inn) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE inn SET key_id=?,lodger_id=?,hall=?,due_time=? WHERE npcid=? and room_number=?");
-
-			pstm.setInt(1, inn.getKeyId());
-			pstm.setInt(2, inn.getLodgerId());
-			pstm.setBoolean(3, inn.isHall());
-			pstm.setTimestamp(4, inn.getDueTime());
-			pstm.setInt(5, inn.getInnNpcId());
-			pstm.setInt(6, inn.getRoomNumber());
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public L1Inn getTemplate(int npcid, int roomNumber) {
-		if (_dataMap.containsKey(npcid)) {
-			return _dataMap.get(npcid)._inn.get(roomNumber);
-		}
-		return null;
 	}
 }

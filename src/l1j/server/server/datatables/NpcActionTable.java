@@ -44,46 +44,8 @@ public class NpcActionTable {
 
 	private static NpcActionTable _instance;
 
-	private final List<L1NpcAction> _actions = Lists.newList();
-
-	private final List<L1NpcAction> _talkActions = Lists.newList();
-
-	private List<L1NpcAction> loadAction(File file, String nodeName)
-
-	throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document doc = builder.parse(file);
-
-		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
-			return Lists.newList();
-		}
-		return L1NpcXmlParser.listActions(doc.getDocumentElement());
-	}
-
-	private void loadAction(File file) throws Exception {
-		_actions.addAll(loadAction(file, "NpcActionList"));
-	}
-
-	private void loadTalkAction(File file) throws Exception {
-		_talkActions.addAll(loadAction(file, "NpcTalkActionList"));
-	}
-
-	private void loadDirectoryActions(File dir) throws Exception {
-		for (String file : dir.list()) {
-			File f = new File(dir, file);
-			if (FileUtil.getExtension(f).equalsIgnoreCase("xml")) {
-				loadAction(f);
-				loadTalkAction(f);
-			}
-		}
-	}
-
-	private NpcActionTable() throws Exception {
-		File usersDir = new File("./data/xml/NpcActions/users/");
-		if (usersDir.exists()) {
-			loadDirectoryActions(usersDir);
-		}
-		loadDirectoryActions(new File("./data/xml/NpcActions/"));
+	public static NpcActionTable getInstance() {
+		return _instance;
 	}
 
 	public static void load() {
@@ -99,8 +61,25 @@ public class NpcActionTable {
 		}
 	}
 
-	public static NpcActionTable getInstance() {
-		return _instance;
+	private final List<L1NpcAction> _actions = Lists.newList();
+
+	private final List<L1NpcAction> _talkActions = Lists.newList();
+
+	private NpcActionTable() throws Exception {
+		File usersDir = new File("./data/xml/NpcActions/users/");
+		if (usersDir.exists()) {
+			loadDirectoryActions(usersDir);
+		}
+		loadDirectoryActions(new File("./data/xml/NpcActions/"));
+	}
+
+	public L1NpcAction get(L1PcInstance pc, L1Object obj) {
+		for (L1NpcAction action : _talkActions) {
+			if (action.acceptsRequest("", pc, obj)) {
+				return action;
+			}
+		}
+		return null;
 	}
 
 	public L1NpcAction get(String actionName, L1PcInstance pc, L1Object obj) {
@@ -112,12 +91,33 @@ public class NpcActionTable {
 		return null;
 	}
 
-	public L1NpcAction get(L1PcInstance pc, L1Object obj) {
-		for (L1NpcAction action : _talkActions) {
-			if (action.acceptsRequest("", pc, obj)) {
-				return action;
+	private void loadAction(File file) throws Exception {
+		_actions.addAll(loadAction(file, "NpcActionList"));
+	}
+
+	private List<L1NpcAction> loadAction(File file, String nodeName)
+
+	throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document doc = builder.parse(file);
+
+		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
+			return Lists.newList();
+		}
+		return L1NpcXmlParser.listActions(doc.getDocumentElement());
+	}
+
+	private void loadDirectoryActions(File dir) throws Exception {
+		for (String file : dir.list()) {
+			File f = new File(dir, file);
+			if (FileUtil.getExtension(f).equalsIgnoreCase("xml")) {
+				loadAction(f);
+				loadTalkAction(f);
 			}
 		}
-		return null;
+	}
+
+	private void loadTalkAction(File file) throws Exception {
+		_talkActions.addAll(loadAction(file, "NpcTalkActionList"));
 	}
 }

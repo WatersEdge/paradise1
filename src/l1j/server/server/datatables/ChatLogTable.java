@@ -37,24 +37,6 @@ public class ChatLogTable {
 	 */
 	private final boolean[] loggingConfig = new boolean[15];
 
-	private ChatLogTable() {
-		loadConfig();
-	}
-
-	/**
-	 * 加载配置
-	 */
-	private void loadConfig() {
-		loggingConfig[0] = Config.LOGGING_CHAT_NORMAL;
-		loggingConfig[1] = Config.LOGGING_CHAT_WHISPER;
-		loggingConfig[2] = Config.LOGGING_CHAT_SHOUT;
-		loggingConfig[3] = Config.LOGGING_CHAT_WORLD;
-		loggingConfig[4] = Config.LOGGING_CHAT_CLAN;
-		loggingConfig[11] = Config.LOGGING_CHAT_PARTY;
-		loggingConfig[13] = Config.LOGGING_CHAT_COMBINED;
-		loggingConfig[14] = Config.LOGGING_CHAT_CHAT_PARTY;
-	}
-
 	private static ChatLogTable _instance;
 
 	public static ChatLogTable getInstance() {
@@ -64,14 +46,8 @@ public class ChatLogTable {
 		return _instance;
 	}
 
-	/**
-	 * 记录目标
-	 * 
-	 * @param type
-	 * @return
-	 */
-	private boolean isLoggingTarget(int type) {
-		return loggingConfig[type];
+	private ChatLogTable() {
+		loadConfig();
 	}
 
 	/**
@@ -145,6 +121,30 @@ public class ChatLogTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
+	}
+
+	/**
+	 * 记录目标
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private boolean isLoggingTarget(int type) {
+		return loggingConfig[type];
+	}
+
+	/**
+	 * 加载配置
+	 */
+	private void loadConfig() {
+		loggingConfig[0] = Config.LOGGING_CHAT_NORMAL;
+		loggingConfig[1] = Config.LOGGING_CHAT_WHISPER;
+		loggingConfig[2] = Config.LOGGING_CHAT_SHOUT;
+		loggingConfig[3] = Config.LOGGING_CHAT_WORLD;
+		loggingConfig[4] = Config.LOGGING_CHAT_CLAN;
+		loggingConfig[11] = Config.LOGGING_CHAT_PARTY;
+		loggingConfig[13] = Config.LOGGING_CHAT_COMBINED;
+		loggingConfig[14] = Config.LOGGING_CHAT_CHAT_PARTY;
 	}
 
 }

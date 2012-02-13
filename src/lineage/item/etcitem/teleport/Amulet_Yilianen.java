@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Amulet_Yilianen extends ItemExecutor {
 
-	private Amulet_Yilianen() {
-	}
-
 	public static ItemExecutor get() {
 		return new Amulet_Yilianen();
+	}
+
+	private Amulet_Yilianen() {
 	}
 
 	/**

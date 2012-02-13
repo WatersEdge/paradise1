@@ -26,6 +26,13 @@ public class LoginController {
 
 	private static LoginController _instance;
 
+	public static LoginController getInstance() {
+		if (_instance == null) {
+			_instance = new LoginController();
+		}
+		return _instance;
+	}
+
 	private final Map<String, ClientThread> _accounts = Maps.newConcurrentMap();
 
 	/** 最大允许在线玩家 */
@@ -34,16 +41,14 @@ public class LoginController {
 	private LoginController() {
 	}
 
-	public static LoginController getInstance() {
-		if (_instance == null) {
-			_instance = new LoginController();
-		}
-		return _instance;
-	}
-
 	/** 取得所有账户 */
 	public ClientThread[] getAllAccounts() {
 		return _accounts.values().toArray(new ClientThread[_accounts.size()]);
+	}
+
+	/** 取得最大允许在线玩家 */
+	public int getMaxAllowedOnlinePlayers() {
+		return _maxAllowedOnlinePlayers;
 	}
 
 	/** 取得在线玩家数量 */
@@ -51,9 +56,30 @@ public class LoginController {
 		return _accounts.size();
 	}
 
-	/** 取得最大允许在线玩家 */
-	public int getMaxAllowedOnlinePlayers() {
-		return _maxAllowedOnlinePlayers;
+	/** 登陆 */
+	public synchronized void login(ClientThread client, Account account) throws GameServerFullException, AccountAlreadyLoginException {
+		if (!account.isValid()) {
+			// 密码验证未指定或不验证账户。
+			// 此代码只存在的错误检测。
+			throw new IllegalArgumentException("账户沒有通过验证");
+		}
+		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount()) && !account.isGameMaster()) {
+			throw new GameServerFullException();
+		}
+		if (_accounts.containsKey(account.getName())) {
+			kickClient(_accounts.remove(account.getName()));
+			throw new AccountAlreadyLoginException();
+		}
+
+		_accounts.put(account.getName(), client);
+	}
+
+	/** 登出 */
+	public synchronized boolean logout(ClientThread client) {
+		if (client.getAccountName() == null) {
+			return false;
+		}
+		return _accounts.remove(client.getAccountName()) != null;
 	}
 
 	/** 设置最大允许在线玩家 */
@@ -82,31 +108,5 @@ public class LoginController {
 				client.kick();
 			}
 		});
-	}
-
-	/** 登陆 */
-	public synchronized void login(ClientThread client, Account account) throws GameServerFullException, AccountAlreadyLoginException {
-		if (!account.isValid()) {
-			// 密码验证未指定或不验证账户。
-			// 此代码只存在的错误检测。
-			throw new IllegalArgumentException("账户沒有通过验证");
-		}
-		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount()) && !account.isGameMaster()) {
-			throw new GameServerFullException();
-		}
-		if (_accounts.containsKey(account.getName())) {
-			kickClient(_accounts.remove(account.getName()));
-			throw new AccountAlreadyLoginException();
-		}
-
-		_accounts.put(account.getName(), client);
-	}
-
-	/** 登出 */
-	public synchronized boolean logout(ClientThread client) {
-		if (client.getAccountName() == null) {
-			return false;
-		}
-		return _accounts.remove(client.getAccountName()) != null;
 	}
 }

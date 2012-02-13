@@ -39,20 +39,28 @@ public class PetTypeTable {
 
 	private static PetTypeTable _instance;
 
-	private final Map<Integer, L1PetType> _types = Maps.newMap();
-
-	private final Set<String> _defaultNames = new HashSet<String>();
+	public static PetTypeTable getInstance() {
+		return _instance;
+	}
 
 	public static void load() {
 		_instance = new PetTypeTable();
 	}
 
-	public static PetTypeTable getInstance() {
-		return _instance;
-	}
+	private final Map<Integer, L1PetType> _types = Maps.newMap();
+
+	private final Set<String> _defaultNames = new HashSet<String>();
 
 	private PetTypeTable() {
 		loadTypes();
+	}
+
+	public L1PetType get(int baseNpcId) {
+		return _types.get(baseNpcId);
+	}
+
+	public boolean isNameDefault(String name) {
+		return _defaultNames.contains(name.toLowerCase());
 	}
 
 	private void loadTypes() {
@@ -94,13 +102,5 @@ public class PetTypeTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	public L1PetType get(int baseNpcId) {
-		return _types.get(baseNpcId);
-	}
-
-	public boolean isNameDefault(String name) {
-		return _defaultNames.contains(name.toLowerCase());
 	}
 }

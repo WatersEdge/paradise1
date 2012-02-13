@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_Kent extends ItemExecutor {
 
-	private Hitlist_Kent() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_Kent();
+	}
+
+	private Hitlist_Kent() {
 	}
 
 	/**

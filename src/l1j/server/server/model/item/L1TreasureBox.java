@@ -44,7 +44,41 @@ import l1j.server.server.utils.collections.Maps;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class L1TreasureBox {
 
-	private static Logger _log = Logger.getLogger(L1TreasureBox.class.getName());
+	@XmlAccessorType(XmlAccessType.FIELD)
+	private static class Item {
+		@XmlAttribute(name = "ItemId")
+		private int _itemId;
+
+		@XmlAttribute(name = "Count")
+		private int _count;
+
+		private int _chance;
+
+		@XmlAttribute(name = "Enchant")
+		private int _enchant;
+
+		public double getChance() {
+			return _chance;
+		}
+
+		public int getCount() {
+			return _count;
+		}
+
+		public int getEnchant() {
+			return _enchant;
+		}
+
+		public int getItemId() {
+			return _itemId;
+		}
+
+		@SuppressWarnings("unused")
+		@XmlAttribute(name = "Chance")
+		private void setChance(double chance) {
+			_chance = (int) (chance * 10000);
+		}
+	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "TreasureBoxList")
@@ -58,45 +92,11 @@ public class L1TreasureBox {
 		}
 	}
 
-	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class Item {
-		@XmlAttribute(name = "ItemId")
-		private int _itemId;
-
-		@XmlAttribute(name = "Count")
-		private int _count;
-
-		private int _chance;
-
-		@SuppressWarnings("unused")
-		@XmlAttribute(name = "Chance")
-		private void setChance(double chance) {
-			_chance = (int) (chance * 10000);
-		}
-
-		public int getItemId() {
-			return _itemId;
-		}
-
-		public int getCount() {
-			return _count;
-		}
-
-		public double getChance() {
-			return _chance;
-		}
-
-		@XmlAttribute(name = "Enchant")
-		private int _enchant;
-
-		public int getEnchant() {
-			return _enchant;
-		}
-	}
-
 	private static enum TYPE {
 		RANDOM, SPECIFIC
 	}
+
+	private static Logger _log = Logger.getLogger(L1TreasureBox.class.getName());
 
 	private static final String PATH = "./data/xml/Item/TreasureBox.xml";
 
@@ -111,48 +111,6 @@ public class L1TreasureBox {
 	 */
 	public static L1TreasureBox get(int id) {
 		return _dataMap.get(id);
-	}
-
-	@XmlAttribute(name = "ItemId")
-	private int _boxId;
-
-	@XmlAttribute(name = "Type")
-	private TYPE _type;
-
-	private int getBoxId() {
-		return _boxId;
-	}
-
-	private TYPE getType() {
-		return _type;
-	}
-
-	@XmlElement(name = "Item")
-	private CopyOnWriteArrayList<Item> _items;
-
-	private List<Item> getItems() {
-		return _items;
-	}
-
-	/** 几率总和 */
-	private int _totalChance;
-
-	/** 获得几率总和 */
-	private int getTotalChance() {
-		return _totalChance;
-	}
-
-	private void init() {
-		for (Item each : getItems()) {
-			_totalChance += each.getChance();
-			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
-				getItems().remove(each);
-				_log.warning("对象 ID : " + each.getItemId() + " 无法找到对应的Template。");
-			}
-		}
-		if ((getTotalChance() != 0) && (getTotalChance() != 1000000)) {
-			_log.warning("ID " + getBoxId() + " 的机率总合不等于100%。");
-		}
 	}
 
 	public static void load() {
@@ -177,6 +135,32 @@ public class L1TreasureBox {
 		}
 		System.out.println("完成!\t耗时: " + timer.get() + "\t毫秒");
 	}
+
+	private static void storeItem(L1PcInstance pc, L1ItemInstance item) {
+		L1Inventory inventory;
+
+		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
+			inventory = pc.getInventory();
+		}
+		else {
+			// 如果在这个过程中取消不会掉在地上（不正防止）
+			inventory = L1World.getInstance().getInventory(pc.getLocation());
+		}
+		inventory.storeItem(item);
+		pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
+	}
+
+	@XmlAttribute(name = "ItemId")
+	private int _boxId;
+
+	@XmlAttribute(name = "Type")
+	private TYPE _type;
+
+	@XmlElement(name = "Item")
+	private CopyOnWriteArrayList<Item> _items;
+
+	/** 几率总和 */
+	private int _totalChance;
 
 	/**
 	 * TreasureBoxを開けるPCにアイテムを入手させる。PCがアイテムを持ちきれなかった場合は アイテムは地面に落ちる。
@@ -252,17 +236,33 @@ public class L1TreasureBox {
 		}
 	}
 
-	private static void storeItem(L1PcInstance pc, L1ItemInstance item) {
-		L1Inventory inventory;
+	private int getBoxId() {
+		return _boxId;
+	}
 
-		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
-			inventory = pc.getInventory();
+	private List<Item> getItems() {
+		return _items;
+	}
+
+	/** 获得几率总和 */
+	private int getTotalChance() {
+		return _totalChance;
+	}
+
+	private TYPE getType() {
+		return _type;
+	}
+
+	private void init() {
+		for (Item each : getItems()) {
+			_totalChance += each.getChance();
+			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
+				getItems().remove(each);
+				_log.warning("对象 ID : " + each.getItemId() + " 无法找到对应的Template。");
+			}
 		}
-		else {
-			// 如果在这个过程中取消不会掉在地上（不正防止）
-			inventory = L1World.getInstance().getInventory(pc.getLocation());
+		if ((getTotalChance() != 0) && (getTotalChance() != 1000000)) {
+			_log.warning("ID " + getBoxId() + " 的机率总合不等于100%。");
 		}
-		inventory.storeItem(item);
-		pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
 	}
 }

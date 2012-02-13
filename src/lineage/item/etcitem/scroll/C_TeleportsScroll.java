@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class C_TeleportsScroll extends ItemExecutor {
 
-	private C_TeleportsScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new C_TeleportsScroll();
+	}
+
+	private C_TeleportsScroll() {
 	}
 
 	/**

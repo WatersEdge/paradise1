@@ -20,11 +20,9 @@ package l1j.server.server;
  */
 public class ActionCodes {
 
-	public ActionCodes() {
-	}
-
 	/** 出现动作 */
 	public static final int ACTION_Appear = 4;
+
 	/** 隐藏动作 */
 	public static final int ACTION_Hide = 11;
 	/** 安塔瑞斯隐藏动作 */
@@ -185,5 +183,7 @@ public class ActionCodes {
 	public static final int ACTION_Shop = 70;
 	/** 钓鱼动作 */
 	public static final int ACTION_Fishing = 71;
+	public ActionCodes() {
+	}
 
 }

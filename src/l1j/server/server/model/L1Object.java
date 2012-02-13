@@ -30,6 +30,43 @@ public class L1Object implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private L1Location _loc = new L1Location();
+
+	private int _id = 0;
+
+	/**
+	 * 取得对象在世界中唯一的ID
+	 * 
+	 * @return 唯一的ID
+	 */
+	public int getId() {
+		return _id;
+	}
+
+	/**
+	 * 取得与另一个对象间的直线距离。
+	 */
+	public double getLineDistance(L1Object obj) {
+		return this.getLocation().getLineDistance(obj.getLocation());
+	}
+
+	/**
+	 * 对象存在在地图上的L1Location
+	 * 
+	 * @return L1Location的座标对应
+	 */
+	public L1Location getLocation() {
+		return _loc;
+	}
+
+	/**
+	 * 取得对象所存在的地图
+	 * 
+	 */
+	public L1Map getMap() {
+		return _loc.getMap();
+	}
+
 	/**
 	 * 取得对象所存在的地图ID
 	 * 
@@ -40,21 +77,94 @@ public class L1Object implements Serializable {
 	}
 
 	/**
-	 * 设定对象所存在的地图ID
-	 * 
-	 * @param mapId
-	 *            地图ID
+	 * 取得与另一个对象间的X轴+Y轴的距离。
 	 */
-	public void setMap(short mapId) {
-		_loc.setMap(L1WorldMap.getInstance().getMap(mapId));
+	public int getTileDistance(L1Object obj) {
+		return this.getLocation().getTileDistance(obj.getLocation());
 	}
 
 	/**
-	 * 取得对象所存在的地图
-	 * 
+	 * 取得与另一个对象间的距离X轴或Y轴较大的那一个。
 	 */
-	public L1Map getMap() {
-		return _loc.getMap();
+	public int getTileLineDistance(L1Object obj) {
+		return this.getLocation().getTileLineDistance(obj.getLocation());
+	}
+
+	/**
+	 * 取得对象在地图上的X轴值
+	 * 
+	 * @return 座标X轴值
+	 */
+	public int getX() {
+		return _loc.getX();
+	}
+
+	/**
+	 * 取得对象在地图上的Y轴值
+	 * 
+	 * @return 座标Y轴值
+	 */
+	public int getY() {
+		return _loc.getY();
+	}
+
+	/**
+	 * 对象对玩家采取的行动
+	 * 
+	 * @param actionFrom
+	 *            要采取行动的玩家目标
+	 */
+	public void onAction(L1PcInstance actionFrom) {
+	}
+
+	public void onAction(L1PcInstance attacker, int skillId) {
+
+	}
+
+	/**
+	 * 对象的荧幕范围进入玩家
+	 * 
+	 * @param perceivedFrom
+	 *            进入荧幕范围的玩家
+	 */
+	public void onPerceive(L1PcInstance perceivedFrom) {
+	}
+
+	/**
+	 * 与对象交谈的玩家
+	 * 
+	 * @param talkFrom
+	 *            交谈的玩家
+	 */
+	public void onTalkAction(L1PcInstance talkFrom) {
+	}
+
+	/**
+	 * 设定对象在世界中唯一的ID
+	 * 
+	 * @param id
+	 *            唯一的ID
+	 */
+	public void setId(int id) {
+		_id = id;
+	}
+
+	/**
+	 * 设置对象存在在地图上的L1Location
+	 */
+	public void setLocation(int x, int y, int mapid) {
+		_loc.setX(x);
+		_loc.setY(y);
+		_loc.setMap(mapid);
+	}
+
+	/**
+	 * 设置对象存在在地图上的L1Location
+	 */
+	public void setLocation(L1Location loc) {
+		_loc.setX(loc.getX());
+		_loc.setY(loc.getY());
+		_loc.setMap(loc.getMapId());
 	}
 
 	/**
@@ -71,31 +181,13 @@ public class L1Object implements Serializable {
 	}
 
 	/**
-	 * 取得对象在世界中唯一的ID
+	 * 设定对象所存在的地图ID
 	 * 
-	 * @return 唯一的ID
+	 * @param mapId
+	 *            地图ID
 	 */
-	public int getId() {
-		return _id;
-	}
-
-	/**
-	 * 设定对象在世界中唯一的ID
-	 * 
-	 * @param id
-	 *            唯一的ID
-	 */
-	public void setId(int id) {
-		_id = id;
-	}
-
-	/**
-	 * 取得对象在地图上的X轴值
-	 * 
-	 * @return 座标X轴值
-	 */
-	public int getX() {
-		return _loc.getX();
+	public void setMap(short mapId) {
+		_loc.setMap(L1WorldMap.getInstance().getMap(mapId));
 	}
 
 	/**
@@ -109,15 +201,6 @@ public class L1Object implements Serializable {
 	}
 
 	/**
-	 * 取得对象在地图上的Y轴值
-	 * 
-	 * @return 座标Y轴值
-	 */
-	public int getY() {
-		return _loc.getY();
-	}
-
-	/**
 	 * 设定对象在地图上的Y轴值
 	 * 
 	 * @param y
@@ -125,88 +208,5 @@ public class L1Object implements Serializable {
 	 */
 	public void setY(int y) {
 		_loc.setY(y);
-	}
-
-	private L1Location _loc = new L1Location();
-
-	/**
-	 * 对象存在在地图上的L1Location
-	 * 
-	 * @return L1Location的座标对应
-	 */
-	public L1Location getLocation() {
-		return _loc;
-	}
-
-	/**
-	 * 设置对象存在在地图上的L1Location
-	 */
-	public void setLocation(L1Location loc) {
-		_loc.setX(loc.getX());
-		_loc.setY(loc.getY());
-		_loc.setMap(loc.getMapId());
-	}
-
-	/**
-	 * 设置对象存在在地图上的L1Location
-	 */
-	public void setLocation(int x, int y, int mapid) {
-		_loc.setX(x);
-		_loc.setY(y);
-		_loc.setMap(mapid);
-	}
-
-	/**
-	 * 取得与另一个对象间的直线距离。
-	 */
-	public double getLineDistance(L1Object obj) {
-		return this.getLocation().getLineDistance(obj.getLocation());
-	}
-
-	/**
-	 * 取得与另一个对象间的距离X轴或Y轴较大的那一个。
-	 */
-	public int getTileLineDistance(L1Object obj) {
-		return this.getLocation().getTileLineDistance(obj.getLocation());
-	}
-
-	/**
-	 * 取得与另一个对象间的X轴+Y轴的距离。
-	 */
-	public int getTileDistance(L1Object obj) {
-		return this.getLocation().getTileDistance(obj.getLocation());
-	}
-
-	/**
-	 * 对象的荧幕范围进入玩家
-	 * 
-	 * @param perceivedFrom
-	 *            进入荧幕范围的玩家
-	 */
-	public void onPerceive(L1PcInstance perceivedFrom) {
-	}
-
-	/**
-	 * 对象对玩家采取的行动
-	 * 
-	 * @param actionFrom
-	 *            要采取行动的玩家目标
-	 */
-	public void onAction(L1PcInstance actionFrom) {
-	}
-
-	/**
-	 * 与对象交谈的玩家
-	 * 
-	 * @param talkFrom
-	 *            交谈的玩家
-	 */
-	public void onTalkAction(L1PcInstance talkFrom) {
-	}
-
-	private int _id = 0;
-
-	public void onAction(L1PcInstance attacker, int skillId) {
-
 	}
 }

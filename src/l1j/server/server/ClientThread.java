@@ -52,8 +52,211 @@ import l1j.server.server.utils.SystemUtil;
  */
 public class ClientThread implements Runnable, PacketOutput {
 
+	// 定时监控客户端
+	class ClientThreadObserver extends TimerTask {
+		private int _checkct = 1;
+
+		private final int _disconnectTimeMillis;
+
+		public ClientThreadObserver(int disconnectTimeMillis) {
+			_disconnectTimeMillis = disconnectTimeMillis;
+		}
+
+		/** 接收的数据包 */
+		public void packetReceived() {
+			_checkct++;
+		}
+
+		@Override
+		public void run() {
+			try {
+				if (_csocket == null) {
+					cancel();
+					return;
+				}
+
+				if (_checkct > 0) {
+					_checkct = 0;
+					return;
+				}
+
+				if (_activeChar == null // 选角色之前
+						|| _activeChar != null && !_activeChar.isPrivateShop()) { // 正在个人商店
+					kick();
+					_log.warning("一定时间没有收到封包回应，所以强制切断 (" + _hostname + ") 的连线。");
+					Account.online(getAccount(), false);
+					cancel();
+					return;
+				}
+			}
+			catch (Exception e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				cancel();
+			}
+		}
+
+		public void start() {
+			_observerTimer.scheduleAtFixedRate(ClientThreadObserver.this, 0, _disconnectTimeMillis);
+		}
+	}
+
+	// 帐号处理的程序
+	class HcPacket implements Runnable {
+		private final Queue<byte[]> _queue;
+
+		private final PacketHandler _handler;
+
+		public HcPacket() {
+			_queue = new ConcurrentLinkedQueue<byte[]>();
+			_handler = new PacketHandler(ClientThread.this);
+		}
+
+		public HcPacket(int capacity) {
+			_queue = new LinkedBlockingQueue<byte[]>(capacity);
+			_handler = new PacketHandler(ClientThread.this);
+		}
+
+		public void requestWork(byte data[]) {
+			_queue.offer(data);
+		}
+
+		@Override
+		public void run() {
+			byte[] data;
+			while (_csocket != null) {
+				data = _queue.poll();
+				if (data != null) {
+					try {
+						_handler.handlePacket(data, _activeChar);
+					}
+					catch (Exception e) {
+					}
+				}
+				else {
+					try {
+						Thread.sleep(10);
+					}
+					catch (Exception e) {
+					}
+				}
+			}
+			return;
+		}
+	}
+
 	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(ClientThread.class.getName());
+
+	/** 离开游戏 */
+	public static void quitGame(L1PcInstance pc) {
+		// 如果死掉回到城中，设定饱食度
+		if (pc.isDead()) {
+			try {
+				Thread.sleep(2000);// 暂停该执行续，优先权让给expmonitor
+				int[] loc = Getback.GetBack_Location(pc, true);
+				pc.setX(loc[0]);
+				pc.setY(loc[1]);
+				pc.setMap((short) loc[2]);
+				pc.setCurrentHp(pc.getLevel());
+				pc.set_food(40);
+			}
+			catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 终止交易
+		if (pc.getTradeID() != 0) { // 交易中
+			L1Trade trade = new L1Trade();
+			trade.TradeCancel(pc);
+		}
+
+		// 终止决斗
+		if (pc.getFightId() != 0) {
+			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
+			pc.setFightId(0);
+			if (fightPc != null) {
+				fightPc.setFightId(0);
+				fightPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
+			}
+		}
+
+		// 离开组队
+		if (pc.isInParty()) { // 如果有组队
+			pc.getParty().leaveMember(pc);
+		}
+
+		// TODO: 离开聊天组队(?)
+		if (pc.isInChatParty()) { // 如果在聊天组队中(?)
+			pc.getChatParty().leaveMember(pc);
+		}
+
+		// 移除世界地图上的宠物
+		// 变更召唤怪物的名称
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) petNpc;
+				// 停止饱食度计时
+				pet.stopFoodTimer(pet);
+				pet.dropItem();
+				pc.getPetList().remove(pet.getId());
+				pet.deleteMe();
+			}
+			else if (petNpc instanceof L1SummonInstance) {
+				L1SummonInstance summon = (L1SummonInstance) petNpc;
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
+					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc, false));
+				}
+			}
+		}
+
+		// 移除世界地图上的魔法娃娃
+		for (L1DollInstance doll : pc.getDollList().values())
+			doll.deleteDoll();
+
+		// 重新建立跟随者
+		for (L1FollowerInstance follower : pc.getFollowerList().values()) {
+			follower.setParalyzed(true);
+			follower.spawn(follower.getNpcTemplate().get_npcId(), follower.getX(), follower.getY(), follower.getHeading(), follower.getMapId());
+			follower.deleteMe();
+		}
+
+		// 删除屠龙副本此玩家纪录
+		if (pc.getPortalNumber() != -1) {
+			L1DragonSlayer.getInstance().removePlayer(pc, pc.getPortalNumber());
+		}
+
+		// 储存魔法状态
+		CharBuffTable.DeleteBuff(pc);
+		CharBuffTable.SaveBuff(pc);
+		pc.clearSkillEffectTimer();
+		l1j.server.server.model.game.L1PolyRace.getInstance().checkLeaveGame(pc);
+
+		// 停止玩家的侦测
+		pc.stopEtcMonitor();
+
+		// 设定线上状态为下线
+		pc.setOnlineStatus(0);
+
+		// 设定帐号为下线
+		// Account account = Account.load(pc.getAccountName());
+		// Account.online(account, false);
+
+		// 设定帐号的角色为下线
+		Account account = Account.load(pc.getAccountName());
+		Account.OnlineStatus(account, false);
+
+		try {
+			pc.save();
+			pc.saveInventory();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+	}
 
 	private InputStream _in;
 
@@ -81,11 +284,25 @@ public class ClientThread implements Runnable, PacketOutput {
 	private static final byte[] FIRST_PACKET = { // 3.5C Taiwan Server
 	(byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f, (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08, (byte) 0x00 };
 
-	/**
-	 * for Test
-	 */
-	protected ClientThread() {
-	}
+	// TODO: 翻译
+	// ClientThreadによる一定间隔自动セーブを制限する为のフラグ（true:制限 false:制限无し）
+	// 现在はC_LoginToServerが实行された际にfalseとなり、
+	// C_NewCharSelectが实行された际にtrueとなる
+	private boolean _charRestart = true;
+
+	private long _lastSavedTime = System.currentTimeMillis();
+
+	private long _lastSavedTime_inventory = System.currentTimeMillis();
+
+	private Cipher _cipher;
+
+	private int _kick = 0;
+
+	private static final int M_CAPACITY = 3; // 一边移动的最大封包量
+
+	private static final int H_CAPACITY = 2;// 一方接受的最高限额所需的行动
+
+	private static Timer _observerTimer = new Timer();
 
 	public ClientThread(Socket socket) throws IOException {
 		_csocket = socket;
@@ -103,9 +320,38 @@ public class ClientThread implements Runnable, PacketOutput {
 		_handler = new PacketHandler(this);
 	}
 
-	/** 取得 IP */
-	public String getIp() {
-		return _ip;
+	/**
+	 * for Test
+	 */
+	protected ClientThread() {
+	}
+
+	/** 角色重新开始 */
+	public void CharReStart(boolean flag) {
+		_charRestart = flag;
+	}
+
+	/** 关闭 */
+	public void close() throws IOException {
+		_csocket.close();
+	}
+
+	/** 取得账号 */
+	public Account getAccount() {
+		return _account;
+	}
+
+	/** 取得帐号名称 */
+	public String getAccountName() {
+		if (_account == null) {
+			return null;
+		}
+		return _account.getName();
+	}
+
+	/** 取得在线角色 */
+	public L1PcInstance getActiveChar() {
+		return _activeChar;
 	}
 
 	/** 取得主机名 */
@@ -113,76 +359,16 @@ public class ClientThread implements Runnable, PacketOutput {
 		return _hostname;
 	}
 
-	// TODO: 翻译
-	// ClientThreadによる一定间隔自动セーブを制限する为のフラグ（true:制限 false:制限无し）
-	// 现在はC_LoginToServerが实行された际にfalseとなり、
-	// C_NewCharSelectが实行された际にtrueとなる
-	private boolean _charRestart = true;
-
-	/** 角色重新开始 */
-	public void CharReStart(boolean flag) {
-		_charRestart = flag;
+	/** 取得 IP */
+	public String getIp() {
+		return _ip;
 	}
 
-	/** 读取数据包 */
-	private byte[] readPacket() throws Exception {
-		try {
-			int hiByte = _in.read();
-			int loByte = _in.read();
-			if (loByte < 0) {
-				throw new RuntimeException();
-			}
-			int dataLength = (loByte * 256 + hiByte) - 2;
-
-			byte data[] = new byte[dataLength];
-
-			int readSize = 0;
-
-			for (int i = 0; i != -1 && readSize < dataLength; readSize += i) {
-				i = _in.read(data, readSize, dataLength - readSize);
-			}
-
-			if (readSize != dataLength) {
-				_log.warning("不完整的数据包发送到服务器，关闭连接。");
-				throw new RuntimeException();
-			}
-
-			return _cipher.decrypt(data);
-		}
-		catch (IOException e) {
-			throw e;
-		}
-	}
-
-	private long _lastSavedTime = System.currentTimeMillis();
-
-	private long _lastSavedTime_inventory = System.currentTimeMillis();
-
-	private Cipher _cipher;
-
-	/** 做自动保存 */
-	private void doAutoSave() throws Exception {
-		if (_activeChar == null || _charRestart) {
-			return;
-		}
-		try {
-			// 自动储存角色资料
-			if (Config.AUTOSAVE_INTERVAL * 1000 < System.currentTimeMillis() - _lastSavedTime) {
-				_activeChar.save();
-				_lastSavedTime = System.currentTimeMillis();
-			}
-
-			// 自动储存身上道具资料
-			if (Config.AUTOSAVE_INTERVAL_INVENTORY * 1000 < System.currentTimeMillis() - _lastSavedTime_inventory) {
-				_activeChar.saveInventory();
-				_lastSavedTime_inventory = System.currentTimeMillis();
-			}
-		}
-		catch (Exception e) {
-			_log.warning("客户端自动保存失败。");
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			throw e;
-		}
+	public void kick() {
+		Account.online(getAccount(), false);
+		sendPacket(new S_Disconnect());
+		_kick = 1;
+		StreamUtil.close(_out, _in);
 	}
 
 	@Override
@@ -327,113 +513,6 @@ public class ClientThread implements Runnable, PacketOutput {
 		return;
 	}
 
-	private int _kick = 0;
-
-	public void kick() {
-		Account.online(getAccount(), false);
-		sendPacket(new S_Disconnect());
-		_kick = 1;
-		StreamUtil.close(_out, _in);
-	}
-
-	private static final int M_CAPACITY = 3; // 一边移动的最大封包量
-
-	private static final int H_CAPACITY = 2;// 一方接受的最高限额所需的行动
-
-	// 帐号处理的程序
-	class HcPacket implements Runnable {
-		private final Queue<byte[]> _queue;
-
-		private final PacketHandler _handler;
-
-		public HcPacket() {
-			_queue = new ConcurrentLinkedQueue<byte[]>();
-			_handler = new PacketHandler(ClientThread.this);
-		}
-
-		public HcPacket(int capacity) {
-			_queue = new LinkedBlockingQueue<byte[]>(capacity);
-			_handler = new PacketHandler(ClientThread.this);
-		}
-
-		public void requestWork(byte data[]) {
-			_queue.offer(data);
-		}
-
-		@Override
-		public void run() {
-			byte[] data;
-			while (_csocket != null) {
-				data = _queue.poll();
-				if (data != null) {
-					try {
-						_handler.handlePacket(data, _activeChar);
-					}
-					catch (Exception e) {
-					}
-				}
-				else {
-					try {
-						Thread.sleep(10);
-					}
-					catch (Exception e) {
-					}
-				}
-			}
-			return;
-		}
-	}
-
-	private static Timer _observerTimer = new Timer();
-
-	// 定时监控客户端
-	class ClientThreadObserver extends TimerTask {
-		private int _checkct = 1;
-
-		private final int _disconnectTimeMillis;
-
-		public ClientThreadObserver(int disconnectTimeMillis) {
-			_disconnectTimeMillis = disconnectTimeMillis;
-		}
-
-		public void start() {
-			_observerTimer.scheduleAtFixedRate(ClientThreadObserver.this, 0, _disconnectTimeMillis);
-		}
-
-		@Override
-		public void run() {
-			try {
-				if (_csocket == null) {
-					cancel();
-					return;
-				}
-
-				if (_checkct > 0) {
-					_checkct = 0;
-					return;
-				}
-
-				if (_activeChar == null // 选角色之前
-						|| _activeChar != null && !_activeChar.isPrivateShop()) { // 正在个人商店
-					kick();
-					_log.warning("一定时间没有收到封包回应，所以强制切断 (" + _hostname + ") 的连线。");
-					Account.online(getAccount(), false);
-					cancel();
-					return;
-				}
-			}
-			catch (Exception e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				cancel();
-			}
-		}
-
-		/** 接收的数据包 */
-		public void packetReceived() {
-			_checkct++;
-		}
-	}
-
 	@Override
 	/** 发送数据包 */
 	public void sendPacket(ServerBasePacket packet) {
@@ -454,9 +533,9 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 	}
 
-	/** 关闭 */
-	public void close() throws IOException {
-		_csocket.close();
+	/** 设置账号 */
+	public void setAccount(Account account) {
+		_account = account;
 	}
 
 	/** 设置在线角色 */
@@ -464,137 +543,58 @@ public class ClientThread implements Runnable, PacketOutput {
 		_activeChar = pc;
 	}
 
-	/** 取得在线角色 */
-	public L1PcInstance getActiveChar() {
-		return _activeChar;
-	}
-
-	/** 设置账号 */
-	public void setAccount(Account account) {
-		_account = account;
-	}
-
-	/** 取得账号 */
-	public Account getAccount() {
-		return _account;
-	}
-
-	/** 取得帐号名称 */
-	public String getAccountName() {
-		if (_account == null) {
-			return null;
+	/** 做自动保存 */
+	private void doAutoSave() throws Exception {
+		if (_activeChar == null || _charRestart) {
+			return;
 		}
-		return _account.getName();
-	}
-
-	/** 离开游戏 */
-	public static void quitGame(L1PcInstance pc) {
-		// 如果死掉回到城中，设定饱食度
-		if (pc.isDead()) {
-			try {
-				Thread.sleep(2000);// 暂停该执行续，优先权让给expmonitor
-				int[] loc = Getback.GetBack_Location(pc, true);
-				pc.setX(loc[0]);
-				pc.setY(loc[1]);
-				pc.setMap((short) loc[2]);
-				pc.setCurrentHp(pc.getLevel());
-				pc.set_food(40);
-			}
-			catch (InterruptedException ie) {
-				ie.printStackTrace();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		// 终止交易
-		if (pc.getTradeID() != 0) { // 交易中
-			L1Trade trade = new L1Trade();
-			trade.TradeCancel(pc);
-		}
-
-		// 终止决斗
-		if (pc.getFightId() != 0) {
-			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
-			pc.setFightId(0);
-			if (fightPc != null) {
-				fightPc.setFightId(0);
-				fightPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
-			}
-		}
-
-		// 离开组队
-		if (pc.isInParty()) { // 如果有组队
-			pc.getParty().leaveMember(pc);
-		}
-
-		// TODO: 离开聊天组队(?)
-		if (pc.isInChatParty()) { // 如果在聊天组队中(?)
-			pc.getChatParty().leaveMember(pc);
-		}
-
-		// 移除世界地图上的宠物
-		// 变更召唤怪物的名称
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
-			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
-				// 停止饱食度计时
-				pet.stopFoodTimer(pet);
-				pet.dropItem();
-				pc.getPetList().remove(pet.getId());
-				pet.deleteMe();
-			}
-			else if (petNpc instanceof L1SummonInstance) {
-				L1SummonInstance summon = (L1SummonInstance) petNpc;
-				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
-					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc, false));
-				}
-			}
-		}
-
-		// 移除世界地图上的魔法娃娃
-		for (L1DollInstance doll : pc.getDollList().values())
-			doll.deleteDoll();
-
-		// 重新建立跟随者
-		for (L1FollowerInstance follower : pc.getFollowerList().values()) {
-			follower.setParalyzed(true);
-			follower.spawn(follower.getNpcTemplate().get_npcId(), follower.getX(), follower.getY(), follower.getHeading(), follower.getMapId());
-			follower.deleteMe();
-		}
-
-		// 删除屠龙副本此玩家纪录
-		if (pc.getPortalNumber() != -1) {
-			L1DragonSlayer.getInstance().removePlayer(pc, pc.getPortalNumber());
-		}
-
-		// 储存魔法状态
-		CharBuffTable.DeleteBuff(pc);
-		CharBuffTable.SaveBuff(pc);
-		pc.clearSkillEffectTimer();
-		l1j.server.server.model.game.L1PolyRace.getInstance().checkLeaveGame(pc);
-
-		// 停止玩家的侦测
-		pc.stopEtcMonitor();
-
-		// 设定线上状态为下线
-		pc.setOnlineStatus(0);
-
-		// 设定帐号为下线
-		// Account account = Account.load(pc.getAccountName());
-		// Account.online(account, false);
-
-		// 设定帐号的角色为下线
-		Account account = Account.load(pc.getAccountName());
-		Account.OnlineStatus(account, false);
-
 		try {
-			pc.save();
-			pc.saveInventory();
+			// 自动储存角色资料
+			if (Config.AUTOSAVE_INTERVAL * 1000 < System.currentTimeMillis() - _lastSavedTime) {
+				_activeChar.save();
+				_lastSavedTime = System.currentTimeMillis();
+			}
+
+			// 自动储存身上道具资料
+			if (Config.AUTOSAVE_INTERVAL_INVENTORY * 1000 < System.currentTimeMillis() - _lastSavedTime_inventory) {
+				_activeChar.saveInventory();
+				_lastSavedTime_inventory = System.currentTimeMillis();
+			}
 		}
 		catch (Exception e) {
+			_log.warning("客户端自动保存失败。");
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw e;
+		}
+	}
+
+	/** 读取数据包 */
+	private byte[] readPacket() throws Exception {
+		try {
+			int hiByte = _in.read();
+			int loByte = _in.read();
+			if (loByte < 0) {
+				throw new RuntimeException();
+			}
+			int dataLength = (loByte * 256 + hiByte) - 2;
+
+			byte data[] = new byte[dataLength];
+
+			int readSize = 0;
+
+			for (int i = 0; i != -1 && readSize < dataLength; readSize += i) {
+				i = _in.read(data, readSize, dataLength - readSize);
+			}
+
+			if (readSize != dataLength) {
+				_log.warning("不完整的数据包发送到服务器，关闭连接。");
+				throw new RuntimeException();
+			}
+
+			return _cipher.decrypt(data);
+		}
+		catch (IOException e) {
+			throw e;
 		}
 	}
 }

@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpeedPotion_2_ElfBrave;
  */
 public class B_WizardBiscuits extends ItemExecutor {
 
-	private B_WizardBiscuits() {
-	}
-
 	public static ItemExecutor get() {
 		return new B_WizardBiscuits();
+	}
+
+	private B_WizardBiscuits() {
 	}
 
 	/**

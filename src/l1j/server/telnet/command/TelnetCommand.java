@@ -38,22 +38,6 @@ public interface TelnetCommand {
 	TelnetCommandResult execute(String args);
 }
 
-class EchoCommand implements TelnetCommand {
-	@Override
-	public TelnetCommandResult execute(String args) {
-		return new TelnetCommandResult(CMD_OK, args);
-	}
-}
-
-class PlayerIdCommand implements TelnetCommand {
-	@Override
-	public TelnetCommandResult execute(String args) {
-		L1PcInstance pc = L1World.getInstance().getPlayer(args);
-		String result = pc == null ? "0" : String.valueOf(pc.getId());
-		return new TelnetCommandResult(CMD_OK, result);
-	}
-}
-
 class CharStatusCommand implements TelnetCommand {
 	@Override
 	public TelnetCommandResult execute(String args) {
@@ -77,6 +61,13 @@ class CharStatusCommand implements TelnetCommand {
 	}
 }
 
+class EchoCommand implements TelnetCommand {
+	@Override
+	public TelnetCommandResult execute(String args) {
+		return new TelnetCommandResult(CMD_OK, args);
+	}
+}
+
 class GlobalChatCommand implements TelnetCommand {
 	@Override
 	public TelnetCommandResult execute(String args) {
@@ -92,6 +83,15 @@ class GlobalChatCommand implements TelnetCommand {
 
 		L1World.getInstance().broadcastPacketToAll(new S_ChatPacket(pc, text, Opcodes.S_OPCODE_GLOBALCHAT, 3));
 		return new TelnetCommandResult(CMD_OK, "");
+	}
+}
+
+class PlayerIdCommand implements TelnetCommand {
+	@Override
+	public TelnetCommandResult execute(String args) {
+		L1PcInstance pc = L1World.getInstance().getPlayer(args);
+		String result = pc == null ? "0" : String.valueOf(pc.getId());
+		return new TelnetCommandResult(CMD_OK, result);
 	}
 }
 

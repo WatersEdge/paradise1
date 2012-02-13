@@ -22,15 +22,6 @@ public class ByteArrayUtil {
 		_byteArray = byteArray;
 	}
 
-	public String getTerminatedString(int i) {
-		StringBuffer stringbuffer = new StringBuffer();
-		for (int j = i; j < _byteArray.length && _byteArray[j] != 0; j++) {
-			stringbuffer.append((char) _byteArray[j]);
-		}
-
-		return stringbuffer.toString();
-	}
-
 	public String dumpToString() {
 		StringBuffer stringbuffer = new StringBuffer();
 		int j = 0;
@@ -77,6 +68,15 @@ public class ByteArrayUtil {
 
 			stringbuffer.append("\n");
 		}
+		return stringbuffer.toString();
+	}
+
+	public String getTerminatedString(int i) {
+		StringBuffer stringbuffer = new StringBuffer();
+		for (int j = i; j < _byteArray.length && _byteArray[j] != 0; j++) {
+			stringbuffer.append((char) _byteArray[j]);
+		}
+
 		return stringbuffer.toString();
 	}
 

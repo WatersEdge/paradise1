@@ -21,11 +21,11 @@ import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Ress implements L1CommandExecutor {
-	private L1Ress() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Ress();
+	}
+
+	private L1Ress() {
 	}
 
 	@Override

@@ -35,10 +35,6 @@ public class RaceTicketTable {
 
 	private static RaceTicketTable _instance;
 
-	private final HashMap<Integer, L1RaceTicket> _tickets = new HashMap<Integer, L1RaceTicket>();
-
-	private int _maxRoundNumber;
-
 	public static RaceTicketTable getInstance() {
 		if (_instance == null) {
 			_instance = new RaceTicketTable();
@@ -46,8 +42,121 @@ public class RaceTicketTable {
 		return _instance;
 	}
 
+	private final HashMap<Integer, L1RaceTicket> _tickets = new HashMap<Integer, L1RaceTicket>();
+
+	private int _maxRoundNumber;
+
 	private RaceTicketTable() {
 		load();
+	}
+
+	public void deleteTicket(int itemobjid) {
+		// PCのインベントリーが減少する再に使用
+		if (_tickets.containsKey(itemobjid)) {
+			_tickets.remove(itemobjid);
+		}
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
+			pstm.setInt(1, itemobjid);
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	public L1RaceTicket[] getRaceTicketTableList() {
+		return _tickets.values().toArray(new L1RaceTicket[_tickets.size()]);
+	}
+
+	public int getRoundNumOfMax() {
+		return _maxRoundNumber;
+	}
+
+	public L1RaceTicket getTemplate(int itemobjid) {
+		if (_tickets.containsKey(itemobjid)) {
+			return _tickets.get(itemobjid);
+		}
+		return null;
+	}
+
+	public void oldTicketDelete(int round) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
+			pstm.setInt(1, round);
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	public void storeNewTiket(L1RaceTicket ticket) {
+		// PCのインベントリーが増える場合に実行
+		// XXX 呼ばれる前と処理の重複
+		if (ticket.get_itemobjid() != 0) {
+			_tickets.put(new Integer(ticket.get_itemobjid()), ticket);
+		}
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO race_ticket SET item_obj_id=?,round=?," + "allotment_percentage=?,victory=?,runner_num=?");
+			pstm.setInt(1, ticket.get_itemobjid());
+			pstm.setInt(2, ticket.get_round());
+			pstm.setDouble(3, ticket.get_allotment_percentage());
+			pstm.setInt(4, ticket.get_victory());
+			pstm.setInt(5, ticket.get_runner_num());
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+
+		}
+	}
+
+	public void updateTicket(int round, int num, double allotment_percentage) {
+		for (L1RaceTicket ticket : getRaceTicketTableList()) {
+			if (ticket.get_round() == round && ticket.get_runner_num() == num) {
+				ticket.set_victory(1);
+				ticket.set_allotment_percentage(allotment_percentage);
+			}
+		}
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE " + "race_ticket SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");
+
+			pstm.setInt(1, 1);
+			pstm.setDouble(2, allotment_percentage);
+			pstm.setInt(3, round);
+			pstm.setInt(4, num);
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	private void load() {
@@ -83,114 +192,5 @@ public class RaceTicketTable {
 			SQLUtil.close(con);
 
 		}
-	}
-
-	public void storeNewTiket(L1RaceTicket ticket) {
-		// PCのインベントリーが増える場合に実行
-		// XXX 呼ばれる前と処理の重複
-		if (ticket.get_itemobjid() != 0) {
-			_tickets.put(new Integer(ticket.get_itemobjid()), ticket);
-		}
-
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO race_ticket SET item_obj_id=?,round=?," + "allotment_percentage=?,victory=?,runner_num=?");
-			pstm.setInt(1, ticket.get_itemobjid());
-			pstm.setInt(2, ticket.get_round());
-			pstm.setDouble(3, ticket.get_allotment_percentage());
-			pstm.setInt(4, ticket.get_victory());
-			pstm.setInt(5, ticket.get_runner_num());
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-
-		}
-	}
-
-	public void deleteTicket(int itemobjid) {
-		// PCのインベントリーが減少する再に使用
-		if (_tickets.containsKey(itemobjid)) {
-			_tickets.remove(itemobjid);
-		}
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=?");
-			pstm.setInt(1, itemobjid);
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public void oldTicketDelete(int round) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("delete from race_ticket WHERE item_obj_id=0 and round!=?");
-			pstm.setInt(1, round);
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public void updateTicket(int round, int num, double allotment_percentage) {
-		for (L1RaceTicket ticket : getRaceTicketTableList()) {
-			if (ticket.get_round() == round && ticket.get_runner_num() == num) {
-				ticket.set_victory(1);
-				ticket.set_allotment_percentage(allotment_percentage);
-			}
-		}
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE " + "race_ticket SET victory=? ,allotment_percentage=? WHERE round=? and runner_num=?");
-
-			pstm.setInt(1, 1);
-			pstm.setDouble(2, allotment_percentage);
-			pstm.setInt(3, round);
-			pstm.setInt(4, num);
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public L1RaceTicket getTemplate(int itemobjid) {
-		if (_tickets.containsKey(itemobjid)) {
-			return _tickets.get(itemobjid);
-		}
-		return null;
-	}
-
-	public L1RaceTicket[] getRaceTicketTableList() {
-		return _tickets.values().toArray(new L1RaceTicket[_tickets.size()]);
-	}
-
-	public int getRoundNumOfMax() {
-		return _maxRoundNumber;
 	}
 }

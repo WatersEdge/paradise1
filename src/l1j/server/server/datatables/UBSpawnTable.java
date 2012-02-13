@@ -37,8 +37,6 @@ public class UBSpawnTable {
 
 	private static UBSpawnTable _instance;
 
-	private final Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
-
 	public static UBSpawnTable getInstance() {
 		if (_instance == null) {
 			_instance = new UBSpawnTable();
@@ -46,54 +44,10 @@ public class UBSpawnTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
+
 	private UBSpawnTable() {
 		loadSpawnTable();
-	}
-
-	private void loadSpawnTable() {
-
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM spawnlist_ub");
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
-				if (npcTemp == null) {
-					continue;
-				}
-
-				L1UbSpawn spawnDat = new L1UbSpawn();
-				spawnDat.setId(rs.getInt(1));
-				spawnDat.setUbId(rs.getInt(2));
-				spawnDat.setPattern(rs.getInt(3));
-				spawnDat.setGroup(rs.getInt(4));
-				spawnDat.setName(npcTemp.get_name());
-				spawnDat.setNpcTemplateId(rs.getInt(6));
-				spawnDat.setAmount(rs.getInt(7));
-				spawnDat.setSpawnDelay(rs.getInt(8));
-				spawnDat.setSealCount(rs.getInt(9));
-
-				_spawnTable.put(spawnDat.getId(), spawnDat);
-			}
-		}
-		catch (SQLException e) {
-			// problem with initializing spawn, go to next one
-			_log.warning("spawn couldnt 被初始化:" + e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		_log.config("UB安置怪物列表 " + _spawnTable.size() + "件");
-	}
-
-	public L1UbSpawn getSpawn(int spawnId) {
-		return _spawnTable.get(spawnId);
 	}
 
 	/**
@@ -138,5 +92,51 @@ public class UBSpawnTable {
 		pattern.freeze();
 
 		return pattern;
+	}
+
+	public L1UbSpawn getSpawn(int spawnId) {
+		return _spawnTable.get(spawnId);
+	}
+
+	private void loadSpawnTable() {
+
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM spawnlist_ub");
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
+				if (npcTemp == null) {
+					continue;
+				}
+
+				L1UbSpawn spawnDat = new L1UbSpawn();
+				spawnDat.setId(rs.getInt(1));
+				spawnDat.setUbId(rs.getInt(2));
+				spawnDat.setPattern(rs.getInt(3));
+				spawnDat.setGroup(rs.getInt(4));
+				spawnDat.setName(npcTemp.get_name());
+				spawnDat.setNpcTemplateId(rs.getInt(6));
+				spawnDat.setAmount(rs.getInt(7));
+				spawnDat.setSpawnDelay(rs.getInt(8));
+				spawnDat.setSealCount(rs.getInt(9));
+
+				_spawnTable.put(spawnDat.getId(), spawnDat);
+			}
+		}
+		catch (SQLException e) {
+			// problem with initializing spawn, go to next one
+			_log.warning("spawn couldnt 被初始化:" + e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		_log.config("UB安置怪物列表 " + _spawnTable.size() + "件");
 	}
 }

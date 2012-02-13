@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SealScroll extends ItemExecutor {
 
-	private SealScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new SealScroll();
+	}
+
+	private SealScroll() {
 	}
 
 	/**

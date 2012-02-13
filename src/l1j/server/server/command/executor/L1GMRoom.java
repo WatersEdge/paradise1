@@ -21,11 +21,11 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1GMRoom implements L1CommandExecutor {
-	private L1GMRoom() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1GMRoom();
+	}
+
+	private L1GMRoom() {
 	}
 
 	@Override

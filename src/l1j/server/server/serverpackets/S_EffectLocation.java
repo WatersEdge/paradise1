@@ -28,13 +28,19 @@ public class S_EffectLocation extends ServerBasePacket {
 	/**
 	 * 在指定位置显示动画效果。
 	 * 
-	 * @param pt
-	 *            - 动画效果坐标 包含Point对象
+	 * @param x
+	 *            - 动画效果X坐标
+	 * @param y
+	 *            - 动画效果Y坐标
 	 * @param gfxId
 	 *            - 动画ID
 	 */
-	public S_EffectLocation(Point pt, int gfxId) {
-		this(pt.getX(), pt.getY(), gfxId);
+	public S_EffectLocation(int x, int y, int gfxId) {
+		writeC(Opcodes.S_OPCODE_EFFECTLOCATION);
+		writeH(x);
+		writeH(y);
+		writeH(gfxId);
+		writeC(0);
 	}
 
 	/**
@@ -52,19 +58,13 @@ public class S_EffectLocation extends ServerBasePacket {
 	/**
 	 * 在指定位置显示动画效果。
 	 * 
-	 * @param x
-	 *            - 动画效果X坐标
-	 * @param y
-	 *            - 动画效果Y坐标
+	 * @param pt
+	 *            - 动画效果坐标 包含Point对象
 	 * @param gfxId
 	 *            - 动画ID
 	 */
-	public S_EffectLocation(int x, int y, int gfxId) {
-		writeC(Opcodes.S_OPCODE_EFFECTLOCATION);
-		writeH(x);
-		writeH(y);
-		writeH(gfxId);
-		writeC(0);
+	public S_EffectLocation(Point pt, int gfxId) {
+		this(pt.getX(), pt.getY(), gfxId);
 	}
 
 	@Override

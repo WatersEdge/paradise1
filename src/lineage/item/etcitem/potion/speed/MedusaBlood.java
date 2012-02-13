@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class MedusaBlood extends ItemExecutor {
 
-	private MedusaBlood() {
-	}
-
 	public static ItemExecutor get() {
 		return new MedusaBlood();
+	}
+
+	private MedusaBlood() {
 	}
 
 	/**

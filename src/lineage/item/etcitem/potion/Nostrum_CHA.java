@@ -18,11 +18,11 @@ public class Nostrum_CHA extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(Nostrum_CHA.class.getName());
 
-	private Nostrum_CHA() {
-	}
-
 	public static ItemExecutor get() {
 		return new Nostrum_CHA();
+	}
+
+	private Nostrum_CHA() {
 	}
 
 	/**

@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_3;
  */
 public class ChocolateCake extends ItemExecutor {
 
-	private ChocolateCake() {
-	}
-
 	public static ItemExecutor get() {
 		return new ChocolateCake();
+	}
+
+	private ChocolateCake() {
 	}
 
 	/**

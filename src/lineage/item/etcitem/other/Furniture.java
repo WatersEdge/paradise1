@@ -27,11 +27,11 @@ public class Furniture extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(C_ItemUSe.class.getName());
 
-	private Furniture() {
-	}
-
 	public static ItemExecutor get() {
 		return new Furniture();
+	}
+
+	private Furniture() {
 	}
 
 	/**

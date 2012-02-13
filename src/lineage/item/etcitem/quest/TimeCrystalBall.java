@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class TimeCrystalBall extends ItemExecutor {
 
-	private TimeCrystalBall() {
-	}
-
 	public static ItemExecutor get() {
 		return new TimeCrystalBall();
+	}
+
+	private TimeCrystalBall() {
 	}
 
 	/**

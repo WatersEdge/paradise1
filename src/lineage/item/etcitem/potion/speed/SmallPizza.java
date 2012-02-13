@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class SmallPizza extends ItemExecutor {
 
-	private SmallPizza() {
-	}
-
 	public static ItemExecutor get() {
 		return new SmallPizza();
+	}
+
+	private SmallPizza() {
 	}
 
 	/**

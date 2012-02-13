@@ -27,14 +27,14 @@ public class LightTimeController implements Runnable {
 
 	private static LightTimeController _instance;
 
-	private boolean isSpawn = false;
-
 	public static LightTimeController getInstance() {
 		if (_instance == null) {
 			_instance = new LightTimeController();
 		}
 		return _instance;
 	}
+
+	private boolean isSpawn = false;
 
 	@Override
 	public void run() {

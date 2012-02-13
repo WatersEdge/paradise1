@@ -38,12 +38,6 @@ public class S_Light extends ServerBasePacket {
 		buildPacket(objid, type);
 	}
 
-	private void buildPacket(int objid, int type) {
-		writeC(Opcodes.S_OPCODE_LIGHT);
-		writeD(objid);
-		writeC(type);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -55,5 +49,11 @@ public class S_Light extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_LIGHT;
+	}
+
+	private void buildPacket(int objid, int type) {
+		writeC(Opcodes.S_OPCODE_LIGHT);
+		writeD(objid);
+		writeC(type);
 	}
 }

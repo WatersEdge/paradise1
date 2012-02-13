@@ -48,6 +48,19 @@ public class S_CharacterConfig extends ServerBasePacket {
 		buildPacket(objectId);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_CHARACTER_CONFIG;
+	}
+
 	private void buildPacket(int objectId) {
 		int length = 0;
 		byte data[] = null;
@@ -78,18 +91,5 @@ public class S_CharacterConfig extends ServerBasePacket {
 			writeD(length);
 			writeByte(data);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_CHARACTER_CONFIG;
 	}
 }

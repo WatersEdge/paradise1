@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SealTeleportAmulet extends ItemExecutor {
 
-	private SealTeleportAmulet() {
-	}
-
 	public static ItemExecutor get() {
 		return new SealTeleportAmulet();
+	}
+
+	private SealTeleportAmulet() {
 	}
 
 	/**

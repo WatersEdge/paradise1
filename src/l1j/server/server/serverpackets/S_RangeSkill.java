@@ -37,8 +37,50 @@ public class S_RangeSkill extends ServerBasePacket {
 
 	public static final int TYPE_DIR = 8;
 
+	private static int calcheading(int myx, int myy, int tx, int ty) {
+		int newheading = 0;
+		if ((tx > myx) && (ty > myy)) {
+			newheading = 3;
+		}
+		if ((tx < myx) && (ty < myy)) {
+			newheading = 7;
+		}
+		if ((tx > myx) && (ty == myy)) {
+			newheading = 2;
+		}
+		if ((tx < myx) && (ty == myy)) {
+			newheading = 6;
+		}
+		if ((tx == myx) && (ty < myy)) {
+			newheading = 0;
+		}
+		if ((tx == myx) && (ty > myy)) {
+			newheading = 4;
+		}
+		if ((tx < myx) && (ty > myy)) {
+			newheading = 5;
+		}
+		if ((tx > myx) && (ty < myy)) {
+			newheading = 1;
+		}
+		return newheading;
+	}
+
 	public S_RangeSkill(L1Character cha, L1Character[] target, int spellgfx, int actionId, int type) {
 		buildPacket(cha, target, spellgfx, actionId, type);
+	}
+
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_RANGE_SKILL;
 	}
 
 	/**
@@ -73,48 +115,6 @@ public class S_RangeSkill extends ServerBasePacket {
 			writeD(element.getId());
 			writeH(0x20); // 0:伤害动作 0以外:无
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	private static int calcheading(int myx, int myy, int tx, int ty) {
-		int newheading = 0;
-		if ((tx > myx) && (ty > myy)) {
-			newheading = 3;
-		}
-		if ((tx < myx) && (ty < myy)) {
-			newheading = 7;
-		}
-		if ((tx > myx) && (ty == myy)) {
-			newheading = 2;
-		}
-		if ((tx < myx) && (ty == myy)) {
-			newheading = 6;
-		}
-		if ((tx == myx) && (ty < myy)) {
-			newheading = 0;
-		}
-		if ((tx == myx) && (ty > myy)) {
-			newheading = 4;
-		}
-		if ((tx < myx) && (ty > myy)) {
-			newheading = 5;
-		}
-		if ((tx > myx) && (ty < myy)) {
-			newheading = 1;
-		}
-		return newheading;
-	}
-
-	@Override
-	public String getType() {
-		return S_RANGE_SKILL;
 	}
 
 }

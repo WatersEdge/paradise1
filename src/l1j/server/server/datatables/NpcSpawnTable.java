@@ -39,10 +39,6 @@ public class NpcSpawnTable {
 
 	private static NpcSpawnTable _instance;
 
-	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
-
-	private int _highestId;
-
 	public static NpcSpawnTable getInstance() {
 		if (_instance == null) {
 			_instance = new NpcSpawnTable();
@@ -50,8 +46,56 @@ public class NpcSpawnTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
+
+	private int _highestId;
+
 	private NpcSpawnTable() {
 		fillNpcSpawnTable();
+	}
+
+	public void addNewSpawn(L1Spawn l1spawn) {
+		_highestId++;
+		l1spawn.setId(_highestId);
+		_spawntable.put(l1spawn.getId(), l1spawn);
+	}
+
+	public L1Spawn getTemplate(int i) {
+		return _spawntable.get(i);
+	}
+
+	/**
+	 * 手动增加Spwan物件
+	 * 
+	 * @param pc
+	 * @param npc
+	 */
+	public void storeSpawn(L1PcInstance pc, L1Npc npc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+
+		try {
+			int count = 1;
+			String note = npc.get_name();
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
+			pstm.setString(1, note);
+			pstm.setInt(2, count);
+			pstm.setInt(3, npc.get_npcId());
+			pstm.setInt(4, pc.getX());
+			pstm.setInt(5, pc.getY());
+			pstm.setInt(6, pc.getHeading());
+			pstm.setInt(7, pc.getMapId());
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	private void fillNpcSpawnTable() {
@@ -156,50 +200,6 @@ public class NpcSpawnTable {
 
 		_log.config("NPC配置清单 " + _spawntable.size() + "件");
 		_log.fine("NPC总数 " + spawnCount + "只");
-	}
-
-	/**
-	 * 手动增加Spwan物件
-	 * 
-	 * @param pc
-	 * @param npc
-	 */
-	public void storeSpawn(L1PcInstance pc, L1Npc npc) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-
-		try {
-			int count = 1;
-			String note = npc.get_name();
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
-			pstm.setString(1, note);
-			pstm.setInt(2, count);
-			pstm.setInt(3, npc.get_npcId());
-			pstm.setInt(4, pc.getX());
-			pstm.setInt(5, pc.getY());
-			pstm.setInt(6, pc.getHeading());
-			pstm.setInt(7, pc.getMapId());
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	public L1Spawn getTemplate(int i) {
-		return _spawntable.get(i);
-	}
-
-	public void addNewSpawn(L1Spawn l1spawn) {
-		_highestId++;
-		l1spawn.setId(_highestId);
-		_spawntable.put(l1spawn.getId(), l1spawn);
 	}
 
 }

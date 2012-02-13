@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpellBook_Crown;
  */
 public class CrownSpellBook extends ItemExecutor {
 
-	private CrownSpellBook() {
-	}
-
 	public static ItemExecutor get() {
 		return new CrownSpellBook();
+	}
+
+	private CrownSpellBook() {
 	}
 
 	/**

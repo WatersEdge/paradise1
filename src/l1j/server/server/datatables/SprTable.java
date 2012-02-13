@@ -60,9 +60,6 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class SprTable {
 
-	/** 提示信息 */
-	private static Logger _log = Logger.getLogger(SprTable.class.getName());
-
 	private static class Spr {
 		private final Map<Integer, Integer> moveSpeed = Maps.newMap();
 
@@ -75,16 +72,162 @@ public class SprTable {
 		private int dirSpellSpeed = 1200;
 	}
 
+	/** 提示信息 */
+	private static Logger _log = Logger.getLogger(SprTable.class.getName());
+
 	private static final Map<Integer, Spr> _dataMap = Maps.newMap();
 
 	private static final SprTable _instance = new SprTable();
+
+	public static SprTable getInstance() {
+		return _instance;
+	}
 
 	private SprTable() {
 		loadSprAction();
 	}
 
-	public static SprTable getInstance() {
-		return _instance;
+	/**
+	 * 传回攻击速度。
+	 * 
+	 * @param sprid
+	 *            - 检查spr的ID
+	 * @param actid
+	 *            - 武器种类表值。L1Item.getType1()一致返回值 + 1
+	 * @return 指定spr的攻击速度(ms)
+	 */
+	public int getAttackSpeed(int sprid, int actid) {
+		if (_dataMap.containsKey(sprid)) {
+			if (_dataMap.get(sprid).attackSpeed.containsKey(actid)) {
+				return _dataMap.get(sprid).attackSpeed.get(actid);
+			}
+			else if (actid == ACTION_Attack) {
+				return 0;
+			}
+			else {
+				return _dataMap.get(sprid).attackSpeed.get(ACTION_Attack);
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * 传回有向施法速度
+	 * 
+	 * @param sprid
+	 * @return
+	 */
+	public int getDirSpellSpeed(int sprid) {
+		if (_dataMap.containsKey(sprid)) {
+			return _dataMap.get(sprid).dirSpellSpeed;
+		}
+		return 0;
+	}
+
+	/**
+	 * 传回移动速度。
+	 * 
+	 * @param sprid
+	 * @param actid
+	 * @return
+	 */
+	public int getMoveSpeed(int sprid, int actid) {
+		if (_dataMap.containsKey(sprid)) {
+			if (_dataMap.get(sprid).moveSpeed.containsKey(actid)) {
+				return _dataMap.get(sprid).moveSpeed.get(actid);
+			}
+			else if (actid == ACTION_Walk) {
+				return 0;
+			}
+			else {
+				return _dataMap.get(sprid).moveSpeed.get(ACTION_Walk);
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * 传回无向施法速度
+	 * 
+	 * @param sprid
+	 * @return
+	 */
+	public int getNodirSpellSpeed(int sprid) {
+		if (_dataMap.containsKey(sprid)) {
+			return _dataMap.get(sprid).nodirSpellSpeed;
+		}
+		return 0;
+	}
+
+	/**
+	 * 传回魔法娃娃表情动作速度
+	 * 
+	 * @param sprid
+	 * @param actid
+	 * @return
+	 */
+	public int getSpecialSpeed(int sprid, int actid) {
+		if (_dataMap.containsKey(sprid)) {
+			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
+				return _dataMap.get(sprid).specialSpeed.get(actid);
+			}
+			else {
+				return 1200;
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * Npc 各动作延迟时间
+	 * 
+	 * @param sprid
+	 * @param actid
+	 */
+	public int getSprSpeed(int sprid, int actid) {
+		switch (actid) {
+		case ACTION_Walk:
+		case ACTION_SwordWalk:
+		case ACTION_AxeWalk:
+		case ACTION_BowWalk:
+		case ACTION_SpearWalk:
+		case ACTION_StaffWalk:
+		case ACTION_DaggerWalk:
+		case ACTION_TwoHandSwordWalk:
+		case ACTION_EdoryuWalk:
+		case ACTION_ClawWalk:
+		case ACTION_ThrowingKnifeWalk:
+			// 移动
+			return getMoveSpeed(sprid, actid);
+		case ACTION_SkillAttack:
+			// 有向施法
+			return getDirSpellSpeed(sprid);
+		case ACTION_SkillBuff:
+			// 无向施法
+			return getNodirSpellSpeed(sprid);
+		case ACTION_Attack:
+		case ACTION_SwordAttack:
+		case ACTION_AxeAttack:
+		case ACTION_BowAttack:
+		case ACTION_SpearAttack:
+		case ACTION_AltAttack:
+		case ACTION_SpellDirectionExtra:
+		case ACTION_StaffAttack:
+		case ACTION_DaggerAttack:
+		case ACTION_TwoHandSwordAttack:
+		case ACTION_EdoryuAttack:
+		case ACTION_ClawAttack:
+		case ACTION_ThrowingKnifeAttack:
+			// 攻击
+			return getAttackSpeed(sprid, actid);
+		case ACTION_Think:
+		case ACTION_Aggress:
+			// 魔法娃娃表情动作
+			return getSpecialSpeed(sprid, actid);
+		default:
+			break;
+		}
+		return 0;
 	}
 
 	/**
@@ -176,148 +319,5 @@ public class SprTable {
 	 */
 	private int calcActionSpeed(int frameCount, int frameRate) {
 		return (int) (frameCount * 40 * (24D / frameRate));
-	}
-
-	/**
-	 * 传回攻击速度。
-	 * 
-	 * @param sprid
-	 *            - 检查spr的ID
-	 * @param actid
-	 *            - 武器种类表值。L1Item.getType1()一致返回值 + 1
-	 * @return 指定spr的攻击速度(ms)
-	 */
-	public int getAttackSpeed(int sprid, int actid) {
-		if (_dataMap.containsKey(sprid)) {
-			if (_dataMap.get(sprid).attackSpeed.containsKey(actid)) {
-				return _dataMap.get(sprid).attackSpeed.get(actid);
-			}
-			else if (actid == ACTION_Attack) {
-				return 0;
-			}
-			else {
-				return _dataMap.get(sprid).attackSpeed.get(ACTION_Attack);
-			}
-		}
-		return 0;
-	}
-
-	/**
-	 * 传回移动速度。
-	 * 
-	 * @param sprid
-	 * @param actid
-	 * @return
-	 */
-	public int getMoveSpeed(int sprid, int actid) {
-		if (_dataMap.containsKey(sprid)) {
-			if (_dataMap.get(sprid).moveSpeed.containsKey(actid)) {
-				return _dataMap.get(sprid).moveSpeed.get(actid);
-			}
-			else if (actid == ACTION_Walk) {
-				return 0;
-			}
-			else {
-				return _dataMap.get(sprid).moveSpeed.get(ACTION_Walk);
-			}
-		}
-		return 0;
-	}
-
-	/**
-	 * 传回有向施法速度
-	 * 
-	 * @param sprid
-	 * @return
-	 */
-	public int getDirSpellSpeed(int sprid) {
-		if (_dataMap.containsKey(sprid)) {
-			return _dataMap.get(sprid).dirSpellSpeed;
-		}
-		return 0;
-	}
-
-	/**
-	 * 传回无向施法速度
-	 * 
-	 * @param sprid
-	 * @return
-	 */
-	public int getNodirSpellSpeed(int sprid) {
-		if (_dataMap.containsKey(sprid)) {
-			return _dataMap.get(sprid).nodirSpellSpeed;
-		}
-		return 0;
-	}
-
-	/**
-	 * 传回魔法娃娃表情动作速度
-	 * 
-	 * @param sprid
-	 * @param actid
-	 * @return
-	 */
-	public int getSpecialSpeed(int sprid, int actid) {
-		if (_dataMap.containsKey(sprid)) {
-			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
-				return _dataMap.get(sprid).specialSpeed.get(actid);
-			}
-			else {
-				return 1200;
-			}
-		}
-		return 0;
-	}
-
-	/**
-	 * Npc 各动作延迟时间
-	 * 
-	 * @param sprid
-	 * @param actid
-	 */
-	public int getSprSpeed(int sprid, int actid) {
-		switch (actid) {
-		case ACTION_Walk:
-		case ACTION_SwordWalk:
-		case ACTION_AxeWalk:
-		case ACTION_BowWalk:
-		case ACTION_SpearWalk:
-		case ACTION_StaffWalk:
-		case ACTION_DaggerWalk:
-		case ACTION_TwoHandSwordWalk:
-		case ACTION_EdoryuWalk:
-		case ACTION_ClawWalk:
-		case ACTION_ThrowingKnifeWalk:
-			// 移动
-			return getMoveSpeed(sprid, actid);
-		case ACTION_SkillAttack:
-			// 有向施法
-			return getDirSpellSpeed(sprid);
-		case ACTION_SkillBuff:
-			// 无向施法
-			return getNodirSpellSpeed(sprid);
-		case ACTION_Attack:
-		case ACTION_SwordAttack:
-		case ACTION_AxeAttack:
-		case ACTION_BowAttack:
-		case ACTION_SpearAttack:
-		case ACTION_AltAttack:
-		case ACTION_SpellDirectionExtra:
-		case ACTION_StaffAttack:
-		case ACTION_DaggerAttack:
-		case ACTION_TwoHandSwordAttack:
-		case ACTION_EdoryuAttack:
-		case ACTION_ClawAttack:
-		case ACTION_ThrowingKnifeAttack:
-			// 攻击
-			return getAttackSpeed(sprid, actid);
-		case ACTION_Think:
-		case ACTION_Aggress:
-			// 魔法娃娃表情动作
-			return getSpecialSpeed(sprid, actid);
-		default:
-			break;
-		}
-		return 0;
 	}
 }

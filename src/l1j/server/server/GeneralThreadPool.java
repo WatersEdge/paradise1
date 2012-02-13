@@ -31,9 +31,46 @@ import l1j.server.server.model.monitor.L1PcMonitor;
  */
 public class GeneralThreadPool {
 
+	// ThreadPoolManager 借用
+	private class PriorityThreadFactory implements ThreadFactory {
+		private final int _prio;
+
+		private final String _name;
+
+		private final AtomicInteger _threadNumber = new AtomicInteger(1);
+
+		private final ThreadGroup _group;
+
+		public PriorityThreadFactory(String name, int prio) {
+			_prio = prio;
+			_name = name;
+			_group = new ThreadGroup(_name);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.util.concurrent.ThreadFactory#newThread(java.lang.Runnable)
+		 */
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(_group, r);
+			t.setName(_name + "-" + _threadNumber.getAndIncrement());
+			t.setPriority(_prio);
+			return t;
+		}
+	}
+
 	private static GeneralThreadPool _instance;
 
 	private static final int SCHEDULED_CORE_POOL_SIZE = 10;
+
+	public static GeneralThreadPool getInstance() {
+		if (_instance == null) {
+			_instance = new GeneralThreadPool();
+		}
+		return _instance;
+	}
 
 	private Executor _executor; // 通用的ExecutorService
 
@@ -46,13 +83,6 @@ public class GeneralThreadPool {
 																				// 20
 																				// 人增加一个
 																				// PoolSize
-
-	public static GeneralThreadPool getInstance() {
-		if (_instance == null) {
-			_instance = new GeneralThreadPool();
-		}
-		return _instance;
-	}
 
 	private GeneralThreadPool() {
 		if (Config.THREAD_P_TYPE_GENERAL == 1) {
@@ -82,23 +112,6 @@ public class GeneralThreadPool {
 		t.start();
 	}
 
-	public ScheduledFuture<?> schedule(Runnable r, long delay) {
-		try {
-			if (delay <= 0) {
-				_executor.execute(r);
-				return null;
-			}
-			return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
-		}
-		catch (RejectedExecutionException e) {
-			return null;
-		}
-	}
-
-	public ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long initialDelay, long period) {
-		return _scheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
-	}
-
 	public ScheduledFuture<?> pcSchedule(L1PcMonitor r, long delay) {
 		try {
 			if (delay <= 0) {
@@ -116,33 +129,20 @@ public class GeneralThreadPool {
 		return _pcScheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 
-	// ThreadPoolManager 借用
-	private class PriorityThreadFactory implements ThreadFactory {
-		private final int _prio;
-
-		private final String _name;
-
-		private final AtomicInteger _threadNumber = new AtomicInteger(1);
-
-		private final ThreadGroup _group;
-
-		public PriorityThreadFactory(String name, int prio) {
-			_prio = prio;
-			_name = name;
-			_group = new ThreadGroup(_name);
+	public ScheduledFuture<?> schedule(Runnable r, long delay) {
+		try {
+			if (delay <= 0) {
+				_executor.execute(r);
+				return null;
+			}
+			return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.util.concurrent.ThreadFactory#newThread(java.lang.Runnable)
-		 */
-		@Override
-		public Thread newThread(Runnable r) {
-			Thread t = new Thread(_group, r);
-			t.setName(_name + "-" + _threadNumber.getAndIncrement());
-			t.setPriority(_prio);
-			return t;
+		catch (RejectedExecutionException e) {
+			return null;
 		}
+	}
+
+	public ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long initialDelay, long period) {
+		return _scheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 }

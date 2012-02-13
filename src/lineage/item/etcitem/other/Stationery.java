@@ -35,11 +35,11 @@ public class Stationery extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(C_ItemUSe.class.getName());
 
-	private Stationery() {
-	}
-
 	public static ItemExecutor get() {
 		return new Stationery();
+	}
+
+	private Stationery() {
 	}
 
 	/**
@@ -70,70 +70,37 @@ public class Stationery extends ItemExecutor {
 		}
 	}
 
-	// 信纸
-	private boolean writeLetter(final int itemId, final L1PcInstance pc, final int letterCode, final String letterReceiver, final byte[] letterText) {
+	// 保存信件
+	private void saveLetter(final int itemObjectId, final int code, final String sender, final String receiver, final byte[] text) {
+		// 取得日期
+		final SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		String date = sdf.format(Calendar.getInstance(tz).getTime());
 
-		int newItemId = 0;
-
-		switch (itemId) {
-			case 40310: // 信纸
-				newItemId = 49016; // 信纸
-				break;
-
-			case 40730: // 圣诞卡片
-				newItemId = 49020; // 圣诞卡片
-				break;
-
-			case 40731: // 情人节 卡片
-				newItemId = 49022; // 情人节 卡片
-				break;
-
-			case 40732: // 白色情人节 卡片
-				newItemId = 49024; // 白色情人节 卡片
-				break;
-		}
-
-		final L1ItemInstance item = ItemTable.getInstance().createItem(newItemId);
-		if (item == null) {
-			return false;
-		}
-		item.setCount(1);
-
-		if (sendLetter(pc, letterReceiver, item, true)) {
-			saveLetter(item.getId(), letterCode, pc.getName(), letterReceiver, letterText);
-		}
-		else {
-			return false;
-		}
-		return true;
-	}
-
-	// 信件 (写信)
-	private boolean writeClanLetter(final int itemId, final L1PcInstance pc, final int letterCode, final String letterReceiver, final byte[] letterText) {
-		L1Clan targetClan = null;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
-			if (clan.getClanName().toLowerCase().equals(letterReceiver.toLowerCase())) {
-				targetClan = clan;
-				break;
+		int spacePosition1 = 0;
+		int spacePosition2 = 0;
+		for (int i = 0; i < text.length; i += 2) {
+			if ((text[i] == 0) && (text[i + 1] == 0)) {
+				if (spacePosition1 == 0) {
+					spacePosition1 = i;
+				}
+				else if ((spacePosition1 != 0) && (spacePosition2 == 0)) {
+					spacePosition2 = i;
+					break;
+				}
 			}
 		}
-		if (targetClan == null) {
-			pc.sendPackets(new S_ServerMessage(434)); // 没有收信者。
-			return false;
-		}
 
-		final String memberName[] = targetClan.getAllMembers();
-		for (String element : memberName) {
-			L1ItemInstance item = ItemTable.getInstance().createItem(49016);
-			if (item == null) {
-				return false;
-			}
-			item.setCount(1);
-			if (sendLetter(pc, element, item, false)) {
-				saveLetter(item.getId(), letterCode, pc.getName(), element, letterText);
-			}
+		int subjectLength = spacePosition1 + 2;
+		int contentLength = spacePosition2 - spacePosition1;
+		if (contentLength <= 0) {
+			contentLength = 1;
 		}
-		return true;
+		byte[] subject = new byte[subjectLength];
+		byte[] content = new byte[contentLength];
+		System.arraycopy(text, 0, subject, 0, subjectLength);
+		System.arraycopy(text, subjectLength, content, 0, contentLength);
+		LetterTable.getInstance().writeLetter(itemObjectId, code, sender, receiver, date, 0, subject, content);
 	}
 
 	// 信件 (收信)
@@ -183,36 +150,69 @@ public class Stationery extends ItemExecutor {
 		return true;
 	}
 
-	// 保存信件
-	private void saveLetter(final int itemObjectId, final int code, final String sender, final String receiver, final byte[] text) {
-		// 取得日期
-		final SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		String date = sdf.format(Calendar.getInstance(tz).getTime());
-
-		int spacePosition1 = 0;
-		int spacePosition2 = 0;
-		for (int i = 0; i < text.length; i += 2) {
-			if ((text[i] == 0) && (text[i + 1] == 0)) {
-				if (spacePosition1 == 0) {
-					spacePosition1 = i;
-				}
-				else if ((spacePosition1 != 0) && (spacePosition2 == 0)) {
-					spacePosition2 = i;
-					break;
-				}
+	// 信件 (写信)
+	private boolean writeClanLetter(final int itemId, final L1PcInstance pc, final int letterCode, final String letterReceiver, final byte[] letterText) {
+		L1Clan targetClan = null;
+		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+			if (clan.getClanName().toLowerCase().equals(letterReceiver.toLowerCase())) {
+				targetClan = clan;
+				break;
 			}
 		}
-
-		int subjectLength = spacePosition1 + 2;
-		int contentLength = spacePosition2 - spacePosition1;
-		if (contentLength <= 0) {
-			contentLength = 1;
+		if (targetClan == null) {
+			pc.sendPackets(new S_ServerMessage(434)); // 没有收信者。
+			return false;
 		}
-		byte[] subject = new byte[subjectLength];
-		byte[] content = new byte[contentLength];
-		System.arraycopy(text, 0, subject, 0, subjectLength);
-		System.arraycopy(text, subjectLength, content, 0, contentLength);
-		LetterTable.getInstance().writeLetter(itemObjectId, code, sender, receiver, date, 0, subject, content);
+
+		final String memberName[] = targetClan.getAllMembers();
+		for (String element : memberName) {
+			L1ItemInstance item = ItemTable.getInstance().createItem(49016);
+			if (item == null) {
+				return false;
+			}
+			item.setCount(1);
+			if (sendLetter(pc, element, item, false)) {
+				saveLetter(item.getId(), letterCode, pc.getName(), element, letterText);
+			}
+		}
+		return true;
+	}
+
+	// 信纸
+	private boolean writeLetter(final int itemId, final L1PcInstance pc, final int letterCode, final String letterReceiver, final byte[] letterText) {
+
+		int newItemId = 0;
+
+		switch (itemId) {
+			case 40310: // 信纸
+				newItemId = 49016; // 信纸
+				break;
+
+			case 40730: // 圣诞卡片
+				newItemId = 49020; // 圣诞卡片
+				break;
+
+			case 40731: // 情人节 卡片
+				newItemId = 49022; // 情人节 卡片
+				break;
+
+			case 40732: // 白色情人节 卡片
+				newItemId = 49024; // 白色情人节 卡片
+				break;
+		}
+
+		final L1ItemInstance item = ItemTable.getInstance().createItem(newItemId);
+		if (item == null) {
+			return false;
+		}
+		item.setCount(1);
+
+		if (sendLetter(pc, letterReceiver, item, true)) {
+			saveLetter(item.getId(), letterCode, pc.getName(), letterReceiver, letterText);
+		}
+		else {
+			return false;
+		}
+		return true;
 	}
 }

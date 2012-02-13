@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class TabbyOctopus extends ItemExecutor {
 
-	private TabbyOctopus() {
-	}
-
 	public static ItemExecutor get() {
 		return new TabbyOctopus();
+	}
+
+	private TabbyOctopus() {
 	}
 
 	/**

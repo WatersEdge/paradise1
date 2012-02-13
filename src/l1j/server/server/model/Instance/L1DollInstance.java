@@ -33,36 +33,6 @@ import l1j.server.server.utils.Random;
  */
 public class L1DollInstance extends L1NpcInstance {
 
-	private static final long serialVersionUID = 1L;
-
-	public static final int DOLL_TIME = 1800000;
-	private int _itemId;
-	private int _itemObjId;
-	private int run;
-	private boolean _isDelete = false;
-
-	// 如果没有目标处理
-	@Override
-	public boolean noTarget() {
-		if ((_master != null) && !_master.isDead() && (_master.getMapId() == getMapId())) {
-			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-				int dir = moveDirection(_master.getX(), _master.getY());
-				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-			}
-			else {
-				// 魔法娃娃 - 特殊动作
-				dollAction();
-			}
-		}
-		else {
-			_isDelete = true;
-			deleteDoll();
-			return true;
-		}
-		return false;
-	}
-
 	// 时间计测用
 	class DollTimer implements Runnable {
 		@Override
@@ -73,6 +43,14 @@ public class L1DollInstance extends L1NpcInstance {
 			deleteDoll();
 		}
 	}
+
+	private static final long serialVersionUID = 1L;
+	public static final int DOLL_TIME = 1800000;
+	private int _itemId;
+	private int _itemObjId;
+	private int run;
+
+	private boolean _isDelete = false;
 
 	public L1DollInstance(L1Npc template, L1PcInstance master, int itemId, int itemObjId) {
 
@@ -132,6 +110,44 @@ public class L1DollInstance extends L1NpcInstance {
 		deleteMe();
 	}
 
+	public int getItemId() {
+		return _itemId;
+	}
+
+	public int getItemObjId() {
+		return _itemObjId;
+	}
+
+	// 如果没有目标处理
+	@Override
+	public boolean noTarget() {
+		if ((_master != null) && !_master.isDead() && (_master.getMapId() == getMapId())) {
+			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
+				int dir = moveDirection(_master.getX(), _master.getY());
+				setDirectionMove(dir);
+				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+			}
+			else {
+				// 魔法娃娃 - 特殊动作
+				dollAction();
+			}
+		}
+		else {
+			_isDelete = true;
+			deleteDoll();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void onGetItem(L1ItemInstance item) {
+	}
+
+	@Override
+	public void onItemUse() {
+	}
+
 	@Override
 	public void onPerceive(L1PcInstance perceivedFrom) {
 		// 判断旅馆内是否使用相同钥匙
@@ -143,28 +159,12 @@ public class L1DollInstance extends L1NpcInstance {
 		perceivedFrom.sendPackets(new S_DollPack(this));
 	}
 
-	@Override
-	public void onItemUse() {
-	}
-
-	@Override
-	public void onGetItem(L1ItemInstance item) {
-	}
-
-	public int getItemObjId() {
-		return _itemObjId;
+	public void setItemId(int i) {
+		_itemId = i;
 	}
 
 	public void setItemObjId(int i) {
 		_itemObjId = i;
-	}
-
-	public int getItemId() {
-		return _itemId;
-	}
-
-	public void setItemId(int i) {
-		_itemId = i;
 	}
 
 	// 表情动作

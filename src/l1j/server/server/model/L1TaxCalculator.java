@@ -46,20 +46,24 @@ public class L1TaxCalculator {
 		_taxRatesTown = L1TownLocation.getTownTaxRateByNpcid(merchantNpcId);
 	}
 
-	public int calcTotalTaxPrice(int price) {
-		int taxCastle = price * _taxRatesCastle;
-		int taxTown = price * _taxRatesTown;
-		int taxWar = price * WAR_TAX_RATES;
-		return (taxCastle + taxTown + taxWar) / 100;
-	}
-
 	// XXX 個別に計算する為、丸め誤差が出る。
 	public int calcCastleTaxPrice(int price) {
 		return (price * _taxRatesCastle) / 100 - calcNationalTaxPrice(price);
 	}
 
+	public int calcDiadTaxPrice(int price) {
+		return (price * _taxRatesWar) / 100 / (100 / DIAD_TAX_RATES);
+	}
+
 	public int calcNationalTaxPrice(int price) {
 		return (price * _taxRatesCastle) / 100 / (100 / NATIONAL_TAX_RATES);
+	}
+
+	public int calcTotalTaxPrice(int price) {
+		int taxCastle = price * _taxRatesCastle;
+		int taxTown = price * _taxRatesTown;
+		int taxWar = price * WAR_TAX_RATES;
+		return (taxCastle + taxTown + taxWar) / 100;
 	}
 
 	public int calcTownTaxPrice(int price) {
@@ -68,10 +72,6 @@ public class L1TaxCalculator {
 
 	public int calcWarTaxPrice(int price) {
 		return (price * _taxRatesWar) / 100;
-	}
-
-	public int calcDiadTaxPrice(int price) {
-		return (price * _taxRatesWar) / 100 / (100 / DIAD_TAX_RATES);
 	}
 
 	/**

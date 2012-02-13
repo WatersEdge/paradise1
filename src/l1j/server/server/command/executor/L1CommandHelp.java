@@ -25,11 +25,17 @@ import l1j.server.server.templates.L1Command;
  * GM指令：取得所有指令
  */
 public class L1CommandHelp implements L1CommandExecutor {
+	public static L1CommandExecutor getInstance() {
+		return new L1CommandHelp();
+	}
+
 	private L1CommandHelp() {
 	}
 
-	public static L1CommandExecutor getInstance() {
-		return new L1CommandHelp();
+	@Override
+	public void execute(L1PcInstance pc, String cmdName, String arg) {
+		List<L1Command> list = L1Commands.availableCommandList(pc.getAccessLevel());
+		pc.sendPackets(new S_SystemMessage(join(list, ", ")));
 	}
 
 	private String join(List<L1Command> list, String with) {
@@ -41,11 +47,5 @@ public class L1CommandHelp implements L1CommandExecutor {
 			result.append(cmd.getName());
 		}
 		return result.toString();
-	}
-
-	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
-		List<L1Command> list = L1Commands.availableCommandList(pc.getAccessLevel());
-		pc.sendPackets(new S_SystemMessage(join(list, ", ")));
 	}
 }

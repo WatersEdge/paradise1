@@ -21,11 +21,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：描述
  */
 public class L1Describe implements L1CommandExecutor {
-	private L1Describe() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Describe();
+	}
+
+	private L1Describe() {
 	}
 
 	@Override

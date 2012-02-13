@@ -62,11 +62,11 @@ import l1j.server.server.templates.L1Skills;
  * 技能定时器(技能结束)
  */
 public interface L1SkillTimer {
-	public int getRemainingTime();
-
 	public void begin();
 
 	public void end();
+
+	public int getRemainingTime();
 
 	public void kill();
 }
@@ -1498,10 +1498,42 @@ class L1SkillStop {
 }
 
 class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
+	private final L1Character _cha;
+
+	private final int _timeMillis;
+
+	private final int _skillId;
+
+	private int _remainingTime;
+
 	public L1SkillTimerThreadImpl(L1Character cha, int skillId, int timeMillis) {
 		_cha = cha;
 		_skillId = skillId;
 		_timeMillis = timeMillis;
+	}
+
+	@Override
+	public void begin() {
+		GeneralThreadPool.getInstance().execute(this);
+	}
+
+	@Override
+	public void end() {
+		super.interrupt();
+		L1SkillStop.stopSkill(_cha, _skillId);
+	}
+
+	@Override
+	public int getRemainingTime() {
+		return _remainingTime;
+	}
+
+	@Override
+	public void kill() {
+		if (Thread.currentThread().getId() == super.getId()) {
+			return; // 如果停止调用线程
+		}
+		super.interrupt();
 	}
 
 	@Override
@@ -1517,30 +1549,12 @@ class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
 		}
 		_cha.removeSkillEffect(_skillId);
 	}
+}
 
-	@Override
-	public int getRemainingTime() {
-		return _remainingTime;
-	}
+class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
+	private static Logger _log = Logger.getLogger(L1SkillTimerTimerImpl.class.getName());
 
-	@Override
-	public void begin() {
-		GeneralThreadPool.getInstance().execute(this);
-	}
-
-	@Override
-	public void end() {
-		super.interrupt();
-		L1SkillStop.stopSkill(_cha, _skillId);
-	}
-
-	@Override
-	public void kill() {
-		if (Thread.currentThread().getId() == super.getId()) {
-			return; // 如果停止调用线程
-		}
-		super.interrupt();
-	}
+	private ScheduledFuture<?> _future = null;
 
 	private final L1Character _cha;
 
@@ -1549,12 +1563,6 @@ class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
 	private final int _skillId;
 
 	private int _remainingTime;
-}
-
-class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
-	private static Logger _log = Logger.getLogger(L1SkillTimerTimerImpl.class.getName());
-
-	private ScheduledFuture<?> _future = null;
 
 	public L1SkillTimerTimerImpl(L1Character cha, int skillId, int timeMillis) {
 		_cha = cha;
@@ -1562,14 +1570,6 @@ class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
 		_timeMillis = timeMillis;
 
 		_remainingTime = _timeMillis / 1000;
-	}
-
-	@Override
-	public void run() {
-		_remainingTime--;
-		if (_remainingTime <= 0) {
-			_cha.removeSkillEffect(_skillId);
-		}
 	}
 
 	@Override
@@ -1589,6 +1589,11 @@ class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
 	}
 
 	@Override
+	public int getRemainingTime() {
+		return _remainingTime;
+	}
+
+	@Override
 	public void kill() {
 		if (_future != null) {
 			_future.cancel(false);
@@ -1596,15 +1601,10 @@ class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
 	}
 
 	@Override
-	public int getRemainingTime() {
-		return _remainingTime;
+	public void run() {
+		_remainingTime--;
+		if (_remainingTime <= 0) {
+			_cha.removeSkillEffect(_skillId);
+		}
 	}
-
-	private final L1Character _cha;
-
-	private final int _timeMillis;
-
-	private final int _skillId;
-
-	private int _remainingTime;
 }

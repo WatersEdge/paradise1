@@ -26,11 +26,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.templates.L1Npc;
 
 public class L1GfxId implements L1CommandExecutor {
-	private L1GfxId() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1GfxId();
+	}
+
+	private L1GfxId() {
 	}
 
 	@Override

@@ -34,15 +34,6 @@ public class S_Race extends ServerBasePacket {
 	public static final int GameOver = 0x45;
 	public static final int GameEnd = 0x46;
 
-	// GameStart// CountDown// GameOver// GameEnd
-	public S_Race(int type) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(type);
-		if (type == GameStart) {
-			writeC(0x05); // 倒數5秒
-		}
-	}
-
 	public S_Race(FastTable<L1PcInstance> playerList, L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(PlayerInfo);
@@ -53,6 +44,15 @@ public class S_Race extends ServerBasePacket {
 				continue;
 			}
 			writeS(player.getName());
+		}
+	}
+
+	// GameStart// CountDown// GameOver// GameEnd
+	public S_Race(int type) {
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(type);
+		if (type == GameStart) {
+			writeC(0x05); // 倒數5秒
 		}
 	}
 

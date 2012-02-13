@@ -19,11 +19,11 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Kill implements L1CommandExecutor {
-	private L1Kill() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Kill();
+	}
+
+	private L1Kill() {
 	}
 
 	@Override

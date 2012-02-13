@@ -37,9 +37,6 @@ public class ArmorSetTable {
 
 	private static ArmorSetTable _instance;
 
-	/** 套装清单 */
-	private final List<L1ArmorSets> _armorSetList = Lists.newList();
-
 	public static ArmorSetTable getInstance() {
 		if (_instance == null) {
 			_instance = new ArmorSetTable();
@@ -47,28 +44,20 @@ public class ArmorSetTable {
 		return _instance;
 	}
 
+	/** 套装清单 */
+	private final List<L1ArmorSets> _armorSetList = Lists.newList();
+
 	private ArmorSetTable() {
 		load();
 	}
 
-	private void load() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM armor_set");
-			rs = pstm.executeQuery();
-			fillTable(rs);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	/**
+	 * 传回所有清单
+	 * 
+	 * @return 所有套装列表
+	 */
+	public L1ArmorSets[] getAllList() {
+		return _armorSetList.toArray(new L1ArmorSets[_armorSetList.size()]);
 	}
 
 	/**
@@ -108,13 +97,24 @@ public class ArmorSetTable {
 		}
 	}
 
-	/**
-	 * 传回所有清单
-	 * 
-	 * @return 所有套装列表
-	 */
-	public L1ArmorSets[] getAllList() {
-		return _armorSetList.toArray(new L1ArmorSets[_armorSetList.size()]);
+	private void load() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM armor_set");
+			rs = pstm.executeQuery();
+			fillTable(rs);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 }

@@ -62,11 +62,11 @@ import l1j.server.server.templates.L1Skills;
  * GM指令：给对象所有魔法
  */
 public class L1AllBuff implements L1CommandExecutor {
-	private L1AllBuff() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1AllBuff();
+	}
+
+	private L1AllBuff() {
 	}
 
 	@Override

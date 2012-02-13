@@ -20,11 +20,11 @@ import l1j.server.server.serverpackets.S_OtherCharPacks;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Visible implements L1CommandExecutor {
-	private L1Visible() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Visible();
+	}
+
+	private L1Visible() {
 	}
 
 	@Override

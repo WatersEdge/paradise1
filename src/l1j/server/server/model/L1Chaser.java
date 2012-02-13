@@ -50,37 +50,6 @@ public class L1Chaser extends TimerTask {
 		_gfxid = gfxid;
 	}
 
-	@Override
-	public void run() {
-		try {
-			if (_cha == null || _cha.isDead()) {
-				stop();
-				return;
-			}
-			attack();
-			_timeCounter++;
-			if (_timeCounter >= 3) {
-				stop();
-				return;
-			}
-		}
-		catch (Throwable e) {
-			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
-		}
-	}
-
-	public void begin() {
-		// 效果时间持续8秒、事实上，在考虑每4秒技能效果处理时间只出现一次
-		// 设置0.9秒的启动时间
-		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 0, 1000);
-	}
-
-	public void stop() {
-		if (_future != null) {
-			_future.cancel(false);
-		}
-	}
-
 	public void attack() {
 		double damage = getDamage(_pc, _cha);
 		if (_cha.getCurrentHp() - (int) damage <= 0 && _cha.getCurrentHp() != 1) {
@@ -123,6 +92,12 @@ public class L1Chaser extends TimerTask {
 		}
 	}
 
+	public void begin() {
+		// 效果时间持续8秒、事实上，在考虑每4秒技能效果处理时间只出现一次
+		// 设置0.9秒的启动时间
+		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 0, 1000);
+	}
+
 	public double getDamage(L1PcInstance pc, L1Character cha) {
 		double dmg = 0;
 		int spByItem = pc.getSp() - pc.getTrueSp();
@@ -155,6 +130,31 @@ public class L1Chaser extends TimerTask {
 			dmg /= 2.0;
 		}
 		return dmg;
+	}
+
+	@Override
+	public void run() {
+		try {
+			if (_cha == null || _cha.isDead()) {
+				stop();
+				return;
+			}
+			attack();
+			_timeCounter++;
+			if (_timeCounter >= 3) {
+				stop();
+				return;
+			}
+		}
+		catch (Throwable e) {
+			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
+		}
+	}
+
+	public void stop() {
+		if (_future != null) {
+			_future.cancel(false);
+		}
 	}
 
 }

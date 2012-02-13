@@ -29,11 +29,11 @@ import l1j.server.server.templates.L1ItemSetItem;
  * GM指令：创立套装
  */
 public class L1CreateItemSet implements L1CommandExecutor {
-	private L1CreateItemSet() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1CreateItemSet();
+	}
+
+	private L1CreateItemSet() {
 	}
 
 	@Override

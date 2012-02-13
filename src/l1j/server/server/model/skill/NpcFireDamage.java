@@ -21,28 +21,6 @@ import l1j.server.server.serverpackets.S_DoActionGFX;
  */
 public class NpcFireDamage {
 
-	/** 使用者 */
-	private L1Character user = null;
-
-	/** 火牢 */
-	private L1EffectInstance fire = null;
-
-	/**
-	 * NPC 火牢伤害
-	 * 
-	 * @param cha
-	 * @param firewall
-	 */
-	public NpcFireDamage(L1Character cha, L1NpcInstance firewall) {
-		user = cha;
-		fire = (L1EffectInstance) firewall;
-	}
-
-	public void onDamageAction() {
-		Damage damage_run = new Damage();
-		GeneralThreadPool.getInstance().execute(damage_run);
-	}
-
 	class Damage implements Runnable {
 
 		private Damage() {
@@ -103,6 +81,28 @@ public class NpcFireDamage {
 				}
 			}
 		}
+	}
+
+	/** 使用者 */
+	private L1Character user = null;
+
+	/** 火牢 */
+	private L1EffectInstance fire = null;
+
+	/**
+	 * NPC 火牢伤害
+	 * 
+	 * @param cha
+	 * @param firewall
+	 */
+	public NpcFireDamage(L1Character cha, L1NpcInstance firewall) {
+		user = cha;
+		fire = (L1EffectInstance) firewall;
+	}
+
+	public void onDamageAction() {
+		Damage damage_run = new Damage();
+		GeneralThreadPool.getInstance().execute(damage_run);
 	}
 
 }

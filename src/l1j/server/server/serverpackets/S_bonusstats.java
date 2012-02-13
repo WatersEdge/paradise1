@@ -36,12 +36,6 @@ public class S_bonusstats extends ServerBasePacket {
 		buildPacket(i, j);
 	}
 
-	private void buildPacket(int i, int j) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(i);
-		writeS("RaiseAttr");
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -54,5 +48,11 @@ public class S_bonusstats extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return "[S] S_bonusstats";
+	}
+
+	private void buildPacket(int i, int j) {
+		writeC(Opcodes.S_OPCODE_SHOWHTML);
+		writeD(i);
+		writeS("RaiseAttr");
 	}
 }

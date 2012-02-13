@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class EnchantConversion extends ItemExecutor {
 
-	private EnchantConversion() {
-	}
-
 	public static ItemExecutor get() {
 		return new EnchantConversion();
+	}
+
+	private EnchantConversion() {
 	}
 
 	/**

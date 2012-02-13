@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class OldTimes2 extends ItemExecutor {
 
-	private OldTimes2() {
-	}
-
 	public static ItemExecutor get() {
 		return new OldTimes2();
+	}
+
+	private OldTimes2() {
 	}
 
 	/**

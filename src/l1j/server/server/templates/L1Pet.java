@@ -15,107 +15,107 @@
 package l1j.server.server.templates;
 
 public class L1Pet {
-	public L1Pet() {
-	}
-
 	private int _itemobjid;
-
-	public int get_itemobjid() {
-		return _itemobjid;
-	}
-
-	public void set_itemobjid(int i) {
-		_itemobjid = i;
-	}
 
 	private int _objid;
 
-	public int get_objid() {
-		return _objid;
-	}
-
-	public void set_objid(int i) {
-		_objid = i;
-	}
-
 	private int _npcid;
-
-	public int get_npcid() {
-		return _npcid;
-	}
-
-	public void set_npcid(int i) {
-		_npcid = i;
-	}
 
 	private String _name;
 
-	public String get_name() {
-		return _name;
-	}
-
-	public void set_name(String s) {
-		_name = s;
-	}
-
 	private int _level;
 
-	public int get_level() {
-		return _level;
-	}
-
-	public void set_level(int i) {
-		_level = i;
-	}
-
 	private int _hp;
+
+	private int _mp;
+
+	private int _exp;
+
+	private int _lawful;
+
+	// 饱食度
+	private int _food;
+
+	public L1Pet() {
+	}
+
+	public int get_exp() {
+		return _exp;
+	}
+
+	public int get_food() {
+		return _food;
+	}
 
 	public int get_hp() {
 		return _hp;
 	}
 
-	public void set_hp(int i) {
-		_hp = i;
+	public int get_itemobjid() {
+		return _itemobjid;
 	}
 
-	private int _mp;
+	public int get_lawful() {
+		return _lawful;
+	}
+
+	public int get_level() {
+		return _level;
+	}
 
 	public int get_mp() {
 		return _mp;
 	}
 
-	public void set_mp(int i) {
-		_mp = i;
+	public String get_name() {
+		return _name;
 	}
 
-	private int _exp;
+	public int get_npcid() {
+		return _npcid;
+	}
 
-	public int get_exp() {
-		return _exp;
+	public int get_objid() {
+		return _objid;
 	}
 
 	public void set_exp(int i) {
 		_exp = i;
 	}
 
-	private int _lawful;
+	public void set_food(int i) {
+		_food = i;
+	}
 
-	public int get_lawful() {
-		return _lawful;
+	public void set_hp(int i) {
+		_hp = i;
+	}
+
+	public void set_itemobjid(int i) {
+		_itemobjid = i;
 	}
 
 	public void set_lawful(int i) {
 		_lawful = i;
 	}
 
-	// 饱食度
-	private int _food;
-
-	public int get_food() {
-		return _food;
+	public void set_level(int i) {
+		_level = i;
 	}
 
-	public void set_food(int i) {
-		_food = i;
+	public void set_mp(int i) {
+		_mp = i;
+	}
+
+	public void set_name(String s) {
+		_name = s;
+	}
+
+	public void set_npcid(int i) {
+		_npcid = i;
+	}
+
+	public void set_objid(int i) {
+		_objid = i;
 	}
 }

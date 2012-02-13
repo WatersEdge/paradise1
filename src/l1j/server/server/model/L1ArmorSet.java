@@ -33,20 +33,6 @@ import l1j.server.server.utils.collections.Lists;
  */
 public abstract class L1ArmorSet {
 
-	public abstract void giveEffect(L1PcInstance pc);
-
-	public abstract void cancelEffect(L1PcInstance pc);
-
-	public abstract boolean isValid(L1PcInstance pc);
-
-	public abstract boolean isPartOfSet(int id);
-
-	public abstract boolean isEquippedRingOfArmorSet(L1PcInstance pc);
-
-	public static List<L1ArmorSet> getAllSet() {
-		return _allSet;
-	}
-
 	private static List<L1ArmorSet> _allSet = Lists.newList();
 
 	/*
@@ -74,6 +60,10 @@ public abstract class L1ArmorSet {
 		}
 	}
 
+	public static List<L1ArmorSet> getAllSet() {
+		return _allSet;
+	}
+
 	private static int[] getArray(String s, String sToken) {
 		StringTokenizer st = new StringTokenizer(s, sToken);
 		int size = st.countTokens();
@@ -85,12 +75,142 @@ public abstract class L1ArmorSet {
 		}
 		return array;
 	}
+
+	public abstract void cancelEffect(L1PcInstance pc);
+
+	public abstract void giveEffect(L1PcInstance pc);
+
+	public abstract boolean isEquippedRingOfArmorSet(L1PcInstance pc);
+
+	public abstract boolean isPartOfSet(int id);
+
+	public abstract boolean isValid(L1PcInstance pc);
+}
+
+class AcHpMpBonusEffect implements L1ArmorSetEffect {
+	private final int _ac;
+
+	private final int _addHp;
+
+	private final int _addMp;
+
+	private final int _regenHp;
+
+	private final int _regenMp;
+
+	private final int _addMr;
+
+	public AcHpMpBonusEffect(int ac, int addHp, int addMp, int regenHp, int regenMp, int addMr) {
+		_ac = ac;
+		_addHp = addHp;
+		_addMp = addMp;
+		_regenHp = regenHp;
+		_regenMp = regenMp;
+		_addMr = addMr;
+	}
+
+	@Override
+	public void cancelEffect(L1PcInstance pc) {
+		pc.addAc(-_ac);
+		pc.addMaxHp(-_addHp);
+		pc.addMaxMp(-_addMp);
+		pc.addHpr(-_regenHp);
+		pc.addMpr(-_regenMp);
+		pc.addMr(-_addMr);
+	}
+
+	@Override
+	public void giveEffect(L1PcInstance pc) {
+		pc.addAc(_ac);
+		pc.addMaxHp(_addHp);
+		pc.addMaxMp(_addMp);
+		pc.addHpr(_regenHp);
+		pc.addMpr(_regenMp);
+		pc.addMr(_addMr);
+	}
+}
+
+// 水、风、火、地属性
+class DefenseBonusEffect implements L1ArmorSetEffect {
+	private final int _defenseWater;
+
+	private final int _defenseWind;
+
+	private final int _defenseFire;
+
+	private final int _defenseEarth;
+
+	public DefenseBonusEffect(int defenseWater, int defenseWind, int defenseFire, int defenseEarth) {
+		_defenseWater = defenseWater;
+		_defenseWind = defenseWind;
+		_defenseFire = defenseFire;
+		_defenseEarth = defenseEarth;
+	}
+
+	// @Override
+	@Override
+	public void cancelEffect(L1PcInstance pc) {
+		pc.addWater(-_defenseWater);
+		pc.addWind(-_defenseWind);
+		pc.addFire(-_defenseFire);
+		pc.addEarth(-_defenseEarth);
+	}
+
+	// @Override
+	@Override
+	public void giveEffect(L1PcInstance pc) {
+		pc.addWater(_defenseWater);
+		pc.addWind(_defenseWind);
+		pc.addFire(_defenseFire);
+		pc.addEarth(_defenseEarth);
+	}
+}
+
+// 命中率、额外攻击力、魔攻
+class HitDmgModifierEffect implements L1ArmorSetEffect {
+	private final int _hitModifier;
+
+	private final int _dmgModifier;
+
+	private final int _bowHitModifier;
+
+	private final int _bowDmgModifier;
+
+	private final int _sp;
+
+	public HitDmgModifierEffect(int hitModifier, int dmgModifier, int bowHitModifier, int bowDmgModifier, int sp) {
+		_hitModifier = hitModifier;
+		_dmgModifier = dmgModifier;
+		_bowHitModifier = bowHitModifier;
+		_bowDmgModifier = bowDmgModifier;
+		_sp = sp;
+	}
+
+	// @Override
+	@Override
+	public void cancelEffect(L1PcInstance pc) {
+		pc.addHitModifierByArmor(-_hitModifier);
+		pc.addDmgModifierByArmor(-_dmgModifier);
+		pc.addBowHitModifierByArmor(-_bowHitModifier);
+		pc.addBowDmgModifierByArmor(-_bowDmgModifier);
+		pc.addSp(-_sp);
+	}
+
+	// @Override
+	@Override
+	public void giveEffect(L1PcInstance pc) {
+		pc.addHitModifierByArmor(_hitModifier);
+		pc.addDmgModifierByArmor(_dmgModifier);
+		pc.addBowHitModifierByArmor(_bowHitModifier);
+		pc.addBowDmgModifierByArmor(_bowDmgModifier);
+		pc.addSp(_sp);
+	}
 }
 
 interface L1ArmorSetEffect {
-	public void giveEffect(L1PcInstance pc);
-
 	public void cancelEffect(L1PcInstance pc);
+
+	public void giveEffect(L1PcInstance pc);
 }
 
 class L1ArmorSetImpl extends L1ArmorSet {
@@ -107,10 +227,6 @@ class L1ArmorSetImpl extends L1ArmorSet {
 		_effects.add(effect);
 	}
 
-	public void removeEffect(L1ArmorSetEffect effect) {
-		_effects.remove(effect);
-	}
-
 	@Override
 	public void cancelEffect(L1PcInstance pc) {
 		for (L1ArmorSetEffect effect : _effects) {
@@ -123,21 +239,6 @@ class L1ArmorSetImpl extends L1ArmorSet {
 		for (L1ArmorSetEffect effect : _effects) {
 			effect.giveEffect(pc);
 		}
-	}
-
-	@Override
-	public final boolean isValid(L1PcInstance pc) {
-		return pc.getInventory().checkEquipped(_ids);
-	}
-
-	@Override
-	public boolean isPartOfSet(int id) {
-		for (int i : _ids) {
-			if (id == i) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -169,49 +270,86 @@ class L1ArmorSetImpl extends L1ArmorSet {
 		return false;
 	}
 
-}
-
-class AcHpMpBonusEffect implements L1ArmorSetEffect {
-	private final int _ac;
-
-	private final int _addHp;
-
-	private final int _addMp;
-
-	private final int _regenHp;
-
-	private final int _regenMp;
-
-	private final int _addMr;
-
-	public AcHpMpBonusEffect(int ac, int addHp, int addMp, int regenHp, int regenMp, int addMr) {
-		_ac = ac;
-		_addHp = addHp;
-		_addMp = addMp;
-		_regenHp = regenHp;
-		_regenMp = regenMp;
-		_addMr = addMr;
+	@Override
+	public boolean isPartOfSet(int id) {
+		for (int i : _ids) {
+			if (id == i) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
-		pc.addAc(_ac);
-		pc.addMaxHp(_addHp);
-		pc.addMaxMp(_addMp);
-		pc.addHpr(_regenHp);
-		pc.addMpr(_regenMp);
-		pc.addMr(_addMr);
+	public final boolean isValid(L1PcInstance pc) {
+		return pc.getInventory().checkEquipped(_ids);
+	}
+
+	public void removeEffect(L1ArmorSetEffect effect) {
+		_effects.remove(effect);
+	}
+
+}
+
+class PolymorphEffect implements L1ArmorSetEffect {
+	private int _gfxId;
+
+	public PolymorphEffect(int gfxId) {
+		_gfxId = gfxId;
 	}
 
 	@Override
 	public void cancelEffect(L1PcInstance pc) {
-		pc.addAc(-_ac);
-		pc.addMaxHp(-_addHp);
-		pc.addMaxMp(-_addMp);
-		pc.addHpr(-_regenHp);
-		pc.addMpr(-_regenMp);
-		pc.addMr(-_addMr);
+		int awakeSkillId = pc.getAwakeSkillId();
+		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
+			return;
+		}
+		if (_gfxId == 6080) {
+			if (pc.get_sex() == 0) {
+				_gfxId = 6094;
+			}
+		}
+		if (pc.getTempCharGfx() != _gfxId) {
+			return;
+		}
+		L1PolyMorph.undoPoly(pc);
 	}
+
+	@Override
+	public void giveEffect(L1PcInstance pc) {
+		int awakeSkillId = pc.getAwakeSkillId();
+		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
+			return;
+		}
+		if ((_gfxId == 6080) || (_gfxId == 6094)) {
+			if (pc.get_sex() == 0) {
+				_gfxId = 6094;
+			}
+			else {
+				_gfxId = 6080;
+			}
+			if (!isRemainderOfCharge(pc)) { // 残チャージ数なし
+				return;
+			}
+		}
+		L1PolyMorph.doPoly(pc, _gfxId, 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
+	}
+
+	private boolean isRemainderOfCharge(L1PcInstance pc) {
+		boolean isRemainderOfCharge = false;
+		if (pc.getInventory().checkItem(20383, 1)) { // 军马头盔
+			L1ItemInstance item = pc.getInventory().findItemId(20383);
+			if (item != null) {
+				if (item.getChargeCount() != 0) {
+					isRemainderOfCharge = true;
+				}
+			}
+		}
+		return isRemainderOfCharge;
+	}
+
 }
 
 class StatBonusEffect implements L1ArmorSetEffect {
@@ -237,16 +375,6 @@ class StatBonusEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
-		pc.addStr((byte) _str);
-		pc.addDex((byte) _dex);
-		pc.addCon((byte) _con);
-		pc.addWis((byte) _wis);
-		pc.addCha((byte) _cha);
-		pc.addInt((byte) _intl);
-	}
-
-	@Override
 	public void cancelEffect(L1PcInstance pc) {
 		pc.addStr((byte) -_str);
 		pc.addDex((byte) -_dex);
@@ -255,142 +383,14 @@ class StatBonusEffect implements L1ArmorSetEffect {
 		pc.addCha((byte) -_cha);
 		pc.addInt((byte) -_intl);
 	}
-}
-
-// 水、风、火、地属性
-class DefenseBonusEffect implements L1ArmorSetEffect {
-	private final int _defenseWater;
-
-	private final int _defenseWind;
-
-	private final int _defenseFire;
-
-	private final int _defenseEarth;
-
-	public DefenseBonusEffect(int defenseWater, int defenseWind, int defenseFire, int defenseEarth) {
-		_defenseWater = defenseWater;
-		_defenseWind = defenseWind;
-		_defenseFire = defenseFire;
-		_defenseEarth = defenseEarth;
-	}
-
-	// @Override
-	@Override
-	public void giveEffect(L1PcInstance pc) {
-		pc.addWater(_defenseWater);
-		pc.addWind(_defenseWind);
-		pc.addFire(_defenseFire);
-		pc.addEarth(_defenseEarth);
-	}
-
-	// @Override
-	@Override
-	public void cancelEffect(L1PcInstance pc) {
-		pc.addWater(-_defenseWater);
-		pc.addWind(-_defenseWind);
-		pc.addFire(-_defenseFire);
-		pc.addEarth(-_defenseEarth);
-	}
-}
-
-// 命中率、额外攻击力、魔攻
-class HitDmgModifierEffect implements L1ArmorSetEffect {
-	private final int _hitModifier;
-
-	private final int _dmgModifier;
-
-	private final int _bowHitModifier;
-
-	private final int _bowDmgModifier;
-
-	private final int _sp;
-
-	public HitDmgModifierEffect(int hitModifier, int dmgModifier, int bowHitModifier, int bowDmgModifier, int sp) {
-		_hitModifier = hitModifier;
-		_dmgModifier = dmgModifier;
-		_bowHitModifier = bowHitModifier;
-		_bowDmgModifier = bowDmgModifier;
-		_sp = sp;
-	}
-
-	// @Override
-	@Override
-	public void giveEffect(L1PcInstance pc) {
-		pc.addHitModifierByArmor(_hitModifier);
-		pc.addDmgModifierByArmor(_dmgModifier);
-		pc.addBowHitModifierByArmor(_bowHitModifier);
-		pc.addBowDmgModifierByArmor(_bowDmgModifier);
-		pc.addSp(_sp);
-	}
-
-	// @Override
-	@Override
-	public void cancelEffect(L1PcInstance pc) {
-		pc.addHitModifierByArmor(-_hitModifier);
-		pc.addDmgModifierByArmor(-_dmgModifier);
-		pc.addBowHitModifierByArmor(-_bowHitModifier);
-		pc.addBowDmgModifierByArmor(-_bowDmgModifier);
-		pc.addSp(-_sp);
-	}
-}
-
-class PolymorphEffect implements L1ArmorSetEffect {
-	private int _gfxId;
-
-	public PolymorphEffect(int gfxId) {
-		_gfxId = gfxId;
-	}
 
 	@Override
 	public void giveEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
-			return;
-		}
-		if ((_gfxId == 6080) || (_gfxId == 6094)) {
-			if (pc.get_sex() == 0) {
-				_gfxId = 6094;
-			}
-			else {
-				_gfxId = 6080;
-			}
-			if (!isRemainderOfCharge(pc)) { // 残チャージ数なし
-				return;
-			}
-		}
-		L1PolyMorph.doPoly(pc, _gfxId, 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
+		pc.addStr((byte) _str);
+		pc.addDex((byte) _dex);
+		pc.addCon((byte) _con);
+		pc.addWis((byte) _wis);
+		pc.addCha((byte) _cha);
+		pc.addInt((byte) _intl);
 	}
-
-	@Override
-	public void cancelEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
-			return;
-		}
-		if (_gfxId == 6080) {
-			if (pc.get_sex() == 0) {
-				_gfxId = 6094;
-			}
-		}
-		if (pc.getTempCharGfx() != _gfxId) {
-			return;
-		}
-		L1PolyMorph.undoPoly(pc);
-	}
-
-	private boolean isRemainderOfCharge(L1PcInstance pc) {
-		boolean isRemainderOfCharge = false;
-		if (pc.getInventory().checkItem(20383, 1)) { // 军马头盔
-			L1ItemInstance item = pc.getInventory().findItemId(20383);
-			if (item != null) {
-				if (item.getChargeCount() != 0) {
-					isRemainderOfCharge = true;
-				}
-			}
-		}
-		return isRemainderOfCharge;
-	}
-
 }

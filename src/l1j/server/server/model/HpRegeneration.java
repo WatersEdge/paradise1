@@ -46,11 +46,31 @@ public class HpRegeneration extends TimerTask {
 
 	private static final Logger _log = Logger.getLogger(HpRegeneration.class.getName());
 
+	/**
+	 * 检查指定的PC是否在治愈能量风暴范围内
+	 * 
+	 * @param pc
+	 *            PC
+	 * @return true 如果PC在治愈能量风暴范围内
+	 */
+	private static boolean isPlayerInLifeStream(L1PcInstance pc) {
+		for (L1Object object : pc.getKnownObjects()) {
+			if (object instanceof L1EffectInstance == false) {
+				continue;
+			}
+			L1EffectInstance effect = (L1EffectInstance) object;
+			if (effect.getNpcId() == 81169 && effect.getLocation().getTileLineDistance(pc.getLocation()) < 4) {
+				return true;
+			}
+		}
+		return false;
+	}
 	private final L1PcInstance _pc;
 	/** 再生的最大值 */
 	private int _regenMax = 0;
 	/** 再生点 */
 	private int _regenPoint = 0;
+
 	/** 当前点 */
 	private int _curPoint = 4;
 
@@ -58,77 +78,6 @@ public class HpRegeneration extends TimerTask {
 		_pc = pc;
 
 		updateLevel();
-	}
-
-	public void setState(int state) {
-		if (_curPoint < state) {
-			return;
-		}
-
-		_curPoint = state;
-	}
-
-	@Override
-	public void run() {
-		try {
-			if (_pc.isDead()) {
-				return;
-			}
-
-			// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
-			if ((_pc.getInventory().checkEquipped(21119)) // 法利昂的力量
-					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
-					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
-					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
-			) {
-				if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) { // 没有法利昂的治愈结界
-					_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
-				}
-			}
-
-			// 装备南瓜魔法帽获得万圣节南瓜派
-			if (_pc.getInventory().checkEquipped(20380)) { // 检查是否装备南瓜魔法帽
-				if (!_pc.hasSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN) && !_pc.isDead()) { // 如果没有南瓜魔法帽效果
-					_pc.setSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN, 5 * 60 * 1000); // 加上效果并开始倒计时5分钟
-				}
-			}
-
-			// 免登出可点完奖励点
-			if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
-				if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
-					if ((_pc.getBaseStr() + _pc.getBaseDex() + _pc.getBaseCon() + _pc.getBaseInt() + _pc.getBaseWis() + _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
-						_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
-					}
-				}
-			}
-
-			_regenPoint += _curPoint;
-			_curPoint = 4;
-
-			synchronized (this) {
-				if (_regenMax <= _regenPoint) {
-					_regenPoint = 0;
-					regenHp();
-				}
-			}
-		}
-		catch (Throwable e) {
-			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
-		}
-	}
-
-	/** 更新级别 */
-	public void updateLevel() {
-		final int lvlTable[] = new int[] { 30, 25, 20, 16, 14, 12, 11, 10, 9, 3, 2 };
-
-		int regenLvl = Math.min(10, _pc.getLevel());
-		if (30 <= _pc.getLevel() && _pc.isKnight()) {
-			regenLvl = 11;
-		}
-
-		synchronized (this) {
-			_regenMax = lvlTable[regenLvl - 1] * 4;
-		}
 	}
 
 	public void regenHp() {
@@ -239,22 +188,81 @@ public class HpRegeneration extends TimerTask {
 		}
 	}
 
-	/** 水中的负面状态无效 */
-	private boolean isUnderwater(L1PcInstance pc) {
-		// 启动水下装备时、 伊娃祝福状态、修好的装备 则认为水中的负面状态无效。
-		if (pc.getInventory().checkEquipped(20207)) { // 深水长靴
-			return false;
+	@Override
+	public void run() {
+		try {
+			if (_pc.isDead()) {
+				return;
+			}
+
+			// 新水龙装备魔法效果(法利昂的治愈结界) 非仿正
+			if ((_pc.getInventory().checkEquipped(21119)) // 法利昂的力量
+					|| (_pc.getInventory().checkEquipped(21120)) // 法利昂的魅惑
+					|| (_pc.getInventory().checkEquipped(21121)) // 法利昂的泉源
+					|| (_pc.getInventory().checkEquipped(21122)) // 法利昂的霸气
+			) {
+				if (!_pc.hasSkillEffect(FLA_CURE_WARD) && !_pc.isDead()) { // 没有法利昂的治愈结界
+					_pc.setSkillEffect(FLA_CURE_WARD, 120 * 1000); // 2分钟
+				}
+			}
+
+			// 装备南瓜魔法帽获得万圣节南瓜派
+			if (_pc.getInventory().checkEquipped(20380)) { // 检查是否装备南瓜魔法帽
+				if (!_pc.hasSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN) && !_pc.isDead()) { // 如果没有南瓜魔法帽效果
+					_pc.setSkillEffect(EFFECT_HELMET_OF_MAGIC_PUMPKIN, 5 * 60 * 1000); // 加上效果并开始倒计时5分钟
+				}
+			}
+
+			// 免登出可点完奖励点
+			if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
+				if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
+					if ((_pc.getBaseStr() + _pc.getBaseDex() + _pc.getBaseCon() + _pc.getBaseInt() + _pc.getBaseWis() + _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
+						_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
+					}
+				}
+			}
+
+			_regenPoint += _curPoint;
+			_curPoint = 4;
+
+			synchronized (this) {
+				if (_regenMax <= _regenPoint) {
+					_regenPoint = 0;
+					regenHp();
+				}
+			}
 		}
-		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
-			return false;
+		catch (Throwable e) {
+			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
-		if (pc.getInventory().checkEquipped(21048) // 修好的戒指
-				&& pc.getInventory().checkEquipped(21049) // 修好的耳环
-				&& pc.getInventory().checkEquipped(21050)) { // 修好的项链
-			return false;
+	}
+
+	public void setState(int state) {
+		if (_curPoint < state) {
+			return;
 		}
 
-		return pc.getMap().isUnderwater();
+		_curPoint = state;
+	}
+
+	/** 更新级别 */
+	public void updateLevel() {
+		final int lvlTable[] = new int[] { 30, 25, 20, 16, 14, 12, 11, 10, 9, 3, 2 };
+
+		int regenLvl = Math.min(10, _pc.getLevel());
+		if (30 <= _pc.getLevel() && _pc.isKnight()) {
+			regenLvl = 11;
+		}
+
+		synchronized (this) {
+			_regenMax = lvlTable[regenLvl - 1] * 4;
+		}
+	}
+
+	/** 50级任务 */
+	private boolean isLv50Quest(L1PcInstance pc) {
+		int mapId = pc.getMapId();
+		return (mapId == 2000 || mapId == 2001) ? true : false;
 	}
 
 	/** 超重仍可恢复血魔 */
@@ -271,29 +279,21 @@ public class HpRegeneration extends TimerTask {
 		return (121 <= pc.getInventory().getWeight242()) ? true : false;
 	}
 
-	/** 50级任务 */
-	private boolean isLv50Quest(L1PcInstance pc) {
-		int mapId = pc.getMapId();
-		return (mapId == 2000 || mapId == 2001) ? true : false;
-	}
-
-	/**
-	 * 检查指定的PC是否在治愈能量风暴范围内
-	 * 
-	 * @param pc
-	 *            PC
-	 * @return true 如果PC在治愈能量风暴范围内
-	 */
-	private static boolean isPlayerInLifeStream(L1PcInstance pc) {
-		for (L1Object object : pc.getKnownObjects()) {
-			if (object instanceof L1EffectInstance == false) {
-				continue;
-			}
-			L1EffectInstance effect = (L1EffectInstance) object;
-			if (effect.getNpcId() == 81169 && effect.getLocation().getTileLineDistance(pc.getLocation()) < 4) {
-				return true;
-			}
+	/** 水中的负面状态无效 */
+	private boolean isUnderwater(L1PcInstance pc) {
+		// 启动水下装备时、 伊娃祝福状态、修好的装备 则认为水中的负面状态无效。
+		if (pc.getInventory().checkEquipped(20207)) { // 深水长靴
+			return false;
 		}
-		return false;
+		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
+			return false;
+		}
+		if (pc.getInventory().checkEquipped(21048) // 修好的戒指
+				&& pc.getInventory().checkEquipped(21049) // 修好的耳环
+				&& pc.getInventory().checkEquipped(21050)) { // 修好的项链
+			return false;
+		}
+
+		return pc.getMap().isUnderwater();
 	}
 }

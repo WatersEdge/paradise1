@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_RestorationMp;
  */
 public class SmartMoney extends ItemExecutor {
 
-	private SmartMoney() {
-	}
-
 	public static ItemExecutor get() {
 		return new SmartMoney();
+	}
+
+	private SmartMoney() {
 	}
 
 	/**

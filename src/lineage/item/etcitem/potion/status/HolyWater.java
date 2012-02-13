@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class HolyWater extends ItemExecutor {
 
-	private HolyWater() {
-	}
-
 	public static ItemExecutor get() {
 		return new HolyWater();
+	}
+
+	private HolyWater() {
 	}
 
 	/**

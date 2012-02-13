@@ -75,6 +75,28 @@ public class Cipher {
 	}
 
 	/**
+	 * 将受保护的资料进行还原,让伺服器可以参考正确的资料.
+	 * 
+	 * @param data
+	 *            , 受保护的资料
+	 * @return data, 原始的资料
+	 */
+	public byte[] decrypt(byte[] data) {
+		data[0] ^= db[5] ^ data[1];
+		data[1] ^= db[4] ^ data[2];
+		data[2] ^= db[3] ^ data[3];
+		data[3] ^= db[2];
+
+		for (int i = data.length - 1; i >= 1; i--) {
+			data[i] ^= data[i - 1] ^ db[i & 7];
+		}
+
+		data[0] ^= db[0];
+		update(db, data);
+		return data;
+	}
+
+	/**
 	 * 将未受保护的资料进行混淆,避免资料外流.
 	 * 
 	 * @param data
@@ -97,28 +119,6 @@ public class Cipher {
 		data[1] ^= eb[4] ^ data[2];
 		data[0] ^= eb[5] ^ data[1];
 		update(eb, tb);
-		return data;
-	}
-
-	/**
-	 * 将受保护的资料进行还原,让伺服器可以参考正确的资料.
-	 * 
-	 * @param data
-	 *            , 受保护的资料
-	 * @return data, 原始的资料
-	 */
-	public byte[] decrypt(byte[] data) {
-		data[0] ^= db[5] ^ data[1];
-		data[1] ^= db[4] ^ data[2];
-		data[2] ^= db[3] ^ data[3];
-		data[3] ^= db[2];
-
-		for (int i = data.length - 1; i >= 1; i--) {
-			data[i] ^= data[i - 1] ^ db[i & 7];
-		}
-
-		data[0] ^= db[0];
-		update(db, data);
 		return data;
 	}
 

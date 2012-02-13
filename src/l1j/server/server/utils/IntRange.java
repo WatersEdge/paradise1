@@ -23,7 +23,18 @@ package l1j.server.server.utils;
  * </p>
  */
 public class IntRange {
+	public static int ensure(int n, int low, int high) {
+		int r = n;
+		r = (low <= r) ? r : low;
+		r = (r <= high) ? r : high;
+		return r;
+	}
+	public static boolean includes(int i, int low, int high) {
+		return (low <= i) && (i <= high);
+	}
+
 	private int _low;
+
 	private int _high;
 
 	public IntRange(int low, int high) {
@@ -33,21 +44,6 @@ public class IntRange {
 
 	public IntRange(IntRange range) {
 		this(range._low, range._high);
-	}
-
-	/**
-	 * 数値iが、範囲内にあるかを返す。
-	 * 
-	 * @param i
-	 *            数値
-	 * @return 範囲内であればtrue
-	 */
-	public boolean includes(int i) {
-		return (_low <= i) && (i <= _high);
-	}
-
-	public static boolean includes(int i, int low, int high) {
-		return (low <= i) && (i <= high);
 	}
 
 	/**
@@ -64,11 +60,39 @@ public class IntRange {
 		return r;
 	}
 
-	public static int ensure(int n, int low, int high) {
-		int r = n;
-		r = (low <= r) ? r : low;
-		r = (r <= high) ? r : high;
-		return r;
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof IntRange)) {
+			return false;
+		}
+		IntRange range = (IntRange) obj;
+		return (this._low == range._low) && (this._high == range._high);
+	}
+
+	/** 获得高的 */
+	public int getHigh() {
+		return _high;
+	}
+
+	/** 获得低的 */
+	public int getLow() {
+		return _low;
+	}
+
+	/** 获得宽度 */
+	public int getWidth() {
+		return _high - _low;
+	}
+
+	/**
+	 * 数値iが、範囲内にあるかを返す。
+	 * 
+	 * @param i
+	 *            数値
+	 * @return 範囲内であればtrue
+	 */
+	public boolean includes(int i) {
+		return (_low <= i) && (i <= _high);
 	}
 
 	/**
@@ -78,30 +102,6 @@ public class IntRange {
 	 */
 	public int randomValue() {
 		return Random.nextInt(getWidth() + 1) + _low;
-	}
-
-	/** 获得低的 */
-	public int getLow() {
-		return _low;
-	}
-
-	/** 获得高的 */
-	public int getHigh() {
-		return _high;
-	}
-
-	/** 获得宽度 */
-	public int getWidth() {
-		return _high - _low;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof IntRange)) {
-			return false;
-		}
-		IntRange range = (IntRange) obj;
-		return (this._low == range._low) && (this._high == range._high);
 	}
 
 	@Override

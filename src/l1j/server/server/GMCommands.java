@@ -41,14 +41,45 @@ public class GMCommands {
 
 	private static GMCommands _instance;
 
-	private GMCommands() {
-	}
+	private static Map<Integer, String> _lastCommands = Maps.newMap();
 
 	public static GMCommands getInstance() {
 		if (_instance == null) {
 			_instance = new GMCommands();
 		}
 		return _instance;
+	}
+
+	private GMCommands() {
+	}
+
+	/** 处理GM指令 */
+	public void handleCommands(L1PcInstance gm, String cmdLine) {
+		StringTokenizer token = new StringTokenizer(cmdLine);
+		// 命令，直到第一个空白，并在其后当作参数空格隔开
+		String cmd = token.nextToken();
+		String param = "";
+		while (token.hasMoreTokens()) {
+			param = new StringBuilder(param).append(token.nextToken()).append(' ').toString();
+		}
+		param = param.trim();
+
+		// 将使用过的指令存起来
+		if (executeDatabaseCommand(gm, cmd, param)) {
+			if (!cmd.equalsIgnoreCase("r")) {
+				_lastCommands.put(gm.getId(), cmdLine);
+			}
+			return;
+		}
+		if (cmd.equalsIgnoreCase("r")) {
+			if (!_lastCommands.containsKey(gm.getId())) {
+				gm.sendPackets(new S_ServerMessage(74, "指令 " + cmd)); // \f1%0%o 无法使用。
+				return;
+			}
+			redo(gm, param);
+			return;
+		}
+		gm.sendPackets(new S_SystemMessage("指令 " + cmd + " 不存在。"));
 	}
 
 	private String complementClassName(String className) {
@@ -83,37 +114,6 @@ public class GMCommands {
 		}
 		return false;
 	}
-
-	/** 处理GM指令 */
-	public void handleCommands(L1PcInstance gm, String cmdLine) {
-		StringTokenizer token = new StringTokenizer(cmdLine);
-		// 命令，直到第一个空白，并在其后当作参数空格隔开
-		String cmd = token.nextToken();
-		String param = "";
-		while (token.hasMoreTokens()) {
-			param = new StringBuilder(param).append(token.nextToken()).append(' ').toString();
-		}
-		param = param.trim();
-
-		// 将使用过的指令存起来
-		if (executeDatabaseCommand(gm, cmd, param)) {
-			if (!cmd.equalsIgnoreCase("r")) {
-				_lastCommands.put(gm.getId(), cmdLine);
-			}
-			return;
-		}
-		if (cmd.equalsIgnoreCase("r")) {
-			if (!_lastCommands.containsKey(gm.getId())) {
-				gm.sendPackets(new S_ServerMessage(74, "指令 " + cmd)); // \f1%0%o 无法使用。
-				return;
-			}
-			redo(gm, param);
-			return;
-		}
-		gm.sendPackets(new S_SystemMessage("指令 " + cmd + " 不存在。"));
-	}
-
-	private static Map<Integer, String> _lastCommands = Maps.newMap();
 
 	private void redo(L1PcInstance pc, String arg) {
 		try {

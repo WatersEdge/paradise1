@@ -26,24 +26,6 @@ public class S_Party extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_Party(String htmlid, int objid) {
-		buildPacket(htmlid, objid, "", "", 0);
-	}
-
-	public S_Party(String htmlid, int objid, String partyname, String partymembers) {
-		buildPacket(htmlid, objid, partyname, partymembers, 1);
-	}
-
-	private void buildPacket(String htmlid, int objid, String partyname, String partymembers, int type) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS(htmlid);
-		writeH(type);
-		writeH(0x02);
-		writeS(partyname);
-		writeS(partymembers);
-	}
-
 	public S_Party(int type, L1PcInstance pc) { // 3.3C 组队系统
 		switch (type) {
 		case 104:
@@ -60,6 +42,40 @@ public class S_Party extends ServerBasePacket {
 		default:
 			break;
 		}
+	}
+
+	public S_Party(String htmlid, int objid) {
+		buildPacket(htmlid, objid, "", "", 0);
+	}
+
+	public S_Party(String htmlid, int objid, String partyname, String partymembers) {
+		buildPacket(htmlid, objid, partyname, partymembers, 1);
+	}
+
+	/**
+	 * 更换队长
+	 * 
+	 * @param pc
+	 */
+	public void changeLeader(L1PcInstance pc) {
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(S_PacketBox.PATRY_SET_MASTER);
+		writeD(pc.getId());
+		writeH(0x0000);
+	}
+
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S_Party;
 	}
 
 	/**
@@ -119,18 +135,6 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	/**
-	 * 更换队长
-	 * 
-	 * @param pc
-	 */
-	public void changeLeader(L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(S_PacketBox.PATRY_SET_MASTER);
-		writeD(pc.getId());
-		writeH(0x0000);
-	}
-
-	/**
 	 * 更新队伍
 	 * 
 	 * @param pc
@@ -154,18 +158,14 @@ public class S_Party extends ServerBasePacket {
 		}
 	}
 
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S_Party;
+	private void buildPacket(String htmlid, int objid, String partyname, String partymembers, int type) {
+		writeC(Opcodes.S_OPCODE_SHOWHTML);
+		writeD(objid);
+		writeS(htmlid);
+		writeH(type);
+		writeH(0x02);
+		writeS(partyname);
+		writeS(partymembers);
 	}
 
 }

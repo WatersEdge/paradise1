@@ -327,21 +327,6 @@ public class S_PacketBox extends ServerBasePacket {
 		}
 	}
 
-	public S_PacketBox(int subCode, String name) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(subCode);
-
-		switch (subCode) {
-		case ADD_EXCLUDE:
-		case REM_EXCLUDE:
-		case MSG_TOWN_LEADER:
-			writeS(name);
-			break;
-		default:
-			break;
-		}
-	}
-
 	public S_PacketBox(int subCode, int id, String name, String clanName) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
@@ -373,6 +358,35 @@ public class S_PacketBox extends ServerBasePacket {
 		}
 	}
 
+	public S_PacketBox(int subCode, String name) {
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(subCode);
+
+		switch (subCode) {
+		case ADD_EXCLUDE:
+		case REM_EXCLUDE:
+		case MSG_TOWN_LEADER:
+			writeS(name);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_PACKETBOX;
+	}
+
 	private void callSomething() {
 		Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers().iterator();
 
@@ -399,19 +413,5 @@ public class S_PacketBox extends ServerBasePacket {
 			writeS(pc.getName()); // 半角最多12字符
 			writeS(pc.getClanname()); // 出现在[]内的文字信息。半角最多12字符
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_PACKETBOX;
 	}
 }

@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpeedPotion_2_ElfBrave;
  */
 public class WelfareForestPotion extends ItemExecutor {
 
-	private WelfareForestPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new WelfareForestPotion();
+	}
+
+	private WelfareForestPotion() {
 	}
 
 	/**

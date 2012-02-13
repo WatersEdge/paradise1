@@ -105,6 +105,11 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		buildPacket(pc, growth[0], growth[1], growth[2], growth[3], growth[4], growth[5]);
 	}
 
+	@Override
+	public byte[] getContent() {
+		return getBytes();
+	}
+
 	/**
 	 * 
 	 * @param pc
@@ -132,10 +137,5 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		writeC(write2);// 敏捷&精神
 		writeC(write3);// 魅力&体质
 		writeC(0x00);
-	}
-
-	@Override
-	public byte[] getContent() {
-		return getBytes();
 	}
 }

@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class Tempura extends ItemExecutor {
 
-	private Tempura() {
-	}
-
 	public static ItemExecutor get() {
 		return new Tempura();
+	}
+
+	private Tempura() {
 	}
 
 	/**

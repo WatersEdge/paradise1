@@ -19,11 +19,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class ResurrectionScrolls extends ItemExecutor {
 
-	private ResurrectionScrolls() {
-	}
-
 	public static ItemExecutor get() {
 		return new ResurrectionScrolls();
+	}
+
+	private ResurrectionScrolls() {
 	}
 
 	/**

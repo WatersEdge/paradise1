@@ -143,6 +143,23 @@ public class C_CharReset extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_CHAR_RESET;
+	}
+
+	/** 初始化角色的状态 */
+	private void initCharStatus(L1PcInstance pc, int hp, int mp, int str, int intel, int wis, int dex, int con, int cha) {
+		pc.addBaseMaxHp((short) (hp - pc.getBaseMaxHp()));
+		pc.addBaseMaxMp((short) (mp - pc.getBaseMaxMp()));
+		pc.addBaseStr((byte) (str - pc.getBaseStr()));
+		pc.addBaseInt((byte) (intel - pc.getBaseInt()));
+		pc.addBaseWis((byte) (wis - pc.getBaseWis()));
+		pc.addBaseDex((byte) (dex - pc.getBaseDex()));
+		pc.addBaseCon((byte) (con - pc.getBaseCon()));
+		pc.addBaseCha((byte) (cha - pc.getBaseCha()));
+	}
+
 	/** 保存角色新的状态 */
 	private void saveNewCharStatus(L1PcInstance pc) {
 		pc.setInCharReset(false);
@@ -179,18 +196,6 @@ public class C_CharReset extends ClientBasePacket {
 		L1Teleport.teleport(pc, 32628, 32772, (short) 4, 4, false);
 	}
 
-	/** 初始化角色的状态 */
-	private void initCharStatus(L1PcInstance pc, int hp, int mp, int str, int intel, int wis, int dex, int con, int cha) {
-		pc.addBaseMaxHp((short) (hp - pc.getBaseMaxHp()));
-		pc.addBaseMaxMp((short) (mp - pc.getBaseMaxMp()));
-		pc.addBaseStr((byte) (str - pc.getBaseStr()));
-		pc.addBaseInt((byte) (intel - pc.getBaseInt()));
-		pc.addBaseWis((byte) (wis - pc.getBaseWis()));
-		pc.addBaseDex((byte) (dex - pc.getBaseDex()));
-		pc.addBaseCon((byte) (con - pc.getBaseCon()));
-		pc.addBaseCha((byte) (cha - pc.getBaseCha()));
-	}
-
 	/** 设定等级提升 */
 	private void setLevelUp(L1PcInstance pc, int addLv) {
 		pc.setTempLevel(pc.getTempLevel() + addLv);
@@ -202,11 +207,6 @@ public class C_CharReset extends ClientBasePacket {
 		}
 		int newAc = CalcStat.calcAc(pc.getTempLevel(), pc.getBaseDex());
 		pc.sendPackets(new S_CharReset(pc, pc.getTempLevel(), pc.getBaseMaxHp(), pc.getBaseMaxMp(), newAc, pc.getBaseStr(), pc.getBaseInt(), pc.getBaseWis(), pc.getBaseDex(), pc.getBaseCon(), pc.getBaseCha()));
-	}
-
-	@Override
-	public String getType() {
-		return C_CHAR_RESET;
 	}
 
 }

@@ -37,6 +37,40 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
+	public L1FollowerInstance(L1Npc template, L1NpcInstance target, L1Character master) {
+		super(template);
+
+		_master = master;
+		setId(IdFactory.getInstance().nextId());
+
+		setMaster(master);
+		setX(target.getX());
+		setY(target.getY());
+		setMap(target.getMapId());
+		setHeading(target.getHeading());
+		setLightSize(target.getLightSize());
+
+		target.setParalyzed(true);
+		target.setDead(true);
+		target.deleteMe();
+
+		L1World.getInstance().storeObject(this);
+		L1World.getInstance().addVisibleObject(this);
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+			onPerceive(pc);
+		}
+
+		startAI();
+		master.addFollower(this);
+	}
+
+	@Override
+	public synchronized void deleteMe() {
+		_master.getFollowerList().remove(getId());
+		getMap().setPassable(getLocation(), true);
+		super.deleteMe();
+	}
+
 	@Override
 	public boolean noTarget() {
 		for (L1Object object : L1World.getInstance().getVisibleObjects(this)) {
@@ -144,40 +178,6 @@ public class L1FollowerInstance extends L1NpcInstance {
 		return false;
 	}
 
-	public L1FollowerInstance(L1Npc template, L1NpcInstance target, L1Character master) {
-		super(template);
-
-		_master = master;
-		setId(IdFactory.getInstance().nextId());
-
-		setMaster(master);
-		setX(target.getX());
-		setY(target.getY());
-		setMap(target.getMapId());
-		setHeading(target.getHeading());
-		setLightSize(target.getLightSize());
-
-		target.setParalyzed(true);
-		target.setDead(true);
-		target.deleteMe();
-
-		L1World.getInstance().storeObject(this);
-		L1World.getInstance().addVisibleObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			onPerceive(pc);
-		}
-
-		startAI();
-		master.addFollower(this);
-	}
-
-	@Override
-	public synchronized void deleteMe() {
-		_master.getFollowerList().remove(getId());
-		getMap().setPassable(getLocation(), true);
-		super.deleteMe();
-	}
-
 	@Override
 	public void onAction(L1PcInstance pc) {
 		onAction(pc, 0);
@@ -194,6 +194,12 @@ public class L1FollowerInstance extends L1NpcInstance {
 		}
 		attack.action();
 		attack.commit();
+	}
+
+	@Override
+	public void onPerceive(L1PcInstance perceivedFrom) {
+		perceivedFrom.addKnownObject(this);
+		perceivedFrom.sendPackets(new S_FollowerPack(this, perceivedFrom));
 	}
 
 	@Override
@@ -252,26 +258,6 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	}
 
-	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
-		perceivedFrom.addKnownObject(this);
-		perceivedFrom.sendPackets(new S_FollowerPack(this, perceivedFrom));
-	}
-
-	private void createNewItem(L1PcInstance pc, int item_id, int count) {
-		L1ItemInstance item = ItemTable.getInstance().createItem(item_id);
-		item.setCount(count);
-		if (item != null) {
-			if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
-				pc.getInventory().storeItem(item);
-			}
-			else {
-				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
-			}
-			pc.sendPackets(new S_ServerMessage(403, item.getLogName()));
-		}
-	}
-
 	public void spawn(int npcId, int X, int Y, int H, short Map) {
 		L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId);
 		if (l1npc != null) {
@@ -298,6 +284,20 @@ public class L1FollowerInstance extends L1NpcInstance {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	private void createNewItem(L1PcInstance pc, int item_id, int count) {
+		L1ItemInstance item = ItemTable.getInstance().createItem(item_id);
+		item.setCount(count);
+		if (item != null) {
+			if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
+				pc.getInventory().storeItem(item);
+			}
+			else {
+				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
+			}
+			pc.sendPackets(new S_ServerMessage(403, item.getLogName()));
 		}
 	}
 

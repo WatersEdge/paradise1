@@ -31,32 +31,6 @@ import org.apache.commons.logging.LogFactory;
  */
 public class L1ItemDelay {
 
-	/** 提示信息 */
-	private static final Log _log = LogFactory.getLog(L1ItemDelay.class);
-
-	/**
-	 * 500:武器禁止使用
-	 */
-	public static final int WEAPON = 500; // 武器禁止使用
-
-	/**
-	 * 501:防具禁止使用
-	 */
-	public static final int ARMOR = 501; // 防具禁止使用
-
-	/**
-	 * 502:道具禁止使用
-	 */
-	public static final int ITEM = 502; // 道具禁止使用
-
-	/**
-	 * 503:变身禁止使用
-	 */
-	public static final int POLY = 503; // 变身禁止使用
-
-	private L1ItemDelay() {
-	}
-
 	/**
 	 * 道具使用延迟计时器
 	 */
@@ -87,11 +61,6 @@ public class L1ItemDelay {
 			this._delayTime = delayTime;
 		}
 
-		@Override
-		public void run() {
-			this.stopDelayTimer(this._delayId);
-		}
-
 		/**
 		 * 取得该物件延迟时间
 		 * 
@@ -99,6 +68,11 @@ public class L1ItemDelay {
 		 */
 		public int get_delayTime() {
 			return _delayTime;
+		}
+
+		@Override
+		public void run() {
+			this.stopDelayTimer(this._delayId);
 		}
 
 		/**
@@ -109,6 +83,74 @@ public class L1ItemDelay {
 		 */
 		public void stopDelayTimer(final int delayId) {
 			this._cha.removeItemDelay(delayId);
+		}
+	}
+
+	/**
+	 * 瞬移解锁定时器
+	 */
+	static class TeleportUnlockTimer implements Runnable {
+
+		/** 角色 */
+		private L1PcInstance _pc;
+
+		/**
+		 * 瞬移解锁定时器
+		 * 
+		 * @param pc
+		 *            角色
+		 */
+		public TeleportUnlockTimer(L1PcInstance pc) {
+			_pc = pc;
+		}
+
+		@Override
+		public void run() {
+			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
+		}
+	}
+
+	/** 提示信息 */
+	private static final Log _log = LogFactory.getLog(L1ItemDelay.class);
+
+	/**
+	 * 500:武器禁止使用
+	 */
+	public static final int WEAPON = 500; // 武器禁止使用
+
+	/**
+	 * 501:防具禁止使用
+	 */
+	public static final int ARMOR = 501; // 防具禁止使用
+
+	/**
+	 * 502:道具禁止使用
+	 */
+	public static final int ITEM = 502; // 道具禁止使用
+
+	/**
+	 * 503:变身禁止使用
+	 */
+	public static final int POLY = 503; // 变身禁止使用
+
+	/**
+	 * 建立物件使用延迟
+	 * 
+	 * @param client
+	 *            执行连线端
+	 * @param item
+	 *            物件
+	 */
+	public static void onItemUse(final ClientThread client, final L1ItemInstance item) {
+		try {
+			final L1PcInstance pc = client.getActiveChar();
+			if (pc != null) {
+				onItemUse(pc, item);
+			}
+
+		}
+		catch (final Exception e) {
+			_log.error(e.getLocalizedMessage(), e);
 		}
 	}
 
@@ -136,27 +178,6 @@ public class L1ItemDelay {
 
 				pc.addItemDelay(delayId, timer);
 				GeneralThreadPool.getInstance().schedule(timer, delayTime);
-			}
-
-		}
-		catch (final Exception e) {
-			_log.error(e.getLocalizedMessage(), e);
-		}
-	}
-
-	/**
-	 * 建立物件使用延迟
-	 * 
-	 * @param client
-	 *            执行连线端
-	 * @param item
-	 *            物件
-	 */
-	public static void onItemUse(final ClientThread client, final L1ItemInstance item) {
-		try {
-			final L1PcInstance pc = client.getActiveChar();
-			if (pc != null) {
-				onItemUse(pc, item);
 			}
 
 		}
@@ -218,30 +239,6 @@ public class L1ItemDelay {
 	}
 
 	/**
-	 * 瞬移解锁定时器
-	 */
-	static class TeleportUnlockTimer implements Runnable {
-
-		/** 角色 */
-		private L1PcInstance _pc;
-
-		/**
-		 * 瞬移解锁定时器
-		 * 
-		 * @param pc
-		 *            角色
-		 */
-		public TeleportUnlockTimer(L1PcInstance pc) {
-			_pc = pc;
-		}
-
-		@Override
-		public void run() {
-			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
-		}
-	}
-
-	/**
 	 * 瞬移解锁
 	 * 
 	 * @param pc
@@ -253,6 +250,9 @@ public class L1ItemDelay {
 		int delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
 		TeleportUnlockTimer timer = new TeleportUnlockTimer(pc);
 		GeneralThreadPool.getInstance().schedule(timer, delayTime);
+	}
+
+	private L1ItemDelay() {
 	}
 
 }

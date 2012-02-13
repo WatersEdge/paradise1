@@ -58,6 +58,19 @@ public class S_BlueMessage extends ServerBasePacket {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S__18_BLUEMESSAGE;
+	}
+
 	private void buildPacket(int type, String msg1, String msg2, String msg3, int check) {
 		writeC(Opcodes.S_OPCODE_BLUEMESSAGE);
 		writeH(type);
@@ -81,18 +94,5 @@ public class S_BlueMessage extends ServerBasePacket {
 			writeS(msg2);
 			writeS(msg3);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__18_BLUEMESSAGE;
 	}
 }

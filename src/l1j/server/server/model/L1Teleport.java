@@ -41,16 +41,15 @@ public class L1Teleport {
 
 	public static final int[] EFFECT_TIME = { 280, 440, 440, 1120 };
 
-	private L1Teleport() {
-	}
+	/** 随机传送 */
+	public static void randomTeleport(L1PcInstance pc, boolean effectable) {
+		// まだ本サーバのランテレ処理と違うところが結構あるような・・・
+		L1Location newLocation = pc.getLocation().randomLocation(200, true);
+		int newX = newLocation.getX();
+		int newY = newLocation.getY();
+		short mapId = (short) newLocation.getMapId();
 
-	/**  */
-	public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable) {
-		teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, TELEPORT);
-	}
-
-	public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable, int skillType) {
-		teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, skillType);
+		L1Teleport.teleport(pc, newX, newY, mapId, 5, effectable);
 	}
 
 	public static void teleport(L1PcInstance pc, int x, int y, short mapid, int head, boolean effectable) {
@@ -91,6 +90,15 @@ public class L1Teleport {
 		else {
 			Teleportation.actionTeleportation(pc);
 		}
+	}
+
+	/**  */
+	public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable) {
+		teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, TELEPORT);
+	}
+
+	public static void teleport(L1PcInstance pc, L1Location loc, int head, boolean effectable, int skillType) {
+		teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), head, effectable, skillType);
 	}
 
 	/**
@@ -156,14 +164,6 @@ public class L1Teleport {
 		}
 	}
 
-	/** 随机传送 */
-	public static void randomTeleport(L1PcInstance pc, boolean effectable) {
-		// まだ本サーバのランテレ処理と違うところが結構あるような・・・
-		L1Location newLocation = pc.getLocation().randomLocation(200, true);
-		int newX = newLocation.getX();
-		int newY = newLocation.getY();
-		short mapId = (short) newLocation.getMapId();
-
-		L1Teleport.teleport(pc, newX, newY, mapId, 5, effectable);
+	private L1Teleport() {
 	}
 }

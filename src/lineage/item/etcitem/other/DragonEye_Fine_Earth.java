@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class DragonEye_Fine_Earth extends ItemExecutor {
 
-	private DragonEye_Fine_Earth() {
-	}
-
 	public static ItemExecutor get() {
 		return new DragonEye_Fine_Earth();
+	}
+
+	private DragonEye_Fine_Earth() {
 	}
 
 	/**

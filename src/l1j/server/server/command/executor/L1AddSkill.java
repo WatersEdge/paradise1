@@ -25,11 +25,11 @@ import l1j.server.server.templates.L1Skills;
  * TODO: 翻译 GM指令：增加魔法
  */
 public class L1AddSkill implements L1CommandExecutor {
-	private L1AddSkill() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1AddSkill();
+	}
+
+	private L1AddSkill() {
 	}
 
 	@Override
