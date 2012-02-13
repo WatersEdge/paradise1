@@ -1,4 +1,4 @@
-package lineage.console.executor;
+package lineage.item.etcitem.executor;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;

@@ -4,8 +4,8 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.executor.ItemExecutor;
 import lineage.item.etcitem.UseSpeedPotion_2_RiBrave;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 生命之树果实 - 49158

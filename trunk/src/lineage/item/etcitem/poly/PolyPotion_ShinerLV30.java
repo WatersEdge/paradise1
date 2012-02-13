@@ -3,8 +3,8 @@ package lineage.item.etcitem.poly;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.executor.ItemExecutor;
 import lineage.item.etcitem.UsePolyOther;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 夏纳的变身卷轴(30级) - 49149

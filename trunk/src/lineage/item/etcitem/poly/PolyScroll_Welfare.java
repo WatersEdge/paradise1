@@ -4,8 +4,8 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.Random;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.executor.ItemExecutor;
 import lineage.item.etcitem.UsePolyScroll;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 福利变形药水 - 49308
