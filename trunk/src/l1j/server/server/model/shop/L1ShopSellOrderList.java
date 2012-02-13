@@ -26,13 +26,13 @@ public class L1ShopSellOrderList {
 
 	private final List<L1ShopSellOrder> _list = Lists.newList();
 
-	L1ShopSellOrderList(L1Shop shop, L1PcInstance pc) {
+	L1ShopSellOrderList(final L1Shop shop, final L1PcInstance pc) {
 		_shop = shop;
 		_pc = pc;
 	}
 
-	public void add(int itemObjectId, int count) {
-		L1AssessedItem assessedItem = _shop.assessItem(_pc.getInventory().getItem(itemObjectId));
+	public void add(final int itemObjectId, final int count) {
+		final L1AssessedItem assessedItem = _shop.assessItem(_pc.getInventory().getItem(itemObjectId));
 		if (assessedItem == null) {
 			/*
 			 * 未指定道具的购买清单。 对流氓包的可能性。
@@ -59,7 +59,7 @@ class L1ShopSellOrder {
 
 	private final int _count;
 
-	public L1ShopSellOrder(L1AssessedItem item, int count) {
+	public L1ShopSellOrder(final L1AssessedItem item, final int count) {
 		_item = item;
 		_count = count;
 	}

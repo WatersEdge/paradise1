@@ -35,10 +35,10 @@ public class S_MoveCharPacket extends ServerBasePacket {
 	 * 
 	 * @param cha
 	 */
-	public S_MoveCharPacket(L1Character cha) {
-		int heading = cha.getHeading();
-		int x = cha.getX() - MoveUtil.MoveX(heading);
-		int y = cha.getY() - MoveUtil.MoveY(heading);
+	public S_MoveCharPacket(final L1Character cha) {
+		final int heading = cha.getHeading();
+		final int x = cha.getX() - MoveUtil.MoveX(heading);
+		final int y = cha.getY() - MoveUtil.MoveY(heading);
 
 		writeC(Opcodes.S_OPCODE_MOVEOBJECT);
 		writeD(cha.getId());

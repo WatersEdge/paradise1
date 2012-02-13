@@ -55,7 +55,7 @@ public class L1Cube extends TimerTask {
 
 	private final int _skillId;
 
-	public L1Cube(L1Character effect, L1Character cha, int skillId) {
+	public L1Cube(final L1Character effect, final L1Character cha, final int skillId) {
 		_effect = effect;
 		_cha = cha;
 		_skillId = skillId;
@@ -93,13 +93,13 @@ public class L1Cube extends TimerTask {
 			}
 
 			if (_cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) _cha;
+				final L1PcInstance pc = (L1PcInstance) _cha;
 				pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 				pc.receiveDamage(_effect, 10, false);
 			}
 			else if (_cha instanceof L1MonsterInstance) {
-				L1MonsterInstance mob = (L1MonsterInstance) _cha;
+				final L1MonsterInstance mob = (L1MonsterInstance) _cha;
 				mob.broadcastPacket(new S_DoActionGFX(mob.getId(), ActionCodes.ACTION_Damage));
 				mob.receiveDamage(_effect, 10);
 			}
@@ -128,12 +128,12 @@ public class L1Cube extends TimerTask {
 			}
 
 			if (_cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) _cha;
+				final L1PcInstance pc = (L1PcInstance) _cha;
 				pc.setSkillEffect(STATUS_FREEZE, 1000);
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
 			}
 			else if (_cha instanceof L1MonsterInstance) {
-				L1MonsterInstance mob = (L1MonsterInstance) _cha;
+				final L1MonsterInstance mob = (L1MonsterInstance) _cha;
 				mob.setSkillEffect(STATUS_FREEZE, 1000);
 				mob.setParalyzed(true);
 			}
@@ -159,11 +159,11 @@ public class L1Cube extends TimerTask {
 			}
 			if (_timeCounter % 5 == 0) {
 				if (_cha instanceof L1PcInstance) {
-					L1PcInstance pc = (L1PcInstance) _cha;
+					final L1PcInstance pc = (L1PcInstance) _cha;
 					pc.receiveDamage(_effect, 25, false);
 				}
 				else if (_cha instanceof L1MonsterInstance) {
-					L1MonsterInstance mob = (L1MonsterInstance) _cha;
+					final L1MonsterInstance mob = (L1MonsterInstance) _cha;
 					mob.receiveDamage(_effect, 25);
 				}
 			}
@@ -184,7 +184,7 @@ public class L1Cube extends TimerTask {
 			_timeCounter++;
 			giveEffect();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

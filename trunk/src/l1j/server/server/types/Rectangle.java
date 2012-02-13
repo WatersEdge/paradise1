@@ -27,11 +27,11 @@ public class Rectangle {
 		this(0, 0, 0, 0);
 	}
 
-	public Rectangle(int left, int top, int right, int bottom) {
+	public Rectangle(final int left, final int top, final int right, final int bottom) {
 		set(left, top, right, bottom);
 	}
 
-	public Rectangle(Rectangle rect) {
+	public Rectangle(final Rectangle rect) {
 		set(rect);
 	}
 
@@ -44,8 +44,8 @@ public class Rectangle {
 	 *            判定する点のY座標
 	 * @return 点(x, y)がこのRectangleの範囲内にある場合、true。
 	 */
-	public boolean contains(int x, int y) {
-		return (_left <= x && x <= _right) && (_top <= y && y <= _bottom);
+	public boolean contains(final int x, final int y) {
+		return ((_left <= x) && (x <= _right)) && ((_top <= y) && (y <= _bottom));
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Rectangle {
 	 *            判定するPoint
 	 * @return ptがこのRectangleの範囲内にある場合、true。
 	 */
-	public boolean contains(Point pt) {
+	public boolean contains(final Point pt) {
 		return contains(pt.getX(), pt.getY());
 	}
 
@@ -83,14 +83,14 @@ public class Rectangle {
 		return _right - _left;
 	}
 
-	public void set(int left, int top, int right, int bottom) {
+	public void set(final int left, final int top, final int right, final int bottom) {
 		_left = left;
 		_top = top;
 		_right = right;
 		_bottom = bottom;
 	}
 
-	public void set(Rectangle rect) {
+	public void set(final Rectangle rect) {
 		set(rect.getLeft(), rect.getTop(), rect.getWidth(), rect.getHeight());
 	}
 }

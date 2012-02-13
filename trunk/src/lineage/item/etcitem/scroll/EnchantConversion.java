@@ -42,12 +42,12 @@ public class EnchantConversion extends ItemExecutor {
 		final int itemId = item.getItemId();
 		final int itemobj = data[0];
 		final L1ItemInstance l1iteminstance1 = pc.getInventory().getItem(itemobj);
-		if (l1iteminstance1.getItemId() >= 47053 && l1iteminstance1.getItemId() <= 47062) { // 附魔石 ~ 9阶附魔石
-			int type = (itemId - 47048) * 10; // type = 10,20,30,40
-			int rnd = Random.nextInt(100) + 1;
+		if ((l1iteminstance1.getItemId() >= 47053) && (l1iteminstance1.getItemId() <= 47062)) { // 附魔石 ~ 9阶附魔石
+			final int type = (itemId - 47048) * 10; // type = 10,20,30,40
+			final int rnd = Random.nextInt(100) + 1;
 			if (Config.MAGIC_STONE_TYPE < rnd) {
-				int newItem = l1iteminstance1.getItemId() + type; // 附魔石(近战) ~ 9阶附魔石(近战)
-				L1Item template = ItemTable.getInstance().getTemplate(newItem);
+				final int newItem = l1iteminstance1.getItemId() + type; // 附魔石(近战) ~ 9阶附魔石(近战)
+				final L1Item template = ItemTable.getInstance().getTemplate(newItem);
 				if (template == null) {
 					pc.sendPackets(new S_ServerMessage(79));
 				}

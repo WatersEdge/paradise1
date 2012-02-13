@@ -61,9 +61,9 @@ public class ClanTable {
 
 				rs = pstm.executeQuery();
 				while (rs.next()) {
-					L1Clan clan = new L1Clan();
+					final L1Clan clan = new L1Clan();
 					// clan.SetClanId(clanData.getInt(1));
-					int clan_id = rs.getInt(1);
+					final int clan_id = rs.getInt(1);
 					clan.setClanId(clan_id);
 					clan.setClanName(rs.getString(2));
 					clan.setLeaderId(rs.getInt(3));
@@ -76,7 +76,7 @@ public class ClanTable {
 				}
 
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				SQLUtil.close(rs);
@@ -85,8 +85,8 @@ public class ClanTable {
 			}
 		}
 
-		Collection<L1Clan> AllClan = L1World.getInstance().getAllClans();
-		for (L1Clan clan : AllClan) {
+		final Collection<L1Clan> AllClan = L1World.getInstance().getAllClans();
+		for (final L1Clan clan : AllClan) {
 			Connection con = null;
 			PreparedStatement pstm = null;
 			ResultSet rs = null;
@@ -101,7 +101,7 @@ public class ClanTable {
 					clan.addMemberName(rs.getString(1));
 				}
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				SQLUtil.close(rs);
@@ -110,7 +110,7 @@ public class ClanTable {
 			}
 		}
 		// 血盟仓库
-		for (L1Clan clan : AllClan) {
+		for (final L1Clan clan : AllClan) {
 			clan.getDwarfForClanInventory().loadItems();
 		}
 	}
@@ -124,13 +124,13 @@ public class ClanTable {
 	 *            血盟名称
 	 * @return clan
 	 */
-	public L1Clan createClan(L1PcInstance player, String clan_name) {
-		for (L1Clan oldClans : L1World.getInstance().getAllClans()) {
+	public L1Clan createClan(final L1PcInstance player, final String clan_name) {
+		for (final L1Clan oldClans : L1World.getInstance().getAllClans()) {
 			if (oldClans.getClanName().equalsIgnoreCase(clan_name)) {
 				return null;
 			}
 		}
-		L1Clan clan = new L1Clan();
+		final L1Clan clan = new L1Clan();
 		clan.setClanId(IdFactory.getInstance().nextId());
 		clan.setClanName(clan_name);
 		clan.setLeaderId(player.getId());
@@ -152,7 +152,7 @@ public class ClanTable {
 			pstm.setInt(6, clan.getHouseId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -170,7 +170,7 @@ public class ClanTable {
 			// 将玩家资料保存至资料库
 			player.save();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return clan;
@@ -181,8 +181,8 @@ public class ClanTable {
 	 * 
 	 * @param clan_name
 	 */
-	public void deleteClan(String clan_name) {
-		L1Clan clan = L1World.getInstance().getClan(clan_name);
+	public void deleteClan(final String clan_name) {
+		final L1Clan clan = L1World.getInstance().getClan(clan_name);
 		if (clan == null) {
 			return;
 		}
@@ -194,7 +194,7 @@ public class ClanTable {
 			pstm.setString(1, clan_name);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -207,7 +207,7 @@ public class ClanTable {
 		_clans.remove(clan.getClanId());
 	}
 
-	public L1Clan getTemplate(int clan_id) {
+	public L1Clan getTemplate(final int clan_id) {
 		return _clans.get(clan_id);
 	}
 
@@ -216,7 +216,7 @@ public class ClanTable {
 	 * 
 	 * @param clan
 	 */
-	public void updateClan(L1Clan clan) {
+	public void updateClan(final L1Clan clan) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -230,7 +230,7 @@ public class ClanTable {
 			pstm.setString(6, clan.getClanName());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

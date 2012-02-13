@@ -33,21 +33,21 @@ public class C_BoardDelete extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_BoardDelete.class.getName());
 
-	public C_BoardDelete(byte decrypt[], ClientThread client) {
+	public C_BoardDelete(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		int objId = readD();
-		int topicId = readD();
-		L1Object obj = L1World.getInstance().findObject(objId);
+		final int objId = readD();
+		final int topicId = readD();
+		final L1Object obj = L1World.getInstance().findObject(objId);
 		if (obj == null) {
 			_log.warning("不正确的NPCID : " + objId);
 			return;
 		}
-		L1BoardTopic topic = L1BoardTopic.findById(topicId);
+		final L1BoardTopic topic = L1BoardTopic.findById(topicId);
 		if (topic == null) {
 			logNotExist(topicId);
 			return;
 		}
-		String name = client.getActiveChar().getName();
+		final String name = client.getActiveChar().getName();
 		if (!name.equals(topic.getName())) {
 			logIllegalDeletion(topic, name);
 			return;
@@ -61,11 +61,11 @@ public class C_BoardDelete extends ClientBasePacket {
 		return C_BOARD_DELETE;
 	}
 
-	private void logIllegalDeletion(L1BoardTopic topic, String name) {
+	private void logIllegalDeletion(final L1BoardTopic topic, final String name) {
 		_log.warning(String.format("Illegal board deletion request: Name <%s> expected but was <%s>.", topic.getName(), name));
 	}
 
-	private void logNotExist(int topicId) {
+	private void logNotExist(final int topicId) {
 		_log.warning(String.format("Illegal board deletion request: Topic id <%d> does not exist.", topicId));
 	}
 }

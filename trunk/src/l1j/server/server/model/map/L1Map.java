@@ -410,12 +410,12 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public int getOriginalTile(int x, int y) {
+	public int getOriginalTile(final int x, final int y) {
 		return 0;
 	}
 
 	@Override
-	public int getTile(int x, int y) {
+	public int getTile(final int x, final int y) {
 		return 0;
 	}
 
@@ -435,32 +435,32 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public boolean isArrowPassable(int x, int y) {
+	public boolean isArrowPassable(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isArrowPassable(int x, int y, int heading) {
+	public boolean isArrowPassable(final int x, final int y, final int heading) {
 		return false;
 	}
 
 	@Override
-	public boolean isArrowPassable(Point pt) {
+	public boolean isArrowPassable(final Point pt) {
 		return false;
 	}
 
 	@Override
-	public boolean isArrowPassable(Point pt, int heading) {
+	public boolean isArrowPassable(final Point pt, final int heading) {
 		return false;
 	}
 
 	@Override
-	public boolean isCombatZone(int x, int y) {
+	public boolean isCombatZone(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isCombatZone(Point pt) {
+	public boolean isCombatZone(final Point pt) {
 		return false;
 	}
 
@@ -475,22 +475,22 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public boolean isExistDoor(int x, int y) {
+	public boolean isExistDoor(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isFishingZone(int x, int y) {
+	public boolean isFishingZone(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isInMap(int x, int y) {
+	public boolean isInMap(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isInMap(Point pt) {
+	public boolean isInMap(final Point pt) {
 		return false;
 	}
 
@@ -500,12 +500,12 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public boolean isNormalZone(int x, int y) {
+	public boolean isNormalZone(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isNormalZone(Point pt) {
+	public boolean isNormalZone(final Point pt) {
 		return false;
 	}
 
@@ -515,22 +515,22 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public boolean isPassable(int x, int y) {
+	public boolean isPassable(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isPassable(int x, int y, int heading) {
+	public boolean isPassable(final int x, final int y, final int heading) {
 		return false;
 	}
 
 	@Override
-	public boolean isPassable(Point pt) {
+	public boolean isPassable(final Point pt) {
 		return false;
 	}
 
 	@Override
-	public boolean isPassable(Point pt, int heading) {
+	public boolean isPassable(final Point pt, final int heading) {
 		return false;
 	}
 
@@ -540,12 +540,12 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public boolean isSafetyZone(int x, int y) {
+	public boolean isSafetyZone(final int x, final int y) {
 		return false;
 	}
 
 	@Override
-	public boolean isSafetyZone(Point pt) {
+	public boolean isSafetyZone(final Point pt) {
 		return false;
 	}
 
@@ -585,15 +585,15 @@ class L1NullMap extends L1Map {
 	}
 
 	@Override
-	public void setPassable(int x, int y, boolean isPassable) {
+	public void setPassable(final int x, final int y, final boolean isPassable) {
 	}
 
 	@Override
-	public void setPassable(Point pt, boolean isPassable) {
+	public void setPassable(final Point pt, final boolean isPassable) {
 	}
 
 	@Override
-	public String toString(Point pt) {
+	public String toString(final Point pt) {
 		return "null";
 	}
 }

@@ -41,8 +41,8 @@ public final class TaskRestart extends Task {
 	 * @see l1j.server.server.tasks.Task#onTimeElapsed(l1j.server.server.tasks.TaskManager.ExecutedTask)
 	 */
 	@Override
-	public void onTimeElapsed(ExecutedTask task) {
-		Shutdown handler = new Shutdown(Integer.valueOf(task.getParams()[2]), true);
+	public void onTimeElapsed(final ExecutedTask task) {
+		final Shutdown handler = new Shutdown(Integer.valueOf(task.getParams()[2]), true);
 		handler.start();
 	}
 

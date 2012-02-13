@@ -29,18 +29,18 @@ public class CalcStat {
 	 * @return acBonus
 	 * 
 	 */
-	public static int calcAc(int level, int dex) {
+	public static int calcAc(final int level, final int dex) {
 		int acBonus = 10;
 		if (dex <= 9) {
 			acBonus -= level / 8;
 		}
-		else if (dex >= 10 && dex <= 12) {
+		else if ((dex >= 10) && (dex <= 12)) {
 			acBonus -= level / 7;
 		}
-		else if (dex >= 13 && dex <= 15) {
+		else if ((dex >= 13) && (dex <= 15)) {
 			acBonus -= level / 6;
 		}
-		else if (dex >= 16 && dex <= 17) {
+		else if ((dex >= 16) && (dex <= 17)) {
 			acBonus -= level / 5;
 		}
 		else if (dex >= 18) {
@@ -49,7 +49,7 @@ public class CalcStat {
 		return acBonus;
 	}
 
-	public static int calcDiffMr(int wis, int diff) {
+	public static int calcDiffMr(final int wis, final int diff) {
 		return calcStatMr(wis + diff) - calcStatMr(wis);
 	}
 
@@ -65,7 +65,7 @@ public class CalcStat {
 	 * @param originalHpup
 	 * @return HP上升后的数值
 	 */
-	public static short calcStatHp(int charType, int baseMaxHp, short baseCon, int originalHpup) {
+	public static short calcStatHp(final int charType, final int baseMaxHp, final short baseCon, final int originalHpup) {
 		short randomhp = 0;
 		if (baseCon > 15) {
 			randomhp = (short) (baseCon - 15);
@@ -140,39 +140,39 @@ public class CalcStat {
 	 * @param originalMpup
 	 * @return MP上升后的数值
 	 */
-	public static short calcStatMp(int charType, int baseMaxMp, short baseWis, int originalMpup) {
+	public static short calcStatMp(final int charType, final int baseMaxMp, final short baseWis, final int originalMpup) {
 		int randommp = 0;
 		int seedY = 0;
 		int seedZ = 0;
-		if (baseWis < 9 || baseWis > 9 && baseWis < 12) {
+		if ((baseWis < 9) || ((baseWis > 9) && (baseWis < 12))) {
 			seedY = 2;
 		}
-		else if (baseWis == 9 || baseWis >= 12 && baseWis <= 17) {
+		else if ((baseWis == 9) || ((baseWis >= 12) && (baseWis <= 17))) {
 			seedY = 3;
 		}
-		else if (baseWis >= 18 && baseWis <= 23 || baseWis == 25 || baseWis == 26 || baseWis == 29 || baseWis == 30 || baseWis == 33 || baseWis == 34) {
+		else if (((baseWis >= 18) && (baseWis <= 23)) || (baseWis == 25) || (baseWis == 26) || (baseWis == 29) || (baseWis == 30) || (baseWis == 33) || (baseWis == 34)) {
 			seedY = 4;
 		}
-		else if (baseWis == 24 || baseWis == 27 || baseWis == 28 || baseWis == 31 || baseWis == 32 || baseWis >= 35) {
+		else if ((baseWis == 24) || (baseWis == 27) || (baseWis == 28) || (baseWis == 31) || (baseWis == 32) || (baseWis >= 35)) {
 			seedY = 5;
 		}
 
-		if (baseWis >= 7 && baseWis <= 9) {
+		if ((baseWis >= 7) && (baseWis <= 9)) {
 			seedZ = 0;
 		}
-		else if (baseWis >= 10 && baseWis <= 14) {
+		else if ((baseWis >= 10) && (baseWis <= 14)) {
 			seedZ = 1;
 		}
-		else if (baseWis >= 15 && baseWis <= 20) {
+		else if ((baseWis >= 15) && (baseWis <= 20)) {
 			seedZ = 2;
 		}
-		else if (baseWis >= 21 && baseWis <= 24) {
+		else if ((baseWis >= 21) && (baseWis <= 24)) {
 			seedZ = 3;
 		}
-		else if (baseWis >= 25 && baseWis <= 28) {
+		else if ((baseWis >= 25) && (baseWis <= 28)) {
 			seedZ = 4;
 		}
-		else if (baseWis >= 29 && baseWis <= 32) {
+		else if ((baseWis >= 29) && (baseWis <= 32)) {
 			seedZ = 5;
 		}
 		else if (baseWis >= 33) {
@@ -244,12 +244,12 @@ public class CalcStat {
 	 * 
 	 * @return mrBonus 抗魔值
 	 */
-	public static int calcStatMr(int wis) {
+	public static int calcStatMr(final int wis) {
 		int mrBonus = 0;
 		if (wis <= 14) {
 			mrBonus = 0;
 		}
-		else if (wis >= 15 && wis <= 16) {
+		else if ((wis >= 15) && (wis <= 16)) {
 			mrBonus = 3;
 		}
 		else if (wis == 17) {
@@ -273,22 +273,22 @@ public class CalcStat {
 		else if (wis == 23) {
 			mrBonus = 47;
 		}
-		else if (wis >= 24 && wis <= 29) {
+		else if ((wis >= 24) && (wis <= 29)) {
 			mrBonus = 50;
 		}
-		else if (wis >= 30 && wis <= 34) {
+		else if ((wis >= 30) && (wis <= 34)) {
 			mrBonus = 52;
 		}
-		else if (wis >= 35 && wis <= 39) {
+		else if ((wis >= 35) && (wis <= 39)) {
 			mrBonus = 55;
 		}
-		else if (wis >= 40 && wis <= 43) {
+		else if ((wis >= 40) && (wis <= 43)) {
 			mrBonus = 59;
 		}
-		else if (wis >= 44 && wis <= 46) {
+		else if ((wis >= 44) && (wis <= 46)) {
 			mrBonus = 62;
 		}
-		else if (wis >= 47 && wis <= 49) {
+		else if ((wis >= 47) && (wis <= 49)) {
 			mrBonus = 64;
 		}
 		else if (wis == 50) {

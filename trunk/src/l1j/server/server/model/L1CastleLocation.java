@@ -33,7 +33,7 @@ import l1j.server.server.utils.collections.Maps;
 public class L1CastleLocation {
 	private static class L1CastleTaxRateListener extends L1GameTimeAdapter {
 		@Override
-		public void onDayChanged(L1GameTime time) {
+		public void onDayChanged(final L1GameTime time) {
 			L1CastleLocation.setCastleTaxRate();
 		}
 	}
@@ -274,34 +274,34 @@ public class L1CastleLocation {
 	/**
 	 * 检查是否在一个战争区（旗内）
 	 */
-	public static boolean checkInAllWarArea(int locx, int locy, short mapid) {
+	public static boolean checkInAllWarArea(final int locx, final int locy, final short mapid) {
 		return checkInAllWarArea(new L1Location(locx, locy, mapid));
 	}
 
-	public static boolean checkInAllWarArea(L1Location loc) {
+	public static boolean checkInAllWarArea(final L1Location loc) {
 		return 0 != getCastleIdByArea(loc);
 	}
 
 	/**
 	 * 返回指定的城战地区（旗内）
 	 */
-	public static boolean checkInWarArea(int castleId, L1Character cha) {
+	public static boolean checkInWarArea(final int castleId, final L1Character cha) {
 		return checkInWarArea(castleId, cha.getLocation());
 	}
 
-	public static boolean checkInWarArea(int castleId, L1Location loc) {
+	public static boolean checkInWarArea(final int castleId, final L1Location loc) {
 		return castleId == getCastleIdByArea(loc);
 	}
 
 	/**
 	 * 守护者之塔、返回王冠的坐标castle_id
 	 */
-	public static int getCastleId(int locx, int locy, short mapid) {
+	public static int getCastleId(final int locx, final int locy, final short mapid) {
 		return getCastleId(new L1Location(locx, locy, mapid));
 	}
 
-	public static int getCastleId(L1Location loc) {
-		for (Map.Entry<Integer, L1Location> entry : _towers.entrySet()) {
+	public static int getCastleId(final L1Location loc) {
+		for (final Map.Entry<Integer, L1Location> entry : _towers.entrySet()) {
 			if (entry.getValue().equals(loc)) {
 				return entry.getKey();
 			}
@@ -312,17 +312,17 @@ public class L1CastleLocation {
 	/**
 	 * 返回战争区（旗内）的坐标castle_id
 	 */
-	public static int getCastleIdByArea(L1Character cha) {
+	public static int getCastleIdByArea(final L1Character cha) {
 		return getCastleIdByArea(cha.getLocation());
 	}
 
-	public static int getCastleIdByArea(L1Location loc) {
-		for (Map.Entry<Integer, L1MapArea> entry : _areas.entrySet()) {
+	public static int getCastleIdByArea(final L1Location loc) {
+		for (final Map.Entry<Integer, L1MapArea> entry : _areas.entrySet()) {
 			if (entry.getValue().contains(loc)) {
 				return entry.getKey();
 			}
 		}
-		for (Map.Entry<Integer, Integer> entry : _innerTowerMaps.entrySet()) {
+		for (final Map.Entry<Integer, Integer> entry : _innerTowerMaps.entrySet()) {
 			if (entry.getValue() == loc.getMapId()) {
 				return entry.getKey();
 			}
@@ -336,7 +336,7 @@ public class L1CastleLocation {
 	 * @param npcid
 	 * @return
 	 */
-	public static int getCastleIdByNpcid(int npcid) {
+	public static int getCastleIdByNpcid(final int npcid) {
 		// 亚丁城：アデン王国全域
 		// 肯特城：ケント、グルーディン
 		// ウィンダウッド城：ウッドベック、オアシス、シルバーナイトタウン
@@ -348,53 +348,53 @@ public class L1CastleLocation {
 
 		int castle_id = 0;
 
-		int town_id = L1TownLocation.getTownIdByNpcid(npcid);
+		final int town_id = L1TownLocation.getTownIdByNpcid(npcid);
 
 		switch (town_id) {
-		case L1TownLocation.TOWNID_KENT:
-		case L1TownLocation.TOWNID_GLUDIO:
-			castle_id = KENT_CASTLE_ID; // 肯特城
-			break;
+			case L1TownLocation.TOWNID_KENT:
+			case L1TownLocation.TOWNID_GLUDIO:
+				castle_id = KENT_CASTLE_ID; // 肯特城
+				break;
 
-		case L1TownLocation.TOWNID_ORCISH_FOREST:
-			castle_id = OT_CASTLE_ID; // オークの森
-			break;
+			case L1TownLocation.TOWNID_ORCISH_FOREST:
+				castle_id = OT_CASTLE_ID; // オークの森
+				break;
 
-		case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
-		case L1TownLocation.TOWNID_WINDAWOOD:
-			castle_id = WW_CASTLE_ID; // ウィンダウッド城
-			break;
+			case L1TownLocation.TOWNID_SILVER_KNIGHT_TOWN:
+			case L1TownLocation.TOWNID_WINDAWOOD:
+				castle_id = WW_CASTLE_ID; // ウィンダウッド城
+				break;
 
-		case L1TownLocation.TOWNID_TALKING_ISLAND:
-		case L1TownLocation.TOWNID_GIRAN:
-			castle_id = GIRAN_CASTLE_ID; // ギラン城
-			break;
+			case L1TownLocation.TOWNID_TALKING_ISLAND:
+			case L1TownLocation.TOWNID_GIRAN:
+				castle_id = GIRAN_CASTLE_ID; // ギラン城
+				break;
 
-		case L1TownLocation.TOWNID_HEINE:
-			castle_id = HEINE_CASTLE_ID; // 海音城
-			break;
+			case L1TownLocation.TOWNID_HEINE:
+				castle_id = HEINE_CASTLE_ID; // 海音城
+				break;
 
-		case L1TownLocation.TOWNID_WERLDAN:
-		case L1TownLocation.TOWNID_OREN:
-			castle_id = DOWA_CASTLE_ID; // 侏儒城
-			break;
+			case L1TownLocation.TOWNID_WERLDAN:
+			case L1TownLocation.TOWNID_OREN:
+				castle_id = DOWA_CASTLE_ID; // 侏儒城
+				break;
 
-		case L1TownLocation.TOWNID_ADEN:
-			castle_id = ADEN_CASTLE_ID; // 亚丁城
-			break;
+			case L1TownLocation.TOWNID_ADEN:
+				castle_id = ADEN_CASTLE_ID; // 亚丁城
+				break;
 
-		case L1TownLocation.TOWNID_OUM_DUNGEON:
-			castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
-			break;
+			case L1TownLocation.TOWNID_OUM_DUNGEON:
+				castle_id = DIAD_CASTLE_ID; // 狄亚得要塞
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 		return castle_id;
 	}
 
-	public static int[] getCastleLoc(int castle_id) { // castle_idから城内の座标を返す
-		int[] loc = new int[3];
+	public static int[] getCastleLoc(final int castle_id) { // castle_idから城内の座标を返す
+		final int[] loc = new int[3];
 		if (castle_id == KENT_CASTLE_ID) { // 肯特城
 			loc[0] = 32731;
 			loc[1] = 32810;
@@ -439,8 +439,8 @@ public class L1CastleLocation {
 	}
 
 	// このメソッドはアデン时间で一日每に更新される税率を返却する。(リアルタイムな税率ではない)
-	public static int getCastleTaxRateByNpcId(int npcId) {
-		int castleId = getCastleIdByNpcid(npcId);
+	public static int getCastleTaxRateByNpcId(final int npcId) {
+		final int castleId = getCastleIdByNpcid(npcId);
 		if (castleId != 0) {
 			return _castleTaxRate.get(castleId);
 		}
@@ -450,7 +450,7 @@ public class L1CastleLocation {
 	/*
 	 * castle_idから归还先の座标をランダムに返す
 	 */
-	public static int[] getGetBackLoc(int castle_id) {
+	public static int[] getGetBackLoc(final int castle_id) {
 		int[] loc;
 		if (castle_id == KENT_CASTLE_ID) { // 肯特城
 			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_KENT);
@@ -475,7 +475,7 @@ public class L1CastleLocation {
 		}
 		else if (castle_id == DIAD_CASTLE_ID) { // 狄亚得要塞
 			// 狄亚得要塞の归还先は未调查
-			int rnd = Random.nextInt(3);
+			final int rnd = Random.nextInt(3);
 			loc = new int[3];
 			if (rnd == 0) {
 				loc[0] = 32792;
@@ -502,9 +502,9 @@ public class L1CastleLocation {
 	/**
 	 * サブタワー番号からサブタワーの座标を返す
 	 */
-	public static int[] getSubTowerLoc(int no) {
-		int[] result = new int[3];
-		L1Location loc = _subTowers.get(no);
+	public static int[] getSubTowerLoc(final int no) {
+		final int[] result = new int[3];
+		final L1Location loc = _subTowers.get(no);
 		if (loc != null) {
 			result[0] = loc.getX();
 			result[1] = loc.getY();
@@ -516,9 +516,9 @@ public class L1CastleLocation {
 	/**
 	 * 返回从castleId的守护塔的坐标
 	 */
-	public static int[] getTowerLoc(int castleId) {
-		int[] result = new int[3];
-		L1Location loc = _towers.get(castleId);
+	public static int[] getTowerLoc(final int castleId) {
+		final int[] result = new int[3];
+		final L1Location loc = _towers.get(castleId);
 		if (loc != null) {
 			result[0] = loc.getX();
 			result[1] = loc.getY();
@@ -530,8 +530,8 @@ public class L1CastleLocation {
 	/**
 	 * 返回从castleId的战争（旗内）的坐标
 	 */
-	public static int[] getWarArea(int castleId) {
-		int[] loc = new int[5];
+	public static int[] getWarArea(final int castleId) {
+		final int[] loc = new int[5];
 		if (castleId == KENT_CASTLE_ID) { // 肯特城
 			loc[0] = KENT_X1;
 			loc[1] = KENT_X2;
@@ -593,7 +593,7 @@ public class L1CastleLocation {
 
 	// GameServer#initialize,L1CastleTaxRateListener#onDayChangedだけに呼び出される予定。
 	public static void setCastleTaxRate() {
-		for (L1Castle castle : CastleTable.getInstance().getCastleTableList()) {
+		for (final L1Castle castle : CastleTable.getInstance().getCastleTableList()) {
 			_castleTaxRate.put(castle.getId(), castle.getTaxRate());
 		}
 		if (_listener == null) {

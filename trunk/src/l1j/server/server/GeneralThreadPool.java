@@ -41,7 +41,7 @@ public class GeneralThreadPool {
 
 		private final ThreadGroup _group;
 
-		public PriorityThreadFactory(String name, int prio) {
+		public PriorityThreadFactory(final String name, final int prio) {
 			_prio = prio;
 			_name = name;
 			_group = new ThreadGroup(_name);
@@ -53,8 +53,8 @@ public class GeneralThreadPool {
 		 * @see java.util.concurrent.ThreadFactory#newThread(java.lang.Runnable)
 		 */
 		@Override
-		public Thread newThread(Runnable r) {
-			Thread t = new Thread(_group, r);
+		public Thread newThread(final Runnable r) {
+			final Thread t = new Thread(_group, r);
 			t.setName(_name + "-" + _threadNumber.getAndIncrement());
 			t.setPriority(_prio);
 			return t;
@@ -74,9 +74,9 @@ public class GeneralThreadPool {
 
 	private Executor _executor; // 通用的ExecutorService
 
-	private ScheduledExecutorService _scheduler; // 通用的ScheduledExecutorService
+	private final ScheduledExecutorService _scheduler; // 通用的ScheduledExecutorService
 
-	private ScheduledExecutorService _pcScheduler; // 监测玩家专用的ScheduledExecutorService
+	private final ScheduledExecutorService _pcScheduler; // 监测玩家专用的ScheduledExecutorService
 
 	// (AutoUpdate:约6ms,ExpMonitor:极小)
 	private final int _pcSchedulerPoolSize = 1 + Config.MAX_ONLINE_USERS / 20; // 每
@@ -98,9 +98,9 @@ public class GeneralThreadPool {
 		_pcScheduler = Executors.newScheduledThreadPool(_pcSchedulerPoolSize, new PriorityThreadFactory("PcMonitorSTPool", Thread.NORM_PRIORITY));
 	}
 
-	public void execute(Runnable r) {
+	public void execute(final Runnable r) {
 		if (_executor == null) {
-			Thread t = new Thread(r);
+			final Thread t = new Thread(r);
 			t.start();
 		}
 		else {
@@ -108,11 +108,11 @@ public class GeneralThreadPool {
 		}
 	}
 
-	public void execute(Thread t) {
+	public void execute(final Thread t) {
 		t.start();
 	}
 
-	public ScheduledFuture<?> pcSchedule(L1PcMonitor r, long delay) {
+	public ScheduledFuture<?> pcSchedule(final L1PcMonitor r, final long delay) {
 		try {
 			if (delay <= 0) {
 				_executor.execute(r);
@@ -120,16 +120,16 @@ public class GeneralThreadPool {
 			}
 			return _pcScheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null;
 		}
 	}
 
-	public ScheduledFuture<?> pcScheduleAtFixedRate(L1PcMonitor r, long initialDelay, long period) {
+	public ScheduledFuture<?> pcScheduleAtFixedRate(final L1PcMonitor r, final long initialDelay, final long period) {
 		return _pcScheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 
-	public ScheduledFuture<?> schedule(Runnable r, long delay) {
+	public ScheduledFuture<?> schedule(final Runnable r, final long delay) {
 		try {
 			if (delay <= 0) {
 				_executor.execute(r);
@@ -137,12 +137,12 @@ public class GeneralThreadPool {
 			}
 			return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null;
 		}
 	}
 
-	public ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long initialDelay, long period) {
+	public ScheduledFuture<?> scheduleAtFixedRate(final Runnable r, final long initialDelay, final long period) {
 		return _scheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 }

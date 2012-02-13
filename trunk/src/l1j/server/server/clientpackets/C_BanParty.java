@@ -28,18 +28,18 @@ public class C_BanParty extends ClientBasePacket {
 
 	private static final String C_BAN_PARTY = "[C] C_BanParty";
 
-	public C_BanParty(byte decrypt[], ClientThread client) throws Exception {
+	public C_BanParty(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		String s = readS();
+		final String s = readS();
 
-		L1PcInstance player = client.getActiveChar();
+		final L1PcInstance player = client.getActiveChar();
 		if (!player.getParty().isLeader(player)) {
 			// 不是组队队长
 			player.sendPackets(new S_ServerMessage(427)); // 只有领导者才有驱逐队伍成员的权力。
 			return;
 		}
 
-		for (L1PcInstance member : player.getParty().getMembers()) {
+		for (final L1PcInstance member : player.getParty().getMembers()) {
 			if (member.getName().toLowerCase().equals(s.toLowerCase())) {
 				player.getParty().kickMember(member);
 				return;

@@ -42,7 +42,7 @@ public class L1MobGroupInfo {
 	}
 
 	/** 增加成员 */
-	public void addMember(L1NpcInstance npc) {
+	public void addMember(final L1NpcInstance npc) {
 		if (npc == null) {
 			throw new NullPointerException();
 		}
@@ -79,7 +79,7 @@ public class L1MobGroupInfo {
 	}
 
 	/** 领导者 */
-	public boolean isLeader(L1NpcInstance npc) {
+	public boolean isLeader(final L1NpcInstance npc) {
 		return npc.getId() == _leader.getId();
 	}
 
@@ -89,7 +89,7 @@ public class L1MobGroupInfo {
 	}
 
 	/** 删除成员 */
-	public synchronized int removeMember(L1NpcInstance npc) {
+	public synchronized int removeMember(final L1NpcInstance npc) {
 		if (npc == null) {
 			throw new NullPointerException();
 		}
@@ -102,7 +102,7 @@ public class L1MobGroupInfo {
 		// リーダーで他のメンバーがいる場合は、新リーダーにする
 		if (isLeader(npc)) {
 			if (isRemoveGroup() && (_membersList.size() != 0)) { // リーダーが死亡したらグループ解除する場合
-				for (L1NpcInstance minion : _membersList) {
+				for (final L1NpcInstance minion : _membersList) {
 					minion.setMobGroupInfo(null);
 					minion.setSpawn(null);
 					minion.setreSpawn(false);
@@ -119,17 +119,17 @@ public class L1MobGroupInfo {
 	}
 
 	/** 设定领导者 */
-	public void setLeader(L1NpcInstance npc) {
+	public void setLeader(final L1NpcInstance npc) {
 		_leader = npc;
 	}
 
 	/** 设定删除群组 */
-	public void setRemoveGroup(boolean flag) {
+	public void setRemoveGroup(final boolean flag) {
 		_isRemoveGroup = flag;
 	}
 
 	/** 设定产生 */
-	public void setSpawn(L1Spawn spawn) {
+	public void setSpawn(final L1Spawn spawn) {
 		_spawn = spawn;
 	}
 

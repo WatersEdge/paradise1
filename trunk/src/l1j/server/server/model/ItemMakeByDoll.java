@@ -33,16 +33,16 @@ public class ItemMakeByDoll extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public ItemMakeByDoll(L1PcInstance pc) {
+	public ItemMakeByDoll(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
 	/** 创造道具 */
 	public void itemMake() {
-		L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemId(_pc));
+		final L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemId(_pc));
 		if (temp != null) {
 			if (_pc.getInventory().checkAddItem(temp, 1) == L1Inventory.OK) {
-				L1ItemInstance item = _pc.getInventory().storeItem(temp.getItemId(), 1);
+				final L1ItemInstance item = _pc.getInventory().storeItem(temp.getItemId(), 1);
 				_pc.sendPackets(new S_ServerMessage(403, item.getItem().getName())); // 获得%0%o 。
 			}
 		}
@@ -56,7 +56,7 @@ public class ItemMakeByDoll extends TimerTask {
 			}
 			itemMake();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

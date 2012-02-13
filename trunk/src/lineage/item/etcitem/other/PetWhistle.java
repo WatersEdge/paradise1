@@ -36,9 +36,9 @@ public class PetWhistle extends ItemExecutor {
 
 		pc.sendPackets(new S_Sound(437));
 		pc.broadcastPacket(new S_Sound(437));
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) { // 宠物
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				pet.call();
 			}
 		}

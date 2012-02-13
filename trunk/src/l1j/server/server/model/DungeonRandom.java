@@ -48,7 +48,7 @@ public class DungeonRandom {
 
 		int _heading;
 
-		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId, int heading) {
+		private NewDungeonRandom(final int[] newX, final int[] newY, final short[] newMapId, final int heading) {
 			for (int i = 0; i < 5; i++) {
 				_newX[i] = newX[i];
 				_newY[i] = newY[i];
@@ -82,13 +82,13 @@ public class DungeonRandom {
 			pstm = con.prepareStatement("SELECT * FROM dungeon_random");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int srcMapId = rs.getInt("src_mapid");
-				int srcX = rs.getInt("src_x");
-				int srcY = rs.getInt("src_y");
-				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
-				int[] newX = new int[5];
-				int[] newY = new int[5];
-				short[] newMapId = new short[5];
+				final int srcMapId = rs.getInt("src_mapid");
+				final int srcX = rs.getInt("src_x");
+				final int srcY = rs.getInt("src_y");
+				final String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
+				final int[] newX = new int[5];
+				final int[] newY = new int[5];
+				final short[] newMapId = new short[5];
 				newX[0] = rs.getInt("new_x1");
 				newY[0] = rs.getInt("new_y1");
 				newMapId[0] = rs.getShort("new_mapid1");
@@ -104,15 +104,15 @@ public class DungeonRandom {
 				newX[4] = rs.getInt("new_x5");
 				newY[4] = rs.getInt("new_y5");
 				newMapId[4] = rs.getShort("new_mapid5");
-				int heading = rs.getInt("new_heading");
-				NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX, newY, newMapId, heading);
+				final int heading = rs.getInt("new_heading");
+				final NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX, newY, newMapId, heading);
 				if (_dungeonMap.containsKey(key)) {
 					_log.log(Level.WARNING, "具有相同的dungeon关键数据。key=" + key);
 				}
 				_dungeonMap.put(key, newDungeonRandom);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -121,15 +121,15 @@ public class DungeonRandom {
 		}
 	}
 
-	public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
-		String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
+	public boolean dg(final int locX, final int locY, final int mapId, final L1PcInstance pc) {
+		final String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
 		if (_dungeonMap.containsKey(key)) {
-			int rnd = Random.nextInt(5);
-			NewDungeonRandom newDungeonRandom = _dungeonMap.get(key);
-			short newMap = newDungeonRandom._newMapId[rnd];
-			int newX = newDungeonRandom._newX[rnd];
-			int newY = newDungeonRandom._newY[rnd];
-			int heading = newDungeonRandom._heading;
+			final int rnd = Random.nextInt(5);
+			final NewDungeonRandom newDungeonRandom = _dungeonMap.get(key);
+			final short newMap = newDungeonRandom._newMapId[rnd];
+			final int newX = newDungeonRandom._newX[rnd];
+			final int newY = newDungeonRandom._newY[rnd];
+			final int heading = newDungeonRandom._heading;
 
 			// 2秒无敌状态。
 			pc.setSkillEffect(ABSOLUTE_BARRIER, 2000);

@@ -34,7 +34,7 @@ public class S_MapID extends ServerBasePacket {
 	 * @param isUnderwater
 	 *            是否在水中
 	 */
-	public S_MapID(int mapid, boolean isUnderwater) {
+	public S_MapID(final int mapid, final boolean isUnderwater) {
 		writeC(Opcodes.S_OPCODE_MAPID);
 		writeH(mapid);
 		writeC(isUnderwater ? 1 : 0); // 水底:1

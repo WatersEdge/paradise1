@@ -40,7 +40,7 @@ public class HomeTownTimeController {
 
 	private class L1TownFixedProcListener extends L1GameTimeAdapter {
 		@Override
-		public void onDayChanged(L1GameTime time) {
+		public void onDayChanged(final L1GameTime time) {
 			fixedProc(time);
 		}
 	}
@@ -63,7 +63,7 @@ public class HomeTownTimeController {
 	 * 
 	 * @return int 报酬
 	 */
-	public static int getPay(int objid) {
+	public static int getPay(final int objid) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		PreparedStatement pstm2 = null;
@@ -85,7 +85,7 @@ public class HomeTownTimeController {
 			pstm2.setInt(1, objid);
 			pstm2.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs1);
@@ -106,7 +106,7 @@ public class HomeTownTimeController {
 			pstm = con.prepareStatement("UPDATE characters SET HomeTownID = 0 WHERE HomeTownID = -1");
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -114,7 +114,7 @@ public class HomeTownTimeController {
 		}
 	}
 
-	private static String totalContribution(int townId) {
+	private static String totalContribution(final int townId) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		ResultSet rs1 = null;
@@ -171,7 +171,7 @@ public class HomeTownTimeController {
 			pstm5.setInt(3, townId);
 			pstm5.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs1);
@@ -202,22 +202,22 @@ public class HomeTownTimeController {
 	public void monthlyProc() {
 		_log.info("城镇系统：开始处理每月事项");
 		L1World.getInstance().setProcessingContributionTotal(true);
-		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
-		for (L1PcInstance pc : players) {
+		final Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
+		for (final L1PcInstance pc : players) {
 			try {
 				// 储存所有线上玩家的资讯
 				pc.save();
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
 
 		for (int townId = 1; townId <= 10; townId++) {
-			String leaderName = totalContribution(townId);
+			final String leaderName = totalContribution(townId);
 			if (leaderName != null) {
-				S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
-				for (L1PcInstance pc : players) {
+				final S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
+				for (final L1PcInstance pc : players) {
 					if (pc.getHomeTownId() == townId) {
 						pc.setContribution(0);
 						pc.sendPackets(packet);
@@ -227,7 +227,7 @@ public class HomeTownTimeController {
 		}
 		TownTable.getInstance().load();
 
-		for (L1PcInstance pc : players) {
+		for (final L1PcInstance pc : players) {
 			if (pc.getHomeTownId() == -1) {
 				pc.setHomeTownId(0);
 			}
@@ -236,7 +236,7 @@ public class HomeTownTimeController {
 				// 储存所有线上玩家的资讯
 				pc.save();
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
@@ -244,9 +244,9 @@ public class HomeTownTimeController {
 		L1World.getInstance().setProcessingContributionTotal(false);
 	}
 
-	private void fixedProc(L1GameTime time) {
-		Calendar cal = time.getCalendar();
-		int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
+	private void fixedProc(final L1GameTime time) {
+		final Calendar cal = time.getCalendar();
+		final int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
 
 		if (day == 25) {
 			monthlyProc();

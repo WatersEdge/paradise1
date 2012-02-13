@@ -26,12 +26,12 @@ public class S_AttackPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AttackPacket(L1Character atk, int objid, int actid) {
-		int[] data = { actid, 0, 0 };
+	public S_AttackPacket(final L1Character atk, final int objid, final int actid) {
+		final int[] data = { actid, 0, 0 };
 		buildpacket(atk, objid, data);
 	}
 
-	public S_AttackPacket(L1Character atk, int objid, int[] data) {
+	public S_AttackPacket(final L1Character atk, final int objid, final int[] data) {
 		buildpacket(atk, objid, data);
 	}
 
@@ -49,7 +49,7 @@ public class S_AttackPacket extends ServerBasePacket {
 		return S_ATTACK_PACKET;
 	}
 
-	private void buildpacket(L1Character atk, int objid, int[] data) { // data = {actid, dmg, effect}
+	private void buildpacket(final L1Character atk, final int objid, final int[] data) { // data = {actid, dmg, effect}
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(data[0]); // actid
 		writeD(atk.getId());

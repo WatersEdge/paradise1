@@ -30,11 +30,11 @@ public class L1CharName {
 		return _name;
 	}
 
-	public void setId(int i) {
+	public void setId(final int i) {
 		_id = i;
 	}
 
-	public void setName(String s) {
+	public void setName(final String s) {
 		_name = s;
 	}
 

@@ -182,194 +182,194 @@ public class S_PacketBox extends ServerBasePacket {
 	/** 魔法娃娃状态图示 */
 	public static final int ICON_MAGIC_DOLL = 56;
 
-	public S_PacketBox(int subCode) {
+	public S_PacketBox(final int subCode) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 
 		switch (subCode) {
-		case MSG_WAR_INITIATIVE:
-		case MSG_WAR_OCCUPY:
-		case MSG_MARRIED:
-		case MSG_FEEL_GOOD:
-		case MSG_CANT_LOGOUT:
-		case LOGOUT:
-		case FISHING:
-			break;
-		case CALL_SOMETHING:
-			callSomething();
-		default:
-			break;
+			case MSG_WAR_INITIATIVE:
+			case MSG_WAR_OCCUPY:
+			case MSG_MARRIED:
+			case MSG_FEEL_GOOD:
+			case MSG_CANT_LOGOUT:
+			case LOGOUT:
+			case FISHING:
+				break;
+			case CALL_SOMETHING:
+				callSomething();
+			default:
+				break;
 		}
 	}
 
-	public S_PacketBox(int subCode, int value) {
+	public S_PacketBox(final int subCode, final int value) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 
 		switch (subCode) {
-		case ICON_BLUEPOTION:
-		case ICON_CHATBAN:
-		case ICON_I2H:
-		case ICON_POLYMORPH:
-			writeH(value); // time
-			break;
-		case MSG_WAR_BEGIN:
-		case MSG_WAR_END:
-		case MSG_WAR_GOING:
-			writeC(value); // castle id
-			writeH(0); // ?
-			break;
-		case MSG_SMS_SENT:
-		case WEIGHT:
-		case FOOD:
-			writeC(value);
-			break;
-		case MSG_ELF: // 忽然全身充满了%s的灵力。
-		case MSG_RANK_CHANGED: // 你的阶级变更为%s
-		case MSG_COLOSSEUM: // 大圆形竞技场，混沌的大战开始！结束！取消！
-			writeC(value); // msg id
-			writeC(0);
-			break;
-		case MSG_LEVEL_OVER:
-			writeC(0); // ?
-			writeC(value); // 0-49以外不显示
-			break;
-		case COOK_WINDOW:
-			writeC(0xdb); // ?
-			writeC(0x31);
-			writeC(0xdf);
-			writeC(0x02);
-			writeC(0x01);
-			writeC(value); // level
-			break;
-		case 88: // + 闪避率
-			writeC(value);
-			writeC(0x00);
-			break;
-		case 101: // - 闪避率
-			writeC(value);
-			break;
-		case 21: // 状态图示
-			writeC(0x00);
-			writeC(0x00);
-			writeC(0x00);
-			writeC(value); // 闪避图示 (幻术:镜像、黑妖:闇影闪避)
-			break;
-		default:
-			break;
-		}
-	}
-
-	public S_PacketBox(int subCode, int type, int time) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(subCode);
-
-		switch (subCode) {
-		case ICON_COOKING:
-			if (type == 54) { // 象牙塔妙药
-				writeC(0x12);
-				writeC(0x0c);
-				writeC(0x0c);
-				writeC(0x07);
-				writeC(0x12);
-				writeC(0x08);
-				writeH(0x0000); // 饱和度 值:2000，饱和度100%
-				writeC(type); // 类型
-				writeC(0x2a);
-				writeH(time); // 时间
-				writeC(0x0); // 负重度 值:242，负重度100%
-			}
-			else if (type != 7) {
-				writeC(0x12);
-				writeC(0x0b);
-				writeC(0x0c);
-				writeC(0x0b);
-				writeC(0x0f);
-				writeC(0x08);
-				writeH(0x0000); // 饱和度 值:2000，饱和度100%
-				writeC(type); // 类型
-				writeC(0x24);
-				writeH(time); // 时间
-				writeC(0x00); // 负重度 值:242，负重度100%
-			}
-			else {
-				writeC(0x12);
-				writeC(0x0b);
-				writeC(0x0c);
-				writeC(0x0b);
-				writeC(0x0f);
-				writeC(0x08);
-				writeH(0x0000); // 饱和度 值:2000，饱和度100%
-				writeC(type); // 类型
-				writeC(0x26);
-				writeH(time); // 时间
-				writeC(0x00); // 负重度 值:240，负重度100%
-			}
-			break;
-		case MSG_DUEL:
-			writeD(type); // 对方ID
-			writeD(time); // 自己ID
-			break;
-		case ICON_MAGIC_DOLL:
-			if (type == 32) { // 爱心图示
-				writeH(time);
-				writeC(type);
-				writeC(12);
-			}
-			else { // 魔法娃娃图示
-				writeH(time);
+			case ICON_BLUEPOTION:
+			case ICON_CHATBAN:
+			case ICON_I2H:
+			case ICON_POLYMORPH:
+				writeH(value); // time
+				break;
+			case MSG_WAR_BEGIN:
+			case MSG_WAR_END:
+			case MSG_WAR_GOING:
+				writeC(value); // castle id
+				writeH(0); // ?
+				break;
+			case MSG_SMS_SENT:
+			case WEIGHT:
+			case FOOD:
+				writeC(value);
+				break;
+			case MSG_ELF: // 忽然全身充满了%s的灵力。
+			case MSG_RANK_CHANGED: // 你的阶级变更为%s
+			case MSG_COLOSSEUM: // 大圆形竞技场，混沌的大战开始！结束！取消！
+				writeC(value); // msg id
 				writeC(0);
-				writeC(0);
-			}
-			break;
-		default:
-			break;
+				break;
+			case MSG_LEVEL_OVER:
+				writeC(0); // ?
+				writeC(value); // 0-49以外不显示
+				break;
+			case COOK_WINDOW:
+				writeC(0xdb); // ?
+				writeC(0x31);
+				writeC(0xdf);
+				writeC(0x02);
+				writeC(0x01);
+				writeC(value); // level
+				break;
+			case 88: // + 闪避率
+				writeC(value);
+				writeC(0x00);
+				break;
+			case 101: // - 闪避率
+				writeC(value);
+				break;
+			case 21: // 状态图示
+				writeC(0x00);
+				writeC(0x00);
+				writeC(0x00);
+				writeC(value); // 闪避图示 (幻术:镜像、黑妖:闇影闪避)
+				break;
+			default:
+				break;
 		}
 	}
 
-	public S_PacketBox(int subCode, int id, String name, String clanName) {
+	public S_PacketBox(final int subCode, final int type, final int time) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 
 		switch (subCode) {
-		case MSG_WIN_LASTAVARD:
-			writeD(id); // 血盟ID或者什么？
-			writeS(name);
-			writeS(clanName);
-			break;
-		default:
-			break;
+			case ICON_COOKING:
+				if (type == 54) { // 象牙塔妙药
+					writeC(0x12);
+					writeC(0x0c);
+					writeC(0x0c);
+					writeC(0x07);
+					writeC(0x12);
+					writeC(0x08);
+					writeH(0x0000); // 饱和度 值:2000，饱和度100%
+					writeC(type); // 类型
+					writeC(0x2a);
+					writeH(time); // 时间
+					writeC(0x0); // 负重度 值:242，负重度100%
+				}
+				else if (type != 7) {
+					writeC(0x12);
+					writeC(0x0b);
+					writeC(0x0c);
+					writeC(0x0b);
+					writeC(0x0f);
+					writeC(0x08);
+					writeH(0x0000); // 饱和度 值:2000，饱和度100%
+					writeC(type); // 类型
+					writeC(0x24);
+					writeH(time); // 时间
+					writeC(0x00); // 负重度 值:242，负重度100%
+				}
+				else {
+					writeC(0x12);
+					writeC(0x0b);
+					writeC(0x0c);
+					writeC(0x0b);
+					writeC(0x0f);
+					writeC(0x08);
+					writeH(0x0000); // 饱和度 值:2000，饱和度100%
+					writeC(type); // 类型
+					writeC(0x26);
+					writeH(time); // 时间
+					writeC(0x00); // 负重度 值:240，负重度100%
+				}
+				break;
+			case MSG_DUEL:
+				writeD(type); // 对方ID
+				writeD(time); // 自己ID
+				break;
+			case ICON_MAGIC_DOLL:
+				if (type == 32) { // 爱心图示
+					writeH(time);
+					writeC(type);
+					writeC(12);
+				}
+				else { // 魔法娃娃图示
+					writeH(time);
+					writeC(0);
+					writeC(0);
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
-	public S_PacketBox(int subCode, Object[] names) {
+	public S_PacketBox(final int subCode, final int id, final String name, final String clanName) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 
 		switch (subCode) {
-		case ADD_EXCLUDE2:
-			writeC(names.length);
-			for (Object name : names) {
-				writeS(name.toString());
-			}
-			break;
-		default:
-			break;
+			case MSG_WIN_LASTAVARD:
+				writeD(id); // 血盟ID或者什么？
+				writeS(name);
+				writeS(clanName);
+				break;
+			default:
+				break;
 		}
 	}
 
-	public S_PacketBox(int subCode, String name) {
+	public S_PacketBox(final int subCode, final Object[] names) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
 
 		switch (subCode) {
-		case ADD_EXCLUDE:
-		case REM_EXCLUDE:
-		case MSG_TOWN_LEADER:
-			writeS(name);
-			break;
-		default:
-			break;
+			case ADD_EXCLUDE2:
+				writeC(names.length);
+				for (final Object name : names) {
+					writeS(name.toString());
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	public S_PacketBox(final int subCode, final String name) {
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(subCode);
+
+		switch (subCode) {
+			case ADD_EXCLUDE:
+			case REM_EXCLUDE:
+			case MSG_TOWN_LEADER:
+				writeS(name);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -388,24 +388,24 @@ public class S_PacketBox extends ServerBasePacket {
 	}
 
 	private void callSomething() {
-		Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers().iterator();
+		final Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers().iterator();
 
 		writeC(L1World.getInstance().getAllPlayers().size());
 
 		while (itr.hasNext()) {
-			L1PcInstance pc = itr.next();
-			Account acc = Account.load(pc.getAccountName());
+			final L1PcInstance pc = itr.next();
+			final Account acc = Account.load(pc.getAccountName());
 
 			// 时间情报 とりあえずログイン时间を入れてみる
 			if (acc == null) {
 				writeD(0);
 			}
 			else {
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Config.TIME_ZONE));
-				long lastactive = acc.getLastActive().getTime();
+				final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Config.TIME_ZONE));
+				final long lastactive = acc.getLastActive().getTime();
 				cal.setTimeInMillis(lastactive);
 				cal.set(Calendar.YEAR, 1970);
-				int time = (int) (cal.getTimeInMillis() / 1000);
+				final int time = (int) (cal.getTimeInMillis() / 1000);
 				writeD(time); // JST 1970 1/1 09:00 が基准
 			}
 

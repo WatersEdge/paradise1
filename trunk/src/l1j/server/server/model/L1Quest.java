@@ -101,12 +101,12 @@ public class L1Quest {
 	/**  */
 	private Map<Integer, Integer> _quest = null;
 
-	public L1Quest(L1PcInstance owner) {
+	public L1Quest(final L1PcInstance owner) {
 		_owner = owner;
 	}
 
 	/** 增加步骤 */
-	public void add_step(int quest_id, int add) {
+	public void add_step(final int quest_id, final int add) {
 		int step = get_step(quest_id);
 		step += add;
 		set_step(quest_id, step);
@@ -118,7 +118,7 @@ public class L1Quest {
 	}
 
 	/** 获得步骤 */
-	public int get_step(int quest_id) {
+	public int get_step(final int quest_id) {
 
 		if (_quest == null) {
 
@@ -138,7 +138,7 @@ public class L1Quest {
 				}
 
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				SQLUtil.close(rs);
@@ -146,7 +146,7 @@ public class L1Quest {
 				SQLUtil.close(con);
 			}
 		}
-		Integer step = _quest.get(new Integer(quest_id));
+		final Integer step = _quest.get(new Integer(quest_id));
 		if (step == null) {
 			return 0;
 		}
@@ -156,7 +156,7 @@ public class L1Quest {
 	}
 
 	/** 是结束 */
-	public boolean isEnd(int quest_id) {
+	public boolean isEnd(final int quest_id) {
 		if (get_step(quest_id) == QUEST_END) {
 			return true;
 		}
@@ -164,12 +164,12 @@ public class L1Quest {
 	}
 
 	/** 设置结束 */
-	public void set_end(int quest_id) {
+	public void set_end(final int quest_id) {
 		set_step(quest_id, QUEST_END);
 	}
 
 	/** 设置步骤 */
-	public void set_step(int quest_id, int step) {
+	public void set_step(final int quest_id, final int step) {
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -192,7 +192,7 @@ public class L1Quest {
 				pstm.execute();
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {

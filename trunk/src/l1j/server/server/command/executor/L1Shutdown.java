@@ -27,7 +27,7 @@ public class L1Shutdown implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			if (arg.equalsIgnoreCase("now")) {
 				GameServer.getInstance().shutdown();
@@ -37,10 +37,10 @@ public class L1Shutdown implements L1CommandExecutor {
 				GameServer.getInstance().abortShutdown();
 				return;
 			}
-			int sec = Math.max(5, Integer.parseInt(arg));
+			final int sec = Math.max(5, Integer.parseInt(arg));
 			GameServer.getInstance().shutdownWithCountdown(sec);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入: .shutdown sec|now|abort 。"));
 		}
 	}

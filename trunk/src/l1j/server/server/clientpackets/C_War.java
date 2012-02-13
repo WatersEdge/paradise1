@@ -39,15 +39,15 @@ public class C_War extends ClientBasePacket {
 	/**
 	 * 要求:宣战、停战、投降
 	 */
-	public C_War(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_War(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		int type = readC();
-		String s = readS();
+		final int type = readC();
+		final String s = readS();
 
-		L1PcInstance player = clientthread.getActiveChar(); // 线上角色
-		String playerName = player.getName(); // 角色名称
-		String clanName = player.getClanname(); // 血盟名称
-		int clanId = player.getClanid(); // 血盟ID
+		final L1PcInstance player = clientthread.getActiveChar(); // 线上角色
+		final String playerName = player.getName(); // 角色名称
+		final String clanName = player.getClanname(); // 血盟名称
+		final int clanId = player.getClanid(); // 血盟ID
 
 		// 不是王族
 		if (!player.isCrown()) {
@@ -62,7 +62,7 @@ public class C_War extends ClientBasePacket {
 		}
 
 		// 取回血盟
-		L1Clan clan = L1World.getInstance().getClan(clanName);
+		final L1Clan clan = L1World.getInstance().getClan(clanName);
 
 		// 找不到血盟
 		if (clan == null) {
@@ -87,7 +87,7 @@ public class C_War extends ClientBasePacket {
 		String enemyClanName = null;
 
 		// 取得所有的血盟
-		for (L1Clan checkClan : L1World.getInstance().getAllClans()) {
+		for (final L1Clan checkClan : L1World.getInstance().getAllClans()) {
 			if (checkClan.getClanName().toLowerCase().equals(s.toLowerCase())) {
 				enemyClan = checkClan;
 				enemyClanName = checkClan.getClanName();
@@ -104,8 +104,8 @@ public class C_War extends ClientBasePacket {
 		boolean inWar = false;
 
 		// 取得所有的盟战
-		List<L1War> warList = L1World.getInstance().getWarList();
-		for (L1War war : warList) {
+		final List<L1War> warList = L1World.getInstance().getWarList();
+		for (final L1War war : warList) {
 
 			// 检查是否在盟战中
 			if (war.CheckClanInWar(clanName)) {
@@ -152,17 +152,17 @@ public class C_War extends ClientBasePacket {
 
 		// 对方王族有城堡
 		if (enemyClan.getCastleId() != 0) {
-			int castle_id = enemyClan.getCastleId();
+			final int castle_id = enemyClan.getCastleId();
 			if (WarTimeController.getInstance().isNowWar(castle_id)) { // 在战争时间内
-				L1PcInstance clanMember[] = clan.getOnlineClanMember();
-				for (L1PcInstance element : clanMember) {
+				final L1PcInstance clanMember[] = clan.getOnlineClanMember();
+				for (final L1PcInstance element : clanMember) {
 					if (L1CastleLocation.checkInWarArea(castle_id, element)) {
 						player.sendPackets(new S_ServerMessage(477)); // 包含你，所有的血盟成员到城外，才能宣布攻城。
 						return;
 					}
 				}
 				boolean enemyInWar = false;
-				for (L1War war : warList) {
+				for (final L1War war : warList) {
 					if (war.CheckClanInWar(enemyClanName)) { // 对方已经在战争中
 						if (type == 0) { // 宣战布告
 							war.DeclareWar(clanName, enemyClanName); // 谁对谁宣战
@@ -184,7 +184,7 @@ public class C_War extends ClientBasePacket {
 					}
 				}
 				if (!enemyInWar && (type == 0)) { // 与对手不在同一场战争中、宣战布告
-					L1War war = new L1War();
+					final L1War war = new L1War();
 					war.handleCommands(1, clanName, enemyClanName); // 攻城战开始
 				}
 			}
@@ -196,7 +196,7 @@ public class C_War extends ClientBasePacket {
 		}
 		else { // 没有对手的其他血盟主
 			boolean enemyInWar = false;
-			for (L1War war : warList) {
+			for (final L1War war : warList) {
 				if (war.CheckClanInWar(enemyClanName)) { // 对手在战争中
 					if (type == 0) { // 宣战布告
 						player.sendPackets(new S_ServerMessage(236, enemyClanName)); // %0 血盟拒绝你的宣战。
@@ -216,7 +216,7 @@ public class C_War extends ClientBasePacket {
 			}
 
 			// 取回对方血盟主资料
-			L1PcInstance enemyLeader = L1World.getInstance().getPlayer(enemyClan.getLeaderName());
+			final L1PcInstance enemyLeader = L1World.getInstance().getPlayer(enemyClan.getLeaderName());
 
 			if (enemyLeader == null) { // 没有找到对方血盟主
 				player.sendPackets(new S_ServerMessage(218, enemyClanName)); // \f1%0 血盟君主不在线上。

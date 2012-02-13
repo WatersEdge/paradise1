@@ -685,11 +685,11 @@ public class TextMapReader extends MapReader {
 	 * @return ArraryList
 	 */
 	public static List<Integer> listMapIds() {
-		List<Integer> ids = Lists.newList();
+		final List<Integer> ids = Lists.newList();
 
-		File mapDir = new File(MAP_DIR);
-		for (String name : mapDir.list()) {
-			File mapFile = new File(mapDir, name);
+		final File mapDir = new File(MAP_DIR);
+		for (final String name : mapDir.list()) {
+			final File mapFile = new File(mapDir, name);
 			if (!mapFile.exists()) {
 				continue;
 			}
@@ -698,10 +698,10 @@ public class TextMapReader extends MapReader {
 			}
 			int id = 0;
 			try {
-				String idStr = FileUtil.getNameWithoutExtension(mapFile);
+				final String idStr = FileUtil.getNameWithoutExtension(mapFile);
 				id = Integer.parseInt(idStr);
 			}
-			catch (NumberFormatException e) {
+			catch (final NumberFormatException e) {
 				continue;
 			}
 			ids.add(id);
@@ -717,21 +717,21 @@ public class TextMapReader extends MapReader {
 	 */
 	@Override
 	public Map<Integer, L1Map> read() throws IOException {
-		Map<Integer, L1Map> maps = Maps.newMap();
+		final Map<Integer, L1Map> maps = Maps.newMap();
 
-		for (int[] info : MAP_INFO) {
-			int mapId = info[MAPINFO_MAP_NO];
-			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
-			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
+		for (final int[] info : MAP_INFO) {
+			final int mapId = info[MAPINFO_MAP_NO];
+			final int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
+			final int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			try {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
-						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
-						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
+				final L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId),
+						MapsTable.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable
+								.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
 
 				maps.put(mapId, map);
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
@@ -749,15 +749,15 @@ public class TextMapReader extends MapReader {
 	 */
 	@Override
 	public L1Map read(final int id) throws IOException {
-		for (int[] info : MAP_INFO) {
-			int mapId = info[MAPINFO_MAP_NO];
-			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
-			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
+		for (final int[] info : MAP_INFO) {
+			final int mapId = info[MAPINFO_MAP_NO];
+			final int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
+			final int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			if (mapId == id) {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
-						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
-						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
+				final L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId),
+						MapsTable.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable
+								.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
 				return map;
 			}
 		}
@@ -777,8 +777,8 @@ public class TextMapReader extends MapReader {
 	 * @throws IOException
 	 */
 	public byte[][] read(final int mapId, final int xSize, final int ySize) throws IOException {
-		byte[][] map = new byte[xSize][ySize];
-		LineNumberReader in = new LineNumberReader(new BufferedReader(new FileReader(MAP_DIR + mapId + ".txt")));
+		final byte[][] map = new byte[xSize][ySize];
+		final LineNumberReader in = new LineNumberReader(new BufferedReader(new FileReader(MAP_DIR + mapId + ".txt")));
 
 		int y = 0;
 		String line;
@@ -788,9 +788,9 @@ public class TextMapReader extends MapReader {
 			}
 
 			int x = 0;
-			StringTokenizer tok = new StringTokenizer(line, ",");
+			final StringTokenizer tok = new StringTokenizer(line, ",");
 			while (tok.hasMoreTokens()) {
-				byte tile = Byte.parseByte(tok.nextToken());
+				final byte tile = Byte.parseByte(tok.nextToken());
 				map[x][y] = tile;
 
 				x++;

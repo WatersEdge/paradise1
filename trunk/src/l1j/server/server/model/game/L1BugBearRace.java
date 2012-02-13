@@ -44,13 +44,13 @@ public class L1BugBearRace {
 		L1NpcInstance _bugBear;
 		int _runnerNumber;
 
-		BugBearRunning(int runnerNumber) {
+		BugBearRunning(final int runnerNumber) {
 			_bugBear = _runner[runnerNumber];
 			_runnerNumber = runnerNumber;
 		}
 
-		public void begin(int startTime) {
-			Timer _timer = new Timer();
+		public void begin(final int startTime) {
+			final Timer _timer = new Timer();
 			_timer.schedule(this, startTime);
 		}
 
@@ -61,7 +61,7 @@ public class L1BugBearRace {
 				try {
 					Thread.sleep(sleepTime);
 				}
-				catch (InterruptedException e) {
+				catch (final InterruptedException e) {
 					e.printStackTrace();
 				}
 				while (!_bugBear.getMap().isPassable(_bugBear.getX(), _bugBear.getY(), _bugBear.getHeading())) {
@@ -89,15 +89,16 @@ public class L1BugBearRace {
 			}
 		}
 	}
+
 	private class RaceTimer extends TimerTask {
 		int _startTime;
 
-		RaceTimer(int startTime) {
+		RaceTimer(final int startTime) {
 			_startTime = startTime;
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, _startTime * 1000);
 		}
 
@@ -114,7 +115,7 @@ public class L1BugBearRace {
 				clearRunner();
 				setRound(getRound() + 1);
 				/* 比赛时间 - 录制过程 */
-				L1RaceTicket ticket = new L1RaceTicket();
+				final L1RaceTicket ticket = new L1RaceTicket();
 				ticket.set_itemobjid(FIRST_ID); // 重複可能
 				ticket.set_allotment_percentage(0);
 				ticket.set_round(getRound());
@@ -126,15 +127,15 @@ public class L1BugBearRace {
 				setRandomRunner(); // 运动员准备
 				setRandomCondition();
 				/* 存储SHOP BuyList */
-				L1Shop shop1 = ShopTable.getInstance().get(70035);
-				L1Shop shop2 = ShopTable.getInstance().get(70041);
-				L1Shop shop3 = ShopTable.getInstance().get(70042);
+				final L1Shop shop1 = ShopTable.getInstance().get(70035);
+				final L1Shop shop2 = ShopTable.getInstance().get(70041);
+				final L1Shop shop3 = ShopTable.getInstance().get(70042);
 				for (int i = 0; i < 5; i++) {
-					L1ShopItem shopItem1 = new L1ShopItem(40309, 500, 1);
+					final L1ShopItem shopItem1 = new L1ShopItem(40309, 500, 1);
 					shopItem1.setName(i);
-					L1ShopItem shopItem2 = new L1ShopItem(40309, 500, 1);
+					final L1ShopItem shopItem2 = new L1ShopItem(40309, 500, 1);
 					shopItem2.setName(i);
-					L1ShopItem shopItem3 = new L1ShopItem(40309, 500, 1);
+					final L1ShopItem shopItem3 = new L1ShopItem(40309, 500, 1);
 					shopItem3.setName(i);
 					shop1.getSellingItems().add(shopItem1);
 					shop2.getSellingItems().add(shopItem2);
@@ -162,8 +163,8 @@ public class L1BugBearRace {
 				shop2.getSellingItems().clear();
 				shop3.getSellingItems().clear();
 				/**/
-				for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-					if (door.getDoorId() <= 812 && door.getDoorId() >= 808) {
+				for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+					if ((door.getDoorId() <= 812) && (door.getDoorId() >= 808)) {
 						door.open();
 					}
 				}
@@ -187,20 +188,21 @@ public class L1BugBearRace {
 							+ String.valueOf(_allotment_percentage[i]));// 402
 																		// の配当率は
 				}
-				this.cancel();
+				cancel();
 			}
-			catch (InterruptedException e) {
+			catch (final InterruptedException e) {
 				e.printStackTrace();
 			}
 
 		}
 	}
+
 	private class StartBuffTimer extends TimerTask {
 		StartBuffTimer() {
 		}
 
 		public void begin() {
-			Timer _timer = new Timer();
+			final Timer _timer = new Timer();
 			_timer.scheduleAtFixedRate(this, 1000, 1000);
 		}
 
@@ -217,10 +219,11 @@ public class L1BugBearRace {
 				}
 			}
 			else {
-				this.cancel();
+				cancel();
 			}
 		}
 	}
+
 	L1MerchantInstance pory;
 	L1MerchantInstance cecile;
 	L1MerchantInstance parkin;
@@ -232,23 +235,25 @@ public class L1BugBearRace {
 	private static final int WAIT_TIME = 60;
 	private static final int READY_TIME = 9 * 60 - 10;// test 60;//
 	private static final int FIRST_NPCID = 91350;// ~20
+
 	public static L1BugBearRace getInstance() {
 		if (instance == null) {
 			instance = new L1BugBearRace();
 		}
 		return instance;
 	}
-	private L1NpcInstance[] _runner;
-	private int[] _runnerStatus = new int[5];
-	private double[] _winning_average = new double[5];
 
-	private double[] _allotment_percentage = new double[5];
+	private final L1NpcInstance[] _runner;
+	private final int[] _runnerStatus = new int[5];
+	private final double[] _winning_average = new double[5];
 
-	private int[] _condition = new int[5];
+	private final double[] _allotment_percentage = new double[5];
+
+	private final int[] _condition = new int[5];
 
 	private int _allBet;
 
-	private int[] _betCount = new int[5];
+	private final int[] _betCount = new int[5];
 
 	private int _round;
 
@@ -261,21 +266,21 @@ public class L1BugBearRace {
 	L1BugBearRace() {
 		setRound(RaceTicketTable.getInstance().getRoundNumOfMax());
 		_runner = new L1NpcInstance[5];
-		for (L1Object obj : L1World.getInstance().getObject()) {
+		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70041) {
 					parkin = (L1MerchantInstance) obj;
 				}
 			}
 		}
-		for (L1Object obj : L1World.getInstance().getObject()) {
+		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70035) {
 					cecile = (L1MerchantInstance) obj;
 				}
 			}
 		}
-		for (L1Object obj : L1World.getInstance().getObject()) {
+		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70042) {
 					pory = (L1MerchantInstance) obj;
@@ -286,18 +291,18 @@ public class L1BugBearRace {
 	}
 
 	/** 检查当前的位置 */
-	public boolean checkPosition(int runnerNumber) {
+	public boolean checkPosition(final int runnerNumber) {
 		final int[] defaultHead = { 6, 7, 0, 1, 2, 2 };
 		if (getGameStatus() != STATUS_PLAYING) {
 			return false;
 		}
 		boolean flag = false;// ゴールするまではfalseを返す
-		L1NpcInstance npc = _runner[runnerNumber];
-		int x = npc.getX();
-		int y = npc.getY();
+		final L1NpcInstance npc = _runner[runnerNumber];
+		final int x = npc.getX();
+		final int y = npc.getY();
 		if (_runnerStatus[runnerNumber] == 0) {// スタート　直線
 			if (// x==33476+(runnerNumber*2)&&y==32861+(runnerNumber*2)
-			(x >= 33476 && x <= 33476 + 8) && (y >= 32861 && y <= 32861 + 8)) {
+			((x >= 33476) && (x <= 33476 + 8)) && ((y >= 32861) && (y <= 32861 + 8))) {
 				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
@@ -306,7 +311,7 @@ public class L1BugBearRace {
 			}
 		}
 		else if (_runnerStatus[runnerNumber] == 1) {//
-			if ((x <= 33473 && x >= 33473 - 9) && y == 32858) {
+			if (((x <= 33473) && (x >= 33473 - 9)) && (y == 32858)) {
 				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
@@ -315,7 +320,7 @@ public class L1BugBearRace {
 			}
 		}
 		else if (_runnerStatus[runnerNumber] == 2) {//
-			if ((x <= 33473 && x >= 33473 - 9) && y == 32852) {
+			if (((x <= 33473) && (x >= 33473 - 9)) && (y == 32852)) {
 				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
@@ -324,7 +329,7 @@ public class L1BugBearRace {
 			}
 		}
 		else if (_runnerStatus[runnerNumber] == 3) {//
-			if ((x == 33478 && (y <= 32847 && y >= 32847 - 9))) {
+			if (((x == 33478) && ((y <= 32847) && (y >= 32847 - 9)))) {
 				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
@@ -333,7 +338,7 @@ public class L1BugBearRace {
 			}
 		}
 		else if (_runnerStatus[runnerNumber] == 4) {//
-			if (x == 33523 && (y >= 32847 - 9 && y <= 32847)) {
+			if ((x == 33523) && ((y >= 32847 - 9) && (y <= 32847))) {
 				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 				// goal
@@ -344,7 +349,7 @@ public class L1BugBearRace {
 			}
 		}
 		else if (_runnerStatus[runnerNumber] == 5) {//
-			if (x == 33527 && (y >= 32847 - 8 && y <= 32847)) {
+			if ((x == 33527) && ((y >= 32847 - 8) && (y <= 32847))) {
 				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
 				finish();
 				flag = true;
@@ -360,11 +365,11 @@ public class L1BugBearRace {
 		return _allBet;
 	}
 
-	public int getBetCount(int i) {
+	public int getBetCount(final int i) {
 		return _betCount[i];
 	}
 
-	public int getCondition(int num) {
+	public int getCondition(final int num) {
 		return _condition[num];
 	}
 
@@ -378,28 +383,28 @@ public class L1BugBearRace {
 		return _round;
 	}
 
-	public L1NpcInstance getRunner(int num) {
+	public L1NpcInstance getRunner(final int num) {
 		return _runner[num];
 	}
 
-	public double getWinningAverage(int num) {
+	public double getWinningAverage(final int num) {
 		return _winning_average[num];
 	}
 
-	public void setAllBet(int allBet) {// allbetは3桁の整数
-		this._allBet = (int) (allBet * 0.9);// 1割は管理人が取得
+	public void setAllBet(final int allBet) {// allbetは3桁の整数
+		_allBet = (int) (allBet * 0.9);// 1割は管理人が取得
 	}
 
-	public void setBetCount(int i, int count) {
+	public void setBetCount(final int i, final int count) {
 		_betCount[i] = count;
 	}
 
-	public void setGameStatus(int i) {
+	public void setGameStatus(final int i) {
 		_status = i;
 	}
 
-	private int calcSleepTime(int sleepTime, int runnerNumber) {
-		L1NpcInstance npc = _runner[runnerNumber];
+	private int calcSleepTime(int sleepTime, final int runnerNumber) {
+		final L1NpcInstance npc = _runner[runnerNumber];
 		if (npc.getBraveSpeed() == 1) {
 			sleepTime -= (sleepTime * 0.25);
 		}
@@ -407,20 +412,25 @@ public class L1BugBearRace {
 		return sleepTime;
 	}
 
-	private boolean checkDuplicate(int npcid, int curi) {
-		for (int i = 0; i < curi; i++)
-			if (_runner[i] != null)
-				if (_runner[i].getNpcId() == npcid)
+	private boolean checkDuplicate(final int npcid, final int curi) {
+		for (int i = 0; i < curi; i++) {
+			if (_runner[i] != null) {
+				if (_runner[i].getNpcId() == npcid) {
 					return true;
+				}
+			}
+		}
 		return false;
 	}
 
 	/** 检查重复 */
-	private boolean checkDuplicateAverage(double winning_average, int curi) {
+	private boolean checkDuplicateAverage(final double winning_average, final int curi) {
 		// 胜率跟状态都一样算重复
-		for (int i = 0; i < curi; i++)
-			if (_winning_average[i] == winning_average && _condition[i] == _condition[curi])
+		for (int i = 0; i < curi; i++) {
+			if ((_winning_average[i] == winning_average) && (_condition[i] == _condition[curi])) {
 				return true;
+			}
+		}
 		return false;
 	}
 
@@ -440,8 +450,8 @@ public class L1BugBearRace {
 			setBetCount(i, 0);
 		}
 		setAllBet(0);
-		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
-			if (door.getDoorId() <= 812 && door.getDoorId() >= 808) {
+		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+			if ((door.getDoorId() <= 812) && (door.getDoorId() >= 808)) {
 				door.close();
 			}
 		}
@@ -449,8 +459,8 @@ public class L1BugBearRace {
 
 	private void finish() {
 		int cnt = 0;
-		for (int i = 0; i < _runnerStatus.length; i++) {
-			if (_runnerStatus[i] == 5) {
+		for (final int _runnerStatu : _runnerStatus) {
+			if (_runnerStatu == 5) {
 				cnt++;
 			}
 		}
@@ -467,10 +477,10 @@ public class L1BugBearRace {
 		return (_random.nextInt(10000) + 1) / 100D;
 	}
 
-	private void goal(int runnberNumber) {
+	private void goal(final int runnberNumber) {
 		int cnt = 0;
-		for (int i = 0; i < _runnerStatus.length; i++) {
-			if (_runnerStatus[i] == 5) {
+		for (final int _runnerStatu : _runnerStatus) {
+			if (_runnerStatu == 5) {
 				cnt++;
 			}
 		}
@@ -492,7 +502,7 @@ public class L1BugBearRace {
 		return heading;
 	}
 
-	private void sendMessage(String id) {
+	private void sendMessage(final String id) {
 		parkin.wideBroadcastPacket(new S_NpcChatPacket(parkin, id, 2));
 		// cecile.broadcastPacket(new S_NpcChatPacket(cecile,id, 2));
 		pory.wideBroadcastPacket(new S_NpcChatPacket(pory, id, 2));
@@ -514,22 +524,23 @@ public class L1BugBearRace {
 			while (checkDuplicate(npcid, i)) {
 				npcid = FIRST_NPCID + _random.nextInt(20);
 			}
-			L1Location loc = new L1Location(33522 - (i * 2), 32861 + (i * 2), 4);
+			final L1Location loc = new L1Location(33522 - (i * 2), 32861 + (i * 2), 4);
 			_runner[i] = spawnOne(loc, npcid, 6);
 
 		}
 	}
 
-	private void setRound(int round) {
-		this._round = round;
+	private void setRound(final int round) {
+		_round = round;
 	}
 
 	private void setWinnigAverage() {
 		for (int i = 0; i < _winning_average.length; i++) {
 			double winningAverage = getRandomProbability();
 
-			while (checkDuplicateAverage(winningAverage, i))
+			while (checkDuplicateAverage(winningAverage, i)) {
 				winningAverage = getRandomProbability();
+			}
 			_winning_average[i] = winningAverage;
 		}
 	}
@@ -546,7 +557,7 @@ public class L1BugBearRace {
 	 * @return L1NpcInstance 戻り値 : 成功=生成したインスタンス 失敗=null
 	 */
 	@SuppressWarnings("unused")
-	private L1NpcInstance spawnOne(L1Location loc, int npcid, int heading) {
+	private L1NpcInstance spawnOne(final L1Location loc, final int npcid, final int heading) {
 		final L1NpcInstance mob = new L1NpcInstance(NpcTable.getInstance().getTemplate(npcid));
 		if (mob == null) {
 			return mob;

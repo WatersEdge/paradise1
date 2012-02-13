@@ -37,8 +37,8 @@ public class S_ActiveSpells extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_ActiveSpells(L1PcInstance pc) {
-		byte[] randBox = new byte[2];
+	public S_ActiveSpells(final L1PcInstance pc) {
+		final byte[] randBox = new byte[2];
 		randBox[0] = Random.nextByte();
 		randBox[1] = Random.nextByte();
 
@@ -48,7 +48,7 @@ public class S_ActiveSpells extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
 		writeC(0x14);
 
-		for (int i : activeSpells(pc)) {
+		for (final int i : activeSpells(pc)) {
 			if (i != 72) {
 				writeC(i);
 			}
@@ -69,8 +69,8 @@ public class S_ActiveSpells extends ServerBasePacket {
 	}
 
 	// 登入时给于角色状态剩余时间
-	private int[] activeSpells(L1PcInstance pc) {
-		int[] data = new int[104];
+	private int[] activeSpells(final L1PcInstance pc) {
+		final int[] data = new int[104];
 		// 生命之树果实
 		if (pc.hasSkillEffect(STATUS_RIBRAVE)) {
 			data[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
@@ -124,7 +124,7 @@ public class S_ActiveSpells extends ServerBasePacket {
 		}
 		// 附魔石
 		if (pc.getMagicStoneLevel() != 0) {
-			int skillId = pc.getMagicStoneLevel() + 3929; // skillId = 4013 ~ 4048
+			final int skillId = pc.getMagicStoneLevel() + 3929; // skillId = 4013 ~ 4048
 			data[102] = pc.getSkillEffectTimeSec(skillId) / 32;
 			if (data[102] != 0) {
 				data[103] = pc.getMagicStoneLevel();

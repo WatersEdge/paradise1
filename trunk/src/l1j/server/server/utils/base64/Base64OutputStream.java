@@ -32,13 +32,13 @@ public class Base64OutputStream extends OutputStream {
 
 	private int linelength = 0;
 
-	public Base64OutputStream(OutputStream outputStream) {
+	public Base64OutputStream(final OutputStream outputStream) {
 		this(outputStream, 76);// 每 76个Byte换行
 	}
 
-	public Base64OutputStream(OutputStream outputStream, int wrapAt) {
+	public Base64OutputStream(final OutputStream outputStream, final int wrapAt) {
 		this.outputStream = outputStream;
-		this.linelength = wrapAt;
+		linelength = wrapAt;
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public class Base64OutputStream extends OutputStream {
 	}
 
 	@Override
-	public void write(int b) throws IOException {
-		int value = (b & 0xFF) << (16 - (bytecounter * 8));
+	public void write(final int b) throws IOException {
+		final int value = (b & 0xFF) << (16 - (bytecounter * 8));
 		buffer = buffer | value;
 		bytecounter++;
 		if (bytecounter == 3) {
@@ -59,14 +59,14 @@ public class Base64OutputStream extends OutputStream {
 
 	protected void commit() throws IOException {
 		if (bytecounter > 0) {
-			if (linelength > 0 && linecounter == linelength) {
+			if ((linelength > 0) && (linecounter == linelength)) {
 				outputStream.write("\r\n".getBytes());
 				linecounter = 0;
 			}
-			char b1 = Base64.Shared.chars.charAt((buffer << 8) >>> 26);
-			char b2 = Base64.Shared.chars.charAt((buffer << 14) >>> 26);
-			char b3 = (bytecounter < 2) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 20) >>> 26);
-			char b4 = (bytecounter < 3) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 26) >>> 26);
+			final char b1 = Base64.Shared.chars.charAt((buffer << 8) >>> 26);
+			final char b2 = Base64.Shared.chars.charAt((buffer << 14) >>> 26);
+			final char b3 = (bytecounter < 2) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 20) >>> 26);
+			final char b4 = (bytecounter < 3) ? Base64.Shared.pad : Base64.Shared.chars.charAt((buffer << 26) >>> 26);
 			outputStream.write(b1);
 			outputStream.write(b2);
 			outputStream.write(b3);

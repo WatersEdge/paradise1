@@ -48,7 +48,7 @@ public class CharacterConfigTable {
 	 * 
 	 * @param objectId
 	 */
-	public int countCharacterConfig(int objectId) {
+	public int countCharacterConfig(final int objectId) {
 		int result = 0;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -62,7 +62,7 @@ public class CharacterConfigTable {
 				result = rs.getInt("cnt");
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -77,7 +77,7 @@ public class CharacterConfigTable {
 	 * 
 	 * @param objectId
 	 */
-	public void deleteCharacterConfig(int objectId) {
+	public void deleteCharacterConfig(final int objectId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -86,7 +86,7 @@ public class CharacterConfigTable {
 			pstm.setInt(1, objectId);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -101,7 +101,7 @@ public class CharacterConfigTable {
 	 * @param length
 	 * @param data
 	 */
-	public void storeCharacterConfig(int objectId, int length, byte[] data) {
+	public void storeCharacterConfig(final int objectId, final int length, final byte[] data) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -112,7 +112,7 @@ public class CharacterConfigTable {
 			pstm.setBytes(3, data);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -127,7 +127,7 @@ public class CharacterConfigTable {
 	 * @param length
 	 * @param data
 	 */
-	public void updateCharacterConfig(int objectId, int length, byte[] data) {
+	public void updateCharacterConfig(final int objectId, final int length, final byte[] data) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -138,7 +138,7 @@ public class CharacterConfigTable {
 			pstm.setInt(3, objectId);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

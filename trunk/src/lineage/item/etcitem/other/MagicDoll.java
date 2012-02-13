@@ -43,7 +43,7 @@ public class MagicDoll extends ItemExecutor {
 			boolean isAppear = true;
 			L1DollInstance doll = null;
 
-			for (L1DollInstance curdoll : pc.getDollList().values()) {
+			for (final L1DollInstance curdoll : pc.getDollList().values()) {
 				doll = curdoll;
 				if (doll.getItemObjId() == itemObjectId) {
 					isAppear = false;

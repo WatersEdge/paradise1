@@ -24,7 +24,7 @@ import l1j.server.server.Opcodes;
  */
 public class S_SkillIconWisdomPotion extends ServerBasePacket {
 
-	public S_SkillIconWisdomPotion(int time) {
+	public S_SkillIconWisdomPotion(final int time) {
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(0x39);
 		writeC(0x2c);

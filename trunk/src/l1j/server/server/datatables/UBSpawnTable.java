@@ -57,7 +57,7 @@ public class UBSpawnTable {
 	 *            检查UBID。
 	 * @return 模式的最大数量。
 	 */
-	public int getMaxPattern(int ubId) {
+	public int getMaxPattern(final int ubId) {
 		int n = 0;
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
@@ -72,7 +72,7 @@ public class UBSpawnTable {
 				n = rs.getInt(1);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -82,9 +82,9 @@ public class UBSpawnTable {
 		return n;
 	}
 
-	public L1UbPattern getPattern(int ubId, int patternNumer) {
-		L1UbPattern pattern = new L1UbPattern();
-		for (L1UbSpawn spawn : _spawnTable.values()) {
+	public L1UbPattern getPattern(final int ubId, final int patternNumer) {
+		final L1UbPattern pattern = new L1UbPattern();
+		for (final L1UbSpawn spawn : _spawnTable.values()) {
 			if ((spawn.getUbId() == ubId) && (spawn.getPattern() == patternNumer)) {
 				pattern.addSpawn(spawn.getGroup(), spawn);
 			}
@@ -94,7 +94,7 @@ public class UBSpawnTable {
 		return pattern;
 	}
 
-	public L1UbSpawn getSpawn(int spawnId) {
+	public L1UbSpawn getSpawn(final int spawnId) {
 		return _spawnTable.get(spawnId);
 	}
 
@@ -110,12 +110,12 @@ public class UBSpawnTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
+				final L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
 				if (npcTemp == null) {
 					continue;
 				}
 
-				L1UbSpawn spawnDat = new L1UbSpawn();
+				final L1UbSpawn spawnDat = new L1UbSpawn();
 				spawnDat.setId(rs.getInt(1));
 				spawnDat.setUbId(rs.getInt(2));
 				spawnDat.setPattern(rs.getInt(3));
@@ -129,7 +129,7 @@ public class UBSpawnTable {
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			// problem with initializing spawn, go to next one
 			_log.warning("spawn couldnt 被初始化:" + e);
 		} finally {

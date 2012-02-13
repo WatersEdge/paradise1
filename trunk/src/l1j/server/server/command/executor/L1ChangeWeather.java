@@ -33,14 +33,14 @@ public class L1ChangeWeather implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
-			int weather = Integer.parseInt(tok.nextToken());
+			final StringTokenizer tok = new StringTokenizer(arg);
+			final int weather = Integer.parseInt(tok.nextToken());
 			L1World.getInstance().setWeather(weather);
 			L1World.getInstance().broadcastPacketToAll(new S_Weather(weather));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " 0～3、16～19。"));
 		}
 	}

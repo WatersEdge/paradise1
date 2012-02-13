@@ -32,21 +32,21 @@ public class ConsoleLogFormatter extends Formatter {
 	}
 
 	@Override
-	public String format(LogRecord record) {
-		StringBuffer output = new StringBuffer();
+	public String format(final LogRecord record) {
+		final StringBuffer output = new StringBuffer();
 		output.append(record.getMessage());
 		output.append("\r\n");
 
 		if (record.getThrown() != null) {
 			try {
-				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
+				final StringWriter sw = new StringWriter();
+				final PrintWriter pw = new PrintWriter(sw);
 				record.getThrown().printStackTrace(pw);
 				pw.close();
 				output.append(sw.toString());
 				output.append("\r\n");
 			}
-			catch (Exception ex) {
+			catch (final Exception ex) {
 			}
 		}
 		return output.toString();

@@ -61,9 +61,9 @@ public class BuddyTable {
 
 				try {
 					buddysPS = con.prepareStatement("SELECT buddy_id, buddy_name FROM character_buddys WHERE char_id = ?");
-					int charId = charIdRS.getInt("char_id");
+					final int charId = charIdRS.getInt("char_id");
 					buddysPS.setInt(1, charId);
-					L1Buddy buddy = new L1Buddy(charId);
+					final L1Buddy buddy = new L1Buddy(charId);
 
 					buddysRS = buddysPS.executeQuery();
 					while (buddysRS.next()) {
@@ -72,7 +72,7 @@ public class BuddyTable {
 
 					_buddys.put(buddy.getCharId(), buddy);
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				} finally {
 					SQLUtil.close(buddysRS);
@@ -81,7 +81,7 @@ public class BuddyTable {
 			}
 			_log.config("加载 " + _buddys.size() + " 角色的好友列表");
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(charIdRS);
@@ -97,7 +97,7 @@ public class BuddyTable {
 	 * @param objId
 	 * @param name
 	 */
-	public void addBuddy(int charId, int objId, String name) {
+	public void addBuddy(final int charId, final int objId, final String name) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -109,7 +109,7 @@ public class BuddyTable {
 			pstm.setString(3, name);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -123,7 +123,7 @@ public class BuddyTable {
 	 * @param charId
 	 * @return 好友
 	 */
-	public L1Buddy getBuddyTable(int charId) {
+	public L1Buddy getBuddyTable(final int charId) {
 		L1Buddy buddy = _buddys.get(charId);
 		if (buddy == null) {
 			buddy = new L1Buddy(charId);
@@ -138,10 +138,10 @@ public class BuddyTable {
 	 * @param charId
 	 * @param buddyName
 	 */
-	public void removeBuddy(int charId, String buddyName) {
+	public void removeBuddy(final int charId, final String buddyName) {
 		Connection con = null;
 		PreparedStatement pstm = null;
-		L1Buddy buddy = getBuddyTable(charId);
+		final L1Buddy buddy = getBuddyTable(charId);
 		if (!buddy.containsName(buddyName)) {
 			return;
 		}
@@ -155,7 +155,7 @@ public class BuddyTable {
 
 			buddy.remove(buddyName);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

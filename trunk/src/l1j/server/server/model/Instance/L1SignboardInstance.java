@@ -24,16 +24,16 @@ public class L1SignboardInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1SignboardInstance(L1Npc template) {
+	public L1SignboardInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_SignboardPack(this));
 	}

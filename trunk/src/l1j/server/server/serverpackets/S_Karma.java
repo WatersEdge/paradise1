@@ -24,7 +24,7 @@ public class S_Karma extends ServerBasePacket {
 
 	private static final String S_KARMA = "[S] S_Karma";
 
-	public S_Karma(L1PcInstance pc) {
+	public S_Karma(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x57);
 		writeD(pc.getKarma());

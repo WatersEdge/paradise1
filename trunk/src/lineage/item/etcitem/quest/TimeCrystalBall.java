@@ -38,9 +38,9 @@ public class TimeCrystalBall extends ItemExecutor {
 
 		if (pc.isIllusionist() && (pc.getMapId() == 4)) { // 火龙窟
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
-					L1MonsterInstance mob = (L1MonsterInstance) obj;
+					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {
 						if (mob.getNpcTemplate().get_npcId() == 81254) { // 时空裂痕
 							found = true;

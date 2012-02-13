@@ -62,7 +62,7 @@ public class Furniture extends ItemExecutor {
 
 		boolean isAppear = true;
 		L1FurnitureInstance furniture = null;
-		for (L1Object l1object : L1World.getInstance().getObject()) {
+		for (final L1Object l1object : L1World.getInstance().getObject()) {
 			if (l1object instanceof L1FurnitureInstance) {
 				furniture = (L1FurnitureInstance) l1object;
 				if (furniture.getItemObjId() == itemObjectId) {
@@ -136,9 +136,9 @@ public class Furniture extends ItemExecutor {
 				final L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId);
 				if (l1npc != null) {
 					try {
-						String s = l1npc.getImpl();
-						Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-						Object aobj[] = { l1npc };
+						final String s = l1npc.getImpl();
+						final Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
+						final Object aobj[] = { l1npc };
 						furniture = (L1FurnitureInstance) constructor.newInstance(aobj);
 						furniture.setId(IdFactory.getInstance().nextId());
 						furniture.setMap(pc.getMapId());
@@ -159,12 +159,12 @@ public class Furniture extends ItemExecutor {
 						L1World.getInstance().addVisibleObject(furniture);
 						FurnitureSpawnTable.getInstance().insertFurniture(furniture);
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}
 			}
-			catch (Exception exception) {
+			catch (final Exception exception) {
 			}
 		}
 		else {

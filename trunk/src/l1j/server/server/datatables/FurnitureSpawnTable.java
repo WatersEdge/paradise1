@@ -55,7 +55,7 @@ public class FurnitureSpawnTable {
 	 * 
 	 * @param furniture
 	 */
-	public void deleteFurniture(L1FurnitureInstance furniture) {
+	public void deleteFurniture(final L1FurnitureInstance furniture) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -64,7 +64,7 @@ public class FurnitureSpawnTable {
 			pstm.setInt(1, furniture.getItemObjId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -77,7 +77,7 @@ public class FurnitureSpawnTable {
 	 * 
 	 * @param furniture
 	 */
-	public void insertFurniture(L1FurnitureInstance furniture) {
+	public void insertFurniture(final L1FurnitureInstance furniture) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -90,7 +90,7 @@ public class FurnitureSpawnTable {
 			pstm.setInt(5, furniture.getMapId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -112,11 +112,11 @@ public class FurnitureSpawnTable {
 					break;
 				}
 
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(rs.getInt(2));
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(rs.getInt(2));
 				if (l1npc != null) {
-					String s = l1npc.getImpl();
-					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-					Object parameters[] = { l1npc };
+					final String s = l1npc.getImpl();
+					final Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
+					final Object parameters[] = { l1npc };
 					L1FurnitureInstance furniture = (L1FurnitureInstance) constructor.newInstance(parameters);
 					furniture = (L1FurnitureInstance) constructor.newInstance(parameters);
 					furniture.setId(IdFactory.getInstance().nextId());
@@ -134,25 +134,25 @@ public class FurnitureSpawnTable {
 				}
 			} while (true);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (SecurityException e) {
+		catch (final SecurityException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (ClassNotFoundException e) {
+		catch (final ClassNotFoundException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (IllegalArgumentException e) {
+		catch (final IllegalArgumentException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (InstantiationException e) {
+		catch (final InstantiationException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (IllegalAccessException e) {
+		catch (final IllegalAccessException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (InvocationTargetException e) {
+		catch (final InvocationTargetException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

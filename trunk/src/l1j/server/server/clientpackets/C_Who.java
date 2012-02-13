@@ -32,20 +32,20 @@ public class C_Who extends ClientBasePacket {
 
 	private static final String C_WHO = "[C] C_Who";
 
-	public C_Who(byte[] decrypt, ClientThread client) {
+	public C_Who(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		String s = readS();
-		L1PcInstance find = L1World.getInstance().getPlayer(s);
-		L1PcInstance pc = client.getActiveChar();
+		final String s = readS();
+		final L1PcInstance find = L1World.getInstance().getPlayer(s);
+		final L1PcInstance pc = client.getActiveChar();
 
 		if (find != null) {
-			S_WhoCharinfo s_whocharinfo = new S_WhoCharinfo(find);
+			final S_WhoCharinfo s_whocharinfo = new S_WhoCharinfo(find);
 			pc.sendPackets(s_whocharinfo);
 		}
 		else {
 			if (Config.ALT_WHO_COMMAND) {
-				String amount = String.valueOf(L1World.getInstance().getAllPlayers().size());
-				S_WhoAmount s_whoamount = new S_WhoAmount(amount);
+				final String amount = String.valueOf(L1World.getInstance().getAllPlayers().size());
+				final S_WhoAmount s_whoamount = new S_WhoAmount(amount);
 				pc.sendPackets(new S_WhoStationery(pc)); // 布告栏(讯息阅读)模式讯息
 				pc.sendPackets(s_whoamount);
 			}

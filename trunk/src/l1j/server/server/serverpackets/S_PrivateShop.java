@@ -38,8 +38,8 @@ public class S_PrivateShop extends ServerBasePacket {
 	 * @param objectId
 	 * @param type
 	 */
-	public S_PrivateShop(L1PcInstance pc, int objectId, int type) {
-		L1PcInstance shopPc = (L1PcInstance) L1World.getInstance().findObject(objectId);
+	public S_PrivateShop(final L1PcInstance pc, final int objectId, final int type) {
+		final L1PcInstance shopPc = (L1PcInstance) L1World.getInstance().findObject(objectId);
 
 		if (shopPc == null) {
 			return;
@@ -50,16 +50,16 @@ public class S_PrivateShop extends ServerBasePacket {
 		writeD(objectId);
 
 		if (type == 0) { // 卖出物品
-			List<L1PrivateShopSellList> list = shopPc.getSellList();
-			int size = list.size();
+			final List<L1PrivateShopSellList> list = shopPc.getSellList();
+			final int size = list.size();
 			pc.setPartnersPrivateShopItemCount(size);
 			writeH(size);
 			for (int i = 0; i < size; i++) {
-				L1PrivateShopSellList pssl = list.get(i);
-				int itemObjectId = pssl.getItemObjectId();
-				int count = pssl.getSellTotalCount() - pssl.getSellCount();
-				int price = pssl.getSellPrice();
-				L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
+				final L1PrivateShopSellList pssl = list.get(i);
+				final int itemObjectId = pssl.getItemObjectId();
+				final int count = pssl.getSellTotalCount() - pssl.getSellCount();
+				final int price = pssl.getSellPrice();
+				final L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
 				if (item != null) {
 					writeC(i);
 					writeC(item.getBless());
@@ -72,16 +72,16 @@ public class S_PrivateShop extends ServerBasePacket {
 			}
 		}
 		else if (type == 1) { // 回收物品
-			List<L1PrivateShopBuyList> list = shopPc.getBuyList();
-			int size = list.size();
+			final List<L1PrivateShopBuyList> list = shopPc.getBuyList();
+			final int size = list.size();
 			writeH(size);
 			for (int i = 0; i < size; i++) {
-				L1PrivateShopBuyList psbl = list.get(i);
-				int itemObjectId = psbl.getItemObjectId();
-				int count = psbl.getBuyTotalCount();
-				int price = psbl.getBuyPrice();
-				L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
-				for (L1ItemInstance pcItem : pc.getInventory().getItems()) {
+				final L1PrivateShopBuyList psbl = list.get(i);
+				final int itemObjectId = psbl.getItemObjectId();
+				final int count = psbl.getBuyTotalCount();
+				final int price = psbl.getBuyPrice();
+				final L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
+				for (final L1ItemInstance pcItem : pc.getInventory().getItems()) {
 					if ((item.getItemId() == pcItem.getItemId()) && (item.getEnchantLevel() == pcItem.getEnchantLevel())) {
 						writeC(i);
 						writeD(pcItem.getId());

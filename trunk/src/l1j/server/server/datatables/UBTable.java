@@ -58,7 +58,7 @@ public class UBTable {
 	 *            检查UBID。
 	 * @return 模式的最大数量。
 	 */
-	public int getMaxPattern(int ubId) {
+	public int getMaxPattern(final int ubId) {
 		int n = 0;
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
@@ -73,7 +73,7 @@ public class UBTable {
 				n = rs.getInt(1);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -83,12 +83,12 @@ public class UBTable {
 		return n;
 	}
 
-	public L1UltimateBattle getUb(int ubId) {
+	public L1UltimateBattle getUb(final int ubId) {
 		return _ub.get(ubId);
 	}
 
-	public L1UltimateBattle getUbForNpcId(int npcId) {
-		for (L1UltimateBattle ub : _ub.values()) {
+	public L1UltimateBattle getUbForNpcId(final int npcId) {
+		for (final L1UltimateBattle ub : _ub.values()) {
 			if (ub.containsManager(npcId)) {
 				return ub;
 			}
@@ -109,7 +109,7 @@ public class UBTable {
 
 			while (rs.next()) {
 
-				L1UltimateBattle ub = new L1UltimateBattle();
+				final L1UltimateBattle ub = new L1UltimateBattle();
 				ub.setUbId(rs.getInt("ub_id"));
 				ub.setMapId(rs.getShort("ub_mapid"));
 				ub.setLocX1(rs.getInt("ub_area_x1"));
@@ -136,7 +136,7 @@ public class UBTable {
 				_ub.put(ub.getUbId(), ub);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("ubsettings couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs);
@@ -149,13 +149,13 @@ public class UBTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
+				final L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
 					ub.addManager(rs.getInt("ub_manager_npc_id"));
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("ub_managers couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs);
@@ -168,13 +168,13 @@ public class UBTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
+				final L1UltimateBattle ub = getUb(rs.getInt("ub_id"));
 				if (ub != null) {
 					ub.addUbTime(rs.getInt("ub_time"));
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("ub_times couldnt 被初始化:" + e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);

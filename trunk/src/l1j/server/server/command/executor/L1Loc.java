@@ -32,16 +32,16 @@ public class L1Loc implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			int locx = pc.getX();
-			int locy = pc.getY();
-			short mapid = pc.getMapId();
-			int gab = L1WorldMap.getInstance().getMap(mapid).getOriginalTile(locx, locy);
-			String msg = String.format("坐标 (%d, %d, %d) %d", locx, locy, mapid, gab);
+			final int locx = pc.getX();
+			final int locy = pc.getY();
+			final short mapid = pc.getMapId();
+			final int gab = L1WorldMap.getInstance().getMap(mapid).getOriginalTile(locx, locy);
+			final String msg = String.format("坐标 (%d, %d, %d) %d", locx, locy, mapid, gab);
 			pc.sendPackets(new S_SystemMessage(msg));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

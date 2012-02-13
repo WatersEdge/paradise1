@@ -16,7 +16,7 @@ public class S_PetEquipment extends ServerBasePacket {
 	 * 【Server】 id:82 size:16 time:1302335819812 0000 52 25 00 04 bd 54 00 00 0a 37 80 08 7e ec d0 46 R%...T...7..~..F
 	 */
 
-	public S_PetEquipment(int i, L1PetInstance pet, int j) {
+	public S_PetEquipment(final int i, final L1PetInstance pet, final int j) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x25);
 		writeC(i);

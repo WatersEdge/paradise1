@@ -32,11 +32,11 @@ public class S_InvList extends ServerBasePacket {
 	/**
 	 * 一起增加多个道具到背包。
 	 */
-	public S_InvList(List<L1ItemInstance> items) {
+	public S_InvList(final List<L1ItemInstance> items) {
 		writeC(Opcodes.S_OPCODE_INVLIST);
 		writeC(items.size()); // 道具数量
 
-		for (L1ItemInstance item : items) {
+		for (final L1ItemInstance item : items) {
 			writeD(item.getId());
 			writeC(item.getItem().getUseType()); // 使用类型
 			writeC(0); // 可用次数
@@ -50,9 +50,9 @@ public class S_InvList extends ServerBasePacket {
 				writeC(0);
 			}
 			else {
-				byte[] status = item.getStatusBytes();
+				final byte[] status = item.getStatusBytes();
 				writeC(status.length);
-				for (byte b : status) {
+				for (final byte b : status) {
 					writeC(b);
 				}
 			}

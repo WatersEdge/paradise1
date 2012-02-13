@@ -30,10 +30,10 @@ public class C_Board extends ClientBasePacket {
 
 	private static final String C_BOARD = "[C] C_Board";
 
-	public C_Board(byte abyte0[], ClientThread client) {
+	public C_Board(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		int objectId = readD();
-		L1Object obj = L1World.getInstance().findObject(objectId);
+		final int objectId = readD();
+		final L1Object obj = L1World.getInstance().findObject(objectId);
 		if (!isBoardInstance(obj)) {
 			return; // 对象不是布告栏停止
 		}
@@ -45,7 +45,7 @@ public class C_Board extends ClientBasePacket {
 		return C_BOARD;
 	}
 
-	private boolean isBoardInstance(L1Object obj) {
+	private boolean isBoardInstance(final L1Object obj) {
 		return ((obj instanceof L1BoardInstance) || (obj instanceof L1AuctionBoardInstance));
 	}
 

@@ -31,7 +31,7 @@ public class S_SignboardPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_SignboardPack(L1SignboardInstance signboard) {
+	public S_SignboardPack(final L1SignboardInstance signboard) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(signboard.getX());
 		writeH(signboard.getY());
@@ -77,24 +77,24 @@ public class S_SignboardPack extends ServerBasePacket {
 		return S_SIGNBOARD_PACK;
 	}
 
-	private int getDirection(int heading) {
+	private int getDirection(final int heading) {
 		int dir = 0;
 		switch (heading) {
-		case 2:
-			dir = 1;
-			break;
-		case 3:
-			dir = 2;
-			break;
-		case 4:
-			dir = 3;
-			break;
-		case 6:
-			dir = 4;
-			break;
-		case 7:
-			dir = 5;
-			break;
+			case 2:
+				dir = 1;
+				break;
+			case 3:
+				dir = 2;
+				break;
+			case 4:
+				dir = 3;
+				break;
+			case 6:
+				dir = 4;
+				break;
+			case 7:
+				dir = 5;
+				break;
 		}
 		return dir;
 	}

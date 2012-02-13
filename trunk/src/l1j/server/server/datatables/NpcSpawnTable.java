@@ -54,13 +54,13 @@ public class NpcSpawnTable {
 		fillNpcSpawnTable();
 	}
 
-	public void addNewSpawn(L1Spawn l1spawn) {
+	public void addNewSpawn(final L1Spawn l1spawn) {
 		_highestId++;
 		l1spawn.setId(_highestId);
 		_spawntable.put(l1spawn.getId(), l1spawn);
 	}
 
-	public L1Spawn getTemplate(int i) {
+	public L1Spawn getTemplate(final int i) {
 		return _spawntable.get(i);
 	}
 
@@ -70,13 +70,13 @@ public class NpcSpawnTable {
 	 * @param pc
 	 * @param npc
 	 */
-	public void storeSpawn(L1PcInstance pc, L1Npc npc) {
+	public void storeSpawn(final L1PcInstance pc, final L1Npc npc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 
 		try {
-			int count = 1;
-			String note = npc.get_name();
+			final int count = 1;
+			final String note = npc.get_name();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
@@ -89,7 +89,7 @@ public class NpcSpawnTable {
 			pstm.setInt(7, pc.getMapId());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -114,7 +114,7 @@ public class NpcSpawnTable {
 
 				// GM商店NPC
 				if (Config.ALT_GMSHOP == false) {
-					int npcid = rs.getInt(1);
+					final int npcid = rs.getInt(1);
 
 					// GM商店NPC
 					if ((npcid >= Config.ALT_GMSHOP_MIN_ID) && (npcid <= Config.ALT_GMSHOP_MAX_ID)) {
@@ -124,7 +124,7 @@ public class NpcSpawnTable {
 
 				// 南瓜怪任务NPC
 				if (Config.ALT_HALLOWEENIVENT == false) {
-					int npcid = rs.getInt("id");
+					final int npcid = rs.getInt("id");
 					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734)) || ((npcid >= 89634) && (npcid <= 89644))) {
 						continue;
 					}
@@ -132,7 +132,7 @@ public class NpcSpawnTable {
 
 				// 日本特典道具NPC
 				if (Config.ALT_JPPRIVILEGED == false) {
-					int npcid = rs.getInt("id");
+					final int npcid = rs.getInt("id");
 					if ((npcid >= 1310368) && (npcid <= 1310379)) {
 						continue;
 					}
@@ -140,7 +140,7 @@ public class NpcSpawnTable {
 
 				// 说话卷轴任务NPC
 				if (Config.ALT_TALKINGSCROLLQUEST == false) {
-					int npcid = rs.getInt("id");
+					final int npcid = rs.getInt("id");
 					if (((npcid >= 87537) && (npcid <= 87551)) || ((npcid >= 1310387) && (npcid <= 1310389))) {
 						continue;
 					}
@@ -148,13 +148,13 @@ public class NpcSpawnTable {
 
 				// 说话卷轴任务NPC
 				if (Config.ALT_TALKINGSCROLLQUEST == true) {
-					int npcid = rs.getInt("id");
+					final int npcid = rs.getInt("id");
 					if ((npcid >= 90066) && (npcid <= 90069)) {
 						continue;
 					}
 				}
-				int npcTemplateid = rs.getInt("npc_templateid");
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(npcTemplateid);
+				final int npcTemplateid = rs.getInt("npc_templateid");
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(npcTemplateid);
 				L1Spawn l1spawn;
 				if (l1npc == null) {
 					_log.warning("mob data for id:" + npcTemplateid + " missing in npc table");
@@ -190,7 +190,7 @@ public class NpcSpawnTable {
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

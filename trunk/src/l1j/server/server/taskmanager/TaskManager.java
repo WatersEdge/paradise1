@@ -49,7 +49,7 @@ public final class TaskManager {
 
 		ScheduledFuture<?> _scheduled;
 
-		public ExecutedTask(Task task, TaskTypes type, ResultSet rset) throws SQLException {
+		public ExecutedTask(final Task task, final TaskTypes type, final ResultSet rset) throws SQLException {
 			_task = task;
 			_type = type;
 			_id = rset.getInt("id");
@@ -58,7 +58,7 @@ public final class TaskManager {
 		}
 
 		@Override
-		public boolean equals(Object object) {
+		public boolean equals(final Object object) {
 			return _id == ((ExecutedTask) object)._id;
 		}
 
@@ -97,7 +97,7 @@ public final class TaskManager {
 				pstm.setInt(2, _id);
 				pstm.executeUpdate();
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.warning("cannot updated the Global Task " + _id + ": " + e.getMessage());
 			} finally {
 				SQLUtil.close(pstm);
@@ -125,11 +125,11 @@ public final class TaskManager {
 	protected static final String[] SQL_STATEMENTS = { "SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks", "UPDATE global_tasks SET last_activation=? WHERE id=?", "SELECT id FROM global_tasks WHERE task=?",
 			"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)" };
 
-	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3) {
+	public static boolean addTask(final String task, final TaskTypes type, final String param1, final String param2, final String param3) {
 		return addTask(task, type, param1, param2, param3, 0);
 	}
 
-	public static boolean addTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
+	public static boolean addTask(final String task, final TaskTypes type, final String param1, final String param2, final String param3, final long lastActivation) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 
@@ -146,7 +146,7 @@ public final class TaskManager {
 
 			return true;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "cannot add the task", e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -156,11 +156,11 @@ public final class TaskManager {
 		return false;
 	}
 
-	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3) {
+	public static boolean addUniqueTask(final String task, final TaskTypes type, final String param1, final String param2, final String param3) {
 		return addUniqueTask(task, type, param1, param2, param3, 0);
 	}
 
-	public static boolean addUniqueTask(String task, TaskTypes type, String param1, String param2, String param3, long lastActivation) {
+	public static boolean addUniqueTask(final String task, final TaskTypes type, final String param1, final String param2, final String param3, final long lastActivation) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -184,7 +184,7 @@ public final class TaskManager {
 
 			return true;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("cannot add the unique task: " + e.getMessage());
 		} finally {
 			SQLUtil.close(rs);
@@ -211,8 +211,8 @@ public final class TaskManager {
 		startAllTasks();
 	}
 
-	public void registerTask(Task task) {
-		int key = task.getName().hashCode();
+	public void registerTask(final Task task) {
+		final int key = task.getName().hashCode();
 		if (!_tasks.containsKey(key)) {
 			_tasks.put(key, task);
 			task.initializate();
@@ -234,7 +234,7 @@ public final class TaskManager {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				Task task = _tasks.get(rs.getString("task").trim().toLowerCase().hashCode());
+				final Task task = _tasks.get(rs.getString("task").trim().toLowerCase().hashCode());
 
 				if (task == null) {
 					continue;
@@ -243,14 +243,14 @@ public final class TaskManager {
 			}
 
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "error while loading Global Task table", e);
 		} finally {
 			if (null != rs) {
 				try {
 					rs.close();
 				}
-				catch (SQLException ignore) {
+				catch (final SQLException ignore) {
 					// ignore
 				}
 				rs = null;
@@ -260,7 +260,7 @@ public final class TaskManager {
 				try {
 					pstm.close();
 				}
-				catch (SQLException ignore) {
+				catch (final SQLException ignore) {
 					// ignore
 				}
 				pstm = null;
@@ -270,7 +270,7 @@ public final class TaskManager {
 				try {
 					con.close();
 				}
-				catch (SQLException ignore) {
+				catch (final SQLException ignore) {
 					// ignore
 				}
 				con = null;

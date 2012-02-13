@@ -74,8 +74,8 @@ public class Stationery extends ItemExecutor {
 	private void saveLetter(final int itemObjectId, final int code, final String sender, final String receiver, final byte[] text) {
 		// 取得日期
 		final SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		String date = sdf.format(Calendar.getInstance(tz).getTime());
+		final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final String date = sdf.format(Calendar.getInstance(tz).getTime());
 
 		int spacePosition1 = 0;
 		int spacePosition2 = 0;
@@ -91,13 +91,13 @@ public class Stationery extends ItemExecutor {
 			}
 		}
 
-		int subjectLength = spacePosition1 + 2;
+		final int subjectLength = spacePosition1 + 2;
 		int contentLength = spacePosition2 - spacePosition1;
 		if (contentLength <= 0) {
 			contentLength = 1;
 		}
-		byte[] subject = new byte[subjectLength];
-		byte[] content = new byte[contentLength];
+		final byte[] subject = new byte[subjectLength];
+		final byte[] content = new byte[contentLength];
 		System.arraycopy(text, 0, subject, 0, subjectLength);
 		System.arraycopy(text, subjectLength, content, 0, contentLength);
 		LetterTable.getInstance().writeLetter(itemObjectId, code, sender, receiver, date, 0, subject, content);
@@ -123,8 +123,8 @@ public class Stationery extends ItemExecutor {
 		else {
 			if (CharacterTable.doesCharNameExist(name)) {
 				try {
-					int targetId = CharacterTable.getInstance().restoreCharacter(name).getId();
-					CharactersItemStorage storage = CharactersItemStorage.create();
+					final int targetId = CharacterTable.getInstance().restoreCharacter(name).getId();
+					final CharactersItemStorage storage = CharactersItemStorage.create();
 					if (storage.getItemCount(targetId) < 180) {
 						storage.storeItem(targetId, item);
 					}
@@ -136,7 +136,7 @@ public class Stationery extends ItemExecutor {
 						return false;
 					}
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 			}
@@ -153,7 +153,7 @@ public class Stationery extends ItemExecutor {
 	// 信件 (写信)
 	private boolean writeClanLetter(final int itemId, final L1PcInstance pc, final int letterCode, final String letterReceiver, final byte[] letterText) {
 		L1Clan targetClan = null;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+		for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 			if (clan.getClanName().toLowerCase().equals(letterReceiver.toLowerCase())) {
 				targetClan = clan;
 				break;
@@ -165,8 +165,8 @@ public class Stationery extends ItemExecutor {
 		}
 
 		final String memberName[] = targetClan.getAllMembers();
-		for (String element : memberName) {
-			L1ItemInstance item = ItemTable.getInstance().createItem(49016);
+		for (final String element : memberName) {
+			final L1ItemInstance item = ItemTable.getInstance().createItem(49016);
 			if (item == null) {
 				return false;
 			}

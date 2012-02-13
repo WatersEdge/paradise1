@@ -34,12 +34,12 @@ public class C_Emblem extends ClientBasePacket {
 	private static final String C_EMBLEM = "[C] C_Emblem";
 	private static Logger _log = Logger.getLogger(C_Emblem.class.getName());
 
-	public C_Emblem(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Emblem(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 		if (player.getClanid() != 0) {
-			String emblem_file = String.valueOf(player.getClanid());
+			final String emblem_file = String.valueOf(player.getClanid());
 
 			FileOutputStream fos = null;
 			try {
@@ -48,7 +48,7 @@ public class C_Emblem extends ClientBasePacket {
 					fos.write(readC());
 				}
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				throw e;
 			} finally {

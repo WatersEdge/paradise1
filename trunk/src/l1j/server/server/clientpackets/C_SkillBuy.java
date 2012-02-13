@@ -28,12 +28,12 @@ public class C_SkillBuy extends ClientBasePacket {
 
 	private static final String C_SKILL_BUY = "[C] C_SkillBuy";
 
-	public C_SkillBuy(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_SkillBuy(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int i = readD();
+		final int i = readD();
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}

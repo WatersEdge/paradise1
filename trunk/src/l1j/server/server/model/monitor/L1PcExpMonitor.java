@@ -33,12 +33,12 @@ public class L1PcExpMonitor extends L1PcMonitor {
 	// 上一次判断时的战斗特化类别
 	private int _oldFight;
 
-	public L1PcExpMonitor(int oId) {
+	public L1PcExpMonitor(final int oId) {
 		super(oId);
 	}
 
 	@Override
-	public void execTask(L1PcInstance pc) {
+	public void execTask(final L1PcInstance pc) {
 
 		// ロウフルが变わった场合はS_Lawfulを送信
 		// // ただし色が变わらない场合は送信しない
@@ -49,14 +49,14 @@ public class L1PcExpMonitor extends L1PcMonitor {
 		// .includes(pc.getLawful(), -32768, -2000)))) {
 		if (_old_lawful != pc.getLawful()) {
 			_old_lawful = pc.getLawful();
-			S_Lawful s_lawful = new S_Lawful(pc.getId(), _old_lawful);
+			final S_Lawful s_lawful = new S_Lawful(pc.getId(), _old_lawful);
 			pc.sendPackets(s_lawful);
 			pc.broadcastPacket(s_lawful);
 
 			// 处理战斗特化系统
 			if (Config.FIGHT_IS_ACTIVE) {
 				// 计算目前的战斗特化组别
-				int fightType = _old_lawful / 10000;
+				final int fightType = _old_lawful / 10000;
 
 				// 判断战斗特化组别是否有所变更
 				if (_oldFight != fightType) {

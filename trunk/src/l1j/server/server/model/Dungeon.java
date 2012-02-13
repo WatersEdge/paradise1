@@ -58,7 +58,7 @@ public class Dungeon {
 
 		DungeonType _dungeonType;
 
-		private NewDungeon(int newX, int newY, short newMapId, int heading, DungeonType dungeonType) {
+		private NewDungeon(final int newX, final int newY, final short newMapId, final int heading, final DungeonType dungeonType) {
 			_newX = newX;
 			_newY = newY;
 			_newMapId = newMapId;
@@ -92,14 +92,14 @@ public class Dungeon {
 			pstm = con.prepareStatement("SELECT * FROM dungeon");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int srcMapId = rs.getInt("src_mapid");
-				int srcX = rs.getInt("src_x");
-				int srcY = rs.getInt("src_y");
-				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
-				int newX = rs.getInt("new_x");
-				int newY = rs.getInt("new_y");
-				int newMapId = rs.getInt("new_mapid");
-				int heading = rs.getInt("new_heading");
+				final int srcMapId = rs.getInt("src_mapid");
+				final int srcX = rs.getInt("src_x");
+				final int srcY = rs.getInt("src_y");
+				final String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
+				final int newX = rs.getInt("new_x");
+				final int newY = rs.getInt("new_y");
+				final int newMapId = rs.getInt("new_mapid");
+				final int heading = rs.getInt("new_heading");
 				DungeonType dungeonType = DungeonType.NONE;
 				if ((((srcX == 33423) || (srcX == 33424) || (srcX == 33425) || (srcX == 33426)) && (srcY == 33502) && (srcMapId == 4 // ハイネ船着场->FI行きの船
 						))
@@ -152,14 +152,14 @@ public class Dungeon {
 				else if ((srcX == 34068) && (srcY == 32254) && (srcMapId == 4)) { // 欧瑞旅馆
 					dungeonType = DungeonType.OREN_HOTEL;
 				}
-				NewDungeon newDungeon = new NewDungeon(newX, newY, (short) newMapId, heading, dungeonType);
+				final NewDungeon newDungeon = new NewDungeon(newX, newY, (short) newMapId, heading, dungeonType);
 				if (_dungeonMap.containsKey(key)) {
 					_log.log(Level.WARNING, "Navicat dungeon 传送点重复。key=" + key);
 				}
 				_dungeonMap.put(key, newDungeon);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -168,25 +168,25 @@ public class Dungeon {
 		}
 	}
 
-	public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
-		int servertime = L1GameTimeClock.getInstance().currentTime().getSeconds();
-		int nowtime = servertime % 86400;
-		String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
+	public boolean dg(final int locX, final int locY, final int mapId, final L1PcInstance pc) {
+		final int servertime = L1GameTimeClock.getInstance().currentTime().getSeconds();
+		final int nowtime = servertime % 86400;
+		final String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
 		if (_dungeonMap.containsKey(key)) {
-			NewDungeon newDungeon = _dungeonMap.get(key);
+			final NewDungeon newDungeon = _dungeonMap.get(key);
 			short newMap = newDungeon._newMapId;
 			int newX = newDungeon._newX;
 			int newY = newDungeon._newY;
 			int heading = newDungeon._heading;
-			DungeonType dungeonType = newDungeon._dungeonType;
+			final DungeonType dungeonType = newDungeon._dungeonType;
 			boolean teleportable = false;
 
 			if (dungeonType == DungeonType.NONE) {
 				teleportable = true;
 			}
 			else {
-				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL || dungeonType == DungeonType.WINDAWOOD_HOTEL || dungeonType == DungeonType.SILVER_KNIGHT_HOTEL || dungeonType == DungeonType.HEINE_HOTEL
-						|| dungeonType == DungeonType.GIRAN_HOTEL || dungeonType == DungeonType.OREN_HOTEL) {
+				if ((dungeonType == DungeonType.TALKING_ISLAND_HOTEL) || (dungeonType == DungeonType.GLUDIO_HOTEL) || (dungeonType == DungeonType.WINDAWOOD_HOTEL) || (dungeonType == DungeonType.SILVER_KNIGHT_HOTEL) || (dungeonType == DungeonType.HEINE_HOTEL)
+						|| (dungeonType == DungeonType.GIRAN_HOTEL) || (dungeonType == DungeonType.OREN_HOTEL)) {
 					int npcid = 0;
 					int[] data = null;
 					if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL) {
@@ -218,7 +218,7 @@ public class Dungeon {
 						data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
 					}
 
-					int type = checkInnKey(pc, npcid);
+					final int type = checkInnKey(pc, npcid);
 
 					if (type == 1) { // 房间
 						newX = data[0];
@@ -272,15 +272,15 @@ public class Dungeon {
 	}
 
 	// 检查身上的钥匙
-	private int checkInnKey(L1PcInstance pc, int npcid) {
-		for (L1ItemInstance item : pc.getInventory().getItems()) {
+	private int checkInnKey(final L1PcInstance pc, final int npcid) {
+		for (final L1ItemInstance item : pc.getInventory().getItems()) {
 			if (item.getInnNpcId() == npcid) { // 钥匙与旅馆NPC相符
 				for (int i = 0; i < 16; i++) {
-					L1Inn inn = InnTable.getInstance().getTemplate(npcid, i);
+					final L1Inn inn = InnTable.getInstance().getTemplate(npcid, i);
 					if (inn.getKeyId() == item.getKeyId()) {
-						Timestamp dueTime = item.getDueTime();
+						final Timestamp dueTime = item.getDueTime();
 						if (dueTime != null) { // 时间不为空值
-							Calendar cal = Calendar.getInstance();
+							final Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用时间未到
 								pc.setInnKeyId(item.getKeyId()); // 登入此钥匙
 								return item.checkRoomOrHall() ? 2 : 1; // 1:房间 2:会议室

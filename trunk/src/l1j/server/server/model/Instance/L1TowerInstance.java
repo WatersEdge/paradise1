@@ -47,7 +47,7 @@ public class L1TowerInstance extends L1NpcInstance {
 			setCurrentHpDirect(0);
 			setDead(true);
 			setStatus(ActionCodes.ACTION_TowerDie);
-			int targetobjid = npc.getId();
+			final int targetobjid = npc.getId();
 
 			npc.getMap().setPassable(npc.getLocation(), true);
 
@@ -55,7 +55,7 @@ public class L1TowerInstance extends L1NpcInstance {
 
 			// クラウンをspawnする
 			if (!isSubTower()) {
-				L1WarSpawn warspawn = new L1WarSpawn();
+				final L1WarSpawn warspawn = new L1WarSpawn();
 				warspawn.SpawnCrown(_castle_id);
 			}
 		}
@@ -69,7 +69,7 @@ public class L1TowerInstance extends L1NpcInstance {
 
 	private int _crackStatus;
 
-	public L1TowerInstance(L1Npc template) {
+	public L1TowerInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -83,7 +83,7 @@ public class L1TowerInstance extends L1NpcInstance {
 		_master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -100,14 +100,14 @@ public class L1TowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
+	public void onAction(final L1PcInstance pc, final int skillId) {
 		if ((getCurrentHp() > 0) && !isDead()) {
-			L1Attack attack = new L1Attack(pc, this, skillId);
+			final L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
 				attack.addPcPoisonAttack(pc, this);
@@ -119,13 +119,13 @@ public class L1TowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_NPCPack(this));
 	}
 
 	@Override
-	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
+	public void receiveDamage(final L1Character attacker, final int damage) { // 攻撃でＨＰを減らすときはここを使用
 		if (_castle_id == 0) { // 初期設定で良いがいい場所がない
 			if (isSubTower()) {
 				_castle_id = L1CastleLocation.ADEN_CASTLE_ID;
@@ -140,9 +140,9 @@ public class L1TowerInstance extends L1NpcInstance {
 			// アデン城のメインタワーはサブタワーが3つ以上破壊されている場合のみ攻撃可能
 			if ((_castle_id == L1CastleLocation.ADEN_CASTLE_ID) && !isSubTower()) {
 				int subTowerDeadCount = 0;
-				for (L1Object l1object : L1World.getInstance().getObject()) {
+				for (final L1Object l1object : L1World.getInstance().getObject()) {
 					if (l1object instanceof L1TowerInstance) {
-						L1TowerInstance tower = (L1TowerInstance) l1object;
+						final L1TowerInstance tower = (L1TowerInstance) l1object;
 						if (tower.isSubTower() && tower.isDead()) {
 							subTowerDeadCount++;
 							if (subTowerDeadCount == 4) {
@@ -172,8 +172,8 @@ public class L1TowerInstance extends L1NpcInstance {
 
 			// 布告しているかチェック。但し、城主が居ない場合は布告不要
 			boolean existDefenseClan = false;
-			for (L1Clan clan : L1World.getInstance().getAllClans()) {
-				int clanCastleId = clan.getCastleId();
+			for (final L1Clan clan : L1World.getInstance().getAllClans()) {
+				final int clanCastleId = clan.getCastleId();
 				if (clanCastleId == _castle_id) {
 					existDefenseClan = true;
 					break;
@@ -181,7 +181,7 @@ public class L1TowerInstance extends L1NpcInstance {
 			}
 			boolean isProclamation = false;
 			// 取得全部战争列表
-			for (L1War war : L1World.getInstance().getWarList()) {
+			for (final L1War war : L1World.getInstance().getWarList()) {
 				if (_castle_id == war.GetCastleId()) { // 今居る城の戦争
 					isProclamation = war.CheckClanInWar(pc.getClanname());
 					break;
@@ -192,14 +192,14 @@ public class L1TowerInstance extends L1NpcInstance {
 			}
 
 			if ((getCurrentHp() > 0) && !isDead()) {
-				int newHp = getCurrentHp() - damage;
+				final int newHp = getCurrentHp() - damage;
 				if ((newHp <= 0) && !isDead()) {
 					setCurrentHpDirect(0);
 					setDead(true);
 					setStatus(ActionCodes.ACTION_TowerDie);
 					_lastattacker = attacker;
 					_crackStatus = 0;
-					Death death = new Death();
+					final Death death = new Death();
 					GeneralThreadPool.getInstance().execute(death);
 					// Death(attacker);
 				}
@@ -232,7 +232,7 @@ public class L1TowerInstance extends L1NpcInstance {
 				setDead(true);
 				setStatus(ActionCodes.ACTION_TowerDie);
 				_lastattacker = attacker;
-				Death death = new Death();
+				final Death death = new Death();
 				GeneralThreadPool.getInstance().execute(death);
 				// Death(attacker);
 			}
@@ -240,7 +240,7 @@ public class L1TowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setCurrentHp(int i) {
+	public void setCurrentHp(final int i) {
 		int currentHp = i;
 		if (currentHp >= getMaxHp()) {
 			currentHp = getMaxHp();

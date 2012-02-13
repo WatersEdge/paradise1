@@ -32,7 +32,7 @@ public class S_PetPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_PetPack(L1PetInstance pet, L1PcInstance pc) {
+	public S_PetPack(final L1PetInstance pet, final L1PcInstance pc) {
 		buildPacket(pet, pc);
 	}
 
@@ -50,7 +50,7 @@ public class S_PetPack extends ServerBasePacket {
 		return S_PET_PACK;
 	}
 
-	private void buildPacket(L1PetInstance pet, L1PcInstance pc) {
+	private void buildPacket(final L1PetInstance pet, final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(pet.getX());
 		writeH(pet.getY());

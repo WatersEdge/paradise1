@@ -35,24 +35,24 @@ public class C_NPCTalkAction extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_NPCTalkAction.class.getName());
 
-	public C_NPCTalkAction(byte decrypt[], ClientThread client) throws FileNotFoundException, Exception {
+	public C_NPCTalkAction(final byte decrypt[], final ClientThread client) throws FileNotFoundException, Exception {
 
 		super(decrypt);
-		int objectId = readD();
-		String action = readS();
-		L1PcInstance activeChar = client.getActiveChar();
+		final int objectId = readD();
+		final String action = readS();
+		final L1PcInstance activeChar = client.getActiveChar();
 
-		L1Object obj = L1World.getInstance().findObject(objectId);
+		final L1Object obj = L1World.getInstance().findObject(objectId);
 		if (obj == null) {
 			_log.warning("找不到对象, oid " + objectId);
 			return;
 		}
 
 		try {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			npc.onFinalAction(activeChar, action);
 		}
-		catch (ClassCastException e) {
+		catch (final ClassCastException e) {
 		}
 	}
 

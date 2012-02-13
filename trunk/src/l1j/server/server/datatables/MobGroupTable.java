@@ -52,7 +52,7 @@ public class MobGroupTable {
 		loadMobGroup();
 	}
 
-	public L1MobGroup getTemplate(int mobGroupId) {
+	public L1MobGroup getTemplate(final int mobGroupId) {
 		return _mobGroupIndex.get(mobGroupId);
 	}
 
@@ -65,21 +65,21 @@ public class MobGroupTable {
 			pstm = con.prepareStatement("SELECT * FROM mobgroup");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int mobGroupId = rs.getInt("id");
-				boolean isRemoveGroup = (rs.getBoolean("remove_group_if_leader_die"));
-				int leaderId = rs.getInt("leader_id");
-				List<L1NpcCount> minions = Lists.newList();
+				final int mobGroupId = rs.getInt("id");
+				final boolean isRemoveGroup = (rs.getBoolean("remove_group_if_leader_die"));
+				final int leaderId = rs.getInt("leader_id");
+				final List<L1NpcCount> minions = Lists.newList();
 				for (int i = 1; i <= 7; i++) {
-					int id = rs.getInt("minion" + i + "_id");
-					int count = rs.getInt("minion" + i + "_count");
+					final int id = rs.getInt("minion" + i + "_id");
+					final int count = rs.getInt("minion" + i + "_count");
 					minions.add(new L1NpcCount(id, count));
 				}
-				L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId, minions, isRemoveGroup);
+				final L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId, minions, isRemoveGroup);
 				_mobGroupIndex.put(mobGroupId, mobGroup);
 			}
 			_log.config("MOB集团名单 " + _mobGroupIndex.size() + "件");
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建mobgroup表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

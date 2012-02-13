@@ -31,7 +31,7 @@ public class MpRegenerationByDoll extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public MpRegenerationByDoll(L1PcInstance pc) {
+	public MpRegenerationByDoll(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -53,7 +53,7 @@ public class MpRegenerationByDoll extends TimerTask {
 			}
 			regenMp();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

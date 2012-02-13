@@ -31,15 +31,15 @@ public class L1Present implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String account = st.nextToken();
-			int itemid = Integer.parseInt(st.nextToken(), 10);
-			int enchant = Integer.parseInt(st.nextToken(), 10);
-			int count = Integer.parseInt(st.nextToken(), 10);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String account = st.nextToken();
+			final int itemid = Integer.parseInt(st.nextToken(), 10);
+			final int enchant = Integer.parseInt(st.nextToken(), 10);
+			final int count = Integer.parseInt(st.nextToken(), 10);
 
-			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
+			final L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp == null) {
 				pc.sendPackets(new S_SystemMessage("不存在的道具编号。"));
 				return;
@@ -48,7 +48,7 @@ public class L1Present implements L1CommandExecutor {
 			L1DwarfInventory.present(account, itemid, enchant, count);
 			pc.sendPackets(new S_SystemMessage(temp.getIdentifiedNameId() + "数量" + count + "个发送出去了。", true));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 : " + ".present 帐号 道具编号 数量 强化等级。（* 等于所有帐号）"));
 		}
 	}

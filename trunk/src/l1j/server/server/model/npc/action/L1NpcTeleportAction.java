@@ -34,12 +34,12 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 	private final int _price;
 	private final boolean _effect;
 
-	public L1NpcTeleportAction(Element element) {
+	public L1NpcTeleportAction(final Element element) {
 		super(element);
 
-		int x = L1NpcXmlParser.getIntAttribute(element, "X", -1);
-		int y = L1NpcXmlParser.getIntAttribute(element, "Y", -1);
-		int mapId = L1NpcXmlParser.getIntAttribute(element, "Map", -1);
+		final int x = L1NpcXmlParser.getIntAttribute(element, "X", -1);
+		final int y = L1NpcXmlParser.getIntAttribute(element, "Y", -1);
+		final int mapId = L1NpcXmlParser.getIntAttribute(element, "Map", -1);
 		_loc = new L1Location(x, y, mapId);
 
 		_heading = L1NpcXmlParser.getIntAttribute(element, "Heading", 5);
@@ -49,7 +49,7 @@ public class L1NpcTeleportAction extends L1NpcXmlAction {
 	}
 
 	@Override
-	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
+	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
 		if (!pc.getInventory().checkItem(L1ItemId.ADENA, _price)) {
 			pc.sendPackets(new S_ServerMessage(337, "$4")); // \f1%0不足%s。
 			return L1NpcHtml.HTML_CLOSE;

@@ -28,11 +28,11 @@ public class C_TradeCancel extends ClientBasePacket {
 
 	private static final String C_TRADE_CANCEL = "[C] C_TradeCancel";
 
-	public C_TradeCancel(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_TradeCancel(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
-		L1Trade trade = new L1Trade();
+		final L1PcInstance player = clientthread.getActiveChar();
+		final L1Trade trade = new L1Trade();
 		trade.TradeCancel(player);
 	}
 

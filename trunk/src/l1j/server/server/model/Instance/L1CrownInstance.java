@@ -37,7 +37,7 @@ public class L1CrownInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1CrownInstance(L1Npc template) {
+	public L1CrownInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -51,7 +51,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		_master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -59,13 +59,13 @@ public class L1CrownInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
+	public void onAction(final L1PcInstance player) {
 		boolean in_war = false;
 		if (player.getClanid() == 0) { // 没有血盟
 			return;
 		}
-		String playerClanName = player.getClanname();
-		L1Clan clan = L1World.getInstance().getClan(playerClanName);
+		final String playerClanName = player.getClanname();
+		final L1Clan clan = L1World.getInstance().getClan(playerClanName);
 		if (clan == null) {
 			return;
 		}
@@ -90,12 +90,12 @@ public class L1CrownInstance extends L1NpcInstance {
 		}
 
 		// クラウンの座標からcastle_idを取得
-		int castle_id = L1CastleLocation.getCastleId(getX(), getY(), getMapId());
+		final int castle_id = L1CastleLocation.getCastleId(getX(), getY(), getMapId());
 
 		// 布告しているかチェック。但し、城主が居ない場合は布告不要
 		boolean existDefenseClan = false;
 		L1Clan defence_clan = null;
-		for (L1Clan defClan : L1World.getInstance().getAllClans()) {
+		for (final L1Clan defClan : L1World.getInstance().getAllClans()) {
 			if (castle_id == defClan.getCastleId()) {
 				// 元の城主クラン
 				defence_clan = L1World.getInstance().getClan(defClan.getClanName());
@@ -103,8 +103,8 @@ public class L1CrownInstance extends L1NpcInstance {
 				break;
 			}
 		}
-		List<L1War> wars = L1World.getInstance().getWarList(); // 获得所有战争列表
-		for (L1War war : wars) {
+		final List<L1War> wars = L1World.getInstance().getWarList(); // 获得所有战争列表
+		for (final L1War war : wars) {
 			if (castle_id == war.GetCastleId()) { // 今天的攻城战
 				in_war = war.CheckClanInWar(playerClanName);
 				break;
@@ -118,8 +118,8 @@ public class L1CrownInstance extends L1NpcInstance {
 		if (existDefenseClan && (defence_clan != null)) { // 元の城主クランが居る
 			defence_clan.setCastleId(0);
 			ClanTable.getInstance().updateClan(defence_clan);
-			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
-			for (L1PcInstance element : defence_clan_member) {
+			final L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
+			for (final L1PcInstance element : defence_clan_member) {
 				if (element.getId() == defence_clan.getLeaderId()) { // 元の城主クランの君主
 					element.sendPackets(new S_CastleMaster(0, element.getId()));
 					element.broadcastPacket(new S_CastleMaster(0, element.getId()));
@@ -134,33 +134,33 @@ public class L1CrownInstance extends L1NpcInstance {
 
 		// 强制传送出其他血盟的成员
 		int[] loc = new int[3];
-		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+		for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 			if ((pc.getClanid() != player.getClanid()) && !pc.isGm()) {
 
 				if (L1CastleLocation.checkInWarArea(castle_id, pc)) {
 					// 旗内に居る
 					loc = L1CastleLocation.getGetBackLoc(castle_id);
-					int locx = loc[0];
-					int locy = loc[1];
-					short mapid = (short) loc[2];
+					final int locx = loc[0];
+					final int locy = loc[1];
+					final short mapid = (short) loc[2];
 					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
 				}
 			}
 		}
 
 		// メッセージ表示
-		for (L1War war : wars) {
+		for (final L1War war : wars) {
 			if (war.CheckClanInWar(playerClanName) && existDefenseClan) {
 				// 自クランが参加中で、城主が交代
 				war.WinCastleWar(playerClanName);
 				break;
 			}
 		}
-		L1PcInstance[] clanMember = clan.getOnlineClanMember();
+		final L1PcInstance[] clanMember = clan.getOnlineClanMember();
 
 		if (clanMember.length > 0) {
-			S_ServerMessage s_serverMessage = new S_ServerMessage(643); // 已占领城堡。
-			for (L1PcInstance pc : clanMember) {
+			final S_ServerMessage s_serverMessage = new S_ServerMessage(643); // 已占领城堡。
+			for (final L1PcInstance pc : clanMember) {
 				pc.sendPackets(s_serverMessage);
 			}
 		}
@@ -169,26 +169,26 @@ public class L1CrownInstance extends L1NpcInstance {
 		deleteMe();
 
 		// 守护塔重新出现
-		for (L1Object l1object : L1World.getInstance().getObject()) {
+		for (final L1Object l1object : L1World.getInstance().getObject()) {
 			if (l1object instanceof L1TowerInstance) {
-				L1TowerInstance tower = (L1TowerInstance) l1object;
+				final L1TowerInstance tower = (L1TowerInstance) l1object;
 				if (L1CastleLocation.checkInWarArea(castle_id, tower)) {
 					tower.deleteMe();
 				}
 			}
 		}
-		L1WarSpawn warspawn = new L1WarSpawn();
+		final L1WarSpawn warspawn = new L1WarSpawn();
 		warspawn.SpawnTower(castle_id);
 
 		// 撤销城门
-		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if (L1CastleLocation.checkInWarArea(castle_id, door)) {
 				door.repairGate();
 			}
 		}
 	}
 
-	private boolean checkRange(L1PcInstance pc) {
+	private boolean checkRange(final L1PcInstance pc) {
 		return ((getX() - 1 <= pc.getX()) && (pc.getX() <= getX() + 1) && (getY() - 1 <= pc.getY()) && (pc.getY() <= getY() + 1));
 	}
 }

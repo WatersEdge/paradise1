@@ -38,7 +38,7 @@ public class S_FollowerPack extends ServerBasePacket {
 	 * @param follower
 	 * @param pc
 	 */
-	public S_FollowerPack(L1FollowerInstance follower, L1PcInstance pc) {
+	public S_FollowerPack(final L1FollowerInstance follower, final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(follower.getX());
 		writeH(follower.getY());

@@ -29,14 +29,14 @@ public class L1Ress implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			int objid = pc.getId();
+			final int objid = pc.getId();
 			pc.sendPackets(new S_SkillSound(objid, 759));
 			pc.broadcastPacket(new S_SkillSound(objid, 759));
 			pc.setCurrentHp(pc.getMaxHp());
 			pc.setCurrentMp(pc.getMaxMp());
-			for (L1PcInstance tg : L1World.getInstance().getVisiblePlayer(pc)) {
+			for (final L1PcInstance tg : L1World.getInstance().getVisiblePlayer(pc)) {
 				if ((tg.getCurrentHp() == 0) && tg.isDead()) {
 					tg.sendPackets(new S_SystemMessage("GM给予了重生。"));
 					tg.broadcastPacket(new S_SkillSound(tg.getId(), 3944));
@@ -54,7 +54,7 @@ public class L1Ress implements L1CommandExecutor {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 指令错误"));
 		}
 	}

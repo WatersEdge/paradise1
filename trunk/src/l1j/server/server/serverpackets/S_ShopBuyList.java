@@ -35,20 +35,20 @@ public class S_ShopBuyList extends ServerBasePacket {
 
 	private static final String S_SHOP_BUY_LIST = "[S] S_ShopBuyList";
 
-	public S_ShopBuyList(int objid, L1PcInstance pc) {
-		L1Object object = L1World.getInstance().findObject(objid);
+	public S_ShopBuyList(final int objid, final L1PcInstance pc) {
+		final L1Object object = L1World.getInstance().findObject(objid);
 		if (!(object instanceof L1NpcInstance)) {
 			return;
 		}
-		L1NpcInstance npc = (L1NpcInstance) object;
-		int npcId = npc.getNpcTemplate().get_npcId();
-		L1Shop shop = ShopTable.getInstance().get(npcId);
+		final L1NpcInstance npc = (L1NpcInstance) object;
+		final int npcId = npc.getNpcTemplate().get_npcId();
+		final L1Shop shop = ShopTable.getInstance().get(npcId);
 		if (shop == null) {
 			pc.sendPackets(new S_NoSell(npc));
 			return;
 		}
 
-		List<L1AssessedItem> assessedItems = shop.assessItems(pc.getInventory());
+		final List<L1AssessedItem> assessedItems = shop.assessItems(pc.getInventory());
 		if (assessedItems.isEmpty()) {
 			pc.sendPackets(new S_NoSell(npc));
 			return;
@@ -58,7 +58,7 @@ public class S_ShopBuyList extends ServerBasePacket {
 		writeD(objid);
 		writeH(assessedItems.size());
 
-		for (L1AssessedItem item : assessedItems) {
+		for (final L1AssessedItem item : assessedItems) {
 			writeD(item.getTargetId());
 			writeD(item.getAssessedPrice());
 		}

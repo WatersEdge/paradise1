@@ -28,21 +28,23 @@ public class L1GameTime {
 
 	/** 2003年7月3日 12:00(UTC)1月1日00:00 */
 	private static final long BASE_TIME_IN_MILLIS_REAL = 1057233600000L;
+
 	public static L1GameTime fromSystemCurrentTime() {
 		return L1GameTime.valueOf(System.currentTimeMillis());
 	}
-	public static L1GameTime valueOf(long timeMillis) {
-		long t1 = timeMillis - BASE_TIME_IN_MILLIS_REAL;
+
+	public static L1GameTime valueOf(final long timeMillis) {
+		final long t1 = timeMillis - BASE_TIME_IN_MILLIS_REAL;
 		if (t1 < 0) {
 			throw new IllegalArgumentException();
 		}
-		int t2 = (int) ((t1 * 6) / 1000L);
-		int t3 = t2 % 3; // 时间调整到3倍
+		final int t2 = (int) ((t1 * 6) / 1000L);
+		final int t3 = t2 % 3; // 时间调整到3倍
 		return new L1GameTime(t2 - t3);
 	}
 
-	public static L1GameTime valueOfGameTime(Time time) {
-		long t = time.getTime() + TimeZone.getDefault().getRawOffset();
+	public static L1GameTime valueOfGameTime(final Time time) {
+		final long t = time.getTime() + TimeZone.getDefault().getRawOffset();
 		return new L1GameTime((int) (t / 1000L));
 	}
 
@@ -57,12 +59,12 @@ public class L1GameTime {
 		this((int) System.currentTimeMillis());
 	}
 
-	private L1GameTime(int time) {
+	private L1GameTime(final int time) {
 		_time = time;
 		_calendar = makeCalendar(time);
 	}
 
-	public int get(int field) {
+	public int get(final int field) {
 		return _calendar.get(field);
 	}
 
@@ -75,25 +77,25 @@ public class L1GameTime {
 	}
 
 	public boolean isNight() {
-		int hour = _calendar.get(Calendar.HOUR_OF_DAY);
+		final int hour = _calendar.get(Calendar.HOUR_OF_DAY);
 		return !IntRange.includes(hour, 6, 17); // 6:00-17:59(昼)で無ければtrue
 	}
 
 	@Override
 	public String toString() {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+		final SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
 		f.setTimeZone(_calendar.getTimeZone());
 		return f.format(_calendar.getTime()) + "(" + getSeconds() + ")";
 	}
 
 	public Time toTime() {
-		int t = _time % (24 * 3600); // 日付情報分を切り捨て
+		final int t = _time % (24 * 3600); // 日付情報分を切り捨て
 		return new Time(t * 1000L - TimeZone.getDefault().getRawOffset());
 	}
 
 	/** 构造日期 */
-	private Calendar makeCalendar(int time) {
-		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+	private Calendar makeCalendar(final int time) {
+		final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		cal.setTimeInMillis(0);
 		cal.add(Calendar.SECOND, time);
 		return cal;

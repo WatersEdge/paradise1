@@ -34,7 +34,7 @@ public class S_Teleport extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public S_Teleport(L1PcInstance pc) {
+	public S_Teleport(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_TELEPORT);
 		writeC(0x00);
 		writeC(0x40);

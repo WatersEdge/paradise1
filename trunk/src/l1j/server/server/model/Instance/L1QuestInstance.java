@@ -44,18 +44,18 @@ public class L1QuestInstance extends L1NpcInstance {
 
 	private RestMonitor _monitor;
 
-	public L1QuestInstance(L1Npc template) {
+	public L1QuestInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		if (attack.calcHit()) {
 			attack.calcDamage();
 			attack.calcStaffOfMana();
@@ -67,36 +67,36 @@ public class L1QuestInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance pc, String action) {
+	public void onFinalAction(final L1PcInstance pc, final String action) {
 		if (action.equalsIgnoreCase("start")) {
-			int npcId = getNpcTemplate().get_npcId();
+			final int npcId = getNpcTemplate().get_npcId();
 			if (((npcId == 71092) || (npcId == 71093)) && pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 			else if ((npcId == 71062) && (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 			else if ((npcId == 71075) && (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 			else if ((npcId == 70957) || (npcId == 81209)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 			else if ((npcId == 81350) && (pc.getQuest().get_step(4) == 3)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
@@ -106,7 +106,7 @@ public class L1QuestInstance extends L1NpcInstance {
 
 	@Override
 	public void onNpcAI() {
-		int npcId = getNpcTemplate().get_npcId();
+		final int npcId = getNpcTemplate().get_npcId();
 		if (isAiRunning()) {
 			return;
 		}
@@ -124,11 +124,11 @@ public class L1QuestInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance pc) {
-		int pcX = pc.getX();
-		int pcY = pc.getY();
-		int npcX = getX();
-		int npcY = getY();
+	public void onTalkAction(final L1PcInstance pc) {
+		final int pcX = pc.getX();
+		final int pcY = pc.getY();
+		final int npcX = getX();
+		final int npcY = getY();
 
 		if ((pcX == npcX) && (pcY < npcY)) {
 			setHeading(0);
@@ -156,7 +156,7 @@ public class L1QuestInstance extends L1NpcInstance {
 		}
 		broadcastPacket(new S_ChangeHeading(this));
 
-		int npcId = getNpcTemplate().get_npcId();
+		final int npcId = getNpcTemplate().get_npcId();
 		if ((npcId == 71092) || (npcId == 71093)) { // 调查员
 			if (pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk1"));

@@ -28,13 +28,13 @@ public class C_ShopList extends ClientBasePacket {
 
 	private static final String C_SHOP_LIST = "[C] C_ShopList";
 
-	public C_ShopList(byte abyte0[], ClientThread clientthread) {
+	public C_ShopList(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 
-		int type = readC();
-		int objectId = readD();
+		final int type = readC();
+		final int objectId = readD();
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}

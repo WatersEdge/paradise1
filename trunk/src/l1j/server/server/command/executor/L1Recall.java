@@ -31,7 +31,7 @@ public class L1Recall implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			Collection<L1PcInstance> targets = null;
 			if (arg.equalsIgnoreCase("all")) {
@@ -39,7 +39,7 @@ public class L1Recall implements L1CommandExecutor {
 			}
 			else {
 				targets = Lists.newList();
-				L1PcInstance tg = L1World.getInstance().getPlayer(arg);
+				final L1PcInstance tg = L1World.getInstance().getPlayer(arg);
 				if (tg == null) {
 					pc.sendPackets(new S_SystemMessage("ID不存在。"));
 					return;
@@ -47,7 +47,7 @@ public class L1Recall implements L1CommandExecutor {
 				targets.add(tg);
 			}
 
-			for (L1PcInstance target : targets) {
+			for (final L1PcInstance target : targets) {
 				if (target.isGm()) {
 					continue;
 				}
@@ -56,7 +56,7 @@ public class L1Recall implements L1CommandExecutor {
 				target.sendPackets(new S_SystemMessage("您被召唤到GM身边。"));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入: " + cmdName + " all|玩家名称。"));
 		}
 	}

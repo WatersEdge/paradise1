@@ -31,7 +31,7 @@ public class S_Lawful extends ServerBasePacket {
 	 * @param objid
 	 * @param lawful
 	 */
-	public S_Lawful(int objid, int lawful) {
+	public S_Lawful(final int objid, final int lawful) {
 		buildPacket(objid, lawful);
 	}
 
@@ -48,7 +48,7 @@ public class S_Lawful extends ServerBasePacket {
 		return S_LAWFUL;
 	}
 
-	private void buildPacket(int objid, int lawful) {
+	private void buildPacket(final int objid, final int lawful) {
 		writeC(Opcodes.S_OPCODE_LAWFUL);
 		writeD(objid);
 		writeH(lawful);

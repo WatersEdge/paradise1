@@ -32,7 +32,7 @@ public class S_bonusstats extends ServerBasePacket {
 	 * @param i
 	 * @param j
 	 */
-	public S_bonusstats(int i, int j) {
+	public S_bonusstats(final int i, final int j) {
 		buildPacket(i, j);
 	}
 
@@ -50,7 +50,7 @@ public class S_bonusstats extends ServerBasePacket {
 		return "[S] S_bonusstats";
 	}
 
-	private void buildPacket(int i, int j) {
+	private void buildPacket(final int i, final int j) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(i);
 		writeS("RaiseAttr");

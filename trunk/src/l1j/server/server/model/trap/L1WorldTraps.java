@@ -43,7 +43,7 @@ public class L1WorldTraps {
 	private class TrapSpawnTimer extends TimerTask {
 		private final L1TrapInstance _targetTrap;
 
-		public TrapSpawnTimer(L1TrapInstance trap) {
+		public TrapSpawnTimer(final L1TrapInstance trap) {
 			_targetTrap = trap;
 		}
 
@@ -65,23 +65,23 @@ public class L1WorldTraps {
 
 	public static void reloadTraps() {
 		TrapTable.reload();
-		L1WorldTraps oldInstance = _instance;
+		final L1WorldTraps oldInstance = _instance;
 		_instance = new L1WorldTraps();
 		oldInstance.resetTimer();
 		removeTraps(oldInstance._allTraps);
 		removeTraps(oldInstance._allBases);
 	}
 
-	private static void removeTraps(List<L1TrapInstance> traps) {
-		for (L1TrapInstance trap : traps) {
+	private static void removeTraps(final List<L1TrapInstance> traps) {
+		for (final L1TrapInstance trap : traps) {
 			trap.disableTrap();
 			L1World.getInstance().removeVisibleObject(trap);
 		}
 	}
 
-	private List<L1TrapInstance> _allTraps = Lists.newList();
+	private final List<L1TrapInstance> _allTraps = Lists.newList();
 
-	private List<L1TrapInstance> _allBases = Lists.newList();
+	private final List<L1TrapInstance> _allBases = Lists.newList();
 
 	private Timer _timer = new Timer();
 
@@ -91,10 +91,10 @@ public class L1WorldTraps {
 		initialize();
 	}
 
-	public void onDetection(L1PcInstance caster) {
-		L1Location loc = caster.getLocation();
+	public void onDetection(final L1PcInstance caster) {
+		final L1Location loc = caster.getLocation();
 
-		for (L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : _allTraps) {
 			if (trap.isEnable() && loc.isInScreen(trap.getLocation())) {
 				trap.onDetection(caster);
 				disableTrap(trap);
@@ -102,10 +102,10 @@ public class L1WorldTraps {
 		}
 	}
 
-	public void onPlayerMoved(L1PcInstance player) {
-		L1Location loc = player.getLocation();
+	public void onPlayerMoved(final L1PcInstance player) {
+		final L1Location loc = player.getLocation();
 
-		for (L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : _allTraps) {
 			if (trap.isEnable() && loc.equals(trap.getLocation())) {
 				trap.onTrod(player);
 				disableTrap(trap);
@@ -114,13 +114,13 @@ public class L1WorldTraps {
 	}
 
 	public void resetAllTraps() {
-		for (L1TrapInstance trap : _allTraps) {
+		for (final L1TrapInstance trap : _allTraps) {
 			trap.resetLocation();
 			trap.enableTrap();
 		}
 	}
 
-	private void disableTrap(L1TrapInstance trap) {
+	private void disableTrap(final L1TrapInstance trap) {
 		trap.disableTrap();
 
 		synchronized (this) {
@@ -141,30 +141,30 @@ public class L1WorldTraps {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				int trapId = rs.getInt("trapId");
-				L1Trap trapTemp = TrapTable.getInstance().getTemplate(trapId);
-				L1Location loc = new L1Location();
+				final int trapId = rs.getInt("trapId");
+				final L1Trap trapTemp = TrapTable.getInstance().getTemplate(trapId);
+				final L1Location loc = new L1Location();
 				loc.setMap(rs.getInt("mapId"));
 				loc.setX(rs.getInt("locX"));
 				loc.setY(rs.getInt("locY"));
-				Point rndPt = new Point();
+				final Point rndPt = new Point();
 				rndPt.setX(rs.getInt("locRndX"));
 				rndPt.setY(rs.getInt("locRndY"));
-				int count = rs.getInt("count");
-				int span = rs.getInt("span");
+				final int count = rs.getInt("count");
+				final int span = rs.getInt("span");
 
 				for (int i = 0; i < count; i++) {
-					L1TrapInstance trap = new L1TrapInstance(IdFactory.getInstance().nextId(), trapTemp, loc, rndPt, span);
+					final L1TrapInstance trap = new L1TrapInstance(IdFactory.getInstance().nextId(), trapTemp, loc, rndPt, span);
 					L1World.getInstance().addVisibleObject(trap);
 					_allTraps.add(trap);
 				}
-				L1TrapInstance base = new L1TrapInstance(IdFactory.getInstance().nextId(), loc);
+				final L1TrapInstance base = new L1TrapInstance(IdFactory.getInstance().nextId(), loc);
 				L1World.getInstance().addVisibleObject(base);
 				_allBases.add(base);
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

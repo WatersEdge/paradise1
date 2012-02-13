@@ -28,10 +28,10 @@ public class C_CheckPK extends ClientBasePacket {
 
 	private static final String C_CHECK_PK = "[C] C_CheckPK";
 
-	public C_CheckPK(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_CheckPK(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 		player.sendPackets(new S_ServerMessage(562, String.valueOf(player.get_PKcount()))); // 你的PK次数为%0次。
 	}
 

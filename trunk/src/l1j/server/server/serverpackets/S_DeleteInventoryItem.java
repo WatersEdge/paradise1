@@ -30,7 +30,7 @@ public class S_DeleteInventoryItem extends ServerBasePacket {
 	 * @param item
 	 *            - 要删除的物品
 	 */
-	public S_DeleteInventoryItem(L1ItemInstance item) {
+	public S_DeleteInventoryItem(final L1ItemInstance item) {
 		if (item != null) {
 			writeC(Opcodes.S_OPCODE_DELETEINVENTORYITEM);
 			writeD(item.getId());

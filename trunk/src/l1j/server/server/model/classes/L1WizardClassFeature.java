@@ -16,12 +16,12 @@ package l1j.server.server.model.classes;
 
 class L1WizardClassFeature extends L1ClassFeature {
 	@Override
-	public int getAcDefenseMax(int ac) {
+	public int getAcDefenseMax(final int ac) {
 		return ac / 5;
 	}
 
 	@Override
-	public int getMagicLevel(int playerLevel) {
+	public int getMagicLevel(final int playerLevel) {
 		return Math.min(10, playerLevel / 4);
 	}
 }

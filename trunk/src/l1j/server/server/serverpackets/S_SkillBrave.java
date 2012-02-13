@@ -38,7 +38,7 @@ public class S_SkillBrave extends ServerBasePacket {
 	 *            6:引发龙之血爆发出來了。<br>
 	 * @param k
 	 */
-	public S_SkillBrave(int i, int j, int k) {
+	public S_SkillBrave(final int i, final int j, final int k) {
 		writeC(Opcodes.S_OPCODE_SKILLBRAVE);
 		writeD(i);
 		writeC(j);

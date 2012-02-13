@@ -43,8 +43,8 @@ public class Seiko_Blue_Green_Ruby extends ItemExecutor {
 		if ((earing3Id >= 41161) && (41172 >= earing3Id)) {
 			if (earing3Id == (itemId + 230)) {
 				if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING) {
-					int[] earingId = { 41161, 41162, 41163, 41164, 41165, 41166, 41167, 41168, 41169, 41170, 41171, 41172 };
-					int[] earinglevel = { 21014, 21006, 21007, 21015, 21009, 21008, 21016, 21012, 21010, 21017, 21013, 21011 };
+					final int[] earingId = { 41161, 41162, 41163, 41164, 41165, 41166, 41167, 41168, 41169, 41170, 41171, 41172 };
+					final int[] earinglevel = { 21014, 21006, 21007, 21015, 21009, 21008, 21016, 21012, 21010, 21017, 21013, 21011 };
 					for (int i = 0; i < earingId.length; i++) {
 						if (earing3Id == earingId[i]) {
 							pc.createNewItem(pc, earinglevel[i], 1);

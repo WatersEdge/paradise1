@@ -47,18 +47,18 @@ public class C_Mail extends ClientBasePacket {
 
 	private static int TYPE_MAIL_BOX = 2; // 保管箱
 
-	public C_Mail(byte abyte0[], ClientThread client) {
+	public C_Mail(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		int type = readC();
-		L1PcInstance pc = client.getActiveChar();
+		final int type = readC();
+		final L1PcInstance pc = client.getActiveChar();
 
 		if ((type == 0x00) || (type == 0x01) || (type == 0x02)) { // 开启
 			pc.sendPackets(new S_Mail(pc.getName(), type));
 		}
 		else if ((type == 0x10) || (type == 0x11) || (type == 0x12)) { // 读取
-			int mailId = readD();
+			final int mailId = readD();
 			MailTable.getInstance();
-			L1Mail mail = MailTable.getMail(mailId);
+			final L1Mail mail = MailTable.getMail(mailId);
 			if (mail.getReadStatus() == 0) {
 				MailTable.getInstance().setReadStatus(mailId);
 			}
@@ -66,9 +66,9 @@ public class C_Mail extends ClientBasePacket {
 		}
 		else if (type == 0x20) { // 一般信纸
 			readH();
-			String receiverName = readS();
-			byte[] text = readByte();
-			L1PcInstance receiver = L1World.getInstance().getPlayer(receiverName);
+			final String receiverName = readS();
+			final byte[] text = readByte();
+			final L1PcInstance receiver = L1World.getInstance().getPlayer(receiverName);
 			if (receiver != null) { // 对方在线上
 				if (getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
 					pc.sendPackets(new S_Mail(type));
@@ -81,7 +81,7 @@ public class C_Mail extends ClientBasePacket {
 			}
 			else { // 对方离线中
 				try {
-					L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(receiverName);
+					final L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(receiverName);
 					if (restorePc != null) {
 						if (getMailSizeByReceiver(receiverName, TYPE_NORMAL_MAIL) >= 20) {
 							pc.sendPackets(new S_Mail(type));
@@ -93,24 +93,24 @@ public class C_Mail extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(109, receiverName)); // 没有叫%0的人。
 					}
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 			}
 		}
 		else if (type == 0x21) { // 血盟信纸
 			readH();
-			String clanName = readS();
-			byte[] text = readByte();
-			L1Clan clan = L1World.getInstance().getClan(clanName);
+			final String clanName = readS();
+			final byte[] text = readByte();
+			final L1Clan clan = L1World.getInstance().getClan(clanName);
 			if (clan != null) {
-				for (String name : clan.getAllMembers()) {
-					int size = getMailSizeByReceiver(name, TYPE_CLAN_MAIL);
+				for (final String name : clan.getAllMembers()) {
+					final int size = getMailSizeByReceiver(name, TYPE_CLAN_MAIL);
 					if (size >= 50) {
 						continue;
 					}
 					MailTable.getInstance().writeMail(TYPE_CLAN_MAIL, name, pc, text);
-					L1PcInstance clanPc = L1World.getInstance().getPlayer(name);
+					final L1PcInstance clanPc = L1World.getInstance().getPlayer(name);
 					if (clanPc != null) { // 在线上
 						clanPc.sendPackets(new S_Mail(name, TYPE_CLAN_MAIL));
 					}
@@ -118,12 +118,12 @@ public class C_Mail extends ClientBasePacket {
 			}
 		}
 		else if ((type == 0x30) || (type == 0x31) || (type == 0x32)) { // 删除
-			int mailId = readD();
+			final int mailId = readD();
 			MailTable.getInstance().deleteMail(mailId);
 			pc.sendPackets(new S_Mail(mailId, type));
 		}
 		else if (type == 0x40) { // 保管箱储存
-			int mailId = readD();
+			final int mailId = readD();
 			MailTable.getInstance().setMailType(mailId, TYPE_MAIL_BOX);
 			pc.sendPackets(new S_Mail(mailId, type));
 		}
@@ -134,10 +134,10 @@ public class C_Mail extends ClientBasePacket {
 		return C_MAIL;
 	}
 
-	private int getMailSizeByReceiver(String receiverName, int type) {
-		List<L1Mail> mails = Lists.newList();
+	private int getMailSizeByReceiver(final String receiverName, final int type) {
+		final List<L1Mail> mails = Lists.newList();
 		MailTable.getInstance();
-		for (L1Mail mail : MailTable.getAllMail()) {
+		for (final L1Mail mail : MailTable.getAllMail()) {
 			if (mail.getReceiverName().equalsIgnoreCase(receiverName)) {
 				if (mail.getType() == type) {
 					mails.add(mail);

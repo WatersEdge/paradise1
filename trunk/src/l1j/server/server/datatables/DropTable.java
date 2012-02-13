@@ -72,8 +72,8 @@ public class DropTable {
 	 * @param acquisitorList
 	 * @param hateList
 	 */
-	public void dropShare(L1NpcInstance npc, List<L1Character> acquisitorList, List<Integer> hateList) {
-		L1Inventory inventory = npc.getInventory();
+	public void dropShare(final L1NpcInstance npc, final List<L1Character> acquisitorList, final List<Integer> hateList) {
+		final L1Inventory inventory = npc.getInventory();
 		if (inventory.getSize() == 0) {
 			return;
 		}
@@ -111,7 +111,6 @@ public class DropTable {
 			item = inventory.getItems().get(0);
 			itemId = item.getItemId();
 			boolean isGround = false;
-			boolean isPartyShare = false; // 组队自动分配
 			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系列道具
 				item.setNowLighting(false);
 			}
@@ -138,7 +137,7 @@ public class DropTable {
 							targetInventory = acquisitor.getInventory();
 							if (acquisitor instanceof L1PcInstance) {
 								player = (L1PcInstance) acquisitor;
-								L1ItemInstance l1iteminstance = player.getInventory().findItemId(L1ItemId.ADENA); // 检查您的物品Adena
+								final L1ItemInstance l1iteminstance = player.getInventory().findItemId(L1ItemId.ADENA); // 检查您的物品Adena
 								if ((l1iteminstance != null) && (l1iteminstance.getCount() > 2000000000)) {
 									targetInventory = L1World.getInstance().getInventory(acquisitor.getX(), acquisitor.getY(), acquisitor.getMapId()); // 持てないので足元に落とす
 									isGround = true;
@@ -151,21 +150,21 @@ public class DropTable {
 										if (player.getPartyType() == 1) {
 											int partySize = 0;
 											int memberItemCount = 0;
-											for (L1PcInstance member : partyMember) {
-												if (member != null && member.getMapId() == npc.getMapId() && member.getCurrentHp() > 0 && !member.isDead()) {
+											for (final L1PcInstance member : partyMember) {
+												if ((member != null) && (member.getMapId() == npc.getMapId()) && (member.getCurrentHp() > 0) && !member.isDead()) {
 													partySize++;
 												}
 											}
-											if (partySize > 1 && item.getCount() >= partySize) {
+											if ((partySize > 1) && (item.getCount() >= partySize)) {
 												memberItemCount = item.getCount() / partySize;
 												int otherCount = item.getCount() - memberItemCount * partySize;
 												if (otherCount > 0) {
 													item.setCount(memberItemCount + otherCount);
 												}
-												for (L1PcInstance member : partyMember) {
-													if (member != null && member.getMapId() == npc.getMapId() && member.getCurrentHp() > 0 && !member.isDead()) {
+												for (final L1PcInstance member : partyMember) {
+													if ((member != null) && (member.getMapId() == npc.getMapId()) && (member.getCurrentHp() > 0) && !member.isDead()) {
 														member.getInventory().storeItem(itemId, memberItemCount);
-														for (L1PcInstance pc : player.getParty().getMembers()) {
+														for (final L1PcInstance pc : player.getParty().getMembers()) {
 															pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), member.getName()));
 														}
 														if (otherCount > 0) {
@@ -175,16 +174,15 @@ public class DropTable {
 													}
 												}
 												inventory.removeItem(item, item.getCount());
-												isPartyShare = true;
 											}
 											else {
-												for (L1PcInstance pc : player.getParty().getMembers()) {
+												for (final L1PcInstance pc : player.getParty().getMembers()) {
 													pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
 												}
 											}
 										}
 										else {
-											for (L1PcInstance element : partyMember) {
+											for (final L1PcInstance element : partyMember) {
 												element.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
 											}
 										}
@@ -205,7 +203,7 @@ public class DropTable {
 				}
 			}
 			else { // ノンオートルーティング
-				List<Integer> dirList = Lists.newList();
+				final List<Integer> dirList = Lists.newList();
 				for (int j = 0; j < 8; j++) {
 					dirList.add(j);
 				}
@@ -222,38 +220,38 @@ public class DropTable {
 					dir = dirList.get(randomInt);
 					dirList.remove(randomInt);
 					switch (dir) {
-					case 0:
-						x = 0;
-						y = -1;
-						break;
-					case 1:
-						x = 1;
-						y = -1;
-						break;
-					case 2:
-						x = 1;
-						y = 0;
-						break;
-					case 3:
-						x = 1;
-						y = 1;
-						break;
-					case 4:
-						x = 0;
-						y = 1;
-						break;
-					case 5:
-						x = -1;
-						y = 1;
-						break;
-					case 6:
-						x = -1;
-						y = 0;
-						break;
-					case 7:
-						x = -1;
-						y = -1;
-						break;
+						case 0:
+							x = 0;
+							y = -1;
+							break;
+						case 1:
+							x = 1;
+							y = -1;
+							break;
+						case 2:
+							x = 1;
+							y = 0;
+							break;
+						case 3:
+							x = 1;
+							y = 1;
+							break;
+						case 4:
+							x = 0;
+							y = 1;
+							break;
+						case 5:
+							x = -1;
+							y = 1;
+							break;
+						case 6:
+							x = -1;
+							y = 0;
+							break;
+						case 7:
+							x = -1;
+							y = -1;
+							break;
 					}
 				} while (!npc.getMap().isPassable(npc.getX(), npc.getY(), dir));
 				targetInventory = L1World.getInstance().getInventory(npc.getX() + x, npc.getY() + y, npc.getMapId());
@@ -276,11 +274,11 @@ public class DropTable {
 	 * @param npc
 	 * @param inventory
 	 */
-	public void setDrop(L1NpcInstance npc, L1Inventory inventory) {
+	public void setDrop(final L1NpcInstance npc, final L1Inventory inventory) {
 
 		// 取得掉落列表
-		int mobId = npc.getNpcTemplate().get_npcId();
-		List<L1Drop> dropList = _droplists.get(mobId);
+		final int mobId = npc.getNpcTemplate().get_npcId();
+		final List<L1Drop> dropList = _droplists.get(mobId);
 		if (dropList == null) {
 			return;
 		}
@@ -304,7 +302,7 @@ public class DropTable {
 		int randomChance;
 		L1ItemInstance item;
 
-		for (L1Drop drop : dropList) {
+		for (final L1Drop drop : dropList) {
 			// 获得掉落物品
 			itemId = drop.getItemid();
 			if ((adenarate == 0) && (itemId == L1ItemId.ADENA)) {
@@ -313,16 +311,16 @@ public class DropTable {
 
 			// 掉落几率判定
 			randomChance = Random.nextInt(0xf4240) + 1;
-			double rateOfMapId = MapsTable.getInstance().getDropRate(npc.getMapId());
-			double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
+			final double rateOfMapId = MapsTable.getInstance().getDropRate(npc.getMapId());
+			final double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
 			if ((droprate == 0) || (drop.getChance() * droprate * rateOfMapId * rateOfItem < randomChance)) {
 				continue;
 			}
 
 			// 设定掉落数量
-			double amount = DropItemTable.getInstance().getDropAmount(itemId);
-			int min = (int) (drop.getMin() * amount);
-			int max = (int) (drop.getMax() * amount);
+			final double amount = DropItemTable.getInstance().getDropAmount(itemId);
+			final int min = (int) (drop.getMin() * amount);
+			final int max = (int) (drop.getMax() * amount);
 
 			itemCount = min;
 			addCount = max - min + 1;
@@ -352,7 +350,7 @@ public class DropTable {
 	 * 所有掉宝列表
 	 */
 	private Map<Integer, List<L1Drop>> allDropList() {
-		Map<Integer, List<L1Drop>> droplistMap = Maps.newMap();
+		final Map<Integer, List<L1Drop>> droplistMap = Maps.newMap();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -362,13 +360,13 @@ public class DropTable {
 			pstm = con.prepareStatement("select * from droplist");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int mobId = rs.getInt("mobId"); // 怪物ID
-				int itemId = rs.getInt("itemId"); // 道具ID
-				int min = rs.getInt("min"); // 最大数量
-				int max = rs.getInt("max"); // 最小数量
-				int chance = rs.getInt("chance"); // 几率
+				final int mobId = rs.getInt("mobId"); // 怪物ID
+				final int itemId = rs.getInt("itemId"); // 道具ID
+				final int min = rs.getInt("min"); // 最大数量
+				final int max = rs.getInt("max"); // 最小数量
+				final int chance = rs.getInt("chance"); // 几率
 
-				L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
+				final L1Drop drop = new L1Drop(mobId, itemId, min, max, chance);
 
 				List<L1Drop> dropList = droplistMap.get(drop.getMobid());
 				if (dropList == null) {
@@ -378,7 +376,7 @@ public class DropTable {
 				dropList.add(drop);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

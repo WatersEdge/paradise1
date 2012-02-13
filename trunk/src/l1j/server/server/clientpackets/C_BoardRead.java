@@ -29,12 +29,12 @@ public class C_BoardRead extends ClientBasePacket {
 
 	private static final String C_BOARD_READ = "[C] C_BoardRead";
 
-	public C_BoardRead(byte decrypt[], ClientThread client) {
+	public C_BoardRead(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		int objId = readD();
-		int topicNumber = readD();
-		L1Object obj = L1World.getInstance().findObject(objId);
-		L1BoardInstance board = (L1BoardInstance) obj;
+		final int objId = readD();
+		final int topicNumber = readD();
+		final L1Object obj = L1World.getInstance().findObject(objId);
+		final L1BoardInstance board = (L1BoardInstance) obj;
 		board.onActionRead(client.getActiveChar(), topicNumber);
 	}
 

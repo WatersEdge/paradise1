@@ -26,7 +26,7 @@ public class S_CloseList extends ServerBasePacket {
 	 * 
 	 * @param objid
 	 */
-	public S_CloseList(int objid) {
+	public S_CloseList(final int objid) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS("");

@@ -24,7 +24,7 @@ import l1j.server.server.Opcodes;
  */
 public class S_SkillIconGFX extends ServerBasePacket {
 
-	public S_SkillIconGFX(int i, int j) {
+	public S_SkillIconGFX(final int i, final int j) {
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(i);
 		writeH(j);

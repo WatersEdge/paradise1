@@ -183,6 +183,7 @@ public class ActionCodes {
 	public static final int ACTION_Shop = 70;
 	/** 钓鱼动作 */
 	public static final int ACTION_Fishing = 71;
+
 	public ActionCodes() {
 	}
 

@@ -26,6 +26,7 @@ import l1j.server.server.utils.SQLUtil;
 
 public class L1DoorGfx {
 	private static Logger _log = Logger.getLogger(L1DoorGfx.class.getName());
+
 	/**
 	 * door_gfxsテーブルから指定されたgfxidを主キーとする行を返します。<br>
 	 * このメソッドは常に最新のデータをテーブルから返します。
@@ -33,7 +34,7 @@ public class L1DoorGfx {
 	 * @param gfxId
 	 * @return
 	 */
-	public static L1DoorGfx findByGfxId(int gfxId) {
+	public static L1DoorGfx findByGfxId(final int gfxId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -45,14 +46,14 @@ public class L1DoorGfx {
 			if (!rs.next()) {
 				return null;
 			}
-			int id = rs.getInt("gfxid");
-			int dir = rs.getInt("direction");
-			int rEdge = rs.getInt("right_edge_offset");
-			int lEdge = rs.getInt("left_edge_offset");
+			final int id = rs.getInt("gfxid");
+			final int dir = rs.getInt("direction");
+			final int rEdge = rs.getInt("right_edge_offset");
+			final int lEdge = rs.getInt("left_edge_offset");
 			return new L1DoorGfx(id, dir, rEdge, lEdge);
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -61,13 +62,14 @@ public class L1DoorGfx {
 		}
 		return null;
 	}
+
 	private final int _gfxId;
 	private final int _direction;
 	private final int _rightEdgeOffset;
 
 	private final int _leftEdgeOffset;
 
-	private L1DoorGfx(int gfxId, int direction, int rightEdgeOffset, int leftEdgeOffset) {
+	private L1DoorGfx(final int gfxId, final int direction, final int rightEdgeOffset, final int leftEdgeOffset) {
 		_gfxId = gfxId;
 		_direction = direction;
 		_rightEdgeOffset = rightEdgeOffset;

@@ -34,7 +34,7 @@ public class S_Light extends ServerBasePacket {
 	 * @param objid
 	 * @param type
 	 */
-	public S_Light(int objid, int type) {
+	public S_Light(final int objid, final int type) {
 		buildPacket(objid, type);
 	}
 
@@ -51,7 +51,7 @@ public class S_Light extends ServerBasePacket {
 		return S_LIGHT;
 	}
 
-	private void buildPacket(int objid, int type) {
+	private void buildPacket(final int objid, final int type) {
 		writeC(Opcodes.S_OPCODE_LIGHT);
 		writeD(objid);
 		writeC(type);

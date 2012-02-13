@@ -58,7 +58,7 @@ public class ChatLogTable {
 	 * @param text
 	 * @param type
 	 */
-	public void storeChat(L1PcInstance pc, L1PcInstance target, String text, int type) {
+	public void storeChat(final L1PcInstance pc, final L1PcInstance target, final String text, final int type) {
 		if (!isLoggingTarget(type)) {
 			return;
 		}
@@ -115,7 +115,7 @@ public class ChatLogTable {
 			pstm.execute();
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -129,7 +129,7 @@ public class ChatLogTable {
 	 * @param type
 	 * @return
 	 */
-	private boolean isLoggingTarget(int type) {
+	private boolean isLoggingTarget(final int type) {
 		return loggingConfig[type];
 	}
 

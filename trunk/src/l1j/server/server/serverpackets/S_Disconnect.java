@@ -25,7 +25,7 @@ public class S_Disconnect extends ServerBasePacket {
 	 * 立即中断连线
 	 */
 	public S_Disconnect() {
-		int content = 500;
+		final int content = 500;
 		writeC(Opcodes.S_OPCODE_DISCONNECT);
 		writeH(content);
 		writeD(0x00000000);
@@ -34,7 +34,7 @@ public class S_Disconnect extends ServerBasePacket {
 	/**
 	 * 0~21, 连线中断 22, 有人以同样的账号登入，请注意，您的密码可能已经外泄
 	 */
-	public S_Disconnect(int id) {
+	public S_Disconnect(final int id) {
 		writeC(Opcodes.S_OPCODE_DISCONNECT);
 		writeC(id);
 		writeD(0x00000000);

@@ -30,7 +30,7 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param type
 	 * @param msg1
 	 */
-	public S_Message_YN(int type, String msg1) {
+	public S_Message_YN(final int type, final String msg1) {
 		buildPacket(type, msg1, null, null, 1);
 	}
 
@@ -41,7 +41,7 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param msg1
 	 * @param msg2
 	 */
-	public S_Message_YN(int type, String msg1, String msg2) {
+	public S_Message_YN(final int type, final String msg1, final String msg2) {
 		buildPacket(type, msg1, msg2, null, 2);
 	}
 
@@ -53,7 +53,7 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param msg2
 	 * @param msg3
 	 */
-	public S_Message_YN(int type, String msg1, String msg2, String msg3) {
+	public S_Message_YN(final int type, final String msg1, final String msg2, final String msg3) {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
@@ -70,7 +70,7 @@ public class S_Message_YN extends ServerBasePacket {
 		return "[S] S_Message_YN";
 	}
 
-	private void buildPacket(int type, String msg1, String msg2, String msg3, int check) {
+	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final int check) {
 		writeC(Opcodes.S_OPCODE_YES_NO);
 		writeH(0x0000); // 3.51未知封包
 		writeD(GameServer.getYesNoCount());

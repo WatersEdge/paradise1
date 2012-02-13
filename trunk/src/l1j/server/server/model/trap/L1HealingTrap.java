@@ -28,7 +28,7 @@ public class L1HealingTrap extends L1Trap {
 	private final int _base;
 	private final int _diceCount;
 
-	public L1HealingTrap(TrapStorage storage) {
+	public L1HealingTrap(final TrapStorage storage) {
 		super(storage);
 
 		_dice = new Dice(storage.getInt("dice"));
@@ -37,10 +37,10 @@ public class L1HealingTrap extends L1Trap {
 	}
 
 	@Override
-	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
+	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
 		sendEffect(trapObj);
 
-		int pt = _dice.roll(_diceCount) + _base;
+		final int pt = _dice.roll(_diceCount) + _base;
 
 		trodFrom.healHp(pt);
 	}

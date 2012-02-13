@@ -35,7 +35,7 @@ public class S_Invis extends ServerBasePacket {
 	 * @param type
 	 *            0:无 1:隐形
 	 */
-	public S_Invis(int objid, int type) {
+	public S_Invis(final int objid, final int type) {
 		buildPacket(objid, type);
 	}
 
@@ -52,7 +52,7 @@ public class S_Invis extends ServerBasePacket {
 		return S_INVIS;
 	}
 
-	private void buildPacket(int objid, int type) {
+	private void buildPacket(final int objid, final int type) {
 		writeC(Opcodes.S_OPCODE_INVIS);
 		writeD(objid);
 		writeC(type);

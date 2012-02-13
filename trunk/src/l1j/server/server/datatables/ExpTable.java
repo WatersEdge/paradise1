@@ -63,7 +63,7 @@ public final class ExpTable {
 	 *            等级
 	 * @return 累积所需经验
 	 */
-	public static long getExpByLevel(int level) {
+	public static long getExpByLevel(final int level) {
 		return _expTable[level - 1];
 	}
 
@@ -74,7 +74,7 @@ public final class ExpTable {
 	 * @param exp
 	 * @return
 	 */
-	public static int getExpPercentage(int level, long exp) {
+	public static int getExpPercentage(final int level, final long exp) {
 		return (int) (100.0 * ((double) (exp - getExpByLevel(level)) / (double) getNeedExpNextLevel(level)));
 	}
 
@@ -85,7 +85,7 @@ public final class ExpTable {
 	 *            累积经验值
 	 * @return 等级获得
 	 */
-	public static int getLevelByExp(long exp) {
+	public static int getLevelByExp(final long exp) {
 
 		int level;
 		for (level = 1; level < _expTable.length; level++) {
@@ -104,7 +104,7 @@ public final class ExpTable {
 	 *            现在的等级
 	 * @return 必须的经验值
 	 */
-	public static long getNeedExpNextLevel(int level) {
+	public static long getNeedExpNextLevel(final int level) {
 		return getExpByLevel(level + 1) - getExpByLevel(level);
 	}
 
@@ -115,7 +115,7 @@ public final class ExpTable {
 	 *            现在的等级
 	 * @return 取得经验值惩罚几率
 	 */
-	public static double getPenaltyRate(int level) {
+	public static double getPenaltyRate(final int level) {
 		if (level < 50) {
 			return 1.0;
 		}

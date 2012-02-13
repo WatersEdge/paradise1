@@ -35,7 +35,7 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	private static AtomicInteger _sequentialNumber = new AtomicInteger(0);
 
-	private static int calcheading(int myx, int myy, int tx, int ty) {
+	private static int calcheading(final int myx, final int myy, final int tx, final int ty) {
 		int newheading = 0;
 		if ((tx > myx) && (ty > myy)) {
 			newheading = 3;
@@ -66,11 +66,11 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data) {
+	public S_UseAttackSkill(final L1Character cha, final int targetobj, final int x, final int y, final int[] data) {
 		buildPacket(cha, targetobj, x, y, data, true);
 	}
 
-	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
+	public S_UseAttackSkill(final L1Character cha, final int targetobj, final int x, final int y, final int[] data, final boolean withCastMotion) {
 		buildPacket(cha, targetobj, x, y, data, withCastMotion);
 	}
 
@@ -98,11 +98,11 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		return S_USE_ATTACK_SKILL;
 	}
 
-	private void buildPacket(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
+	private void buildPacket(final L1Character cha, final int targetobj, final int x, final int y, final int[] data, final boolean withCastMotion) {
 		if (cha instanceof L1PcInstance) {
 			// 变身中使用攻击魔法时动作代号异动
 			if (cha.hasSkillEffect(SHAPE_CHANGE) && (data[0] == ActionCodes.ACTION_SkillAttack)) {
-				int tempchargfx = cha.getTempCharGfx();
+				final int tempchargfx = cha.getTempCharGfx();
 				if ((tempchargfx == 5727) || (tempchargfx == 5730)) {
 					data[0] = ActionCodes.ACTION_SkillBuff;
 				}
@@ -118,7 +118,7 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		}
 
 		// 设置新面向
-		int newheading = calcheading(cha.getX(), cha.getY(), x, y);
+		final int newheading = calcheading(cha.getX(), cha.getY(), x, y);
 		cha.setHeading(newheading);
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(data[0]); // actionId 动作代码

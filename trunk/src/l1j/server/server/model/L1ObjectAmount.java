@@ -23,7 +23,7 @@ public class L1ObjectAmount<T> {
 
 	private final int _amount;
 
-	public L1ObjectAmount(T obj, int amount) {
+	public L1ObjectAmount(final T obj, final int amount) {
 		_obj = obj;
 		_amount = amount;
 	}

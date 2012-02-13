@@ -34,17 +34,17 @@ public class C_ChangeWarTime extends ClientBasePacket {
 
 	private static final String C_CHANGE_WAR_TIME = "[C] C_ChangeWarTime";
 
-	public C_ChangeWarTime(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_ChangeWarTime(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 
-		L1Clan clan = L1World.getInstance().getClan(player.getClanname());
+		final L1Clan clan = L1World.getInstance().getClan(player.getClanname());
 		if (clan != null) {
-			int castle_id = clan.getCastleId();
+			final int castle_id = clan.getCastleId();
 			if (castle_id != 0) { // 有城
-				L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
-				Calendar cal = l1castle.getWarTime();
+				final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+				final Calendar cal = l1castle.getWarTime();
 				player.sendPackets(new S_WarTime(cal));
 			}
 		}

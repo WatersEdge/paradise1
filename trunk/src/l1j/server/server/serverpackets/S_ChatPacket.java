@@ -36,7 +36,7 @@ public class S_ChatPacket extends ServerBasePacket {
 	 * @param opcode
 	 * @param type
 	 */
-	public S_ChatPacket(L1PcInstance pc, String chat, int opcode, int type) {
+	public S_ChatPacket(final L1PcInstance pc, final String chat, final int opcode, final int type) {
 
 		if (type == 0) { // 一般频道
 			writeC(opcode);

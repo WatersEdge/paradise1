@@ -50,27 +50,27 @@ public class C_CharReset extends ClientBasePacket {
 	 * //万能药 127.0.0.1 Request Work ID : 120 0000: 78 03 23 0a 0b 17 12 0d
 	 */
 
-	public C_CharReset(byte abyte0[], ClientThread clientthread) {
+	public C_CharReset(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
-		int stage = readC();
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final int stage = readC();
 
 		if (stage == 0x01) { // 0x01:初始化角色
-			int str = readC();
-			int intel = readC();
-			int wis = readC();
-			int dex = readC();
-			int con = readC();
-			int cha = readC();
-			int hp = CalcInitHpMp.calcInitHp(pc);
-			int mp = CalcInitHpMp.calcInitMp(pc);
+			final int str = readC();
+			final int intel = readC();
+			final int wis = readC();
+			final int dex = readC();
+			final int con = readC();
+			final int cha = readC();
+			final int hp = CalcInitHpMp.calcInitHp(pc);
+			final int mp = CalcInitHpMp.calcInitMp(pc);
 			pc.sendPackets(new S_CharReset(pc, 1, hp, mp, 10, str, intel, wis, dex, con, cha));
 			initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);
 			CharacterTable.getInstance();
 			CharacterTable.saveCharStatus(pc);
 		}
 		else if (stage == 0x02) { // 0x02:再分配状态
-			int type2 = readC();
+			final int type2 = readC();
 			if (type2 == 0x00) { // 0x00:Lv1UP
 				setLevelUp(pc, 1);
 			}
@@ -106,24 +106,24 @@ public class C_CharReset extends ClientBasePacket {
 			}
 			else if (type2 == 0x08) {
 				switch (readC()) {
-				case 1:
-					pc.addBaseStr((byte) 1);
-					break;
-				case 2:
-					pc.addBaseInt((byte) 1);
-					break;
-				case 3:
-					pc.addBaseWis((byte) 1);
-					break;
-				case 4:
-					pc.addBaseDex((byte) 1);
-					break;
-				case 5:
-					pc.addBaseCon((byte) 1);
-					break;
-				case 6:
-					pc.addBaseCha((byte) 1);
-					break;
+					case 1:
+						pc.addBaseStr((byte) 1);
+						break;
+					case 2:
+						pc.addBaseInt((byte) 1);
+						break;
+					case 3:
+						pc.addBaseWis((byte) 1);
+						break;
+					case 4:
+						pc.addBaseDex((byte) 1);
+						break;
+					case 5:
+						pc.addBaseCon((byte) 1);
+						break;
+					case 6:
+						pc.addBaseCha((byte) 1);
+						break;
 				}
 				if (pc.getElixirStats() > 0) {
 					pc.sendPackets(new S_CharReset(pc.getElixirStats()));
@@ -149,7 +149,7 @@ public class C_CharReset extends ClientBasePacket {
 	}
 
 	/** 初始化角色的状态 */
-	private void initCharStatus(L1PcInstance pc, int hp, int mp, int str, int intel, int wis, int dex, int con, int cha) {
+	private void initCharStatus(final L1PcInstance pc, final int hp, final int mp, final int str, final int intel, final int wis, final int dex, final int con, final int cha) {
 		pc.addBaseMaxHp((short) (hp - pc.getBaseMaxHp()));
 		pc.addBaseMaxMp((short) (mp - pc.getBaseMaxMp()));
 		pc.addBaseStr((byte) (str - pc.getBaseStr()));
@@ -161,7 +161,7 @@ public class C_CharReset extends ClientBasePacket {
 	}
 
 	/** 保存角色新的状态 */
-	private void saveNewCharStatus(L1PcInstance pc) {
+	private void saveNewCharStatus(final L1PcInstance pc) {
 		pc.setInCharReset(false);
 		if (pc.getOriginalAc() > 0) {
 			pc.addAc(pc.getOriginalAc());
@@ -183,13 +183,13 @@ public class C_CharReset extends ClientBasePacket {
 			pc.setBonusStats(0);
 		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
-		L1ItemInstance item = pc.getInventory().findItemId(49142); // 回忆蜡烛
+		final L1ItemInstance item = pc.getInventory().findItemId(49142); // 回忆蜡烛
 		if (item != null) {
 			try {
 				pc.getInventory().removeItem(item, 1);
 				pc.save(); // 储存玩家的资料到资料库中
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
@@ -197,15 +197,15 @@ public class C_CharReset extends ClientBasePacket {
 	}
 
 	/** 设定等级提升 */
-	private void setLevelUp(L1PcInstance pc, int addLv) {
+	private void setLevelUp(final L1PcInstance pc, final int addLv) {
 		pc.setTempLevel(pc.getTempLevel() + addLv);
 		for (int i = 0; i < addLv; i++) {
-			short randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
-			short randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
+			final short randomHp = CalcStat.calcStatHp(pc.getType(), pc.getBaseMaxHp(), pc.getBaseCon(), pc.getOriginalHpup());
+			final short randomMp = CalcStat.calcStatMp(pc.getType(), pc.getBaseMaxMp(), pc.getBaseWis(), pc.getOriginalMpup());
 			pc.addBaseMaxHp(randomHp);
 			pc.addBaseMaxMp(randomMp);
 		}
-		int newAc = CalcStat.calcAc(pc.getTempLevel(), pc.getBaseDex());
+		final int newAc = CalcStat.calcAc(pc.getTempLevel(), pc.getBaseDex());
 		pc.sendPackets(new S_CharReset(pc, pc.getTempLevel(), pc.getBaseMaxHp(), pc.getBaseMaxMp(), newAc, pc.getBaseStr(), pc.getBaseInt(), pc.getBaseWis(), pc.getBaseDex(), pc.getBaseCon(), pc.getBaseCha()));
 	}
 

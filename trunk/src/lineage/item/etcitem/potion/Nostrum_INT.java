@@ -49,7 +49,7 @@ public class Nostrum_INT extends ItemExecutor {
 				pc.sendPackets(new S_ServerMessage(481)); // \f1属性最大值只能到35。 请重试一次。
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			// TODO Auto-generated catch block
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("万能药:智力 错误" + " File.");

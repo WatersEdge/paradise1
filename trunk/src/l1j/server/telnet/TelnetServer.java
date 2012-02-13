@@ -34,16 +34,16 @@ public class TelnetServer {
 				_sock = new ServerSocket(Config.TELNET_SERVER_PORT);
 
 				while (true) {
-					Socket sock = _sock.accept();
+					final Socket sock = _sock.accept();
 					new TelnetConnection(sock);
 				}
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 			}
 			try {
 				_sock.close();
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 			}
 		}
 	}

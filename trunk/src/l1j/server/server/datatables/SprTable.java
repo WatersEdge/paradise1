@@ -96,7 +96,7 @@ public class SprTable {
 	 *            - 武器种类表值。L1Item.getType1()一致返回值 + 1
 	 * @return 指定spr的攻击速度(ms)
 	 */
-	public int getAttackSpeed(int sprid, int actid) {
+	public int getAttackSpeed(final int sprid, final int actid) {
 		if (_dataMap.containsKey(sprid)) {
 			if (_dataMap.get(sprid).attackSpeed.containsKey(actid)) {
 				return _dataMap.get(sprid).attackSpeed.get(actid);
@@ -117,7 +117,7 @@ public class SprTable {
 	 * @param sprid
 	 * @return
 	 */
-	public int getDirSpellSpeed(int sprid) {
+	public int getDirSpellSpeed(final int sprid) {
 		if (_dataMap.containsKey(sprid)) {
 			return _dataMap.get(sprid).dirSpellSpeed;
 		}
@@ -131,7 +131,7 @@ public class SprTable {
 	 * @param actid
 	 * @return
 	 */
-	public int getMoveSpeed(int sprid, int actid) {
+	public int getMoveSpeed(final int sprid, final int actid) {
 		if (_dataMap.containsKey(sprid)) {
 			if (_dataMap.get(sprid).moveSpeed.containsKey(actid)) {
 				return _dataMap.get(sprid).moveSpeed.get(actid);
@@ -152,7 +152,7 @@ public class SprTable {
 	 * @param sprid
 	 * @return
 	 */
-	public int getNodirSpellSpeed(int sprid) {
+	public int getNodirSpellSpeed(final int sprid) {
 		if (_dataMap.containsKey(sprid)) {
 			return _dataMap.get(sprid).nodirSpellSpeed;
 		}
@@ -166,7 +166,7 @@ public class SprTable {
 	 * @param actid
 	 * @return
 	 */
-	public int getSpecialSpeed(int sprid, int actid) {
+	public int getSpecialSpeed(final int sprid, final int actid) {
 		if (_dataMap.containsKey(sprid)) {
 			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
 				return _dataMap.get(sprid).specialSpeed.get(actid);
@@ -184,48 +184,48 @@ public class SprTable {
 	 * @param sprid
 	 * @param actid
 	 */
-	public int getSprSpeed(int sprid, int actid) {
+	public int getSprSpeed(final int sprid, final int actid) {
 		switch (actid) {
-		case ACTION_Walk:
-		case ACTION_SwordWalk:
-		case ACTION_AxeWalk:
-		case ACTION_BowWalk:
-		case ACTION_SpearWalk:
-		case ACTION_StaffWalk:
-		case ACTION_DaggerWalk:
-		case ACTION_TwoHandSwordWalk:
-		case ACTION_EdoryuWalk:
-		case ACTION_ClawWalk:
-		case ACTION_ThrowingKnifeWalk:
-			// 移动
-			return getMoveSpeed(sprid, actid);
-		case ACTION_SkillAttack:
-			// 有向施法
-			return getDirSpellSpeed(sprid);
-		case ACTION_SkillBuff:
-			// 无向施法
-			return getNodirSpellSpeed(sprid);
-		case ACTION_Attack:
-		case ACTION_SwordAttack:
-		case ACTION_AxeAttack:
-		case ACTION_BowAttack:
-		case ACTION_SpearAttack:
-		case ACTION_AltAttack:
-		case ACTION_SpellDirectionExtra:
-		case ACTION_StaffAttack:
-		case ACTION_DaggerAttack:
-		case ACTION_TwoHandSwordAttack:
-		case ACTION_EdoryuAttack:
-		case ACTION_ClawAttack:
-		case ACTION_ThrowingKnifeAttack:
-			// 攻击
-			return getAttackSpeed(sprid, actid);
-		case ACTION_Think:
-		case ACTION_Aggress:
-			// 魔法娃娃表情动作
-			return getSpecialSpeed(sprid, actid);
-		default:
-			break;
+			case ACTION_Walk:
+			case ACTION_SwordWalk:
+			case ACTION_AxeWalk:
+			case ACTION_BowWalk:
+			case ACTION_SpearWalk:
+			case ACTION_StaffWalk:
+			case ACTION_DaggerWalk:
+			case ACTION_TwoHandSwordWalk:
+			case ACTION_EdoryuWalk:
+			case ACTION_ClawWalk:
+			case ACTION_ThrowingKnifeWalk:
+				// 移动
+				return getMoveSpeed(sprid, actid);
+			case ACTION_SkillAttack:
+				// 有向施法
+				return getDirSpellSpeed(sprid);
+			case ACTION_SkillBuff:
+				// 无向施法
+				return getNodirSpellSpeed(sprid);
+			case ACTION_Attack:
+			case ACTION_SwordAttack:
+			case ACTION_AxeAttack:
+			case ACTION_BowAttack:
+			case ACTION_SpearAttack:
+			case ACTION_AltAttack:
+			case ACTION_SpellDirectionExtra:
+			case ACTION_StaffAttack:
+			case ACTION_DaggerAttack:
+			case ACTION_TwoHandSwordAttack:
+			case ACTION_EdoryuAttack:
+			case ACTION_ClawAttack:
+			case ACTION_ThrowingKnifeAttack:
+				// 攻击
+				return getAttackSpeed(sprid, actid);
+			case ACTION_Think:
+			case ACTION_Aggress:
+				// 魔法娃娃表情动作
+				return getSpecialSpeed(sprid, actid);
+			default:
+				break;
 		}
 		return 0;
 	}
@@ -243,7 +243,7 @@ public class SprTable {
 			pstm = con.prepareStatement("SELECT * FROM spr_action");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int key = rs.getInt("spr_id");
+				final int key = rs.getInt("spr_id");
 				if (!_dataMap.containsKey(key)) {
 					spr = new Spr();
 					_dataMap.put(key, spr);
@@ -252,56 +252,56 @@ public class SprTable {
 					spr = _dataMap.get(key);
 				}
 
-				int actid = rs.getInt("act_id");
-				int frameCount = rs.getInt("framecount");
-				int frameRate = rs.getInt("framerate");
-				int speed = calcActionSpeed(frameCount, frameRate);
+				final int actid = rs.getInt("act_id");
+				final int frameCount = rs.getInt("framecount");
+				final int frameRate = rs.getInt("framerate");
+				final int speed = calcActionSpeed(frameCount, frameRate);
 
 				switch (actid) {
-				case ACTION_Walk:
-				case ACTION_SwordWalk:
-				case ACTION_AxeWalk:
-				case ACTION_BowWalk:
-				case ACTION_SpearWalk:
-				case ACTION_StaffWalk:
-				case ACTION_DaggerWalk:
-				case ACTION_TwoHandSwordWalk:
-				case ACTION_EdoryuWalk:
-				case ACTION_ClawWalk:
-				case ACTION_ThrowingKnifeWalk:
-					spr.moveSpeed.put(actid, speed);
-					break;
-				case ACTION_SkillAttack:
-					spr.dirSpellSpeed = speed;
-					break;
-				case ACTION_SkillBuff:
-					spr.nodirSpellSpeed = speed;
-					break;
-				case ACTION_Attack:
-				case ACTION_SwordAttack:
-				case ACTION_AxeAttack:
-				case ACTION_BowAttack:
-				case ACTION_SpearAttack:
-				case ACTION_AltAttack:
-				case ACTION_SpellDirectionExtra:
-				case ACTION_StaffAttack:
-				case ACTION_DaggerAttack:
-				case ACTION_TwoHandSwordAttack:
-				case ACTION_EdoryuAttack:
-				case ACTION_ClawAttack:
-				case ACTION_ThrowingKnifeAttack:
-					spr.attackSpeed.put(actid, speed);
-					break;
-				case ACTION_Think:
-				case ACTION_Aggress:
-					spr.specialSpeed.put(actid, speed);
-					break;
-				default:
-					break;
+					case ACTION_Walk:
+					case ACTION_SwordWalk:
+					case ACTION_AxeWalk:
+					case ACTION_BowWalk:
+					case ACTION_SpearWalk:
+					case ACTION_StaffWalk:
+					case ACTION_DaggerWalk:
+					case ACTION_TwoHandSwordWalk:
+					case ACTION_EdoryuWalk:
+					case ACTION_ClawWalk:
+					case ACTION_ThrowingKnifeWalk:
+						spr.moveSpeed.put(actid, speed);
+						break;
+					case ACTION_SkillAttack:
+						spr.dirSpellSpeed = speed;
+						break;
+					case ACTION_SkillBuff:
+						spr.nodirSpellSpeed = speed;
+						break;
+					case ACTION_Attack:
+					case ACTION_SwordAttack:
+					case ACTION_AxeAttack:
+					case ACTION_BowAttack:
+					case ACTION_SpearAttack:
+					case ACTION_AltAttack:
+					case ACTION_SpellDirectionExtra:
+					case ACTION_StaffAttack:
+					case ACTION_DaggerAttack:
+					case ACTION_TwoHandSwordAttack:
+					case ACTION_EdoryuAttack:
+					case ACTION_ClawAttack:
+					case ACTION_ThrowingKnifeAttack:
+						spr.attackSpeed.put(actid, speed);
+						break;
+					case ACTION_Think:
+					case ACTION_Aggress:
+						spr.specialSpeed.put(actid, speed);
+						break;
+					default:
+						break;
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -317,7 +317,7 @@ public class SprTable {
 	 * @param frameCount
 	 * @param frameRate
 	 */
-	private int calcActionSpeed(int frameCount, int frameRate) {
+	private int calcActionSpeed(final int frameCount, final int frameRate) {
 		return (int) (frameCount * 40 * (24D / frameRate));
 	}
 }

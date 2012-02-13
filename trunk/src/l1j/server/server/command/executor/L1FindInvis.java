@@ -29,7 +29,7 @@ public class L1FindInvis implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		if (arg.equalsIgnoreCase("on")) {
 			pc.setSkillEffect(GMSTATUS_FINDINVIS, 0);
 			pc.removeAllKnownObjects();
@@ -37,7 +37,7 @@ public class L1FindInvis implements L1CommandExecutor {
 		}
 		else if (arg.equalsIgnoreCase("off")) {
 			pc.removeSkillEffect(GMSTATUS_FINDINVIS);
-			for (L1PcInstance visible : L1World.getInstance().getVisiblePlayer(pc)) {
+			for (final L1PcInstance visible : L1World.getInstance().getVisiblePlayer(pc)) {
 				if (visible.isInvisble()) {
 					pc.sendPackets(new S_RemoveObject(visible));
 				}

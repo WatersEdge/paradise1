@@ -31,9 +31,9 @@ import l1j.server.telnet.command.TelnetCommandResult;
 public class TelnetConnection {
 
 	private class ConnectionThread extends Thread {
-		private Socket _socket;
+		private final Socket _socket;
 
-		public ConnectionThread(Socket sock) {
+		public ConnectionThread(final Socket sock) {
 			_socket = sock;
 		}
 
@@ -51,7 +51,7 @@ public class TelnetConnection {
 
 				String cmd = null;
 				while (null != (cmd = in.readLine())) {
-					TelnetCommandResult result = TelnetCommandExecutor.getInstance().execute(cmd);
+					final TelnetCommandResult result = TelnetCommandExecutor.getInstance().execute(cmd);
 					out.write(result.getCode() + " " + result.getCodeMessage() + "\r\n");
 					out.write(result.getResult() + "\r\n");
 					out.flush();
@@ -61,19 +61,19 @@ public class TelnetConnection {
 					// System.out.println(result.getResult());
 				}
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 				StreamUtil.close(isr, in);
 				StreamUtil.close(osw, out);
 			}
 			try {
 				_socket.close();
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 			}
 		}
 	}
 
-	public TelnetConnection(Socket sock) {
+	public TelnetConnection(final Socket sock) {
 		new ConnectionThread(sock).start();
 	}
 }

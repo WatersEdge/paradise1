@@ -36,7 +36,7 @@ public class S_CastleMaster extends ServerBasePacket {
 	 * @param objecId
 	 *            角色的OBJID
 	 */
-	public S_CastleMaster(int type, int objecId) {
+	public S_CastleMaster(final int type, final int objecId) {
 		buildPacket(type, objecId);
 	}
 
@@ -53,7 +53,7 @@ public class S_CastleMaster extends ServerBasePacket {
 		return _S__08_CASTLEMASTER;
 	}
 
-	private void buildPacket(int type, int objecId) {
+	private void buildPacket(final int type, final int objecId) {
 		writeC(Opcodes.S_OPCODE_CASTLEMASTER);
 		writeC(type);
 		writeD(objecId);

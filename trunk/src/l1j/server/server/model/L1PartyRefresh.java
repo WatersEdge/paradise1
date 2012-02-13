@@ -30,7 +30,7 @@ public class L1PartyRefresh extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public L1PartyRefresh(L1PcInstance pc) {
+	public L1PartyRefresh(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -44,13 +44,13 @@ public class L1PartyRefresh extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			if (_pc.isDead() || _pc.getParty() == null) {
+			if (_pc.isDead() || (_pc.getParty() == null)) {
 				_pc.stopRefreshParty();
 				return;
 			}
 			fresh();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_pc.stopRefreshParty();
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}

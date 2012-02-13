@@ -69,35 +69,35 @@ public class L1Mail {
 		return _type;
 	}
 
-	public void setContent(byte[] arg) {
+	public void setContent(final byte[] arg) {
 		_content = arg;
 	}
 
-	public void setDate(String s) {
+	public void setDate(final String s) {
 		_date = s;
 	}
 
-	public void setId(int i) {
+	public void setId(final int i) {
 		_id = i;
 	}
 
-	public void setReadStatus(int i) {
+	public void setReadStatus(final int i) {
 		_readStatus = i;
 	}
 
-	public void setReceiverName(String s) {
+	public void setReceiverName(final String s) {
 		_receiverName = s;
 	}
 
-	public void setSenderName(String s) {
+	public void setSenderName(final String s) {
 		_senderName = s;
 	}
 
-	public void setSubject(byte[] arg) {
+	public void setSubject(final byte[] arg) {
 		_subject = arg;
 	}
 
-	public void setType(int i) {
+	public void setType(final int i) {
 		_type = i;
 	}
 

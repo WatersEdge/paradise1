@@ -34,7 +34,7 @@ public class S_NewCharPacket extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public S_NewCharPacket(L1PcInstance pc) {
+	public S_NewCharPacket(final L1PcInstance pc) {
 		buildPacket(pc);
 	}
 
@@ -51,7 +51,7 @@ public class S_NewCharPacket extends ServerBasePacket {
 		return _S__25_NEWCHARPACK;
 	}
 
-	private void buildPacket(L1PcInstance pc) {
+	private void buildPacket(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_NEWCHARPACK);
 		writeS(pc.getName());
 		writeS("");

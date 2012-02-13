@@ -64,7 +64,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 		@Override
 		public void run() {
 			try {
-				if (GDROPITEM_TIME > 0 && !isDropitems()) {
+				if ((GDROPITEM_TIME > 0) && !isDropitems()) {
 					if (npcId == 70848) { // 安特
 						if (!_inventory.checkItem(40505) && !_inventory.checkItem(40506) && !_inventory.checkItem(40507)) {
 							_inventory.storeItem(40506, 1);
@@ -85,7 +85,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 					giveDropItems(false);
 				}
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, "资料载入错误", e);
 			}
 		}
@@ -100,7 +100,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 			setCurrentHpDirect(0);
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);
-			int targetobjid = getId();
+			final int targetobjid = getId();
 			getMap().setPassable(getLocation(), true);
 			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
 
@@ -115,17 +115,17 @@ public class L1GuardianInstance extends L1NpcInstance {
 				player = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 			}
 			if (player != null) {
-				List<L1Character> targetList = _hateList.toTargetArrayList();
-				List<Integer> hateList = _hateList.toHateArrayList();
-				long exp = getExp();
+				final List<L1Character> targetList = _hateList.toTargetArrayList();
+				final List<Integer> hateList = _hateList.toHateArrayList();
+				final long exp = getExp();
 				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
 
-				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
-				List<Integer> dropHateList = _dropHateList.toHateArrayList();
+				final List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
+				final List<Integer> dropHateList = _dropHateList.toHateArrayList();
 				try {
 					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 				// カルマは止めを刺したプレイヤーに設定。ペットorサモンで倒した場合も入る。
@@ -140,6 +140,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 			startDeleteTimer();
 		}
 	}
+
 	private static final long serialVersionUID = 1L;
 
 	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
@@ -160,44 +161,44 @@ public class L1GuardianInstance extends L1NpcInstance {
 	/**
 	 * @param template
 	 */
-	public L1GuardianInstance(L1Npc template) {
+	public L1GuardianInstance(final L1Npc template) {
 		super(template);
 		if (!isDropitems()) {
 			doGDropItem(0);
 		}
 	}
 
-	public void doFinalAction(L1PcInstance player) {
+	public void doFinalAction(final L1PcInstance player) {
 	}
 
-	public void doGDropItem(int timer) {
-		GDropItemTask task = new GDropItemTask();
+	public void doGDropItem(final int timer) {
+		final GDropItemTask task = new GDropItemTask();
 		GeneralThreadPool.getInstance().schedule(task, timer * 60000);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
+	public void onAction(final L1PcInstance pc, final int skillId) {
 		if ((pc.getType() == 2) && (pc.getCurrentWeapon() == 0) && pc.isElf()) {
-			L1Attack attack = new L1Attack(pc, this, skillId);
+			final L1Attack attack = new L1Attack(pc, this, skillId);
 
 			if (attack.calcHit()) {
 				try {
 					int chance = 0;
-					int npcId = getNpcTemplate().get_npcId();
-					String npcName = getNpcTemplate().get_name();
+					final int npcId = getNpcTemplate().get_npcId();
+					final String npcName = getNpcTemplate().get_name();
 					String itemName = "";
 					int itemCount = 0;
-					L1Item item40499 = ItemTable.getInstance().getTemplate(40499);
-					L1Item item40503 = ItemTable.getInstance().getTemplate(40503);
-					L1Item item40505 = ItemTable.getInstance().getTemplate(40505);
-					L1Item item40506 = ItemTable.getInstance().getTemplate(40506);
-					L1Item item40507 = ItemTable.getInstance().getTemplate(40507);
-					L1Item item40519 = ItemTable.getInstance().getTemplate(40519);
+					final L1Item item40499 = ItemTable.getInstance().getTemplate(40499);
+					final L1Item item40503 = ItemTable.getInstance().getTemplate(40503);
+					final L1Item item40505 = ItemTable.getInstance().getTemplate(40505);
+					final L1Item item40506 = ItemTable.getInstance().getTemplate(40506);
+					final L1Item item40507 = ItemTable.getInstance().getTemplate(40507);
+					final L1Item item40519 = ItemTable.getInstance().getTemplate(40519);
 					if (npcId == 70848) { // 安特
 						if (_inventory.checkItem(40499) && !_inventory.checkItem(40505)) { // 蘑菇汁 换 安特之树皮
 							itemName = item40505.getName();
@@ -214,7 +215,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 						}
 						if (_inventory.checkItem(40505)) { // 安特之树皮
 							chance = Random.nextInt(100) + 1;
-							if (chance <= 60 && chance >= 50) {
+							if ((chance <= 60) && (chance >= 50)) {
 								itemName = item40505.getName();
 								_inventory.consumeItem(40505, 1);
 								pc.getInventory().storeItem(40505, 1);
@@ -227,7 +228,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 						}
 						else if (_inventory.checkItem(40507) && !_inventory.checkItem(40505)) { // 安特之树枝
 							chance = Random.nextInt(100) + 1;
-							if (chance <= 40 && chance >= 25) {
+							if ((chance <= 40) && (chance >= 25)) {
 								itemName = item40507.getName();
 								itemName += " (6)";
 								_inventory.consumeItem(40507, 6);
@@ -241,7 +242,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 						}
 						else if (_inventory.checkItem(40506) && !_inventory.checkItem(40507)) { // 安特的水果
 							chance = Random.nextInt(100) + 1;
-							if (chance <= 90 && chance >= 85) {
+							if ((chance <= 90) && (chance >= 85)) {
 								itemName = item40506.getName();
 								_inventory.consumeItem(40506, 1);
 								pc.getInventory().storeItem(40506, 1);
@@ -258,7 +259,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 								doGDropItem(GDROPITEM_TIME);
 							}
 							chance = Random.nextInt(100) + 1;
-							if (chance <= 80 && chance >= 40) {
+							if ((chance <= 80) && (chance >= 40)) {
 								broadcastPacket(new S_NpcChatPacket(_npc, "$822", 0));
 							}
 							else {
@@ -284,7 +285,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 								doGDropItem(GDROPITEM_TIME);
 							}
 							chance = Random.nextInt(100) + 1;
-							if (chance <= 80 && chance >= 40) {
+							if ((chance <= 80) && (chance >= 40)) {
 								broadcastPacket(new S_NpcChatPacket(_npc, "$824", 0));
 							}
 						}
@@ -306,7 +307,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 						}
 					}
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, "发生错误", e);
 				}
 				attack.calcDamage();
@@ -318,7 +319,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 			attack.commit();
 		}
 		else if ((getCurrentHp() > 0) && !isDead()) {
-			L1Attack attack = new L1Attack(pc, this, skillId);
+			final L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
 				attack.calcStaffOfMana();
@@ -331,7 +332,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
+	public void onFinalAction(final L1PcInstance player, final String action) {
 	}
 
 	@Override
@@ -344,17 +345,17 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance player) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		L1Object object = L1World.getInstance().findObject(getId());
-		L1NpcInstance target = (L1NpcInstance) object;
+	public void onTalkAction(final L1PcInstance player) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final L1Object object = L1World.getInstance().findObject(getId());
+		final L1NpcInstance target = (L1NpcInstance) object;
 
 		if (talking != null) {
-			int pcx = player.getX(); // PCのX座標
-			int pcy = player.getY(); // PCのY座標
-			int npcx = target.getX(); // NPCのX座標
-			int npcy = target.getY(); // NPCのY座標
+			final int pcx = player.getX(); // PCのX座標
+			final int pcy = player.getY(); // PCのY座標
+			final int npcx = target.getX(); // NPCのX座標
+			final int npcy = target.getY(); // NPCのY座標
 
 			if ((pcx == npcx) && (pcy < npcy)) {
 				setHeading(0);
@@ -403,9 +404,9 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
+	public void receiveDamage(final L1Character attacker, final int damage) { // 攻撃でＨＰを減らすときはここを使用
 		if ((attacker instanceof L1PcInstance) && (damage > 0)) {
-			L1PcInstance pc = (L1PcInstance) attacker;
+			final L1PcInstance pc = (L1PcInstance) attacker;
 			if ((pc.getType() == 2) && // 素手ならダメージなし
 					(pc.getCurrentWeapon() == 0)) {
 			}
@@ -424,13 +425,13 @@ public class L1GuardianInstance extends L1NpcInstance {
 						pc.setPetTarget(this);
 					}
 
-					int newHp = getCurrentHp() - damage;
+					final int newHp = getCurrentHp() - damage;
 					if ((newHp <= 0) && !isDead()) {
 						setCurrentHpDirect(0);
 						setDead(true);
 						setStatus(ActionCodes.ACTION_Die);
 						_lastattacker = attacker;
-						Death death = new Death();
+						final Death death = new Death();
 						GeneralThreadPool.getInstance().execute(death);
 					}
 					if (newHp > 0) {
@@ -441,7 +442,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
 					_lastattacker = attacker;
-					Death death = new Death();
+					final Death death = new Death();
 					GeneralThreadPool.getInstance().execute(death);
 				}
 			}
@@ -453,7 +454,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 		// 目标搜索
 		L1PcInstance targetPlayer = null;
 
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
 				continue;
 			}
@@ -477,7 +478,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setCurrentHp(int i) {
+	public void setCurrentHp(final int i) {
 		int currentHp = i;
 		if (currentHp >= getMaxHp()) {
 			currentHp = getMaxHp();
@@ -490,7 +491,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setCurrentMp(int i) {
+	public void setCurrentMp(final int i) {
 		int currentMp = i;
 		if (currentMp >= getMaxMp()) {
 			currentMp = getMaxMp();
@@ -504,7 +505,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 	// 设置链接
 	@Override
-	public void setLink(L1Character cha) {
+	public void setLink(final L1Character cha) {
 		if ((cha != null) && _hateList.isEmpty()) { // ターゲットがいない場合のみ追加
 			_hateList.add(cha, 0);
 			checkTarget();

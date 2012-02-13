@@ -34,7 +34,7 @@ public class MagicDollTable {
 		load();
 	}
 
-	public L1MagicDoll getTemplate(int itemId) {
+	public L1MagicDoll getTemplate(final int itemId) {
 		if (_dolls.containsKey(itemId)) {
 			return _dolls.get(itemId);
 		}
@@ -50,8 +50,8 @@ public class MagicDollTable {
 			pstm = con.prepareStatement("SELECT * FROM magic_doll");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1MagicDoll doll = new L1MagicDoll();
-				int itemId = rs.getInt("item_id"); // 魔法娃娃道具编号 对应 etcitem
+				final L1MagicDoll doll = new L1MagicDoll();
+				final int itemId = rs.getInt("item_id"); // 魔法娃娃道具编号 对应 etcitem
 				doll.setItemId(itemId);
 				doll.setDollId(rs.getInt("doll_id")); // 魔法娃娃编号 对应 npc
 				doll.setAc(rs.getInt("ac")); // 增加物理防御
@@ -81,7 +81,7 @@ public class MagicDollTable {
 				_dolls.put(new Integer(itemId), doll);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

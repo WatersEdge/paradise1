@@ -40,13 +40,13 @@ public class L1DwarfForElfInventory extends L1Inventory {
 
 	private final L1PcInstance _owner;
 
-	public L1DwarfForElfInventory(L1PcInstance owner) {
+	public L1DwarfForElfInventory(final L1PcInstance owner) {
 		_owner = owner;
 	}
 
 	// ＤＢのcharacter_elf_warehouseから削除
 	@Override
-	public void deleteItem(L1ItemInstance item) {
+	public void deleteItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -55,7 +55,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm.setInt(1, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -67,7 +67,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 
 	// ＤＢのcharacter_elf_warehouseへ登録
 	@Override
-	public void insertItem(L1ItemInstance item) {
+	public void insertItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -100,7 +100,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -123,10 +123,10 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1ItemInstance item = new L1ItemInstance();
-				int objectId = rs.getInt("id");
+				final L1ItemInstance item = new L1ItemInstance();
+				final int objectId = rs.getInt("id");
 				item.setId(objectId);
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
+				final L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
 				item.setEquipped(false);
@@ -158,7 +158,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -166,9 +166,10 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			SQLUtil.close(con);
 		}
 	}
+
 	// ＤＢのcharacter_elf_warehouseを更新
 	@Override
-	public void updateItem(L1ItemInstance item) {
+	public void updateItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -178,7 +179,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm.setInt(2, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

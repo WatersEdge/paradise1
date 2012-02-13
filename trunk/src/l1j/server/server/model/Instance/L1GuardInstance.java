@@ -37,7 +37,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	class Death implements Runnable {
 		L1Character _lastAttacker;
 
-		public Death(L1Character lastAttacker) {
+		public Death(final L1Character lastAttacker) {
 			_lastAttacker = lastAttacker;
 		}
 
@@ -64,7 +64,7 @@ public class L1GuardInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1GuardInstance(L1Npc template) {
+	public L1GuardInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -76,7 +76,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	@Override
 	public boolean noTarget() {
 		if (getLocation().getTileLineDistance(new Point(getHomeX(), getHomeY())) > 0) {
-			int dir = moveDirection(getHomeX(), getHomeY());
+			final int dir = moveDirection(getHomeX(), getHomeY());
 			if (dir != -1) {
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
@@ -95,15 +95,15 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
+	public void onAction(final L1PcInstance pc, final int skillId) {
 		if (!isDead()) {
 			if (getCurrentHp() > 0) {
-				L1Attack attack = new L1Attack(pc, this, skillId);
+				final L1Attack attack = new L1Attack(pc, this, skillId);
 				if (attack.calcHit()) {
 					attack.calcDamage();
 					attack.calcStaffOfMana();
@@ -114,7 +114,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				attack.commit();
 			}
 			else {
-				L1Attack attack = new L1Attack(pc, this, skillId);
+				final L1Attack attack = new L1Attack(pc, this, skillId);
 				attack.calcHit();
 				attack.action();
 			}
@@ -135,10 +135,10 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance player) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		int npcid = getNpcTemplate().get_npcId();
+	public void onTalkAction(final L1PcInstance player) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final int npcid = getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
 		boolean hascastle = false;
@@ -275,7 +275,7 @@ public class L1GuardInstance extends L1NpcInstance {
 
 			// 近衛兵
 			else if (npcid == 60514) { // ケント城近衛兵
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.KENT_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -287,7 +287,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60560) { // オーク近衛兵
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.OT_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -299,7 +299,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 60552) { // ウィンダウッド城近衛兵
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.WW_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -313,7 +313,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			else if ((npcid == 60524) || // ギラン街入り口近衛兵(弓)
 					(npcid == 60525) || // ギラン街入り口近衛兵
 					(npcid == 60529)) { // ギラン城近衛兵
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.GIRAN_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -325,7 +325,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 70857) { // ハイネ城ハイネ ガード
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.HEINE_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -338,7 +338,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 60530) || // ドワーフ城ドワーフ ガード
 					(npcid == 60531)) {
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.DOWA_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -351,7 +351,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 			else if ((npcid == 60533) || // アデン城 ガード
 					(npcid == 60534)) {
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.ADEN_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -363,7 +363,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				htmldata = new String[] { getName(), clan_name, pri_name };
 			}
 			else if (npcid == 81156) { // アデン偵察兵（ディアド要塞）
-				for (L1Clan clan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 					if (clan.getCastleId() // 城主クラン
 					== L1CastleLocation.DIAD_CASTLE_ID) {
 						clan_name = clan.getClanName();
@@ -396,7 +396,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
+	public void receiveDamage(final L1Character attacker, final int damage) { // 攻撃でＨＰを減らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
 			if (damage >= 0) {
 				if (!(attacker instanceof L1EffectInstance)) { // FWはヘイトなし
@@ -410,17 +410,17 @@ public class L1GuardInstance extends L1NpcInstance {
 			onNpcAI();
 
 			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
-				L1PcInstance pc = (L1PcInstance) attacker;
+				final L1PcInstance pc = (L1PcInstance) attacker;
 				pc.setPetTarget(this);
 				serchLink(pc, getNpcTemplate().get_family());
 			}
 
-			int newHp = getCurrentHp() - damage;
+			final int newHp = getCurrentHp() - damage;
 			if ((newHp <= 0) && !isDead()) {
 				setCurrentHpDirect(0);
 				setDead(true);
 				setStatus(ActionCodes.ACTION_Die);
-				Death death = new Death(attacker);
+				final Death death = new Death(attacker);
 				GeneralThreadPool.getInstance().execute(death);
 			}
 			if (newHp > 0) {
@@ -432,7 +432,7 @@ public class L1GuardInstance extends L1NpcInstance {
 		else if (!isDead()) { // 念のため
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);
-			Death death = new Death(attacker);
+			final Death death = new Death(attacker);
 			GeneralThreadPool.getInstance().execute(death);
 		}
 	}
@@ -442,7 +442,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	public void searchTarget() {
 		// 目标搜索
 		L1PcInstance targetPlayer = null;
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
 				continue;
 			}
@@ -461,7 +461,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setCurrentHp(int i) {
+	public void setCurrentHp(final int i) {
 		int currentHp = i;
 		if (currentHp >= getMaxHp()) {
 			currentHp = getMaxHp();
@@ -474,7 +474,7 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setLink(L1Character cha) {
+	public void setLink(final L1Character cha) {
 		if ((cha != null) && _hateList.isEmpty()) {
 			_hateList.add(cha, 0);
 			checkTarget();
@@ -482,16 +482,16 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	/** 设置目标 */
-	public void setTarget(L1PcInstance targetPlayer) {
+	public void setTarget(final L1PcInstance targetPlayer) {
 		if (targetPlayer != null) {
 			_hateList.add(targetPlayer, 0);
 			_target = targetPlayer;
 		}
 	}
 
-	private boolean checkHasCastle(L1PcInstance pc, int castleId) {
+	private boolean checkHasCastle(final L1PcInstance pc, final int castleId) {
 		boolean isExistDefenseClan = false;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+		for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 			if (castleId == clan.getCastleId()) {
 				isExistDefenseClan = true;
 				break;
@@ -502,7 +502,7 @@ public class L1GuardInstance extends L1NpcInstance {
 		}
 
 		if (pc.getClanid() != 0) { // クラン所属中
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				if (clan.getCastleId() == castleId) {
 					return true;

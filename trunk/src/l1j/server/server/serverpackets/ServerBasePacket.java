@@ -36,7 +36,7 @@ public abstract class ServerBasePacket {
 	}
 
 	public byte[] getBytes() {
-		int padding = _bao.size() % 4;
+		final int padding = _bao.size() % 4;
 
 		if (padding != 0) {
 			for (int i = padding; i < 4; i++) {
@@ -60,22 +60,22 @@ public abstract class ServerBasePacket {
 		return "[S] " + this.getClass().getSimpleName();
 	}
 
-	protected void writeByte(byte[] text) {
+	protected void writeByte(final byte[] text) {
 		try {
 			if (text != null) {
 				_bao.write(text);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
 
-	protected void writeC(int value) {
+	protected void writeC(final int value) {
 		_bao.write(value & 0xff);
 	}
 
-	protected void writeD(int value) {
+	protected void writeD(final int value) {
 		_bao.write(value & 0xff);
 		_bao.write(value >> 8 & 0xff);
 		_bao.write(value >> 16 & 0xff);
@@ -83,14 +83,14 @@ public abstract class ServerBasePacket {
 	}
 
 	protected void writeExp(final long value) {
-		this._bao.write((int) (value & 0xff));
-		this._bao.write((int) (value >> 8 & 0xff));
-		this._bao.write((int) (value >> 16 & 0xff));
-		this._bao.write((int) (value >> 24 & 0xff));
+		_bao.write((int) (value & 0xff));
+		_bao.write((int) (value >> 8 & 0xff));
+		_bao.write((int) (value >> 16 & 0xff));
+		_bao.write((int) (value >> 24 & 0xff));
 	}
 
-	protected void writeF(double org) {
-		long value = Double.doubleToRawLongBits(org);
+	protected void writeF(final double org) {
+		final long value = Double.doubleToRawLongBits(org);
 		_bao.write((int) (value & 0xff));
 		_bao.write((int) (value >> 8 & 0xff));
 		_bao.write((int) (value >> 16 & 0xff));
@@ -101,26 +101,26 @@ public abstract class ServerBasePacket {
 		_bao.write((int) (value >> 56 & 0xff));
 	}
 
-	protected void writeH(int value) {
+	protected void writeH(final int value) {
 		_bao.write(value & 0xff);
 		_bao.write(value >> 8 & 0xff);
 	}
 
-	protected void writeL(long value) {
+	protected void writeL(final long value) {
 		_bao.write((int) (value & 0xff));
 	}
 
-	protected void writeP(int value) {
+	protected void writeP(final int value) {
 		_bao.write(value);
 	}
 
-	protected void writeS(String text) {
+	protected void writeS(final String text) {
 		try {
 			if (text != null) {
 				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 

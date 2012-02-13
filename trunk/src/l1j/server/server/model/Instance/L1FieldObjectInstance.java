@@ -32,7 +32,7 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1FieldObjectInstance(L1Npc template) {
+	public L1FieldObjectInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -44,7 +44,7 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 		}
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -52,14 +52,14 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		if (getNpcTemplate().get_npcId() == 81171) { // おばけ屋敷のゴールの炎
 			if (L1HauntedHouse.getInstance().getHauntedHouseStatus() == L1HauntedHouse.STATUS_PLAYING) {
-				int winnersCount = L1HauntedHouse.getInstance().getWinnersCount();
-				int goalCount = L1HauntedHouse.getInstance().getGoalCount();
+				final int winnersCount = L1HauntedHouse.getInstance().getWinnersCount();
+				final int goalCount = L1HauntedHouse.getInstance().getGoalCount();
 				if (winnersCount == goalCount + 1) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(49280); // 勇者的南瓜袋子(铜)
-					int count = 1;
+					final L1ItemInstance item = ItemTable.getInstance().createItem(49280); // 勇者的南瓜袋子(铜)
+					final int count = 1;
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
 							item.setCount(count);
@@ -84,7 +84,7 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 					else if (winnersCount == 2) {
 						item = ItemTable.getInstance().createItem(49279); // 勇者的南瓜袋子(银)
 					}
-					int count = 1;
+					final int count = 1;
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
 							item.setCount(count);
@@ -92,7 +92,7 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 							pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
 						}
 					}
-					L1SkillUse l1skilluse = new L1SkillUse();
+					final L1SkillUse l1skilluse = new L1SkillUse();
 					l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 					L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
 				}

@@ -28,9 +28,9 @@ public class L1Kick implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			L1PcInstance target = L1World.getInstance().getPlayer(arg);
+			final L1PcInstance target = L1World.getInstance().getPlayer(arg);
 
 			if (target != null) {
 				pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(target.getName()).append("已被您强制踢除游戏。").toString()));
@@ -40,7 +40,7 @@ public class L1Kick implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage("您指定的该玩家名称不存在。"));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 : " + cmdName + " 玩家名称。"));
 		}
 	}

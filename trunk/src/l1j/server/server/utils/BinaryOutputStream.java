@@ -44,33 +44,33 @@ public class BinaryOutputStream extends OutputStream {
 	}
 
 	@Override
-	public void write(int b) throws IOException {
+	public void write(final int b) throws IOException {
 		_bao.write(b);
 	}
 
-	public void writeByte(byte[] text) {
+	public void writeByte(final byte[] text) {
 		try {
 			if (text != null) {
 				_bao.write(text);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 		}
 	}
 
-	public void writeC(int value) {
+	public void writeC(final int value) {
 		_bao.write(value & 0xff);
 	}
 
-	public void writeD(int value) {
+	public void writeD(final int value) {
 		_bao.write(value & 0xff);
 		_bao.write(value >> 8 & 0xff);
 		_bao.write(value >> 16 & 0xff);
 		_bao.write(value >> 24 & 0xff);
 	}
 
-	public void writeF(double org) {
-		long value = Double.doubleToRawLongBits(org);
+	public void writeF(final double org) {
+		final long value = Double.doubleToRawLongBits(org);
 		_bao.write((int) (value & 0xff));
 		_bao.write((int) (value >> 8 & 0xff));
 		_bao.write((int) (value >> 16 & 0xff));
@@ -81,26 +81,26 @@ public class BinaryOutputStream extends OutputStream {
 		_bao.write((int) (value >> 56 & 0xff));
 	}
 
-	public void writeH(int value) {
+	public void writeH(final int value) {
 		_bao.write(value & 0xff);
 		_bao.write(value >> 8 & 0xff);
 	}
 
-	public void writeL(long value) {
+	public void writeL(final long value) {
 		_bao.write((int) (value & 0xff));
 	}
 
-	public void writeP(int value) {
+	public void writeP(final int value) {
 		_bao.write(value);
 	}
 
-	public void writeS(String text) {
+	public void writeS(final String text) {
 		try {
 			if (text != null) {
 				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 		}
 
 		_bao.write(0);

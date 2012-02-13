@@ -35,7 +35,7 @@ public class S_Dexup extends ServerBasePacket {
 	 * @param time
 	 *            时间
 	 */
-	public S_Dexup(L1PcInstance pc, int type, int time) {
+	public S_Dexup(final L1PcInstance pc, final int type, final int time) {
 		writeC(Opcodes.S_OPCODE_DEXUP);
 		writeH(time);
 		writeC(pc.getDex());

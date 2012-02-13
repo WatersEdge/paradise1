@@ -31,15 +31,15 @@ public class L1Summon implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
+			final StringTokenizer tok = new StringTokenizer(arg);
 			String nameid = tok.nextToken();
 			int npcid = 0;
 			try {
 				npcid = Integer.parseInt(nameid);
 			}
-			catch (NumberFormatException e) {
+			catch (final NumberFormatException e) {
 				npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameid);
 				if (npcid == 0) {
 					pc.sendPackets(new S_SystemMessage("找不到符合条件的NPC。"));
@@ -50,15 +50,15 @@ public class L1Summon implements L1CommandExecutor {
 			if (tok.hasMoreTokens()) {
 				count = Integer.parseInt(tok.nextToken());
 			}
-			L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
+			final L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
 			for (int i = 0; i < count; i++) {
-				L1SummonInstance summonInst = new L1SummonInstance(npc, pc);
+				final L1SummonInstance summonInst = new L1SummonInstance(npc, pc);
 				summonInst.setPetcost(0);
 			}
 			nameid = NpcTable.getInstance().getTemplate(npcid).get_name();
 			pc.sendPackets(new S_SystemMessage(nameid + "(ID:" + npcid + ") (" + count + ") 召唤了。"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入" + cmdName + " npcid|name [数量] 。"));
 		}
 	}

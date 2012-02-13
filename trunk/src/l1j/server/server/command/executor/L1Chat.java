@@ -32,11 +32,11 @@ public class L1Chat implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
+			final StringTokenizer st = new StringTokenizer(arg);
 			if (st.hasMoreTokens()) {
-				String flag = st.nextToken();
+				final String flag = st.nextToken();
 				String msg;
 				if (flag.compareToIgnoreCase("on") == 0) {
 					L1World.getInstance().set_worldChatElabled(true);
@@ -62,7 +62,7 @@ public class L1Chat implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage(msg));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " [on|off]"));
 		}
 	}

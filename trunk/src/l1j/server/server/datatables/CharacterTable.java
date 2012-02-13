@@ -55,7 +55,7 @@ public class CharacterTable {
 			pstm = con.prepareStatement("UPDATE characters SET OnlineStatus=0");
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -69,7 +69,7 @@ public class CharacterTable {
 	 * @param name
 	 *            名称
 	 */
-	public static boolean doesCharNameExist(String name) {
+	public static boolean doesCharNameExist(final String name) {
 		boolean result = true;
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
@@ -81,7 +81,7 @@ public class CharacterTable {
 			rs = pstm.executeQuery();
 			result = rs.next();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("could not check existing charname:" + e.getMessage());
 		} finally {
 			SQLUtil.close(rs);
@@ -103,7 +103,7 @@ public class CharacterTable {
 	 * 
 	 * @param pc
 	 */
-	public static void saveCharStatus(L1PcInstance pc) {
+	public static void saveCharStatus(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -118,7 +118,7 @@ public class CharacterTable {
 			pstm.setInt(7, pc.getId());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -131,7 +131,7 @@ public class CharacterTable {
 	 * 
 	 * @param pc
 	 */
-	public static void updateOnlineStatus(L1PcInstance pc) {
+	public static void updateOnlineStatus(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -141,7 +141,7 @@ public class CharacterTable {
 			pstm.setInt(2, pc.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -154,7 +154,7 @@ public class CharacterTable {
 	 * 
 	 * @param targetId
 	 */
-	public static void updatePartnerId(int targetId) {
+	public static void updatePartnerId(final int targetId) {
 		updatePartnerId(targetId, 0);
 	}
 
@@ -164,7 +164,7 @@ public class CharacterTable {
 	 * @param targetId
 	 * @param partnerId
 	 */
-	public static void updatePartnerId(int targetId, int partnerId) {
+	public static void updatePartnerId(final int targetId, final int partnerId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -174,7 +174,7 @@ public class CharacterTable {
 			pstm.setInt(2, targetId);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -197,7 +197,7 @@ public class CharacterTable {
 	 * @param charName
 	 *            角色名称
 	 */
-	public void deleteCharacter(String accountName, String charName) throws Exception {
+	public void deleteCharacter(final String accountName, final String charName) throws Exception {
 		// 也许，不需要同步
 		_charStorage.deleteCharacter(accountName, charName);
 		if (_charNameList.containsKey(charName)) {
@@ -236,7 +236,7 @@ public class CharacterTable {
 				_charNameList.put(name, cn);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -251,13 +251,13 @@ public class CharacterTable {
 	 * @param charName
 	 *            角色名称
 	 */
-	public L1PcInstance loadCharacter(String charName) throws Exception {
+	public L1PcInstance loadCharacter(final String charName) throws Exception {
 		L1PcInstance pc = null;
 		try {
 			pc = restoreCharacter(charName);
 
 			// 取回角色所在地图ID
-			L1Map map = L1WorldMap.getInstance().getMap(pc.getMapId());
+			final L1Map map = L1WorldMap.getInstance().getMap(pc.getMapId());
 
 			// 角色在地图不可用位置
 			if (!map.isInMap(pc.getX(), pc.getY())) {
@@ -271,7 +271,7 @@ public class CharacterTable {
 			 */
 			_log.finest("载入角色: " + pc.getName());
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return pc;
@@ -285,8 +285,8 @@ public class CharacterTable {
 	 *            角色名称
 	 * @return pc
 	 */
-	public L1PcInstance restoreCharacter(String charName) throws Exception {
-		L1PcInstance pc = _charStorage.loadCharacter(charName);
+	public L1PcInstance restoreCharacter(final String charName) throws Exception {
+		final L1PcInstance pc = _charStorage.loadCharacter(charName);
 		return pc;
 	}
 
@@ -295,7 +295,7 @@ public class CharacterTable {
 	 * 
 	 * @param pc
 	 */
-	public void restoreInventory(L1PcInstance pc) {
+	public void restoreInventory(final L1PcInstance pc) {
 		pc.getInventory().loadItems(); // 加载背包道具
 		pc.getDwarfInventory().loadItems(); // 加载个人仓库道具
 		pc.getDwarfForElfInventory().loadItems(); // 加载精灵仓库道具
@@ -306,7 +306,7 @@ public class CharacterTable {
 	 * 
 	 * @param pc
 	 */
-	public void storeCharacter(L1PcInstance pc) throws Exception {
+	public void storeCharacter(final L1PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.storeCharacter(pc);
 			_log.finest("储存角色: " + pc.getName());
@@ -318,12 +318,12 @@ public class CharacterTable {
 	 * 
 	 * @param pc
 	 */
-	public void storeNewCharacter(L1PcInstance pc) throws Exception {
+	public void storeNewCharacter(final L1PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.createCharacter(pc);
-			String name = pc.getName();
+			final String name = pc.getName();
 			if (!_charNameList.containsKey(name)) {
-				L1CharName cn = new L1CharName();
+				final L1CharName cn = new L1CharName();
 				cn.setName(name);
 				cn.setId(pc.getId());
 				_charNameList.put(name, cn);

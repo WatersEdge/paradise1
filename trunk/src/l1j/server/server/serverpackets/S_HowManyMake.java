@@ -19,7 +19,7 @@ import java.io.IOException;
 import l1j.server.server.Opcodes;
 
 public class S_HowManyMake extends ServerBasePacket {
-	public S_HowManyMake(int objId, int max, String htmlId) {
+	public S_HowManyMake(final int objId, final int max, final String htmlId) {
 		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 		writeD(objId);
 		writeD(0); // ?

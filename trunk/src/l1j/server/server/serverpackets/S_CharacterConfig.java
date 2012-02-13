@@ -44,7 +44,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 	 * 
 	 * @param objId
 	 */
-	public S_CharacterConfig(int objectId) {
+	public S_CharacterConfig(final int objectId) {
 		buildPacket(objectId);
 	}
 
@@ -61,7 +61,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 		return S_CHARACTER_CONFIG;
 	}
 
-	private void buildPacket(int objectId) {
+	private void buildPacket(final int objectId) {
 		int length = 0;
 		byte data[] = null;
 		Connection con = null;
@@ -77,7 +77,7 @@ public class S_CharacterConfig extends ServerBasePacket {
 				data = rs.getBytes(3);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -39,7 +39,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 
 	private final L1Clan _clan;
 
-	public L1DwarfForClanInventory(L1Clan clan) {
+	public L1DwarfForClanInventory(final L1Clan clan) {
 		_clan = clan;
 	}
 
@@ -53,7 +53,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setString(1, _clan.getClanName());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -63,7 +63,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 
 	// ＤＢのclan_warehouseから削除
 	@Override
-	public synchronized void deleteItem(L1ItemInstance item) {
+	public synchronized void deleteItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -72,7 +72,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setInt(1, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -83,7 +83,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 
 	// ＤＢのclan_warehouseへ登録
 	@Override
-	public synchronized void insertItem(L1ItemInstance item) {
+	public synchronized void insertItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -116,7 +116,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -136,11 +136,11 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setString(1, _clan.getClanName());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1ItemInstance item = new L1ItemInstance();
-				int objectId = rs.getInt("id");
+				final L1ItemInstance item = new L1ItemInstance();
+				final int objectId = rs.getInt("id");
 				item.setId(objectId);
-				int itemId = rs.getInt("item_id");
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(itemId);
+				final int itemId = rs.getInt("item_id");
+				final L1Item itemTemplate = ItemTable.getInstance().getTemplate(itemId);
 				if (itemTemplate == null) {
 					throw new NullPointerException("item_id=" + itemId + " not found");
 				}
@@ -174,7 +174,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 				L1World.getInstance().storeObject(item);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -185,7 +185,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 
 	// ＤＢのclan_warehouseを更新
 	@Override
-	public synchronized void updateItem(L1ItemInstance item) {
+	public synchronized void updateItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -196,7 +196,7 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.execute();
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

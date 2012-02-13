@@ -41,7 +41,7 @@ public abstract class L1ArmorSet {
 	static {
 		L1ArmorSetImpl impl;
 
-		for (L1ArmorSets armorSets : ArmorSetTable.getInstance().getAllList()) {
+		for (final L1ArmorSets armorSets : ArmorSetTable.getInstance().getAllList()) {
 			try {
 
 				impl = new L1ArmorSetImpl(getArray(armorSets.getSets(), ","));
@@ -54,7 +54,7 @@ public abstract class L1ArmorSet {
 				impl.addEffect(new HitDmgModifierEffect(armorSets.getHitModifier(), armorSets.getDmgModifier(), armorSets.getBowHitModifier(), armorSets.getBowDmgModifier(), armorSets.getSp()));
 				_allSet.add(impl);
 			}
-			catch (Exception ex) {
+			catch (final Exception ex) {
 				ex.printStackTrace();
 			}
 		}
@@ -64,11 +64,11 @@ public abstract class L1ArmorSet {
 		return _allSet;
 	}
 
-	private static int[] getArray(String s, String sToken) {
-		StringTokenizer st = new StringTokenizer(s, sToken);
-		int size = st.countTokens();
+	private static int[] getArray(final String s, final String sToken) {
+		final StringTokenizer st = new StringTokenizer(s, sToken);
+		final int size = st.countTokens();
 		String temp = null;
-		int[] array = new int[size];
+		final int[] array = new int[size];
 		for (int i = 0; i < size; i++) {
 			temp = st.nextToken();
 			array[i] = Integer.parseInt(temp);
@@ -100,7 +100,7 @@ class AcHpMpBonusEffect implements L1ArmorSetEffect {
 
 	private final int _addMr;
 
-	public AcHpMpBonusEffect(int ac, int addHp, int addMp, int regenHp, int regenMp, int addMr) {
+	public AcHpMpBonusEffect(final int ac, final int addHp, final int addMp, final int regenHp, final int regenMp, final int addMr) {
 		_ac = ac;
 		_addHp = addHp;
 		_addMp = addMp;
@@ -110,7 +110,7 @@ class AcHpMpBonusEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
+	public void cancelEffect(final L1PcInstance pc) {
 		pc.addAc(-_ac);
 		pc.addMaxHp(-_addHp);
 		pc.addMaxMp(-_addMp);
@@ -120,7 +120,7 @@ class AcHpMpBonusEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
+	public void giveEffect(final L1PcInstance pc) {
 		pc.addAc(_ac);
 		pc.addMaxHp(_addHp);
 		pc.addMaxMp(_addMp);
@@ -140,7 +140,7 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 
 	private final int _defenseEarth;
 
-	public DefenseBonusEffect(int defenseWater, int defenseWind, int defenseFire, int defenseEarth) {
+	public DefenseBonusEffect(final int defenseWater, final int defenseWind, final int defenseFire, final int defenseEarth) {
 		_defenseWater = defenseWater;
 		_defenseWind = defenseWind;
 		_defenseFire = defenseFire;
@@ -149,7 +149,7 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 
 	// @Override
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
+	public void cancelEffect(final L1PcInstance pc) {
 		pc.addWater(-_defenseWater);
 		pc.addWind(-_defenseWind);
 		pc.addFire(-_defenseFire);
@@ -158,7 +158,7 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 
 	// @Override
 	@Override
-	public void giveEffect(L1PcInstance pc) {
+	public void giveEffect(final L1PcInstance pc) {
 		pc.addWater(_defenseWater);
 		pc.addWind(_defenseWind);
 		pc.addFire(_defenseFire);
@@ -178,7 +178,7 @@ class HitDmgModifierEffect implements L1ArmorSetEffect {
 
 	private final int _sp;
 
-	public HitDmgModifierEffect(int hitModifier, int dmgModifier, int bowHitModifier, int bowDmgModifier, int sp) {
+	public HitDmgModifierEffect(final int hitModifier, final int dmgModifier, final int bowHitModifier, final int bowDmgModifier, final int sp) {
 		_hitModifier = hitModifier;
 		_dmgModifier = dmgModifier;
 		_bowHitModifier = bowHitModifier;
@@ -188,7 +188,7 @@ class HitDmgModifierEffect implements L1ArmorSetEffect {
 
 	// @Override
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
+	public void cancelEffect(final L1PcInstance pc) {
 		pc.addHitModifierByArmor(-_hitModifier);
 		pc.addDmgModifierByArmor(-_dmgModifier);
 		pc.addBowHitModifierByArmor(-_bowHitModifier);
@@ -198,7 +198,7 @@ class HitDmgModifierEffect implements L1ArmorSetEffect {
 
 	// @Override
 	@Override
-	public void giveEffect(L1PcInstance pc) {
+	public void giveEffect(final L1PcInstance pc) {
 		pc.addHitModifierByArmor(_hitModifier);
 		pc.addDmgModifierByArmor(_dmgModifier);
 		pc.addBowHitModifierByArmor(_bowHitModifier);
@@ -218,37 +218,37 @@ class L1ArmorSetImpl extends L1ArmorSet {
 
 	private final List<L1ArmorSetEffect> _effects;
 
-	protected L1ArmorSetImpl(int ids[]) {
+	protected L1ArmorSetImpl(final int ids[]) {
 		_ids = ids;
 		_effects = Lists.newList();
 	}
 
-	public void addEffect(L1ArmorSetEffect effect) {
+	public void addEffect(final L1ArmorSetEffect effect) {
 		_effects.add(effect);
 	}
 
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
-		for (L1ArmorSetEffect effect : _effects) {
+	public void cancelEffect(final L1PcInstance pc) {
+		for (final L1ArmorSetEffect effect : _effects) {
 			effect.cancelEffect(pc);
 		}
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
-		for (L1ArmorSetEffect effect : _effects) {
+	public void giveEffect(final L1PcInstance pc) {
+		for (final L1ArmorSetEffect effect : _effects) {
 			effect.giveEffect(pc);
 		}
 	}
 
 	@Override
-	public boolean isEquippedRingOfArmorSet(L1PcInstance pc) {
-		L1PcInventory pcInventory = pc.getInventory();
+	public boolean isEquippedRingOfArmorSet(final L1PcInstance pc) {
+		final L1PcInventory pcInventory = pc.getInventory();
 		L1ItemInstance armor = null;
 		boolean isSetContainRing = false;
 
 		// セット装備にリングが含まれているか調べる
-		for (int id : _ids) {
+		for (final int id : _ids) {
 			armor = pcInventory.findItemId(id);
 			if ((armor.getItem().getType2() == 2) && (armor.getItem().getType() == 9)) { // ring
 				isSetContainRing = true;
@@ -258,7 +258,7 @@ class L1ArmorSetImpl extends L1ArmorSet {
 
 		// リングを2つ装備していて、それが両方セット装備か調べる
 		if ((armor != null) && isSetContainRing) {
-			int itemId = armor.getItem().getItemId();
+			final int itemId = armor.getItem().getItemId();
 			if (pcInventory.getTypeEquipped(2, 9) == 2) {
 				L1ItemInstance ring[] = new L1ItemInstance[2];
 				ring = pcInventory.getRingEquipped();
@@ -271,8 +271,8 @@ class L1ArmorSetImpl extends L1ArmorSet {
 	}
 
 	@Override
-	public boolean isPartOfSet(int id) {
-		for (int i : _ids) {
+	public boolean isPartOfSet(final int id) {
+		for (final int i : _ids) {
 			if (id == i) {
 				return true;
 			}
@@ -281,11 +281,11 @@ class L1ArmorSetImpl extends L1ArmorSet {
 	}
 
 	@Override
-	public final boolean isValid(L1PcInstance pc) {
+	public final boolean isValid(final L1PcInstance pc) {
 		return pc.getInventory().checkEquipped(_ids);
 	}
 
-	public void removeEffect(L1ArmorSetEffect effect) {
+	public void removeEffect(final L1ArmorSetEffect effect) {
 		_effects.remove(effect);
 	}
 
@@ -294,13 +294,13 @@ class L1ArmorSetImpl extends L1ArmorSet {
 class PolymorphEffect implements L1ArmorSetEffect {
 	private int _gfxId;
 
-	public PolymorphEffect(int gfxId) {
+	public PolymorphEffect(final int gfxId) {
 		_gfxId = gfxId;
 	}
 
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
+	public void cancelEffect(final L1PcInstance pc) {
+		final int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
@@ -317,8 +317,8 @@ class PolymorphEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
-		int awakeSkillId = pc.getAwakeSkillId();
+	public void giveEffect(final L1PcInstance pc) {
+		final int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
@@ -337,10 +337,10 @@ class PolymorphEffect implements L1ArmorSetEffect {
 		L1PolyMorph.doPoly(pc, _gfxId, 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 	}
 
-	private boolean isRemainderOfCharge(L1PcInstance pc) {
+	private boolean isRemainderOfCharge(final L1PcInstance pc) {
 		boolean isRemainderOfCharge = false;
 		if (pc.getInventory().checkItem(20383, 1)) { // 军马头盔
-			L1ItemInstance item = pc.getInventory().findItemId(20383);
+			final L1ItemInstance item = pc.getInventory().findItemId(20383);
 			if (item != null) {
 				if (item.getChargeCount() != 0) {
 					isRemainderOfCharge = true;
@@ -365,7 +365,7 @@ class StatBonusEffect implements L1ArmorSetEffect {
 
 	private final int _intl;
 
-	public StatBonusEffect(int str, int dex, int con, int wis, int cha, int intl) {
+	public StatBonusEffect(final int str, final int dex, final int con, final int wis, final int cha, final int intl) {
 		_str = str;
 		_dex = dex;
 		_con = con;
@@ -375,7 +375,7 @@ class StatBonusEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void cancelEffect(L1PcInstance pc) {
+	public void cancelEffect(final L1PcInstance pc) {
 		pc.addStr((byte) -_str);
 		pc.addDex((byte) -_dex);
 		pc.addCon((byte) -_con);
@@ -385,7 +385,7 @@ class StatBonusEffect implements L1ArmorSetEffect {
 	}
 
 	@Override
-	public void giveEffect(L1PcInstance pc) {
+	public void giveEffect(final L1PcInstance pc) {
 		pc.addStr((byte) _str);
 		pc.addDex((byte) _dex);
 		pc.addCon((byte) _con);

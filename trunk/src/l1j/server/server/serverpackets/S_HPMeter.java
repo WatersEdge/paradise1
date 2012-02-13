@@ -32,7 +32,7 @@ public class S_HPMeter extends ServerBasePacket {
 	 * @param objId
 	 * @param hpRatio
 	 */
-	public S_HPMeter(int objId, int hpRatio) {
+	public S_HPMeter(final int objId, final int hpRatio) {
 		buildPacket(objId, hpRatio);
 	}
 
@@ -41,8 +41,8 @@ public class S_HPMeter extends ServerBasePacket {
 	 * 
 	 * @param cha
 	 */
-	public S_HPMeter(L1Character cha) {
-		int objId = cha.getId();
+	public S_HPMeter(final L1Character cha) {
+		final int objId = cha.getId();
 		int hpRatio = 100;
 		if (0 < cha.getMaxHp()) {
 			hpRatio = 100 * cha.getCurrentHp() / cha.getMaxHp();
@@ -65,7 +65,7 @@ public class S_HPMeter extends ServerBasePacket {
 		return _typeString;
 	}
 
-	private void buildPacket(int objId, int hpRatio) {
+	private void buildPacket(final int objId, final int hpRatio) {
 		writeC(Opcodes.S_OPCODE_HPMETER);
 		writeD(objId);
 		writeC(hpRatio);

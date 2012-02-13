@@ -67,11 +67,11 @@ public class LightSpawnTable {
 					break;
 				}
 
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(rs.getInt(2));
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(rs.getInt(2));
 				if (l1npc != null) {
-					String s = l1npc.getImpl();
-					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-					Object parameters[] = { l1npc };
+					final String s = l1npc.getImpl();
+					final Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
+					final Object parameters[] = { l1npc };
 					L1FieldObjectInstance field = (L1FieldObjectInstance) constructor.newInstance(parameters);
 					field = (L1FieldObjectInstance) constructor.newInstance(parameters);
 					field.setId(IdFactory.getInstance().nextId());
@@ -88,25 +88,25 @@ public class LightSpawnTable {
 				}
 			} while (true);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (SecurityException e) {
+		catch (final SecurityException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (ClassNotFoundException e) {
+		catch (final ClassNotFoundException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (IllegalArgumentException e) {
+		catch (final IllegalArgumentException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (InstantiationException e) {
+		catch (final InstantiationException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (IllegalAccessException e) {
+		catch (final IllegalAccessException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (InvocationTargetException e) {
+		catch (final InvocationTargetException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

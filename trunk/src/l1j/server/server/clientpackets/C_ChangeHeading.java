@@ -28,11 +28,11 @@ public class C_ChangeHeading extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_ChangeHeading.class.getName());
 
-	public C_ChangeHeading(byte[] decrypt, ClientThread client) {
+	public C_ChangeHeading(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		int heading = readC();
+		final int heading = readC();
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
 		pc.setHeading(heading);
 

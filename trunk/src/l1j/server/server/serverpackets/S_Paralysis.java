@@ -38,7 +38,7 @@ public class S_Paralysis extends ServerBasePacket {
 	/** 解除传送锁定状态 */
 	public static final int TYPE_TELEPORT_UNLOCK = 7;
 
-	public S_Paralysis(int type, boolean flag) {
+	public S_Paralysis(final int type, final boolean flag) {
 		writeC(Opcodes.S_OPCODE_PARALYSIS);
 		if (type == TYPE_PARALYSIS) // 你的身体完全麻痹了。
 		{

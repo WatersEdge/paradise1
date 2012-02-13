@@ -33,24 +33,24 @@ public class FaceToFace {
 	 * 
 	 * @param pc
 	 */
-	public static L1PcInstance faceToFace(L1PcInstance pc) {
+	public static L1PcInstance faceToFace(final L1PcInstance pc) {
 
 		// X坐标
-		int pcX = pc.getX();
+		final int pcX = pc.getX();
 		// Y坐标
-		int pcY = pc.getY();
+		final int pcY = pc.getY();
 		// 面向
-		int pcHeading = pc.getHeading();
-		List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(pc, 1);
+		final int pcHeading = pc.getHeading();
+		final List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(pc, 1);
 
 		if (players.size() == 0) { // 1格内无物件 (PC)
 			pc.sendPackets(new S_ServerMessage(93)); // \f1你注视的地方没有人。
 			return null;
 		}
-		for (L1PcInstance target : players) {
-			int targetX = target.getX();
-			int targetY = target.getY();
-			int targetHeading = target.getHeading();
+		for (final L1PcInstance target : players) {
+			final int targetX = target.getX();
+			final int targetY = target.getY();
+			final int targetHeading = target.getHeading();
 			if ((pcHeading == 0) && (pcX == targetX) && (pcY == (targetY + 1))) {
 				if (targetHeading == 4) {
 					return target;

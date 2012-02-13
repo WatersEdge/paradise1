@@ -37,7 +37,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1FollowerInstance(L1Npc template, L1NpcInstance target, L1Character master) {
+	public L1FollowerInstance(final L1Npc template, final L1NpcInstance target, final L1Character master) {
 		super(template);
 
 		_master = master;
@@ -56,7 +56,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			onPerceive(pc);
 		}
 
@@ -73,14 +73,14 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	@Override
 	public boolean noTarget() {
-		for (L1Object object : L1World.getInstance().getVisibleObjects(this)) {
+		for (final L1Object object : L1World.getInstance().getVisibleObjects(this)) {
 			if (object instanceof L1NpcInstance) {
-				L1NpcInstance npc = (L1NpcInstance) object;
+				final L1NpcInstance npc = (L1NpcInstance) object;
 				if ((npc.getNpcTemplate().get_npcId() == 70740 // 公爵的士兵
 						)
 						&& (getNpcTemplate().get_npcId() == 71093)) { // 调查员
 					setParalyzed(true);
-					L1PcInstance pc = (L1PcInstance) _master;
+					final L1PcInstance pc = (L1PcInstance) _master;
 					if (!pc.getInventory().checkItem(40593)) {
 						createNewItem(pc, 40593, 1);
 					}
@@ -91,7 +91,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 						)
 						&& (getNpcTemplate().get_npcId() == 71094)) { // 安迪亚
 					setParalyzed(true);
-					L1PcInstance pc = (L1PcInstance) _master;
+					final L1PcInstance pc = (L1PcInstance) _master;
 					if (!pc.getInventory().checkItem(40582) && !pc.getInventory().checkItem(40583)) { // 身上无安迪亚之袋、安迪亚之信
 						createNewItem(pc, 40582, 1);
 					}
@@ -102,7 +102,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 						)
 						&& (getNpcTemplate().get_npcId() == 71062)) { // カミット
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						L1PcInstance pc = (L1PcInstance) _master;
+						final L1PcInstance pc = (L1PcInstance) _master;
 						if (((pc.getX() >= 32448) && (pc.getX() <= 32452)) // カドモス周辺座标
 								&& ((pc.getY() >= 33048) && (pc.getY() <= 33052)) && (pc.getMapId() == 440)) {
 							setParalyzed(true);
@@ -120,7 +120,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 						&& (getNpcTemplate().get_npcId() == 71075)) {
 					// 疲れ果てたリザードマンファイター
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						L1PcInstance pc = (L1PcInstance) _master;
+						final L1PcInstance pc = (L1PcInstance) _master;
 						if (((pc.getX() >= 32731) && (pc.getX() <= 32735)) // リザードマン长老周辺座标
 								&& ((pc.getY() >= 32854) && (pc.getY() <= 32858)) && (pc.getMapId() == 480)) {
 							setParalyzed(true);
@@ -137,7 +137,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 						)
 						&& (getNpcTemplate().get_npcId() == 70957)) { // ロイ
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						L1PcInstance pc = (L1PcInstance) _master;
+						final L1PcInstance pc = (L1PcInstance) _master;
 						if (((pc.getX() >= 32917) && (pc.getX() <= 32921)) // バッシュ周辺座标
 								&& ((pc.getY() >= 32974) && (pc.getY() <= 32978)) && (pc.getMapId() == 410)) {
 							setParalyzed(true);
@@ -150,7 +150,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 				}
 				else if ((npc.getNpcTemplate().get_npcId() == 71114) && (getNpcTemplate().get_npcId() == 81350)) { // 迪嘉勒廷的女间谍
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 15) {
-						L1PcInstance pc = (L1PcInstance) _master;
+						final L1PcInstance pc = (L1PcInstance) _master;
 						if (((pc.getX() >= 32542) && (pc.getX() <= 32585)) && ((pc.getY() >= 32656) && (pc.getY() <= 32698)) && (pc.getMapId() == 400)) {
 							setParalyzed(true);
 							createNewItem(pc, 49163, 1);
@@ -179,13 +179,13 @@ public class L1FollowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		if (attack.calcHit()) {
 			attack.calcDamage();
 			attack.calcStaffOfMana();
@@ -197,13 +197,13 @@ public class L1FollowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_FollowerPack(this, perceivedFrom));
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance player) {
+	public void onTalkAction(final L1PcInstance player) {
 		if (isDead()) {
 			return;
 		}
@@ -258,13 +258,13 @@ public class L1FollowerInstance extends L1NpcInstance {
 
 	}
 
-	public void spawn(int npcId, int X, int Y, int H, short Map) {
-		L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId);
+	public void spawn(final int npcId, final int X, final int Y, final int H, final short Map) {
+		final L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId);
 		if (l1npc != null) {
 			L1NpcInstance mob = null;
 			try {
-				String implementationName = l1npc.getImpl();
-				Constructor<?> _constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString()).getConstructors()[0];
+				final String implementationName = l1npc.getImpl();
+				final Constructor<?> _constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString()).getConstructors()[0];
 				mob = (L1NpcInstance) _constructor.newInstance(new Object[] { l1npc });
 				mob.setId(IdFactory.getInstance().nextId());
 				mob.setX(X);
@@ -275,20 +275,20 @@ public class L1FollowerInstance extends L1NpcInstance {
 				mob.setHeading(H);
 				L1World.getInstance().storeObject(mob);
 				L1World.getInstance().addVisibleObject(mob);
-				L1Object object = L1World.getInstance().findObject(mob.getId());
-				L1QuestInstance newnpc = (L1QuestInstance) object;
+				final L1Object object = L1World.getInstance().findObject(mob.getId());
+				final L1QuestInstance newnpc = (L1QuestInstance) object;
 				newnpc.onNpcAI();
 				newnpc.turnOnOffLight();
 				newnpc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void createNewItem(L1PcInstance pc, int item_id, int count) {
-		L1ItemInstance item = ItemTable.getInstance().createItem(item_id);
+	private void createNewItem(final L1PcInstance pc, final int item_id, final int count) {
+		final L1ItemInstance item = ItemTable.getInstance().createItem(item_id);
 		item.setCount(count);
 		if (item != null) {
 			if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {

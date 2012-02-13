@@ -29,7 +29,7 @@ public class S_AttackMissPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AttackMissPacket(int attackId, int targetId) {
+	public S_AttackMissPacket(final int attackId, final int targetId) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(1);
 		writeD(attackId);
@@ -39,7 +39,7 @@ public class S_AttackMissPacket extends ServerBasePacket {
 		writeD(0);
 	}
 
-	public S_AttackMissPacket(int attackId, int targetId, int actId) {
+	public S_AttackMissPacket(final int attackId, final int targetId, final int actId) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(actId);
 		writeD(attackId);
@@ -49,7 +49,7 @@ public class S_AttackMissPacket extends ServerBasePacket {
 		writeD(0);
 	}
 
-	public S_AttackMissPacket(L1Character attacker, int targetId) {
+	public S_AttackMissPacket(final L1Character attacker, final int targetId) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(1);
 		writeD(attacker.getId());
@@ -60,7 +60,7 @@ public class S_AttackMissPacket extends ServerBasePacket {
 		writeC(0);
 	}
 
-	public S_AttackMissPacket(L1Character attacker, int targetId, int actId) {
+	public S_AttackMissPacket(final L1Character attacker, final int targetId, final int actId) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(actId);
 		writeD(attacker.getId());

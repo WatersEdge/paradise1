@@ -31,7 +31,7 @@ public class Lists {
 			super();
 		}
 
-		public SerializableArrayList(int capacity) {
+		public SerializableArrayList(final int capacity) {
 			super(capacity);
 		}
 	}
@@ -40,7 +40,7 @@ public class Lists {
 		return new ArrayList<E>();
 	}
 
-	public static <E> ArrayList<E> newArrayList(Collection<? extends E> c) {
+	public static <E> ArrayList<E> newArrayList(final Collection<? extends E> c) {
 		return new ArrayList<E>(c);
 	}
 
@@ -48,7 +48,7 @@ public class Lists {
 		return new CopyOnWriteArrayList<E>();
 	}
 
-	public static <E> List<E> newConcurrentList(List<E> from) {
+	public static <E> List<E> newConcurrentList(final List<E> from) {
 		return new CopyOnWriteArrayList<E>(from);
 	}
 
@@ -56,15 +56,15 @@ public class Lists {
 		return new FastTable<E>();
 	}
 
-	public static <E> List<E> newList(Collection<E> from) {
+	public static <E> List<E> newList(final Collection<E> from) {
 		return new FastTable<E>(from);
 	}
 
-	public static <E> List<E> newList(int n) {
+	public static <E> List<E> newList(final int n) {
 		return new FastTable<E>(n);
 	}
 
-	public static <E> List<E> newList(Set<E> from) {
+	public static <E> List<E> newList(final Set<E> from) {
 		return new FastTable<E>(from);
 	}
 
@@ -72,7 +72,7 @@ public class Lists {
 		return new SerializableArrayList<E>();
 	}
 
-	public static <E> List<E> newSerializableList(int n) {
+	public static <E> List<E> newSerializableList(final int n) {
 		return new SerializableArrayList<E>(n);
 	}
 }

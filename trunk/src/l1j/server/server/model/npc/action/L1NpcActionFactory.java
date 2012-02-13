@@ -40,26 +40,26 @@ public class L1NpcActionFactory {
 			_actions.put("SetQuest", loadConstructor(L1NpcSetQuestAction.class));
 			_actions.put("Teleport", loadConstructor(L1NpcTeleportAction.class));
 		}
-		catch (NoSuchMethodException e) {
+		catch (final NoSuchMethodException e) {
 			_log.log(Level.SEVERE, "NpcAction类加载失败", e);
 		}
 	}
 
-	public static L1NpcAction newAction(Element element) {
+	public static L1NpcAction newAction(final Element element) {
 		try {
-			Constructor<? extends L1NpcXmlAction> con = _actions.get(element.getNodeName());
+			final Constructor<? extends L1NpcXmlAction> con = _actions.get(element.getNodeName());
 			return con.newInstance(element);
 		}
-		catch (NullPointerException e) {
+		catch (final NullPointerException e) {
 			_log.warning(element.getNodeName() + " 未定义的NPC动作.");
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "NpcAction类加载失败", e);
 		}
 		return null;
 	}
 
-	private static Constructor<? extends L1NpcXmlAction> loadConstructor(Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
+	private static Constructor<? extends L1NpcXmlAction> loadConstructor(final Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
 		return c.getConstructor(new Class[] { Element.class });
 	}
 }

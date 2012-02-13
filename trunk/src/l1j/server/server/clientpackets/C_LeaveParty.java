@@ -27,10 +27,10 @@ public class C_LeaveParty extends ClientBasePacket {
 
 	private static final String C_LEAVE_PARTY = "[C] C_LeaveParty";
 
-	public C_LeaveParty(byte decrypt[], ClientThread client) throws Exception {
+	public C_LeaveParty(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
 
-		L1PcInstance player = client.getActiveChar();
+		final L1PcInstance player = client.getActiveChar();
 		if (player.isInParty()) // 组队中
 		{
 			player.getParty().leaveMember(player);

@@ -53,7 +53,7 @@ public class MobSkillTable {
 		_initialized = true;
 	}
 
-	public L1MobSkill getTemplate(int id) {
+	public L1MobSkill getTemplate(final int id) {
 		return _mobskills.get(id);
 	}
 
@@ -85,7 +85,7 @@ public class MobSkillTable {
 
 				try {
 					pstm2.setInt(1, mobid);
-					L1MobSkill mobskill = new L1MobSkill(count);
+					final L1MobSkill mobskill = new L1MobSkill(count);
 					mobskill.set_mobid(mobid);
 
 					rs2 = pstm2.executeQuery();
@@ -116,7 +116,7 @@ public class MobSkillTable {
 
 					_mobskills.put(new Integer(mobid), mobskill);
 				}
-				catch (SQLException e1) {
+				catch (final SQLException e1) {
 					_log.log(Level.SEVERE, e1.getLocalizedMessage(), e1);
 
 				} finally {
@@ -125,7 +125,7 @@ public class MobSkillTable {
 			}
 
 		}
-		catch (SQLException e2) {
+		catch (final SQLException e2) {
 			_log.log(Level.SEVERE, "创建mobskill表时出现错误", e2);
 
 		} finally {

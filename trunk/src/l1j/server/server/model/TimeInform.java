@@ -48,27 +48,27 @@ public class TimeInform {
 	public static String getDayOfWeek() {
 		String DayOfWeek = null;
 		switch (rightNow.get(Calendar.DAY_OF_WEEK)) {
-		case 1:// index 1~7 星期日~星期六
-			DayOfWeek = "星期日";
-			break;
-		case 2:
-			DayOfWeek = "星期一";
-			break;
-		case 3:
-			DayOfWeek = "星期二";
-			break;
-		case 4:
-			DayOfWeek = "星期三";
-			break;
-		case 5:
-			DayOfWeek = "星期四";
-			break;
-		case 6:
-			DayOfWeek = "星期五";
-			break;
-		case 7:
-			DayOfWeek = "星期六";
-			break;
+			case 1:// index 1~7 星期日~星期六
+				DayOfWeek = "星期日";
+				break;
+			case 2:
+				DayOfWeek = "星期一";
+				break;
+			case 3:
+				DayOfWeek = "星期二";
+				break;
+			case 4:
+				DayOfWeek = "星期三";
+				break;
+			case 5:
+				DayOfWeek = "星期四";
+				break;
+			case 6:
+				DayOfWeek = "星期五";
+				break;
+			case 7:
+				DayOfWeek = "星期六";
+				break;
 
 		}
 		return DayOfWeek;
@@ -109,18 +109,18 @@ public class TimeInform {
 	 *            0:西元 1:民国
 	 * @return
 	 */
-	public static String getNowTime(int type, int type_year) {
+	public static String getNowTime(final int type, final int type_year) {
 		String NowTime = null;
 		switch (type) {
-		case 1:
-			NowTime = TimeInform.getYear(type_year, 0) + "年 " + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日 " + TimeInform.getDayOfWeek();
-			break;
-		case 2:
-			NowTime = TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
-			break;
-		case 3:
-			NowTime = TimeInform.getYear(type_year, 0) + "年" + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日" + TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
-		default:
+			case 1:
+				NowTime = TimeInform.getYear(type_year, 0) + "年 " + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日 " + TimeInform.getDayOfWeek();
+				break;
+			case 2:
+				NowTime = TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
+				break;
+			case 3:
+				NowTime = TimeInform.getYear(type_year, 0) + "年" + TimeInform.getMonth() + "月" + TimeInform.getDay() + "日" + TimeInform.getHour() + "时" + TimeInform.getMinute() + "分" + TimeInform.getSecond() + "秒";
+			default:
 
 		}
 		return NowTime;
@@ -141,17 +141,21 @@ public class TimeInform {
 	 * @param i
 	 *            = +|- years
 	 */
-	public static String getYear(int type, int i) {
+	public static String getYear(final int type, final int i) {
 		String year = null;
-		if (type == 0)
+		if (type == 0) {
 			year = String.valueOf(rightNow.get(Calendar.YEAR) + i);
-		else if (type == 1)// 西元
+		}
+		else if (type == 1) {
 			year = "西元 " + String.valueOf(rightNow.get(Calendar.YEAR));
-		else if (type == 2)
+		}
+		else if (type == 2) {
 			// 民国
 			year = "民国 " + String.valueOf(rightNow.get(Calendar.YEAR) - 1911);
-		else
+		}
+		else {
 			year = null;
+		}
 		return year;
 	}
 
@@ -160,7 +164,7 @@ public class TimeInform {
 	 */
 	public String getNowTime_Standard() {
 
-		String NowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		final String NowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
 		return NowTime;
 	}

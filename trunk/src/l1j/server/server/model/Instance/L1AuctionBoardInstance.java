@@ -24,12 +24,12 @@ public class L1AuctionBoardInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1AuctionBoardInstance(L1Npc template) {
+	public L1AuctionBoardInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		pc.sendPackets(new S_AuctionBoard(this));
 	}
 

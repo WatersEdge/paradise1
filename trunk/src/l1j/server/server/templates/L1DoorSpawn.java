@@ -15,8 +15,9 @@ import l1j.server.server.utils.collections.Lists;
 
 public class L1DoorSpawn {
 	private static Logger _log = Logger.getLogger(L1DoorSpawn.class.getName());
+
 	public static List<L1DoorSpawn> all() {
-		List<L1DoorSpawn> result = Lists.newArrayList();
+		final List<L1DoorSpawn> result = Lists.newArrayList();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -25,21 +26,21 @@ public class L1DoorSpawn {
 			pstm = con.prepareStatement("SELECT * FROM spawnlist_door");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				int gfxId = rs.getInt("gfxid");
-				int x = rs.getInt("locx");
-				int y = rs.getInt("locy");
-				int mapId = rs.getInt("mapid");
-				int hp = rs.getInt("hp");
-				int keeper = rs.getInt("keeper");
-				boolean isOpening = rs.getBoolean("isOpening");
-				L1DoorGfx gfx = L1DoorGfx.findByGfxId(gfxId);
-				L1DoorSpawn spawn = new L1DoorSpawn(id, gfx, x, y, mapId, hp, keeper, isOpening);
+				final int id = rs.getInt("id");
+				final int gfxId = rs.getInt("gfxid");
+				final int x = rs.getInt("locx");
+				final int y = rs.getInt("locy");
+				final int mapId = rs.getInt("mapid");
+				final int hp = rs.getInt("hp");
+				final int keeper = rs.getInt("keeper");
+				final boolean isOpening = rs.getBoolean("isOpening");
+				final L1DoorGfx gfx = L1DoorGfx.findByGfxId(gfxId);
+				final L1DoorSpawn spawn = new L1DoorSpawn(id, gfx, x, y, mapId, hp, keeper, isOpening);
 				result.add(spawn);
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -48,6 +49,7 @@ public class L1DoorSpawn {
 		}
 		return result;
 	}
+
 	private final int _id;
 	private final L1DoorGfx _gfx;
 	private final int _x;
@@ -59,7 +61,7 @@ public class L1DoorSpawn {
 
 	private final boolean _isOpening;
 
-	public L1DoorSpawn(int id, L1DoorGfx gfx, int x, int y, int mapId, int hp, int keeper, boolean isOpening) {
+	public L1DoorSpawn(final int id, final L1DoorGfx gfx, final int x, final int y, final int mapId, final int hp, final int keeper, final boolean isOpening) {
 		super();
 		_id = id;
 		_gfx = gfx;

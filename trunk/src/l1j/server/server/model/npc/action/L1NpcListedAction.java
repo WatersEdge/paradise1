@@ -27,21 +27,21 @@ import org.w3c.dom.Element;
  */
 public class L1NpcListedAction extends L1NpcXmlAction {
 
-	private List<L1NpcAction> _actions;
+	private final List<L1NpcAction> _actions;
 
-	public L1NpcListedAction(Element element) {
+	public L1NpcListedAction(final Element element) {
 		super(element);
 		_actions = L1NpcXmlParser.listActions(element);
 	}
 
 	@Override
-	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
+	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
 		L1NpcHtml result = null;
-		for (L1NpcAction action : _actions) {
+		for (final L1NpcAction action : _actions) {
 			if (!action.acceptsRequest(actionName, pc, obj)) {
 				continue;
 			}
-			L1NpcHtml r = action.execute(actionName, pc, obj, args);
+			final L1NpcHtml r = action.execute(actionName, pc, obj, args);
 			if (r != null) {
 				result = r;
 			}
@@ -50,13 +50,13 @@ public class L1NpcListedAction extends L1NpcXmlAction {
 	}
 
 	@Override
-	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
+	public L1NpcHtml executeWithAmount(final String actionName, final L1PcInstance pc, final L1Object obj, final int amount) {
 		L1NpcHtml result = null;
-		for (L1NpcAction action : _actions) {
+		for (final L1NpcAction action : _actions) {
 			if (!action.acceptsRequest(actionName, pc, obj)) {
 				continue;
 			}
-			L1NpcHtml r = action.executeWithAmount(actionName, pc, obj, amount);
+			final L1NpcHtml r = action.executeWithAmount(actionName, pc, obj, amount);
 			if (r != null) {
 				result = r;
 			}

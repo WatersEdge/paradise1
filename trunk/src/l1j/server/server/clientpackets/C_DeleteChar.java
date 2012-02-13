@@ -38,13 +38,13 @@ public class C_DeleteChar extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_DeleteChar.class.getName());
 
-	public C_DeleteChar(byte decrypt[], ClientThread client) throws Exception {
+	public C_DeleteChar(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		String name = readS();
+		final String name = readS();
 
 		try {
-			L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
-			if (pc != null && pc.getLevel() >= 30 && Config.DELETE_CHARACTER_AFTER_7DAYS) {
+			final L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
+			if ((pc != null) && (pc.getLevel() >= 30) && Config.DELETE_CHARACTER_AFTER_7DAYS) {
 				if (pc.getType() < 32) {
 					if (pc.isCrown()) {
 						pc.setType(32);
@@ -67,7 +67,7 @@ public class C_DeleteChar extends ClientBasePacket {
 					else if (pc.isIllusionist()) {
 						pc.setType(38);
 					}
-					Timestamp deleteTime = new Timestamp(System.currentTimeMillis() + 604800000); // 7日后
+					final Timestamp deleteTime = new Timestamp(System.currentTimeMillis() + 604800000); // 7日后
 					pc.setDeleteTime(deleteTime);
 					pc.save(); // 储存到资料库中
 				}
@@ -101,14 +101,14 @@ public class C_DeleteChar extends ClientBasePacket {
 			}
 
 			if (pc != null) {
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 				if (clan != null) {
 					clan.delMemberName(name);
 				}
 			}
 			CharacterTable.getInstance().deleteCharacter(client.getAccountName(), name);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			client.close();
 			return;

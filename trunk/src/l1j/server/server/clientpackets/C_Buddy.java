@@ -30,10 +30,10 @@ public class C_Buddy extends ClientBasePacket {
 
 	private static final String C_BUDDY = "[C] C_Buddy";
 
-	public C_Buddy(byte abyte0[], ClientThread clientthread) {
+	public C_Buddy(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
-		L1Buddy buddy = BuddyTable.getInstance().getBuddyTable(pc.getId());
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final L1Buddy buddy = BuddyTable.getInstance().getBuddyTable(pc.getId());
 		pc.sendPackets(new S_Buddy(pc.getId(), buddy));
 	}
 

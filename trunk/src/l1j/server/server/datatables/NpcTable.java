@@ -42,7 +42,7 @@ public class NpcTable {
 	 * @return
 	 */
 	public static Map<String, Integer> buildFamily() {
-		Map<String, Integer> result = Maps.newMap();
+		final Map<String, Integer> result = Maps.newMap();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -52,11 +52,11 @@ public class NpcTable {
 			rs = pstm.executeQuery();
 			int id = 1;
 			while (rs.next()) {
-				String family = rs.getString("family");
+				final String family = rs.getString("family");
 				result.put(family, id++);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -95,8 +95,8 @@ public class NpcTable {
 	 *            依照NPC名称
 	 * @return
 	 */
-	public int findNpcIdByName(String name) {
-		for (L1Npc npc : _npcs.values()) {
+	public int findNpcIdByName(final String name) {
+		for (final L1Npc npc : _npcs.values()) {
 			if (npc.get_name().equals(name)) {
 				return npc.get_npcId();
 			}
@@ -111,8 +111,8 @@ public class NpcTable {
 	 *            依照NPC名称
 	 * @return
 	 */
-	public int findNpcIdByNameWithoutSpace(String name) {
-		for (L1Npc npc : _npcs.values()) {
+	public int findNpcIdByNameWithoutSpace(final String name) {
+		for (final L1Npc npc : _npcs.values()) {
 			if (npc.get_name().replace(" ", "").equals(name)) {
 				return npc.get_npcId();
 			}
@@ -126,7 +126,7 @@ public class NpcTable {
 	 * @param id
 	 * @return
 	 */
-	public L1Npc getTemplate(int id) {
+	public L1Npc getTemplate(final int id) {
 		return _npcs.get(id);
 	}
 
@@ -141,8 +141,8 @@ public class NpcTable {
 	 *            NPCID
 	 * @return
 	 */
-	public L1NpcInstance newNpcInstance(int id) {
-		L1Npc npcTemp = getTemplate(id);
+	public L1NpcInstance newNpcInstance(final int id) {
+		final L1Npc npcTemp = getTemplate(id);
 		if (npcTemp == null) {
 			throw new IllegalArgumentException(String.format("NpcTemplate: %d not found", id));
 		}
@@ -156,12 +156,12 @@ public class NpcTable {
 	 *            NPC资料
 	 * @return
 	 */
-	public L1NpcInstance newNpcInstance(L1Npc template) {
+	public L1NpcInstance newNpcInstance(final L1Npc template) {
 		try {
-			Constructor<?> con = _constructorCache.get(template.getImpl());
+			final Constructor<?> con = _constructorCache.get(template.getImpl());
 			return (L1NpcInstance) con.newInstance(new Object[] { template });
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -173,13 +173,13 @@ public class NpcTable {
 	 * @param implName
 	 * @return
 	 */
-	private Constructor<?> getConstructor(String implName) {
+	private Constructor<?> getConstructor(final String implName) {
 		try {
-			String implFullName = "l1j.server.server.model.Instance." + implName + "Instance";
-			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
+			final String implFullName = "l1j.server.server.model.Instance." + implName + "Instance";
+			final Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;
 		}
-		catch (ClassNotFoundException e) {
+		catch (final ClassNotFoundException e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -194,8 +194,8 @@ public class NpcTable {
 			pstm = con.prepareStatement("SELECT * FROM npc");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1Npc npc = new L1Npc();
-				int npcId = rs.getInt("npcid");
+				final L1Npc npc = new L1Npc();
+				final int npcId = rs.getInt("npcid");
 				npc.set_npcId(npcId);
 				npc.set_name(rs.getString("name"));
 				npc.set_nameid(rs.getString("nameid"));
@@ -228,14 +228,14 @@ public class NpcTable {
 				npc.set_agro(rs.getBoolean("agro"));
 				npc.set_agrososc(rs.getBoolean("agrososc"));
 				npc.set_agrocoi(rs.getBoolean("agrocoi"));
-				Integer family = _familyTypes.get(rs.getString("family"));
+				final Integer family = _familyTypes.get(rs.getString("family"));
 				if (family == null) {
 					npc.set_family(0);
 				}
 				else {
 					npc.set_family(family.intValue());
 				}
-				int agrofamily = rs.getInt("agrofamily");
+				final int agrofamily = rs.getInt("agrofamily");
 				if ((npc.get_family() == 0) && (agrofamily == 1)) {
 					npc.set_agrofamily(0);
 				}
@@ -276,7 +276,7 @@ public class NpcTable {
 				_npcs.put(npcId, npc);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -290,7 +290,7 @@ public class NpcTable {
 	 * 
 	 * @param implName
 	 */
-	private void registerConstructorCache(String implName) {
+	private void registerConstructorCache(final String implName) {
 		if (implName.isEmpty() || _constructorCache.containsKey(implName)) {
 			return;
 		}

@@ -37,16 +37,16 @@ public class C_NPCTalk extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_NPCTalk.class.getName());
 
-	public C_NPCTalk(byte abyte0[], ClientThread client) throws Exception {
+	public C_NPCTalk(final byte abyte0[], final ClientThread client) throws Exception {
 
 		super(abyte0);
-		int objid = readD();
-		L1Object obj = L1World.getInstance().findObject(objid);
-		L1PcInstance pc = client.getActiveChar();
-		if (obj != null && pc != null) {
-			L1NpcAction action = NpcActionTable.getInstance().get(pc, obj);
+		final int objid = readD();
+		final L1Object obj = L1World.getInstance().findObject(objid);
+		final L1PcInstance pc = client.getActiveChar();
+		if ((obj != null) && (pc != null)) {
+			final L1NpcAction action = NpcActionTable.getInstance().get(pc, obj);
 			if (action != null) {
-				L1NpcHtml html = action.execute("", pc, obj, new byte[0]);
+				final L1NpcHtml html = action.execute("", pc, obj, new byte[0]);
 				if (html != null) {
 					pc.sendPackets(new S_NPCTalkReturn(obj.getId(), html));
 				}

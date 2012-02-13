@@ -103,8 +103,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return 掉宝倍率
 	 */
-	public double getDropRate(int mapId) {
-		MapData map = _maps.get(mapId);
+	public double getDropRate(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -118,8 +118,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return X结束坐标
 	 */
-	public int getEndX(int mapId) {
-		MapData map = _maps.get(mapId);
+	public int getEndX(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -133,8 +133,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return Y结束坐标
 	 */
-	public int getEndY(int mapId) {
-		MapData map = _maps.get(mapId);
+	public int getEndY(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -148,8 +148,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return 怪物数量规模
 	 */
-	public double getMonsterAmount(int mapId) {
-		MapData map = _maps.get(mapId);
+	public double getMonsterAmount(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -163,8 +163,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return X开始坐标
 	 */
-	public int getStartX(int mapId) {
-		MapData map = _maps.get(mapId);
+	public int getStartX(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -178,8 +178,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return Y开始坐标
 	 */
-	public int getStartY(int mapId) {
-		MapData map = _maps.get(mapId);
+	public int getStartY(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -194,8 +194,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果有死亡惩罚true
 	 */
-	public boolean isEnabledDeathPenalty(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isEnabledDeathPenalty(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -209,8 +209,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return 如果可能true
 	 */
-	public boolean isEscapable(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isEscapable(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -224,8 +224,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return 如果能记忆坐标true
 	 */
-	public boolean isMarkable(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isMarkable(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -240,8 +240,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果可以 召回宠物true
 	 */
-	public boolean isRecallPets(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isRecallPets(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -256,8 +256,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果可以召唤宠物true
 	 */
-	public boolean isTakePets(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isTakePets(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -271,8 +271,8 @@ public final class MapsTable {
 	 *            检查地图的地图ID
 	 * @return 如果可能true
 	 */
-	public boolean isTeleportable(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isTeleportable(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -287,8 +287,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果在水中true
 	 */
-	public boolean isUnderwater(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isUnderwater(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -303,8 +303,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果可以使用道具true
 	 */
-	public boolean isUsableItem(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isUsableItem(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -319,8 +319,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果可以使用技能true
 	 */
-	public boolean isUsableSkill(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isUsableSkill(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -335,8 +335,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果能使用魔杖 true
 	 */
-	public boolean isUsePainwand(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isUsePainwand(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -351,8 +351,8 @@ public final class MapsTable {
 	 * 
 	 * @return 如果能复活true
 	 */
-	public boolean isUseResurrection(int mapId) {
-		MapData map = _maps.get(mapId);
+	public boolean isUseResurrection(final int mapId) {
+		final MapData map = _maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
@@ -371,8 +371,8 @@ public final class MapsTable {
 			pstm = con.prepareStatement("SELECT * FROM mapids");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
-				MapData data = new MapData();
-				int mapId = rs.getInt("mapid");
+				final MapData data = new MapData();
+				final int mapId = rs.getInt("mapid");
 				// rs.getString("locationname");
 				data.startX = rs.getInt("startX");
 				data.endX = rs.getInt("endX");
@@ -397,7 +397,7 @@ public final class MapsTable {
 
 			_log.config("Maps " + _maps.size());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

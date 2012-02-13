@@ -24,7 +24,7 @@ public class L1Drop {
 
 	int _chance;
 
-	public L1Drop(int mobId, int itemId, int min, int max, int chance) {
+	public L1Drop(final int mobId, final int itemId, final int min, final int max, final int chance) {
 		_mobId = mobId;
 		_itemId = itemId;
 		_min = min;

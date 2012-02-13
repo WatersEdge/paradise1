@@ -33,54 +33,54 @@ public class L1BanIp implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer stringtokenizer = new StringTokenizer(arg);
+			final StringTokenizer stringtokenizer = new StringTokenizer(arg);
 			// IPを指定
-			String s1 = stringtokenizer.nextToken();
+			final String s1 = stringtokenizer.nextToken();
 
 			// add/delを指定(しなくてもOK)
 			String s2 = null;
 			try {
 				s2 = stringtokenizer.nextToken();
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 			}
 
-			IpTable iptable = IpTable.getInstance();
-			boolean isBanned = iptable.isBannedIp(s1);
+			final IpTable iptable = IpTable.getInstance();
+			final boolean isBanned = iptable.isBannedIp(s1);
 
-			for (L1PcInstance tg : L1World.getInstance().getAllPlayers()) {
+			for (final L1PcInstance tg : L1World.getInstance().getAllPlayers()) {
 				if (s1.equals(tg.getNetConnection().getIp())) {
-					String msg = new StringBuilder().append("IP:").append(s1).append(" 连线中的角色名称:").append(tg.getName()).toString();
+					final String msg = new StringBuilder().append("IP:").append(s1).append(" 连线中的角色名称:").append(tg.getName()).toString();
 					pc.sendPackets(new S_SystemMessage(msg));
 				}
 			}
 
 			if ("add".equalsIgnoreCase(s2) && !isBanned) {
 				iptable.banIp(s1); // BANリストへIPを加える
-				String msg = new StringBuilder().append("IP:").append(s1).append(" 被新增到封锁名单。").toString();
+				final String msg = new StringBuilder().append("IP:").append(s1).append(" 被新增到封锁名单。").toString();
 				pc.sendPackets(new S_SystemMessage(msg));
 			}
 			else if ("del".equalsIgnoreCase(s2) && isBanned) {
 				if (iptable.liftBanIp(s1)) { // BANリストからIPを削除する
-					String msg = new StringBuilder().append("IP:").append(s1).append(" 已从封锁名单中删除。").toString();
+					final String msg = new StringBuilder().append("IP:").append(s1).append(" 已从封锁名单中删除。").toString();
 					pc.sendPackets(new S_SystemMessage(msg));
 				}
 			}
 			else {
 				// BANの确认
 				if (isBanned) {
-					String msg = new StringBuilder().append("IP:").append(s1).append(" 已被登记在封锁名单中。").toString();
+					final String msg = new StringBuilder().append("IP:").append(s1).append(" 已被登记在封锁名单中。").toString();
 					pc.sendPackets(new S_SystemMessage(msg));
 				}
 				else {
-					String msg = new StringBuilder().append("IP:").append(s1).append(" 尚未被登记在封锁名单中。").toString();
+					final String msg = new StringBuilder().append("IP:").append(s1).append(" 尚未被登记在封锁名单中。").toString();
 					pc.sendPackets(new S_SystemMessage(msg));
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " IP [ add | del ]。"));
 		}
 	}

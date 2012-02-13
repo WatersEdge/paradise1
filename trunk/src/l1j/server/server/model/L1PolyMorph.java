@@ -138,18 +138,18 @@ public class L1PolyMorph {
 	}
 
 	// 变身
-	public static void doPoly(L1Character cha, int polyId, int timeSecs, int cause) {
+	public static void doPoly(final L1Character cha, final int polyId, final int timeSecs, final int cause) {
 		doPoly(cha, polyId, timeSecs, cause, true);
 	}
 
 	// 变身
-	public static void doPoly(L1Character cha, int polyId, int timeSecs, int cause, boolean cantPolyMessage) {
+	public static void doPoly(final L1Character cha, final int polyId, final int timeSecs, final int cause, final boolean cantPolyMessage) {
 		if ((cha == null) || cha.isDead()) {
 			return;
 		}
 		if (cha instanceof L1PcInstance) {
-			L1PcInstance pc = (L1PcInstance) cha;
-			if (pc.getMapId() == 5124 || pc.getMapId() == 5300 || pc.getMapId() == 5301) { // 钓鱼池
+			final L1PcInstance pc = (L1PcInstance) cha;
+			if ((pc.getMapId() == 5124) || (pc.getMapId() == 5300) || (pc.getMapId() == 5301)) { // 钓鱼池
 				if (cantPolyMessage) {
 					pc.sendPackets(new S_ServerMessage(1170)); // 这里不可以变身。
 				}
@@ -170,8 +170,8 @@ public class L1PolyMorph {
 			pc.killSkillEffectTimer(SHAPE_CHANGE);
 			pc.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (pc.getTempCharGfx() != polyId) {
-				L1ItemInstance weapon = pc.getWeapon();
-				boolean weaponTakeoff = (weapon != null && !isEquipableWeapon(polyId, weapon.getItem().getType()));
+				final L1ItemInstance weapon = pc.getWeapon();
+				final boolean weaponTakeoff = ((weapon != null) && !isEquipableWeapon(polyId, weapon.getItem().getType()));
 				if (weaponTakeoff) { // 解除武器时
 					pc.setCurrentWeapon(0);
 				}
@@ -190,18 +190,18 @@ public class L1PolyMorph {
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
 		}
 		else if (cha instanceof L1MonsterInstance) { // 怪物变身
-			L1MonsterInstance mob = (L1MonsterInstance) cha;
+			final L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.killSkillEffectTimer(SHAPE_CHANGE);
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (mob.getTempCharGfx() != polyId) {
 				mob.setTempCharGfx(polyId);
-				int npcStatus = L1NpcDefaultAction.getInstance().getStatus(polyId);
+				final int npcStatus = L1NpcDefaultAction.getInstance().getStatus(polyId);
 				mob.setStatus(npcStatus);
 				if (npcStatus == 20) { // 弓类
 					mob.setPolyAtkRanged(10);
 					mob.setPolyArrowGfx(66);
 				}
-				else if (npcStatus == 24 || polyId == 95 || polyId == 146) { // 矛类、夏洛伯、杨果里恩
+				else if ((npcStatus == 24) || (polyId == 95) || (polyId == 146)) { // 矛类、夏洛伯、杨果里恩
 					mob.setPolyAtkRanged(2);
 					mob.setPolyArrowGfx(0);
 				}
@@ -216,11 +216,11 @@ public class L1PolyMorph {
 		}
 	}
 
-	public static void handleCommands(L1PcInstance pc, String s) {
+	public static void handleCommands(final L1PcInstance pc, final String s) {
 		if ((pc == null) || pc.isDead()) {
 			return;
 		}
-		L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
+		final L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
 		if ((poly != null) || s.equals("none")) {
 			if (s.equals("none")) {
 				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
@@ -246,13 +246,13 @@ public class L1PolyMorph {
 	}
 
 	// 指定polyId与armorType装备防具出来？
-	public static boolean isEquipableArmor(int polyId, int armorType) {
-		L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
+	public static boolean isEquipableArmor(final int polyId, final int armorType) {
+		final L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
 		if (poly == null) {
 			return true;
 		}
 
-		Integer flg = armorFlgMap.get(armorType);
+		final Integer flg = armorFlgMap.get(armorType);
 		if (flg != null) {
 			return 0 != (poly.getArmorEquipFlg() & flg);
 		}
@@ -260,13 +260,13 @@ public class L1PolyMorph {
 	}
 
 	// 指定polyId与weapontTypeの武器を装备出来るか？
-	public static boolean isEquipableWeapon(int polyId, int weaponType) {
-		L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
+	public static boolean isEquipableWeapon(final int polyId, final int weaponType) {
+		final L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
 		if (poly == null) {
 			return true;
 		}
 
-		Integer flg = weaponFlgMap.get(weaponType);
+		final Integer flg = weaponFlgMap.get(weaponType);
 		if (flg != null) {
 			return 0 != (poly.getWeaponEquipFlg() & flg);
 		}
@@ -274,8 +274,8 @@ public class L1PolyMorph {
 	}
 
 	// 指定polyId把你变身、他将如何变身？
-	public static boolean isMatchCause(int polyId, int cause) {
-		L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
+	public static boolean isMatchCause(final int polyId, final int cause) {
+		final L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
 		if (poly == null) {
 			return true;
 		}
@@ -287,10 +287,10 @@ public class L1PolyMorph {
 	}
 
 	/** 解除变身 */
-	public static void undoPoly(L1Character cha) {
+	public static void undoPoly(final L1Character cha) {
 		if (cha instanceof L1PcInstance) {
-			L1PcInstance pc = (L1PcInstance) cha;
-			int classId = pc.getClassId();
+			final L1PcInstance pc = (L1PcInstance) cha;
+			final int classId = pc.getClassId();
 			pc.setTempCharGfx(classId);
 			if (!pc.isDead()) {
 				pc.sendPackets(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
@@ -298,8 +298,8 @@ public class L1PolyMorph {
 			}
 		}
 		else if (cha instanceof L1MonsterInstance) {
-			L1MonsterInstance mob = (L1MonsterInstance) cha;
-			int gfxId = mob.getGfxId();
+			final L1MonsterInstance mob = (L1MonsterInstance) cha;
+			final int gfxId = mob.getGfxId();
 			mob.setTempCharGfx(0);
 			mob.setStatus(L1NpcDefaultAction.getInstance().getStatus(gfxId));
 			mob.setPolyAtkRanged(-1);
@@ -310,23 +310,23 @@ public class L1PolyMorph {
 		}
 	}
 
-	private int _id;
+	private final int _id;
 
-	private String _name;
+	private final String _name;
 
-	private int _polyId;
+	private final int _polyId;
 
-	private int _minLevel;
+	private final int _minLevel;
 
-	private int _weaponEquipFlg;
+	private final int _weaponEquipFlg;
 
-	private int _armorEquipFlg;
+	private final int _armorEquipFlg;
 
-	private boolean _canUseSkill;
+	private final boolean _canUseSkill;
 
-	private int _causeFlg;
+	private final int _causeFlg;
 
-	public L1PolyMorph(int id, String name, int polyId, int minLevel, int weaponEquipFlg, int armorEquipFlg, boolean canUseSkill, int causeFlg) {
+	public L1PolyMorph(final int id, final String name, final int polyId, final int minLevel, final int weaponEquipFlg, final int armorEquipFlg, final boolean canUseSkill, final int causeFlg) {
 		_id = id;
 		_name = name;
 		_polyId = polyId;

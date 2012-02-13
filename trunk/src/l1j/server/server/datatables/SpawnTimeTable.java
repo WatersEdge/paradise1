@@ -49,7 +49,7 @@ public class SpawnTimeTable {
 		load();
 	}
 
-	public L1SpawnTime get(int id) {
+	public L1SpawnTime get(final int id) {
 		return _times.get(id);
 	}
 
@@ -62,8 +62,8 @@ public class SpawnTimeTable {
 			pstm = con.prepareStatement("SELECT * FROM spawnlist_time");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt("spawn_id");
-				L1SpawnTime.L1SpawnTimeBuilder builder = new L1SpawnTime.L1SpawnTimeBuilder(id);
+				final int id = rs.getInt("spawn_id");
+				final L1SpawnTime.L1SpawnTimeBuilder builder = new L1SpawnTime.L1SpawnTimeBuilder(id);
 				builder.setTimeStart(rs.getTime("time_start"));
 				builder.setTimeEnd(rs.getTime("time_end"));
 				// builder.setPeriodStart(rs.getTimestamp("period_start"));
@@ -73,7 +73,7 @@ public class SpawnTimeTable {
 				_times.put(id, builder.build());
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -33,7 +33,7 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 	 * @param prices
 	 * @param objid
 	 */
-	public S_NPCTalkActionTPUrl(L1NpcTalkData cha, Object[] prices, int objid) {
+	public S_NPCTalkActionTPUrl(final L1NpcTalkData cha, final Object[] prices, final int objid) {
 		buildPacket(cha, prices, objid);
 	}
 
@@ -50,7 +50,7 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 		return _S__25_TalkReturnAction;
 	}
 
-	private void buildPacket(L1NpcTalkData npc, Object[] prices, int objid) {
+	private void buildPacket(final L1NpcTalkData npc, final Object[] prices, final int objid) {
 		String htmlid = "";
 		htmlid = npc.getTeleportURL();
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
@@ -59,7 +59,7 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 		writeH(0x01); // 不明
 		writeH(prices.length); // 数的参数
 
-		for (Object price : prices) {
+		for (final Object price : prices) {
 			writeS(String.valueOf(((Integer) price).intValue()));
 		}
 	}

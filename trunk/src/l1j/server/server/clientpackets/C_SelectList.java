@@ -33,20 +33,20 @@ public class C_SelectList extends ClientBasePacket {
 
 	private static final String C_SELECT_LIST = "[C] C_SelectList";
 
-	public C_SelectList(byte abyte0[], ClientThread clientthread) {
+	public C_SelectList(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 		// アイテム每にリクエストが来る。
-		int itemObjectId = readD();
-		int npcObjectId = readD();
-		L1PcInstance pc = clientthread.getActiveChar();
+		final int itemObjectId = readD();
+		final int npcObjectId = readD();
+		final L1PcInstance pc = clientthread.getActiveChar();
 
 		if (npcObjectId != 0) { // 武器的修理
-			L1Object obj = L1World.getInstance().findObject(npcObjectId);
+			final L1Object obj = L1World.getInstance().findObject(npcObjectId);
 			if (obj != null) {
 				if (obj instanceof L1NpcInstance) {
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					int difflocx = Math.abs(pc.getX() - npc.getX());
-					int difflocy = Math.abs(pc.getY() - npc.getY());
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final int difflocx = Math.abs(pc.getX() - npc.getX());
+					final int difflocy = Math.abs(pc.getY() - npc.getY());
 					// 3格以上的距离视为无效请求
 					if ((difflocx > 3) || (difflocy > 3)) {
 						return;
@@ -54,9 +54,9 @@ public class C_SelectList extends ClientBasePacket {
 				}
 			}
 
-			L1PcInventory pcInventory = pc.getInventory();
-			L1ItemInstance item = pcInventory.getItem(itemObjectId);
-			int cost = item.get_durability() * 200;
+			final L1PcInventory pcInventory = pc.getInventory();
+			final L1ItemInstance item = pcInventory.getItem(itemObjectId);
+			final int cost = item.get_durability() * 200;
 			if (!pc.getInventory().consumeItem(L1ItemId.ADENA, cost)) {
 				return;
 			}

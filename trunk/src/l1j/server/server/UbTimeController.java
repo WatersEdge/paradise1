@@ -43,14 +43,14 @@ public class UbTimeController implements Runnable {
 				Thread.sleep(15000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 			_log.warning(e1.getMessage());
 		}
 	}
 
 	/** 检查无限大战时间 */
 	private void checkUbTime() {
-		for (L1UltimateBattle ub : UBTable.getInstance().getAllUb()) {
+		for (final L1UltimateBattle ub : UBTable.getInstance().getAllUb()) {
 			if (ub.checkUbTime() && !ub.isActive()) {
 				ub.start(); // 无限大战开始
 			}

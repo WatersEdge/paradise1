@@ -31,28 +31,28 @@ public class L1NpcDefaultAction {
 		loadAction();
 	}
 
-	public int getDefaultAttack(int gfxid) {
+	public int getDefaultAttack(final int gfxid) {
 		if (_dataMap.containsKey(gfxid)) {
 			return _dataMap.get(gfxid).defaultAttack;
 		}
 		return 1;
 	}
 
-	public int getRangedAttack(int gfxid) {
+	public int getRangedAttack(final int gfxid) {
 		if (_dataMap.containsKey(gfxid)) {
 			return _dataMap.get(gfxid).rangedAttack;
 		}
 		return 1;
 	}
 
-	public int getSpecialAttack(int gfxid) {
+	public int getSpecialAttack(final int gfxid) {
 		if (_dataMap.containsKey(gfxid)) {
 			return _dataMap.get(gfxid).specialAttack;
 		}
 		return 0;
 	}
 
-	public int getStatus(int gfxid) {
+	public int getStatus(final int gfxid) {
 		if (_dataMap.containsKey(gfxid)) {
 			return _dataMap.get(gfxid).status;
 		}

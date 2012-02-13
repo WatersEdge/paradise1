@@ -70,13 +70,13 @@ public class L1AllBuff implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
-		int[] allBuffSkill = { LIGHT, DECREASE_WEIGHT, PHYSICAL_ENCHANT_DEX, MEDITATION, PHYSICAL_ENCHANT_STR, BLESS_WEAPON, BERSERKERS, IMMUNE_TO_HARM, ADVANCE_SPIRIT, REDUCTION_ARMOR, BOUNCE_ATTACK, SOLID_CARRIAGE, ENCHANT_VENOM, BURNING_SPIRIT, VENOM_RESIST, DOUBLE_BRAKE,
-				UNCANNY_DODGE, DRESS_EVASION, GLOWING_AURA, BRAVE_AURA, RESIST_MAGIC, CLEAR_MIND, ELEMENTAL_PROTECTION, AQUA_PROTECTER, BURNING_WEAPON, IRON_SKIN, EXOTIC_VITALIZE, WATER_LIFE, ELEMENTAL_FIRE, SOUL_OF_FLAME, ADDITIONAL_FIRE };
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
+		final int[] allBuffSkill = { LIGHT, DECREASE_WEIGHT, PHYSICAL_ENCHANT_DEX, MEDITATION, PHYSICAL_ENCHANT_STR, BLESS_WEAPON, BERSERKERS, IMMUNE_TO_HARM, ADVANCE_SPIRIT, REDUCTION_ARMOR, BOUNCE_ATTACK, SOLID_CARRIAGE, ENCHANT_VENOM, BURNING_SPIRIT, VENOM_RESIST,
+				DOUBLE_BRAKE, UNCANNY_DODGE, DRESS_EVASION, GLOWING_AURA, BRAVE_AURA, RESIST_MAGIC, CLEAR_MIND, ELEMENTAL_PROTECTION, AQUA_PROTECTER, BURNING_WEAPON, IRON_SKIN, EXOTIC_VITALIZE, WATER_LIFE, ELEMENTAL_FIRE, SOUL_OF_FLAME, ADDITIONAL_FIRE };
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String name = st.nextToken();
-			L1PcInstance target = L1World.getInstance().getPlayer(name);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String name = st.nextToken();
+			final L1PcInstance target = L1World.getInstance().getPlayer(name);
 			if (target == null) {
 				pc.sendPackets(new S_ServerMessage(73, name)); // \f1%0%d 不在线上。
 				return;
@@ -85,12 +85,12 @@ public class L1AllBuff implements L1CommandExecutor {
 			L1BuffUtil.haste(target, 3600 * 1000);
 			L1BuffUtil.brave(target, 3600 * 1000);
 			L1PolyMorph.doPoly(target, 5641, 7200, L1PolyMorph.MORPH_BY_GM);
-			for (int element : allBuffSkill) {
-				L1Skills skill = SkillsTable.getInstance().getTemplate(element);
+			for (final int element : allBuffSkill) {
+				final L1Skills skill = SkillsTable.getInstance().getTemplate(element);
 				new L1SkillUse().handleCommands(target, element, target.getId(), target.getX(), target.getY(), null, skill.getBuffDuration() * 1000, L1SkillUse.TYPE_GMBUFF);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 .allBuff 玩家名称。"));
 		}
 	}

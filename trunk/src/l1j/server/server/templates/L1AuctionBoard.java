@@ -80,43 +80,43 @@ public class L1AuctionBoard {
 		return _price;
 	}
 
-	public void setBidder(String s) {
+	public void setBidder(final String s) {
 		_bidder = s;
 	}
 
-	public void setBidderId(int i) {
+	public void setBidderId(final int i) {
 		_bidderId = i;
 	}
 
-	public void setDeadline(Calendar i) {
+	public void setDeadline(final Calendar i) {
 		_deadline = i;
 	}
 
-	public void setHouseArea(int i) {
+	public void setHouseArea(final int i) {
 		_houseArea = i;
 	}
 
-	public void setHouseId(int i) {
+	public void setHouseId(final int i) {
 		_houseId = i;
 	}
 
-	public void setHouseName(String s) {
+	public void setHouseName(final String s) {
 		_houseName = s;
 	}
 
-	public void setLocation(String s) {
+	public void setLocation(final String s) {
 		_location = s;
 	}
 
-	public void setOldOwner(String s) {
+	public void setOldOwner(final String s) {
 		_oldOwner = s;
 	}
 
-	public void setOldOwnerId(int i) {
+	public void setOldOwnerId(final int i) {
 		_oldOwnerId = i;
 	}
 
-	public void setPrice(int i) {
+	public void setPrice(final int i) {
 		_price = i;
 	}
 

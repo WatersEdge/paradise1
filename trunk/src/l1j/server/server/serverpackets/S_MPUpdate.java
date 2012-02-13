@@ -27,7 +27,7 @@ public class S_MPUpdate extends ServerBasePacket {
 	 * @param currentmp
 	 * @param maxmp
 	 */
-	public S_MPUpdate(int currentmp, int maxmp) {
+	public S_MPUpdate(final int currentmp, final int maxmp) {
 		writeC(Opcodes.S_OPCODE_MPUPDATE);
 
 		if (currentmp < 0) {

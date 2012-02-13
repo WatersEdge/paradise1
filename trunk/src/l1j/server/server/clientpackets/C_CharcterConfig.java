@@ -29,13 +29,13 @@ public class C_CharcterConfig extends ClientBasePacket {
 
 	private static final String C_CHARCTER_CONFIG = "[C] C_CharcterConfig";
 
-	public C_CharcterConfig(byte abyte0[], ClientThread client) throws Exception {
+	public C_CharcterConfig(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
 		if (Config.CHARACTER_CONFIG_IN_SERVER_SIDE) {
-			L1PcInstance pc = client.getActiveChar();
-			int length = readD() - 3;
-			byte data[] = readByte();
-			int count = CharacterConfigTable.getInstance().countCharacterConfig(pc.getId());
+			final L1PcInstance pc = client.getActiveChar();
+			final int length = readD() - 3;
+			final byte data[] = readByte();
+			final int count = CharacterConfigTable.getInstance().countCharacterConfig(pc.getId());
 			if (count == 0) {
 				CharacterConfigTable.getInstance().storeCharacterConfig(pc.getId(), length, data);
 			}

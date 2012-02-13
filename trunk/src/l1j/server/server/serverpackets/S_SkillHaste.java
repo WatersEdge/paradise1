@@ -37,7 +37,7 @@ public class S_SkillHaste extends ServerBasePacket {
 	 * @param k
 	 *            时间
 	 */
-	public S_SkillHaste(int i, int j, int k) {
+	public S_SkillHaste(final int i, final int j, final int k) {
 		writeC(Opcodes.S_OPCODE_SKILLHASTE);
 		writeD(i);
 		writeC(j);

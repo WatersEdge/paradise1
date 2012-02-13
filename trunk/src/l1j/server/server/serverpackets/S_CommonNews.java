@@ -49,7 +49,7 @@ public class S_CommonNews extends ServerBasePacket {
 	 * 
 	 * @param s
 	 */
-	public S_CommonNews(String s) {
+	public S_CommonNews(final String s) {
 		writeC(Opcodes.S_OPCODE_COMMONNEWS);
 		writeS(s);
 	}
@@ -67,14 +67,14 @@ public class S_CommonNews extends ServerBasePacket {
 	/** 载入公告 */
 	private void loadAnnouncements() {
 		_announcements.clear();
-		File file = new File("data/announcements.txt");
+		final File file = new File("data/announcements.txt");
 		if (file.exists()) {
 			readFromDisk(file);
 		}
 	}
 
 	/** 读取 */
-	private void readFromDisk(File file) {
+	private void readFromDisk(final File file) {
 		LineNumberReader lnr = null;
 		try {
 			String line = null;
@@ -83,9 +83,9 @@ public class S_CommonNews extends ServerBasePacket {
 				if ((line = lnr.readLine()) == null) {
 					break;
 				}
-				StringTokenizer st = new StringTokenizer(line, "\n\r");
+				final StringTokenizer st = new StringTokenizer(line, "\n\r");
 				if (st.hasMoreTokens()) {
-					String announcement = st.nextToken();
+					final String announcement = st.nextToken();
 					_announcements.add(announcement);
 				}
 				else {
@@ -93,7 +93,7 @@ public class S_CommonNews extends ServerBasePacket {
 				}
 			} while (true);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 		}
 	}
 

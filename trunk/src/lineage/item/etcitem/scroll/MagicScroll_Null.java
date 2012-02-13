@@ -52,10 +52,10 @@ public class MagicScroll_Null extends ItemExecutor {
 					|| ((itemId == 40094) && (blanksc_skillid <= 39)) // 空的魔法卷轴(等级5)可写5级以下的魔法
 			) {
 
-				L1ItemInstance spellsc = ItemTable.getInstance().createItem(40859 + blanksc_skillid);
+				final L1ItemInstance spellsc = ItemTable.getInstance().createItem(40859 + blanksc_skillid);
 				if (spellsc != null) {
 					if (pc.getInventory().checkAddItem(spellsc, 1) == L1Inventory.OK) {
-						L1Skills l1skills = SkillsTable.getInstance().getTemplate(blanksc_skillid + 1); // blanksc_skillid 0
+						final L1Skills l1skills = SkillsTable.getInstance().getTemplate(blanksc_skillid + 1); // blanksc_skillid 0
 						if (pc.getCurrentHp() + 1 < l1skills.getHpConsume() + 1) {
 							pc.sendPackets(new S_ServerMessage(279)); // \f1因体力不足而无法使用魔法。
 							return;

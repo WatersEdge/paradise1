@@ -47,7 +47,7 @@ public class BossSpawnTable {
 			L1BossSpawn spawnDat;
 			L1Npc template1;
 			while (rs.next()) {
-				int npcTemplateId = rs.getInt("npc_id");
+				final int npcTemplateId = rs.getInt("npc_id");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 
 				if (template1 == null) {
@@ -89,7 +89,7 @@ public class BossSpawnTable {
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

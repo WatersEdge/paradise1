@@ -33,8 +33,8 @@ public class Firework_A_Z extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		final int itemId = item.getItemId();
-		int soundid = itemId - 34946;
-		S_SkillSound s_skillsound = new S_SkillSound(pc.getId(), soundid);
+		final int soundid = itemId - 34946;
+		final S_SkillSound s_skillsound = new S_SkillSound(pc.getId(), soundid);
 		pc.sendPackets(s_skillsound);
 		pc.broadcastPacket(s_skillsound);
 		pc.getInventory().removeItem(item, 1);

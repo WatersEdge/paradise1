@@ -79,43 +79,43 @@ public class L1Town {
 		return _townid;
 	}
 
-	public void set_leader_id(int i) {
+	public void set_leader_id(final int i) {
 		_leader_id = i;
 	}
 
-	public void set_leader_name(String s) {
+	public void set_leader_name(final String s) {
 		_leader_name = s;
 	}
 
-	public void set_name(String s) {
+	public void set_name(final String s) {
 		_name = s;
 	}
 
-	public void set_sales_money(int i) {
+	public void set_sales_money(final int i) {
 		_sales_money = i;
 	}
 
-	public void set_sales_money_yesterday(int i) {
+	public void set_sales_money_yesterday(final int i) {
 		_sales_money_yesterday = i;
 	}
 
-	public void set_tax_rate(int i) {
+	public void set_tax_rate(final int i) {
 		_tax_rate = i;
 	}
 
-	public void set_tax_rate_reserved(int i) {
+	public void set_tax_rate_reserved(final int i) {
 		_tax_rate_reserved = i;
 	}
 
-	public void set_town_fix_tax(int i) {
+	public void set_town_fix_tax(final int i) {
 		_town_fix_tax = i;
 	}
 
-	public void set_town_tax(int i) {
+	public void set_town_tax(final int i) {
 		_town_tax = i;
 	}
 
-	public void set_townid(int i) {
+	public void set_townid(final int i) {
 		_townid = i;
 	}
 }

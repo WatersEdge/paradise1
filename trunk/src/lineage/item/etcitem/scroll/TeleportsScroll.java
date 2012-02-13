@@ -54,7 +54,7 @@ public class TeleportsScroll extends ItemExecutor {
 
 				// 全体传送术的卷轴
 				if (itemId == 40086) {
-					for (L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
+					for (final L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
 						if ((pc.getLocation().getTileLineDistance(member.getLocation()) <= 3) && (member.getClanid() == pc.getClanid()) && (pc.getClanid() != 0) && (member.getId() != pc.getId())) {
 							L1Teleport.teleport(member, newX, newY, mapId, 5, true);
 						}
@@ -80,7 +80,7 @@ public class TeleportsScroll extends ItemExecutor {
 
 				// 全体传送术的卷轴
 				if (itemId == 40086) {
-					for (L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
+					for (final L1PcInstance member : L1World.getInstance().getVisiblePlayer(pc)) {
 						if ((pc.getLocation().getTileLineDistance(member.getLocation()) <= 3) && (member.getClanid() == pc.getClanid()) && (pc.getClanid() != 0) && (member.getId() != pc.getId())) {
 							L1Teleport.teleport(member, newX, newY, mapId, 5, true);
 						}

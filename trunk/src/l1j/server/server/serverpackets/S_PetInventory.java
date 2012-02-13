@@ -37,16 +37,16 @@ public class S_PetInventory extends ServerBasePacket {
 	 * 
 	 * @param pet
 	 */
-	public S_PetInventory(L1PetInstance pet) {
-		List<L1ItemInstance> itemList = pet.getInventory().getItems();
+	public S_PetInventory(final L1PetInstance pet) {
+		final List<L1ItemInstance> itemList = pet.getInventory().getItems();
 
 		writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 		writeD(pet.getId());
 		writeH(itemList.size());
 		writeC(0x0b);
 
-		for (Object itemObject : itemList) {
-			L1ItemInstance petItem = (L1ItemInstance) itemObject;
+		for (final Object itemObject : itemList) {
+			final L1ItemInstance petItem = (L1ItemInstance) itemObject;
 			if (petItem == null) {
 				continue;
 			}
@@ -57,7 +57,7 @@ public class S_PetInventory extends ServerBasePacket {
 			writeD(petItem.getCount());
 
 			// 显示装备中的宠物装备
-			if (petItem.getItem().getType2() == 0 && petItem.getItem().getType() == 11 && petItem.isEquipped()) {
+			if ((petItem.getItem().getType2() == 0) && (petItem.getItem().getType() == 11) && petItem.isEquipped()) {
 				writeC(petItem.isIdentified() ? 3 : 2);
 			}
 			else {

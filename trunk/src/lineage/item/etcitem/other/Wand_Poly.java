@@ -93,22 +93,22 @@ public class Wand_Poly extends ItemExecutor {
 			}
 		}
 		if ((attacker.getId() != cha.getId()) && !isSameClan) { // 非自身及盟友
-			int probability = 3 * (attacker.getLevel() - cha.getLevel()) + 100 - cha.getMr();
-			int rnd = Random.nextInt(100) + 1;
+			final int probability = 3 * (attacker.getLevel() - cha.getLevel()) + 100 - cha.getMr();
+			final int rnd = Random.nextInt(100) + 1;
 			if (rnd > probability) {
 				attacker.sendPackets(new S_ServerMessage(79));
 				return;
 			}
 		}
 
-		int[] polyArray = { 29, 945, 947, 979, 1037, 1039, 3860, 3861, 3862, 3863, 3864, 3865, 3904, 3906, 95, 146, 2374, 2376, 2377, 2378, 3866, 3867, 3868, 3869, 3870, 3871, 3872, 3873, 3874, 3875, 3876 };
+		final int[] polyArray = { 29, 945, 947, 979, 1037, 1039, 3860, 3861, 3862, 3863, 3864, 3865, 3904, 3906, 95, 146, 2374, 2376, 2377, 2378, 3866, 3867, 3868, 3869, 3870, 3871, 3872, 3873, 3874, 3875, 3876 };
 
-		int pid = Random.nextInt(polyArray.length);
-		int polyId = polyArray[pid];
+		final int pid = Random.nextInt(polyArray.length);
+		final int polyId = polyArray[pid];
 
 		if (cha instanceof L1PcInstance) {
 			final L1PcInstance pc = (L1PcInstance) cha;
-			int awakeSkillId = pc.getAwakeSkillId();
+			final int awakeSkillId = pc.getAwakeSkillId();
 			if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
 				if (attacker.getId() == pc.getId()) {
 					attacker.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
@@ -136,7 +136,7 @@ public class Wand_Poly extends ItemExecutor {
 		else if (cha instanceof L1MonsterInstance) {
 			final L1MonsterInstance mob = (L1MonsterInstance) cha;
 			if (mob.getLevel() < 50) {
-				int npcId = mob.getNpcTemplate().get_npcId();
+				final int npcId = mob.getNpcTemplate().get_npcId();
 				if ((npcId != 45338) && (npcId != 45370) && (npcId != 45456 // 巨大鳄鱼、强盗头目、魔法师
 						) && (npcId != 45464) && (npcId != 45473) && (npcId != 45488 // 西玛、巴土瑟、卡士伯
 						) && (npcId != 45497) && (npcId != 45516) && (npcId != 45529 // 马库尔、伊弗利特、飞龙 (DV)

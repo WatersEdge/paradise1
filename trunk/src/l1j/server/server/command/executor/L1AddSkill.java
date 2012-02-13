@@ -33,13 +33,13 @@ public class L1AddSkill implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			int cnt = 0; // 计数器
 			String skill_name = ""; // 技能名称
 			int skill_id = 0; // 技能ID
 
-			int object_id = pc.getId(); // 取得角色的 objectid
+			final int object_id = pc.getId(); // 取得角色的 objectid
 			pc.sendPackets(new S_SkillSound(object_id, '\343')); // 魔法习得的效果音效
 			pc.broadcastPacket(new S_SkillSound(object_id, '\343'));
 
@@ -48,14 +48,14 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 16; cnt++) // LV1~2魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
 				}
 				for (cnt = 113; cnt <= 120; cnt++) // 王族魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -67,14 +67,14 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 192, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 8; cnt++) // LV1魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
 				}
 				for (cnt = 87; cnt <= 91; cnt++) // 骑士魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -86,14 +86,14 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 3, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 48; cnt++) // LV1~6魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
 				}
 				for (cnt = 129; cnt <= 176; cnt++) // 精灵魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -105,7 +105,7 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 80; cnt++) // LV1~10魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -115,14 +115,14 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 				for (cnt = 1; cnt <= 16; cnt++) // LV1~2魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
 				}
 				for (cnt = 97; cnt <= 111; cnt++) // DE魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -134,7 +134,7 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 240, 255, 7, 0, 0, 0));
 				for (cnt = 181; cnt <= 195; cnt++) // 龙骑士秘技
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
@@ -146,14 +146,14 @@ public class L1AddSkill implements L1CommandExecutor {
 				pc.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 15));
 				for (cnt = 201; cnt <= 220; cnt++) // 幻术师魔法
 				{
-					L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
+					final L1Skills l1skills = SkillsTable.getInstance().getTemplate(cnt); // 技能情报取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 写入DB
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 指令错误。"));
 		}
 	}

@@ -35,7 +35,7 @@ public class L1GroundInventory extends L1Inventory {
 	private class DeletionTimer extends TimerTask {
 		private final L1ItemInstance _item;
 
-		public DeletionTimer(L1ItemInstance item) {
+		public DeletionTimer(final L1ItemInstance item) {
 			_item = item;
 		}
 
@@ -49,7 +49,7 @@ public class L1GroundInventory extends L1Inventory {
 					removeItem(_item);
 				}
 			}
-			catch (Throwable t) {
+			catch (final Throwable t) {
 				_log.log(Level.SEVERE, t.getLocalizedMessage(), t);
 			}
 		}
@@ -61,9 +61,9 @@ public class L1GroundInventory extends L1Inventory {
 
 	private static final Timer _timer = new Timer();
 
-	private Map<Integer, DeletionTimer> _reservedTimers = Maps.newMap();
+	private final Map<Integer, DeletionTimer> _reservedTimers = Maps.newMap();
 
-	public L1GroundInventory(int objectId, int x, int y, short map) {
+	public L1GroundInventory(final int objectId, final int x, final int y, final short map) {
 		setId(objectId);
 		setX(x);
 		setY(y);
@@ -73,9 +73,9 @@ public class L1GroundInventory extends L1Inventory {
 
 	// 空インベントリ破棄及び見える範囲内にいるプレイヤーのオブジェクト削除
 	@Override
-	public void deleteItem(L1ItemInstance item) {
+	public void deleteItem(final L1ItemInstance item) {
 		cancelTimer(item);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
 			pc.sendPackets(new S_RemoveObject(item));
 			pc.removeKnownObject(item);
 		}
@@ -88,18 +88,18 @@ public class L1GroundInventory extends L1Inventory {
 
 	// 对可见范围内的玩家送信
 	@Override
-	public void insertItem(L1ItemInstance item) {
+	public void insertItem(final L1ItemInstance item) {
 		setTimer(item);
 
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
 			pc.sendPackets(new S_DropItem(item));
 			pc.addKnownObject(item);
 		}
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
-		for (L1ItemInstance item : getItems()) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
+		for (final L1ItemInstance item : getItems()) {
 			if (!perceivedFrom.knownsObject(item)) {
 				perceivedFrom.addKnownObject(item);
 				perceivedFrom.sendPackets(new S_DropItem(item)); // プレイヤーへDROPITEM情報を通知
@@ -109,21 +109,21 @@ public class L1GroundInventory extends L1Inventory {
 
 	// 对可见范围内的玩家更新
 	@Override
-	public void updateItem(L1ItemInstance item) {
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
+	public void updateItem(final L1ItemInstance item) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
 			pc.sendPackets(new S_DropItem(item));
 		}
 	}
 
-	private void cancelTimer(L1ItemInstance item) {
-		DeletionTimer timer = _reservedTimers.get(item.getId());
+	private void cancelTimer(final L1ItemInstance item) {
+		final DeletionTimer timer = _reservedTimers.get(item.getId());
 		if (timer == null) {
 			return;
 		}
 		timer.cancel();
 	}
 
-	private void setTimer(L1ItemInstance item) {
+	private void setTimer(final L1ItemInstance item) {
 		if (!Config.ALT_ITEM_DELETION_TYPE.equalsIgnoreCase("std")) {
 			return;
 		}

@@ -36,14 +36,14 @@ public class C_Door extends ClientBasePacket {
 
 	public class CloseTimer extends TimerTask {
 
-		private L1DoorInstance _door;
+		private final L1DoorInstance _door;
 
-		public CloseTimer(L1DoorInstance door) {
+		public CloseTimer(final L1DoorInstance door) {
 			_door = door;
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 5 * 1000);
 		}
 
@@ -57,14 +57,14 @@ public class C_Door extends ClientBasePacket {
 
 	private static final String C_DOOR = "[C] C_Door";
 
-	public C_Door(byte abyte0[], ClientThread client) throws Exception {
+	public C_Door(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
 		readH();
 		readH();
-		int objectId = readD();
+		final int objectId = readD();
 
-		L1PcInstance pc = client.getActiveChar();
-		L1DoorInstance door = (L1DoorInstance) L1World.getInstance().findObject(objectId);
+		final L1PcInstance pc = client.getActiveChar();
+		final L1DoorInstance door = (L1DoorInstance) L1World.getInstance().findObject(objectId);
 		if (door == null) {
 			return;
 		}
@@ -78,7 +78,7 @@ public class C_Door extends ClientBasePacket {
 			}
 			if (pc.getInventory().consumeItem(40163, 1)) { // 黄金钥匙
 				door.open();
-				CloseTimer closetimer = new CloseTimer(door);
+				final CloseTimer closetimer = new CloseTimer(door);
 				closetimer.begin();
 			}
 		}
@@ -88,7 +88,7 @@ public class C_Door extends ClientBasePacket {
 			}
 			if (pc.getInventory().consumeItem(40313, 1)) { // 银钥匙
 				door.open();
-				CloseTimer closetimer = new CloseTimer(door);
+				final CloseTimer closetimer = new CloseTimer(door);
 				closetimer.begin();
 			}
 		}
@@ -107,16 +107,16 @@ public class C_Door extends ClientBasePacket {
 		return C_DOOR;
 	}
 
-	private boolean isExistKeeper(L1PcInstance pc, int keeperId) {
+	private boolean isExistKeeper(final L1PcInstance pc, final int keeperId) {
 		if (keeperId == 0) {
 			return false;
 		}
 
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int houseId = clan.getHouseId();
+			final int houseId = clan.getHouseId();
 			if (houseId != 0) {
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				final L1House house = HouseTable.getInstance().getHouseTable(houseId);
 				if (keeperId == house.getKeeperId()) {
 					return false;
 				}

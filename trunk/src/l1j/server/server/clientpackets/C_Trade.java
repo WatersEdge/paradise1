@@ -29,14 +29,14 @@ public class C_Trade extends ClientBasePacket {
 
 	private static final String C_TRADE = "[C] C_Trade";
 
-	public C_Trade(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Trade(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 		if (player.isGhost()) {
 			return;
 		}
-		L1PcInstance target = FaceToFace.faceToFace(player);
+		final L1PcInstance target = FaceToFace.faceToFace(player);
 		if (target != null) {
 			if (!target.isParalyzed()) {
 				player.setTradeID(target.getId()); // 保存对象的ID

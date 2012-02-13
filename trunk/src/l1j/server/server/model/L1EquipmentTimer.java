@@ -28,7 +28,7 @@ public class L1EquipmentTimer extends TimerTask {
 
 	private final L1ItemInstance _item;
 
-	public L1EquipmentTimer(L1PcInstance pc, L1ItemInstance item) {
+	public L1EquipmentTimer(final L1PcInstance pc, final L1ItemInstance item) {
 		_pc = pc;
 		_item = item;
 	}

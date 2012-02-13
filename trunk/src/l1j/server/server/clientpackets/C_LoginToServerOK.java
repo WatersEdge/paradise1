@@ -27,13 +27,13 @@ public class C_LoginToServerOK extends ClientBasePacket {
 
 	private static final String C_LOGIN_TO_SERVER_OK = "[C] C_LoginToServerOK";
 
-	public C_LoginToServerOK(byte[] decrypt, ClientThread client) {
+	public C_LoginToServerOK(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
 
-		int type = readC();
-		int button = readC();
+		final int type = readC();
+		final int button = readC();
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
 		if (type == 255) { // 全体聊天 && 密语
 			if ((button == 95) || (button == 127)) {

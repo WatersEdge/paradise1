@@ -191,17 +191,17 @@ public class Teleportation {
 		}
 
 		// 副本编号与副本地图不符
-		if (pc.getPortalNumber() != -1 && (pc.getMapId() != (1005 + pc.getPortalNumber()))) {
+		if ((pc.getPortalNumber() != -1) && (pc.getMapId() != (1005 + pc.getPortalNumber()))) {
 			L1DragonSlayer.getInstance().removePlayer(pc, pc.getPortalNumber());
 			pc.setPortalNumber(-1);
 		}
 		// 离开旅馆地图，旅馆钥匙归零
-		if (pc.getMapId() <= 10000 && pc.getInnKeyId() != 0) {
+		if ((pc.getMapId() <= 10000) && (pc.getInnKeyId() != 0)) {
 			pc.setInnKeyId(0);
 		}
 	}
 
-	private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
+	private static void teleport(final L1NpcInstance npc, final int x, final int y, final short map, final int head) {
 		L1World.getInstance().moveVisibleObject(npc, map);
 		L1WorldMap.getInstance().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), true);
 		npc.setX(x);

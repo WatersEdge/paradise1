@@ -17,7 +17,7 @@ import lineage.console.connector.UniversalUseItem;
 public class UsePolyOther implements UniversalUseItem {
 
 	@Override
-	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
+	public void useItem(final L1PcInstance pc, final L1ItemInstance item, final int itemId, final int effect, final int time, final int gfxid) {
 
 		// 不能变身的状态
 		// 取回觉醒技能ID

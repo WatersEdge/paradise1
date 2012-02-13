@@ -42,15 +42,15 @@ public class C_MoveChar extends ClientBasePacket {
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
 	// 移动
-	public C_MoveChar(byte decrypt[], ClientThread client) throws Exception {
+	public C_MoveChar(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
 		int locx = readH();
 		int locy = readH();
 		int heading = readC();
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
-		if (pc == null || pc.isTeleport()) { // 传送中
+		if ((pc == null) || pc.isTeleport()) { // 传送中
 			return;
 		}
 
@@ -111,7 +111,7 @@ public class C_MoveChar extends ClientBasePacket {
 
 	// 地图编号的研究
 	@SuppressWarnings("unused")
-	private void sendMapTileLog(L1PcInstance pc) {
+	private void sendMapTileLog(final L1PcInstance pc) {
 		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(pc.getLocation())));
 	}
 }

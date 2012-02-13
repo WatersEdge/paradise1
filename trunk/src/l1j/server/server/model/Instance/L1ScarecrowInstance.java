@@ -30,7 +30,7 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1ScarecrowInstance(L1Npc template) {
+	public L1ScarecrowInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -38,13 +38,13 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		if (attack.calcHit()) {
 			attack.calcDamage();
 			attack.calcStaffOfMana();
@@ -60,12 +60,12 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance l1pcinstance) {
+	public void onTalkAction(final L1PcInstance l1pcinstance) {
 
 	}
 
 	@Override
-	public void receiveDamage(L1Character attacker, int damage) {
+	public void receiveDamage(final L1Character attacker, final int damage) {
 		if ((getCurrentHp() > 0) && !isDead()) {
 			if (damage > 0) {
 				if (getHeading() < 7) {
@@ -77,13 +77,13 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 				broadcastPacket(new S_ChangeHeading(this));
 
 				if ((attacker instanceof L1PcInstance)) {
-					L1PcInstance pc = (L1PcInstance) attacker;
+					final L1PcInstance pc = (L1PcInstance) attacker;
 					pc.setPetTarget(this);
 
 					if (pc.getLevel() < 5) {
-						List<L1Character> targetList = Lists.newList();
+						final List<L1Character> targetList = Lists.newList();
 						targetList.add(pc);
-						List<Integer> hateList = Lists.newList();
+						final List<Integer> hateList = Lists.newList();
 						hateList.add(1);
 						CalcExp.calcExp(pc, getId(), targetList, hateList, getExp());
 					}

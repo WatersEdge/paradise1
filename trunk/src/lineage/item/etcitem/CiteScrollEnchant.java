@@ -52,7 +52,7 @@ public class CiteScrollEnchant implements ScrollEnchant {
 			case 140129: // 奇安的卷轴
 			case 140130: // 金侃的卷轴
 				if (item.getEnchantLevel() <= 2) {
-					int j = Random.nextInt(100) + 1;
+					final int j = Random.nextInt(100) + 1;
 					if (j < 32) {
 						return 1;
 					}
@@ -64,7 +64,7 @@ public class CiteScrollEnchant implements ScrollEnchant {
 					}
 				}
 				else if ((item.getEnchantLevel() >= 3) && (item.getEnchantLevel() <= 5)) {
-					int j = Random.nextInt(100) + 1;
+					final int j = Random.nextInt(100) + 1;
 					if (j < 50) {
 						return 2;
 					}
@@ -120,15 +120,15 @@ public class CiteScrollEnchant implements ScrollEnchant {
 		// 防具类
 		if (item.getItem().getType2() == 2) {
 			if (item.isEquipped()) {
-				if ((item.getItem().getType() < 8 || item.getItem().getType() > 12)) {
+				if (((item.getItem().getType() < 8) || (item.getItem().getType() > 12))) {
 					pc.addAc(-i);
 				}
 				final int armorId = item.getItem().getItemId();
 				// 强化等级+1，魔防+1
 				final int[] i1 = { 20011, 20110, 21123, 21124, 21125, 21126, 120011 };
 				// 抗魔法头盔、抗魔法链甲、林德拜尔的XX、受祝福的 抗魔法头盔
-				for (int j = 0; j < i1.length; j++) {
-					if (armorId == i1[j]) {
+				for (final int element : i1) {
+					if (armorId == element) {
 						pc.addMr(i);
 						pc.sendPackets(new S_SPMR(pc));
 						break;
@@ -137,8 +137,8 @@ public class CiteScrollEnchant implements ScrollEnchant {
 				// 强化等级+1，魔防+2
 				final int[] i2 = { 20056, 120056, 220056 };
 				// 抗魔法斗篷
-				for (int j = 0; j < i2.length; j++) {
-					if (armorId == i2[j]) {
+				for (final int element : i2) {
+					if (armorId == element) {
 						pc.addMr(i * 2);
 						pc.sendPackets(new S_SPMR(pc));
 						break;
@@ -154,10 +154,11 @@ public class CiteScrollEnchant implements ScrollEnchant {
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128) // 封印中
-				|| (l1iteminstance1.getItem().getType2() != 2 // 不是装备
-						|| l1iteminstance1.getItem().getType() < 8 // 8:卷轴 9:任务物品 10:魔法书
-						|| l1iteminstance1.getItem().getType() > 12 // 11:宠物装备 12:其他
-				|| l1iteminstance1.getItem().getGrade() == -1)) { // 封印中
+				|| ((l1iteminstance1.getItem().getType2() != 2 // 不是装备
+						)
+						|| (l1iteminstance1.getItem().getType() < 8 // 8:卷轴 9:任务物品 10:魔法书
+						) || (l1iteminstance1.getItem().getType() > 12 // 11:宠物装备 12:其他
+						) || (l1iteminstance1.getItem().getGrade() == -1))) { // 封印中
 			pc.sendPackets(new S_ServerMessage(79));
 			return;
 		}
@@ -166,7 +167,7 @@ public class CiteScrollEnchant implements ScrollEnchant {
 		final int enchant_level = l1iteminstance1.getEnchantLevel();
 
 		// 强化上限 + 10
-		if (enchant_level < 0 || enchant_level >= 10) {
+		if ((enchant_level < 0) || (enchant_level >= 10)) {
 			pc.sendPackets(new S_ServerMessage(79));
 			return;
 		}
@@ -286,8 +287,8 @@ public class CiteScrollEnchant implements ScrollEnchant {
 		}
 
 		// 象牙塔装备
-		if (armorId == 20028 || armorId == 20082 || armorId == 20126 || armorId == 20173 || armorId == 20206 || armorId == 20232 || armorId == 21138 || armorId == 21051 || armorId == 21052 || armorId == 21053 || armorId == 21054 || armorId == 21055 || armorId == 21056
-				|| armorId == 21140 || armorId == 21141) {
+		if ((armorId == 20028) || (armorId == 20082) || (armorId == 20126) || (armorId == 20173) || (armorId == 20206) || (armorId == 20232) || (armorId == 21138) || (armorId == 21051) || (armorId == 21052) || (armorId == 21053) || (armorId == 21054) || (armorId == 21055)
+				|| (armorId == 21056) || (armorId == 21140) || (armorId == 21141)) {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
 			return;
 		}
@@ -377,8 +378,8 @@ public class CiteScrollEnchant implements ScrollEnchant {
 		}
 
 		// 非象牙塔、泡水装备
-		if (armorId != 20028 && armorId != 20082 && armorId != 20126 && armorId != 20173 && armorId != 20206 && armorId != 20232 && armorId != 21138 && armorId != 21051 && armorId != 21052 && armorId != 21053 && armorId != 21054 && armorId != 21055 && armorId != 21056
-				&& armorId != 21140 && armorId != 21141) {
+		if ((armorId != 20028) && (armorId != 20082) && (armorId != 20126) && (armorId != 20173) && (armorId != 20206) && (armorId != 20232) && (armorId != 21138) && (armorId != 21051) && (armorId != 21052) && (armorId != 21053) && (armorId != 21054) && (armorId != 21055)
+				&& (armorId != 21056) && (armorId != 21140) && (armorId != 21141)) {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
 			return;
 		}
@@ -590,7 +591,7 @@ public class CiteScrollEnchant implements ScrollEnchant {
 		}
 
 		// 非象牙塔装备
-		if (weaponId != 7 && weaponId != 35 && weaponId != 48 && weaponId != 73 && weaponId != 105 && weaponId != 120 && weaponId != 147 && weaponId != 156 && weaponId != 174 && weaponId != 175 && weaponId != 224) {
+		if ((weaponId != 7) && (weaponId != 35) && (weaponId != 48) && (weaponId != 73) && (weaponId != 105) && (weaponId != 120) && (weaponId != 147) && (weaponId != 156) && (weaponId != 174) && (weaponId != 175) && (weaponId != 224)) {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1没有任何事情发生。
 			return;
 		}

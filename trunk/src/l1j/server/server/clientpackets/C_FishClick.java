@@ -26,10 +26,10 @@ public class C_FishClick extends ClientBasePacket {
 
 	private static final String C_FISHCLICK = "[C] C_FishClick";
 
-	public C_FishClick(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_FishClick(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc == null || pc.isDead()) {
+		final L1PcInstance pc = clientthread.getActiveChar();
+		if ((pc == null) || pc.isDead()) {
 			return;
 		}
 		pc.setFishingTime(0);

@@ -37,7 +37,7 @@ public class HomeScroll extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		if (pc.getMap().isEscapable() || pc.isGm()) {
-			int[] loc = Getback.GetBack_Location(pc, true);
+			final int[] loc = Getback.GetBack_Location(pc, true);
 			L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 			pc.getInventory().removeItem(item, 1);
 		}

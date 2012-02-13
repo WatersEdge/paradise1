@@ -40,9 +40,9 @@ public class L1DwarfInventory extends L1Inventory {
 
 	private static Logger _log = Logger.getLogger(L1DwarfInventory.class.getName());
 
-	public static void present(int minlvl, int maxlvl, int itemid, int enchant, int count) throws Exception {
+	public static void present(final int minlvl, final int maxlvl, final int itemid, final int enchant, final int count) throws Exception {
 
-		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
+		final L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
 			return;
 		}
@@ -58,7 +58,7 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(2, maxlvl);
 			rs = pstm.executeQuery();
 
-			List<String> accountList = Lists.newList();
+			final List<String> accountList = Lists.newList();
 			while (rs.next()) {
 				accountList.add(rs.getString("account_name"));
 			}
@@ -66,7 +66,7 @@ public class L1DwarfInventory extends L1Inventory {
 			present(accountList, itemid, enchant, count);
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
 		} finally {
@@ -77,9 +77,9 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	public static void present(String account, int itemid, int enchant, int count) throws Exception {
+	public static void present(final String account, final int itemid, final int enchant, final int count) throws Exception {
 
-		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
+		final L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
 			return;
 		}
@@ -99,7 +99,7 @@ public class L1DwarfInventory extends L1Inventory {
 			}
 			rs = pstm.executeQuery();
 
-			List<String> accountList = Lists.newList();
+			final List<String> accountList = Lists.newList();
 			while (rs.next()) {
 				accountList.add(rs.getString("login"));
 			}
@@ -107,7 +107,7 @@ public class L1DwarfInventory extends L1Inventory {
 			present(accountList, itemid, enchant, count);
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
 		} finally {
@@ -118,8 +118,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	private static void present(List<String> accountList, int itemid, int enchant, int count) throws Exception {
-		L1Item itemtemp = ItemTable.getInstance().getTemplate(itemid);
+	private static void present(final List<String> accountList, final int itemid, final int enchant, final int count) throws Exception {
+		final L1Item itemtemp = ItemTable.getInstance().getTemplate(itemid);
 
 		if (ItemTable.getInstance().getTemplate(itemid) == null) {
 			throw new Exception("道具编号不存在。");
@@ -132,9 +132,9 @@ public class L1DwarfInventory extends L1Inventory {
 				con = L1DatabaseFactory.getInstance().getConnection();
 				con.setAutoCommit(false);
 
-				for (String account : accountList) {
+				for (final String account : accountList) {
 					if (itemtemp.isStackable()) {
-						L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
+						final L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
 						item.setEnchantLevel(enchant);
 						item.setCount(count);
 
@@ -212,11 +212,11 @@ public class L1DwarfInventory extends L1Inventory {
 				con.commit();
 				con.setAutoCommit(true);
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				try {
 					con.rollback();
 				}
-				catch (SQLException ignore) {
+				catch (final SQLException ignore) {
 				}
 
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -230,13 +230,13 @@ public class L1DwarfInventory extends L1Inventory {
 
 	private final L1PcInstance _owner;
 
-	public L1DwarfInventory(L1PcInstance owner) {
+	public L1DwarfInventory(final L1PcInstance owner) {
 		_owner = owner;
 	}
 
 	// ＤＢのcharacter_warehouseから削除
 	@Override
-	public void deleteItem(L1ItemInstance item) {
+	public void deleteItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -245,7 +245,7 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(1, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -257,7 +257,7 @@ public class L1DwarfInventory extends L1Inventory {
 
 	// ＤＢのcharacter_warehouseへ登録
 	@Override
-	public void insertItem(L1ItemInstance item) {
+	public void insertItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -290,7 +290,7 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -313,10 +313,10 @@ public class L1DwarfInventory extends L1Inventory {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1ItemInstance item = new L1ItemInstance();
-				int objectId = rs.getInt("id");
+				final L1ItemInstance item = new L1ItemInstance();
+				final int objectId = rs.getInt("id");
 				item.setId(objectId);
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
+				final L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
 				item.setEquipped(false);
@@ -348,7 +348,7 @@ public class L1DwarfInventory extends L1Inventory {
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -359,7 +359,7 @@ public class L1DwarfInventory extends L1Inventory {
 
 	// ＤＢのcharacter_warehouseを更新
 	@Override
-	public void updateItem(L1ItemInstance item) {
+	public void updateItem(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -369,7 +369,7 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(2, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

@@ -43,35 +43,35 @@ public class C_UsePetItem extends ClientBasePacket {
 	private static final String C_USE_PET_ITEM = "[C] C_UsePetItem";
 
 	/** 使用宠物装备 */
-	public C_UsePetItem(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_UsePetItem(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int data = readC();
-		int petId = readD();
-		int listNo = readC();
+		final int data = readC();
+		final int petId = readD();
+		final int listNo = readC();
 
-		L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
+		final L1PcInstance pc = clientthread.getActiveChar();
 
 		// 宠物与角色为空
 		if ((pet == null) && (pc == null)) {
 			return;
 		}
-		L1ItemInstance item = pet.getInventory().getItems().get(listNo);
+		final L1ItemInstance item = pet.getInventory().getItems().get(listNo);
 		if (item == null) {
 			return;
 		}
 
 		// 宠物道具
 		if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 11)) {
-			L1PetType petType = PetTypeTable.getInstance().get(pet.getNpcTemplate().get_npcId());
+			final L1PetType petType = PetTypeTable.getInstance().get(pet.getNpcTemplate().get_npcId());
 			// 判断是否可用宠物装备
 			if (!petType.canUseEquipment()) {
 				pc.sendPackets(new S_ServerMessage(74, item.getLogName())); // \f1%0%o 无法使用。
 				return;
 			}
-			int itemId = item.getItem().getItemId();
-			L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
+			final int itemId = item.getItem().getItemId();
+			final L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
 			if (petItem.getUseType() == 1) { // 牙齿
 				pet.usePetWeapon(pet, item);
 				pc.sendPackets(new S_PetEquipment(data, pet, listNo)); // 装备时更新宠物资讯

@@ -31,13 +31,13 @@ public class L1Poly implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String name = st.nextToken();
-			int polyid = Integer.parseInt(st.nextToken());
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String name = st.nextToken();
+			final int polyid = Integer.parseInt(st.nextToken());
 
-			L1PcInstance tg = L1World.getInstance().getPlayer(name);
+			final L1PcInstance tg = L1World.getInstance().getPlayer(name);
 
 			if (tg == null) {
 				pc.sendPackets(new S_ServerMessage(73, name)); // \f1%0%d 不在线上。
@@ -46,12 +46,12 @@ public class L1Poly implements L1CommandExecutor {
 				try {
 					L1PolyMorph.doPoly(tg, polyid, 7200, L1PolyMorph.MORPH_BY_GM);
 				}
-				catch (Exception exception) {
+				catch (final Exception exception) {
 					pc.sendPackets(new S_SystemMessage("请输入 .poly 玩家名称 变身代码。"));
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 请输入  玩家名称 变身代码。"));
 		}
 	}

@@ -30,7 +30,7 @@ public class S_PinkName extends ServerBasePacket {
 	 * @param objecId
 	 * @param time
 	 */
-	public S_PinkName(int objecId, int time) {
+	public S_PinkName(final int objecId, final int time) {
 		writeC(Opcodes.S_OPCODE_PINKNAME);
 		writeD(objecId);
 		writeD(time);

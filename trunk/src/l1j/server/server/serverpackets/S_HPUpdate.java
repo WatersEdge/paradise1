@@ -31,7 +31,7 @@ public class S_HPUpdate extends ServerBasePacket {
 	 * @param currentHp
 	 * @param maxHp
 	 */
-	public S_HPUpdate(int currentHp, int maxHp) {
+	public S_HPUpdate(final int currentHp, final int maxHp) {
 		buildPacket(currentHp, maxHp);
 	}
 
@@ -40,11 +40,11 @@ public class S_HPUpdate extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public S_HPUpdate(L1PcInstance pc) {
+	public S_HPUpdate(final L1PcInstance pc) {
 		buildPacket(pc.getCurrentHp(), pc.getMaxHp());
 	}
 
-	public void buildPacket(int currentHp, int maxHp) {
+	public void buildPacket(final int currentHp, final int maxHp) {
 		writeC(Opcodes.S_OPCODE_HPUPDATE);
 		writeH(hpRange.ensure(currentHp));
 		writeH(hpRange.ensure(maxHp));

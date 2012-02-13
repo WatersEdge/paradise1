@@ -56,9 +56,9 @@ public class L1EffectSpawn {
 	}
 
 	/** 产生火牢 */
-	public void doSpawnFireWall(L1Character cha, int targetX, int targetY) {
-		L1Npc firewall = NpcTable.getInstance().getTemplate(81157); // 火牢
-		int duration = SkillsTable.getInstance().getTemplate(FIRE_WALL).getBuffDuration();
+	public void doSpawnFireWall(final L1Character cha, final int targetX, final int targetY) {
+		final L1Npc firewall = NpcTable.getInstance().getTemplate(81157); // 火牢
+		final int duration = SkillsTable.getInstance().getTemplate(FIRE_WALL).getBuffDuration();
 
 		if (firewall == null) {
 			throw new NullPointerException("没有找到火牢数据:npcid=81157");
@@ -66,7 +66,7 @@ public class L1EffectSpawn {
 
 		L1Character base = cha;
 		for (int i = 0; i < 8; i++) {
-			int a = base.targetDirection(targetX, targetY);
+			final int a = base.targetDirection(targetX, targetY);
 			int x = base.getX();
 			int y = base.getY();
 			if (a == 1) {
@@ -101,18 +101,18 @@ public class L1EffectSpawn {
 				x = base.getX();
 				y = base.getY();
 			}
-			L1Map map = L1WorldMap.getInstance().getMap(cha.getMapId());
+			final L1Map map = L1WorldMap.getInstance().getMap(cha.getMapId());
 			if (!map.isArrowPassable(x, y, cha.getHeading())) {
 				break;
 			}
 
-			L1EffectInstance effect = spawnEffect(81157, duration * 1000, x, y, cha.getMapId());
+			final L1EffectInstance effect = spawnEffect(81157, duration * 1000, x, y, cha.getMapId());
 			if (effect == null) {
 				break;
 			}
-			for (L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
+			for (final L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
 				if (objects instanceof L1EffectInstance) {
-					L1EffectInstance npc = (L1EffectInstance) objects;
+					final L1EffectInstance npc = (L1EffectInstance) objects;
 					if (npc.getNpcTemplate().get_npcId() == 81157) {
 						npc.deleteMe();
 					}
@@ -126,18 +126,18 @@ public class L1EffectSpawn {
 	}
 
 	/** 巴拉卡斯火牢 */
-	public void doSpawnFireWallforNpc(L1Character _user, L1Character target) {
+	public void doSpawnFireWallforNpc(final L1Character _user, final L1Character target) {
 		@SuppressWarnings("unused")
 		L1Character base = _user;
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				L1EffectInstance effect = spawnEffect(81157, 10 * 1000, target.getX() + i, target.getY() + j, target.getMapId());
+				final L1EffectInstance effect = spawnEffect(81157, 10 * 1000, target.getX() + i, target.getY() + j, target.getMapId());
 				if (effect == null) {
 					break;
 				}
-				for (L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
+				for (final L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
 					if (objects instanceof L1EffectInstance) {
-						L1EffectInstance npc = (L1EffectInstance) objects;
+						final L1EffectInstance npc = (L1EffectInstance) objects;
 						if (npc.getNpcTemplate().get_npcId() == 81157) {
 							npc.deleteMe();
 						}
@@ -145,9 +145,9 @@ public class L1EffectSpawn {
 				}
 				// 火牢伤害
 				@SuppressWarnings("unused")
-				L1Map map = L1WorldMap.getInstance().getMap(_user.getMapId());
+				final L1Map map = L1WorldMap.getInstance().getMap(_user.getMapId());
 
-				NpcFireDamage firedamage = new NpcFireDamage(_user, effect);
+				final NpcFireDamage firedamage = new NpcFireDamage(_user, effect);
 				firedamage.onDamageAction();
 				// 火牢伤害 end
 				base = effect;
@@ -170,23 +170,23 @@ public class L1EffectSpawn {
 	 *            设置地图的ID
 	 * @return 生成的对象的影响
 	 */
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId) {
+	public L1EffectInstance spawnEffect(final int npcId, final int time, final int locX, final int locY, final short mapId) {
 		return spawnEffect(npcId, time, locX, locY, mapId, null, 0);
 	}
 
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1PcInstance user, int skiiId) {
-		L1Npc template = NpcTable.getInstance().getTemplate(npcId);
+	public L1EffectInstance spawnEffect(final int npcId, final int time, final int locX, final int locY, final short mapId, final L1PcInstance user, final int skiiId) {
+		final L1Npc template = NpcTable.getInstance().getTemplate(npcId);
 		L1EffectInstance effect = null;
 
 		if (template == null) {
 			return null;
 		}
 
-		String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
+		final String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
 
 		try {
 			_constructor = Class.forName(className).getConstructors()[0];
-			Object obj[] = { template };
+			final Object obj[] = { template };
 			effect = (L1EffectInstance) _constructor.newInstance(obj);
 
 			effect.setId(IdFactory.getInstance().nextId());
@@ -202,16 +202,16 @@ public class L1EffectSpawn {
 			L1World.getInstance().storeObject(effect);
 			L1World.getInstance().addVisibleObject(effect);
 
-			for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(effect)) {
+			for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(effect)) {
 				effect.addKnownObject(pc);
 				pc.addKnownObject(effect);
 				pc.sendPackets(new S_NPCPack(effect));
 				pc.broadcastPacket(new S_NPCPack(effect));
 			}
-			L1NpcDeleteTimer timer = new L1NpcDeleteTimer(effect, time);
+			final L1NpcDeleteTimer timer = new L1NpcDeleteTimer(effect, time);
 			timer.begin();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 

@@ -48,21 +48,21 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 
 	private final L1NpcAction _actionOnFail;
 
-	public L1NpcMakeItemAction(Element element) {
+	public L1NpcMakeItemAction(final Element element) {
 		super(element);
 
 		_isAmountInputable = L1NpcXmlParser.getBoolAttribute(element, "AmountInputable", true);
-		NodeList list = element.getChildNodes();
-		for (Element elem : new IterableElementList(list)) {
+		final NodeList list = element.getChildNodes();
+		for (final Element elem : new IterableElementList(list)) {
 			if (elem.getNodeName().equalsIgnoreCase("Material")) {
-				int id = Integer.valueOf(elem.getAttribute("ItemId"));
-				int amount = Integer.valueOf(elem.getAttribute("Amount"));
+				final int id = Integer.valueOf(elem.getAttribute("ItemId"));
+				final int amount = Integer.valueOf(elem.getAttribute("Amount"));
 				_materials.add(new L1ObjectAmount<Integer>(id, amount));
 				continue;
 			}
 			if (elem.getNodeName().equalsIgnoreCase("Item")) {
-				int id = Integer.valueOf(elem.getAttribute("ItemId"));
-				int amount = Integer.valueOf(elem.getAttribute("Amount"));
+				final int id = Integer.valueOf(elem.getAttribute("ItemId"));
+				final int amount = Integer.valueOf(elem.getAttribute("Amount"));
 				_items.add(new L1ObjectAmount<Integer>(id, amount));
 				continue;
 			}
@@ -79,8 +79,8 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 	}
 
 	@Override
-	public L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte[] args) {
-		int numOfMaterials = countNumOfMaterials(pc.getInventory());
+	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
+		final int numOfMaterials = countNumOfMaterials(pc.getInventory());
 		if ((1 < numOfMaterials) && _isAmountInputable) {
 			pc.sendPackets(new S_HowManyMake(obj.getId(), numOfMaterials, actionName));
 			return null;
@@ -89,8 +89,8 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 	}
 
 	@Override
-	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
-		L1NpcInstance npc = (L1NpcInstance) obj;
+	public L1NpcHtml executeWithAmount(final String actionName, final L1PcInstance pc, final L1Object obj, final int amount) {
+		final L1NpcInstance npc = (L1NpcInstance) obj;
 		L1NpcHtml result = null;
 		if (makeItems(pc, npc.getNpcTemplate().get_name(), amount)) {
 			if (_actionOnSucceed != null) {
@@ -108,24 +108,24 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 	/**
 	 * 指定されたインベントリ内に、素材が何セットあるか数える
 	 */
-	private int countNumOfMaterials(L1PcInventory inv) {
+	private int countNumOfMaterials(final L1PcInventory inv) {
 		int count = Integer.MAX_VALUE;
-		for (L1ObjectAmount<Integer> material : _materials) {
-			int numOfSet = inv.countItems(material.getObject()) / material.getAmount();
+		for (final L1ObjectAmount<Integer> material : _materials) {
+			final int numOfSet = inv.countItems(material.getObject()) / material.getAmount();
 			count = Math.min(count, numOfSet);
 		}
 		return count;
 	}
 
-	private boolean makeItems(L1PcInstance pc, String npcName, int amount) {
+	private boolean makeItems(final L1PcInstance pc, final String npcName, final int amount) {
 		if (amount <= 0) {
 			return false;
 		}
 
 		boolean isEnoughMaterials = true;
-		for (L1ObjectAmount<Integer> material : _materials) {
+		for (final L1ObjectAmount<Integer> material : _materials) {
 			if (!pc.getInventory().checkItemNotEquipped(material.getObject(), material.getAmount() * amount)) {
-				L1Item temp = ItemTable.getInstance().getTemplate(material.getObject());
+				final L1Item temp = ItemTable.getInstance().getTemplate(material.getObject());
 				pc.sendPackets(new S_ServerMessage(337, temp.getName() + "(" + ((material.getAmount() * amount) - pc.getInventory().countItems(temp.getItemId())) + ")")); // \f1%0が不足しています。
 				isEnoughMaterials = false;
 			}
@@ -138,8 +138,8 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		int countToCreate = 0; // アイテムの個数（纏まる物は1個）
 		int weight = 0;
 
-		for (L1ObjectAmount<Integer> makingItem : _items) {
-			L1Item temp = ItemTable.getInstance().getTemplate(makingItem.getObject());
+		for (final L1ObjectAmount<Integer> makingItem : _items) {
+			final L1Item temp = ItemTable.getInstance().getTemplate(makingItem.getObject());
 			if (temp.isStackable()) {
 				if (!pc.getInventory().checkItem(makingItem.getObject())) {
 					countToCreate += 1;
@@ -161,13 +161,13 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 			return false;
 		}
 
-		for (L1ObjectAmount<Integer> material : _materials) {
+		for (final L1ObjectAmount<Integer> material : _materials) {
 			// 材料消費
 			pc.getInventory().consumeItem(material.getObject(), material.getAmount() * amount);
 		}
 
-		for (L1ObjectAmount<Integer> makingItem : _items) {
-			L1ItemInstance item = pc.getInventory().storeItem(makingItem.getObject(), makingItem.getAmount() * amount);
+		for (final L1ObjectAmount<Integer> makingItem : _items) {
+			final L1ItemInstance item = pc.getInventory().storeItem(makingItem.getObject(), makingItem.getAmount() * amount);
 			if (item != null) {
 				String itemName = ItemTable.getInstance().getTemplate(makingItem.getObject()).getName();
 				if (makingItem.getAmount() * amount > 1) {

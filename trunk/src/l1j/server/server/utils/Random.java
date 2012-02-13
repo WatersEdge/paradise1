@@ -45,20 +45,20 @@ public class Random {
 	}
 
 	/** 取得整数 */
-	public static int nextInt(int n) {
+	public static int nextInt(final int n) {
 		_idx = _idx & _max;
 		return (int) (_value[_idx++] * n);
 	}
 
 	/** 取得整数+偏移 */
-	public static int nextInt(int n, int offset) {
+	public static int nextInt(final int n, final int offset) {
 		_idx = _idx & _max;
 		return offset + (int) (_value[_idx++] * n);
 	}
 
 	/** 随机长整数 */
 	public static long nextLong() {
-		long l = nextInt(Integer.MAX_VALUE) << 32 + nextInt(Integer.MAX_VALUE);
+		final long l = nextInt(Integer.MAX_VALUE) << 32 + nextInt(Integer.MAX_VALUE);
 		return l;
 	}
 }

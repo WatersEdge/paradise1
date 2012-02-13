@@ -37,7 +37,7 @@ public class S_RangeSkill extends ServerBasePacket {
 
 	public static final int TYPE_DIR = 8;
 
-	private static int calcheading(int myx, int myy, int tx, int ty) {
+	private static int calcheading(final int myx, final int myy, final int tx, final int ty) {
 		int newheading = 0;
 		if ((tx > myx) && (ty > myy)) {
 			newheading = 3;
@@ -66,7 +66,7 @@ public class S_RangeSkill extends ServerBasePacket {
 		return newheading;
 	}
 
-	public S_RangeSkill(L1Character cha, L1Character[] target, int spellgfx, int actionId, int type) {
+	public S_RangeSkill(final L1Character cha, final L1Character[] target, final int spellgfx, final int actionId, final int type) {
 		buildPacket(cha, target, spellgfx, actionId, type);
 	}
 
@@ -92,7 +92,7 @@ public class S_RangeSkill extends ServerBasePacket {
 	 * @param actionId
 	 * @param type
 	 */
-	private void buildPacket(L1Character cha, L1Character[] target, int spellgfx, int actionId, int type) {
+	private void buildPacket(final L1Character cha, final L1Character[] target, final int spellgfx, final int actionId, final int type) {
 		writeC(Opcodes.S_OPCODE_RANGESKILLS);
 		writeC(actionId);
 		writeD(cha.getId());
@@ -102,7 +102,7 @@ public class S_RangeSkill extends ServerBasePacket {
 			writeC(cha.getHeading());
 		}
 		else if (type == TYPE_DIR) {
-			int newHeading = calcheading(cha.getX(), cha.getY(), target[0].getX(), target[0].getY());
+			final int newHeading = calcheading(cha.getX(), cha.getY(), target[0].getX(), target[0].getY());
 			cha.setHeading(newHeading);
 			writeC(cha.getHeading());
 		}
@@ -111,7 +111,7 @@ public class S_RangeSkill extends ServerBasePacket {
 		writeC(type); // 0:范围 6:远距离 8:范围&远距离
 		writeH(0);
 		writeH(target.length);
-		for (L1Character element : target) {
+		for (final L1Character element : target) {
 			writeD(element.getId());
 			writeH(0x20); // 0:伤害动作 0以外:无
 		}

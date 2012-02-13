@@ -27,7 +27,7 @@ public class L1SkillTrap extends L1Trap {
 	private final int _skillId;
 	private final int _skillTimeSeconds;
 
-	public L1SkillTrap(TrapStorage storage) {
+	public L1SkillTrap(final TrapStorage storage) {
 		super(storage);
 
 		_skillId = storage.getInt("skillId");
@@ -35,7 +35,7 @@ public class L1SkillTrap extends L1Trap {
 	}
 
 	@Override
-	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
+	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
 		sendEffect(trapObj);
 
 		new L1SkillUse().handleCommands(trodFrom, _skillId, trodFrom.getId(), trodFrom.getX(), trodFrom.getY(), null, _skillTimeSeconds, L1SkillUse.TYPE_GMBUFF);

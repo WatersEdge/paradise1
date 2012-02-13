@@ -14,47 +14,50 @@ import l1j.server.server.utils.Random;
 public class L1MagicDoll {
 
 	/** 防御力增加 */
-	public static int getAcByDoll(L1Character _master) {
+	public static int getAcByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getAc();
 			}
 		}
 		return s;
 	}
+
 	/** 弓的攻击力增加 */
-	public static int getBowDamageByDoll(L1Character _master) {
+	public static int getBowDamageByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getBowDmg();
 			}
 		}
 		return s;
 	}
+
 	/** 弓的命中率增加 */
-	public static int getBowHitAddByDoll(L1Character _master) {
+	public static int getBowHitAddByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getBowHit();
 			}
 		}
 		return s;
 	}
+
 	/** 近距离的攻击力增加 */
-	public static int getDamageAddByDoll(L1Character _master) {
+	public static int getDamageAddByDoll(final L1Character _master) {
 		int s = 0;
-		int chance = Random.nextInt(100) + 1;
+		final int chance = Random.nextInt(100) + 1;
 		boolean isAdd = false;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getDmgChance() > 0 && !isAdd) { // 额外伤害发动机率
+				if ((doll.getDmgChance() > 0) && !isAdd) { // 额外伤害发动机率
 					if (doll.getDmgChance() >= chance) {
 						s += doll.getDmg();
 						isAdd = true;
@@ -67,22 +70,23 @@ public class L1MagicDoll {
 		}
 		if (isAdd) {
 			if (_master instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) _master;
+				final L1PcInstance pc = (L1PcInstance) _master;
 				pc.sendPackets(new S_SkillSound(_master.getId(), 6319));
 			}
 			_master.broadcastPacket(new S_SkillSound(_master.getId(), 6319));
 		}
 		return s;
 	}
+
 	/** 伤害回避 */
-	public static int getDamageEvasionByDoll(L1Character _master) {
-		int chance = Random.nextInt(100) + 1;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static int getDamageEvasionByDoll(final L1Character _master) {
+		final int chance = Random.nextInt(100) + 1;
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getDmgEvasionChance() >= chance) { // 伤害回避发动机率
 					if (_master instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) _master;
+						final L1PcInstance pc = (L1PcInstance) _master;
 						pc.sendPackets(new S_SkillSound(_master.getId(), 6320));
 					}
 					_master.broadcastPacket(new S_SkillSound(_master.getId(), 6320));
@@ -92,15 +96,16 @@ public class L1MagicDoll {
 		}
 		return 0;
 	}
+
 	/** 取得魔法娃娃伤害减免 */
-	public static int getDamageReductionByDoll(L1Character _master) {
+	public static int getDamageReductionByDoll(final L1Character _master) {
 		int s = 0;
-		int chance = Random.nextInt(100) + 1;
+		final int chance = Random.nextInt(100) + 1;
 		boolean isReduction = false;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getDmgReductionChance() > 0 && !isReduction) { // 伤害减免发动机率
+				if ((doll.getDmgReductionChance() > 0) && !isReduction) { // 伤害减免发动机率
 					if (doll.getDmgReductionChance() >= chance) {
 						s += doll.getDmgReduction();
 						isReduction = true;
@@ -113,18 +118,19 @@ public class L1MagicDoll {
 		}
 		if (isReduction) {
 			if (_master instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) _master;
+				final L1PcInstance pc = (L1PcInstance) _master;
 				pc.sendPackets(new S_SkillSound(_master.getId(), 6320));
 			}
 			_master.broadcastPacket(new S_SkillSound(_master.getId(), 6320));
 		}
 		return s;
 	}
+
 	/** 取得魔法娃娃效果 */
-	public static int getEffectByDoll(L1Character _master, byte type) {
-		int chance = Random.nextInt(100) + 1;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static int getEffectByDoll(final L1Character _master, final byte type) {
+		final int chance = Random.nextInt(100) + 1;
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll.getEffectChance() > chance) {
 				if (doll != null) {
 					if (doll.getEffect() == type) {
@@ -135,49 +141,53 @@ public class L1MagicDoll {
 		}
 		return 0;
 	}
+
 	/** 近距离的命中率增加 */
-	public static int getHitAddByDoll(L1Character _master) {
+	public static int getHitAddByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getHit();
 			}
 		}
 		return s;
 	}
+
 	/** 体力回覆量 (时间固定性) */
-	public static int getHpByDoll(L1Character _master) {
+	public static int getHpByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getHprTime() && doll.getHpr() != 0) {
+				if (doll.getHprTime() && (doll.getHpr() != 0)) {
 					s += doll.getHpr();
 				}
 			}
 		}
 		return s;
 	}
+
 	/** 体力回覆量 */
-	public static int getHprByDoll(L1Character _master) {
+	public static int getHprByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (!doll.getHprTime() && doll.getHpr() != 0) {
+				if (!doll.getHprTime() && (doll.getHpr() != 0)) {
 					s += doll.getHpr();
 				}
 			}
 		}
 		return s;
 	}
+
 	/** 取得道具 */
-	public static int getMakeItemId(L1Character _master) {
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static int getMakeItemId(final L1Character _master) {
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
+				final L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
 				if (item != null) {
 					return item.getItemId();
 				}
@@ -185,128 +195,139 @@ public class L1MagicDoll {
 		}
 		return 0;
 	}
+
 	/** 魔力回覆量 (时间固定性) */
-	public static int getMpByDoll(L1Character _master) {
+	public static int getMpByDoll(final L1Character _master) {
 		int s = 0;
 
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getMprTime() && doll.getMpr() != 0) {
+				if (doll.getMprTime() && (doll.getMpr() != 0)) {
 					s += doll.getMpr();
 				}
 			}
 		}
 		return s;
 	}
+
 	/** 魔力回覆量 */
-	public static int getMprByDoll(L1Character _master) {
+	public static int getMprByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (!doll.getMprTime() && doll.getMpr() != 0) {
+				if (!doll.getMprTime() && (doll.getMpr() != 0)) {
 					s += doll.getMpr();
 				}
 			}
 		}
 		return s;
 	}
+
 	/** 闇黑耐性增加 */
-	public static int getRegistBlindByDoll(L1Character _master) {
+	public static int getRegistBlindByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistBlind();
 			}
 		}
 		return s;
 	}
+
 	/** 寒冰耐性增加 */
-	public static int getRegistFreezeByDoll(L1Character _master) {
+	public static int getRegistFreezeByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistFreeze();
 			}
 		}
 		return s;
 	}
+
 	/** 睡眠耐性增加 */
-	public static int getRegistSleepByDoll(L1Character _master) {
+	public static int getRegistSleepByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistSleep();
 			}
 		}
 		return s;
 	}
+
 	/** 石化耐性增加 */
-	public static int getRegistStoneByDoll(L1Character _master) {
+	public static int getRegistStoneByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistStone();
 			}
 		}
 		return s;
 	}
+
 	/** 昏迷耐性增加 */
-	public static int getRegistStunByDoll(L1Character _master) {
+	public static int getRegistStunByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistStun();
 			}
 		}
 		return s;
 	}
+
 	/** 支撑耐性增加 */
-	public static int getRegistSustainByDoll(L1Character _master) {
+	public static int getRegistSustainByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistSustain();
 			}
 		}
 		return s;
 	}
+
 	/** 负重减轻 */
-	public static int getWeightReductionByDoll(L1Character _master) {
+	public static int getWeightReductionByDoll(final L1Character _master) {
 		int s = 0;
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getWeightReduction();
 			}
 		}
 		return s;
 	}
+
 	/** 回血判断 (时间固定性) */
-	public static boolean isHpRegeneration(L1Character _master) {
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static boolean isHpRegeneration(final L1Character _master) {
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getHprTime() && doll.getHpr() != 0) {
+				if (doll.getHprTime() && (doll.getHpr() != 0)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
+
 	/** 创造道具 */
-	public static boolean isItemMake(L1Character _master) {
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static boolean isItemMake(final L1Character _master) {
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
+				final L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
 				if (item != null) {
 					return true;
 				}
@@ -314,18 +335,20 @@ public class L1MagicDoll {
 		}
 		return false;
 	}
+
 	/** 回魔判断 (时间固定性) */
-	public static boolean isMpRegeneration(L1Character _master) {
-		for (L1DollInstance dollIns : _master.getDollList().values()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
+	public static boolean isMpRegeneration(final L1Character _master) {
+		for (final L1DollInstance dollIns : _master.getDollList().values()) {
+			final L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
-				if (doll.getMprTime() && doll.getMpr() != 0) {
+				if (doll.getMprTime() && (doll.getMpr() != 0)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
+
 	/** 道具ID */
 	private int _itemId;
 	/** 娃娃ID */
@@ -526,127 +549,127 @@ public class L1MagicDoll {
 	}
 
 	/** 设定AC */
-	public void setAc(int i) {
+	public void setAc(final int i) {
 		_ac = i;
 	}
 
 	/** 设定弓伤害 */
-	public void setBowDmg(int i) {
+	public void setBowDmg(final int i) {
 		_bowDmg = i;
 	}
 
 	/** 设定弓的命中率 */
-	public void setBowHit(int i) {
+	public void setBowHit(final int i) {
 		_bowHit = i;
 	}
 
 	/** 设定伤害 */
-	public void setDmg(int i) {
+	public void setDmg(final int i) {
 		_dmg = i;
 	}
 
 	/** 设定伤害几率 */
-	public void setDmgChance(int i) {
+	public void setDmgChance(final int i) {
 		_dmgChance = i;
 	}
 
 	/** 设定伤害回避 */
-	public void setDmgEvasionChance(int i) {
+	public void setDmgEvasionChance(final int i) {
 		_dmgEvasionChance = i;
 	}
 
 	/** 设定伤害减免 */
-	public void setDmgReduction(int i) {
+	public void setDmgReduction(final int i) {
 		_dmgReduction = i;
 	}
 
 	/** 设定伤害减免的几率 */
-	public void setDmgReductionChance(int i) {
+	public void setDmgReductionChance(final int i) {
 		_dmgReductionChance = i;
 	}
 
 	/** 设定娃娃ID */
-	public void setDollId(int i) {
+	public void setDollId(final int i) {
 		_dollId = i;
 	}
 
 	/** 设定效果 */
-	public void setEffect(byte i) {
+	public void setEffect(final byte i) {
 		_effect = i;
 	}
 
 	/** 设定效果几率 */
-	public void setEffectChance(int i) {
+	public void setEffectChance(final int i) {
 		_EffectChance = i;
 	}
 
 	/** 设定命中率 */
-	public void setHit(int i) {
+	public void setHit(final int i) {
 		_hit = i;
 	}
 
 	/** 设定回血 */
-	public void setHpr(int i) {
+	public void setHpr(final int i) {
 		_hpr = i;
 	}
 
 	/** 设定回血时间 */
-	public void setHprTime(boolean i) {
+	public void setHprTime(final boolean i) {
 		_hprTime = i;
 	}
 
 	/** 设定道具ID */
-	public void setItemId(int i) {
+	public void setItemId(final int i) {
 		_itemId = i;
 	}
 
 	/** 设定取得道具 */
-	public void setMakeItemId(int i) {
+	public void setMakeItemId(final int i) {
 		_makeItemId = i;
 	}
 
 	/** 设定回魔 */
-	public void setMpr(int i) {
+	public void setMpr(final int i) {
 		_mpr = i;
 	}
 
 	/** 设定回魔时间 */
-	public void setMprTime(boolean i) {
+	public void setMprTime(final boolean i) {
 		_mprTime = i;
 	}
 
 	/** 设定闇黑耐性 */
-	public void setRegistBlind(int i) {
+	public void setRegistBlind(final int i) {
 		_registBlind = i;
 	}
 
 	/** 设定寒冰耐性 */
-	public void setRegistFreeze(int i) {
+	public void setRegistFreeze(final int i) {
 		_registFreeze = i;
 	}
 
 	/** 设定睡眠耐性 */
-	public void setRegistSleep(int i) {
+	public void setRegistSleep(final int i) {
 		_registSleep = i;
 	}
 
 	/** 设定石化耐性 */
-	public void setRegistStone(int i) {
+	public void setRegistStone(final int i) {
 		_registStone = i;
 	}
 
 	/** 设定昏迷耐性 */
-	public void setRegistStun(int i) {
+	public void setRegistStun(final int i) {
 		_registStun = i;
 	}
 
 	/** 设定支撑耐性 */
-	public void setRegistSustain(int i) {
+	public void setRegistSustain(final int i) {
 		_registSustain = i;
 	}
 
 	/** 设定负重轻减 */
-	public void setWeightReduction(int i) {
+	public void setWeightReduction(final int i) {
 		_weightReduction = i;
 	}
 

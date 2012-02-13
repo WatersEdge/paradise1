@@ -37,14 +37,14 @@ public class L1InsertSpawn implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		String msg = null;
 
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
-			String type = tok.nextToken();
-			int npcId = Integer.parseInt(tok.nextToken().trim());
-			L1Npc template = NpcTable.getInstance().getTemplate(npcId);
+			final StringTokenizer tok = new StringTokenizer(arg);
+			final String type = tok.nextToken();
+			final int npcId = Integer.parseInt(tok.nextToken().trim());
+			final L1Npc template = NpcTable.getInstance().getTemplate(npcId);
 
 			if (template == null) {
 				msg = "找不到符合条件的NPC。";
@@ -63,7 +63,7 @@ public class L1InsertSpawn implements L1CommandExecutor {
 			L1SpawnUtil.spawn(pc, npcId, 0, 0);
 			msg = new StringBuilder().append(template.get_name()).append(" (" + npcId + ") ").append("新增到资料库中。").toString();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "", e);
 			msg = "请输入 : " + cmdName + " mob|npc NPCID 。";
 		} finally {

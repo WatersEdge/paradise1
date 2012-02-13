@@ -29,7 +29,7 @@ public class S_ChangeHeading extends ServerBasePacket {
 	 * 
 	 * @param cha
 	 */
-	public S_ChangeHeading(L1Character cha) {
+	public S_ChangeHeading(final L1Character cha) {
 		buildPacket(cha);
 	}
 
@@ -46,7 +46,7 @@ public class S_ChangeHeading extends ServerBasePacket {
 		return "[S] S_ChangeHeading";
 	}
 
-	private void buildPacket(L1Character cha) {
+	private void buildPacket(final L1Character cha) {
 		writeC(Opcodes.S_OPCODE_CHANGEHEADING);
 		writeD(cha.getId());
 		writeC(cha.getHeading());

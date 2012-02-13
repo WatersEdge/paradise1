@@ -44,8 +44,8 @@ public class NpcChatTimeController implements Runnable {
 
 	// 获得现实时间
 	private static Calendar getRealTime() {
-		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(_tz);
+		final TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final Calendar cal = Calendar.getInstance(_tz);
 		return cal;
 	}
 
@@ -57,21 +57,21 @@ public class NpcChatTimeController implements Runnable {
 				Thread.sleep(60000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 			_log.warning(e1.getMessage());
 		}
 	}
 
 	// 检查NPC聊天时间
 	private void checkNpcChatTime() {
-		for (L1NpcChat npcChat : NpcChatTable.getInstance().getAllGameTime()) {
+		for (final L1NpcChat npcChat : NpcChatTable.getInstance().getAllGameTime()) {
 			if (isChatTime(npcChat.getGameTime())) {
-				int npcId = npcChat.getNpcId();
-				for (L1Object obj : L1World.getInstance().getObject()) {
+				final int npcId = npcChat.getNpcId();
+				for (final L1Object obj : L1World.getInstance().getObject()) {
 					if (!(obj instanceof L1NpcInstance)) {
 						continue;
 					}
-					L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1NpcInstance npc = (L1NpcInstance) obj;
 					if (npc.getNpcTemplate().get_npcId() == npcId) {
 						npc.startChat(L1NpcInstance.CHAT_TIMING_GAME_TIME);
 					}
@@ -80,10 +80,10 @@ public class NpcChatTimeController implements Runnable {
 		}
 	}
 
-	private boolean isChatTime(int chatTime) {
-		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
-		Calendar realTime = getRealTime();
-		int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
+	private boolean isChatTime(final int chatTime) {
+		final SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
+		final Calendar realTime = getRealTime();
+		final int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
 		return (nowTime == chatTime);
 	}
 

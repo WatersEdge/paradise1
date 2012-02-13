@@ -27,7 +27,7 @@ public class L1MobGroup {
 
 	private final boolean _isRemoveGroupIfLeaderDie;
 
-	public L1MobGroup(int id, int leaderId, List<L1NpcCount> minions, boolean isRemoveGroupIfLeaderDie) {
+	public L1MobGroup(final int id, final int leaderId, final List<L1NpcCount> minions, final boolean isRemoveGroupIfLeaderDie) {
 		_id = id;
 		_leaderId = leaderId;
 		_minions.addAll(minions); // 参照コピーの方が速いが、不変性が保証できない

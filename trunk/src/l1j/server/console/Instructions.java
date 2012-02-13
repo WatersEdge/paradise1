@@ -32,7 +32,7 @@ public class Instructions {
 	 * @param level
 	 *            玩家等级
 	 */
-	public static void DeleteUnderLevel(int level) {
+	public static void DeleteUnderLevel(final int level) {
 		// TODO 移除角色的SQL指令
 	}
 }

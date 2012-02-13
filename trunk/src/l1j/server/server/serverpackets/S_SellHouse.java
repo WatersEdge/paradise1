@@ -34,7 +34,7 @@ public class S_SellHouse extends ServerBasePacket {
 	 * @param objectId
 	 * @param houseNumber
 	 */
-	public S_SellHouse(int objectId, String houseNumber) {
+	public S_SellHouse(final int objectId, final String houseNumber) {
 		buildPacket(objectId, houseNumber);
 	}
 
@@ -51,7 +51,7 @@ public class S_SellHouse extends ServerBasePacket {
 		return S_SELLHOUSE;
 	}
 
-	private void buildPacket(int objectId, String houseNumber) {
+	private void buildPacket(final int objectId, final String houseNumber) {
 		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 		writeD(objectId);
 		writeD(0); // ?

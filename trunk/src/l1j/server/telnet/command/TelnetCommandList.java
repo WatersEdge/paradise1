@@ -32,7 +32,7 @@ public class TelnetCommandList {
 		_cmds.put("shutdown", new ShutDownCommand());
 	}
 
-	public static TelnetCommand get(String name) {
+	public static TelnetCommand get(final String name) {
 		return _cmds.get(name.toLowerCase());
 	}
 }

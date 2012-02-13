@@ -37,7 +37,7 @@ public class S_FixWeaponList extends ServerBasePacket {
 	 * @param pc
 	 *            该角色
 	 */
-	public S_FixWeaponList(L1PcInstance pc) {
+	public S_FixWeaponList(final L1PcInstance pc) {
 		buildPacket(pc);
 	}
 
@@ -51,27 +51,27 @@ public class S_FixWeaponList extends ServerBasePacket {
 		return S_FIX_WEAPON_LIST;
 	}
 
-	private void buildPacket(L1PcInstance pc) {
+	private void buildPacket(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SELECTLIST);
 		writeD(0x000000c8); // Price
 
-		List<L1ItemInstance> weaponList = Lists.newList();
-		List<L1ItemInstance> itemList = pc.getInventory().getItems();
-		for (L1ItemInstance item : itemList) {
+		final List<L1ItemInstance> weaponList = Lists.newList();
+		final List<L1ItemInstance> itemList = pc.getInventory().getItems();
+		for (final L1ItemInstance item : itemList) {
 
 			// Find Weapon
 			switch (item.getItem().getType2()) {
-			case 1:
-				if (item.get_durability() > 0) {
-					weaponList.add(item);
-				}
-				break;
+				case 1:
+					if (item.get_durability() > 0) {
+						weaponList.add(item);
+					}
+					break;
 			}
 		}
 
 		writeH(weaponList.size()); // Weapon Amount
 
-		for (L1ItemInstance weapon : weaponList) {
+		for (final L1ItemInstance weapon : weaponList) {
 
 			writeD(weapon.getId()); // Item ID
 			writeC(weapon.get_durability()); // Fix Level

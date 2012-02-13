@@ -34,7 +34,7 @@ public class S_Buddy extends ServerBasePacket {
 	 * @param objId
 	 * @param buddy
 	 */
-	public S_Buddy(int objId, L1Buddy buddy) {
+	public S_Buddy(final int objId, final L1Buddy buddy) {
 		buildPacket(objId, buddy);
 	}
 
@@ -51,7 +51,7 @@ public class S_Buddy extends ServerBasePacket {
 		return _S_Buddy;
 	}
 
-	private void buildPacket(int objId, L1Buddy buddy) {
+	private void buildPacket(final int objId, final L1Buddy buddy) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objId);
 		writeS(_HTMLID);

@@ -32,15 +32,15 @@ public class C_JoinClan extends ClientBasePacket {
 
 	private static final String C_JOIN_CLAN = "[C] C_JoinClan";
 
-	public C_JoinClan(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_JoinClan(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
 
-		L1PcInstance target = FaceToFace.faceToFace(pc);
+		final L1PcInstance target = FaceToFace.faceToFace(pc);
 		if (target != null) {
 			JoinClan(pc, target);
 		}
@@ -52,20 +52,20 @@ public class C_JoinClan extends ClientBasePacket {
 	}
 
 	// 加入血盟
-	private void JoinClan(L1PcInstance player, L1PcInstance target) {
+	private void JoinClan(final L1PcInstance player, final L1PcInstance target) {
 		if (!target.isCrown()) { // 如果面对的对象不是王族
 			player.sendPackets(new S_ServerMessage(92, target.getName())); // \f1%0%d 不是王子或公主。
 			return;
 		}
 
-		int clan_id = target.getClanid();
-		String clan_name = target.getClanname();
+		final int clan_id = target.getClanid();
+		final String clan_name = target.getClanname();
 		if (clan_id == 0) { // 面对的对象没有创立血盟
 			player.sendPackets(new S_ServerMessage(90, target.getName())); // \f1%0%d 尚未创立血盟。
 			return;
 		}
 
-		L1Clan clan = L1World.getInstance().getClan(clan_name);
+		final L1Clan clan = L1World.getInstance().getClan(clan_name);
 		if (clan == null) {
 			return;
 		}
@@ -77,8 +77,8 @@ public class C_JoinClan extends ClientBasePacket {
 
 		if (player.getClanid() != 0) { // 已经加入血盟
 			if (player.isCrown()) { // 自己是盟主
-				String player_clan_name = player.getClanname();
-				L1Clan player_clan = L1World.getInstance().getClan(player_clan_name);
+				final String player_clan_name = player.getClanname();
+				final L1Clan player_clan = L1World.getInstance().getClan(player_clan_name);
 				if (player_clan == null) {
 					return;
 				}

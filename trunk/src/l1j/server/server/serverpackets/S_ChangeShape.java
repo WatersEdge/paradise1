@@ -26,7 +26,7 @@ public class S_ChangeShape extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_ChangeShape(int objId, int polyId, int currentWeapon) {
+	public S_ChangeShape(final int objId, final int polyId, final int currentWeapon) {
 		writeC(Opcodes.S_OPCODE_POLY);
 		writeD(objId);
 		writeH(polyId);

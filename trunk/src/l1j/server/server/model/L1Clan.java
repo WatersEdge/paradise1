@@ -59,14 +59,14 @@ public class L1Clan {
 	private final List<String> membersNameList = Lists.newList();
 
 	/** 增加成员名称 */
-	public void addMemberName(String member_name) {
+	public void addMemberName(final String member_name) {
 		if (!membersNameList.contains(member_name)) {
 			membersNameList.add(member_name);
 		}
 	}
 
 	/** 删除成员名称 */
-	public void delMemberName(String member_name) {
+	public void delMemberName(final String member_name) {
 		if (membersNameList.contains(member_name)) {
 			membersNameList.remove(member_name);
 		}
@@ -80,7 +80,7 @@ public class L1Clan {
 	/** 获得所有成员FP */
 	public String getAllMembersFP() {
 		String result = "";
-		for (String name : membersNameList) {
+		for (final String name : membersNameList) {
 			result = result + name + " ";
 		}
 		return result;
@@ -90,14 +90,14 @@ public class L1Clan {
 	public String getAllMembersFPWithRank() {
 		String result = "";
 		try {
-			for (String name : membersNameList) {
-				L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
+			for (final String name : membersNameList) {
+				final L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
 				if (pc != null) {
 					result = result + name + getRankString(pc) + " ";
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return result;
@@ -140,9 +140,9 @@ public class L1Clan {
 
 	/** 获得在线血盟成员 */
 	public L1PcInstance[] getOnlineClanMember() {
-		List<L1PcInstance> onlineMembers = Lists.newList();
-		for (String name : membersNameList) {
-			L1PcInstance pc = L1World.getInstance().getPlayer(name);
+		final List<L1PcInstance> onlineMembers = Lists.newList();
+		for (final String name : membersNameList) {
+			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if ((pc != null) && !onlineMembers.contains(pc)) {
 				onlineMembers.add(pc);
 			}
@@ -153,8 +153,8 @@ public class L1Clan {
 	/** 获得在线成员FP */
 	public String getOnlineMembersFP() { // FP means "For Pledge" (FP表示承诺)
 		String result = "";
-		for (String name : membersNameList) {
-			L1PcInstance pc = L1World.getInstance().getPlayer(name);
+		for (final String name : membersNameList) {
+			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if (pc != null) {
 				result = result + name + " ";
 			}
@@ -165,8 +165,8 @@ public class L1Clan {
 	/** 获得在线成员FP排名 */
 	public String getOnlineMembersFPWithRank() {
 		String result = "";
-		for (String name : membersNameList) {
-			L1PcInstance pc = L1World.getInstance().getPlayer(name);
+		for (final String name : membersNameList) {
+			final L1PcInstance pc = L1World.getInstance().getPlayer(name);
 			if (pc != null) {
 				result = result + name + getRankString(pc) + " ";
 			}
@@ -180,44 +180,44 @@ public class L1Clan {
 	}
 
 	/** 设置城堡ID */
-	public void setCastleId(int hasCastle) {
+	public void setCastleId(final int hasCastle) {
 		_castleId = hasCastle;
 	}
 
 	/** 设置血盟ID */
-	public void setClanId(int clan_id) {
+	public void setClanId(final int clan_id) {
 		_clanId = clan_id;
 	}
 
 	/** 设置血盟名称 */
-	public void setClanName(String clan_name) {
+	public void setClanName(final String clan_name) {
 		_clanName = clan_name;
 	}
 
 	/** 设置盟屋ID */
-	public void setHouseId(int hasHideout) {
+	public void setHouseId(final int hasHideout) {
 		_houseId = hasHideout;
 	}
 
 	/** 设置领导者的ID */
-	public void setLeaderId(int leader_id) {
+	public void setLeaderId(final int leader_id) {
 		_leaderId = leader_id;
 	}
 
 	/** 设置领导者的名称 */
-	public void setLeaderName(String leader_name) {
+	public void setLeaderName(final String leader_name) {
 		_leaderName = leader_name;
 	}
 
 	/** 设定使用仓库的角色 */
-	public void setWarehouseUsingChar(int objid) {
+	public void setWarehouseUsingChar(final int objid) {
 		_warehouse = objid;
 	}
 
 	/** 获得排名字符串 */
-	private String getRankString(L1PcInstance pc) {
+	private String getRankString(final L1PcInstance pc) {
 		String rank = "";
-		String[] msg = { "[見習]", "[一般]", "[守護騎士]", "[血盟君主]", "[见习]", "[一般]", "[守护骑士]", "[血盟君主]", "[見習い]", "[一般]", "[ガーディアン]", "[血盟君主]" };
+		final String[] msg = { "[見習]", "[一般]", "[守護騎士]", "[血盟君主]", "[见习]", "[一般]", "[守护骑士]", "[血盟君主]", "[見習い]", "[一般]", "[ガーディアン]", "[血盟君主]" };
 		byte i = 0; // 预设：繁体
 		if (Config.CLIENT_LANGUAGE == 5) { // 简体
 			i = 4;

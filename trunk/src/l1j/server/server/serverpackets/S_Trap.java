@@ -30,7 +30,7 @@ public class S_Trap extends ServerBasePacket {
 	 * @param trap
 	 * @param name
 	 */
-	public S_Trap(L1TrapInstance trap, String name) {
+	public S_Trap(final L1TrapInstance trap, final String name) {
 
 		writeC(Opcodes.S_OPCODE_DROPITEM);
 		writeH(trap.getX());

@@ -71,7 +71,7 @@ public class WarTimeController implements Runnable {
 	}
 
 	/** 检查城堡战争 */
-	public void checkCastleWar(L1PcInstance player) {
+	public void checkCastleWar(final L1PcInstance player) {
 		for (int i = 0; i < 8; i++) {
 			if (_is_now_war[i]) {
 				player.sendPackets(new S_PacketBox(S_PacketBox.MSG_WAR_GOING, i + 1)); // %s的攻城战正在进行中。
@@ -81,13 +81,13 @@ public class WarTimeController implements Runnable {
 
 	/** 取得现实时间 */
 	public Calendar getRealTime() {
-		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(_tz);
+		final TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final Calendar cal = Calendar.getInstance(_tz);
 		return cal;
 	}
 
 	/** 是攻城战区域 */
-	public boolean isNowWar(int castle_id) {
+	public boolean isNowWar(final int castle_id) {
 		return _is_now_war[castle_id - 1];
 	}
 
@@ -99,7 +99,7 @@ public class WarTimeController implements Runnable {
 				Thread.sleep(1000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 		}
 	}
 
@@ -111,10 +111,10 @@ public class WarTimeController implements Runnable {
 				if (_is_now_war[i] == false) {
 					_is_now_war[i] = true;
 					// 招出攻城的旗子
-					L1WarSpawn warspawn = new L1WarSpawn();
+					final L1WarSpawn warspawn = new L1WarSpawn();
 					warspawn.SpawnFlag(i + 1);
 					// 修理城门并设定为关闭
-					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+					for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(i + 1, door)) {
 							door.repairGate();
 						}
@@ -122,10 +122,10 @@ public class WarTimeController implements Runnable {
 
 					L1World.getInstance().broadcastPacketToAll(new S_PacketBox(S_PacketBox.MSG_WAR_BEGIN, i + 1)); // %s的攻城战开始。
 					int[] loc = new int[3];
-					for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-						int castleId = i + 1;
+					for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+						final int castleId = i + 1;
 						if (L1CastleLocation.checkInWarArea(castleId, pc) && !pc.isGm()) { // 刚好在攻城范围内
-							L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+							final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 							if (clan != null) {
 								if (clan.getCastleId() == castleId) { // 如果是有城血盟
 									continue;
@@ -144,36 +144,36 @@ public class WarTimeController implements Runnable {
 					// 更新攻城时间
 					WarUpdate(i);
 
-					int castle_id = i + 1;
-					for (L1Object l1object : L1World.getInstance().getObject()) {
+					final int castle_id = i + 1;
+					for (final L1Object l1object : L1World.getInstance().getObject()) {
 						// 取消攻城的旗子
 						if (l1object instanceof L1FieldObjectInstance) {
-							L1FieldObjectInstance flag = (L1FieldObjectInstance) l1object;
+							final L1FieldObjectInstance flag = (L1FieldObjectInstance) l1object;
 							if (L1CastleLocation.checkInWarArea(castle_id, flag)) {
 								flag.deleteMe();
 							}
 						}
 						// 移除皇冠
 						if (l1object instanceof L1CrownInstance) {
-							L1CrownInstance crown = (L1CrownInstance) l1object;
+							final L1CrownInstance crown = (L1CrownInstance) l1object;
 							if (L1CastleLocation.checkInWarArea(castle_id, crown)) {
 								crown.deleteMe();
 							}
 						}
 						// 移除守护塔
 						if (l1object instanceof L1TowerInstance) {
-							L1TowerInstance tower = (L1TowerInstance) l1object;
+							final L1TowerInstance tower = (L1TowerInstance) l1object;
 							if (L1CastleLocation.checkInWarArea(castle_id, tower)) {
 								tower.deleteMe();
 							}
 						}
 					}
 					// 塔重新出现
-					L1WarSpawn warspawn = new L1WarSpawn();
+					final L1WarSpawn warspawn = new L1WarSpawn();
 					warspawn.SpawnTower(castle_id);
 
 					// 移除城门
-					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+					for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(castle_id, door)) {
 							door.repairGate();
 						}
@@ -190,7 +190,7 @@ public class WarTimeController implements Runnable {
 	}
 
 	/** 更新攻城战时间 */
-	private void WarUpdate(int i) {
+	private void WarUpdate(final int i) {
 		_war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
 		_war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT, Config.ALT_WAR_INTERVAL);
 		_l1castle[i].setWarTime(_war_start_time[i]);

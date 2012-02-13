@@ -34,12 +34,12 @@ public class S_Race extends ServerBasePacket {
 	public static final int GameOver = 0x45;
 	public static final int GameEnd = 0x46;
 
-	public S_Race(FastTable<L1PcInstance> playerList, L1PcInstance pc) {
+	public S_Race(final FastTable<L1PcInstance> playerList, final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(PlayerInfo);
 		writeH(playerList.size()); // 參賽者人數
 		writeH(playerList.indexOf(pc)); // 名次
-		for (L1PcInstance player : playerList) {
+		for (final L1PcInstance player : playerList) {
 			if (player == null) {
 				continue;
 			}
@@ -48,7 +48,7 @@ public class S_Race extends ServerBasePacket {
 	}
 
 	// GameStart// CountDown// GameOver// GameEnd
-	public S_Race(int type) {
+	public S_Race(final int type) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(type);
 		if (type == GameStart) {
@@ -56,14 +56,14 @@ public class S_Race extends ServerBasePacket {
 		}
 	}
 
-	public S_Race(int maxLap, int lap) {
+	public S_Race(final int maxLap, final int lap) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(Lap);
 		writeH(maxLap); // 最大圈數
 		writeH(lap); // 目前圈數
 	}
 
-	public S_Race(String winnerName, int time) {
+	public S_Race(final String winnerName, final int time) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(Winner);
 		writeS(winnerName);

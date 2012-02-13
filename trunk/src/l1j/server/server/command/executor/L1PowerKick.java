@@ -29,11 +29,11 @@ public class L1PowerKick implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			L1PcInstance target = L1World.getInstance().getPlayer(arg);
+			final L1PcInstance target = L1World.getInstance().getPlayer(arg);
 
-			IpTable iptable = IpTable.getInstance();
+			final IpTable iptable = IpTable.getInstance();
 			if (target != null) {
 				iptable.banIp(target.getNetConnection().getIp()); // 加入IP至BAN名单
 				pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(target.getName()).append("被您强制踢除游戏并封锁IP。").toString()));
@@ -43,7 +43,7 @@ public class L1PowerKick implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage("您指定的角色名称不存在。"));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 : " + cmdName + " 玩家名称。"));
 		}
 	}

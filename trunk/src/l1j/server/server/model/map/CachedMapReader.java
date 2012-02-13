@@ -48,8 +48,8 @@ public class CachedMapReader extends MapReader {
 	 */
 	@Override
 	public Map<Integer, L1Map> read() throws IOException {
-		Map<Integer, L1Map> maps = Maps.newMap();
-		for (int id : TextMapReader.listMapIds()) {
+		final Map<Integer, L1Map> maps = Maps.newMap();
+		for (final int id : TextMapReader.listMapIds()) {
 			maps.put(id, read(id));
 		}
 		return maps;
@@ -65,32 +65,32 @@ public class CachedMapReader extends MapReader {
 	 */
 	@Override
 	public L1Map read(final int mapId) throws IOException {
-		File file = new File(CACHE_DIR + mapId + ".map");
+		final File file = new File(CACHE_DIR + mapId + ".map");
 		if (!file.exists()) {
 			return cacheMap(mapId);
 		}
 
-		DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(CACHE_DIR + mapId + ".map")));
+		final DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(CACHE_DIR + mapId + ".map")));
 
-		int id = in.readInt();
+		final int id = in.readInt();
 		if (mapId != id) {
 			throw new FileNotFoundException();
 		}
 
-		int xLoc = in.readInt();
-		int yLoc = in.readInt();
-		int width = in.readInt();
-		int height = in.readInt();
+		final int xLoc = in.readInt();
+		final int yLoc = in.readInt();
+		final int width = in.readInt();
+		final int height = in.readInt();
 
-		byte[][] tiles = new byte[width][height];
-		for (byte[] line : tiles) {
+		final byte[][] tiles = new byte[width][height];
+		for (final byte[] line : tiles) {
 			in.read(line);
 		}
 
 		in.close();
-		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(
-				mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable
-				.getInstance().isUsableSkill(mapId));
+		final L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable.getInstance().isEscapable(mapId), MapsTable.getInstance()
+				.isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId),
+				MapsTable.getInstance().isUsableSkill(mapId));
 		return map;
 	}
 
@@ -103,14 +103,14 @@ public class CachedMapReader extends MapReader {
 	 * @throws IOException
 	 */
 	private L1V1Map cacheMap(final int mapId) throws IOException {
-		File file = new File(CACHE_DIR);
+		final File file = new File(CACHE_DIR);
 		if (!file.exists()) {
 			file.mkdir();
 		}
 
-		L1V1Map map = (L1V1Map) new TextMapReader().read(mapId);
+		final L1V1Map map = (L1V1Map) new TextMapReader().read(mapId);
 
-		DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_DIR + mapId + ".map")));
+		final DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_DIR + mapId + ".map")));
 
 		out.writeInt(map.getId());
 		out.writeInt(map.getX());
@@ -118,8 +118,8 @@ public class CachedMapReader extends MapReader {
 		out.writeInt(map.getWidth());
 		out.writeInt(map.getHeight());
 
-		for (byte[] line : map.getRawTiles()) {
-			for (byte tile : line) {
+		for (final byte[] line : map.getRawTiles()) {
+			for (final byte tile : line) {
 				out.writeByte(tile);
 			}
 		}

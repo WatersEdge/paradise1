@@ -46,7 +46,7 @@ public class FishingTimeController implements Runnable {
 	private final List<L1PcInstance> _fishingList = Lists.newList();
 
 	/** 增加成员 */
-	public void addMember(L1PcInstance pc) {
+	public void addMember(final L1PcInstance pc) {
 		if ((pc == null) || _fishingList.contains(pc)) {
 			return;
 		}
@@ -54,7 +54,7 @@ public class FishingTimeController implements Runnable {
 	}
 
 	/** 删除成员 */
-	public void removeMember(L1PcInstance pc) {
+	public void removeMember(final L1PcInstance pc) {
 		if ((pc == null) || !_fishingList.contains(pc)) {
 			return;
 		}
@@ -69,17 +69,17 @@ public class FishingTimeController implements Runnable {
 				fishing();
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 		}
 	}
 
 	// 钓鱼完成
-	private void finishFishing(L1PcInstance pc) {
-		int chance = Random.nextInt(215) + 1;
+	private void finishFishing(final L1PcInstance pc) {
+		final int chance = Random.nextInt(215) + 1;
 		boolean finish = false;
 
 		// 钓到的物品
-		int[] fish = { 41296, 41297, 41298, 41299, // 鲷鱼`鲑鱼`鳕鱼`虎斑带鱼
+		final int[] fish = { 41296, 41297, 41298, 41299, // 鲷鱼`鲑鱼`鳕鱼`虎斑带鱼
 				41300, 41301, 41302, 41303, // 鲔鱼`发红光的鱼`发绿光的鱼`发蓝光的鱼
 				41304, 41305, 41306, 41307, // 发白光的鱼`破碎的耳环`破碎的戒指`破碎的项练
 				21051, 21052, 21053, 21054, // 泡水的头具`泡水的斗篷`泡水的盔甲`泡水的手套
@@ -88,7 +88,7 @@ public class FishingTimeController implements Runnable {
 		};
 
 		// 钓到物品的几率
-		int[] random = { 20, 40, 60, 80, 100, 110, 120, 130, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 198, 201, 204 };
+		final int[] random = { 20, 40, 60, 80, 100, 110, 120, 130, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 198, 201, 204 };
 		for (int i = 0; i < fish.length; i++) {
 			if (random[i] > chance) {
 				successFishing(pc, fish[i]);
@@ -107,11 +107,11 @@ public class FishingTimeController implements Runnable {
 	/** 钓鱼 */
 	private void fishing() {
 		if (_fishingList.size() > 0) {
-			long currentTime = System.currentTimeMillis();
+			final long currentTime = System.currentTimeMillis();
 			for (int i = 0; i < _fishingList.size(); i++) {
-				L1PcInstance pc = _fishingList.get(i);
+				final L1PcInstance pc = _fishingList.get(i);
 				if (pc.isFishing()) { // 钓鱼中
-					long time = pc.getFishingTime();
+					final long time = pc.getFishingTime();
 					if ((currentTime <= (time + 500)) && (currentTime >= (time - 500)) && !pc.isFishingReady()) {
 						pc.setFishingReady(true);
 						finishFishing(pc);
@@ -122,9 +122,9 @@ public class FishingTimeController implements Runnable {
 	}
 
 	// 重新钓鱼
-	private void restartFishing(L1PcInstance pc) {
+	private void restartFishing(final L1PcInstance pc) {
 		if (pc.getInventory().consumeItem(47103, 1)) { // 消耗饵，重新钓鱼
-			long fishTime = System.currentTimeMillis() + 10000 + Random.nextInt(5) * 1000;
+			final long fishTime = System.currentTimeMillis() + 10000 + Random.nextInt(5) * 1000;
 			pc.setFishingTime(fishTime);
 			pc.setFishingReady(false);
 		}
@@ -135,7 +135,7 @@ public class FishingTimeController implements Runnable {
 	}
 
 	// 停止钓鱼
-	private void stopFishing(L1PcInstance pc) {
+	private void stopFishing(final L1PcInstance pc) {
 		pc.setFishingTime(0);
 		pc.setFishingReady(false);
 		pc.setFishing(false);
@@ -145,8 +145,8 @@ public class FishingTimeController implements Runnable {
 	}
 
 	// 钓鱼成功
-	private void successFishing(L1PcInstance pc, int itemId) {
-		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
+	private void successFishing(final L1PcInstance pc, final int itemId) {
+		final L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 		if (item != null) {
 			pc.sendPackets(new S_ServerMessage(403, item.getItem().getName()));
 			pc.addExp((int) (2 * Config.RATE_XP));

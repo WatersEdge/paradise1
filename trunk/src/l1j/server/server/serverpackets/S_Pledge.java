@@ -25,15 +25,15 @@ public class S_Pledge extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_Pledge(String htmlid, int objid) {
+	public S_Pledge(final String htmlid, final int objid) {
 		buildPacket(htmlid, objid, 0, "", "", "");
 	}
 
-	public S_Pledge(String htmlid, int objid, String clanname, String olmembers) {
+	public S_Pledge(final String htmlid, final int objid, final String clanname, final String olmembers) {
 		buildPacket(htmlid, objid, 1, clanname, olmembers, "");
 	}
 
-	public S_Pledge(String htmlid, int objid, String clanname, String olmembers, String allmembers) {
+	public S_Pledge(final String htmlid, final int objid, final String clanname, final String olmembers, final String allmembers) {
 		buildPacket(htmlid, objid, 2, clanname, olmembers, allmembers);
 	}
 
@@ -50,7 +50,7 @@ public class S_Pledge extends ServerBasePacket {
 		return _S_Pledge;
 	}
 
-	private void buildPacket(String htmlid, int objid, int type, String clanname, String olmembers, String allmembers) {
+	private void buildPacket(final String htmlid, final int objid, final int type, final String clanname, final String olmembers, final String allmembers) {
 
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);

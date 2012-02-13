@@ -51,26 +51,26 @@ public class PolyTable {
 		loadPolymorphs();
 	}
 
-	public L1PolyMorph getTemplate(int polyId) {
+	public L1PolyMorph getTemplate(final int polyId) {
 		return _polyIdIndex.get(polyId);
 	}
 
-	public L1PolyMorph getTemplate(String name) {
+	public L1PolyMorph getTemplate(final String name) {
 		return _polymorphs.get(name);
 	}
 
-	private void fillPolyTable(ResultSet rs) throws SQLException {
+	private void fillPolyTable(final ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			int id = rs.getInt("id");
-			String name = rs.getString("name");
-			int polyId = rs.getInt("polyid");
-			int minLevel = rs.getInt("minlevel");
-			int weaponEquipFlg = rs.getInt("weaponequip");
-			int armorEquipFlg = rs.getInt("armorequip");
-			boolean canUseSkill = rs.getBoolean("isSkillUse");
-			int causeFlg = rs.getInt("cause");
+			final int id = rs.getInt("id");
+			final String name = rs.getString("name");
+			final int polyId = rs.getInt("polyid");
+			final int minLevel = rs.getInt("minlevel");
+			final int weaponEquipFlg = rs.getInt("weaponequip");
+			final int armorEquipFlg = rs.getInt("armorequip");
+			final boolean canUseSkill = rs.getBoolean("isSkillUse");
+			final int causeFlg = rs.getInt("cause");
 
-			L1PolyMorph poly = new L1PolyMorph(id, name, polyId, minLevel, weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
+			final L1PolyMorph poly = new L1PolyMorph(id, name, polyId, minLevel, weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
 
 			_polymorphs.put(name, poly);
 			_polyIdIndex.put(polyId, poly);
@@ -90,7 +90,7 @@ public class PolyTable {
 			rs = pstm.executeQuery();
 			fillPolyTable(rs);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

@@ -34,7 +34,7 @@ public class S_HouseMap extends ServerBasePacket {
 	 * @param objectId
 	 * @param house_number
 	 */
-	public S_HouseMap(int objectId, String house_number) {
+	public S_HouseMap(final int objectId, final String house_number) {
 		buildPacket(objectId, house_number);
 	}
 
@@ -51,8 +51,8 @@ public class S_HouseMap extends ServerBasePacket {
 		return S_HOUSEMAP;
 	}
 
-	private void buildPacket(int objectId, String house_number) {
-		int number = Integer.valueOf(house_number);
+	private void buildPacket(final int objectId, final String house_number) {
+		final int number = Integer.valueOf(house_number);
 
 		writeC(Opcodes.S_OPCODE_HOUSEMAP);
 		writeD(objectId);

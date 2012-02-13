@@ -32,18 +32,18 @@ public class C_Deposit extends ClientBasePacket {
 
 	private static final String C_DEPOSIT = "[C] C_Deposit";
 
-	public C_Deposit(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Deposit(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		int i = readD();
-		int j = readD();
+		final int i = readD();
+		final int j = readD();
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 		if (i == player.getId()) {
-			L1Clan clan = L1World.getInstance().getClan(player.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(player.getClanname());
 			if (clan != null) {
-				int castle_id = clan.getCastleId();
+				final int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 有城堡的盟主
-					L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+					final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
 					synchronized (l1castle) {
 						int money = l1castle.getPublicMoney();
 						if (player.getInventory().consumeItem(L1ItemId.ADENA, j)) {

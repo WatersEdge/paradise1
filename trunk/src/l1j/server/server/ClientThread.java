@@ -58,7 +58,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		private final int _disconnectTimeMillis;
 
-		public ClientThreadObserver(int disconnectTimeMillis) {
+		public ClientThreadObserver(final int disconnectTimeMillis) {
 			_disconnectTimeMillis = disconnectTimeMillis;
 		}
 
@@ -80,8 +80,9 @@ public class ClientThread implements Runnable, PacketOutput {
 					return;
 				}
 
-				if (_activeChar == null // 选角色之前
-						|| _activeChar != null && !_activeChar.isPrivateShop()) { // 正在个人商店
+				if ((_activeChar == null // 选角色之前
+						)
+						|| ((_activeChar != null) && !_activeChar.isPrivateShop())) { // 正在个人商店
 					kick();
 					_log.warning("一定时间没有收到封包回应，所以强制切断 (" + _hostname + ") 的连线。");
 					Account.online(getAccount(), false);
@@ -89,7 +90,7 @@ public class ClientThread implements Runnable, PacketOutput {
 					return;
 				}
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				cancel();
 			}
@@ -111,12 +112,12 @@ public class ClientThread implements Runnable, PacketOutput {
 			_handler = new PacketHandler(ClientThread.this);
 		}
 
-		public HcPacket(int capacity) {
+		public HcPacket(final int capacity) {
 			_queue = new LinkedBlockingQueue<byte[]>(capacity);
 			_handler = new PacketHandler(ClientThread.this);
 		}
 
-		public void requestWork(byte data[]) {
+		public void requestWork(final byte data[]) {
 			_queue.offer(data);
 		}
 
@@ -129,14 +130,14 @@ public class ClientThread implements Runnable, PacketOutput {
 					try {
 						_handler.handlePacket(data, _activeChar);
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 					}
 				}
 				else {
 					try {
 						Thread.sleep(10);
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 					}
 				}
 			}
@@ -148,35 +149,35 @@ public class ClientThread implements Runnable, PacketOutput {
 	private static Logger _log = Logger.getLogger(ClientThread.class.getName());
 
 	/** 离开游戏 */
-	public static void quitGame(L1PcInstance pc) {
+	public static void quitGame(final L1PcInstance pc) {
 		// 如果死掉回到城中，设定饱食度
 		if (pc.isDead()) {
 			try {
 				Thread.sleep(2000);// 暂停该执行续，优先权让给expmonitor
-				int[] loc = Getback.GetBack_Location(pc, true);
+				final int[] loc = Getback.GetBack_Location(pc, true);
 				pc.setX(loc[0]);
 				pc.setY(loc[1]);
 				pc.setMap((short) loc[2]);
 				pc.setCurrentHp(pc.getLevel());
 				pc.set_food(40);
 			}
-			catch (InterruptedException ie) {
+			catch (final InterruptedException ie) {
 				ie.printStackTrace();
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		// 终止交易
 		if (pc.getTradeID() != 0) { // 交易中
-			L1Trade trade = new L1Trade();
+			final L1Trade trade = new L1Trade();
 			trade.TradeCancel(pc);
 		}
 
 		// 终止决斗
 		if (pc.getFightId() != 0) {
-			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
+			final L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
 			pc.setFightId(0);
 			if (fightPc != null) {
 				fightPc.setFightId(0);
@@ -196,9 +197,9 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		// 移除世界地图上的宠物
 		// 变更召唤怪物的名称
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				// 停止饱食度计时
 				pet.stopFoodTimer(pet);
 				pet.dropItem();
@@ -206,19 +207,20 @@ public class ClientThread implements Runnable, PacketOutput {
 				pet.deleteMe();
 			}
 			else if (petNpc instanceof L1SummonInstance) {
-				L1SummonInstance summon = (L1SummonInstance) petNpc;
-				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
+				final L1SummonInstance summon = (L1SummonInstance) petNpc;
+				for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc, false));
 				}
 			}
 		}
 
 		// 移除世界地图上的魔法娃娃
-		for (L1DollInstance doll : pc.getDollList().values())
+		for (final L1DollInstance doll : pc.getDollList().values()) {
 			doll.deleteDoll();
+		}
 
 		// 重新建立跟随者
-		for (L1FollowerInstance follower : pc.getFollowerList().values()) {
+		for (final L1FollowerInstance follower : pc.getFollowerList().values()) {
 			follower.setParalyzed(true);
 			follower.spawn(follower.getNpcTemplate().get_npcId(), follower.getX(), follower.getY(), follower.getHeading(), follower.getMapId());
 			follower.deleteMe();
@@ -246,14 +248,14 @@ public class ClientThread implements Runnable, PacketOutput {
 		// Account.online(account, false);
 
 		// 设定帐号的角色为下线
-		Account account = Account.load(pc.getAccountName());
+		final Account account = Account.load(pc.getAccountName());
 		Account.OnlineStatus(account, false);
 
 		try {
 			pc.save();
 			pc.saveInventory();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -304,7 +306,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	private static Timer _observerTimer = new Timer();
 
-	public ClientThread(Socket socket) throws IOException {
+	public ClientThread(final Socket socket) throws IOException {
 		_csocket = socket;
 		_ip = socket.getInetAddress().getHostAddress();
 		if (Config.HOSTNAME_LOOKUPS) {
@@ -327,7 +329,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	}
 
 	/** 角色重新开始 */
-	public void CharReStart(boolean flag) {
+	public void CharReStart(final boolean flag) {
 		_charRestart = flag;
 	}
 
@@ -382,12 +384,12 @@ public class ClientThread implements Runnable, PacketOutput {
 		 * 
 		 * 无制限にする前に不正检出方法を见直す必要がある。
 		 */
-		HcPacket movePacket = new HcPacket(M_CAPACITY);
-		HcPacket hcPacket = new HcPacket(H_CAPACITY);
+		final HcPacket movePacket = new HcPacket(M_CAPACITY);
+		final HcPacket hcPacket = new HcPacket(H_CAPACITY);
 		GeneralThreadPool.getInstance().execute(movePacket);
 		GeneralThreadPool.getInstance().execute(hcPacket);
 
-		ClientThreadObserver observer = new ClientThreadObserver(Config.AUTOMATIC_KICK * 60 * 1000); // 自动断线的时间（单位:毫秒）
+		final ClientThreadObserver observer = new ClientThreadObserver(Config.AUTOMATIC_KICK * 60 * 1000); // 自动断线的时间（单位:毫秒）
 
 		// 是否启用自动踢人
 		if (Config.AUTOMATIC_KICK > 0) {
@@ -396,10 +398,10 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		try {
 			/** 采取乱数取seed */
-			String keyHax = Integer.toHexString((int) (Math.random() * 2147483647) + 1);
-			int key = Integer.parseInt(keyHax, 16);
+			final String keyHax = Integer.toHexString((int) (Math.random() * 2147483647) + 1);
+			final int key = Integer.parseInt(keyHax, 16);
 
-			byte Bogus = (byte) (FIRST_PACKET.length + 7);
+			final byte Bogus = (byte) (FIRST_PACKET.length + 7);
 			_out.write(Bogus & 0xFF);
 			_out.write(Bogus >> 8 & 0xFF);
 			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.5C Taiwan Server
@@ -420,16 +422,16 @@ public class ClientThread implements Runnable, PacketOutput {
 				try {
 					data = readPacket();
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					break;
 				}
 				// _log.finest("[C]\n" + new
 				// ByteArrayUtil(data).dumpToString());
 
-				int opcode = data[0] & 0xFF;
+				final int opcode = data[0] & 0xFF;
 
 				// 处理多重登入
-				if (opcode == Opcodes.C_OPCODE_COMMONCLICK || opcode == Opcodes.C_OPCODE_CHANGECHAR) {
+				if ((opcode == Opcodes.C_OPCODE_COMMONCLICK) || (opcode == Opcodes.C_OPCODE_CHANGECHAR)) {
 					_loginStatus = 1;
 				}
 				if (opcode == Opcodes.C_OPCODE_LOGINTOSERVER) {
@@ -437,7 +439,7 @@ public class ClientThread implements Runnable, PacketOutput {
 						continue;
 					}
 				}
-				if (opcode == Opcodes.C_OPCODE_LOGINTOSERVEROK || opcode == Opcodes.C_OPCODE_RETURNTOLOGIN) {
+				if ((opcode == Opcodes.C_OPCODE_LOGINTOSERVEROK) || (opcode == Opcodes.C_OPCODE_RETURNTOLOGIN)) {
 					_loginStatus = 0;
 				}
 
@@ -458,7 +460,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 				// 要处理的 OPCODE
 				// 切换角色、丢道具到地上、删除身上道具
-				if (opcode == Opcodes.C_OPCODE_CHANGECHAR || opcode == Opcodes.C_OPCODE_DROPITEM || opcode == Opcodes.C_OPCODE_DELETEINVENTORYITEM) {
+				if ((opcode == Opcodes.C_OPCODE_CHANGECHAR) || (opcode == Opcodes.C_OPCODE_DROPITEM) || (opcode == Opcodes.C_OPCODE_DELETEINVENTORYITEM)) {
 					_handler.handlePacket(data, _activeChar);
 				}
 				else if (opcode == Opcodes.C_OPCODE_MOVECHAR) {
@@ -471,7 +473,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				}
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			try {
@@ -494,7 +496,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 				StreamUtil.close(_out, _in);
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
 				LoginController.getInstance().logout(this);
@@ -515,37 +517,37 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	@Override
 	/** 发送数据包 */
-	public void sendPacket(ServerBasePacket packet) {
+	public void sendPacket(final ServerBasePacket packet) {
 		synchronized (this) {
 			try {
-				byte content[] = packet.getContent();
-				byte data[] = Arrays.copyOf(content, content.length);
+				final byte content[] = packet.getContent();
+				final byte data[] = Arrays.copyOf(content, content.length);
 				_cipher.encrypt(data);
-				int length = data.length + 2;
+				final int length = data.length + 2;
 
 				_out.write(length & 0xff);
 				_out.write(length >> 8 & 0xff);
 				_out.write(data);
 				_out.flush();
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 			}
 		}
 	}
 
 	/** 设置账号 */
-	public void setAccount(Account account) {
+	public void setAccount(final Account account) {
 		_account = account;
 	}
 
 	/** 设置在线角色 */
-	public void setActiveChar(L1PcInstance pc) {
+	public void setActiveChar(final L1PcInstance pc) {
 		_activeChar = pc;
 	}
 
 	/** 做自动保存 */
 	private void doAutoSave() throws Exception {
-		if (_activeChar == null || _charRestart) {
+		if ((_activeChar == null) || _charRestart) {
 			return;
 		}
 		try {
@@ -561,7 +563,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				_lastSavedTime_inventory = System.currentTimeMillis();
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.warning("客户端自动保存失败。");
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
@@ -571,18 +573,18 @@ public class ClientThread implements Runnable, PacketOutput {
 	/** 读取数据包 */
 	private byte[] readPacket() throws Exception {
 		try {
-			int hiByte = _in.read();
-			int loByte = _in.read();
+			final int hiByte = _in.read();
+			final int loByte = _in.read();
 			if (loByte < 0) {
 				throw new RuntimeException();
 			}
-			int dataLength = (loByte * 256 + hiByte) - 2;
+			final int dataLength = (loByte * 256 + hiByte) - 2;
 
-			byte data[] = new byte[dataLength];
+			final byte data[] = new byte[dataLength];
 
 			int readSize = 0;
 
-			for (int i = 0; i != -1 && readSize < dataLength; readSize += i) {
+			for (int i = 0; (i != -1) && (readSize < dataLength); readSize += i) {
 				i = _in.read(data, readSize, dataLength - readSize);
 			}
 
@@ -593,7 +595,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 			return _cipher.decrypt(data);
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			throw e;
 		}
 	}

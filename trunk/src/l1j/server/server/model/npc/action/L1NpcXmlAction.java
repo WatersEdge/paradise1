@@ -56,7 +56,7 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		_charTypes.put('I', 6);
 	}
 
-	public L1NpcXmlAction(Element element) {
+	public L1NpcXmlAction(final Element element) {
 		_name = element.getAttribute("Name");
 		_name = _name.equals("") ? null : _name;
 		_npcIds = parseNpcIds(element.getAttribute("NpcId"));
@@ -68,7 +68,7 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 	}
 
 	@Override
-	public boolean acceptsRequest(String actionName, L1PcInstance pc, L1Object obj) {
+	public boolean acceptsRequest(final String actionName, final L1PcInstance pc, final L1Object obj) {
 		if (!acceptsNpcId(obj)) {
 			return false;
 		}
@@ -86,22 +86,23 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		}
 		return true;
 	}
+
 	@Override
 	public abstract L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte args[]);
 
 	@Override
-	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
+	public L1NpcHtml executeWithAmount(final String actionName, final L1PcInstance pc, final L1Object obj, final int amount) {
 		return null;
 	}
 
-	private boolean acceptsActionName(String name) {
+	private boolean acceptsActionName(final String name) {
 		if (_name == null) {
 			return true;
 		}
 		return name.equals(_name);
 	}
 
-	private boolean acceptsCharType(int type) {
+	private boolean acceptsCharType(final int type) {
 		if (0 < _classes.length) {
 			if (Arrays.binarySearch(_classes, type) < 0) {
 				return false;
@@ -110,16 +111,16 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return true;
 	}
 
-	private boolean acceptsLevel(int level) {
+	private boolean acceptsLevel(final int level) {
 		return _level.includes(level);
 	}
 
-	private boolean acceptsNpcId(L1Object obj) {
+	private boolean acceptsNpcId(final L1Object obj) {
 		if (0 < _npcIds.length) {
 			if (!(obj instanceof L1NpcInstance)) {
 				return false;
 			}
-			int npcId = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+			final int npcId = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
 
 			if (Arrays.binarySearch(_npcIds, npcId) < 0) {
 				return false;
@@ -128,7 +129,7 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return true;
 	}
 
-	private boolean acceptsQuest(L1PcInstance pc) {
+	private boolean acceptsQuest(final L1PcInstance pc) {
 		if (_questId == -1) {
 			return true;
 		}
@@ -138,27 +139,27 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return pc.getQuest().get_step(_questId) == _questStep;
 	}
 
-	private int[] parseClasses(Element element) {
-		String classes = element.getAttribute("Class").toUpperCase();
-		int result[] = new int[classes.length()];
+	private int[] parseClasses(final Element element) {
+		final String classes = element.getAttribute("Class").toUpperCase();
+		final int result[] = new int[classes.length()];
 		int idx = 0;
-		for (Character cha : classes.toCharArray()) {
+		for (final Character cha : classes.toCharArray()) {
 			result[idx++] = _charTypes.get(cha);
 		}
 		Arrays.sort(result);
 		return result;
 	}
 
-	private IntRange parseLevel(Element element) {
-		int level = L1NpcXmlParser.getIntAttribute(element, "Level", 0);
-		int min = L1NpcXmlParser.getIntAttribute(element, "LevelMin", 1);
-		int max = L1NpcXmlParser.getIntAttribute(element, "LevelMax", 99);
+	private IntRange parseLevel(final Element element) {
+		final int level = L1NpcXmlParser.getIntAttribute(element, "Level", 0);
+		final int min = L1NpcXmlParser.getIntAttribute(element, "LevelMin", 1);
+		final int max = L1NpcXmlParser.getIntAttribute(element, "LevelMax", 99);
 		return level == 0 ? new IntRange(min, max) : new IntRange(level, level);
 	}
 
-	private int[] parseNpcIds(String npcIds) {
-		StringTokenizer tok = new StringTokenizer(npcIds.replace(" ", ""), ",");
-		int result[] = new int[tok.countTokens()];
+	private int[] parseNpcIds(final String npcIds) {
+		final StringTokenizer tok = new StringTokenizer(npcIds.replace(" ", ""), ",");
+		final int result[] = new int[tok.countTokens()];
 		for (int i = 0; i < result.length; i++) {
 			result[i] = Integer.parseInt(tok.nextToken());
 		}

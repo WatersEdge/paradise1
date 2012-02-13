@@ -75,7 +75,7 @@ public class IdFactory {
 			_curId = id;
 			_log.info("目前的物件ID: " + _curId);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -30,7 +30,7 @@ public class S_Liquor extends ServerBasePacket {
 	 * @param objecId
 	 * @param type
 	 */
-	public S_Liquor(int objecId, int j) {
+	public S_Liquor(final int objecId, final int j) {
 		writeC(Opcodes.S_OPCODE_LIQUOR);
 		writeD(objecId);
 		writeC(j);

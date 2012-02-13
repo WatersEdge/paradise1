@@ -55,7 +55,7 @@ public class CookingBooks extends ItemExecutor {
 	private void makeCooking(final L1PcInstance pc, final int cookNo) {
 
 		boolean isNearFire = false;
-		for (L1Object obj : L1World.getInstance().getVisibleObjects(pc, 3)) {
+		for (final L1Object obj : L1World.getInstance().getVisibleObjects(pc, 3)) {
 			if (obj instanceof L1EffectInstance) {
 				final L1EffectInstance effect = (L1EffectInstance) obj;
 				if (effect.getGfxId() == 5943) {

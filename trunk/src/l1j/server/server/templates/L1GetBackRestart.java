@@ -48,23 +48,23 @@ public class L1GetBackRestart {
 		return _note;
 	}
 
-	public void setArea(int i) {
+	public void setArea(final int i) {
 		_area = i;
 	}
 
-	public void setLocX(int i) {
+	public void setLocX(final int i) {
 		_locX = i;
 	}
 
-	public void setLocY(int i) {
+	public void setLocY(final int i) {
 		_locY = i;
 	}
 
-	public void setMapId(short i) {
+	public void setMapId(final short i) {
 		_mapId = i;
 	}
 
-	public void setNote(String s) {
+	public void setNote(final String s) {
 		_note = s;
 	}
 

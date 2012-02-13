@@ -35,13 +35,13 @@ import l1j.server.server.serverpackets.S_SPMR;
 public class L1Awake {
 
 	/** 觉醒变身 */
-	public static void doPoly(L1PcInstance pc) {
-		int polyId = 6894;
+	public static void doPoly(final L1PcInstance pc) {
+		final int polyId = 6894;
 		if (pc.hasSkillEffect(SHAPE_CHANGE)) {
 			pc.killSkillEffectTimer(SHAPE_CHANGE);
 		}
-		L1ItemInstance weapon = pc.getWeapon();
-		boolean weaponTakeoff = (weapon != null && !L1PolyMorph.isEquipableWeapon(polyId, weapon.getItem().getType()));
+		final L1ItemInstance weapon = pc.getWeapon();
+		final boolean weaponTakeoff = ((weapon != null) && !L1PolyMorph.isEquipableWeapon(polyId, weapon.getItem().getType()));
 		if (weaponTakeoff) { // 解除武器时
 			pc.setCurrentWeapon(0);
 		}
@@ -59,7 +59,7 @@ public class L1Awake {
 	}
 
 	/** 开始觉醒 */
-	public static void start(L1PcInstance pc, int skillId) {
+	public static void start(final L1PcInstance pc, final int skillId) {
 
 		// 再次咏唱时解除觉醒状态
 		if (skillId == pc.getAwakeSkillId()) {
@@ -103,8 +103,8 @@ public class L1Awake {
 	}
 
 	/** 停止觉醒 */
-	public static void stop(L1PcInstance pc) {
-		int skillId = pc.getAwakeSkillId();
+	public static void stop(final L1PcInstance pc) {
+		final int skillId = pc.getAwakeSkillId();
 		if (skillId == AWAKEN_ANTHARAS) { // 觉醒：安塔瑞斯
 			pc.addMaxHp(-127);
 			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
@@ -138,8 +138,8 @@ public class L1Awake {
 	}
 
 	/** 觉醒解除变身 */
-	public static void undoPoly(L1PcInstance pc) {
-		int classId = pc.getClassId();
+	public static void undoPoly(final L1PcInstance pc) {
+		final int classId = pc.getClassId();
 		pc.setTempCharGfx(classId);
 		if (!pc.isDead()) {
 			pc.sendPackets(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));

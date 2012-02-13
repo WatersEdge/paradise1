@@ -31,7 +31,7 @@ public class HpRegenerationByDoll extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public HpRegenerationByDoll(L1PcInstance pc) {
+	public HpRegenerationByDoll(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -53,7 +53,7 @@ public class HpRegenerationByDoll extends TimerTask {
 			}
 			regenHp();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

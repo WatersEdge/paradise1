@@ -24,10 +24,11 @@ public class MysqlAutoBackupTimer {
 	 * Mysql自动备份程序计时器
 	 */
 	public static synchronized void TimerStart() {
-		int minutes = Config.MysqlAutoBackup;
-		if (minutes == 0)
+		final int minutes = Config.MysqlAutoBackup;
+		if (minutes == 0) {
 			return;
-		Timer timer = new Timer();
+		}
+		final Timer timer = new Timer();
 		timer.schedule(new MysqlAutoBackup(), 60000, minutes * 60000);// 开机1分钟后,每隔设定之时间备份一次
 	}
 }

@@ -36,18 +36,18 @@ public class L1ShopBuyOrderList {
 	/** 总价格含税收 */
 	private int _totalPriceTaxIncluded = 0;
 
-	L1ShopBuyOrderList(L1Shop shop) {
+	L1ShopBuyOrderList(final L1Shop shop) {
 		_shop = shop;
 		_taxCalc = new L1TaxCalculator(shop.getNpcId());
 	}
 
-	public void add(int orderNumber, int count) {
+	public void add(final int orderNumber, final int count) {
 		if (_shop.getSellingItems().size() < orderNumber) {
 			return;
 		}
-		L1ShopItem shopItem = _shop.getSellingItems().get(orderNumber);
+		final L1ShopItem shopItem = _shop.getSellingItems().get(orderNumber);
 
-		int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE);
+		final int price = (int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE);
 		// 溢出检查
 		for (int j = 0; j < count; j++) {
 			if (price * j < 0) {
@@ -99,7 +99,7 @@ class L1ShopBuyOrder {
 
 	private final int _count;
 
-	public L1ShopBuyOrder(L1ShopItem item, int count) {
+	public L1ShopBuyOrder(final L1ShopItem item, final int count) {
 		_item = item;
 		_count = count;
 	}

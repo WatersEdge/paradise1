@@ -38,27 +38,27 @@ public class UnZipUtil {
 	 * @param ToPath
 	 *            目的路径
 	 */
-	public static void unZip(String zipFile, String ToPath) {
+	public static void unZip(final String zipFile, final String ToPath) {
 		try {
-			ZipFile zipfile = new ZipFile(zipFile);
-			Enumeration<?> zipenum = zipfile.getEntries();
+			final ZipFile zipfile = new ZipFile(zipFile);
+			final Enumeration<?> zipenum = zipfile.getEntries();
 			while (zipenum.hasMoreElements()) {
-				ZipEntry ze = (ZipEntry) zipenum.nextElement();
-				File newFile = new File(ToPath, ze.getName());
-				ReadableByteChannel rc = Channels.newChannel(zipfile.getInputStream(ze));
+				final ZipEntry ze = (ZipEntry) zipenum.nextElement();
+				final File newFile = new File(ToPath, ze.getName());
+				final ReadableByteChannel rc = Channels.newChannel(zipfile.getInputStream(ze));
 				if (ze.isDirectory()) {
 					newFile.mkdirs();
 				}
 				else {
-					FileOutputStream fos = new FileOutputStream(newFile);
-					FileChannel fc = fos.getChannel();
+					final FileOutputStream fos = new FileOutputStream(newFile);
+					final FileChannel fc = fos.getChannel();
 					fc.transferFrom(rc, 0, ze.getSize());
 					fos.close();
 				}
 			}
 			zipfile.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -38,7 +38,7 @@ public class L1Party {
 	private L1PcInstance _leader = null;
 
 	/** 增加成员 */
-	public void addMember(L1PcInstance pc) {
+	public void addMember(final L1PcInstance pc) {
 		if (pc == null) {
 			throw new NullPointerException();
 		}
@@ -73,7 +73,7 @@ public class L1Party {
 	/** 获得成员名称列表 */
 	public String getMembersNameList() {
 		String _result = new String("");
-		for (L1PcInstance pc : _membersList) {
+		for (final L1PcInstance pc : _membersList) {
 			_result = _result + pc.getName() + " ";
 		}
 		return _result;
@@ -90,12 +90,12 @@ public class L1Party {
 	}
 
 	/** 是领导者 */
-	public boolean isLeader(L1PcInstance pc) {
+	public boolean isLeader(final L1PcInstance pc) {
 		return pc.getId() == _leader.getId();
 	}
 
 	/** 是成员 */
-	public boolean isMember(L1PcInstance pc) {
+	public boolean isMember(final L1PcInstance pc) {
 		return _membersList.contains(pc);
 	}
 
@@ -105,14 +105,14 @@ public class L1Party {
 	}
 
 	/** 踢成员 */
-	public void kickMember(L1PcInstance pc) {
+	public void kickMember(final L1PcInstance pc) {
 		if (getNumOfMembers() == 2) {
 			// パーティーメンバーが自分とリーダーのみ
 			breakup();
 		}
 		else {
 			removeMember(pc);
-			for (L1PcInstance member : getMembers()) {
+			for (final L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
 			}
 			sendKickMessage(pc);
@@ -120,14 +120,14 @@ public class L1Party {
 	}
 
 	/** 离开队员 */
-	public void leaveMember(L1PcInstance pc) {
+	public void leaveMember(final L1PcInstance pc) {
 		if (isLeader(pc) || (getNumOfMembers() == 2)) {
 			// 有组队领导者的场合
 			breakup();
 		}
 		else {
 			removeMember(pc);
-			for (L1PcInstance member : getMembers()) {
+			for (final L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
 			}
 			sendLeftMessage(pc, pc);
@@ -140,56 +140,56 @@ public class L1Party {
 	}
 
 	/** 通过领导者 */
-	public void passLeader(L1PcInstance pc) {
+	public void passLeader(final L1PcInstance pc) {
 		pc.getParty().setLeader(pc);
-		for (L1PcInstance member : getMembers()) {
+		for (final L1PcInstance member : getMembers()) {
 			member.sendPackets(new S_Party(0x6A, pc));
 		}
 	}
 
 	/** 更新组队血条 */
-	public void updateMiniHP(L1PcInstance pc) {
-		L1PcInstance[] members = getMembers();
+	public void updateMiniHP(final L1PcInstance pc) {
+		final L1PcInstance[] members = getMembers();
 
-		for (L1PcInstance member : members) { // パーティーメンバー分更新
+		for (final L1PcInstance member : members) { // パーティーメンバー分更新
 			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
 		}
 	}
 
 	/** 解散队伍 */
 	private void breakup() {
-		L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = getMembers();
 
-		for (L1PcInstance member : members) {
+		for (final L1PcInstance member : members) {
 			removeMember(member);
 			member.sendPackets(new S_ServerMessage(418)); // 您解散您的队伍了!!
 		}
 	}
 
 	/** 创建组队血条 */
-	private void createMiniHp(L1PcInstance pc) {
+	private void createMiniHp(final L1PcInstance pc) {
 		// 成员加入时、显示对方的HP血条
-		L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = getMembers();
 
-		for (L1PcInstance member : members) {
+		for (final L1PcInstance member : members) {
 			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
 			pc.sendPackets(new S_HPMeter(member.getId(), 100 * member.getCurrentHp() / member.getMaxHp()));
 		}
 	}
 
 	/** 删除组队血条 */
-	private void deleteMiniHp(L1PcInstance pc) {
+	private void deleteMiniHp(final L1PcInstance pc) {
 		// 队员离队时、删除HP血条。
-		L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = getMembers();
 
-		for (L1PcInstance member : members) {
+		for (final L1PcInstance member : members) {
 			pc.sendPackets(new S_HPMeter(member.getId(), 0xff));
 			member.sendPackets(new S_HPMeter(pc.getId(), 0xff));
 		}
 	}
 
 	/** 删除成员 */
-	private void removeMember(L1PcInstance pc) {
+	private void removeMember(final L1PcInstance pc) {
 		if (!_membersList.contains(pc)) {
 			return;
 		}
@@ -202,24 +202,24 @@ public class L1Party {
 	}
 
 	/** 发送踢人信息 */
-	private void sendKickMessage(L1PcInstance kickpc) {
+	private void sendKickMessage(final L1PcInstance kickpc) {
 		kickpc.sendPackets(new S_ServerMessage(419)); // 您从队伍中被驱逐了。
 	}
 
 	/** 发送离队信息 */
-	private void sendLeftMessage(L1PcInstance sendTo, L1PcInstance left) {
+	private void sendLeftMessage(final L1PcInstance sendTo, final L1PcInstance left) {
 		// %0%s 离开了队伍。
 		sendTo.sendPackets(new S_ServerMessage(420, left.getName()));
 	}
 
 	/** 设置领导者 */
-	private void setLeader(L1PcInstance pc) {
+	private void setLeader(final L1PcInstance pc) {
 		_leader = pc;
 	}
 
 	/** 显示加入队伍的信息 */
-	private void showAddPartyInfo(L1PcInstance pc) {
-		for (L1PcInstance member : getMembers()) {
+	private void showAddPartyInfo(final L1PcInstance pc) {
+		for (final L1PcInstance member : getMembers()) {
 			if ((pc.getId() == getLeader().getId()) && (getNumOfMembers() == 1)) {
 				continue;
 			}

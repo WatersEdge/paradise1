@@ -31,17 +31,17 @@ public class C_CreateParty extends ClientBasePacket {
 
 	private static final String C_CREATE_PARTY = "[C] C_CreateParty";
 
-	public C_CreateParty(byte decrypt[], ClientThread client) throws Exception {
+	public C_CreateParty(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
-		int type = readC();
+		final int type = readC();
 		if ((type == 0) || (type == 1)) { // 自动接受组队 on 与 off 的同
-			int targetId = readD();
-			L1Object temp = L1World.getInstance().findObject(targetId);
+			final int targetId = readD();
+			final L1Object temp = L1World.getInstance().findObject(targetId);
 			if (temp instanceof L1PcInstance) {
-				L1PcInstance targetPc = (L1PcInstance) temp;
+				final L1PcInstance targetPc = (L1PcInstance) temp;
 				if (pc.getId() == targetPc.getId()) {
 					return;
 				}
@@ -61,12 +61,12 @@ public class C_CreateParty extends ClientBasePacket {
 						targetPc.setPartyType(type);
 						targetPc.setPartyID(pc.getId());
 						switch (type) {
-						case 0:
-							targetPc.sendPackets(new S_Message_YN(953, pc.getName())); // 玩家 %0%s 邀请您加入队伍？(Y/N)
-							break;
-						case 1:
-							targetPc.sendPackets(new S_Message_YN(954, pc.getName())); // 玩家 %0%s 邀请您加入自动分配队伍？(Y/N)
-							break;
+							case 0:
+								targetPc.sendPackets(new S_Message_YN(953, pc.getName())); // 玩家 %0%s 邀请您加入队伍？(Y/N)
+								break;
+							case 1:
+								targetPc.sendPackets(new S_Message_YN(954, pc.getName())); // 玩家 %0%s 邀请您加入自动分配队伍？(Y/N)
+								break;
 						}
 					}
 					else {
@@ -77,19 +77,19 @@ public class C_CreateParty extends ClientBasePacket {
 					pc.setPartyType(type);
 					targetPc.setPartyID(pc.getId());
 					switch (type) {
-					case 0:
-						targetPc.sendPackets(new S_Message_YN(953, pc.getName())); // 玩家 %0%s 邀请您加入队伍？(Y/N)
-						break;
-					case 1:
-						targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
-						break;
+						case 0:
+							targetPc.sendPackets(new S_Message_YN(953, pc.getName())); // 玩家 %0%s 邀请您加入队伍？(Y/N)
+							break;
+						case 1:
+							targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
+							break;
 					}
 				}
 			}
 		}
 		else if (type == 2) { // 聊天组队
-			String name = readS();
-			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
+			final String name = readS();
+			final L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
 				pc.sendPackets(new S_ServerMessage(109)); // 没有叫%0的人。
 				return;
@@ -131,10 +131,10 @@ public class C_CreateParty extends ClientBasePacket {
 			}
 
 			// 取得目标物件编号
-			int targetId = readD();
+			final int targetId = readD();
 
 			// 尝试取得目标
-			L1Object obj = L1World.getInstance().findObject(targetId);
+			final L1Object obj = L1World.getInstance().findObject(targetId);
 
 			// 判断目标是否合理
 			if ((obj == null) || (pc.getId() == obj.getId()) || !(obj instanceof L1PcInstance)) {
@@ -148,7 +148,7 @@ public class C_CreateParty extends ClientBasePacket {
 			}
 
 			// 转型为玩家物件
-			L1PcInstance targetPc = (L1PcInstance) obj;
+			final L1PcInstance targetPc = (L1PcInstance) obj;
 
 			// 判断目标是否属于相同队伍
 			if (!targetPc.isInParty()) {

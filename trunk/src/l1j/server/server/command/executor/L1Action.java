@@ -32,13 +32,13 @@ public class L1Action implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			int actId = Integer.parseInt(st.nextToken(), 10);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final int actId = Integer.parseInt(st.nextToken(), 10);
 			pc.sendPackets(new S_DoActionGFX(pc.getId(), actId));
 		}
-		catch (Exception exception) {
+		catch (final Exception exception) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " actid。"));
 		}
 	}

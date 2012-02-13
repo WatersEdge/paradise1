@@ -15,11 +15,11 @@ import lineage.console.connector.UniversalUseItem;
 public class UsePotion_BlessOfEva implements UniversalUseItem {
 
 	@Override
-	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
+	public void useItem(final L1PcInstance pc, final L1ItemInstance item, final int itemId, final int effect, int time, final int gfxid) {
 
 		// 持续时间可累加
 		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
-			int timeSec = pc.getSkillEffectTimeSec(STATUS_UNDERWATER_BREATH);
+			final int timeSec = pc.getSkillEffectTimeSec(STATUS_UNDERWATER_BREATH);
 			time += timeSec;
 			if (time > 7200) {
 				time = 7200;

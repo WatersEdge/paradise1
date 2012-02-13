@@ -29,7 +29,7 @@ public class Maps {
 			super();
 		}
 
-		public SerializableHashMap(Map<? extends K, ? extends V> m) {
+		public SerializableHashMap(final Map<? extends K, ? extends V> m) {
 			super(m);
 		}
 	}
@@ -42,7 +42,7 @@ public class Maps {
 		return new ConcurrentHashMap<K, V>();
 	}
 
-	public static <K, V> Map<K, V> newConcurrentMap(Map<K, V> from) {
+	public static <K, V> Map<K, V> newConcurrentMap(final Map<K, V> from) {
 		return new ConcurrentHashMap<K, V>(from);
 	}
 
@@ -50,7 +50,7 @@ public class Maps {
 		return new FastMap<K, V>();
 	}
 
-	public static <K, V> Map<K, V> newMap(Map<K, V> from) {
+	public static <K, V> Map<K, V> newMap(final Map<K, V> from) {
 		return new FastMap<K, V>(from);
 	}
 
@@ -58,7 +58,7 @@ public class Maps {
 		return new SerializableHashMap<K, V>();
 	}
 
-	public static <K, V> Map<K, V> newSerializableMap(Map<K, V> from) {
+	public static <K, V> Map<K, V> newSerializableMap(final Map<K, V> from) {
 		return new SerializableHashMap<K, V>(from);
 	}
 
@@ -66,7 +66,7 @@ public class Maps {
 		return new WeakHashMap<K, V>();
 	}
 
-	public static <K, V> Map<K, V> newWeakMap(Map<K, V> from) {
+	public static <K, V> Map<K, V> newWeakMap(final Map<K, V> from) {
 		return new WeakHashMap<K, V>(from);
 	}
 }

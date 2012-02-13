@@ -40,10 +40,10 @@ public class L1CreateItem implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String nameid = st.nextToken();
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String nameid = st.nextToken();
 			int count = 1;
 			if (st.hasMoreTokens()) {
 				count = Integer.parseInt(st.nextToken());
@@ -68,17 +68,17 @@ public class L1CreateItem implements L1CommandExecutor {
 			try {
 				itemid = Integer.parseInt(nameid);
 			}
-			catch (NumberFormatException e) {
+			catch (final NumberFormatException e) {
 				itemid = ItemTable.getInstance().findItemIdByNameWithoutSpace(nameid);
 				if (itemid == 0) {
 					pc.sendPackets(new S_SystemMessage("找不到符合条件项目。"));
 					return;
 				}
 			}
-			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
+			final L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp != null) {
 				if (temp.isStackable()) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
+					final L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
 					item.setEnchantLevel(0);
 					item.setCount(count);
 					if (isId == 1) {
@@ -96,7 +96,7 @@ public class L1CreateItem implements L1CommandExecutor {
 					for (createCount = 0; createCount < count; createCount++) {
 						item = ItemTable.getInstance().createItem(itemid);
 						item.setEnchantLevel(enchant);
-						if ((item.getItem().getType2() == 2) && (item.getItem().getType() >= 8 && item.getItem().getType() <= 12)) { // 饰品类
+						if ((item.getItem().getType2() == 2) && ((item.getItem().getType() >= 8) && (item.getItem().getType() <= 12))) { // 饰品类
 							boolean award = false;
 							for (int i = 0; i < enchant; i++) {
 								if (i == 5) {
@@ -106,63 +106,63 @@ public class L1CreateItem implements L1CommandExecutor {
 									award = false;
 								}
 								switch (item.getItem().getGrade()) {
-								case 0: // 上等
-									// 四属性 +1
-									item.setFireMr(item.getFireMr() + 1);
-									item.setWaterMr(item.getWaterMr() + 1);
-									item.setEarthMr(item.getEarthMr() + 1);
-									item.setWindMr(item.getWindMr() + 1);
-									// LV6 额外奖励：体力与魔力回复量 +1
-									if (award) {
-										item.setHpr(item.getHpr() + 1);
-										item.setMpr(item.getMpr() + 1);
-									}
-									break;
-								case 1: // 中等
-									// HP +2
-									item.setaddHp(item.getaddHp() + 2);
-									// LV6 额外奖励：魔防 +1
-									if (award) {
-										item.setM_Def(item.getM_Def() + 1);
-									}
-									break;
-								case 2: // 初等
-									// MP +1
-									item.setaddMp(item.getaddMp() + 1);
-									// LV6 额外奖励：魔攻 +1
-									if (award) {
-										item.setaddSp(item.getaddSp() + 1);
-									}
-									break;
-								case 3: // 特等
-									// 功能台版未实装。
-									break;
-								default:
-									break;
+									case 0: // 上等
+										// 四属性 +1
+										item.setFireMr(item.getFireMr() + 1);
+										item.setWaterMr(item.getWaterMr() + 1);
+										item.setEarthMr(item.getEarthMr() + 1);
+										item.setWindMr(item.getWindMr() + 1);
+										// LV6 额外奖励：体力与魔力回复量 +1
+										if (award) {
+											item.setHpr(item.getHpr() + 1);
+											item.setMpr(item.getMpr() + 1);
+										}
+										break;
+									case 1: // 中等
+										// HP +2
+										item.setaddHp(item.getaddHp() + 2);
+										// LV6 额外奖励：魔防 +1
+										if (award) {
+											item.setM_Def(item.getM_Def() + 1);
+										}
+										break;
+									case 2: // 初等
+										// MP +1
+										item.setaddMp(item.getaddMp() + 1);
+										// LV6 额外奖励：魔攻 +1
+										if (award) {
+											item.setaddSp(item.getaddSp() + 1);
+										}
+										break;
+									case 3: // 特等
+										// 功能台版未实装。
+										break;
+									default:
+										break;
 								}
 							}
 						}
 						else if (item.getItem().getType2() == 1) { // 武器类
 							if (attr.equalsIgnoreCase("地") || attr.equalsIgnoreCase("1")) {
-								if (attLevel > 0 && attLevel <= 3) {
+								if ((attLevel > 0) && (attLevel <= 3)) {
 									item.setAttrEnchantKind(1);
 									item.setAttrEnchantLevel(attLevel);
 								}
 							}
 							else if (attr.equalsIgnoreCase("火") || attr.equalsIgnoreCase("2")) {
-								if (attLevel > 0 && attLevel <= 3) {
+								if ((attLevel > 0) && (attLevel <= 3)) {
 									item.setAttrEnchantKind(2);
 									item.setAttrEnchantLevel(attLevel);
 								}
 							}
 							else if (attr.equalsIgnoreCase("水") || attr.equalsIgnoreCase("4")) {
-								if (attLevel > 0 && attLevel <= 3) {
+								if ((attLevel > 0) && (attLevel <= 3)) {
 									item.setAttrEnchantKind(4);
 									item.setAttrEnchantLevel(attLevel);
 								}
 							}
 							else if (attr.equalsIgnoreCase("风") || attr.equalsIgnoreCase("8")) {
-								if (attLevel > 0 && attLevel <= 3) {
+								if ((attLevel > 0) && (attLevel <= 3)) {
 									item.setAttrEnchantKind(8);
 									item.setAttrEnchantLevel(attLevel);
 								}
@@ -188,7 +188,7 @@ public class L1CreateItem implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage("指定的道具编号不存在"));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage("请输入 .item itemid|name [数量] [强化等级] [鉴定状态] [武器属性] [属性等级]。"));
 		}

@@ -35,18 +35,18 @@ public class L1DwarfInstance extends L1NpcInstance {
 	/**
 	 * @param template
 	 */
-	public L1DwarfInstance(L1Npc template) {
+	public L1DwarfInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		attack.calcHit();
 		attack.action();
 		attack.calcDamage();
@@ -57,7 +57,7 @@ public class L1DwarfInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance pc, String Action) {
+	public void onFinalAction(final L1PcInstance pc, final String Action) {
 		if (Action.equalsIgnoreCase("retrieve")) {
 			_log.finest("Retrive items in storage");
 		}
@@ -66,7 +66,7 @@ public class L1DwarfInstance extends L1NpcInstance {
 
 			if (pc.getClanname().equalsIgnoreCase(" ")) {
 				_log.finest("pc isnt in a pledge");
-				S_ServerMessage talk = new S_ServerMessage((S_ServerMessage.NO_PLEDGE), Action);
+				final S_ServerMessage talk = new S_ServerMessage((S_ServerMessage.NO_PLEDGE), Action);
 				pc.sendPackets(talk);
 			}
 			else {
@@ -76,10 +76,10 @@ public class L1DwarfInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance pc) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		int npcId = getNpcTemplate().get_npcId();
+	public void onTalkAction(final L1PcInstance pc) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final int npcId = getNpcTemplate().get_npcId();
 		String htmlid = null;
 
 		if (talking != null) {

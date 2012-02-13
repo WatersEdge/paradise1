@@ -32,25 +32,25 @@ public class L1PetFood extends TimerTask {
 
 	private int _food = 0;
 
-	private L1Pet _l1pet;
+	private final L1Pet _l1pet;
 
 	/** 宠物饱食度计时器 */
-	public L1PetFood(L1PetInstance pet, int itemObj) {
+	public L1PetFood(final L1PetInstance pet, final int itemObj) {
 		_pet = pet;
 		_l1pet = PetTable.getInstance().getTemplate(itemObj);
 	}
 
 	@Override
 	public void run() {
-		if (_pet != null && !_pet.isDead()) {
+		if ((_pet != null) && !_pet.isDead()) {
 			_food = _pet.get_food() - 2;
 			if (_food <= 0) {
 				_pet.set_food(0);
 				_pet.setCurrentPetStatus(3);
 
 				// 非常饿时提醒主人
-				L1PetType type = PetTypeTable.getInstance().get(_pet.getNpcTemplate().get_npcId());
-				int id = type.getDefyMessageId();
+				final L1PetType type = PetTypeTable.getInstance().get(_pet.getNpcTemplate().get_npcId());
+				final int id = type.getDefyMessageId();
 				if (id != 0) {
 					_pet.broadcastPacket(new S_NpcChatPacket(_pet, "$" + id, 0));
 				}

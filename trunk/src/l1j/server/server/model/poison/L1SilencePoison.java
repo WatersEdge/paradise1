@@ -22,7 +22,7 @@ import l1j.server.server.model.L1Character;
  */
 public class L1SilencePoison extends L1Poison {
 
-	public static boolean doInfection(L1Character cha) {
+	public static boolean doInfection(final L1Character cha) {
 		if (!L1Poison.isValidTarget(cha)) {
 			return false;
 		}
@@ -33,7 +33,7 @@ public class L1SilencePoison extends L1Poison {
 
 	private final L1Character _target;
 
-	private L1SilencePoison(L1Character cha) {
+	private L1SilencePoison(final L1Character cha) {
 		_target = cha;
 
 		doInfection();

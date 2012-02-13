@@ -28,11 +28,11 @@ public class C_EnterPortal extends ClientBasePacket {
 
 	private static final String C_ENTER_PORTAL = "[C] C_EnterPortal";
 
-	public C_EnterPortal(byte abyte0[], ClientThread client) throws Exception {
+	public C_EnterPortal(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		int locx = readH();
-		int locy = readH();
-		L1PcInstance pc = client.getActiveChar();
+		final int locx = readH();
+		final int locy = readH();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isTeleport()) { // 传送中
 			return;
 		}

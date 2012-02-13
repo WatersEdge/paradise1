@@ -132,7 +132,7 @@ public class CharBuffTable {
 	 * 
 	 * @param pc
 	 */
-	public static void buffRemainingTime(L1PcInstance pc) {
+	public static void buffRemainingTime(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -143,69 +143,69 @@ public class CharBuffTable {
 			pstm.setInt(1, pc.getId());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int skillid = rs.getInt("skill_id");
+				final int skillid = rs.getInt("skill_id");
 				int remaining_time = rs.getInt("remaining_time");
 				switch (skillid) {
-				case STATUS_RIBRAVE: // 生命之树果实
-				case DRESS_EVASION: // 闪避提升
-					remaining_time = remaining_time / 4;
-					pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
-					break;
-				case COOKING_WONDER_DRUG: // 象牙塔妙药
-					pc.addHpr(10);
-					pc.addMpr(2);
-					remaining_time = remaining_time / 4;
-					pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
-					break;
-				case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
-				case EFFECT_ENCHANTING_BATTLE: // 强化战斗卷轴
-				case EFFECT_STRENGTHENING_HP: // 体力增强卷轴
-				case EFFECT_STRENGTHENING_MP: // 魔力增强卷轴
-					remaining_time = remaining_time / 16;
-					Effect.useEffect(pc, skillid, remaining_time * 16);
-					break;
-				case EFFECT_POTION_OF_BATTLE: // 战斗药水
-				case EFFECT_POTION_OF_EXP_150: // 神力药水
-				case EFFECT_POTION_OF_EXP_175:
-				case EFFECT_POTION_OF_EXP_200:
-				case EFFECT_POTION_OF_EXP_225:
-				case EFFECT_POTION_OF_EXP_250:
-					remaining_time = remaining_time / 16;
-					pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
-					break;
-				case EFFECT_MAGIC_EYE_OF_AHTHARTS: // 魔眼
-				case EFFECT_MAGIC_EYE_OF_FAFURION:
-				case EFFECT_MAGIC_EYE_OF_LINDVIOR:
-				case EFFECT_MAGIC_EYE_OF_VALAKAS:
-				case EFFECT_MAGIC_EYE_OF_BIRTH:
-				case EFFECT_MAGIC_EYE_OF_FIGURE:
-				case EFFECT_MAGIC_EYE_OF_LIFE:
-					remaining_time = remaining_time / 32;
-					Effect.useEffect(pc, skillid, remaining_time * 32);
-					break;
-				case RESIST_FEAR: // 恐惧无助
-					remaining_time = remaining_time / 4;
-					pc.addNdodge((byte) 5); // 闪避率 - 50%
-					// 更新闪避率显示
-					pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
-					pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
-					break;
-				case EFFECT_BLESS_OF_CRAY: // 卡瑞、莎尔的祝福
-				case EFFECT_BLESS_OF_SAELL:
-					remaining_time = remaining_time / 32;
-					L1BuffUtil.effectBlessOfDragonSlayer(pc, skillid, remaining_time * 32, 0);
-					break;
-				default:
-					if (skillid >= EFFECT_MAGIC_STONE_A_1 && skillid <= EFFECT_MAGIC_STONE_D_9) { // 附魔石
-						remaining_time = remaining_time / 32;
-						Effect.magicStoneEffect(pc, skillid, remaining_time * 32);
+					case STATUS_RIBRAVE: // 生命之树果实
+					case DRESS_EVASION: // 闪避提升
+						remaining_time = remaining_time / 4;
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
-					}
-					break;
+					case COOKING_WONDER_DRUG: // 象牙塔妙药
+						pc.addHpr(10);
+						pc.addMpr(2);
+						remaining_time = remaining_time / 4;
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
+						break;
+					case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
+					case EFFECT_ENCHANTING_BATTLE: // 强化战斗卷轴
+					case EFFECT_STRENGTHENING_HP: // 体力增强卷轴
+					case EFFECT_STRENGTHENING_MP: // 魔力增强卷轴
+						remaining_time = remaining_time / 16;
+						Effect.useEffect(pc, skillid, remaining_time * 16);
+						break;
+					case EFFECT_POTION_OF_BATTLE: // 战斗药水
+					case EFFECT_POTION_OF_EXP_150: // 神力药水
+					case EFFECT_POTION_OF_EXP_175:
+					case EFFECT_POTION_OF_EXP_200:
+					case EFFECT_POTION_OF_EXP_225:
+					case EFFECT_POTION_OF_EXP_250:
+						remaining_time = remaining_time / 16;
+						pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
+						break;
+					case EFFECT_MAGIC_EYE_OF_AHTHARTS: // 魔眼
+					case EFFECT_MAGIC_EYE_OF_FAFURION:
+					case EFFECT_MAGIC_EYE_OF_LINDVIOR:
+					case EFFECT_MAGIC_EYE_OF_VALAKAS:
+					case EFFECT_MAGIC_EYE_OF_BIRTH:
+					case EFFECT_MAGIC_EYE_OF_FIGURE:
+					case EFFECT_MAGIC_EYE_OF_LIFE:
+						remaining_time = remaining_time / 32;
+						Effect.useEffect(pc, skillid, remaining_time * 32);
+						break;
+					case RESIST_FEAR: // 恐惧无助
+						remaining_time = remaining_time / 4;
+						pc.addNdodge((byte) 5); // 闪避率 - 50%
+						// 更新闪避率显示
+						pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
+						break;
+					case EFFECT_BLESS_OF_CRAY: // 卡瑞、莎尔的祝福
+					case EFFECT_BLESS_OF_SAELL:
+						remaining_time = remaining_time / 32;
+						L1BuffUtil.effectBlessOfDragonSlayer(pc, skillid, remaining_time * 32, 0);
+						break;
+					default:
+						if ((skillid >= EFFECT_MAGIC_STONE_A_1) && (skillid <= EFFECT_MAGIC_STONE_D_9)) { // 附魔石
+							remaining_time = remaining_time / 32;
+							Effect.magicStoneEffect(pc, skillid, remaining_time * 32);
+							break;
+						}
+						break;
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -219,7 +219,7 @@ public class CharBuffTable {
 	 * 
 	 * @param pc
 	 */
-	public static void DeleteBuff(L1PcInstance pc) {
+	public static void DeleteBuff(final L1PcInstance pc) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -228,7 +228,7 @@ public class CharBuffTable {
 			pstm.setInt(1, pc.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -242,9 +242,9 @@ public class CharBuffTable {
 	 * 
 	 * @param pc
 	 */
-	public static void SaveBuff(L1PcInstance pc) {
-		for (int skillId : buffSkill) {
-			int timeSec = pc.getSkillEffectTimeSec(skillId);
+	public static void SaveBuff(final L1PcInstance pc) {
+		for (final int skillId : buffSkill) {
+			final int timeSec = pc.getSkillEffectTimeSec(skillId);
 			if (0 < timeSec) {
 				int polyId = 0;
 				if (skillId == SHAPE_CHANGE) {
@@ -267,7 +267,7 @@ public class CharBuffTable {
 	 * @param polyId
 	 *            变身ID
 	 */
-	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
+	private static void StoreBuff(final int objId, final int skillId, final int time, final int polyId) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -279,7 +279,7 @@ public class CharBuffTable {
 			pstm.setInt(4, polyId);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

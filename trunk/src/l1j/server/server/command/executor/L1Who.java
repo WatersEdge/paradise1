@@ -30,18 +30,18 @@ public class L1Who implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
-			String amount = String.valueOf(players.size());
-			S_WhoAmount s_whoamount = new S_WhoAmount(amount);
+			final Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
+			final String amount = String.valueOf(players.size());
+			final S_WhoAmount s_whoamount = new S_WhoAmount(amount);
 			pc.sendPackets(s_whoamount);
 
 			// オンラインのプレイヤーリストを表示
 			if (arg.equalsIgnoreCase("all")) {
 				pc.sendPackets(new S_SystemMessage("-- 线上玩家 --"));
-				StringBuffer buf = new StringBuffer();
-				for (L1PcInstance each : players) {
+				final StringBuffer buf = new StringBuffer();
+				for (final L1PcInstance each : players) {
 					buf.append(each.getName());
 					buf.append(" / ");
 					if (buf.length() > 50) {
@@ -54,7 +54,7 @@ public class L1Who implements L1CommandExecutor {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入: .who [all] 。"));
 		}
 	}

@@ -54,7 +54,7 @@ public class SkillsTable {
 		RestoreSkills();
 	}
 
-	public L1Skills getTemplate(int i) {
+	public L1Skills getTemplate(final int i) {
 		return _skills.get(new Integer(i));
 	}
 
@@ -68,7 +68,7 @@ public class SkillsTable {
 	 * @param playerobjid
 	 * @param skillid
 	 */
-	public boolean spellCheck(int playerobjid, int skillid) {
+	public boolean spellCheck(final int playerobjid, final int skillid) {
 		boolean ret = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -87,7 +87,7 @@ public class SkillsTable {
 				ret = false;
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -104,8 +104,8 @@ public class SkillsTable {
 	 * @param playerobjid
 	 * @param skillid
 	 */
-	public void spellLost(int playerobjid, int skillid) {
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
+	public void spellLost(final int playerobjid, final int skillid) {
+		final L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.removeSkillMastery(skillid);
 		}
@@ -120,7 +120,7 @@ public class SkillsTable {
 			pstm.setInt(2, skillid);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -138,11 +138,11 @@ public class SkillsTable {
 	 * @param active
 	 * @param time
 	 */
-	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
+	public void spellMastery(final int playerobjid, final int skillid, final String skillname, final int active, final int time) {
 		if (spellCheck(playerobjid, skillid)) {
 			return;
 		}
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
+		final L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.setSkillMastery(skillid);
 		}
@@ -160,7 +160,7 @@ public class SkillsTable {
 			pstm.setInt(5, time);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -169,11 +169,11 @@ public class SkillsTable {
 		}
 	}
 
-	private void FillSkillsTable(ResultSet rs) throws SQLException {
+	private void FillSkillsTable(final ResultSet rs) throws SQLException {
 
 		while (rs.next()) {
-			L1Skills l1skills = new L1Skills();
-			int skill_id = rs.getInt("skill_id");
+			final L1Skills l1skills = new L1Skills();
+			final int skill_id = rs.getInt("skill_id");
 			l1skills.setSkillId(skill_id);
 			l1skills.setName(rs.getString("name"));
 			l1skills.setSkillLevel(rs.getInt("skill_level"));
@@ -222,7 +222,7 @@ public class SkillsTable {
 			FillSkillsTable(rs);
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建skills表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

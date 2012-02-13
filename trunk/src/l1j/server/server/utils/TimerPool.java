@@ -21,8 +21,8 @@ import java.util.Timer;
  */
 public class TimerPool {
 
-	private Timer _timers[];
-	private int _numOfTimers;
+	private final Timer _timers[];
+	private final int _numOfTimers;
 	private int _pointer = 0;
 
 	/**
@@ -30,7 +30,7 @@ public class TimerPool {
 	 * 
 	 * @param numOfTimers
 	 */
-	public TimerPool(int numOfTimers) {
+	public TimerPool(final int numOfTimers) {
 		_timers = new Timer[numOfTimers];
 		for (int i = 0; i < numOfTimers; i++) {
 			_timers[i] = new Timer();

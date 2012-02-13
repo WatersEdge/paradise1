@@ -79,7 +79,7 @@ public class Effect {
 	 * @param skillId
 	 * @param time
 	 */
-	public static void magicStoneEffect(L1PcInstance pc, int skillId, int time) {
+	public static void magicStoneEffect(final L1PcInstance pc, final int skillId, final int time) {
 		byte type = 0;
 		if (!pc.hasSkillEffect(skillId)) {
 			switch (skillId) {
@@ -278,23 +278,23 @@ public class Effect {
 					break;
 			}
 
-			if (type >= 84 && type <= 92) { // (近战)
+			if ((type >= 84) && (type <= 92)) { // (近战)
 				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
 				if (pc.isInParty()) { // 组队中
 					pc.getParty().updateMiniHP(pc);
 				}
 			}
-			else if (type >= 93 && type <= 101) { // (远攻)
+			else if ((type >= 93) && (type <= 101)) { // (远攻)
 				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 				if (pc.isInParty()) { // 组队中
 					pc.getParty().updateMiniHP(pc);
 				}
 			}
-			else if (type >= 102 && type <= 110) { // 恢复
+			else if ((type >= 102) && (type <= 110)) { // 恢复
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 			}
-			else if (type >= 111 && type <= 119) { // 防御
+			else if ((type >= 111) && (type <= 119)) { // 防御
 				pc.sendPackets(new S_SPMR(pc));
 				pc.sendPackets(new S_OwnCharAttrDef(pc));
 				pc.sendPackets(new S_OwnCharStatus2(pc));
@@ -315,7 +315,7 @@ public class Effect {
 	 * @param time
 	 *            时间
 	 */
-	public static void useEffect(L1PcInstance pc, int skillId, int time) {
+	public static void useEffect(final L1PcInstance pc, final int skillId, final int time) {
 		if (!pc.hasSkillEffect(skillId)) {
 			switch (skillId) {
 				case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
@@ -360,16 +360,16 @@ public class Effect {
 	 * @param item
 	 *            道具
 	 */
-	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
+	public static void useEffectItem(final L1PcInstance pc, final L1ItemInstance item) {
 		boolean isMagicStone = false;
-		boolean deteleItem = true;
+		final boolean deteleItem = true;
 
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
 			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
 			return;
 		}
 
-		int itemId = item.getItem().getItemId();
+		final int itemId = item.getItem().getItemId();
 		int skillId = 0;
 		int time = 0;
 		int gfxid = 0;
@@ -407,28 +407,28 @@ public class Effect {
 				break;
 
 			default:
-				if (itemId >= 47064 && itemId <= 47072) { // 附魔石(近战)
+				if ((itemId >= 47064) && (itemId <= 47072)) { // 附魔石(近战)
 					skillId = itemId - 43051;
 					gfxid = itemId - 38125;
 					time = 600;
 					isMagicStone = true;
 					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
-				else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
+				else if ((itemId >= 47074) && (itemId <= 47082)) { // 附魔石(远攻)
 					skillId = itemId - 43052;
 					gfxid = itemId - 38126;
 					time = 600;
 					isMagicStone = true;
 					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
-				else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
+				else if ((itemId >= 47084) && (itemId <= 47092)) { // 附魔石(恢复)
 					skillId = itemId - 43053;
 					gfxid = itemId - 38127;
 					time = 600;
 					isMagicStone = true;
 					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
 				}
-				else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
+				else if ((itemId >= 47094) && (itemId <= 47102)) { // 附魔石(防御)
 					skillId = itemId - 43054;
 					gfxid = itemId - 38128;
 					time = 600;

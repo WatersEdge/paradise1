@@ -30,13 +30,13 @@ public class C_Party extends ClientBasePacket {
 
 	private static final String C_PARTY = "[C] C_Party";
 
-	public C_Party(byte abyte0[], ClientThread clientthread) {
+	public C_Party(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
-		L1Party party = pc.getParty();
+		final L1Party party = pc.getParty();
 		if (pc.isInParty()) {
 			pc.sendPackets(new S_Party("party", pc.getId(), party.getLeader().getName(), party.getMembersNameList()));
 		}

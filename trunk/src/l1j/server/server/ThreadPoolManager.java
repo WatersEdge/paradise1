@@ -45,7 +45,7 @@ public class ThreadPoolManager {
 
 		private final ThreadGroup _group;
 
-		public PriorityThreadFactory(String name, int prio) {
+		public PriorityThreadFactory(final String name, final int prio) {
 			_prio = prio;
 			_name = name;
 			_group = new ThreadGroup(_name);
@@ -61,8 +61,8 @@ public class ThreadPoolManager {
 		 * @see java.util.concurrent.ThreadFactory#newThread(java.lang.Runnable)
 		 */
 		@Override
-		public Thread newThread(Runnable r) {
-			Thread t = new Thread(_group, r);
+		public Thread newThread(final Runnable r) {
+			final Thread t = new Thread(_group, r);
 			t.setName(_name + "-" + _threadNumber.getAndIncrement());
 			t.setPriority(_prio);
 			return t;
@@ -124,7 +124,7 @@ public class ThreadPoolManager {
 	}
 
 	/** 执行AI */
-	public void executeAi(Runnable r) {
+	public void executeAi(final Runnable r) {
 		_aiThreadPool.execute(r);
 	}
 
@@ -134,29 +134,29 @@ public class ThreadPoolManager {
 	 * public void executeIOPacket(ReceivablePacket<L2GameClient> pkt) { _ioPacketsThreadPool.execute(pkt); }
 	 */
 	/** 执行任务 */
-	public void executeTask(Runnable r) {
+	public void executeTask(final Runnable r) {
 		_generalThreadPool.execute(r);
 	}
 
 	/** 获得常规统​​计 */
 	public String getGeneralStats() {
-		TextBuilder tb = new TextBuilder();
-		ThreadFactory tf = _generalThreadPool.getThreadFactory();
+		final TextBuilder tb = new TextBuilder();
+		final ThreadFactory tf = _generalThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("General Thread Pool:\r\n");
 			tb.append("Tasks in the queue: " + _generalThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
-			PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
-			int count = ptf.getGroup().activeCount();
-			Thread[] threads = new Thread[count + 2];
+			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
+			final int count = ptf.getGroup().activeCount();
+			final Thread[] threads = new Thread[count + 2];
 			ptf.getGroup().enumerate(threads);
 			tb.append("There should be " + count + " Threads\r\n");
-			for (Thread t : threads) {
+			for (final Thread t : threads) {
 				if (t == null) {
 					continue;
 				}
 				tb.append(t.getName() + "\r\n");
-				for (StackTraceElement ste : t.getStackTrace()) {
+				for (final StackTraceElement ste : t.getStackTrace()) {
 					tb.append(ste.toString());
 					tb.append("\r\n");
 				}
@@ -168,23 +168,23 @@ public class ThreadPoolManager {
 
 	/** 得到的IO包统计 */
 	public String getIOPacketStats() {
-		TextBuilder tb = new TextBuilder();
-		ThreadFactory tf = _ioPacketsThreadPool.getThreadFactory();
+		final TextBuilder tb = new TextBuilder();
+		final ThreadFactory tf = _ioPacketsThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("I/O Packet Thread Pool:\r\n");
 			tb.append("Tasks in the queue: " + _ioPacketsThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
-			PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
-			int count = ptf.getGroup().activeCount();
-			Thread[] threads = new Thread[count + 2];
+			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
+			final int count = ptf.getGroup().activeCount();
+			final Thread[] threads = new Thread[count + 2];
 			ptf.getGroup().enumerate(threads);
 			tb.append("There should be " + count + " Threads\r\n");
-			for (Thread t : threads) {
+			for (final Thread t : threads) {
 				if (t == null) {
 					continue;
 				}
 				tb.append(t.getName() + "\r\n");
-				for (StackTraceElement ste : t.getStackTrace()) {
+				for (final StackTraceElement ste : t.getStackTrace()) {
 					tb.append(ste.toString());
 					tb.append("\r\n");
 				}
@@ -198,23 +198,23 @@ public class ThreadPoolManager {
 	 * 获得包统计
 	 */
 	public String getPacketStats() {
-		TextBuilder tb = new TextBuilder();
-		ThreadFactory tf = _generalPacketsThreadPool.getThreadFactory();
+		final TextBuilder tb = new TextBuilder();
+		final ThreadFactory tf = _generalPacketsThreadPool.getThreadFactory();
 		if (tf instanceof PriorityThreadFactory) {
 			tb.append("General Packet Thread Pool:\r\n");
 			tb.append("Tasks in the queue: " + _generalPacketsThreadPool.getQueue().size() + "\r\n");
 			tb.append("Showing threads stack trace:\r\n");
-			PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
-			int count = ptf.getGroup().activeCount();
-			Thread[] threads = new Thread[count + 2];
+			final PriorityThreadFactory ptf = (PriorityThreadFactory) tf;
+			final int count = ptf.getGroup().activeCount();
+			final Thread[] threads = new Thread[count + 2];
 			ptf.getGroup().enumerate(threads);
 			tb.append("There should be " + count + " Threads\r\n");
-			for (Thread t : threads) {
+			for (final Thread t : threads) {
 				if (t == null) {
 					continue;
 				}
 				tb.append(t.getName() + "\r\n");
-				for (StackTraceElement ste : t.getStackTrace()) {
+				for (final StackTraceElement ste : t.getStackTrace()) {
 					tb.append(ste.toString());
 					tb.append("\r\n");
 				}
@@ -261,20 +261,20 @@ public class ThreadPoolManager {
 	}
 
 	/** AI时间表 */
-	public ScheduledFuture<?> scheduleAi(Runnable r, long delay) {
+	public ScheduledFuture<?> scheduleAi(final Runnable r, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
 			}
 			return _aiScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
 
 	/** 在固定汇率的AI时间表 */
-	public ScheduledFuture<?> scheduleAiAtFixedRate(Runnable r, long initial, long delay) {
+	public ScheduledFuture<?> scheduleAiAtFixedRate(final Runnable r, long initial, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
@@ -284,26 +284,26 @@ public class ThreadPoolManager {
 			}
 			return _aiScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
 
 	/** 时间表的影响 */
-	public ScheduledFuture<?> scheduleEffect(Runnable r, long delay) {
+	public ScheduledFuture<?> scheduleEffect(final Runnable r, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
 			}
 			return _effectsScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
 
 	/** 在固定汇率的时间表的影响 */
-	public ScheduledFuture<?> scheduleEffectAtFixedRate(Runnable r, long initial, long delay) {
+	public ScheduledFuture<?> scheduleEffectAtFixedRate(final Runnable r, long initial, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
@@ -313,26 +313,26 @@ public class ThreadPoolManager {
 			}
 			return _effectsScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
 
 	/** 共通的时间表 */
-	public ScheduledFuture<?> scheduleGeneral(Runnable r, long delay) {
+	public ScheduledFuture<?> scheduleGeneral(final Runnable r, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
 			}
 			return _generalScheduledThreadPool.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
 
 	/** 在固定汇率的共通时间表 */
-	public ScheduledFuture<?> scheduleGeneralAtFixedRate(Runnable r, long initial, long delay) {
+	public ScheduledFuture<?> scheduleGeneralAtFixedRate(final Runnable r, long initial, long delay) {
 		try {
 			if (delay < 0) {
 				delay = 0;
@@ -342,7 +342,7 @@ public class ThreadPoolManager {
 			}
 			return _generalScheduledThreadPool.scheduleAtFixedRate(r, initial, delay, TimeUnit.MILLISECONDS);
 		}
-		catch (RejectedExecutionException e) {
+		catch (final RejectedExecutionException e) {
 			return null; /* shutdown, ignore */
 		}
 	}
@@ -368,7 +368,7 @@ public class ThreadPoolManager {
 			System.out.println("现在清空所有的线程池。");
 
 		}
-		catch (InterruptedException e) {
+		catch (final InterruptedException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		}

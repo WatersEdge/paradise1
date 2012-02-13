@@ -132,113 +132,113 @@ public class L1TownLocation {
 
 	private static final Point[] GETBACK_LOC_RECLUSE_VILLAGE = { new Point(32599, 32916), new Point(32599, 32923), new Point(32603, 32908), new Point(32595, 32908), new Point(32591, 32918), };
 
-	public static int[] getGetBackLoc(int town_id) { // town_idから帰還先の座標をランダムに返す
-		int[] loc = new int[3];
+	public static int[] getGetBackLoc(final int town_id) { // town_idから帰還先の座標をランダムに返す
+		final int[] loc = new int[3];
 
 		if (town_id == TOWNID_TALKING_ISLAND) { // TI
-			int rnd = Random.nextInt(GETBACK_LOC_TALKING_ISLAND.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_TALKING_ISLAND.length);
 			loc[0] = GETBACK_LOC_TALKING_ISLAND[rnd].getX();
 			loc[1] = GETBACK_LOC_TALKING_ISLAND[rnd].getY();
 			loc[2] = GETBACK_MAP_TALKING_ISLAND;
 		}
 		else if (town_id == TOWNID_SILVER_KNIGHT_TOWN) { // SKT
-			int rnd = Random.nextInt(GETBACK_LOC_SILVER_KNIGHT_TOWN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_SILVER_KNIGHT_TOWN.length);
 			loc[0] = GETBACK_LOC_SILVER_KNIGHT_TOWN[rnd].getX();
 			loc[1] = GETBACK_LOC_SILVER_KNIGHT_TOWN[rnd].getY();
 			loc[2] = GETBACK_MAP_SILVER_KNIGHT_TOWN;
 		}
 		else if (town_id == TOWNID_KENT) { // ケント
-			int rnd = Random.nextInt(GETBACK_LOC_KENT.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_KENT.length);
 			loc[0] = GETBACK_LOC_KENT[rnd].getX();
 			loc[1] = GETBACK_LOC_KENT[rnd].getY();
 			loc[2] = GETBACK_MAP_KENT;
 		}
 		else if (town_id == TOWNID_GLUDIO) { // グル
-			int rnd = Random.nextInt(GETBACK_LOC_GLUDIO.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_GLUDIO.length);
 			loc[0] = GETBACK_LOC_GLUDIO[rnd].getX();
 			loc[1] = GETBACK_LOC_GLUDIO[rnd].getY();
 			loc[2] = GETBACK_MAP_GLUDIO;
 		}
 		else if (town_id == TOWNID_ORCISH_FOREST) { // 火田村
-			int rnd = Random.nextInt(GETBACK_LOC_ORCISH_FOREST.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_ORCISH_FOREST.length);
 			loc[0] = GETBACK_LOC_ORCISH_FOREST[rnd].getX();
 			loc[1] = GETBACK_LOC_ORCISH_FOREST[rnd].getY();
 			loc[2] = GETBACK_MAP_ORCISH_FOREST;
 		}
 		else if (town_id == TOWNID_WINDAWOOD) { // ウッドベック
-			int rnd = Random.nextInt(GETBACK_LOC_WINDAWOOD.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_WINDAWOOD.length);
 			loc[0] = GETBACK_LOC_WINDAWOOD[rnd].getX();
 			loc[1] = GETBACK_LOC_WINDAWOOD[rnd].getY();
 			loc[2] = GETBACK_MAP_WINDAWOOD;
 		}
 		else if (town_id == TOWNID_GIRAN) { // ギラン
-			int rnd = Random.nextInt(GETBACK_LOC_GIRAN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_GIRAN.length);
 			loc[0] = GETBACK_LOC_GIRAN[rnd].getX();
 			loc[1] = GETBACK_LOC_GIRAN[rnd].getY();
 			loc[2] = GETBACK_MAP_GIRAN;
 		}
 		else if (town_id == TOWNID_HEINE) { // ハイネ
-			int rnd = Random.nextInt(GETBACK_LOC_HEINE.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_HEINE.length);
 			loc[0] = GETBACK_LOC_HEINE[rnd].getX();
 			loc[1] = GETBACK_LOC_HEINE[rnd].getY();
 			loc[2] = GETBACK_MAP_HEINE;
 		}
 		else if (town_id == TOWNID_WERLDAN) { // ウェルダン
-			int rnd = Random.nextInt(GETBACK_LOC_WERLDAN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_WERLDAN.length);
 			loc[0] = GETBACK_LOC_WERLDAN[rnd].getX();
 			loc[1] = GETBACK_LOC_WERLDAN[rnd].getY();
 			loc[2] = GETBACK_MAP_WERLDAN;
 		}
 		else if (town_id == TOWNID_OREN) { // オーレン
-			int rnd = Random.nextInt(GETBACK_LOC_OREN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_OREN.length);
 			loc[0] = GETBACK_LOC_OREN[rnd].getX();
 			loc[1] = GETBACK_LOC_OREN[rnd].getY();
 			loc[2] = GETBACK_MAP_OREN;
 		}
 		else if (town_id == TOWNID_ELVEN_FOREST) { // エルフの森
-			int rnd = Random.nextInt(GETBACK_LOC_ELVEN_FOREST.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_ELVEN_FOREST.length);
 			loc[0] = GETBACK_LOC_ELVEN_FOREST[rnd].getX();
 			loc[1] = GETBACK_LOC_ELVEN_FOREST[rnd].getY();
 			loc[2] = GETBACK_MAP_ELVEN_FOREST;
 		}
 		else if (town_id == TOWNID_ADEN) { // アデン
-			int rnd = Random.nextInt(GETBACK_LOC_ADEN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_ADEN.length);
 			loc[0] = GETBACK_LOC_ADEN[rnd].getX();
 			loc[1] = GETBACK_LOC_ADEN[rnd].getY();
 			loc[2] = GETBACK_MAP_ADEN;
 		}
 		else if (town_id == TOWNID_SILENT_CAVERN) { // 沈黙の洞窟
-			int rnd = Random.nextInt(GETBACK_LOC_SILENT_CAVERN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_SILENT_CAVERN.length);
 			loc[0] = GETBACK_LOC_SILENT_CAVERN[rnd].getX();
 			loc[1] = GETBACK_LOC_SILENT_CAVERN[rnd].getY();
 			loc[2] = GETBACK_MAP_SILENT_CAVERN;
 		}
 		else if (town_id == TOWNID_OUM_DUNGEON) { // オームダンジョン
-			int rnd = Random.nextInt(GETBACK_LOC_OUM_DUNGEON.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_OUM_DUNGEON.length);
 			loc[0] = GETBACK_LOC_OUM_DUNGEON[rnd].getX();
 			loc[1] = GETBACK_LOC_OUM_DUNGEON[rnd].getY();
 			loc[2] = GETBACK_MAP_OUM_DUNGEON;
 		}
 		else if (town_id == TOWNID_RESISTANCE) { // レシスタンス村
-			int rnd = Random.nextInt(GETBACK_LOC_RESISTANCE.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_RESISTANCE.length);
 			loc[0] = GETBACK_LOC_RESISTANCE[rnd].getX();
 			loc[1] = GETBACK_LOC_RESISTANCE[rnd].getY();
 			loc[2] = GETBACK_MAP_RESISTANCE;
 		}
 		else if (town_id == TOWNID_PIRATE_ISLAND) { // 海賊島
-			int rnd = Random.nextInt(GETBACK_LOC_PIRATE_ISLAND.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_PIRATE_ISLAND.length);
 			loc[0] = GETBACK_LOC_PIRATE_ISLAND[rnd].getX();
 			loc[1] = GETBACK_LOC_PIRATE_ISLAND[rnd].getY();
 			loc[2] = GETBACK_MAP_PIRATE_ISLAND;
 		}
 		else if (town_id == TOWNID_RECLUSE_VILLAGE) { // 隠れ里
-			int rnd = Random.nextInt(GETBACK_LOC_RECLUSE_VILLAGE.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_RECLUSE_VILLAGE.length);
 			loc[0] = GETBACK_LOC_RECLUSE_VILLAGE[rnd].getX();
 			loc[1] = GETBACK_LOC_RECLUSE_VILLAGE[rnd].getY();
 			loc[2] = GETBACK_MAP_RECLUSE_VILLAGE;
 		}
 		else { // その他はSKT
-			int rnd = Random.nextInt(GETBACK_LOC_SILVER_KNIGHT_TOWN.length);
+			final int rnd = Random.nextInt(GETBACK_LOC_SILVER_KNIGHT_TOWN.length);
 			loc[0] = GETBACK_LOC_SILVER_KNIGHT_TOWN[rnd].getX();
 			loc[1] = GETBACK_LOC_SILVER_KNIGHT_TOWN[rnd].getY();
 			loc[2] = GETBACK_MAP_SILVER_KNIGHT_TOWN;
@@ -246,7 +246,7 @@ public class L1TownLocation {
 		return loc;
 	}
 
-	public static int getTownIdByNpcid(int npcid) { // npcidからtown_idを返す
+	public static int getTownIdByNpcid(final int npcid) { // npcidからtown_idを返す
 		// アデン城：アデン王国全域
 		// ケント城：ケント、グルーディン
 		// ウィンダウッド城：ウッドベック、オアシス、シルバーナイトタウン
@@ -260,139 +260,139 @@ public class L1TownLocation {
 		int town_id = 0;
 
 		switch (npcid) {
-		case 70528: // タウンマスター（TI）
-		case 50015: // ルーカス（テレポーター）
-		case 70010: // バルシム（犬小屋裏道具屋）
-		case 70011: // 船着場管理人
-		case 70012: // セレナ（宿屋）
-		case 70014: // パンドラ（港道具屋）
-		case 70532: // ジョンソン（ペット屋）
-		case 70536: // トーマ（鍛冶屋）
-			town_id = TOWNID_TALKING_ISLAND;
-			break;
+			case 70528: // タウンマスター（TI）
+			case 50015: // ルーカス（テレポーター）
+			case 70010: // バルシム（犬小屋裏道具屋）
+			case 70011: // 船着場管理人
+			case 70012: // セレナ（宿屋）
+			case 70014: // パンドラ（港道具屋）
+			case 70532: // ジョンソン（ペット屋）
+			case 70536: // トーマ（鍛冶屋）
+				town_id = TOWNID_TALKING_ISLAND;
+				break;
 
-		case 70799: // タウンマスター（SKT）
-		case 50056: // メット（テレポーター）
-		case 70073: // グレン（武器屋）
-		case 70074: // メリン（道具屋）
-		case 70075: // ミランダ（宿屋）
-			town_id = TOWNID_SILVER_KNIGHT_TOWN;
-			break;
+			case 70799: // タウンマスター（SKT）
+			case 50056: // メット（テレポーター）
+			case 70073: // グレン（武器屋）
+			case 70074: // メリン（道具屋）
+			case 70075: // ミランダ（宿屋）
+				town_id = TOWNID_SILVER_KNIGHT_TOWN;
+				break;
 
-		case 70546: // タウンマスター（KENT）
-		case 50020: // スタンリー（テレポーター）
-		case 70018: // イソーリア（道具屋）
-		case 70016: // アンディン（武器屋）
-		case 70544: // リック（ペット屋）
-			town_id = TOWNID_KENT;
-			break;
+			case 70546: // タウンマスター（KENT）
+			case 50020: // スタンリー（テレポーター）
+			case 70018: // イソーリア（道具屋）
+			case 70016: // アンディン（武器屋）
+			case 70544: // リック（ペット屋）
+				town_id = TOWNID_KENT;
+				break;
 
-		case 70567: // タウンマスター（グル）
-		case 50024: // スティーブ（グルテレポーター）
-		case 70019: // ロリア（グル宿屋）
-		case 70020: // ロルコ（グル古代物品商人）
-		case 70021: // ロッテ（グル道具屋）
-		case 70022: // 船着場管理人
-		case 70024: // ケティ（グル武器屋）
-			town_id = TOWNID_GLUDIO;
-			break;
+			case 70567: // タウンマスター（グル）
+			case 50024: // スティーブ（グルテレポーター）
+			case 70019: // ロリア（グル宿屋）
+			case 70020: // ロルコ（グル古代物品商人）
+			case 70021: // ロッテ（グル道具屋）
+			case 70022: // 船着場管理人
+			case 70024: // ケティ（グル武器屋）
+				town_id = TOWNID_GLUDIO;
+				break;
 
-		case 70815: // 火田村タウンマスター
-		case 70079: // ジャクソン（道具屋）
-		case 70836: // ハンス（ペット屋）
-			town_id = TOWNID_ORCISH_FOREST;
-			break;
+			case 70815: // 火田村タウンマスター
+			case 70079: // ジャクソン（道具屋）
+			case 70836: // ハンス（ペット屋）
+				town_id = TOWNID_ORCISH_FOREST;
+				break;
 
-		case 70774: // タウンマスター（WB）
-		case 50054: // トレイ（テレポーター）
-		case 70070: // ベリッサ（宿屋）
-		case 70071: // アシュール（オアシス）
-		case 70072: // エルミナ（道具屋）
-		case 70773: // マービン（ペット屋）
-			town_id = TOWNID_WINDAWOOD;
-			break;
+			case 70774: // タウンマスター（WB）
+			case 50054: // トレイ（テレポーター）
+			case 70070: // ベリッサ（宿屋）
+			case 70071: // アシュール（オアシス）
+			case 70072: // エルミナ（道具屋）
+			case 70773: // マービン（ペット屋）
+				town_id = TOWNID_WINDAWOOD;
+				break;
 
-		case 70594: // タウンマスター（ギラン）
-		case 50036: // ウィルマ（テレポーター）
-		case 70026: // デレック（ハンター）
-		case 70028: // ランダル（薬品商人）
-		case 70029: // マーガレット（食料品商人）
-		case 70030: // メイアー（道具屋）
-		case 70031: // モーリ（宿屋）
-		case 70032: // バージル（防具屋）
-		case 70033: // ベリタ（道具屋）
-		case 70038: // エバート（布商人）
-		case 70039: // ワーナー（武器屋）
-		case 70043: // フィリップ（皮商人）
-		case 70617: // アルモン（ペット屋）
-		case 70632: // ケビン（ペット屋）
-			town_id = TOWNID_GIRAN;
-			break;
+			case 70594: // タウンマスター（ギラン）
+			case 50036: // ウィルマ（テレポーター）
+			case 70026: // デレック（ハンター）
+			case 70028: // ランダル（薬品商人）
+			case 70029: // マーガレット（食料品商人）
+			case 70030: // メイアー（道具屋）
+			case 70031: // モーリ（宿屋）
+			case 70032: // バージル（防具屋）
+			case 70033: // ベリタ（道具屋）
+			case 70038: // エバート（布商人）
+			case 70039: // ワーナー（武器屋）
+			case 70043: // フィリップ（皮商人）
+			case 70617: // アルモン（ペット屋）
+			case 70632: // ケビン（ペット屋）
+				town_id = TOWNID_GIRAN;
+				break;
 
-		case 70860: // タウンマスター（ハイネ）
-		case 50066: // リオル（テレポーター）
-		case 70082: // ブリット（道具屋）
-		case 70083: // シバン（武器屋）
-		case 70084: // エリー（宿屋）
-		case 70873: // エラン（ペット屋）
-			town_id = TOWNID_HEINE;
-			break;
+			case 70860: // タウンマスター（ハイネ）
+			case 50066: // リオル（テレポーター）
+			case 70082: // ブリット（道具屋）
+			case 70083: // シバン（武器屋）
+			case 70084: // エリー（宿屋）
+			case 70873: // エラン（ペット屋）
+				town_id = TOWNID_HEINE;
+				break;
 
-		case 70654: // タウンマスター（ウェルダン）
-		case 50039: // レスリー（テレポーター）
-		case 70045: // ベリー（道具屋）
-		case 70044: // ラルフ（武器屋）
-		case 70664: // コブ（ペット屋）
-			town_id = TOWNID_WERLDAN;
-			break;
+			case 70654: // タウンマスター（ウェルダン）
+			case 50039: // レスリー（テレポーター）
+			case 70045: // ベリー（道具屋）
+			case 70044: // ラルフ（武器屋）
+			case 70664: // コブ（ペット屋）
+				town_id = TOWNID_WERLDAN;
+				break;
 
-		case 70748: // 村庄管理人（オーレン）
-		case 50051: // 吉利乌斯（传送师）
-		case 70059: // 迪库（国境要塞道具店）
-		case 70060: // 琳达（象牙塔精灵魔法店）
-		case 70061: // 曼德拉（武器店）
-		case 70062: // 巴耶斯（象牙塔魔法店）
-		case 70063: // 毕伍斯（道具店）
-		case 70065: // 小安安（旅馆）
-		case 70066: // 克里斯特（象牙塔魔法店）
-		case 70067: // 帕罗（象牙塔道具店）
-		case 70068: // 福朗克（古代物品商人）
-		case 70749: // 麦德（宠物商店）
-			town_id = TOWNID_OREN;
-			break;
+			case 70748: // 村庄管理人（オーレン）
+			case 50051: // 吉利乌斯（传送师）
+			case 70059: // 迪库（国境要塞道具店）
+			case 70060: // 琳达（象牙塔精灵魔法店）
+			case 70061: // 曼德拉（武器店）
+			case 70062: // 巴耶斯（象牙塔魔法店）
+			case 70063: // 毕伍斯（道具店）
+			case 70065: // 小安安（旅馆）
+			case 70066: // 克里斯特（象牙塔魔法店）
+			case 70067: // 帕罗（象牙塔道具店）
+			case 70068: // 福朗克（古代物品商人）
+			case 70749: // 麦德（宠物商店）
+				town_id = TOWNID_OREN;
+				break;
 
-		case 50044: // 西里乌斯（传送师）
-		case 70057: // 凯瑟琳（道具店）
-		case 70048: // 拉温（道具店）
-		case 70052: // 马夏（道具店）
-		case 70053: // 夏露（食品店）
-		case 70049: // 罗杰（药水店）
-		case 70051: // 马古斯（道具店）
-		case 70047: // 戴夫曼（武器店）
-		case 70058: // 菲卡（防具店）
-		case 70054: // 史斌（旅馆）
-		case 70055: // 艾丝西尼（宠物商店）
-		case 70056: // 乔德（吉普赛村古代物品商人）
-			town_id = TOWNID_ADEN;
-			break;
+			case 50044: // 西里乌斯（传送师）
+			case 70057: // 凯瑟琳（道具店）
+			case 70048: // 拉温（道具店）
+			case 70052: // 马夏（道具店）
+			case 70053: // 夏露（食品店）
+			case 70049: // 罗杰（药水店）
+			case 70051: // 马古斯（道具店）
+			case 70047: // 戴夫曼（武器店）
+			case 70058: // 菲卡（防具店）
+			case 70054: // 史斌（旅馆）
+			case 70055: // 艾丝西尼（宠物商店）
+			case 70056: // 乔德（吉普赛村古代物品商人）
+				town_id = TOWNID_ADEN;
+				break;
 
-		case 70092: // 商人 艾玛勒特
-		case 70093: // 商人 嘉勒福
-			town_id = TOWNID_OUM_DUNGEON;
-			break;
+			case 70092: // 商人 艾玛勒特
+			case 70093: // 商人 嘉勒福
+				town_id = TOWNID_OUM_DUNGEON;
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 		return town_id;
 	}
 
-	public static int getTownTaxRateByNpcid(int npcid) { // npcidから町税率を返す
+	public static int getTownTaxRateByNpcid(final int npcid) { // npcidから町税率を返す
 		int tax_rate = 0;
 
-		int town_id = getTownIdByNpcid(npcid);
+		final int town_id = getTownIdByNpcid(npcid);
 		if ((town_id >= 1) && (town_id <= 10)) {
-			L1Town town = TownTable.getInstance().getTownTable(town_id);
+			final L1Town town = TownTable.getInstance().getTownTable(town_id);
 			tax_rate = town.get_tax_rate() + 2; // 2%は固定税
 		}
 		return tax_rate;

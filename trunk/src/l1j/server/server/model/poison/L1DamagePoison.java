@@ -32,7 +32,7 @@ public class L1DamagePoison extends L1Poison {
 				try {
 					Thread.sleep(_damageSpan);
 				}
-				catch (InterruptedException e) {
+				catch (final InterruptedException e) {
 					break;
 				}
 
@@ -40,14 +40,14 @@ public class L1DamagePoison extends L1Poison {
 					break;
 				}
 				if (_target instanceof L1PcInstance) {
-					L1PcInstance player = (L1PcInstance) _target;
+					final L1PcInstance player = (L1PcInstance) _target;
 					player.receiveDamage(_attacker, _damage, false);
 					if (player.isDead()) { // 死亡时解毒
 						break;
 					}
 				}
 				else if (_target instanceof L1MonsterInstance) {
-					L1MonsterInstance mob = (L1MonsterInstance) _target;
+					final L1MonsterInstance mob = (L1MonsterInstance) _target;
 					mob.receiveDamage(_attacker, _damage);
 					if (mob.isDead()) { // 死亡时解毒
 						return;
@@ -58,7 +58,7 @@ public class L1DamagePoison extends L1Poison {
 		}
 	}
 
-	public static boolean doInfection(L1Character attacker, L1Character cha, int damageSpan, int damage) {
+	public static boolean doInfection(final L1Character attacker, final L1Character cha, final int damageSpan, final int damage) {
 		if (!isValidTarget(cha)) {
 			return false;
 		}
@@ -77,7 +77,7 @@ public class L1DamagePoison extends L1Poison {
 
 	private final int _damage;
 
-	private L1DamagePoison(L1Character attacker, L1Character cha, int damageSpan, int damage) {
+	private L1DamagePoison(final L1Character attacker, final L1Character cha, final int damageSpan, final int damage) {
 		_attacker = attacker;
 		_target = cha;
 		_damageSpan = damageSpan;
@@ -112,7 +112,7 @@ public class L1DamagePoison extends L1Poison {
 		}
 	}
 
-	boolean isDamageTarget(L1Character cha) {
+	boolean isDamageTarget(final L1Character cha) {
 		return (cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance);
 	}
 }

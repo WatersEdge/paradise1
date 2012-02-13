@@ -37,9 +37,9 @@ public class L1Buff implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
+			final StringTokenizer tok = new StringTokenizer(arg);
 			Collection<L1PcInstance> players = null;
 			String s = tok.nextToken();
 			if (s.equalsIgnoreCase("me")) {
@@ -55,21 +55,21 @@ public class L1Buff implements L1CommandExecutor {
 				players = L1World.getInstance().getVisiblePlayer(pc);
 			}
 
-			int skillId = Integer.parseInt(s);
+			final int skillId = Integer.parseInt(s);
 			int time = 0;
 			if (tok.hasMoreTokens()) {
 				time = Integer.parseInt(tok.nextToken());
 			}
 
-			L1Skills skill = SkillsTable.getInstance().getTemplate(skillId);
+			final L1Skills skill = SkillsTable.getInstance().getTemplate(skillId);
 
 			if (skill.getTarget().equals("buff")) {
-				for (L1PcInstance tg : players) {
+				for (final L1PcInstance tg : players) {
 					new L1SkillUse().handleCommands(pc, skillId, tg.getId(), tg.getX(), tg.getY(), null, time, L1SkillUse.TYPE_SPELLSC);
 				}
 			}
 			else if (skill.getTarget().equals("none")) {
-				for (L1PcInstance tg : players) {
+				for (final L1PcInstance tg : players) {
 					new L1SkillUse().handleCommands(tg, skillId, tg.getId(), tg.getX(), tg.getY(), null, time, L1SkillUse.TYPE_GMBUFF);
 				}
 			}
@@ -77,7 +77,7 @@ public class L1Buff implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage("非buff类型的魔法。"));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " [all|me] skillId time。"));
 		}
 	}

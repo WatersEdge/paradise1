@@ -28,12 +28,12 @@ public class L1AssessedItem {
 	/** 评估价格 */
 	private int _assessedPrice;
 
-	L1AssessedItem(int targetId, int assessedPrice) {
+	L1AssessedItem(final int targetId, final int assessedPrice) {
 		_targetId = targetId;
-		L1ItemInstance item = (L1ItemInstance) L1World.getInstance().findObject(getTargetId());
+		final L1ItemInstance item = (L1ItemInstance) L1World.getInstance().findObject(getTargetId());
 
 		if (item.getItemId() == 40309) { // Race Tickets(食人妖精竞赛票)
-			L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(_targetId);
+			final L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(_targetId);
 
 			int price = 0;
 			if (ticket != null) {

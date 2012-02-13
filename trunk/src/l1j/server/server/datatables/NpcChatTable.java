@@ -72,7 +72,7 @@ public class NpcChatTable {
 	 *            NPCID
 	 * @return
 	 */
-	public L1NpcChat getTemplateAppearance(int i) {
+	public L1NpcChat getTemplateAppearance(final int i) {
 		return _npcChatAppearance.get(new Integer(i));
 	}
 
@@ -83,7 +83,7 @@ public class NpcChatTable {
 	 *            NPCID
 	 * @return
 	 */
-	public L1NpcChat getTemplateDead(int i) {
+	public L1NpcChat getTemplateDead(final int i) {
 		return _npcChatDead.get(new Integer(i));
 	}
 
@@ -94,7 +94,7 @@ public class NpcChatTable {
 	 *            NPCID
 	 * @return
 	 */
-	public L1NpcChat getTemplateGameTime(int i) {
+	public L1NpcChat getTemplateGameTime(final int i) {
 		return _npcChatGameTime.get(new Integer(i));
 	}
 
@@ -105,7 +105,7 @@ public class NpcChatTable {
 	 *            NPCID
 	 * @return
 	 */
-	public L1NpcChat getTemplateHide(int i) {
+	public L1NpcChat getTemplateHide(final int i) {
 		return _npcChatHide.get(new Integer(i));
 	}
 
@@ -119,7 +119,7 @@ public class NpcChatTable {
 			pstm = con.prepareStatement("SELECT * FROM npcchat");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1NpcChat npcChat = new L1NpcChat();
+				final L1NpcChat npcChat = new L1NpcChat();
 				npcChat.setNpcId(rs.getInt("npc_id"));
 				npcChat.setChatTiming(rs.getInt("chat_timing"));
 				npcChat.setStartDelayTime(rs.getInt("start_delay_time"));
@@ -149,7 +149,7 @@ public class NpcChatTable {
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

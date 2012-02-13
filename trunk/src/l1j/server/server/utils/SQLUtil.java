@@ -24,43 +24,43 @@ import java.sql.Statement;
  */
 public class SQLUtil {
 
-	public static SQLException close(Connection con) {
+	public static SQLException close(final Connection con) {
 		try {
 			if (con != null) {
 				con.close();
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			return e;
 		}
 		return null;
 	}
 
-	public static SQLException close(ResultSet rs) {
+	public static SQLException close(final ResultSet rs) {
 		try {
 			if (rs != null) {
 				rs.close();
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			return e;
 		}
 		return null;
 	}
 
-	public static void close(ResultSet rs, Statement pstm, Connection con) {
+	public static void close(final ResultSet rs, final Statement pstm, final Connection con) {
 		close(rs);
 		close(pstm);
 		close(con);
 	}
 
-	public static SQLException close(Statement ps) {
+	public static SQLException close(final Statement ps) {
 		try {
 			if (ps != null) {
 				ps.close();
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			return e;
 		}
 		return null;

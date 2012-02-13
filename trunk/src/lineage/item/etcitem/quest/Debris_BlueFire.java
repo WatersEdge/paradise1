@@ -38,7 +38,7 @@ public class Debris_BlueFire extends ItemExecutor {
 
 		if (pc.isIllusionist() && (pc.getMapId() == 2004)) { // 异界 奎斯特
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {

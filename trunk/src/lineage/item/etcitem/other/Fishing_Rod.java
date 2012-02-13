@@ -53,7 +53,7 @@ public class Fishing_Rod extends ItemExecutor {
 			return;
 		}
 
-		int rodLength = 6;
+		final int rodLength = 6;
 
 		if (pc.getMap().isFishingZone(fishX, fishY)) {
 			if (pc.getMap().isFishingZone(fishX + 1, fishY) && pc.getMap().isFishingZone(fishX - 1, fishY) && pc.getMap().isFishingZone(fishX, fishY + 1) && pc.getMap().isFishingZone(fishX, fishY - 1)) {

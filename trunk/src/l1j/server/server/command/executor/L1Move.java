@@ -29,11 +29,11 @@ public class L1Move implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			int locx = Integer.parseInt(st.nextToken());
-			int locy = Integer.parseInt(st.nextToken());
+			final StringTokenizer st = new StringTokenizer(arg);
+			final int locx = Integer.parseInt(st.nextToken());
+			final int locy = Integer.parseInt(st.nextToken());
 			short mapid;
 			if (st.hasMoreTokens()) {
 				mapid = Short.parseShort(st.nextToken());
@@ -44,7 +44,7 @@ public class L1Move implements L1CommandExecutor {
 			L1Teleport.teleport(pc, locx, locy, mapid, 5, false);
 			pc.sendPackets(new S_SystemMessage("坐标 " + locx + ", " + locy + ", " + mapid + "已经到达。"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + "请输入 X坐标 Y坐标 [地图编号]。"));
 		}
 	}

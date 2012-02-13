@@ -27,12 +27,12 @@ public class L1PcDeleteTimer extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public L1PcDeleteTimer(L1PcInstance pc) {
+	public L1PcDeleteTimer(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
 	public void begin() {
-		Timer timer = new Timer();
+		final Timer timer = new Timer();
 		timer.schedule(this, 10 * 60 * 1000);
 	}
 

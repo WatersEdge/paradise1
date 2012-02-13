@@ -36,7 +36,7 @@ public class L1ToSpawn implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			if (!_spawnId.containsKey(pc.getId())) {
 				_spawnId.put(pc.getId(), 0);
@@ -49,7 +49,7 @@ public class L1ToSpawn implements L1CommandExecutor {
 				id--;
 			}
 			else {
-				StringTokenizer st = new StringTokenizer(arg);
+				final StringTokenizer st = new StringTokenizer(arg);
 				id = Integer.parseInt(st.nextToken());
 			}
 			L1Spawn spawn = NpcSpawnTable.getInstance().getTemplate(id);
@@ -65,7 +65,7 @@ public class L1ToSpawn implements L1CommandExecutor {
 			}
 			_spawnId.put(pc.getId(), id);
 		}
-		catch (Exception exception) {
+		catch (final Exception exception) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " spawnid|+|-"));
 		}
 	}

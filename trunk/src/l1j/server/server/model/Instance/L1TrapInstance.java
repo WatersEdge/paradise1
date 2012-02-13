@@ -47,9 +47,9 @@ public class L1TrapInstance extends L1Object {
 
 	private final String _nameForView;
 
-	private List<L1PcInstance> _knownPlayers = Lists.newConcurrentList();
+	private final List<L1PcInstance> _knownPlayers = Lists.newConcurrentList();
 
-	public L1TrapInstance(int id, L1Location loc) {
+	public L1TrapInstance(final int id, final L1Location loc) {
 		setId(id);
 		_trap = L1Trap.newNull();
 		getLocation().set(loc);
@@ -57,7 +57,7 @@ public class L1TrapInstance extends L1Object {
 		_nameForView = "trap base";
 	}
 
-	public L1TrapInstance(int id, L1Trap trap, L1Location loc, Point rndPt, int span) {
+	public L1TrapInstance(final int id, final L1Trap trap, final L1Location loc, final Point rndPt, final int span) {
 		setId(id);
 		_trap = trap;
 		getLocation().set(loc);
@@ -72,7 +72,7 @@ public class L1TrapInstance extends L1Object {
 	public void disableTrap() {
 		_isEnable = false;
 
-		for (L1PcInstance pc : _knownPlayers) {
+		for (final L1PcInstance pc : _knownPlayers) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -91,12 +91,12 @@ public class L1TrapInstance extends L1Object {
 		return _isEnable;
 	}
 
-	public void onDetection(L1PcInstance caster) {
+	public void onDetection(final L1PcInstance caster) {
 		_trap.onDetection(caster, this);
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		if (perceivedFrom.hasSkillEffect(GMSTATUS_SHOWTRAPS)) {
 			perceivedFrom.addKnownObject(this);
 			perceivedFrom.sendPackets(new S_Trap(this, _nameForView));
@@ -104,7 +104,7 @@ public class L1TrapInstance extends L1Object {
 		}
 	}
 
-	public void onTrod(L1PcInstance trodFrom) {
+	public void onTrod(final L1PcInstance trodFrom) {
 		_trap.onTrod(trodFrom, this);
 	}
 
@@ -120,7 +120,7 @@ public class L1TrapInstance extends L1Object {
 			rndX += _baseLoc.getX();
 			rndY += _baseLoc.getY();
 
-			L1Map map = getLocation().getMap();
+			final L1Map map = getLocation().getMap();
 			if (map.isInMap(rndX, rndY) && map.isPassable(rndX, rndY)) {
 				getLocation().set(rndX, rndY);
 				break;

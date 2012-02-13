@@ -30,13 +30,13 @@ public class L1NpcDeleteTimer extends TimerTask {
 
 	private final int _timeMillis;
 
-	public L1NpcDeleteTimer(L1NpcInstance npc, int timeMillis) {
+	public L1NpcDeleteTimer(final L1NpcInstance npc, final int timeMillis) {
 		_npc = npc;
 		_timeMillis = timeMillis;
 	}
 
 	public void begin() {
-		Timer timer = new Timer();
+		final Timer timer = new Timer();
 		timer.schedule(this, _timeMillis);
 	}
 
@@ -44,7 +44,7 @@ public class L1NpcDeleteTimer extends TimerTask {
 	public void run() {
 		// 龙之门扉存在时间到时
 		if (_npc != null) {
-			if (_npc.getNpcId() == 81273 || _npc.getNpcId() == 81274 || _npc.getNpcId() == 81275 || _npc.getNpcId() == 81276 || _npc.getNpcId() == 81277) {
+			if ((_npc.getNpcId() == 81273) || (_npc.getNpcId() == 81274) || (_npc.getNpcId() == 81275) || (_npc.getNpcId() == 81276) || (_npc.getNpcId() == 81277)) {
 				if (_npc.getNpcId() == 81277) { // 隐匿的巨龙谷入口关闭
 					L1DragonSlayer.getInstance().setHiddenDragonValleyStstus(0);
 				}

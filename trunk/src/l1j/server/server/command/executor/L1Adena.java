@@ -33,17 +33,17 @@ public class L1Adena implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer stringtokenizer = new StringTokenizer(arg);
-			int count = Integer.parseInt(stringtokenizer.nextToken());
+			final StringTokenizer stringtokenizer = new StringTokenizer(arg);
+			final int count = Integer.parseInt(stringtokenizer.nextToken());
 
-			L1ItemInstance adena = pc.getInventory().storeItem(L1ItemId.ADENA, count);
+			final L1ItemInstance adena = pc.getInventory().storeItem(L1ItemId.ADENA, count);
 			if (adena != null) {
 				pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(count).append(" 金币产生。").toString()));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage((new StringBuilder()).append("请输入 .adena 数量||.金币  数量。").toString()));
 		}
 	}

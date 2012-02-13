@@ -37,9 +37,9 @@ public class MagicDice_LV2 extends ItemExecutor {
 
 		int A = 0;
 		if (pc.getInventory().consumeItem(40318, 1)) {
-			int SK = Random.nextInt(2) + 1;
+			final int SK = Random.nextInt(2) + 1;
 			{
-				if (SK >= 1 && SK <= 2) {
+				if ((SK >= 1) && (SK <= 2)) {
 					A = SK;
 					switch (A) {
 						case 1:

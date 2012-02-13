@@ -30,14 +30,14 @@ public class L1ShowTrap implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		if (arg.equalsIgnoreCase("on")) {
 			pc.setSkillEffect(GMSTATUS_SHOWTRAPS, 0);
 		}
 		else if (arg.equalsIgnoreCase("off")) {
 			pc.removeSkillEffect(GMSTATUS_SHOWTRAPS);
 
-			for (L1Object obj : pc.getKnownObjects()) {
+			for (final L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1TrapInstance) {
 					pc.removeKnownObject(obj);
 					pc.sendPackets(new S_RemoveObject(obj));

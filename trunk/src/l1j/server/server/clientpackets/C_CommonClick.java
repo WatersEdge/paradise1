@@ -42,9 +42,9 @@ public class C_CommonClick {
 
 	private static Logger _log = Logger.getLogger(C_CommonClick.class.getName());
 
-	public C_CommonClick(ClientThread client) {
+	public C_CommonClick(final ClientThread client) {
 		deleteCharacter(client); // 到达删除期限，删除角色
-		int amountOfChars = client.getAccount().countCharacters();
+		final int amountOfChars = client.getAccount().countCharacters();
 		client.sendPacket(new S_CharAmount(amountOfChars, client));
 		if (amountOfChars > 0) {
 			sendCharPacks(client);
@@ -56,7 +56,7 @@ public class C_CommonClick {
 	}
 
 	/** 删除角色 */
-	private void deleteCharacter(ClientThread client) {
+	private void deleteCharacter(final ClientThread client) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -68,15 +68,15 @@ public class C_CommonClick {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				String name = rs.getString("char_name");
-				String clanname = rs.getString("Clanname");
+				final String name = rs.getString("char_name");
+				final String clanname = rs.getString("Clanname");
 
-				Timestamp deleteTime = rs.getTimestamp("DeleteTime");
+				final Timestamp deleteTime = rs.getTimestamp("DeleteTime");
 				if (deleteTime != null) {
-					Calendar cal = Calendar.getInstance();
-					long checkDeleteTime = ((cal.getTimeInMillis() - deleteTime.getTime()) / 1000) / 3600;
+					final Calendar cal = Calendar.getInstance();
+					final long checkDeleteTime = ((cal.getTimeInMillis() - deleteTime.getTime()) / 1000) / 3600;
 					if (checkDeleteTime >= 0) {
-						L1Clan clan = L1World.getInstance().getClan(clanname);
+						final L1Clan clan = L1World.getInstance().getClan(clanname);
 						if (clan != null) {
 							clan.delMemberName(name);
 						}
@@ -85,7 +85,7 @@ public class C_CommonClick {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -95,7 +95,7 @@ public class C_CommonClick {
 	}
 
 	/** 发送角色封包 */
-	private void sendCharPacks(ClientThread client) {
+	private void sendCharPacks(final ClientThread client) {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -107,11 +107,11 @@ public class C_CommonClick {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				String name = rs.getString("char_name");
-				String clanname = rs.getString("Clanname");
-				int type = rs.getInt("Type");
-				byte sex = rs.getByte("Sex");
-				int lawful = rs.getInt("Lawful");
+				final String name = rs.getString("char_name");
+				final String clanname = rs.getString("Clanname");
+				final int type = rs.getInt("Type");
+				final byte sex = rs.getByte("Sex");
+				final int lawful = rs.getInt("Lawful");
 
 				int currenthp = rs.getInt("CurHp");
 				if (currenthp < 1) {
@@ -192,17 +192,17 @@ public class C_CommonClick {
 				else if (intel > 255) {
 					intel = 255;
 				}
-				int accessLevel = rs.getShort("AccessLevel");
-				Timestamp _birthday = rs.getTimestamp("birthday");
-				SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
-				int birthday = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
+				final int accessLevel = rs.getShort("AccessLevel");
+				final Timestamp _birthday = rs.getTimestamp("birthday");
+				final SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
+				final int birthday = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
 
-				S_CharPacks cpk = new S_CharPacks(name, clanname, type, sex, lawful, currenthp, currentmp, ac, lvl, str, dex, con, wis, cha, intel, accessLevel, birthday);
+				final S_CharPacks cpk = new S_CharPacks(name, clanname, type, sex, lawful, currenthp, currentmp, ac, lvl, str, dex, con, wis, cha, intel, accessLevel, birthday);
 
 				client.sendPacket(cpk);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

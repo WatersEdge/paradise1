@@ -45,7 +45,7 @@ public class L1PolyRace {
 	/** 确认人数OK --->开始 */
 	private class CheckTimer extends TimerTask {
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 30 * 1000); // 60s
 		}
 
@@ -57,26 +57,26 @@ public class L1PolyRace {
 			else {
 				setGameEnd(END_STATUS_NOPLAYER);
 			}
-			this.cancel();
+			cancel();
 		}
 	}
 
 	/** 倒数5秒--->开始计时 */
 	private class ClockTimer extends TimerTask {
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 5000); // 5s
 		}
 
 		@Override
 		public void run() {
 			// 计时封包
-			for (L1PcInstance pc : playerList) {
+			for (final L1PcInstance pc : playerList) {
 				pc.sendPackets(new S_Race(S_Race.CountDown));
 			}
 			setDoorClose(false);
 			startGameTimeLimitTimer();
-			this.cancel();
+			cancel();
 		}
 	}
 
@@ -89,14 +89,14 @@ public class L1PolyRace {
 		}
 
 		public void stopTimer() {
-			this.cancel();
+			cancel();
 		}
 	}
 
 	/** 结束计时器 */
 	private class EndTimer extends TimerTask {
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 5000); // 10s
 		}
 
@@ -104,41 +104,44 @@ public class L1PolyRace {
 		public void run() {
 			giftWinner();
 			setGameInit();
-			this.cancel();
+			cancel();
 		}
 	}
+
 	/** 开始计时--->游戏结束 */
 	private class GameTimeLimitTimer extends TimerTask {
 		@Override
 		public void run() {
 			setGameEnd(END_STATUS_NOWINNER);
-			this.cancel();
+			cancel();
 		}
 
 		public void stopTimer() {
-			this.cancel();
+			cancel();
 		}
 	}
+
 	/** 进场等待--->确认人数 */
 	private class ReadyTimer extends TimerTask {
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, readyTime);
 		}
 
 		@Override
 		public void run() {
-			for (L1PcInstance pc : playerList) {
+			for (final L1PcInstance pc : playerList) {
 				pc.sendPackets(new S_ServerMessage(1258));
 			}
 			startCheckTimer();
-			this.cancel();
+			cancel();
 		}
 	}
+
 	/***
 	 * [变身清单] 资料提供 CTKI 有错请去干跷他 :)
 	 */
-	private int[] polyList = { 29, 96, 929, 931, 934, 936, 938, 945, 1540, 1642, 1649, 2001, 2145, 2541, 3107, 3132, 3134, 3143, 3154, 3156, 3178, 3182, 3184, 3188, 3199, 3211, 3783, 3918, 4038, 4133, 4171, 5089, };
+	private final int[] polyList = { 29, 96, 929, 931, 934, 936, 938, 945, 1540, 1642, 1649, 2001, 2145, 2541, 3107, 3132, 3134, 3143, 3154, 3156, 3178, 3182, 3184, 3188, 3199, 3211, 3783, 3918, 4038, 4133, 4171, 5089, };
 	private static L1PolyRace instance;
 	/** 空闲状态 */
 	public static final int STATUS_NONE = 0;
@@ -180,12 +183,12 @@ public class L1PolyRace {
 	}
 
 	/** 玩家清单 */
-	private FastTable<L1PcInstance> playerList = new FastTable<L1PcInstance>();
+	private final FastTable<L1PcInstance> playerList = new FastTable<L1PcInstance>();
 
 	/** 预约清单 */
-	private FastTable<L1PcInstance> orderList = new FastTable<L1PcInstance>();
+	private final FastTable<L1PcInstance> orderList = new FastTable<L1PcInstance>();
 	/** 排名 */
-	private FastTable<L1PcInstance> position = new FastTable<L1PcInstance>();
+	private final FastTable<L1PcInstance> position = new FastTable<L1PcInstance>();
 	/** 变身效果 */
 	private static int POLY_EFFECT = 15566;
 
@@ -208,7 +211,7 @@ public class L1PolyRace {
 	private CompareTimer compareTimer;
 
 	/** 预约进场...试做1 */
-	public void addOrderList(L1PcInstance pc) {
+	public void addOrderList(final L1PcInstance pc) {
 		if (orderList.contains(pc)) {
 			pc.sendPackets(new S_ServerMessage(1254)); // 已预约到场次了。
 			return;
@@ -218,7 +221,7 @@ public class L1PolyRace {
 		pc.sendPackets(new S_ServerMessage(1253, String.valueOf(orderList.size()))); // 已预约到第%0顺位进入比赛场地。
 
 		if (orderList.size() >= minPlayer) {
-			for (L1PcInstance player : orderList) {
+			for (final L1PcInstance player : orderList) {
 				player.sendPackets(new S_Message_YN(1256, null)); // 要进入到竞赛场地吗？(Y/N)
 			}
 			setGameStatus(STATUS_READY);
@@ -227,108 +230,108 @@ public class L1PolyRace {
 	}
 
 	/** 增加玩家清单 */
-	public void addPlayerList(L1PcInstance pc) {
+	public void addPlayerList(final L1PcInstance pc) {
 		if (!playerList.contains(pc)) {
 			playerList.add(pc);
 		}
 	}
 
 	/** 很蠢的判断圈数... */
-	public void checkLapFinish(L1PcInstance pc) {
-		if (pc.getMapId() != 5143 || getGameStatus() != STATUS_PLAYING) {
+	public void checkLapFinish(final L1PcInstance pc) {
+		if ((pc.getMapId() != 5143) || (getGameStatus() != STATUS_PLAYING)) {
 			return;
 		}
 
 		onEffectTrap(pc);
-		int x = pc.getX();
-		int y = pc.getY();
-		int check = pc.getLapCheck();
+		final int x = pc.getX();
+		final int y = pc.getY();
+		final int check = pc.getLapCheck();
 
-		if (x == 32762 && y >= 32845 && check == 0) {
+		if ((x == 32762) && (y >= 32845) && (check == 0)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32754 && y >= 32845 && check == 1) {
+		else if ((x == 32754) && (y >= 32845) && (check == 1)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32748 && y >= 32845 && check == 2) {
+		else if ((x == 32748) && (y >= 32845) && (check == 2)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32743 && y == 32844 && check == 3) {
+		else if ((x <= 32743) && (y == 32844) && (check == 3)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32742 && y == 32840 && check == 4) {
+		else if ((x <= 32742) && (y == 32840) && (check == 4)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32742 && y == 32835 && check == 5) {
+		else if ((x <= 32742) && (y == 32835) && (check == 5)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32742 && y == 32830 && check == 6) {
+		else if ((x <= 32742) && (y == 32830) && (check == 6)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32742 && y == 32826 && check == 7) {
+		else if ((x <= 32742) && (y == 32826) && (check == 7)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x <= 32742 && y == 32822 && check == 8) {
+		else if ((x <= 32742) && (y == 32822) && (check == 8)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32749 && y <= 32818 && check == 9) {
+		else if ((x == 32749) && (y <= 32818) && (check == 9)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32755 && y <= 32818 && check == 10) {
+		else if ((x == 32755) && (y <= 32818) && (check == 10)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32760 && y <= 32818 && check == 11) {
+		else if ((x == 32760) && (y <= 32818) && (check == 11)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32765 && y <= 32818 && check == 12) {
+		else if ((x == 32765) && (y <= 32818) && (check == 12)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32770 && y <= 32818 && check == 13) {
+		else if ((x == 32770) && (y <= 32818) && (check == 13)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32775 && y <= 32818 && check == 14) {
+		else if ((x == 32775) && (y <= 32818) && (check == 14)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32780 && y <= 32818 && check == 15) {
+		else if ((x == 32780) && (y <= 32818) && (check == 15)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32785 && y <= 32818 && check == 16) {
+		else if ((x == 32785) && (y <= 32818) && (check == 16)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32789 && y <= 32818 && check == 17) {
+		else if ((x == 32789) && (y <= 32818) && (check == 17)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x >= 32792 && y == 32821 && check == 18) {
+		else if ((x >= 32792) && (y == 32821) && (check == 18)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x >= 32793 && y == 32826 && check == 19) {
+		else if ((x >= 32793) && (y == 32826) && (check == 19)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x >= 32793 && y == 32831 && check == 20) {
+		else if ((x >= 32793) && (y == 32831) && (check == 20)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x >= 32793 && y == 32836 && check == 21) {
+		else if ((x >= 32793) && (y == 32836) && (check == 21)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x >= 32793 && y == 32842 && check == 22) {
+		else if ((x >= 32793) && (y == 32842) && (check == 22)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32790 && y >= 32845 && check == 23) {
+		else if ((x == 32790) && (y >= 32845) && (check == 23)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32785 && y >= 32845 && check == 24) {
+		else if ((x == 32785) && (y >= 32845) && (check == 24)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32780 && y >= 32845 && check == 25) {
+		else if ((x == 32780) && (y >= 32845) && (check == 25)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32775 && y >= 32845 && check == 26) {
+		else if ((x == 32775) && (y >= 32845) && (check == 26)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32770 && y >= 32845 && check == 27) {
+		else if ((x == 32770) && (y >= 32845) && (check == 27)) {
 			pc.setLapCheck(check + 1);
 		}
-		else if (x == 32764 && y >= 32845 && check == 28) {
+		else if ((x == 32764) && (y >= 32845) && (check == 28)) {
 			if (pc.getLap() == maxLap) {
 				setGameWinner(pc);
 				return;
@@ -342,7 +345,7 @@ public class L1PolyRace {
 
 	// XXX for ClientThread.java
 	/** 检查离开游戏 */
-	public void checkLeaveGame(L1PcInstance pc) {
+	public void checkLeaveGame(final L1PcInstance pc) {
 		if (pc.getMapId() == 5143) {
 			removePlayerList(pc);
 			L1PolyMorph.undoPoly(pc);
@@ -353,7 +356,7 @@ public class L1PolyRace {
 	}
 
 	/** 进入游戏 */
-	public void enterGame(L1PcInstance pc) {
+	public void enterGame(final L1PcInstance pc) {
 		if (pc.getLevel() < 30) {
 			pc.sendPackets(new S_ServerMessage(1273, "30", "99")); // 所选择的竞赛只有Lv%0 ~ Lv%1 能参加。
 			return;
@@ -366,7 +369,7 @@ public class L1PolyRace {
 			pc.sendPackets(new S_SystemMessage("游戏人数已达上限"));
 			return;
 		}
-		if (getGameStatus() == STATUS_PLAYING || getGameStatus() == STATUS_END) {
+		if ((getGameStatus() == STATUS_PLAYING) || (getGameStatus() == STATUS_END)) {
 			pc.sendPackets(new S_ServerMessage(1182)); // 游戏已经开始了。
 			return;
 		}
@@ -383,32 +386,33 @@ public class L1PolyRace {
 	public int getGameStatus() {
 		return _status;
 	}
+
 	/** 取得胜利者 */
 	public L1PcInstance getWinner() {
 		return _winner;
 	}
 
 	/** 删除预约清单 */
-	public void removeOrderList(L1PcInstance pc) {
+	public void removeOrderList(final L1PcInstance pc) {
 		orderList.remove(pc);
 	}
 
 	/** 删除玩家清单 */
-	public void removePlayerList(L1PcInstance pc) {
+	public void removePlayerList(final L1PcInstance pc) {
 		if (playerList.contains(pc)) {
 			playerList.remove(pc);
 		}
 	}
 
 	/** 删除技能效果 */
-	public void removeSkillEffect(L1PcInstance pc) {
-		L1SkillUse skill = new L1SkillUse();
+	public void removeSkillEffect(final L1PcInstance pc) {
+		final L1SkillUse skill = new L1SkillUse();
 		skill.handleCommands(pc, L1SkillId.CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 	}
 
 	// XXX for C_Attr.java
 	/**  */
-	public void requsetAttr(L1PcInstance pc, int c) {
+	public void requsetAttr(final L1PcInstance pc, final int c) {
 		if (c == 0) { // NO
 			removeOrderList(pc);
 			pc.setInOrderList(false);
@@ -424,12 +428,12 @@ public class L1PolyRace {
 	}
 
 	/** 设定游戏状态 */
-	public void setGameStatus(int i) {
+	public void setGameStatus(final int i) {
 		_status = i;
 	}
 
 	/** 设定胜利者 */
-	public void setWinner(L1PcInstance pc) {
+	public void setWinner(final L1PcInstance pc) {
 		_winner = pc;
 	}
 
@@ -453,12 +457,12 @@ public class L1PolyRace {
 
 	/** 判断排名 */
 	private void comparePosition() {
-		FastTable<L1PcInstance> temp = new FastTable<L1PcInstance>();
-		int size = playerList.size();
+		final FastTable<L1PcInstance> temp = new FastTable<L1PcInstance>();
+		final int size = playerList.size();
 		int count = 0;
 		while (size > count) {
 			int maxLapScore = 0;
-			for (L1PcInstance pc : playerList) {
+			for (final L1PcInstance pc : playerList) {
 				if (temp.contains(pc)) {
 					continue;
 				}
@@ -466,7 +470,7 @@ public class L1PolyRace {
 					maxLapScore = pc.getLapScore();
 				}
 			}
-			for (L1PcInstance player : playerList) {
+			for (final L1PcInstance player : playerList) {
 				if (player.getLapScore() == maxLapScore) {
 					temp.add(player);
 				}
@@ -476,7 +480,7 @@ public class L1PolyRace {
 		if (!position.equals(temp)) {
 			position.clear();
 			position.addAll(temp);
-			for (L1PcInstance pc : playerList) {
+			for (final L1PcInstance pc : playerList) {
 				pc.sendPackets(new S_Race(position, pc));// info(信息)
 			}
 		}
@@ -484,9 +488,9 @@ public class L1PolyRace {
 
 	/** 奖励获胜者 */
 	private void giftWinner() {
-		L1PcInstance winner = getWinner();
-		L1ItemInstance item = ItemTable.getInstance().createItem(41308); // 勇者的南瓜袋子
-		if (winner == null || item == null) {
+		final L1PcInstance winner = getWinner();
+		final L1ItemInstance item = ItemTable.getInstance().createItem(41308); // 勇者的南瓜袋子
+		if ((winner == null) || (item == null)) {
 			return;
 		}
 		if (winner.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
@@ -497,52 +501,52 @@ public class L1PolyRace {
 	}
 
 	/** 很蠢的陷阱设定 ... */
-	private void onEffectTrap(L1PcInstance pc) {
-		int x = pc.getX();
-		int y = pc.getY();
-		if (x == 32748 && (y == 32845 || y == 32846)) {
+	private void onEffectTrap(final L1PcInstance pc) {
+		final int x = pc.getX();
+		final int y = pc.getY();
+		if ((x == 32748) && ((y == 32845) || (y == 32846))) {
 			speedUp(pc, 32748, 32845);
 		}
-		else if (x == 32748 && (y == 32847 || y == 32848)) {
+		else if ((x == 32748) && ((y == 32847) || (y == 32848))) {
 			speedUp(pc, 32748, 32847);
 		}
-		else if (x == 32748 && (y == 32849 || y == 32850)) {
+		else if ((x == 32748) && ((y == 32849) || (y == 32850))) {
 			speedUp(pc, 32748, 32849);
 		}
-		else if (x == 32748 && y == 32851) {
+		else if ((x == 32748) && (y == 32851)) {
 			speedUp(pc, 32748, 32851);
 		}
-		else if (x == 32762 && (y == 32811 || y == 32812)) {
+		else if ((x == 32762) && ((y == 32811) || (y == 32812))) {
 			speedUp(pc, 32762, 32811);
 		}
-		else if ((x == 32799 || x == 32800) && y == 32830) {
+		else if (((x == 32799) || (x == 32800)) && (y == 32830)) {
 			speedUp(pc, 32800, 32830);
 		}
-		else if ((x == 32736 || x == 32737) && y == 32840) {
+		else if (((x == 32736) || (x == 32737)) && (y == 32840)) {
 			randomPoly(pc, 32737, 32840);
 		}
-		else if ((x == 32738 || x == 32739) && y == 32840) {
+		else if (((x == 32738) || (x == 32739)) && (y == 32840)) {
 			randomPoly(pc, 32739, 32840);
 		}
-		else if ((x == 32740 || x == 32741) && y == 32840) {
+		else if (((x == 32740) || (x == 32741)) && (y == 32840)) {
 			randomPoly(pc, 32741, 32840);
 		}
-		else if (x == 32749 && (y == 32818 || y == 32817)) {
+		else if ((x == 32749) && ((y == 32818) || (y == 32817))) {
 			randomPoly(pc, 32749, 32817);
 		}
-		else if (x == 32749 && (y == 32816 || y == 32815)) {
+		else if ((x == 32749) && ((y == 32816) || (y == 32815))) {
 			randomPoly(pc, 32749, 32815);
 		}
-		else if (x == 32749 && (y == 32814 || y == 32813)) {
+		else if ((x == 32749) && ((y == 32814) || (y == 32813))) {
 			randomPoly(pc, 32749, 32813);
 		}
-		else if (x == 32749 && (y == 32812 || y == 32811)) {
+		else if ((x == 32749) && ((y == 32812) || (y == 32811))) {
 			randomPoly(pc, 32749, 32811);
 		}
-		else if (x == 32790 && (y == 32812 || y == 32813)) {
+		else if ((x == 32790) && ((y == 32812) || (y == 32813))) {
 			randomPoly(pc, 32790, 32812);
 		}
-		else if ((x == 32793 || x == 32794) && y == 32831) {
+		else if (((x == 32793) || (x == 32794)) && (y == 32831)) {
 			randomPoly(pc, 32794, 32831);
 		}
 	}
@@ -550,24 +554,24 @@ public class L1PolyRace {
 	// /////////////////////////////////////////////////////////////
 
 	/** 变身效果 */
-	private void randomPoly(L1PcInstance pc, int x, int y) {
+	private void randomPoly(final L1PcInstance pc, final int x, final int y) {
 		if (pc.hasSkillEffect(POLY_EFFECT)) {
 			return;
 		}
 		pc.setSkillEffect(POLY_EFFECT, 4 * 1000);
 
-		int i = Random.nextInt(polyList.length);
+		final int i = Random.nextInt(polyList.length);
 		L1PolyMorph.doPoly(pc, polyList[i], 3600, L1PolyMorph.MORPH_BY_NPC);
 
-		for (L1PcInstance player : playerList) {
+		for (final L1PcInstance player : playerList) {
 			player.sendPackets(new S_EffectLocation(x, y, 6675));
 		}
 	}
 
 	/** 设定结束提示信息 */
 	private void sendEndMessage() {
-		L1PcInstance winner = getWinner();
-		for (L1PcInstance pc : playerList) {
+		final L1PcInstance winner = getWinner();
+		for (final L1PcInstance pc : playerList) {
 			if (winner != null) {
 				pc.sendPackets(new S_ServerMessage(1259)); // 稍后将往村庄移动。
 				pc.sendPackets(new S_Race(winner.getName(), _time * 2));
@@ -578,9 +582,9 @@ public class L1PolyRace {
 	}
 
 	/** 设定关门 */
-	private void setDoorClose(boolean isClose) {
-		L1DoorInstance[] list = DoorTable.getInstance().getDoorList();
-		for (L1DoorInstance door : list) {
+	private void setDoorClose(final boolean isClose) {
+		final L1DoorInstance[] list = DoorTable.getInstance().getDoorList();
+		for (final L1DoorInstance door : list) {
 			if (door.getMapId() == 5143) {
 				if (isClose) {
 					door.close();
@@ -598,32 +602,32 @@ public class L1PolyRace {
 	 * @param type
 	 *            情况
 	 */
-	private void setGameEnd(int type) {
+	private void setGameEnd(final int type) {
 		setGameStatus(STATUS_END);
 		switch (type) {
-		case END_STATUS_WINNER:
-			stopCompareTimer();
-			stopGameTimeLimitTimer();
-			sendEndMessage();
-			break;
-		case END_STATUS_NOWINNER:
-			stopCompareTimer();
-			sendEndMessage();
-			break;
-		case END_STATUS_NOPLAYER:
-			for (L1PcInstance pc : playerList) {
-				// 未达到比赛最低人数(2人)，因此强制关闭比赛并退还1000个金币。
-				pc.sendPackets(new S_ServerMessage(1264));
-				pc.getInventory().storeItem(40308, 1000);
-			}
-			break;
+			case END_STATUS_WINNER:
+				stopCompareTimer();
+				stopGameTimeLimitTimer();
+				sendEndMessage();
+				break;
+			case END_STATUS_NOWINNER:
+				stopCompareTimer();
+				sendEndMessage();
+				break;
+			case END_STATUS_NOPLAYER:
+				for (final L1PcInstance pc : playerList) {
+					// 未达到比赛最低人数(2人)，因此强制关闭比赛并退还1000个金币。
+					pc.sendPackets(new S_ServerMessage(1264));
+					pc.getInventory().storeItem(40308, 1000);
+				}
+				break;
 		}
 		startEndTimer(); // 5秒后传回村
 	}
 
 	/** 初始化 + 下一场准备 */
 	private void setGameInit() {
-		for (L1PcInstance pc : playerList) {
+		for (final L1PcInstance pc : playerList) {
 			pc.sendPackets(new S_Race(S_Race.GameEnd));
 			pc.setLap(1);
 			pc.setLapCheck(0);
@@ -640,7 +644,7 @@ public class L1PolyRace {
 	/** 设定游戏开始 */
 	private void setGameStart() {
 		setGameStatus(STATUS_PLAYING);
-		for (L1PcInstance pc : playerList) {
+		for (final L1PcInstance pc : playerList) {
 			speedUp(pc, 0, 0);
 			randomPoly(pc, 0, 0);
 			pc.sendPackets(new S_ServerMessage(1257)); // 稍后比赛即将开始，请做好准备。
@@ -653,7 +657,7 @@ public class L1PolyRace {
 	}
 
 	/** 设定比赛胜利者 */
-	private void setGameWinner(L1PcInstance pc) {
+	private void setGameWinner(final L1PcInstance pc) {
 		if (getWinner() == null) {
 			setWinner(pc);
 			setGameEnd(END_STATUS_WINNER);
@@ -661,13 +665,13 @@ public class L1PolyRace {
 	}
 
 	/** 加速效果 */
-	private void speedUp(L1PcInstance pc, int x, int y) {
+	private void speedUp(final L1PcInstance pc, final int x, final int y) {
 		if (pc.hasSkillEffect(SPEED_EFFECT)) {
 			return;
 		}
 		pc.setSkillEffect(SPEED_EFFECT, 4 * 1000);
-		int time = 15;
-		int objectId = pc.getId();
+		final int time = 15;
+		final int objectId = pc.getId();
 		// 竞速专用 -超级加速
 		pc.sendPackets(new S_SkillBrave(objectId, 5, time));
 		pc.broadcastPacket(new S_SkillBrave(objectId, 5, time));
@@ -680,7 +684,7 @@ public class L1PolyRace {
 		pc.setSkillEffect(L1SkillId.STATUS_HASTE, time * 10 * 1000);
 		pc.setMoveSpeed(1);
 
-		for (L1PcInstance player : playerList) {
+		for (final L1PcInstance player : playerList) {
 			player.sendPackets(new S_EffectLocation(x, y, 6674));
 		}
 	}
@@ -699,7 +703,7 @@ public class L1PolyRace {
 
 	/** 开始比较计时器 */
 	private void startCompareTimer() {
-		Timer timer = new Timer();
+		final Timer timer = new Timer();
 		compareTimer = new CompareTimer();
 		timer.schedule(compareTimer, 2000, 2000);
 	}
@@ -711,7 +715,7 @@ public class L1PolyRace {
 
 	/** 启动游戏时间限制定时器 */
 	private void startGameTimeLimitTimer() {
-		Timer timer = new Timer();
+		final Timer timer = new Timer();
 		limitTimer = new GameTimeLimitTimer();
 		timer.schedule(limitTimer, limitTime);
 	}

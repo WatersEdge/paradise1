@@ -30,16 +30,16 @@ public class C_Propose extends ClientBasePacket {
 
 	private static final String C_PROPOSE = "[C] C_Propose";
 
-	public C_Propose(byte abyte0[], ClientThread clientthread) {
+	public C_Propose(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		int c = readC();
+		final int c = readC();
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (c == 0) { // /propose（/结婚）
 			if (pc.isGhost()) {
 				return;
 			}
-			L1PcInstance target = FaceToFace.faceToFace(pc);
+			final L1PcInstance target = FaceToFace.faceToFace(pc);
 			if (target != null) {
 				if (pc.getPartnerId() != 0) {
 					pc.sendPackets(new S_ServerMessage(657)); // \f1你(你)己经结婚。

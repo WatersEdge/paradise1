@@ -18,7 +18,7 @@ import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.utils.IntRange;
 
 public class L1PetType {
-	public static int getMessageNumber(int level) {
+	public static int getMessageNumber(final int level) {
 		if (50 <= level) {
 			return 5;
 		}
@@ -59,7 +59,7 @@ public class L1PetType {
 
 	private final boolean _canUseEquipment;
 
-	public L1PetType(int baseNpcId, String name, int itemIdForTaming, IntRange hpUpRange, IntRange mpUpRange, int evolvItemId, int npcIdForEvolving, int msgIds[], int defyMsgId, boolean canUseEquipment) {
+	public L1PetType(final int baseNpcId, final String name, final int itemIdForTaming, final IntRange hpUpRange, final IntRange mpUpRange, final int evolvItemId, final int npcIdForEvolving, final int msgIds[], final int defyMsgId, final boolean canUseEquipment) {
 		_baseNpcId = baseNpcId;
 		_baseNpcTemplate = NpcTable.getInstance().getTemplate(baseNpcId);
 		_name = name;
@@ -112,7 +112,7 @@ public class L1PetType {
 		return _itemIdForTaming;
 	}
 
-	public int getMessageId(int num) {
+	public int getMessageId(final int num) {
 		if (num == 0) {
 			return 0;
 		}

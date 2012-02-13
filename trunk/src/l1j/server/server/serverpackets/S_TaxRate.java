@@ -24,7 +24,7 @@ import l1j.server.server.Opcodes;
  */
 public class S_TaxRate extends ServerBasePacket {
 
-	public S_TaxRate(int objecId) {
+	public S_TaxRate(final int objecId) {
 		writeC(Opcodes.S_OPCODE_TAXRATE);
 		writeD(objecId);
 		writeC(10); // 10 10%~50%

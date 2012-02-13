@@ -45,22 +45,22 @@ public class Server {
 	 * @throws Exception
 	 */
 	public static void main(final String[] args) throws Exception {
-		File logFolder = new File("log");
+		final File logFolder = new File("log");
 		logFolder.mkdir();
 
 		try {
-			InputStream is = new BufferedInputStream(new FileInputStream(LOG_PROP));
+			final InputStream is = new BufferedInputStream(new FileInputStream(LOG_PROP));
 			LogManager.getLogManager().readConfiguration(is);
 			is.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			_log.log(Level.SEVERE, "无法加载 " + LOG_PROP + " File.", e);
 			System.exit(0);
 		}
 		try {
 			Config.load();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			System.exit(0);
 		}

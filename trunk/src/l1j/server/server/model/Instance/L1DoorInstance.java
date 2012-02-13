@@ -48,7 +48,7 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	private int _keeperId = 0;
 
-	public L1DoorInstance(int doorId, L1DoorGfx gfx, L1Location loc, int hp, int keeper, boolean isOpening) {
+	public L1DoorInstance(final int doorId, final L1DoorGfx gfx, final L1Location loc, final int hp, final int keeper, final boolean isOpening) {
 		super(NpcTable.getInstance().getTemplate(DOOR_NPC_ID));
 		setDoorId(doorId);
 		setMaxHp(hp);
@@ -58,7 +58,7 @@ public class L1DoorInstance extends L1NpcInstance {
 		setHomeX(loc.getX());
 		setHomeY(loc.getY());
 		setDirection(gfx.getDirection());
-		int baseLoc = gfx.getDirection() == 0 ? loc.getX() : loc.getY();
+		final int baseLoc = gfx.getDirection() == 0 ? loc.getX() : loc.getY();
 		setLeftEdgeLocation(baseLoc + gfx.getLeftEdgeOffset());
 		setRightEdgeLocation(baseLoc + gfx.getRightEdgeOffset());
 		setKeeperId(keeper);
@@ -67,12 +67,12 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 	}
 
-	public L1DoorInstance(L1Npc template) {
+	public L1DoorInstance(final L1Npc template) {
 		super(template);
 	}
 
 	public void close() {
-		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Close) {
+		if (isDead() || (getOpenStatus() == ActionCodes.ACTION_Close)) {
 			return;
 		}
 
@@ -95,7 +95,7 @@ public class L1DoorInstance extends L1NpcInstance {
 		_master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -149,13 +149,13 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		if (getMaxHp() == 0) { // 破壊不可能なドアは対象外
 			return;
 		}
 
-		if (getCurrentHp() > 0 && !isDead()) {
-			L1Attack attack = new L1Attack(pc, this);
+		if ((getCurrentHp() > 0) && !isDead()) {
+			final L1Attack attack = new L1Attack(pc, this);
 			if (attack.calcHit()) {
 				attack.calcDamage();
 				attack.addPcPoisonAttack(pc, this);
@@ -167,14 +167,14 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_DoorPack(this));
 		sendDoorPacket(perceivedFrom);
 	}
 
 	public void open() {
-		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Open) {
+		if (isDead() || (getOpenStatus() == ActionCodes.ACTION_Open)) {
 			return;
 		}
 
@@ -185,16 +185,16 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void receiveDamage(L1Character attacker, int damage) {
+	public void receiveDamage(final L1Character attacker, final int damage) {
 		if (getMaxHp() == 0) { // 破壊不可能なドアは対象外
 			return;
 		}
-		if (getCurrentHp() <= 0 || isDead()) {
+		if ((getCurrentHp() <= 0) || isDead()) {
 			return;
 		}
 
-		int newHp = getCurrentHp() - damage;
-		if (newHp <= 0 && !isDead()) {
+		final int newHp = getCurrentHp() - damage;
+		if ((newHp <= 0) && !isDead()) {
 			die();
 			return;
 		}
@@ -215,13 +215,13 @@ public class L1DoorInstance extends L1NpcInstance {
 		close();
 	}
 
-	public void sendDoorPacket(L1PcInstance pc) {
-		int entranceX = getEntranceX();
-		int entranceY = getEntranceY();
-		int leftEdgeLocation = getLeftEdgeLocation();
-		int rightEdgeLocation = getRightEdgeLocation();
+	public void sendDoorPacket(final L1PcInstance pc) {
+		final int entranceX = getEntranceX();
+		final int entranceY = getEntranceY();
+		final int leftEdgeLocation = getLeftEdgeLocation();
+		final int rightEdgeLocation = getRightEdgeLocation();
 
-		int size = rightEdgeLocation - leftEdgeLocation;
+		final int size = rightEdgeLocation - leftEdgeLocation;
 		if (size == 0) { // 1マス分の幅のドア
 			sendPacket(pc, entranceX, entranceY);
 		}
@@ -240,7 +240,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void setCurrentHp(int i) {
+	public void setCurrentHp(final int i) {
 		int currentHp = i;
 		if (currentHp >= getMaxHp()) {
 			currentHp = getMaxHp();
@@ -248,26 +248,26 @@ public class L1DoorInstance extends L1NpcInstance {
 		setCurrentHpDirect(currentHp);
 	}
 
-	public void setDirection(int i) {
-		if (i != 0 && i != 1) {
+	public void setDirection(final int i) {
+		if ((i != 0) && (i != 1)) {
 			throw new IllegalArgumentException();
 		}
 		_direction = i;
 	}
 
-	public void setDoorId(int i) {
+	public void setDoorId(final int i) {
 		_doorId = i;
 	}
 
-	public void setKeeperId(int i) {
+	public void setKeeperId(final int i) {
 		_keeperId = i;
 	}
 
-	public void setLeftEdgeLocation(int i) {
+	public void setLeftEdgeLocation(final int i) {
 		_leftEdgeLocation = i;
 	}
 
-	public void setRightEdgeLocation(int i) {
+	public void setRightEdgeLocation(final int i) {
 		_rightEdgeLocation = i;
 	}
 
@@ -283,11 +283,11 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	private boolean isPassable() {
-		return isDead() || getOpenStatus() == ActionCodes.ACTION_Open;
+		return isDead() || (getOpenStatus() == ActionCodes.ACTION_Open);
 	}
 
-	private void sendPacket(L1PcInstance pc, int x, int y) {
-		S_Door packet = new S_Door(x, y, getDirection(), isPassable());
+	private void sendPacket(final L1PcInstance pc, final int x, final int y) {
+		final S_Door packet = new S_Door(x, y, getDirection(), isPassable());
 		if (pc != null) { // onPerceive()経由の場合
 			// 開いている場合は通行不可パケット送信不要
 			if (getOpenStatus() == ActionCodes.ACTION_Close) {
@@ -299,8 +299,8 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 	}
 
-	private void setOpenStatus(int newStatus) {
-		if (newStatus != ActionCodes.ACTION_Open && newStatus != ActionCodes.ACTION_Close) {
+	private void setOpenStatus(final int newStatus) {
+		if ((newStatus != ActionCodes.ACTION_Open) && (newStatus != ActionCodes.ACTION_Close)) {
 			throw new IllegalArgumentException();
 		}
 		_openStatus = newStatus;

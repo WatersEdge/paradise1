@@ -34,7 +34,7 @@ public class L1SpawnTime {
 
 		private boolean _isDeleteAtEndTime;
 
-		public L1SpawnTimeBuilder(int spawnId) {
+		public L1SpawnTimeBuilder(final int spawnId) {
 			_spawnId = spawnId;
 		}
 
@@ -42,23 +42,23 @@ public class L1SpawnTime {
 			return new L1SpawnTime(this);
 		}
 
-		public void setDeleteAtEndTime(boolean f) {
+		public void setDeleteAtEndTime(final boolean f) {
 			_isDeleteAtEndTime = f;
 		}
 
-		public void setPeriodEnd(Timestamp periodEnd) {
+		public void setPeriodEnd(final Timestamp periodEnd) {
 			_periodEnd = periodEnd;
 		}
 
-		public void setPeriodStart(Timestamp periodStart) {
+		public void setPeriodStart(final Timestamp periodStart) {
 			_periodStart = periodStart;
 		}
 
-		public void setTimeEnd(Time timeEnd) {
+		public void setTimeEnd(final Time timeEnd) {
 			_timeEnd = timeEnd;
 		}
 
-		public void setTimeStart(Time timeStart) {
+		public void setTimeStart(final Time timeStart) {
 			_timeStart = timeStart;
 		}
 
@@ -76,9 +76,9 @@ public class L1SpawnTime {
 
 	private final Timestamp _periodEnd;
 
-	private boolean _isDeleteAtEndTime;
+	private final boolean _isDeleteAtEndTime;
 
-	private L1SpawnTime(L1SpawnTimeBuilder builder) {
+	private L1SpawnTime(final L1SpawnTimeBuilder builder) {
 		_spawnId = builder._spawnId;
 		_timeStart = builder._timeStart;
 		_timeEnd = builder._timeEnd;

@@ -27,7 +27,7 @@ public class C_ServerVersion extends ClientBasePacket {
 
 	private static final String C_SERVER_VERSION = "[C] C_ServerVersion";
 
-	public C_ServerVersion(byte decrypt[], ClientThread client) throws Exception {
+	public C_ServerVersion(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
 		client.sendPacket(new S_ServerVersion());
 	}

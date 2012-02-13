@@ -263,7 +263,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 		try {
 			return super.clone();
 		}
-		catch (CloneNotSupportedException e) {
+		catch (final CloneNotSupportedException e) {
 			// throw (new InternalError(e.getMessage()));
 			return null;
 		}
@@ -578,7 +578,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getClassName() {
-		return this._className;
+		return _className;
 	}
 
 	/**
@@ -859,7 +859,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @return
 	 */
 	public String getNameId() {
-		return this._nameId;
+		return _nameId;
 	}
 
 	/**
@@ -1189,7 +1189,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addcha
 	 */
-	public void set_addcha(byte addcha) {
+	public void set_addcha(final byte addcha) {
 		_addcha = addcha;
 	}
 
@@ -1198,7 +1198,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addcon
 	 */
-	public void set_addcon(byte addcon) {
+	public void set_addcon(final byte addcon) {
 		_addcon = addcon;
 	}
 
@@ -1207,7 +1207,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param adddex
 	 */
-	public void set_adddex(byte adddex) {
+	public void set_adddex(final byte adddex) {
 		_adddex = adddex;
 	}
 
@@ -1216,7 +1216,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addhp
 	 */
-	public void set_addhp(int addhp) {
+	public void set_addhp(final int addhp) {
 		_addhp = addhp;
 	}
 
@@ -1225,7 +1225,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addhpr
 	 */
-	public void set_addhpr(int addhpr) {
+	public void set_addhpr(final int addhpr) {
 		_addhpr = addhpr;
 	}
 
@@ -1234,7 +1234,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addint
 	 */
-	public void set_addint(byte addint) {
+	public void set_addint(final byte addint) {
 		_addint = addint;
 	}
 
@@ -1243,7 +1243,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addmp
 	 */
-	public void set_addmp(int addmp) {
+	public void set_addmp(final int addmp) {
 		_addmp = addmp;
 	}
 
@@ -1252,7 +1252,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addmpr
 	 */
-	public void set_addmpr(int addmpr) {
+	public void set_addmpr(final int addmpr) {
 		_addmpr = addmpr;
 	}
 
@@ -1261,7 +1261,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addsp
 	 */
-	public void set_addsp(int addsp) {
+	public void set_addsp(final int addsp) {
 		_addsp = addsp;
 	}
 
@@ -1270,7 +1270,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addstr
 	 */
-	public void set_addstr(byte addstr) {
+	public void set_addstr(final byte addstr) {
 		_addstr = addstr;
 	}
 
@@ -1279,7 +1279,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param addwis
 	 */
-	public void set_addwis(byte addwis) {
+	public void set_addwis(final byte addwis) {
 		_addwis = addwis;
 	}
 
@@ -1288,8 +1288,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param i
 	 */
-	public void set_mdef(int i) {
-		this._mdef = i;
+	public void set_mdef(final int i) {
+		_mdef = i;
 	}
 
 	/**
@@ -1297,7 +1297,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param safeenchant
 	 */
-	public void set_safeenchant(int safeenchant) {
+	public void set_safeenchant(final int safeenchant) {
 		_safeEnchant = safeenchant;
 	}
 
@@ -1308,7 +1308,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param i
 	 */
-	public void setBless(int i) {
+	public void setBless(final int i) {
 		_bless = i;
 	}
 
@@ -1317,7 +1317,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setCantDelete(boolean flag) {
+	public void setCantDelete(final boolean flag) {
 		_cantDelete = flag;
 	}
 
@@ -1327,7 +1327,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param classname
 	 */
 	public void setClassName(final String className) {
-		this._className = className;
+		_className = className;
 	}
 
 	/**
@@ -1335,7 +1335,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param dmgLarge
 	 */
-	public void setDmgLarge(int dmgLarge) {
+	public void setDmgLarge(final int dmgLarge) {
 		_dmgLarge = dmgLarge;
 	}
 
@@ -1344,7 +1344,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param dmgSmall
 	 */
-	public void setDmgSmall(int dmgSmall) {
+	public void setDmgSmall(final int dmgSmall) {
 		_dmgSmall = dmgSmall;
 	}
 
@@ -1353,7 +1353,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param volume
 	 */
-	public void setFoodVolume(int volume) {
+	public void setFoodVolume(final int volume) {
 		_foodVolume = volume;
 	}
 
@@ -1362,7 +1362,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param gfxId
 	 */
-	public void setGfxId(int gfxId) {
+	public void setGfxId(final int gfxId) {
 		_gfxId = gfxId;
 	}
 
@@ -1371,7 +1371,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param groundGfxId
 	 */
-	public void setGroundGfxId(int groundGfxId) {
+	public void setGroundGfxId(final int groundGfxId) {
 		_groundGfxId = groundGfxId;
 	}
 
@@ -1382,7 +1382,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setHasteItem(boolean flag) {
+	public void setHasteItem(final boolean flag) {
 		_isHasteItem = flag;
 	}
 
@@ -1391,7 +1391,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param identifiedNameId
 	 */
-	public void setIdentifiedNameId(String identifiedNameId) {
+	public void setIdentifiedNameId(final String identifiedNameId) {
 		_identifiedNameId = identifiedNameId;
 	}
 
@@ -1400,7 +1400,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param descId
 	 */
-	public void setItemDescId(int descId) {
+	public void setItemDescId(final int descId) {
 		_itemDescId = descId;
 	}
 
@@ -1409,7 +1409,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param itemId
 	 */
-	public void setItemId(int itemId) {
+	public void setItemId(final int itemId) {
 		_itemId = itemId;
 	}
 
@@ -1418,7 +1418,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param material
 	 */
-	public void setMaterial(int material) {
+	public void setMaterial(final int material) {
 		_material = material;
 	}
 
@@ -1427,7 +1427,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param maxlvl
 	 */
-	public void setMaxLevel(int maxlvl) {
+	public void setMaxLevel(final int maxlvl) {
 		_maxLevel = maxlvl;
 	}
 
@@ -1436,7 +1436,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param i
 	 */
-	public void setMaxUseTime(int i) {
+	public void setMaxUseTime(final int i) {
 		_maxUseTime = i;
 	}
 
@@ -1447,7 +1447,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param level
 	 */
-	public void setMinLevel(int level) {
+	public void setMinLevel(final int level) {
 		_minLevel = level;
 	}
 
@@ -1456,7 +1456,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		_name = name;
 	}
 
@@ -1466,7 +1466,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param nameid
 	 */
 	public void setNameId(final String nameid) {
-		this._nameId = nameid;
+		_nameId = nameid;
 	}
 
 	/**
@@ -1474,7 +1474,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setToBeSavedAtOnce(boolean flag) {
+	public void setToBeSavedAtOnce(final boolean flag) {
 		_save_at_once = flag;
 	}
 
@@ -1483,7 +1483,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setTradable(boolean flag) {
+	public void setTradable(final boolean flag) {
 		_tradable = flag;
 	}
 
@@ -1492,7 +1492,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param type
 	 */
-	public void setType(int type) {
+	public void setType(final int type) {
 		_type = type;
 	}
 
@@ -1501,7 +1501,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param type1
 	 */
-	public void setType1(int type1) {
+	public void setType1(final int type1) {
 		_type1 = type1;
 	}
 
@@ -1511,7 +1511,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * @param type
 	 *            0 if L1EtcItem, 1 if L1Weapon, 2 if L1Armor
 	 */
-	public void setType2(int type) {
+	public void setType2(final int type) {
 		_type2 = type;
 	}
 
@@ -1520,7 +1520,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param unidentifiedNameId
 	 */
-	public void setUnidentifiedNameId(String unidentifiedNameId) {
+	public void setUnidentifiedNameId(final String unidentifiedNameId) {
 		_unidentifiedNameId = unidentifiedNameId;
 	}
 
@@ -1529,7 +1529,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseDarkelf(boolean flag) {
+	public void setUseDarkelf(final boolean flag) {
 		_useDarkelf = flag;
 	}
 
@@ -1538,7 +1538,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseDragonknight(boolean flag) {
+	public void setUseDragonknight(final boolean flag) {
 		_useDragonknight = flag;
 	}
 
@@ -1547,7 +1547,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseElf(boolean flag) {
+	public void setUseElf(final boolean flag) {
 		_useElf = flag;
 	}
 
@@ -1556,7 +1556,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseIllusionist(boolean flag) {
+	public void setUseIllusionist(final boolean flag) {
 		_useIllusionist = flag;
 	}
 
@@ -1565,7 +1565,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseKnight(boolean flag) {
+	public void setUseKnight(final boolean flag) {
 		_useKnight = flag;
 	}
 
@@ -1574,7 +1574,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseMage(boolean flag) {
+	public void setUseMage(final boolean flag) {
 		_useMage = flag;
 	}
 
@@ -1583,7 +1583,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param flag
 	 */
-	public void setUseRoyal(boolean flag) {
+	public void setUseRoyal(final boolean flag) {
 		_useRoyal = flag;
 	}
 
@@ -1592,7 +1592,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param useType
 	 */
-	public void setUseType(int useType) {
+	public void setUseType(final int useType) {
 		_useType = useType;
 	}
 
@@ -1601,7 +1601,7 @@ public abstract class L1Item implements Cloneable, Serializable {
 	 * 
 	 * @param weight
 	 */
-	public void setWeight(int weight) {
+	public void setWeight(final int weight) {
 		_weight = weight;
 	}
 

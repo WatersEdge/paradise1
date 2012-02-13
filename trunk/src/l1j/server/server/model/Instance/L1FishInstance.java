@@ -30,9 +30,9 @@ public class L1FishInstance extends L1NpcInstance {
 
 	private class fishTimer extends TimerTask {
 
-		private L1FishInstance _fish;
+		private final L1FishInstance _fish;
 
-		public fishTimer(L1FishInstance fish) {
+		public fishTimer(final L1FishInstance fish) {
 			_fish = fish;
 		}
 
@@ -51,17 +51,17 @@ public class L1FishInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	private fishTimer _fishTimer;
+	private final fishTimer _fishTimer;
 
-	public L1FishInstance(L1Npc template) {
+	public L1FishInstance(final L1Npc template) {
 		super(template);
 		_fishTimer = new fishTimer(this);
-		Timer timer = new Timer(true);
+		final Timer timer = new Timer(true);
 		timer.scheduleAtFixedRate(_fishTimer, 1000, (Random.nextInt(30, 30) * 1000));
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_NPCPack(this));
 	}

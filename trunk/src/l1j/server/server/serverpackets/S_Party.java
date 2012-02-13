@@ -26,29 +26,29 @@ public class S_Party extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_Party(int type, L1PcInstance pc) { // 3.3C 组队系统
+	public S_Party(final int type, final L1PcInstance pc) { // 3.3C 组队系统
 		switch (type) {
-		case 104:
-			newMember(pc);
-			break;
-		case 105:
-			oldMember(pc);
-			break;
-		case 106:
-			changeLeader(pc);
-		case 110:
-			refreshParty(pc);
-			break;
-		default:
-			break;
+			case 104:
+				newMember(pc);
+				break;
+			case 105:
+				oldMember(pc);
+				break;
+			case 106:
+				changeLeader(pc);
+			case 110:
+				refreshParty(pc);
+				break;
+			default:
+				break;
 		}
 	}
 
-	public S_Party(String htmlid, int objid) {
+	public S_Party(final String htmlid, final int objid) {
 		buildPacket(htmlid, objid, "", "", 0);
 	}
 
-	public S_Party(String htmlid, int objid, String partyname, String partymembers) {
+	public S_Party(final String htmlid, final int objid, final String partyname, final String partymembers) {
 		buildPacket(htmlid, objid, partyname, partymembers, 1);
 	}
 
@@ -57,7 +57,7 @@ public class S_Party extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public void changeLeader(L1PcInstance pc) {
+	public void changeLeader(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(S_PacketBox.PATRY_SET_MASTER);
 		writeD(pc.getId());
@@ -83,9 +83,9 @@ public class S_Party extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public void newMember(L1PcInstance pc) {
-		L1PcInstance leader = pc.getParty().getLeader();
-		L1PcInstance member[] = pc.getParty().getMembers();
+	public void newMember(final L1PcInstance pc) {
+		final L1PcInstance leader = pc.getParty().getLeader();
+		final L1PcInstance member[] = pc.getParty().getMembers();
 		double nowhp = 0.0d;
 		double maxhp = 0.0d;
 		if (pc.getParty() == null) {
@@ -103,17 +103,18 @@ public class S_Party extends ServerBasePacket {
 			writeD(leader.getMapId());
 			writeH(leader.getX());
 			writeH(leader.getY());
-			for (int i = 0, a = member.length; i < a; i++) {
-				if (member[i].getId() == leader.getId() || member[i] == null)
+			for (final L1PcInstance element : member) {
+				if ((element.getId() == leader.getId()) || (element == null)) {
 					continue;
-				nowhp = member[i].getCurrentHp();
-				maxhp = member[i].getMaxHp();
-				writeD(member[i].getId());
-				writeS(member[i].getName());
+				}
+				nowhp = element.getCurrentHp();
+				maxhp = element.getMaxHp();
+				writeD(element.getId());
+				writeS(element.getName());
 				writeC((int) (nowhp / maxhp) * 100);
-				writeD(member[i].getMapId());
-				writeH(member[i].getX());
-				writeH(member[i].getY());
+				writeD(element.getMapId());
+				writeH(element.getX());
+				writeH(element.getY());
 			}
 			writeC(0x00);
 		}
@@ -124,7 +125,7 @@ public class S_Party extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public void oldMember(L1PcInstance pc) {
+	public void oldMember(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(S_PacketBox.PATRY_UPDATE_MEMBER);
 		writeD(pc.getId());
@@ -139,8 +140,8 @@ public class S_Party extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public void refreshParty(L1PcInstance pc) {
-		L1PcInstance member[] = pc.getParty().getMembers();
+	public void refreshParty(final L1PcInstance pc) {
+		final L1PcInstance member[] = pc.getParty().getMembers();
 		if (pc.getParty() == null) {
 			return;
 		}
@@ -148,17 +149,17 @@ public class S_Party extends ServerBasePacket {
 			writeC(Opcodes.S_OPCODE_PACKETBOX);
 			writeC(S_PacketBox.PATRY_MEMBERS);
 			writeC(member.length);
-			for (int i = 0, a = member.length; i < a; i++) {
-				writeD(member[i].getId());
-				writeD(member[i].getMapId());
-				writeH(member[i].getX());
-				writeH(member[i].getY());
+			for (final L1PcInstance element : member) {
+				writeD(element.getId());
+				writeD(element.getMapId());
+				writeH(element.getX());
+				writeH(element.getY());
 			}
 			writeC(0x00);
 		}
 	}
 
-	private void buildPacket(String htmlid, int objid, String partyname, String partymembers, int type) {
+	private void buildPacket(final String htmlid, final int objid, final String partyname, final String partymembers, final int type) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS(htmlid);

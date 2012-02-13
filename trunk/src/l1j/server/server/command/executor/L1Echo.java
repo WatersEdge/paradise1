@@ -29,7 +29,7 @@ public class L1Echo implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		pc.sendPackets(new S_SystemMessage(arg));
 	}
 }

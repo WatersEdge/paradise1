@@ -45,12 +45,12 @@ public class ResurrectionScrolls extends ItemExecutor {
 
 		if (resobject != null) {
 			if (resobject instanceof L1PcInstance) {
-				L1PcInstance target = (L1PcInstance) resobject;
+				final L1PcInstance target = (L1PcInstance) resobject;
 				if (pc.getId() == target.getId()) {
 					return;
 				}
 				if (L1World.getInstance().getVisiblePlayer(target, 0).size() > 0) {
-					for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(target, 0)) {
+					for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(target, 0)) {
 						if (!visiblePc.isDead()) {
 							// \f1复活失败，因为这个位置已被占据
 							pc.sendPackets(new S_ServerMessage(592));
@@ -77,13 +77,13 @@ public class ResurrectionScrolls extends ItemExecutor {
 			}
 			else if (resobject instanceof L1NpcInstance) {
 				if (!(resobject instanceof L1TowerInstance)) {
-					L1NpcInstance npc = (L1NpcInstance) resobject;
+					final L1NpcInstance npc = (L1NpcInstance) resobject;
 					if (npc.getNpcTemplate().isCantResurrect() && !(npc instanceof L1PetInstance)) {
 						pc.getInventory().removeItem(item, 1);
 						return;
 					}
 					if ((npc instanceof L1PetInstance) && (L1World.getInstance().getVisiblePlayer(npc, 0).size() > 0)) {
-						for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(npc, 0)) {
+						for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(npc, 0)) {
 							if (!visiblePc.isDead()) {
 								// \f1复活失败，因为这个位置已被占据
 								pc.sendPackets(new S_ServerMessage(592));
@@ -95,7 +95,7 @@ public class ResurrectionScrolls extends ItemExecutor {
 						npc.resurrect(npc.getMaxHp() / 4);
 						npc.setResurrect(true);
 						if ((npc instanceof L1PetInstance)) {
-							L1PetInstance pet = (L1PetInstance) npc;
+							final L1PetInstance pet = (L1PetInstance) npc;
 							// 开始饱食度计时
 							pet.startFoodTimer(pet);
 						}

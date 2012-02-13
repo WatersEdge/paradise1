@@ -38,9 +38,9 @@ public class LogRecorder {
 	 * @param pc
 	 *            玩家
 	 */
-	public static void writeArmorLog(String messenge, L1PcInstance pc) {
+	public static void writeArmorLog(final String messenge, final L1PcInstance pc) {
 		try {
-			File ArmorLog = new File("log\\ArmorLog.log");
+			final File ArmorLog = new File("log\\ArmorLog.log");
 			if (ArmorLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\ArmorLog.log", false));
 				out.write("※以下是[冲升防具]的所有纪录※" + "\r\n");
@@ -51,7 +51,7 @@ public class LogRecorder {
 			out.write("来自帐号: " + pc.getAccountName() + ", 来自玩家: " + pc.getName() + ", " + messenge + "。" + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
@@ -62,9 +62,9 @@ public class LogRecorder {
 	 * @param pc
 	 *            玩家
 	 */
-	public static void writeBugLog(String messenge, L1PcInstance pc) {
+	public static void writeBugLog(final String messenge, final L1PcInstance pc) {
 		try {
-			File BugLog = new File("log\\BugLog.log");
+			final File BugLog = new File("log\\BugLog.log");
 			if (BugLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\BugLog.txt", false));
 				out.write("※以下是所有玩家提供的BUG清单※" + "\r\n");
@@ -77,7 +77,7 @@ public class LogRecorder {
 			out.close();
 
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
@@ -87,9 +87,9 @@ public class LogRecorder {
 	 * 
 	 * @param player
 	 */
-	public static void writeDropLog(L1PcInstance player, L1ItemInstance item) {
+	public static void writeDropLog(final L1PcInstance player, final L1ItemInstance item) {
 		try {
-			File DropLog = new File("log\\DropLog.log");
+			final File DropLog = new File("log\\DropLog.log");
 			if (DropLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\DropLog.log", false));
 				out.write("※以下是玩家[丢弃物品]的所有纪录※" + "\r\n");
@@ -101,19 +101,19 @@ public class LogRecorder {
 					+ item.getBless() + ",加成值: " + item.getEnchantLevel() + ",属性强化类型: " + item.getAttrEnchantKind() + ",属性强化等级: " + item.getAttrEnchantLevel() + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
 
 	/** base */
-	public static void writeLog(String messenge) {
+	public static void writeLog(final String messenge) {
 		try {
 			out = new BufferedWriter(new FileWriter("log\\Log.log", true));
 			out.write(messenge + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
@@ -124,9 +124,9 @@ public class LogRecorder {
 	 * @param player
 	 *            使用外挂或加速器的玩家
 	 */
-	public static void writeRobotsLog(L1PcInstance player) {
+	public static void writeRobotsLog(final L1PcInstance player) {
 		try {
-			File RobotsLog = new File("log\\RobotsLog.log");
+			final File RobotsLog = new File("log\\RobotsLog.log");
 			if (RobotsLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", false));
 				out.write("※以下是玩家[使用加速器&外挂]的所有纪录※" + "\r\n");
@@ -137,7 +137,7 @@ public class LogRecorder {
 			out.write("加速器纪录 → 来自帐号: " + player.getAccountName() + ", 来自玩家: " + player.getName() + ", 〈时间〉" + TimeInform.getNowTime(3, 0) + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
@@ -153,9 +153,9 @@ public class LogRecorder {
 	 *            物品
 	 * 
 	 **/
-	public static void writeTradeLog(L1PcInstance sender, L1PcInstance receiver, L1ItemInstance l1iteminstance1) {
+	public static void writeTradeLog(final L1PcInstance sender, final L1PcInstance receiver, final L1ItemInstance l1iteminstance1) {
 		try {
-			File TradeLog = new File("log\\TradeLog.log");
+			final File TradeLog = new File("log\\TradeLog.log");
 			if (TradeLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\TradeLog.log", false));
 				out.write("※以下是玩家[交易]的所有纪录※" + "\r\n");
@@ -167,7 +167,7 @@ public class LogRecorder {
 					+ " 玩家。" + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}
@@ -178,9 +178,9 @@ public class LogRecorder {
 	 * @param pc
 	 *            玩家
 	 */
-	public static void writeWeaponLog(String messenge, L1PcInstance pc) {
+	public static void writeWeaponLog(final String messenge, final L1PcInstance pc) {
 		try {
-			File WeaponLog = new File("log\\WeaponLog.log");
+			final File WeaponLog = new File("log\\WeaponLog.log");
 			if (WeaponLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\WeaponLog.log", false));
 				out.write("※以下是[冲升武器]的所有纪录※" + "\r\n");
@@ -191,7 +191,7 @@ public class LogRecorder {
 			out.write("来自帐号: " + pc.getAccountName() + ", 来自玩家: " + pc.getName() + ", " + messenge + "。" + "\r\n");
 			out.close();
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			System.out.println("以下是错误讯息: " + e.getMessage());
 		}
 	}

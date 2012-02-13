@@ -39,7 +39,7 @@ public class Logins {
 	private static Logger _log = Logger.getLogger(Logins.class.getName());
 
 	/** 登陆有效 */
-	public static boolean loginValid(String account, String password, String ip, String host) throws IOException {
+	public static boolean loginValid(final String account, final String password, final String ip, final String host) throws IOException {
 		boolean flag1 = false;
 		_log.info("连接从 : " + account);
 
@@ -49,8 +49,8 @@ public class Logins {
 		try {
 			byte abyte1[];
 			byte abyte2[];
-			MessageDigest messagedigest = MessageDigest.getInstance("SHA");
-			byte abyte0[] = password.getBytes("UTF-8");
+			final MessageDigest messagedigest = MessageDigest.getInstance("SHA");
+			final byte abyte0[] = password.getBytes("UTF-8");
 			abyte1 = messagedigest.digest(abyte0);
 			abyte2 = null;
 
@@ -100,18 +100,18 @@ public class Logins {
 					i++;
 				} while (true);
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.warning("无法检查密码:" + e);
 				flag1 = false;
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (NoSuchAlgorithmException e) {
+		catch (final NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (UnsupportedEncodingException e) {
+		catch (final UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

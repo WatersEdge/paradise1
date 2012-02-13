@@ -27,7 +27,7 @@ public class S_GMHtml extends ServerBasePacket {
 	 * @param _objid
 	 * @param html
 	 */
-	public S_GMHtml(int _objid, String html) {
+	public S_GMHtml(final int _objid, final String html) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(_objid);
 		writeS("hsiw");

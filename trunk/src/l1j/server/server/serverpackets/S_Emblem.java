@@ -31,11 +31,11 @@ public class S_Emblem extends ServerBasePacket {
 
 	private static final String S_EMBLEM = "[S] S_Emblem";
 
-	public S_Emblem(int clanid) {
+	public S_Emblem(final int clanid) {
 		BufferedInputStream bis = null;
 		try {
-			String emblem_file = String.valueOf(clanid);
-			File file = new File("emblem/" + emblem_file);
+			final String emblem_file = String.valueOf(clanid);
+			final File file = new File("emblem/" + emblem_file);
 			if (file.exists()) {
 				int data = 0;
 				bis = new BufferedInputStream(new FileInputStream(file));
@@ -48,13 +48,13 @@ public class S_Emblem extends ServerBasePacket {
 				writeH(0x0000);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 		} finally {
 			if (bis != null) {
 				try {
 					bis.close();
 				}
-				catch (IOException ignore) {
+				catch (final IOException ignore) {
 					// ignore
 				}
 			}

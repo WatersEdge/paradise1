@@ -32,7 +32,7 @@ public class Weather {
 	 * @天气 0<无雪雨> 1<小雪>、2<中雪> 3<大雪> 16<停止下雨> 17<小雨> 18<中雨> 19<大雨>
 	 */
 	public Weather() {
-		int ran = Random.nextInt(8); // 读取乱数
+		final int ran = Random.nextInt(8); // 读取乱数
 		L1World.getInstance().setWeather(WeatherId[ran]);
 		L1World.getInstance().broadcastPacketToAll(new S_Weather(WeatherId[ran]));
 	}

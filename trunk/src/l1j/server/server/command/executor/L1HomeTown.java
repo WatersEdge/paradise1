@@ -29,10 +29,10 @@ public class L1HomeTown implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String para1 = st.nextToken();
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String para1 = st.nextToken();
 			if (para1.equalsIgnoreCase("daily")) {
 				HomeTownTimeController.getInstance().dailyProc();
 			}
@@ -43,7 +43,7 @@ public class L1HomeTown implements L1CommandExecutor {
 				throw new Exception();
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 .hometown daily|monthly 。"));
 		}
 	}

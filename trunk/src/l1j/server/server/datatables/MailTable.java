@@ -65,8 +65,8 @@ public class MailTable {
 	 * 
 	 * @param mailId
 	 */
-	public static L1Mail getMail(int mailId) {
-		for (L1Mail mail : _allMail) {
+	public static L1Mail getMail(final int mailId) {
+		for (final L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
 				return mail;
 			}
@@ -83,7 +83,7 @@ public class MailTable {
 	 * 
 	 * @param mailId
 	 */
-	public void deleteMail(int mailId) {
+	public void deleteMail(final int mailId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -94,7 +94,7 @@ public class MailTable {
 
 			delMail(mailId);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -109,7 +109,7 @@ public class MailTable {
 	 * @param mailId
 	 * @param type
 	 */
-	public void setMailType(int mailId, int type) {
+	public void setMailType(final int mailId, final int type) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -124,7 +124,7 @@ public class MailTable {
 				changeMailType(mailId, type);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -138,7 +138,7 @@ public class MailTable {
 	 * 
 	 * @param mailId
 	 */
-	public void setReadStatus(int mailId) {
+	public void setReadStatus(final int mailId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -153,7 +153,7 @@ public class MailTable {
 				changeMailStatus(mailId);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -170,12 +170,12 @@ public class MailTable {
 	 * @param writer
 	 * @param text
 	 */
-	public void writeMail(int type, String receiver, L1PcInstance writer, byte[] text) {
-		int readStatus = 0;
+	public void writeMail(final int type, final String receiver, final L1PcInstance writer, final byte[] text) {
+		final int readStatus = 0;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		String date = sdf.format(Calendar.getInstance(tz).getTime());
+		final SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final String date = sdf.format(Calendar.getInstance(tz).getTime());
 
 		// subjectとcontent分离(0x00 0x00)寻找位置
 		int spacePosition1 = 0;
@@ -193,13 +193,13 @@ public class MailTable {
 		}
 
 		// 写入mail(邮件)表
-		int subjectLength = spacePosition1 + 2;
+		final int subjectLength = spacePosition1 + 2;
 		int contentLength = spacePosition2 - spacePosition1;
 		if (contentLength <= 0) {
 			contentLength = 1;
 		}
-		byte[] subject = new byte[subjectLength];
-		byte[] content = new byte[contentLength];
+		final byte[] subject = new byte[subjectLength];
+		final byte[] content = new byte[contentLength];
 		System.arraycopy(text, 0, subject, 0, subjectLength);
 		System.arraycopy(text, subjectLength, content, 0, contentLength);
 
@@ -208,7 +208,7 @@ public class MailTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm2 = con.prepareStatement("INSERT INTO mail SET " + "id=?, type=?, sender=?, receiver=?," + " date=?, read_status=?, subject=?, content=?");
-			int id = IdFactory.getInstance().nextId();
+			final int id = IdFactory.getInstance().nextId();
 			pstm2.setInt(1, id);
 			pstm2.setInt(2, type);
 			pstm2.setString(3, writer.getName());
@@ -219,7 +219,7 @@ public class MailTable {
 			pstm2.setBytes(8, content);
 			pstm2.execute();
 
-			L1Mail mail = new L1Mail();
+			final L1Mail mail = new L1Mail();
 			mail.setId(id);
 			mail.setType(type);
 			mail.setSenderName(writer.getName());
@@ -231,7 +231,7 @@ public class MailTable {
 
 			_allMail.add(mail);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm2);
@@ -244,10 +244,10 @@ public class MailTable {
 	 * 
 	 * @param mailId
 	 */
-	private void changeMailStatus(int mailId) {
-		for (L1Mail mail : _allMail) {
+	private void changeMailStatus(final int mailId) {
+		for (final L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
-				L1Mail newMail = mail;
+				final L1Mail newMail = mail;
 				newMail.setReadStatus(1);
 
 				_allMail.remove(mail);
@@ -263,10 +263,10 @@ public class MailTable {
 	 * @param mailId
 	 * @param type
 	 */
-	private void changeMailType(int mailId, int type) {
-		for (L1Mail mail : _allMail) {
+	private void changeMailType(final int mailId, final int type) {
+		for (final L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
-				L1Mail newMail = mail;
+				final L1Mail newMail = mail;
 				newMail.setType(type);
 
 				_allMail.remove(mail);
@@ -281,8 +281,8 @@ public class MailTable {
 	 * 
 	 * @param mailId
 	 */
-	private void delMail(int mailId) {
-		for (L1Mail mail : _allMail) {
+	private void delMail(final int mailId) {
+		for (final L1Mail mail : _allMail) {
 			if (mail.getId() == mailId) {
 				_allMail.remove(mail);
 				break;
@@ -299,7 +299,7 @@ public class MailTable {
 			pstm = con.prepareStatement("SELECT * FROM mail");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1Mail mail = new L1Mail();
+				final L1Mail mail = new L1Mail();
 				mail.setId(rs.getInt("id"));
 				mail.setType(rs.getInt("type"));
 				mail.setSenderName(rs.getString("sender"));
@@ -312,7 +312,7 @@ public class MailTable {
 				_allMail.add(mail);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建邮件表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);
