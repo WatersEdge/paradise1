@@ -40,7 +40,7 @@ public class Solvent extends ItemExecutor {
 		final int itemobj = data[0];
 		final L1ItemInstance l1iteminstance1 = pc.getInventory().getItem(itemobj);
 
-		useResolvent(pc, l1iteminstance1, item);
+		this.useResolvent(pc, l1iteminstance1, item);
 	}
 
 	// 溶解

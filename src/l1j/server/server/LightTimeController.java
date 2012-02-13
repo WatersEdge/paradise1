@@ -40,7 +40,7 @@ public class LightTimeController implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				checkLightTime();
+				this.checkLightTime();
 				Thread.sleep(60000);
 			}
 		}
@@ -53,8 +53,8 @@ public class LightTimeController implements Runnable {
 		final int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		final int nowTime = serverTime % 86400;
 		if ((nowTime >= ((5 * 3600) + 3300)) && (nowTime < ((17 * 3600) + 3300))) { // 5:55~17:55
-			if (isSpawn) {
-				isSpawn = false;
+			if (this.isSpawn) {
+				this.isSpawn = false;
 				for (final L1Object object : L1World.getInstance().getObject()) {
 					if (object instanceof L1FieldObjectInstance) {
 						final L1FieldObjectInstance npc = (L1FieldObjectInstance) object;
@@ -73,8 +73,8 @@ public class LightTimeController implements Runnable {
 			}
 		}
 		else if (((nowTime >= ((17 * 3600) + 3300)) && (nowTime <= 24 * 3600)) || ((nowTime >= 0 * 3600) && (nowTime < ((5 * 3600) + 3300)))) { // 17:55~24:00,0:00~5:55
-			if (!isSpawn) {
-				isSpawn = true;
+			if (!this.isSpawn) {
+				this.isSpawn = true;
 				LightSpawnTable.getInstance();
 			}
 		}

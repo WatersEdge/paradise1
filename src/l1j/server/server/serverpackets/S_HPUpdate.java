@@ -32,7 +32,7 @@ public class S_HPUpdate extends ServerBasePacket {
 	 * @param maxHp
 	 */
 	public S_HPUpdate(final int currentHp, final int maxHp) {
-		buildPacket(currentHp, maxHp);
+		this.buildPacket(currentHp, maxHp);
 	}
 
 	/**
@@ -41,19 +41,19 @@ public class S_HPUpdate extends ServerBasePacket {
 	 * @param pc
 	 */
 	public S_HPUpdate(final L1PcInstance pc) {
-		buildPacket(pc.getCurrentHp(), pc.getMaxHp());
+		this.buildPacket(pc.getCurrentHp(), pc.getMaxHp());
 	}
 
 	public void buildPacket(final int currentHp, final int maxHp) {
-		writeC(Opcodes.S_OPCODE_HPUPDATE);
-		writeH(hpRange.ensure(currentHp));
-		writeH(hpRange.ensure(maxHp));
+		this.writeC(Opcodes.S_OPCODE_HPUPDATE);
+		this.writeH(hpRange.ensure(currentHp));
+		this.writeH(hpRange.ensure(maxHp));
 		// writeC(0);
 		// writeD(GameTimeController.getInstance().getGameTime());
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

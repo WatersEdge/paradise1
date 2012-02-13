@@ -30,27 +30,27 @@ public class L1CurseParalysis extends L1Paralysis {
 	private class ParalysisDelayTimer extends Thread {
 		@Override
 		public void run() {
-			_target.setSkillEffect(STATUS_CURSE_PARALYZING, 0);
+			L1CurseParalysis.this._target.setSkillEffect(STATUS_CURSE_PARALYZING, 0);
 
 			try {
-				Thread.sleep(_delay); // 麻痹毒瘫痪前的等待时间。
+				Thread.sleep(L1CurseParalysis.this._delay); // 麻痹毒瘫痪前的等待时间。
 			}
 			catch (final InterruptedException e) {
-				_target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
+				L1CurseParalysis.this._target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
 				return;
 			}
 
-			if (_target instanceof L1PcInstance) {
-				final L1PcInstance player = (L1PcInstance) _target;
+			if (L1CurseParalysis.this._target instanceof L1PcInstance) {
+				final L1PcInstance player = (L1PcInstance) L1CurseParalysis.this._target;
 				if (!player.isDead()) {
 					player.sendPackets(new S_Paralysis(1, true)); // 麻痹状态
 				}
 			}
-			_target.setParalyzed(true);
-			_timer = new ParalysisTimer();
-			GeneralThreadPool.getInstance().execute(_timer); // 启动麻痹定时器
-			if (isInterrupted()) {
-				_timer.interrupt();
+			L1CurseParalysis.this._target.setParalyzed(true);
+			L1CurseParalysis.this._timer = new ParalysisTimer();
+			GeneralThreadPool.getInstance().execute(L1CurseParalysis.this._timer); // 启动麻痹定时器
+			if (this.isInterrupted()) {
+				L1CurseParalysis.this._timer.interrupt();
 			}
 		}
 	}
@@ -58,23 +58,23 @@ public class L1CurseParalysis extends L1Paralysis {
 	private class ParalysisTimer extends Thread {
 		@Override
 		public void run() {
-			_target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
-			_target.setSkillEffect(STATUS_CURSE_PARALYZED, 0);
+			L1CurseParalysis.this._target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
+			L1CurseParalysis.this._target.setSkillEffect(STATUS_CURSE_PARALYZED, 0);
 			try {
-				Thread.sleep(_time);
+				Thread.sleep(L1CurseParalysis.this._time);
 			}
 			catch (final InterruptedException e) {
 			}
 
-			_target.killSkillEffectTimer(STATUS_CURSE_PARALYZED);
-			if (_target instanceof L1PcInstance) {
-				final L1PcInstance player = (L1PcInstance) _target;
+			L1CurseParalysis.this._target.killSkillEffectTimer(STATUS_CURSE_PARALYZED);
+			if (L1CurseParalysis.this._target instanceof L1PcInstance) {
+				final L1PcInstance player = (L1PcInstance) L1CurseParalysis.this._target;
 				if (!player.isDead()) {
 					player.sendPackets(new S_Paralysis(1, false)); // 解除麻痹状态
 				}
 			}
-			_target.setParalyzed(false);
-			cure(); // 解除诅咒
+			L1CurseParalysis.this._target.setParalyzed(false);
+			L1CurseParalysis.this.cure(); // 解除诅咒
 		}
 	}
 
@@ -99,21 +99,21 @@ public class L1CurseParalysis extends L1Paralysis {
 	private Thread _timer;
 
 	private L1CurseParalysis(final L1Character cha, final int delay, final int time) {
-		_target = cha;
-		_delay = delay;
-		_time = time;
+		this._target = cha;
+		this._delay = delay;
+		this._time = time;
 
-		curse();
+		this.curse();
 	}
 
 	@Override
 	public void cure() {
-		if (_timer != null) {
-			_timer.interrupt(); // 清除瘫痪定时器
+		if (this._timer != null) {
+			this._timer.interrupt(); // 清除瘫痪定时器
 		}
 
-		_target.setPoisonEffect(0);
-		_target.setParalaysis(null);
+		this._target.setPoisonEffect(0);
+		this._target.setParalaysis(null);
 	}
 
 	@Override
@@ -122,14 +122,14 @@ public class L1CurseParalysis extends L1Paralysis {
 	}
 
 	private void curse() {
-		if (_target instanceof L1PcInstance) {
-			final L1PcInstance player = (L1PcInstance) _target;
+		if (this._target instanceof L1PcInstance) {
+			final L1PcInstance player = (L1PcInstance) this._target;
 			player.sendPackets(new S_ServerMessage(212)); // \f1你的身体渐渐麻痹。
 		}
 
-		_target.setPoisonEffect(2);
+		this._target.setPoisonEffect(2);
 
-		_timer = new ParalysisDelayTimer();
-		GeneralThreadPool.getInstance().execute(_timer);
+		this._timer = new ParalysisDelayTimer();
+		GeneralThreadPool.getInstance().execute(this._timer);
 	}
 }

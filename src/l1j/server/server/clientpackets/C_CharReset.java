@@ -53,59 +53,59 @@ public class C_CharReset extends ClientBasePacket {
 	public C_CharReset(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 		final L1PcInstance pc = clientthread.getActiveChar();
-		final int stage = readC();
+		final int stage = this.readC();
 
 		if (stage == 0x01) { // 0x01:初始化角色
-			final int str = readC();
-			final int intel = readC();
-			final int wis = readC();
-			final int dex = readC();
-			final int con = readC();
-			final int cha = readC();
+			final int str = this.readC();
+			final int intel = this.readC();
+			final int wis = this.readC();
+			final int dex = this.readC();
+			final int con = this.readC();
+			final int cha = this.readC();
 			final int hp = CalcInitHpMp.calcInitHp(pc);
 			final int mp = CalcInitHpMp.calcInitMp(pc);
 			pc.sendPackets(new S_CharReset(pc, 1, hp, mp, 10, str, intel, wis, dex, con, cha));
-			initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);
+			this.initCharStatus(pc, hp, mp, str, intel, wis, dex, con, cha);
 			CharacterTable.getInstance();
 			CharacterTable.saveCharStatus(pc);
 		}
 		else if (stage == 0x02) { // 0x02:再分配状态
-			final int type2 = readC();
+			final int type2 = this.readC();
 			if (type2 == 0x00) { // 0x00:Lv1UP
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x07) { // 0x07:Lv10UP
 				if (pc.getTempMaxLevel() - pc.getTempLevel() < 10) {
 					return;
 				}
-				setLevelUp(pc, 10);
+				this.setLevelUp(pc, 10);
 			}
 			else if (type2 == 0x01) {
 				pc.addBaseStr((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x02) {
 				pc.addBaseInt((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x03) {
 				pc.addBaseWis((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x04) {
 				pc.addBaseDex((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x05) {
 				pc.addBaseCon((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x06) {
 				pc.addBaseCha((byte) 1);
-				setLevelUp(pc, 1);
+				this.setLevelUp(pc, 1);
 			}
 			else if (type2 == 0x08) {
-				switch (readC()) {
+				switch (this.readC()) {
 					case 1:
 						pc.addBaseStr((byte) 1);
 						break;
@@ -129,17 +129,17 @@ public class C_CharReset extends ClientBasePacket {
 					pc.sendPackets(new S_CharReset(pc.getElixirStats()));
 					return;
 				}
-				saveNewCharStatus(pc);
+				this.saveNewCharStatus(pc);
 			}
 		}
 		else if (stage == 0x03) {
-			pc.addBaseStr((byte) (readC() - pc.getBaseStr()));
-			pc.addBaseInt((byte) (readC() - pc.getBaseInt()));
-			pc.addBaseWis((byte) (readC() - pc.getBaseWis()));
-			pc.addBaseDex((byte) (readC() - pc.getBaseDex()));
-			pc.addBaseCon((byte) (readC() - pc.getBaseCon()));
-			pc.addBaseCha((byte) (readC() - pc.getBaseCha()));
-			saveNewCharStatus(pc);
+			pc.addBaseStr((byte) (this.readC() - pc.getBaseStr()));
+			pc.addBaseInt((byte) (this.readC() - pc.getBaseInt()));
+			pc.addBaseWis((byte) (this.readC() - pc.getBaseWis()));
+			pc.addBaseDex((byte) (this.readC() - pc.getBaseDex()));
+			pc.addBaseCon((byte) (this.readC() - pc.getBaseCon()));
+			pc.addBaseCha((byte) (this.readC() - pc.getBaseCha()));
+			this.saveNewCharStatus(pc);
 		}
 	}
 

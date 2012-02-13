@@ -30,13 +30,13 @@ public class S_Trade extends ServerBasePacket {
 	 * @param name
 	 */
 	public S_Trade(final String name) {
-		writeC(Opcodes.S_OPCODE_TRADE);
-		writeS(name);
+		this.writeC(Opcodes.S_OPCODE_TRADE);
+		this.writeS(name);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

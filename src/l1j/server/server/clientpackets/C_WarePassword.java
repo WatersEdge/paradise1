@@ -34,16 +34,16 @@ public class C_WarePassword extends ClientBasePacket {
 	public C_WarePassword(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
 		// 类型(0: 密码变更, 1: 一般仓库, 2: 血盟仓库)
-		final int type = readC();
+		final int type = this.readC();
 
 		// 取得第一组数值(旧密码, 或待验证的密码)
-		final int pass1 = readD();
+		final int pass1 = this.readD();
 
 		// 取得第二组数值(新密码, 或仓库 NPC 的 objId)
-		final int pass2 = readD();
+		final int pass2 = this.readD();
 
 		// 不明的2个位元组
-		readH();
+		this.readH();
 
 		// 取得角色物件
 		final L1PcInstance pc = client.getActiveChar();

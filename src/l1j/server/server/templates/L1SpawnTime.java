@@ -35,7 +35,7 @@ public class L1SpawnTime {
 		private boolean _isDeleteAtEndTime;
 
 		public L1SpawnTimeBuilder(final int spawnId) {
-			_spawnId = spawnId;
+			this._spawnId = spawnId;
 		}
 
 		public L1SpawnTime build() {
@@ -43,23 +43,23 @@ public class L1SpawnTime {
 		}
 
 		public void setDeleteAtEndTime(final boolean f) {
-			_isDeleteAtEndTime = f;
+			this._isDeleteAtEndTime = f;
 		}
 
 		public void setPeriodEnd(final Timestamp periodEnd) {
-			_periodEnd = periodEnd;
+			this._periodEnd = periodEnd;
 		}
 
 		public void setPeriodStart(final Timestamp periodStart) {
-			_periodStart = periodStart;
+			this._periodStart = periodStart;
 		}
 
 		public void setTimeEnd(final Time timeEnd) {
-			_timeEnd = timeEnd;
+			this._timeEnd = timeEnd;
 		}
 
 		public void setTimeStart(final Time timeStart) {
-			_timeStart = timeStart;
+			this._timeStart = timeStart;
 		}
 
 	}
@@ -79,40 +79,40 @@ public class L1SpawnTime {
 	private final boolean _isDeleteAtEndTime;
 
 	private L1SpawnTime(final L1SpawnTimeBuilder builder) {
-		_spawnId = builder._spawnId;
-		_timeStart = builder._timeStart;
-		_timeEnd = builder._timeEnd;
-		_timePeriod = new TimePeriod(_timeStart, _timeEnd);
-		_periodStart = builder._periodStart;
-		_periodEnd = builder._periodEnd;
-		_isDeleteAtEndTime = builder._isDeleteAtEndTime;
+		this._spawnId = builder._spawnId;
+		this._timeStart = builder._timeStart;
+		this._timeEnd = builder._timeEnd;
+		this._timePeriod = new TimePeriod(this._timeStart, this._timeEnd);
+		this._periodStart = builder._periodStart;
+		this._periodEnd = builder._periodEnd;
+		this._isDeleteAtEndTime = builder._isDeleteAtEndTime;
 	}
 
 	public Timestamp getPeriodEnd() {
-		return _periodEnd;
+		return this._periodEnd;
 	}
 
 	public Timestamp getPeriodStart() {
-		return _periodStart;
+		return this._periodStart;
 	}
 
 	public int getSpawnId() {
-		return _spawnId;
+		return this._spawnId;
 	}
 
 	public Time getTimeEnd() {
-		return _timeEnd;
+		return this._timeEnd;
 	}
 
 	public TimePeriod getTimePeriod() {
-		return _timePeriod;
+		return this._timePeriod;
 	}
 
 	public Time getTimeStart() {
-		return _timeStart;
+		return this._timeStart;
 	}
 
 	public boolean isDeleteAtEndTime() {
-		return _isDeleteAtEndTime;
+		return this._isDeleteAtEndTime;
 	}
 }

@@ -37,7 +37,7 @@ public class L1NpcShowHtmlAction extends L1NpcXmlAction {
 	public L1NpcShowHtmlAction(final Element element) {
 		super(element);
 
-		_htmlId = element.getAttribute("HtmlId");
+		this._htmlId = element.getAttribute("HtmlId");
 		final NodeList list = element.getChildNodes();
 		final List<String> dataList = Lists.newList();
 		for (final Element elem : new IterableElementList(list)) {
@@ -45,12 +45,12 @@ public class L1NpcShowHtmlAction extends L1NpcXmlAction {
 				dataList.add(elem.getAttribute("Value"));
 			}
 		}
-		_args = dataList.toArray(new String[dataList.size()]);
+		this._args = dataList.toArray(new String[dataList.size()]);
 	}
 
 	@Override
 	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
-		return new L1NpcHtml(_htmlId, _args);
+		return new L1NpcHtml(this._htmlId, this._args);
 	}
 
 }

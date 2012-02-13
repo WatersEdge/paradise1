@@ -28,7 +28,7 @@ public class UseSpellBook_Illusionist implements UniversalUseItem {
 			case 49120:
 			case 49121:
 				if (level >= 10) {
-					IllusionistSpellBook(pc, item);
+					this.IllusionistSpellBook(pc, item);
 				}
 				break;
 
@@ -38,7 +38,7 @@ public class UseSpellBook_Illusionist implements UniversalUseItem {
 			case 49125:
 			case 49126:
 				if (level >= 20) {
-					IllusionistSpellBook(pc, item);
+					this.IllusionistSpellBook(pc, item);
 				}
 				break;
 
@@ -48,7 +48,7 @@ public class UseSpellBook_Illusionist implements UniversalUseItem {
 			case 49130:
 			case 49131:
 				if (level >= 30) {
-					IllusionistSpellBook(pc, item);
+					this.IllusionistSpellBook(pc, item);
 				}
 				break;
 
@@ -58,7 +58,7 @@ public class UseSpellBook_Illusionist implements UniversalUseItem {
 			case 49135:
 			case 49136:
 				if (level >= 40) {
-					IllusionistSpellBook(pc, item);
+					this.IllusionistSpellBook(pc, item);
 				}
 				break;
 

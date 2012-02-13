@@ -50,19 +50,19 @@ public class L1BossCycle {
 		private String _time;
 
 		public String getDate() {
-			return _date;
+			return this._date;
 		}
 
 		public String getTime() {
-			return _time;
+			return this._time;
 		}
 
 		public void setDate(final String date) {
-			_date = date;
+			this._date = date;
 		}
 
 		public void setTime(final String time) {
-			_time = time;
+			this._time = time;
 		}
 	}
 
@@ -78,15 +78,15 @@ public class L1BossCycle {
 		private String _end;
 
 		public String getEnd() {
-			return _end;
+			return this._end;
 		}
 
 		public String getPeriod() {
-			return _period;
+			return this._period;
 		}
 
 		public String getStart() {
-			return _start;
+			return this._start;
 		}
 	}
 
@@ -97,7 +97,7 @@ public class L1BossCycle {
 		private List<L1BossCycle> bossCycles;
 
 		public List<L1BossCycle> getBossCycles() {
-			return bossCycles;
+			return this.bossCycles;
 		}
 
 		public void setBossCycles(final List<L1BossCycle> bossCycles) {
@@ -207,22 +207,22 @@ public class L1BossCycle {
 	 */
 	public Calendar calcSpawnTime(final Calendar now) {
 		// 获取参考日期
-		final Calendar base = getBaseCycleOnTarget(now);
+		final Calendar base = this.getBaseCycleOnTarget(now);
 		// 计算出现的时期
-		base.add(Calendar.MINUTE, _startTime);
+		base.add(Calendar.MINUTE, this._startTime);
 		// 出現時間の決定 start～end迄の間でランダムの秒
-		final int diff = (_endTime - _startTime) * 60;
+		final int diff = (this._endTime - this._startTime) * 60;
 		final int random = diff > 0 ? Random.nextInt(diff) : 0;
 		base.add(Calendar.SECOND, random);
 		return base;
 	}
 
 	public Base getBase() {
-		return _base;
+		return this._base;
 	}
 
 	public Cycle getCycle() {
-		return _cycle;
+		return this._cycle;
 	}
 
 	/**
@@ -232,21 +232,21 @@ public class L1BossCycle {
 	 */
 	public Calendar getLatestStartTime(final Calendar now) {
 		// 获取参考日期
-		final Calendar latestStart = getSpawnStartTime(now);
+		final Calendar latestStart = this.getSpawnStartTime(now);
 		if (!now.before(latestStart)) { // now >= latestStart
 		}
 		else {
 			// now < latestStartなら1個前が最近の周期
-			latestStart.add(Calendar.DAY_OF_MONTH, -_periodDay);
-			latestStart.add(Calendar.HOUR_OF_DAY, -_periodHour);
-			latestStart.add(Calendar.MINUTE, -_periodMinute);
+			latestStart.add(Calendar.DAY_OF_MONTH, -this._periodDay);
+			latestStart.add(Calendar.HOUR_OF_DAY, -this._periodHour);
+			latestStart.add(Calendar.MINUTE, -this._periodMinute);
 		}
 
 		return latestStart;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	/**
@@ -256,9 +256,9 @@ public class L1BossCycle {
 	 */
 	public Calendar getSpawnEndTime(final Calendar now) {
 		// 获取参考日期
-		final Calendar endDate = getBaseCycleOnTarget(now);
+		final Calendar endDate = this.getBaseCycleOnTarget(now);
 		// 计算出现的时期
-		endDate.add(Calendar.MINUTE, _endTime);
+		endDate.add(Calendar.MINUTE, this._endTime);
 		return endDate;
 	}
 
@@ -269,21 +269,21 @@ public class L1BossCycle {
 	 */
 	public Calendar getSpawnStartTime(final Calendar now) {
 		// 获取参考日期
-		final Calendar startDate = getBaseCycleOnTarget(now);
+		final Calendar startDate = this.getBaseCycleOnTarget(now);
 		// 计算出现的时期
-		startDate.add(Calendar.MINUTE, _startTime);
+		startDate.add(Calendar.MINUTE, this._startTime);
 		return startDate;
 	}
 
 	public void init() throws Exception {
 		// 参考日期和时间设置
-		Base base = getBase();
+		Base base = this.getBase();
 		// 如果没有参考标准、以当前的日期0:00标准
 		if (base == null) {
-			setBase(new Base());
-			getBase().setDate(_sdfYmd.format(_initDate));
-			getBase().setTime(_initTime);
-			base = getBase();
+			this.setBase(new Base());
+			this.getBase().setDate(_sdfYmd.format(_initDate));
+			this.getBase().setTime(_initTime);
+			base = this.getBase();
 		}
 		else {
 			try {
@@ -304,15 +304,15 @@ public class L1BossCycle {
 		baseCal.setTime(_sdf.parse(base.getDate() + " " + base.getTime()));
 
 		// 出现周期初始化,检查
-		final Cycle spawn = getCycle();
+		final Cycle spawn = this.getCycle();
 		if ((spawn == null) || (spawn.getPeriod() == null)) {
 			throw new Exception("CycleのPeriodは必須");
 		}
 
 		final String period = spawn.getPeriod();
-		_periodDay = getTimeParse(period, "d");
-		_periodHour = getTimeParse(period, "h");
-		_periodMinute = getTimeParse(period, "m");
+		this._periodDay = getTimeParse(period, "d");
+		this._periodHour = getTimeParse(period, "h");
+		this._periodMinute = getTimeParse(period, "m");
 
 		final String start = spawn.getStart();
 		final int sDay = getTimeParse(start, "d");
@@ -324,41 +324,41 @@ public class L1BossCycle {
 		final int eMinute = getTimeParse(end, "m");
 
 		// 分換算
-		_period = (_periodDay * 24 * 60) + (_periodHour * 60) + _periodMinute;
-		_startTime = (sDay * 24 * 60) + (sHour * 60) + sMinute;
-		_endTime = (eDay * 24 * 60) + (eHour * 60) + eMinute;
-		if (_period <= 0) {
+		this._period = (this._periodDay * 24 * 60) + (this._periodHour * 60) + this._periodMinute;
+		this._startTime = (sDay * 24 * 60) + (sHour * 60) + sMinute;
+		this._endTime = (eDay * 24 * 60) + (eHour * 60) + eMinute;
+		if (this._period <= 0) {
 			throw new Exception("must be Period > 0");
 		}
 		// start補正
-		if ((_startTime < 0) || (_period < _startTime)) { // 補正
-			_startTime = 0;
+		if ((this._startTime < 0) || (this._period < this._startTime)) { // 補正
+			this._startTime = 0;
 		}
 		// end補正
-		if ((_endTime < 0) || (_period < _endTime) || (end == null)) { // 補正
-			_endTime = _period;
+		if ((this._endTime < 0) || (this._period < this._endTime) || (end == null)) { // 補正
+			this._endTime = this._period;
 		}
-		if (_startTime > _endTime) {
-			_startTime = _endTime;
+		if (this._startTime > this._endTime) {
+			this._startTime = this._endTime;
 		}
 		// start,endの相関補正(最低1分钟的间隔开启)
 		// start==end还指定、出現時間が次の周期に被らないようにするため
-		if (_startTime == _endTime) {
-			if (_endTime == _period) {
-				_startTime--;
+		if (this._startTime == this._endTime) {
+			if (this._endTime == this._period) {
+				this._startTime--;
 			}
 			else {
-				_endTime++;
+				this._endTime++;
 			}
 		}
 
 		// 最近の周期まで補正(再計算するときに厳密に算出するので、ここでは近くまで適当に補正するだけ)
 		while (!(baseCal.after(START_UP))) {
-			baseCal.add(Calendar.DAY_OF_MONTH, _periodDay);
-			baseCal.add(Calendar.HOUR_OF_DAY, _periodHour);
-			baseCal.add(Calendar.MINUTE, _periodMinute);
+			baseCal.add(Calendar.DAY_OF_MONTH, this._periodDay);
+			baseCal.add(Calendar.HOUR_OF_DAY, this._periodHour);
+			baseCal.add(Calendar.MINUTE, this._periodMinute);
 		}
-		_baseDate = baseCal;
+		this._baseDate = baseCal;
 	}
 
 	/**
@@ -369,22 +369,22 @@ public class L1BossCycle {
 	public Calendar nextSpawnTime(final Calendar now) {
 		// 获取参考日期
 		final Calendar next = (Calendar) now.clone();
-		next.add(Calendar.DAY_OF_MONTH, _periodDay);
-		next.add(Calendar.HOUR_OF_DAY, _periodHour);
-		next.add(Calendar.MINUTE, _periodMinute);
-		return calcSpawnTime(next);
+		next.add(Calendar.DAY_OF_MONTH, this._periodDay);
+		next.add(Calendar.HOUR_OF_DAY, this._periodHour);
+		next.add(Calendar.MINUTE, this._periodMinute);
+		return this.calcSpawnTime(next);
 	}
 
 	public void setBase(final Base base) {
-		_base = base;
+		this._base = base;
 	}
 
 	public void setCycle(final Cycle cycle) {
-		_cycle = cycle;
+		this._cycle = cycle;
 	}
 
 	public void setName(final String name) {
-		_name = name;
+		this._name = name;
 	}
 
 	/**
@@ -394,10 +394,10 @@ public class L1BossCycle {
 	 *            周期产生的时间
 	 */
 	public void showData(final Calendar now) {
-		System.out.println("[Type]" + getName());
+		System.out.println("[Type]" + this.getName());
 		System.out.print("  [出现期间]");
-		System.out.print(_sdf.format(getSpawnStartTime(now).getTime()) + " - ");
-		System.out.println(_sdf.format(getSpawnEndTime(now).getTime()));
+		System.out.print(_sdf.format(this.getSpawnStartTime(now).getTime()) + " - ");
+		System.out.println(_sdf.format(this.getSpawnEndTime(now).getTime()));
 	}
 
 	/*
@@ -405,29 +405,29 @@ public class L1BossCycle {
 	 */
 	private Calendar getBaseCycleOnTarget(final Calendar target) {
 		// 获取参考日期
-		final Calendar base = (Calendar) _baseDate.clone();
+		final Calendar base = (Calendar) this._baseDate.clone();
 		if (target.after(base)) {
 			// target <= baseとなるまで繰り返す
 			while (target.after(base)) {
-				base.add(Calendar.DAY_OF_MONTH, _periodDay);
-				base.add(Calendar.HOUR_OF_DAY, _periodHour);
-				base.add(Calendar.MINUTE, _periodMinute);
+				base.add(Calendar.DAY_OF_MONTH, this._periodDay);
+				base.add(Calendar.HOUR_OF_DAY, this._periodHour);
+				base.add(Calendar.MINUTE, this._periodMinute);
 			}
 		}
 		if (target.before(base)) {
 			while (target.before(base)) {
-				base.add(Calendar.DAY_OF_MONTH, -_periodDay);
-				base.add(Calendar.HOUR_OF_DAY, -_periodHour);
-				base.add(Calendar.MINUTE, -_periodMinute);
+				base.add(Calendar.DAY_OF_MONTH, -this._periodDay);
+				base.add(Calendar.HOUR_OF_DAY, -this._periodHour);
+				base.add(Calendar.MINUTE, -this._periodMinute);
 			}
 		}
 		// 尝试计算完成时间、過去の時刻ならボス時間が過ぎている→次の周期を返す。
 		final Calendar end = (Calendar) base.clone();
-		end.add(Calendar.MINUTE, _endTime);
+		end.add(Calendar.MINUTE, this._endTime);
 		if (end.before(target)) {
-			base.add(Calendar.DAY_OF_MONTH, _periodDay);
-			base.add(Calendar.HOUR_OF_DAY, _periodHour);
-			base.add(Calendar.MINUTE, _periodMinute);
+			base.add(Calendar.DAY_OF_MONTH, this._periodDay);
+			base.add(Calendar.HOUR_OF_DAY, this._periodHour);
+			base.add(Calendar.MINUTE, this._periodMinute);
 		}
 		return base;
 	}

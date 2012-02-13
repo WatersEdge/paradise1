@@ -42,9 +42,9 @@ public class GeneralThreadPool {
 		private final ThreadGroup _group;
 
 		public PriorityThreadFactory(final String name, final int prio) {
-			_prio = prio;
-			_name = name;
-			_group = new ThreadGroup(_name);
+			this._prio = prio;
+			this._name = name;
+			this._group = new ThreadGroup(this._name);
 		}
 
 		/*
@@ -54,9 +54,9 @@ public class GeneralThreadPool {
 		 */
 		@Override
 		public Thread newThread(final Runnable r) {
-			final Thread t = new Thread(_group, r);
-			t.setName(_name + "-" + _threadNumber.getAndIncrement());
-			t.setPriority(_prio);
+			final Thread t = new Thread(this._group, r);
+			t.setName(this._name + "-" + this._threadNumber.getAndIncrement());
+			t.setPriority(this._prio);
 			return t;
 		}
 	}
@@ -86,25 +86,25 @@ public class GeneralThreadPool {
 
 	private GeneralThreadPool() {
 		if (Config.THREAD_P_TYPE_GENERAL == 1) {
-			_executor = Executors.newFixedThreadPool(Config.THREAD_P_SIZE_GENERAL);
+			this._executor = Executors.newFixedThreadPool(Config.THREAD_P_SIZE_GENERAL);
 		}
 		else if (Config.THREAD_P_TYPE_GENERAL == 2) {
-			_executor = Executors.newCachedThreadPool();
+			this._executor = Executors.newCachedThreadPool();
 		}
 		else {
-			_executor = null;
+			this._executor = null;
 		}
-		_scheduler = Executors.newScheduledThreadPool(SCHEDULED_CORE_POOL_SIZE, new PriorityThreadFactory("GerenalSTPool", Thread.NORM_PRIORITY));
-		_pcScheduler = Executors.newScheduledThreadPool(_pcSchedulerPoolSize, new PriorityThreadFactory("PcMonitorSTPool", Thread.NORM_PRIORITY));
+		this._scheduler = Executors.newScheduledThreadPool(SCHEDULED_CORE_POOL_SIZE, new PriorityThreadFactory("GerenalSTPool", Thread.NORM_PRIORITY));
+		this._pcScheduler = Executors.newScheduledThreadPool(this._pcSchedulerPoolSize, new PriorityThreadFactory("PcMonitorSTPool", Thread.NORM_PRIORITY));
 	}
 
 	public void execute(final Runnable r) {
-		if (_executor == null) {
+		if (this._executor == null) {
 			final Thread t = new Thread(r);
 			t.start();
 		}
 		else {
-			_executor.execute(r);
+			this._executor.execute(r);
 		}
 	}
 
@@ -115,10 +115,10 @@ public class GeneralThreadPool {
 	public ScheduledFuture<?> pcSchedule(final L1PcMonitor r, final long delay) {
 		try {
 			if (delay <= 0) {
-				_executor.execute(r);
+				this._executor.execute(r);
 				return null;
 			}
-			return _pcScheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
+			return this._pcScheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null;
@@ -126,16 +126,16 @@ public class GeneralThreadPool {
 	}
 
 	public ScheduledFuture<?> pcScheduleAtFixedRate(final L1PcMonitor r, final long initialDelay, final long period) {
-		return _pcScheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
+		return this._pcScheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 
 	public ScheduledFuture<?> schedule(final Runnable r, final long delay) {
 		try {
 			if (delay <= 0) {
-				_executor.execute(r);
+				this._executor.execute(r);
 				return null;
 			}
-			return _scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
+			return this._scheduler.schedule(r, delay, TimeUnit.MILLISECONDS);
 		}
 		catch (final RejectedExecutionException e) {
 			return null;
@@ -143,6 +143,6 @@ public class GeneralThreadPool {
 	}
 
 	public ScheduledFuture<?> scheduleAtFixedRate(final Runnable r, final long initialDelay, final long period) {
-		return _scheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
+		return this._scheduler.scheduleAtFixedRate(r, initialDelay, period, TimeUnit.MILLISECONDS);
 	}
 }

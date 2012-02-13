@@ -93,7 +93,7 @@ public final class MapsTable {
 	 * 新しくMapsTableオブジェクトを生成し、マップのテレポート可否フラグを読み込む。
 	 */
 	private MapsTable() {
-		loadMapsFromDatabase();
+		this.loadMapsFromDatabase();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public final class MapsTable {
 	 * @return 掉宝倍率
 	 */
 	public double getDropRate(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -119,11 +119,11 @@ public final class MapsTable {
 	 * @return X结束坐标
 	 */
 	public int getEndX(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
-		return _maps.get(mapId).endX;
+		return this._maps.get(mapId).endX;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public final class MapsTable {
 	 * @return Y结束坐标
 	 */
 	public int getEndY(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
-		return _maps.get(mapId).endY;
+		return this._maps.get(mapId).endY;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public final class MapsTable {
 	 * @return 怪物数量规模
 	 */
 	public double getMonsterAmount(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
@@ -164,11 +164,11 @@ public final class MapsTable {
 	 * @return X开始坐标
 	 */
 	public int getStartX(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
-		return _maps.get(mapId).startX;
+		return this._maps.get(mapId).startX;
 	}
 
 	/**
@@ -179,11 +179,11 @@ public final class MapsTable {
 	 * @return Y开始坐标
 	 */
 	public int getStartY(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return 0;
 		}
-		return _maps.get(mapId).startY;
+		return this._maps.get(mapId).startY;
 	}
 
 	/**
@@ -195,11 +195,11 @@ public final class MapsTable {
 	 * @return 如果有死亡惩罚true
 	 */
 	public boolean isEnabledDeathPenalty(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isEnabledDeathPenalty;
+		return this._maps.get(mapId).isEnabledDeathPenalty;
 	}
 
 	/**
@@ -210,11 +210,11 @@ public final class MapsTable {
 	 * @return 如果可能true
 	 */
 	public boolean isEscapable(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).escapable;
+		return this._maps.get(mapId).escapable;
 	}
 
 	/**
@@ -225,11 +225,11 @@ public final class MapsTable {
 	 * @return 如果能记忆坐标true
 	 */
 	public boolean isMarkable(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).markable;
+		return this._maps.get(mapId).markable;
 	}
 
 	/**
@@ -241,11 +241,11 @@ public final class MapsTable {
 	 * @return 如果可以 召回宠物true
 	 */
 	public boolean isRecallPets(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isRecallPets;
+		return this._maps.get(mapId).isRecallPets;
 	}
 
 	/**
@@ -257,11 +257,11 @@ public final class MapsTable {
 	 * @return 如果可以召唤宠物true
 	 */
 	public boolean isTakePets(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isTakePets;
+		return this._maps.get(mapId).isTakePets;
 	}
 
 	/**
@@ -272,11 +272,11 @@ public final class MapsTable {
 	 * @return 如果可能true
 	 */
 	public boolean isTeleportable(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).teleportable;
+		return this._maps.get(mapId).teleportable;
 	}
 
 	/**
@@ -288,11 +288,11 @@ public final class MapsTable {
 	 * @return 如果在水中true
 	 */
 	public boolean isUnderwater(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isUnderwater;
+		return this._maps.get(mapId).isUnderwater;
 	}
 
 	/**
@@ -304,11 +304,11 @@ public final class MapsTable {
 	 * @return 如果可以使用道具true
 	 */
 	public boolean isUsableItem(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isUsableItem;
+		return this._maps.get(mapId).isUsableItem;
 	}
 
 	/**
@@ -320,11 +320,11 @@ public final class MapsTable {
 	 * @return 如果可以使用技能true
 	 */
 	public boolean isUsableSkill(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isUsableSkill;
+		return this._maps.get(mapId).isUsableSkill;
 	}
 
 	/**
@@ -336,11 +336,11 @@ public final class MapsTable {
 	 * @return 如果能使用魔杖 true
 	 */
 	public boolean isUsePainwand(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isUsePainwand;
+		return this._maps.get(mapId).isUsePainwand;
 	}
 
 	/**
@@ -352,11 +352,11 @@ public final class MapsTable {
 	 * @return 如果能复活true
 	 */
 	public boolean isUseResurrection(final int mapId) {
-		final MapData map = _maps.get(mapId);
+		final MapData map = this._maps.get(mapId);
 		if (map == null) {
 			return false;
 		}
-		return _maps.get(mapId).isUseResurrection;
+		return this._maps.get(mapId).isUseResurrection;
 	}
 
 	/**
@@ -392,10 +392,10 @@ public final class MapsTable {
 				data.isUsableItem = rs.getBoolean("usable_item");
 				data.isUsableSkill = rs.getBoolean("usable_skill");
 
-				_maps.put(new Integer(mapId), data);
+				this._maps.put(new Integer(mapId), data);
 			}
 
-			_log.config("Maps " + _maps.size());
+			_log.config("Maps " + this._maps.size());
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

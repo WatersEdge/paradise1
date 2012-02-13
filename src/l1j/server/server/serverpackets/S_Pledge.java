@@ -26,23 +26,23 @@ public class S_Pledge extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_Pledge(final String htmlid, final int objid) {
-		buildPacket(htmlid, objid, 0, "", "", "");
+		this.buildPacket(htmlid, objid, 0, "", "", "");
 	}
 
 	public S_Pledge(final String htmlid, final int objid, final String clanname, final String olmembers) {
-		buildPacket(htmlid, objid, 1, clanname, olmembers, "");
+		this.buildPacket(htmlid, objid, 1, clanname, olmembers, "");
 	}
 
 	public S_Pledge(final String htmlid, final int objid, final String clanname, final String olmembers, final String allmembers) {
-		buildPacket(htmlid, objid, 2, clanname, olmembers, allmembers);
+		this.buildPacket(htmlid, objid, 2, clanname, olmembers, allmembers);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,14 +52,14 @@ public class S_Pledge extends ServerBasePacket {
 
 	private void buildPacket(final String htmlid, final int objid, final int type, final String clanname, final String olmembers, final String allmembers) {
 
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS(htmlid);
-		writeH(type);
-		writeH(0x03);
-		writeS(clanname); // clanname
-		writeS(olmembers); // clanmember with a space in the end
-		writeS(allmembers); // all clan members names with a space in the
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS(htmlid);
+		this.writeH(type);
+		this.writeH(0x03);
+		this.writeS(clanname); // clanname
+		this.writeS(olmembers); // clanmember with a space in the end
+		this.writeS(allmembers); // all clan members names with a space in the
 		// end
 		// example: "player1 player2 player3 "
 	}

@@ -45,15 +45,15 @@ public class S_AuctionBoard extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_AuctionBoard(final L1NpcInstance board) {
-		buildPacket(board);
+		this.buildPacket(board);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 					id[i] = rs.getInt(1);
 					name[i] = rs.getString(2);
 					area[i] = rs.getInt(3);
-					final Calendar cal = timestampToCalendar((Timestamp) rs.getObject(4));
+					final Calendar cal = this.timestampToCalendar((Timestamp) rs.getObject(4));
 					month[i] = cal.get(Calendar.MONTH) + 1;
 					day[i] = cal.get(Calendar.DATE);
 					price[i] = rs.getInt(5);
@@ -137,16 +137,16 @@ public class S_AuctionBoard extends ServerBasePacket {
 			SQLUtil.close(con);
 		}
 
-		writeC(Opcodes.S_OPCODE_HOUSELIST);
-		writeD(board.getId());
-		writeH(count); // 记录数
+		this.writeC(Opcodes.S_OPCODE_HOUSELIST);
+		this.writeD(board.getId());
+		this.writeH(count); // 记录数
 		for (int i = 0; i < count; ++i) {
-			writeD(id[i]); // 盟屋编号
-			writeS(name[i]); // 盟屋名称
-			writeH(area[i]); // 盟屋面积
-			writeC(month[i]); // 截止月
-			writeC(day[i]); // 截止日
-			writeD(price[i]); // 售屋价格
+			this.writeD(id[i]); // 盟屋编号
+			this.writeS(name[i]); // 盟屋名称
+			this.writeH(area[i]); // 盟屋面积
+			this.writeC(month[i]); // 截止月
+			this.writeC(day[i]); // 截止日
+			this.writeD(price[i]); // 售屋价格
 		}
 	}
 

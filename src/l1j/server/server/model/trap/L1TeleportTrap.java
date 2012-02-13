@@ -33,13 +33,13 @@ public class L1TeleportTrap extends L1Trap {
 		final int x = storage.getInt("teleportX");
 		final int y = storage.getInt("teleportY");
 		final int mapId = storage.getInt("teleportMapId");
-		_loc = new L1Location(x, y, mapId);
+		this._loc = new L1Location(x, y, mapId);
 	}
 
 	@Override
 	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
-		sendEffect(trapObj);
+		this.sendEffect(trapObj);
 
-		L1Teleport.teleport(trodFrom, _loc.getX(), _loc.getY(), (short) _loc.getMapId(), 5, true);
+		L1Teleport.teleport(trodFrom, this._loc.getX(), this._loc.getY(), (short) this._loc.getMapId(), 5, true);
 	}
 }

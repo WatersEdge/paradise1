@@ -46,11 +46,11 @@ public class SpawnTimeTable {
 	private final Map<Integer, L1SpawnTime> _times = Maps.newMap();
 
 	private SpawnTimeTable() {
-		load();
+		this.load();
 	}
 
 	public L1SpawnTime get(final int id) {
-		return _times.get(id);
+		return this._times.get(id);
 	}
 
 	private void load() {
@@ -70,7 +70,7 @@ public class SpawnTimeTable {
 				// builder.setPeriodEnd(rs.getTimestamp("period_end"));
 				builder.setDeleteAtEndTime(rs.getBoolean("delete_at_endtime"));
 
-				_times.put(id, builder.build());
+				this._times.put(id, builder.build());
 			}
 		}
 		catch (final SQLException e) {

@@ -40,15 +40,15 @@ public class S_LoginResult extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_LoginResult(final int reason) {
-		buildPacket(reason);
+		this.buildPacket(reason);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class S_LoginResult extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int reason) {
-		writeC(Opcodes.S_OPCODE_LOGINRESULT);
-		writeC(reason);
-		writeD(0x00000000);
-		writeD(0x00000000);
-		writeD(0x00000000);
+		this.writeC(Opcodes.S_OPCODE_LOGINRESULT);
+		this.writeC(reason);
+		this.writeD(0x00000000);
+		this.writeD(0x00000000);
+		this.writeD(0x00000000);
 	}
 }

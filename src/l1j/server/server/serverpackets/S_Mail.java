@@ -38,8 +38,8 @@ public class S_Mail extends ServerBasePacket {
 	 * // 无法传送信件 [Server] opcode = 48 0000: 30 20 00 45 54 fa 00 b5
 	 */
 	public S_Mail(final int type) { // 通知收信者
-		writeC(Opcodes.S_OPCODE_MAIL);
-		writeC(type);
+		this.writeC(Opcodes.S_OPCODE_MAIL);
+		this.writeC(type);
 	}
 
 	/**
@@ -52,19 +52,19 @@ public class S_Mail extends ServerBasePacket {
 		// 刪除信件
 		// 0x30: 刪除一般 0x31:刪除血盟 0x32:?保存到保管箱 0x40:刪除保管箱
 		if ((type == 0x30) || (type == 0x31) || (type == 0x32) || (type == 0x40)) {
-			writeC(Opcodes.S_OPCODE_MAIL);
-			writeC(type);
-			writeD(mailId);
-			writeC(1);
+			this.writeC(Opcodes.S_OPCODE_MAIL);
+			this.writeC(type);
+			this.writeD(mailId);
+			this.writeC(1);
 			return;
 		}
 		MailTable.getInstance();
 		final L1Mail mail = MailTable.getMail(mailId);
 		if (mail != null) {
-			writeC(Opcodes.S_OPCODE_MAIL);
-			writeC(type);
-			writeD(mail.getId());
-			writeByte(mail.getContent());
+			this.writeC(Opcodes.S_OPCODE_MAIL);
+			this.writeC(type);
+			this.writeD(mail.getId());
+			this.writeByte(mail.getContent());
 		}
 	}
 
@@ -90,31 +90,31 @@ public class S_Mail extends ServerBasePacket {
 			return;
 		}
 
-		writeC(Opcodes.S_OPCODE_MAIL);
-		writeC(type);
-		writeH(mails.size());
+		this.writeC(Opcodes.S_OPCODE_MAIL);
+		this.writeC(type);
+		this.writeH(mails.size());
 		for (int i = 0; i < mails.size(); i++) {
 			final L1Mail mail = mails.get(i);
-			writeD(mail.getId());
-			writeC(mail.getReadStatus());
+			this.writeD(mail.getId());
+			this.writeC(mail.getReadStatus());
 
 			final StringTokenizer st = new StringTokenizer(mail.getDate(), "/"); // yy/mm/dd
 			final int size = st.countTokens();
 			for (int j = 0; j < size; j++) {
 				// XXX writeC(Year) writeC(Month) writeC(Day)
-				writeC(Integer.parseInt(st.nextToken()));
+				this.writeC(Integer.parseInt(st.nextToken()));
 			}
-			writeS(mail.getSenderName());
-			writeByte(mail.getSubject());
+			this.writeS(mail.getSenderName());
+			this.writeByte(mail.getSubject());
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

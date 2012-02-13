@@ -81,7 +81,7 @@ public class UseSpellBook implements UniversalUseItem {
 			isLawful = false;
 		}
 		if (pc.isGm()) {
-			SpellBook(pc, item, isLawful);
+			this.SpellBook(pc, item, isLawful);
 		}
 		else if (((itemAttr == locAttr) || (itemAttr == 0)) && (locAttr != 0)) {
 
@@ -89,7 +89,7 @@ public class UseSpellBook implements UniversalUseItem {
 			if (pc.isKnight()) {
 
 				if ((itemId >= 45000) && (itemId <= 45007) && (level >= 50)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45000) && (itemId <= 45007)) {
 					pc.sendPackets(new S_ServerMessage(312)); // 你还不能学习法术。
@@ -102,10 +102,10 @@ public class UseSpellBook implements UniversalUseItem {
 			// 王族或黑暗精灵
 			else if (pc.isCrown() || pc.isDarkelf()) {
 				if ((itemId >= 45000) && (itemId <= 45007) && (level >= 10)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45008) && (itemId <= 45015) && (level >= 20)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if (((itemId >= 45008) && (itemId <= 45015)) || ((itemId >= 45000) && (itemId <= 45007))) {
 					pc.sendPackets(new S_ServerMessage(312)); // 你还不能学习法术。
@@ -118,22 +118,22 @@ public class UseSpellBook implements UniversalUseItem {
 			// 精灵
 			else if (pc.isElf()) {
 				if ((itemId >= 45000) && (itemId <= 45007) && (level >= 8)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45008) && (itemId <= 45015) && (level >= 16)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45016) && (itemId <= 45022) && (level >= 24)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40170) && (itemId <= 40177) && (level >= 32)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40178) && (itemId <= 40185) && (level >= 40)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40186) && (itemId <= 40193) && (level >= 48)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if (((itemId >= 45000) && (itemId <= 45022)) || ((itemId >= 40170) && (itemId <= 40193))) {
 					pc.sendPackets(new S_ServerMessage(312)); // 你还不能学习法术。
@@ -146,34 +146,34 @@ public class UseSpellBook implements UniversalUseItem {
 			// 法师
 			else if (pc.isWizard()) {
 				if ((itemId >= 45000) && (itemId <= 45007) && (level >= 4)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45008) && (itemId <= 45015) && (level >= 8)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 45016) && (itemId <= 45022) && (level >= 12)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40170) && (itemId <= 40177) && (level >= 16)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40178) && (itemId <= 40185) && (level >= 20)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40186) && (itemId <= 40193) && (level >= 24)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40194) && (itemId <= 40201) && (level >= 28)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40202) && (itemId <= 40209) && (level >= 32)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40210) && (itemId <= 40217) && (level >= 36)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else if ((itemId >= 40218) && (itemId <= 40225) && (level >= 40)) {
-					SpellBook(pc, item, isLawful);
+					this.SpellBook(pc, item, isLawful);
 				}
 				else {
 					pc.sendPackets(new S_ServerMessage(312)); // 你还不能学习法术。

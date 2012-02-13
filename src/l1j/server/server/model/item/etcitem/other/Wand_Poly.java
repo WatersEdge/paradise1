@@ -64,7 +64,7 @@ public class Wand_Poly extends ItemExecutor {
 			final L1Object target = L1World.getInstance().findObject(spellsc_objid);
 			if (target != null) {
 				final L1Character cha = (L1Character) target;
-				polyAction(pc, cha);
+				this.polyAction(pc, cha);
 				final int itemId = item.getItemId();
 				if ((itemId == 40008) || (itemId == 140008)) {
 					item.setChargeCount(item.getChargeCount() - 1);

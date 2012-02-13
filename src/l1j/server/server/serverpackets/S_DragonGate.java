@@ -26,23 +26,23 @@ public class S_DragonGate extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_DragonGate(final L1PcInstance pc, final boolean[] i) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x66); // = 102
-		writeD(pc.getId());
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(0x66); // = 102
+		this.writeD(pc.getId());
 		// true 可點選，false 不能點選
-		writeC(i[0] ? 1 : 0); // 安塔瑞斯
-		writeC(i[1] ? 1 : 0); // 法利昂
-		writeC(i[2] ? 1 : 0); // 林德拜爾
-		writeC(i[3] ? 1 : 0); // 巴拉卡斯
+		this.writeC(i[0] ? 1 : 0); // 安塔瑞斯
+		this.writeC(i[1] ? 1 : 0); // 法利昂
+		this.writeC(i[2] ? 1 : 0); // 林德拜爾
+		this.writeC(i[3] ? 1 : 0); // 巴拉卡斯
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

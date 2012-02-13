@@ -40,9 +40,9 @@ public class L1RequestInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance player) {
-		final int objid = getId();
+		final int objid = this.getId();
 
-		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(this.getNpcTemplate().get_npcId());
 
 		if (talking != null) {
 			if (player.getLawful() < -1000) { // プレイヤーがカオティック

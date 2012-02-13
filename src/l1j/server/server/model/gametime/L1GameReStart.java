@@ -45,14 +45,14 @@ public class L1GameReStart {
 		@Override
 		public void run() {
 			while (true) {
-				_previousTime = _currentTime;
-				_currentTime = new L1GameTime();
-				notifyChanged();
-				final int remnant = GetRestartTime() * 60;
-				System.out.println("╠》正在载入 自动重开设定...完成!\t" + GetRestartTime() + " 分钟后");
+				L1GameReStart.this._previousTime = L1GameReStart.this._currentTime;
+				L1GameReStart.this._currentTime = new L1GameTime();
+				L1GameReStart.this.notifyChanged();
+				final int remnant = L1GameReStart.this.GetRestartTime() * 60;
+				System.out.println("╠》正在载入 自动重开设定...完成!\t" + L1GameReStart.this.GetRestartTime() + " 分钟后");
 				while (remnant > 0) {
 					for (int i = remnant; i >= 0; i--) {
-						SetRemnant(i);
+						L1GameReStart.this.SetRemnant(i);
 						willRestartTime = i;
 
 						// (五分钟内 一分钟一次)
@@ -71,10 +71,10 @@ public class L1GameReStart {
 
 						// (1秒)
 						else if (i == 0) {
-							BroadCastToAll("服务器自动重新启动。");
+							L1GameReStart.this.BroadCastToAll("服务器自动重新启动。");
 							System.out.println("服务器自动重新启动。");
 							GameServer.getInstance().shutdown(); // TODO 修正自动重开角色资料会回溯
-							disconnectAllCharacters();
+							L1GameReStart.this.disconnectAllCharacters();
 							System.exit(1);
 						}
 
@@ -88,7 +88,7 @@ public class L1GameReStart {
 						// 整点报时
 						if (Config.HOURLY_CHIME) {
 							if ((GetNowTime.GetNowHour() == 0) && (GetNowTime.GetNowMinute() == 0) && (GetNowTime.GetNowSecond() == 0)) {
-								BroadCastToAll("\\fR现在时间凌晨12点，长时间在线的玩家注意保护眼睛哦。");
+								L1GameReStart.this.BroadCastToAll("\\fR现在时间凌晨12点，长时间在线的玩家注意保护眼睛哦。");
 								L1World.getInstance().broadcastPacketToAll(new S_BlueMessage(166, "\\fR现在时间凌晨12点"));
 							}
 							if ((GetNowTime.GetNowHour() == 1) && (GetNowTime.GetNowMinute() == 0) && (GetNowTime.GetNowSecond() == 0)) {
@@ -198,7 +198,7 @@ public class L1GameReStart {
 	}
 
 	public void addListener(final L1GameTimeListener listener) {
-		_listeners.add(listener);
+		this._listeners.add(listener);
 	}
 
 	/**
@@ -220,19 +220,19 @@ public class L1GameReStart {
 	}
 
 	public L1GameTime getGameTime() {
-		return _currentTime;
+		return this._currentTime;
 	}
 
 	public int GetRemnant() {
-		return _remnant;
+		return this._remnant;
 	}
 
 	public void removeListener(final L1GameTimeListener listener) {
-		_listeners.remove(listener);
+		this._listeners.remove(listener);
 	}
 
 	public void SetRemnant(final int remnant) {
-		_remnant = remnant;
+		this._remnant = remnant;
 	}
 
 	private void BroadCastToAll(final String string) {
@@ -247,28 +247,28 @@ public class L1GameReStart {
 	}
 
 	private boolean isFieldChanged(final int field) {
-		return _previousTime.get(field) != _currentTime.get(field);
+		return this._previousTime.get(field) != this._currentTime.get(field);
 	}
 
 	private void notifyChanged() {
-		if (isFieldChanged(Calendar.MONTH)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onMonthChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.MONTH)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onMonthChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.DAY_OF_MONTH)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onDayChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.DAY_OF_MONTH)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onDayChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.HOUR_OF_DAY)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onHourChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.HOUR_OF_DAY)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onHourChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.MINUTE)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onMinuteChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.MINUTE)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onMinuteChanged(this._currentTime);
 			}
 		}
 	}

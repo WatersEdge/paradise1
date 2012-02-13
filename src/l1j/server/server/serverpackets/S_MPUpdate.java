@@ -28,26 +28,26 @@ public class S_MPUpdate extends ServerBasePacket {
 	 * @param maxmp
 	 */
 	public S_MPUpdate(final int currentmp, final int maxmp) {
-		writeC(Opcodes.S_OPCODE_MPUPDATE);
+		this.writeC(Opcodes.S_OPCODE_MPUPDATE);
 
 		if (currentmp < 0) {
-			writeH(0);
+			this.writeH(0);
 		}
 		else if (currentmp > 32767) {
-			writeH(32767);
+			this.writeH(32767);
 		}
 		else {
-			writeH(currentmp);
+			this.writeH(currentmp);
 		}
 
 		if (maxmp < 1) {
-			writeH(1);
+			this.writeH(1);
 		}
 		else if (maxmp > 32767) {
-			writeH(32767);
+			this.writeH(32767);
 		}
 		else {
-			writeH(maxmp);
+			this.writeH(maxmp);
 		}
 
 		// writeH(currentmp);
@@ -58,6 +58,6 @@ public class S_MPUpdate extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

@@ -47,115 +47,115 @@ public class L1NpcChat {
 	}
 
 	public String getChatId1() {
-		return _chatId1;
+		return this._chatId1;
 	}
 
 	public String getChatId2() {
-		return _chatId2;
+		return this._chatId2;
 	}
 
 	public String getChatId3() {
-		return _chatId3;
+		return this._chatId3;
 	}
 
 	public String getChatId4() {
-		return _chatId4;
+		return this._chatId4;
 	}
 
 	public String getChatId5() {
-		return _chatId5;
+		return this._chatId5;
 	}
 
 	public int getChatInterval() {
-		return _chatInterval;
+		return this._chatInterval;
 	}
 
 	public int getChatTiming() {
-		return _chatTiming;
+		return this._chatTiming;
 	}
 
 	public int getGameTime() {
-		return _gameTime;
+		return this._gameTime;
 	}
 
 	public int getNpcId() {
-		return _npcId;
+		return this._npcId;
 	}
 
 	public int getRepeatInterval() {
-		return _repeatInterval;
+		return this._repeatInterval;
 	}
 
 	public int getStartDelayTime() {
-		return _startDelayTime;
+		return this._startDelayTime;
 	}
 
 	public boolean isRepeat() {
-		return _isRepeat;
+		return this._isRepeat;
 	}
 
 	public boolean isShout() {
-		return _isShout;
+		return this._isShout;
 	}
 
 	public boolean isWorldChat() {
-		return _isWorldChat;
+		return this._isWorldChat;
 	}
 
 	public void setChatId1(final String s) {
-		_chatId1 = s;
+		this._chatId1 = s;
 	}
 
 	public void setChatId2(final String s) {
-		_chatId2 = s;
+		this._chatId2 = s;
 	}
 
 	public void setChatId3(final String s) {
-		_chatId3 = s;
+		this._chatId3 = s;
 	}
 
 	public void setChatId4(final String s) {
-		_chatId4 = s;
+		this._chatId4 = s;
 	}
 
 	public void setChatId5(final String s) {
-		_chatId5 = s;
+		this._chatId5 = s;
 	}
 
 	public void setChatInterval(final int i) {
-		_chatInterval = i;
+		this._chatInterval = i;
 	}
 
 	public void setChatTiming(final int i) {
-		_chatTiming = i;
+		this._chatTiming = i;
 	}
 
 	public void setGameTime(final int i) {
-		_gameTime = i;
+		this._gameTime = i;
 	}
 
 	public void setNpcId(final int i) {
-		_npcId = i;
+		this._npcId = i;
 	}
 
 	public void setRepeat(final boolean flag) {
-		_isRepeat = flag;
+		this._isRepeat = flag;
 	}
 
 	public void setRepeatInterval(final int i) {
-		_repeatInterval = i;
+		this._repeatInterval = i;
 	}
 
 	public void setShout(final boolean flag) {
-		_isShout = flag;
+		this._isShout = flag;
 	}
 
 	public void setStartDelayTime(final int i) {
-		_startDelayTime = i;
+		this._startDelayTime = i;
 	}
 
 	public void setWorldChat(final boolean flag) {
-		_isWorldChat = flag;
+		this._isWorldChat = flag;
 	}
 
 }

@@ -39,8 +39,8 @@ public class C_Title extends ClientBasePacket {
 	public C_Title(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 		final L1PcInstance pc = clientthread.getActiveChar();
-		final String charName = readS();
-		final String title = readS();
+		final String charName = this.readS();
+		final String title = this.readS();
 
 		if (charName.isEmpty() || title.isEmpty()) {
 			// \f1请以如下的格式输入。: "/title \f0角色名称 角色封号\f1"
@@ -53,18 +53,18 @@ public class C_Title extends ClientBasePacket {
 		}
 
 		if (pc.isGm()) {
-			changeTitle(target, title);
+			this.changeTitle(target, title);
 			return;
 		}
 
-		if (isClanLeader(pc)) { // 血盟主
+		if (this.isClanLeader(pc)) { // 血盟主
 			if (pc.getId() == target.getId()) { // 自己
 				if (pc.getLevel() < 10) {
 					// \f1加入血盟之后等级10以上才可使用封号。
 					pc.sendPackets(new S_ServerMessage(197));
 					return;
 				}
-				changeTitle(pc, title);
+				this.changeTitle(pc, title);
 			}
 			else { // 他人
 				if (pc.getClanid() != target.getClanid()) {
@@ -77,7 +77,7 @@ public class C_Title extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(202, charName));
 					return;
 				}
-				changeTitle(target, title);
+				this.changeTitle(target, title);
 				final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 				if (clan != null) {
 					for (final L1PcInstance clanPc : clan.getOnlineClanMember()) {
@@ -99,7 +99,7 @@ public class C_Title extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(200));
 					return;
 				}
-				changeTitle(pc, title);
+				this.changeTitle(pc, title);
 			}
 			else { // 他人
 				if (pc.isCrown()) { // 连合に所属した君主

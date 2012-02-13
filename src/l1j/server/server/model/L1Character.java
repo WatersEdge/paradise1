@@ -471,22 +471,22 @@ public class L1Character extends L1Object {
 	private boolean _isHall;
 
 	public L1Character() {
-		_level = 1;
+		this._level = 1;
 	}
 
 	/**
 	 * 增加寒冰耐性
 	 */
 	public void add_regist_freeze(final int i) {
-		_trueRegistFreeze += i;
-		if (_trueRegistFreeze > 127) {
-			_registFreeze = 127;
+		this._trueRegistFreeze += i;
+		if (this._trueRegistFreeze > 127) {
+			this._registFreeze = 127;
 		}
-		else if (_trueRegistFreeze < -128) {
-			_registFreeze = -128;
+		else if (this._trueRegistFreeze < -128) {
+			this._registFreeze = -128;
 		}
 		else {
-			_registFreeze = _trueRegistFreeze;
+			this._registFreeze = this._trueRegistFreeze;
 		}
 	}
 
@@ -494,22 +494,22 @@ public class L1Character extends L1Object {
 	 * 增加物理防御
 	 */
 	public void addAc(final int i) {
-		setAc(_trueAc + i);
+		this.setAc(this._trueAc + i);
 	}
 
 	/**
 	 * 增加远距离伤害
 	 */
 	public void addBowDmgup(final int i) {
-		_trueBowDmgup += i;
-		if (_trueBowDmgup >= 127) {
-			_bowDmgup = 127;
+		this._trueBowDmgup += i;
+		if (this._trueBowDmgup >= 127) {
+			this._bowDmgup = 127;
 		}
-		else if (_trueBowDmgup <= -128) {
-			_bowDmgup = -128;
+		else if (this._trueBowDmgup <= -128) {
+			this._bowDmgup = -128;
 		}
 		else {
-			_bowDmgup = _trueBowDmgup;
+			this._bowDmgup = this._trueBowDmgup;
 		}
 	}
 
@@ -517,15 +517,15 @@ public class L1Character extends L1Object {
 	 * 增加远距离的命中率
 	 */
 	public void addBowHitup(final int i) {
-		_trueBowHitup += i;
-		if (_trueBowHitup >= 127) {
-			_bowHitup = 127;
+		this._trueBowHitup += i;
+		if (this._trueBowHitup >= 127) {
+			this._bowHitup = 127;
 		}
-		else if (_trueBowHitup <= -128) {
-			_bowHitup = -128;
+		else if (this._trueBowHitup <= -128) {
+			this._bowHitup = -128;
 		}
 		else {
-			_bowHitup = _trueBowHitup;
+			this._bowHitup = this._trueBowHitup;
 		}
 	}
 
@@ -533,36 +533,36 @@ public class L1Character extends L1Object {
 	 * 增加魅力值
 	 */
 	public void addCha(final int i) {
-		setCha(_trueCha + i);
+		this.setCha(this._trueCha + i);
 	}
 
 	/**
 	 * 增加体质值
 	 */
 	public void addCon(final int i) {
-		setCon(_trueCon + i);
+		this.setCon(this._trueCon + i);
 	}
 
 	/**
 	 * 增加敏捷值
 	 */
 	public void addDex(final int i) {
-		setDex(_trueDex + i);
+		this.setDex(this._trueDex + i);
 	}
 
 	/**
 	 * 增加近距离伤害
 	 */
 	public void addDmgup(final int i) {
-		_trueDmgup += i;
-		if (_trueDmgup >= 127) {
-			_dmgup = 127;
+		this._trueDmgup += i;
+		if (this._trueDmgup >= 127) {
+			this._dmgup = 127;
 		}
-		else if (_trueDmgup <= -128) {
-			_dmgup = -128;
+		else if (this._trueDmgup <= -128) {
+			this._dmgup = -128;
 		}
 		else {
-			_dmgup = _trueDmgup;
+			this._dmgup = this._trueDmgup;
 		}
 	}
 
@@ -570,12 +570,12 @@ public class L1Character extends L1Object {
 	 * 增加闪避率 +
 	 */
 	public void addDodge(final byte i) {
-		_dodge += i;
-		if (_dodge >= 10) {
-			_dodge = 10;
+		this._dodge += i;
+		if (this._dodge >= 10) {
+			this._dodge = 10;
 		}
-		else if (_dodge <= 0) {
-			_dodge = 0;
+		else if (this._dodge <= 0) {
+			this._dodge = 0;
 		}
 	}
 
@@ -586,22 +586,22 @@ public class L1Character extends L1Object {
 	 *            添加到doll表、L1DollInstance对象。
 	 */
 	public void addDoll(final L1DollInstance doll) {
-		_dolllist.put(doll.getId(), doll);
+		this._dolllist.put(doll.getId(), doll);
 	}
 
 	/**
 	 * 增加地属性防御
 	 */
 	public void addEarth(final int i) {
-		_trueEarth += i;
-		if (_trueEarth >= 127) {
-			_earth = 127;
+		this._trueEarth += i;
+		if (this._trueEarth >= 127) {
+			this._earth = 127;
 		}
-		else if (_trueEarth <= -128) {
-			_earth = -128;
+		else if (this._trueEarth <= -128) {
+			this._earth = -128;
 		}
 		else {
-			_earth = _trueEarth;
+			this._earth = this._trueEarth;
 		}
 	}
 
@@ -609,15 +609,15 @@ public class L1Character extends L1Object {
 	 * 增加火属性防御
 	 */
 	public void addFire(final int i) {
-		_trueFire += i;
-		if (_trueFire >= 127) {
-			_fire = 127;
+		this._trueFire += i;
+		if (this._trueFire >= 127) {
+			this._fire = 127;
 		}
-		else if (_trueFire <= -128) {
-			_fire = -128;
+		else if (this._trueFire <= -128) {
+			this._fire = -128;
 		}
 		else {
-			_fire = _trueFire;
+			this._fire = this._trueFire;
 		}
 	}
 
@@ -628,22 +628,22 @@ public class L1Character extends L1Object {
 	 *            添加到follower表、L1FollowerInstance对象。
 	 */
 	public void addFollower(final L1FollowerInstance follower) {
-		_followerlist.put(follower.getId(), follower);
+		this._followerlist.put(follower.getId(), follower);
 	}
 
 	/**
 	 * 近距离的命中率增加
 	 */
 	public void addHitup(final int i) {
-		_trueHitup += i;
-		if (_trueHitup >= 127) {
-			_hitup = 127;
+		this._trueHitup += i;
+		if (this._trueHitup >= 127) {
+			this._hitup = 127;
 		}
-		else if (_trueHitup <= -128) {
-			_hitup = -128;
+		else if (this._trueHitup <= -128) {
+			this._hitup = -128;
 		}
 		else {
-			_hitup = _trueHitup;
+			this._hitup = this._trueHitup;
 		}
 	}
 
@@ -651,7 +651,7 @@ public class L1Character extends L1Object {
 	 * 增加智力值
 	 */
 	public void addInt(final int i) {
-		setInt(_trueInt + i);
+		this.setInt(this._trueInt + i);
 	}
 
 	/**
@@ -663,7 +663,7 @@ public class L1Character extends L1Object {
 	 *            表示延迟时间 (毫秒)、L1ItemDelay.ItemDelayTimer对象。
 	 */
 	public void addItemDelay(final int delayId, final L1ItemDelay.ItemDelayTimer timer) {
-		_itemdelay.put(delayId, timer);
+		this._itemdelay.put(delayId, timer);
 	}
 
 	/**
@@ -673,10 +673,10 @@ public class L1Character extends L1Object {
 	 *            加入对象。
 	 */
 	public void addKnownObject(final L1Object obj) {
-		if (!_knownObjects.contains(obj)) {
-			_knownObjects.add(obj);
+		if (!this._knownObjects.contains(obj)) {
+			this._knownObjects.add(obj);
 			if (obj instanceof L1PcInstance) {
-				_knownPlayer.add((L1PcInstance) obj);
+				this._knownPlayer.add((L1PcInstance) obj);
 			}
 		}
 	}
@@ -685,12 +685,12 @@ public class L1Character extends L1Object {
 	 * 增加正义值
 	 */
 	public synchronized void addLawful(final int i) {
-		_lawful += i;
-		if (_lawful > 32767) {
-			_lawful = 32767;
+		this._lawful += i;
+		if (this._lawful > 32767) {
+			this._lawful = 32767;
 		}
-		else if (_lawful < -32768) {
-			_lawful = -32768;
+		else if (this._lawful < -32768) {
+			this._lawful = -32768;
 		}
 	}
 
@@ -698,26 +698,26 @@ public class L1Character extends L1Object {
 	 * 增加最高ＨＰ
 	 */
 	public void addMaxHp(final int i) {
-		setMaxHp(_trueMaxHp + i);
+		this.setMaxHp(this._trueMaxHp + i);
 	}
 
 	/**
 	 * 增加最高ＭＰ
 	 */
 	public void addMaxMp(final int i) {
-		setMaxMp(_trueMaxMp + i);
+		this.setMaxMp(this._trueMaxMp + i);
 	}
 
 	/**
 	 * 增加魔法防御
 	 */
 	public void addMr(final int i) {
-		_trueMr += i;
-		if (_trueMr <= 0) {
-			_mr = 0;
+		this._trueMr += i;
+		if (this._trueMr <= 0) {
+			this._mr = 0;
 		}
 		else {
-			_mr = _trueMr;
+			this._mr = this._trueMr;
 		}
 	}
 
@@ -725,12 +725,12 @@ public class L1Character extends L1Object {
 	 * 增加闪避率 -
 	 */
 	public void addNdodge(final byte i) {
-		_nDodge += i;
-		if (_nDodge >= 10) {
-			_nDodge = 10;
+		this._nDodge += i;
+		if (this._nDodge >= 10) {
+			this._nDodge = 10;
 		}
-		else if (_nDodge <= 0) {
-			_nDodge = 0;
+		else if (this._nDodge <= 0) {
+			this._nDodge = 0;
 		}
 	}
 
@@ -741,9 +741,9 @@ public class L1Character extends L1Object {
 	 *            添加到Npc表、L1NpcInstance对象。
 	 */
 	public void addPet(final L1NpcInstance npc) {
-		_petlist.put(npc.getId(), npc);
+		this._petlist.put(npc.getId(), npc);
 		// if (_petlist.size() < 2) {
-		sendPetCtrlMenu(npc, true); // 显示宠物控制图形介面
+		this.sendPetCtrlMenu(npc, true); // 显示宠物控制图形介面
 		// }
 
 	}
@@ -752,15 +752,15 @@ public class L1Character extends L1Object {
 	 * 增加闇黑耐性
 	 */
 	public void addRegistBlind(final int i) {
-		_trueRegistBlind += i;
-		if (_trueRegistBlind > 127) {
-			_registBlind = 127;
+		this._trueRegistBlind += i;
+		if (this._trueRegistBlind > 127) {
+			this._registBlind = 127;
 		}
-		else if (_trueRegistBlind < -128) {
-			_registBlind = -128;
+		else if (this._trueRegistBlind < -128) {
+			this._registBlind = -128;
 		}
 		else {
-			_registBlind = _trueRegistBlind;
+			this._registBlind = this._trueRegistBlind;
 		}
 	}
 
@@ -768,15 +768,15 @@ public class L1Character extends L1Object {
 	 * 增加睡眠耐性
 	 */
 	public void addRegistSleep(final int i) {
-		_trueRegistSleep += i;
-		if (_trueRegistSleep > 127) {
-			_registSleep = 127;
+		this._trueRegistSleep += i;
+		if (this._trueRegistSleep > 127) {
+			this._registSleep = 127;
 		}
-		else if (_trueRegistSleep < -128) {
-			_registSleep = -128;
+		else if (this._trueRegistSleep < -128) {
+			this._registSleep = -128;
 		}
 		else {
-			_registSleep = _trueRegistSleep;
+			this._registSleep = this._trueRegistSleep;
 		}
 	}
 
@@ -784,15 +784,15 @@ public class L1Character extends L1Object {
 	 * 增加石化耐性
 	 */
 	public void addRegistStone(final int i) {
-		_trueRegistStone += i;
-		if (_trueRegistStone > 127) {
-			_registStone = 127;
+		this._trueRegistStone += i;
+		if (this._trueRegistStone > 127) {
+			this._registStone = 127;
 		}
-		else if (_trueRegistStone < -128) {
-			_registStone = -128;
+		else if (this._trueRegistStone < -128) {
+			this._registStone = -128;
 		}
 		else {
-			_registStone = _trueRegistStone;
+			this._registStone = this._trueRegistStone;
 		}
 	}
 
@@ -800,15 +800,15 @@ public class L1Character extends L1Object {
 	 * 增加昏迷耐性
 	 */
 	public void addRegistStun(final int i) {
-		_trueRegistStun += i;
-		if (_trueRegistStun > 127) {
-			_registStun = 127;
+		this._trueRegistStun += i;
+		if (this._trueRegistStun > 127) {
+			this._registStun = 127;
 		}
-		else if (_trueRegistStun < -128) {
-			_registStun = -128;
+		else if (this._trueRegistStun < -128) {
+			this._registStun = -128;
 		}
 		else {
-			_registStun = _trueRegistStun;
+			this._registStun = this._trueRegistStun;
 		}
 	}
 
@@ -816,15 +816,15 @@ public class L1Character extends L1Object {
 	 * 增加支撑耐性
 	 */
 	public void addRegistSustain(final int i) {
-		_trueRegistSustain += i;
-		if (_trueRegistSustain > 127) {
-			_registSustain = 127;
+		this._trueRegistSustain += i;
+		if (this._trueRegistSustain > 127) {
+			this._registSustain = 127;
 		}
-		else if (_trueRegistSustain < -128) {
-			_registSustain = -128;
+		else if (this._trueRegistSustain < -128) {
+			this._registSustain = -128;
 		}
 		else {
-			_registSustain = _trueRegistSustain;
+			this._registSustain = this._trueRegistSustain;
 		}
 	}
 
@@ -832,29 +832,29 @@ public class L1Character extends L1Object {
 	 * 增加魔攻
 	 */
 	public void addSp(final int i) {
-		_sp += i;
+		this._sp += i;
 	}
 
 	/**
 	 * 增加力量值
 	 */
 	public void addStr(final int i) {
-		setStr(_trueStr + i);
+		this.setStr(this._trueStr + i);
 	}
 
 	/**
 	 * 增加水属性防御
 	 */
 	public void addWater(final int i) {
-		_trueWater += i;
-		if (_trueWater >= 127) {
-			_water = 127;
+		this._trueWater += i;
+		if (this._trueWater >= 127) {
+			this._water = 127;
 		}
-		else if (_trueWater <= -128) {
-			_water = -128;
+		else if (this._trueWater <= -128) {
+			this._water = -128;
 		}
 		else {
-			_water = _trueWater;
+			this._water = this._trueWater;
 		}
 	}
 
@@ -862,15 +862,15 @@ public class L1Character extends L1Object {
 	 * 增加风属性防御
 	 */
 	public void addWind(final int i) {
-		_trueWind += i;
-		if (_trueWind >= 127) {
-			_wind = 127;
+		this._trueWind += i;
+		if (this._trueWind >= 127) {
+			this._wind = 127;
 		}
-		else if (_trueWind <= -128) {
-			_wind = -128;
+		else if (this._trueWind <= -128) {
+			this._wind = -128;
 		}
 		else {
-			_wind = _trueWind;
+			this._wind = this._trueWind;
 		}
 	}
 
@@ -878,7 +878,7 @@ public class L1Character extends L1Object {
 	 * 增加精神值
 	 */
 	public void addWis(final int i) {
-		setWis(_trueWis + i);
+		this.setWis(this._trueWis + i);
 	}
 
 	/**
@@ -890,7 +890,7 @@ public class L1Character extends L1Object {
 	public void broadcastPacket(final ServerBasePacket packet) {
 		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			// 旅馆内判断
-			if ((pc.getMapId() < 16384) || (pc.getMapId() > 25088) || (pc.getInnKeyId() == getInnKeyId())) {
+			if ((pc.getMapId() < 16384) || (pc.getMapId() > 25088) || (pc.getInnKeyId() == this.getInnKeyId())) {
 				pc.sendPackets(packet);
 			}
 		}
@@ -935,27 +935,27 @@ public class L1Character extends L1Object {
 	 * 检查房间或大厅
 	 */
 	public boolean checkRoomOrHall() {
-		return _isHall;
+		return this._isHall;
 	}
 
 	/**
 	 * 删除全部的技能效果
 	 */
 	public void clearSkillEffectTimer() {
-		for (final L1SkillTimer timer : _skillEffect.values()) {
+		for (final L1SkillTimer timer : this._skillEffect.values()) {
 			if (timer != null) {
 				timer.kill();
 			}
 		}
-		_skillEffect.clear();
+		this._skillEffect.clear();
 	}
 
 	/**
 	 * 治愈麻痹
 	 */
 	public void cureParalaysis() {
-		if (_paralysis != null) {
-			_paralysis.cure();
+		if (this._paralysis != null) {
+			this._paralysis.cure();
 		}
 	}
 
@@ -963,76 +963,76 @@ public class L1Character extends L1Object {
 	 * 解毒。
 	 */
 	public void curePoison() {
-		if (_poison == null) {
+		if (this._poison == null) {
 			return;
 		}
-		_poison.cure();
+		this._poison.cure();
 	}
 
 	/**
 	 * 取得饱食度
 	 */
 	public int get_food() {
-		return _food;
+		return this._food;
 	}
 
 	/**
 	 * 取得物理防御
 	 */
 	public int getAc() {
-		return _ac + L1MagicDoll.getAcByDoll(this); // TODO 魔法娃娃效果 - 防御增加
+		return this._ac + L1MagicDoll.getAcByDoll(this); // TODO 魔法娃娃效果 - 防御增加
 	}
 
 	/**
 	 * 取得属性种类
 	 */
 	public int getAddAttrKind() {
-		return _addAttrKind;
+		return this._addAttrKind;
 	}
 
 	/**
 	 * 取得增加远距离伤害
 	 */
 	public int getBowDmgup() {
-		return _bowDmgup + L1MagicDoll.getBowDamageByDoll(this); // 魔法娃娃效果 - 远距离的攻击力增加
+		return this._bowDmgup + L1MagicDoll.getBowDamageByDoll(this); // 魔法娃娃效果 - 远距离的攻击力增加
 	}
 
 	/**
 	 * 取得远距离的命中率增加
 	 */
 	public int getBowHitup() {
-		return (_bowHitup + L1MagicDoll.getBowHitAddByDoll(this)); // TODO 魔法娃娃效果 - 弓的命中率增加
+		return (this._bowHitup + L1MagicDoll.getBowHitAddByDoll(this)); // TODO 魔法娃娃效果 - 弓的命中率增加
 	}
 
 	/**
 	 * 取得攻击速度: 0，通常 1，勇敢
 	 */
 	public int getBraveSpeed() {
-		return _braveSpeed;
+		return this._braveSpeed;
 	}
 
 	/**
 	 * 取得魅力值
 	 */
 	public short getCha() {
-		return _cha;
+		return this._cha;
 	}
 
 	/**
 	 * 取得亮度范围
 	 */
 	public int getChaLightSize() {
-		if (isInvisble()) {
+		if (this.isInvisble()) {
 			return 0;
 		}
-		return _chaLightSize;
+		return this._chaLightSize;
 	}
 
 	/**
 	 * 取得体质值
 	 */
 	public short getCon() {
-		return _con;
+		return this._con;
 	}
 
 	/**
@@ -1041,7 +1041,7 @@ public class L1Character extends L1Object {
 	 * @return 现在的HP
 	 */
 	public int getCurrentHp() {
-		return _currentHp;
+		return this._currentHp;
 	}
 
 	/**
@@ -1050,28 +1050,28 @@ public class L1Character extends L1Object {
 	 * @return 现在的MP
 	 */
 	public int getCurrentMp() {
-		return _currentMp;
+		return this._currentMp;
 	}
 
 	/**
 	 * 取得敏捷值
 	 */
 	public short getDex() {
-		return _dex;
+		return this._dex;
 	}
 
 	/**
 	 * 取得增加近距离伤害
 	 */
 	public int getDmgup() {
-		return _dmgup + L1MagicDoll.getDamageAddByDoll(this); // 魔法娃娃效果 - 近距离的攻击力增加
+		return this._dmgup + L1MagicDoll.getDamageAddByDoll(this); // 魔法娃娃效果 - 近距离的攻击力增加
 	} // 当你使用
 
 	/**
 	 * 取得闪避率 +
 	 */
 	public byte getDodge() {
-		return _dodge;
+		return this._dodge;
 	}
 
 	/**
@@ -1080,14 +1080,14 @@ public class L1Character extends L1Object {
 	 * @return 魔法娃娃代表一个角色列表、HashMap对象。这个对象Key的对象ID、ValueはL1NpcInstance
 	 */
 	public Map<Integer, L1DollInstance> getDollList() {
-		return _dolllist;
+		return this._dolllist;
 	}
 
 	/**
 	 * 取得地属性防御
 	 */
 	public int getEarth() {
-		return _earth;
+		return this._earth;
 	} // 当你使用
 
 	/**
@@ -1096,14 +1096,14 @@ public class L1Character extends L1Object {
 	 * @return 经验值。
 	 */
 	public long getExp() {
-		return _exp;
+		return this._exp;
 	}
 
 	/**
 	 * 取得火属性防御
 	 */
 	public int getFire() {
-		return _fire;
+		return this._fire;
 	} // 当你使用
 
 	/**
@@ -1112,7 +1112,7 @@ public class L1Character extends L1Object {
 	 * @return 代表一个跟随名单、HashMap对象。这个对象Key的对象ID、ValueはL1NpcInstance
 	 */
 	public Map<Integer, L1FollowerInstance> getFollowerList() {
-		return _followerlist;
+		return this._followerlist;
 	}
 
 	/**
@@ -1122,9 +1122,9 @@ public class L1Character extends L1Object {
 	 */
 	public int[] getFrontLoc() {
 		final int[] loc = new int[2];
-		int x = getX();
-		int y = getY();
-		final int heading = getHeading();
+		int x = this.getX();
+		int y = this.getY();
+		final int heading = this.getHeading();
 
 		x += HEADING_TABLE_X[heading];
 		y += HEADING_TABLE_Y[heading];
@@ -1138,42 +1138,42 @@ public class L1Character extends L1Object {
 	 * 取得原始外形ＩＤ
 	 */
 	public int getGfxId() {
-		return _gfxid;
+		return this._gfxid;
 	}
 
 	/**
 	 * 取得面向: 0.左上 1.上 2.右上 3.右 4.右下 5.下 6.左下 7.左
 	 */
 	public int getHeading() {
-		return _heading;
+		return this._heading;
 	}
 
 	/**
 	 * 取得近距离的命中率增加
 	 */
 	public int getHitup() {
-		return (_hitup + L1MagicDoll.getHitAddByDoll(this)); // TODO 魔法娃娃效果 - 近距离的命中率增加
+		return (this._hitup + L1MagicDoll.getHitAddByDoll(this)); // TODO 魔法娃娃效果 - 近距离的命中率增加
 	}
 
 	/**
 	 * 取得旅馆钥匙ID
 	 */
 	public int getInnKeyId() {
-		return _innKeyId;
+		return this._innKeyId;
 	}
 
 	/**
 	 * 取得旅馆编号
 	 */
 	public int getInnRoomNumber() {
-		return _innRoomNumber;
+		return this._innRoomNumber;
 	}
 
 	/**
 	 * 取得智力值
 	 */
 	public short getInt() {
-		return _int;
+		return this._int;
 	}
 
 	/**
@@ -1193,7 +1193,7 @@ public class L1Character extends L1Object {
 	 * @return 延迟设置
 	 */
 	public L1ItemDelay.ItemDelayTimer getItemDelayTimer(final int delayId) {
-		return _itemdelay.get(delayId);
+		return this._itemdelay.get(delayId);
 	}
 
 	/**
@@ -1202,7 +1202,7 @@ public class L1Character extends L1Object {
 	 * @return 友好度。
 	 */
 	public int getKarma() {
-		return _karma;
+		return this._karma;
 	}
 
 	/**
@@ -1211,7 +1211,7 @@ public class L1Character extends L1Object {
 	 * @return L1Object的ArrayList，它包含对象来表示角色识别。
 	 */
 	public List<L1Object> getKnownObjects() {
-		return _knownObjects;
+		return this._knownObjects;
 	}
 
 	/**
@@ -1220,21 +1220,21 @@ public class L1Character extends L1Object {
 	 * @return L1PcInstance的ArrayList，它包含对象来表示角色识别。
 	 */
 	public List<L1PcInstance> getKnownPlayers() {
-		return _knownPlayer;
+		return this._knownPlayer;
 	}
 
 	/**
 	 * 取得正义值
 	 */
 	public int getLawful() {
-		return _lawful;
+		return this._lawful;
 	}
 
 	/**
 	 * 取得等级
 	 */
 	public synchronized int getLevel() {
-		return _level;
+		return this._level;
 	}
 
 	/**
@@ -1243,7 +1243,7 @@ public class L1Character extends L1Object {
 	 * @return 魔法命中率
 	 */
 	public int getMagicBonus() {
-		switch (getInt()) {
+		switch (this.getInt()) {
 			case 0:
 			case 1:
 			case 2:
@@ -1318,7 +1318,7 @@ public class L1Character extends L1Object {
 				return 13;
 
 			default:
-				return getInt() - 25;
+				return this.getInt() - 25;
 		}
 	}
 
@@ -1328,46 +1328,46 @@ public class L1Character extends L1Object {
 	 * @return 角色目前等级除以4
 	 */
 	public int getMagicLevel() {
-		return getLevel() >> 2; // 原 (/ 4;)
+		return this.getLevel() >> 2; // 原 (/ 4;)
 	}
 
 	/**
 	 * 取得附魔石等级
 	 */
 	public byte getMagicStoneLevel() {
-		return _magicStoneLevel;
+		return this._magicStoneLevel;
 	}
 
 	/**
 	 * 取得最高ＨＰ
 	 */
 	public short getMaxHp() {
-		return _maxHp;
+		return this._maxHp;
 	}
 
 	/**
 	 * 取得最高ＭＰ
 	 */
 	public short getMaxMp() {
-		return _maxMp;
+		return this._maxMp;
 	}
 
 	/**
 	 * 取得移动速度: 0.通常 1.加速 2.缓速
 	 */
 	public int getMoveSpeed() {
-		return _moveSpeed;
+		return this._moveSpeed;
 	}
 
 	/**
 	 * 取得魔法防御
 	 */
 	public int getMr() {
-		if (hasSkillEffect(153) == true) {
-			return _mr / 4;
+		if (this.hasSkillEffect(153) == true) {
+			return this._mr / 4;
 		}
 		else {
-			return _mr;
+			return this._mr;
 		}
 	} // 当你使用
 
@@ -1375,28 +1375,28 @@ public class L1Character extends L1Object {
 	 * 取得名称
 	 */
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	/**
 	 * 取得闪避率 -
 	 */
 	public byte getNdodge() {
-		return _nDodge;
+		return this._nDodge;
 	}
 
 	/**
 	 * 取得自身亮度范围(S_OwnCharPack用)
 	 */
 	public int getOwnLightSize() {
-		return _ownLightSize;
+		return this._ownLightSize;
 	}
 
 	/**
 	 * 取得麻痹
 	 */
 	public L1Paralysis getParalysis() {
-		return _paralysis;
+		return this._paralysis;
 	}
 
 	/**
@@ -1405,7 +1405,7 @@ public class L1Character extends L1Object {
 	 * @return 代表宠物清单，HashMap对象的角色。这个对象Key的对象ID、ValueはL1NpcInstance
 	 */
 	public Map<Integer, L1NpcInstance> getPetList() {
-		return _petlist;
+		return this._petlist;
 	}
 
 	/**
@@ -1414,56 +1414,56 @@ public class L1Character extends L1Object {
 	 * @return 表示角色中毒、L1Poison对象。
 	 */
 	public L1Poison getPoison() {
-		return _poison;
+		return this._poison;
 	}
 
 	/**
 	 * 取得龙之门扉编号
 	 */
 	public int getPortalNumber() {
-		return _portalNumber;
+		return this._portalNumber;
 	}
 
 	/**
 	 * 取得闇黑耐性
 	 */
 	public int getRegistBlind() {
-		return (_registBlind + L1MagicDoll.getRegistBlindByDoll(this));
+		return (this._registBlind + L1MagicDoll.getRegistBlindByDoll(this));
 	}
 
 	/**
 	 * 取得寒冰耐性
 	 */
 	public int getRegistFreeze() {
-		return (_registFreeze + L1MagicDoll.getRegistFreezeByDoll(this)); // TODO 魔法娃娃效果 - 寒冰耐性增加
+		return (this._registFreeze + L1MagicDoll.getRegistFreezeByDoll(this)); // TODO 魔法娃娃效果 - 寒冰耐性增加
 	}
 
 	/**
 	 * 取得睡眠耐性
 	 */
 	public int getRegistSleep() {
-		return (_registSleep + L1MagicDoll.getRegistSleepByDoll(this));
+		return (this._registSleep + L1MagicDoll.getRegistSleepByDoll(this));
 	}
 
 	/**
 	 * 取得石化耐性
 	 */
 	public int getRegistStone() {
-		return (_registStone + L1MagicDoll.getRegistStoneByDoll(this));
+		return (this._registStone + L1MagicDoll.getRegistStoneByDoll(this));
 	}
 
 	/**
 	 * 取得昏迷耐性
 	 */
 	public int getRegistStun() {
-		return (_registStun + L1MagicDoll.getRegistStunByDoll(this));
+		return (this._registStun + L1MagicDoll.getRegistStunByDoll(this));
 	}
 
 	/**
 	 * 取得支撑耐性
 	 */
 	public int getRegistSustain() {
-		return (_registSustain + L1MagicDoll.getRegistSustainByDoll(this));
+		return (this._registSustain + L1MagicDoll.getRegistSustainByDoll(this));
 	}
 
 	/**
@@ -1474,7 +1474,7 @@ public class L1Character extends L1Object {
 	 * @return 技能效果剩余时间(秒)。无限制 -1。
 	 */
 	public int getSkillEffectTimeSec(final int skillId) {
-		final L1SkillTimer timer = _skillEffect.get(skillId);
+		final L1SkillTimer timer = this._skillEffect.get(skillId);
 		if (timer == null) {
 			return -1;
 		}
@@ -1485,70 +1485,70 @@ public class L1Character extends L1Object {
 	 * 取得魔攻
 	 */
 	public int getSp() {
-		return getTrueSp() + _sp;
+		return this.getTrueSp() + this._sp;
 	}
 
 	/**
 	 * 取得初始化状态
 	 */
 	public int getStatus() {
-		return _status;
+		return this._status;
 	}
 
 	/**
 	 * 取得力量值
 	 */
 	public short getStr() {
-		return _str;
+		return this._str;
 	}
 
 	/**
 	 * 取得变身ID
 	 */
 	public int getTempCharGfx() {
-		return _tempCharGfx;
+		return this._tempCharGfx;
 	}
 
 	/**
 	 * 取得封号
 	 */
 	public String getTitle() {
-		return _title;
+		return this._title;
 	}
 
 	/**
 	 * 取得真正的魔法防御
 	 */
 	public int getTrueMr() {
-		return _trueMr;
+		return this._trueMr;
 	} // 当你设定
 
 	/**
 	 * 取得真正的魔攻
 	 */
 	public int getTrueSp() {
-		return getMagicLevel() + getMagicBonus();
+		return this.getMagicLevel() + this.getMagicBonus();
 	}
 
 	/**
 	 * 取得水属性防御
 	 */
 	public int getWater() {
-		return _water;
+		return this._water;
 	} // 当你使用
 
 	/**
 	 * 取得风属性防御
 	 */
 	public int getWind() {
-		return _wind;
+		return this._wind;
 	} // 当你使用
 
 	/**
 	 * 取得精神值
 	 */
 	public short getWis() {
-		return _wis;
+		return this._wis;
 	}
 
 	/**
@@ -1557,10 +1557,10 @@ public class L1Character extends L1Object {
 	 * @return 表示坐标值区。1:安全区，-1:战斗区，0:一般区。
 	 */
 	public int getZoneType() {
-		if (getMap().isSafetyZone(getLocation())) {
+		if (this.getMap().isSafetyZone(this.getLocation())) {
 			return 1;
 		}
-		else if (getMap().isCombatZone(getLocation())) {
+		else if (this.getMap().isCombatZone(this.getLocation())) {
 			return -1;
 		}
 		else { // 正常区
@@ -1578,14 +1578,14 @@ public class L1Character extends L1Object {
 	 * @return 没有障碍物true、有障碍物false。
 	 */
 	public boolean glanceCheck(final int tx, final int ty) {
-		int chx = getX();
-		int chy = getY();
+		int chx = this.getX();
+		int chy = this.getY();
 		for (int i = 0; i < 15; i++) {
 			if ((chx == tx) && (chy == ty)) {
 				break;
 			}
 
-			if (!getMap().isArrowPassable(chx, chy, targetDirection(tx, ty))) {
+			if (!this.getMap().isArrowPassable(chx, chy, this.targetDirection(tx, ty))) {
 				return false;
 			}
 
@@ -1604,7 +1604,7 @@ public class L1Character extends L1Object {
 	 * @return 有延迟true、没有false。
 	 */
 	public boolean hasItemDelay(final int delayId) {
-		return _itemdelay.containsKey(delayId);
+		return this._itemdelay.containsKey(delayId);
 	}
 
 	/**
@@ -1615,14 +1615,14 @@ public class L1Character extends L1Object {
 	 * @return 有技能效果true、没有false。
 	 */
 	public boolean hasSkillEffect(final int skillId) {
-		return _skillEffect.containsKey(skillId);
+		return this._skillEffect.containsKey(skillId);
 	}
 
 	/**
 	 * 恢复HP
 	 */
 	public void healHp(final int pt) {
-		setCurrentHp(getCurrentHp() + pt);
+		this.setCurrentHp(this.getCurrentHp() + pt);
 	}
 
 	/**
@@ -1714,23 +1714,23 @@ public class L1Character extends L1Object {
 	public boolean isAttackPosition(final int x, final int y, final int range) {
 		if (range >= 7) // 远程武器（走出画面考虑至少7对角线的情况下）
 		{
-			if (getLocation().getTileDistance(new Point(x, y)) > range) {
+			if (this.getLocation().getTileDistance(new Point(x, y)) > range) {
 				return false;
 			}
 		}
 		else { // 近身武器
-			if (getLocation().getTileLineDistance(new Point(x, y)) > range) {
+			if (this.getLocation().getTileLineDistance(new Point(x, y)) > range) {
 				return false;
 			}
 		}
-		return glanceCheck(x, y);
+		return this.glanceCheck(x, y);
 	}
 
 	/**
 	 * 是否为死亡状态
 	 */
 	public boolean isDead() {
-		return _isDead;
+		return this._isDead;
 	}
 
 	/**
@@ -1739,7 +1739,7 @@ public class L1Character extends L1Object {
 	 * @return 隐身术或暗隐术
 	 */
 	public boolean isInvisble() {
-		return (hasSkillEffect(INVISIBILITY) || hasSkillEffect(BLIND_HIDING));
+		return (this.hasSkillEffect(INVISIBILITY) || this.hasSkillEffect(BLIND_HIDING));
 	}
 
 	/**
@@ -1748,7 +1748,7 @@ public class L1Character extends L1Object {
 	 * @return true:麻痹 false:无
 	 */
 	public boolean isParalyzed() {
-		return _paralyzed;
+		return this._paralyzed;
 	}
 
 	/**
@@ -1757,7 +1757,7 @@ public class L1Character extends L1Object {
 	 * @return true:是 false:否
 	 */
 	public boolean isSkillDelay() {
-		return _isSkillDelay;
+		return this._isSkillDelay;
 	}
 
 	/**
@@ -1766,7 +1766,7 @@ public class L1Character extends L1Object {
 	 * @return true:睡眠 false:无
 	 */
 	public boolean isSleeped() {
-		return _sleeped;
+		return this._sleeped;
 	}
 
 	/**
@@ -1776,7 +1776,7 @@ public class L1Character extends L1Object {
 	 *            要删除的技能ＩＤ
 	 */
 	public void killSkillEffectTimer(final int skillId) {
-		final L1SkillTimer timer = _skillEffect.remove(skillId);
+		final L1SkillTimer timer = this._skillEffect.remove(skillId);
 		if (timer != null) {
 			timer.kill();
 		}
@@ -1790,15 +1790,15 @@ public class L1Character extends L1Object {
 	 * @return 如果是知道的角色对象true、不知道false。 对自己false。
 	 */
 	public boolean knownsObject(final L1Object obj) {
-		return _knownObjects.contains(obj);
+		return this._knownObjects.contains(obj);
 	}
 
 	/**
 	 * 删除全部认识对象
 	 */
 	public void removeAllKnownObjects() {
-		_knownObjects.clear();
-		_knownPlayer.clear();
+		this._knownObjects.clear();
+		this._knownPlayer.clear();
 	}
 
 	/**
@@ -1808,7 +1808,7 @@ public class L1Character extends L1Object {
 	 *            删除doll表、L1DollInstance对象。
 	 */
 	public void removeDoll(final L1DollInstance doll) {
-		_dolllist.remove(doll.getId());
+		this._dolllist.remove(doll.getId());
 	}
 
 	/**
@@ -1818,7 +1818,7 @@ public class L1Character extends L1Object {
 	 *            删除follower表、L1FollowerInstance对象。
 	 */
 	public void removeFollower(final L1FollowerInstance follower) {
-		_followerlist.remove(follower.getId());
+		this._followerlist.remove(follower.getId());
 	}
 
 	/**
@@ -1828,7 +1828,7 @@ public class L1Character extends L1Object {
 	 *            延迟物品ID。 如果是正常的道具0、隐形斗篷、血腥炎魔披风1。
 	 */
 	public void removeItemDelay(final int delayId) {
-		_itemdelay.remove(delayId);
+		this._itemdelay.remove(delayId);
 	}
 
 	/**
@@ -1838,9 +1838,9 @@ public class L1Character extends L1Object {
 	 *            删除对象
 	 */
 	public void removeKnownObject(final L1Object obj) {
-		_knownObjects.remove(obj);
+		this._knownObjects.remove(obj);
 		if (obj instanceof L1PcInstance) {
-			_knownPlayer.remove(obj);
+			this._knownPlayer.remove(obj);
 		}
 	}
 
@@ -1851,9 +1851,9 @@ public class L1Character extends L1Object {
 	 *            添加到Npc表、L1NpcInstance对象。
 	 */
 	public void removePet(final L1NpcInstance npc) {
-		_petlist.remove(npc.getId());
+		this._petlist.remove(npc.getId());
 		// if (_petlist.isEmpty()) {
-		sendPetCtrlMenu(npc, false); // 关闭宠物控制图形介面
+		this.sendPetCtrlMenu(npc, false); // 关闭宠物控制图形介面
 		// }
 	}
 
@@ -1864,7 +1864,7 @@ public class L1Character extends L1Object {
 	 *            结束技能效果的ID
 	 */
 	public void removeSkillEffect(final int skillId) {
-		final L1SkillTimer timer = _skillEffect.remove(skillId);
+		final L1SkillTimer timer = this._skillEffect.remove(skillId);
 		if (timer != null) {
 			timer.end();
 		}
@@ -1877,7 +1877,7 @@ public class L1Character extends L1Object {
 	 *            复活后的HP
 	 */
 	public void resurrect(int hp) {
-		if (!isDead()) {
+		if (!this.isDead()) {
 			return;
 		}
 		if (hp <= 0) {
@@ -1885,11 +1885,11 @@ public class L1Character extends L1Object {
 		}
 
 		// 设置为未死亡
-		setDead(false);
+		this.setDead(false);
 		// 设置HP
-		setCurrentHp(hp);
+		this.setCurrentHp(hp);
 		// 设置状态
-		setStatus(0);
+		this.setStatus(0);
 		// 解除变身
 		L1PolyMorph.undoPoly(this);
 		// 重新认识物件
@@ -1931,52 +1931,52 @@ public class L1Character extends L1Object {
 	 * 设定饱食度
 	 */
 	public void set_food(final int i) {
-		_food = i;
+		this._food = i;
 	}
 
 	/**
 	 * 设置物理防御
 	 */
 	public void setAc(final int i) {
-		_trueAc = i;
-		_ac = IntRange.ensure(i, -211, 211);
+		this._trueAc = i;
+		this._ac = IntRange.ensure(i, -211, 211);
 	}
 
 	/**
 	 * 设置属性种类
 	 */
 	public void setAddAttrKind(final int i) {
-		_addAttrKind = i;
+		this._addAttrKind = i;
 	}
 
 	/**
 	 * 设置攻击速度: 0，通常 1，勇敢
 	 */
 	public void setBraveSpeed(final int i) {
-		_braveSpeed = i;
+		this._braveSpeed = i;
 	}
 
 	/**
 	 * 设置魅力值
 	 */
 	public void setCha(final int i) {
-		_trueCha = (short) i;
-		_cha = (short) IntRange.ensure(i, 1, 255);
+		this._trueCha = (short) i;
+		this._cha = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
 	 * 设定亮度范围
 	 */
 	public void setChaLightSize(final int i) {
-		_chaLightSize = i;
+		this._chaLightSize = i;
 	}
 
 	/**
 	 * 设置体质值
 	 */
 	public void setCon(final int i) {
-		_trueCon = (short) i;
-		_con = (short) IntRange.ensure(i, 1, 255);
+		this._trueCon = (short) i;
+		this._con = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
@@ -1987,9 +1987,9 @@ public class L1Character extends L1Object {
 	 */
 	// 特殊处理的场合覆盖（分组传输等）
 	public void setCurrentHp(final int i) {
-		_currentHp = i;
-		if (_currentHp >= getMaxHp()) {
-			_currentHp = getMaxHp();
+		this._currentHp = i;
+		if (this._currentHp >= this.getMaxHp()) {
+			this._currentHp = this.getMaxHp();
 		}
 	}
 
@@ -2000,7 +2000,7 @@ public class L1Character extends L1Object {
 	 *            登场物件的HP
 	 */
 	public void setCurrentHpDirect(final int i) {
-		_currentHp = i;
+		this._currentHp = i;
 	}
 
 	/**
@@ -2011,9 +2011,9 @@ public class L1Character extends L1Object {
 	 */
 	// 特殊处理的场合覆盖（分组传输等）
 	public void setCurrentMp(final int i) {
-		_currentMp = i;
-		if (_currentMp >= getMaxMp()) {
-			_currentMp = getMaxMp();
+		this._currentMp = i;
+		if (this._currentMp >= this.getMaxMp()) {
+			this._currentMp = this.getMaxMp();
 		}
 	}
 
@@ -2024,22 +2024,22 @@ public class L1Character extends L1Object {
 	 *            登场物件的MP
 	 */
 	public void setCurrentMpDirect(final int i) {
-		_currentMp = i;
+		this._currentMp = i;
 	}
 
 	/**
 	 * 设置死亡状态
 	 */
 	public void setDead(final boolean flag) {
-		_isDead = flag;
+		this._isDead = flag;
 	}
 
 	/**
 	 * 设置敏捷值
 	 */
 	public void setDex(final int i) {
-		_trueDex = (short) i;
-		_dex = (short) IntRange.ensure(i, 1, 255);
+		this._trueDex = (short) i;
+		this._dex = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
@@ -2049,50 +2049,50 @@ public class L1Character extends L1Object {
 	 *            经验值。
 	 */
 	public void setExp(final long exp) {
-		_exp = exp;
+		this._exp = exp;
 	}
 
 	/**
 	 * 设置原始外形ＩＤ
 	 */
 	public void setGfxId(final int i) {
-		_gfxid = i;
+		this._gfxid = i;
 	}
 
 	/**
 	 * 设置大厅
 	 */
 	public void setHall(final boolean i) {
-		_isHall = i;
+		this._isHall = i;
 	}
 
 	/**
 	 * 设置面向: 0.左上 1.上 2.右上 3.右 4.右下 5.下 6.左下 7.左
 	 */
 	public void setHeading(final int i) {
-		_heading = i;
+		this._heading = i;
 	}
 
 	/**
 	 * 设置旅馆钥匙ID
 	 */
 	public void setInnKeyId(final int i) {
-		_innKeyId = i;
+		this._innKeyId = i;
 	}
 
 	/**
 	 * 设置旅馆编号
 	 */
 	public void setInnRoomNumber(final int i) {
-		_innRoomNumber = i;
+		this._innRoomNumber = i;
 	}
 
 	/**
 	 * 设置智力值
 	 */
 	public void setInt(final int i) {
-		_trueInt = (short) i;
-		_int = (short) IntRange.ensure(i, 1, 255);
+		this._trueInt = (short) i;
+		this._int = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
@@ -2102,65 +2102,65 @@ public class L1Character extends L1Object {
 	 *            友好度。
 	 */
 	public void setKarma(final int karma) {
-		_karma = karma;
+		this._karma = karma;
 	}
 
 	/**
 	 * 设置正义值
 	 */
 	public void setLawful(final int i) {
-		_lawful = i;
+		this._lawful = i;
 	}
 
 	/**
 	 * 设置等级
 	 */
 	public synchronized void setLevel(final long level) {
-		_level = (int) level;
+		this._level = (int) level;
 	}
 
 	/**
 	 * 设定附魔石等级
 	 */
 	public void setMagicStoneLevel(final byte i) {
-		_magicStoneLevel = i;
+		this._magicStoneLevel = i;
 	}
 
 	/**
 	 * 设置最高ＨＰ
 	 */
 	public void setMaxHp(final int hp) {
-		_trueMaxHp = hp;
-		_maxHp = (short) IntRange.ensure(_trueMaxHp, 1, 32767);
-		_currentHp = Math.min(_currentHp, _maxHp);
+		this._trueMaxHp = hp;
+		this._maxHp = (short) IntRange.ensure(this._trueMaxHp, 1, 32767);
+		this._currentHp = Math.min(this._currentHp, this._maxHp);
 	}
 
 	/**
 	 * 设置最高ＭＰ
 	 */
 	public void setMaxMp(final int mp) {
-		_trueMaxMp = mp;
-		_maxMp = (short) IntRange.ensure(_trueMaxMp, 0, 32767);
-		_currentMp = Math.min(_currentMp, _maxMp);
+		this._trueMaxMp = mp;
+		this._maxMp = (short) IntRange.ensure(this._trueMaxMp, 0, 32767);
+		this._currentMp = Math.min(this._currentMp, this._maxMp);
 	}
 
 	/**
 	 * 设置移动速度: 0.通常 1.加速 2.缓速
 	 */
 	public void setMoveSpeed(final int i) {
-		_moveSpeed = i;
+		this._moveSpeed = i;
 	}
 
 	/**
 	 * 设置魔防
 	 */
 	public void setMr(final int i) {
-		_trueMr = i;
-		if (_trueMr <= 0) {
-			_mr = 0;
+		this._trueMr = i;
+		if (this._trueMr <= 0) {
+			this._mr = 0;
 		}
 		else {
-			_mr = _trueMr;
+			this._mr = this._trueMr;
 		}
 	}
 
@@ -2168,21 +2168,21 @@ public class L1Character extends L1Object {
 	 * 设置名称
 	 */
 	public void setName(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 	/**
 	 * 设定自身亮度范围(S_OwnCharPack用)
 	 */
 	public void setOwnLightSize(final int i) {
-		_ownLightSize = i;
+		this._ownLightSize = i;
 	}
 
 	/**
 	 * 设定麻痹
 	 */
 	public void setParalaysis(final L1Paralysis p) {
-		_paralysis = p;
+		this._paralysis = p;
 	}
 
 	/**
@@ -2192,7 +2192,7 @@ public class L1Character extends L1Object {
 	 *            true:麻痹 false:无
 	 */
 	public void setParalyzed(final boolean paralyzed) {
-		_paralyzed = paralyzed;
+		this._paralyzed = paralyzed;
 	}
 
 	/**
@@ -2202,7 +2202,7 @@ public class L1Character extends L1Object {
 	 *            毒列表、L1Poison对象。
 	 */
 	public void setPoison(final L1Poison poison) {
-		_poison = poison;
+		this._poison = poison;
 	}
 
 	/**
@@ -2212,14 +2212,14 @@ public class L1Character extends L1Object {
 	 * @see S_Poison#S_Poison(int, int)
 	 */
 	public void setPoisonEffect(final int effectId) {
-		broadcastPacket(new S_Poison(getId(), effectId));
+		this.broadcastPacket(new S_Poison(this.getId(), effectId));
 	}
 
 	/**
 	 * 设定龙之门扉编号
 	 */
 	public void setPortalNumber(final int portalNumber) {
-		_portalNumber = portalNumber;
+		this._portalNumber = portalNumber;
 	}
 
 	/**
@@ -2228,7 +2228,7 @@ public class L1Character extends L1Object {
 	 * @param flag
 	 */
 	public void setSkillDelay(final boolean flag) {
-		_isSkillDelay = flag;
+		this._isSkillDelay = flag;
 	}
 
 	/**
@@ -2242,17 +2242,17 @@ public class L1Character extends L1Object {
 	 *            设置技能效果的持续时间。无限制是0。
 	 */
 	public void setSkillEffect(final int skillId, final int timeMillis) {
-		if (hasSkillEffect(skillId)) {
-			final int remainingTimeMills = getSkillEffectTimeSec(skillId) * 1000;
+		if (this.hasSkillEffect(skillId)) {
+			final int remainingTimeMills = this.getSkillEffectTimeSec(skillId) * 1000;
 
 			// 残り时间が有限で、パラメータの效果时间の方が长いか无限の场合は上书きする。
 			if ((remainingTimeMills >= 0) && ((remainingTimeMills < timeMillis) || (timeMillis == 0))) {
-				killSkillEffectTimer(skillId);
-				addSkillEffect(skillId, timeMillis);
+				this.killSkillEffectTimer(skillId);
+				this.addSkillEffect(skillId, timeMillis);
 			}
 		}
 		else {
-			addSkillEffect(skillId, timeMillis);
+			this.addSkillEffect(skillId, timeMillis);
 		}
 	}
 
@@ -2263,44 +2263,44 @@ public class L1Character extends L1Object {
 	 *            true:睡眠 false:无
 	 */
 	public void setSleeped(final boolean sleeped) {
-		_sleeped = sleeped;
+		this._sleeped = sleeped;
 	}
 
 	/**
 	 * 设置初始化状态
 	 */
 	public void setStatus(final int i) {
-		_status = i;
+		this._status = i;
 	}
 
 	/**
 	 * 设置力量值
 	 */
 	public void setStr(final int i) {
-		_trueStr = (short) i;
-		_str = (short) IntRange.ensure(i, 1, 255);
+		this._trueStr = (short) i;
+		this._str = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
 	 * 设置变身ID
 	 */
 	public void setTempCharGfx(final int i) {
-		_tempCharGfx = i;
+		this._tempCharGfx = i;
 	}
 
 	/**
 	 * 设置封号
 	 */
 	public void setTitle(final String s) {
-		_title = s;
+		this._title = s;
 	}
 
 	/**
 	 * 设置精神值
 	 */
 	public void setWis(final int i) {
-		_trueWis = (short) i;
-		_wis = (short) IntRange.ensure(i, 1, 255);
+		this._trueWis = (short) i;
+		this._wis = (short) IntRange.ensure(i, 1, 255);
 	}
 
 	/**
@@ -2313,27 +2313,27 @@ public class L1Character extends L1Object {
 	 * @return 指定的坐标对应的面向
 	 */
 	public int targetDirection(final int tx, final int ty) {
-		final float dis_x = Math.abs(getX() - tx); // 距离目标在X方向
-		final float dis_y = Math.abs(getY() - ty); // 距离目标在Y方向
+		final float dis_x = Math.abs(this.getX() - tx); // 距离目标在X方向
+		final float dis_y = Math.abs(this.getY() - ty); // 距离目标在Y方向
 		final float dis = Math.max(dis_x, dis_y); // 距离目标
 		if (dis == 0) {
-			return getHeading(); // 回到同一个位置的面向
+			return this.getHeading(); // 回到同一个位置的面向
 		}
 		final int avg_x = (int) Math.floor((dis_x / dis) + 0.59f); // 上下左右がちょっと优先な丸め
 		final int avg_y = (int) Math.floor((dis_y / dis) + 0.59f); // 上下左右がちょっと优先な丸め
 
 		int dir_x = 0;
 		int dir_y = 0;
-		if (getX() < tx) {
+		if (this.getX() < tx) {
 			dir_x = 1;
 		}
-		if (getX() > tx) {
+		if (this.getX() > tx) {
 			dir_x = -1;
 		}
-		if (getY() < ty) {
+		if (this.getY() < ty) {
 			dir_y = 1;
 		}
-		if (getY() > ty) {
+		if (this.getY() > ty) {
 			dir_y = -1;
 		}
 
@@ -2368,7 +2368,7 @@ public class L1Character extends L1Object {
 		if ((dir_x == 0) && (dir_y == -1)) {
 			return 0; // 左上
 		}
-		return getHeading(); // ここにはこない。はず
+		return this.getHeading(); // ここにはこない。はず
 	}
 
 	/**
@@ -2380,11 +2380,11 @@ public class L1Character extends L1Object {
 			final L1NpcInstance npc = (L1NpcInstance) this;
 			lightSize = npc.getLightSize(); // npc.sqlのライトサイズ
 		}
-		if (hasSkillEffect(LIGHT)) {
+		if (this.hasSkillEffect(LIGHT)) {
 			lightSize = 14;
 		}
 
-		for (final L1ItemInstance item : getInventory().getItems()) {
+		for (final L1ItemInstance item : this.getInventory().getItems()) {
 			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系アイテム
 				final int itemlightSize = item.getItem().getLightRange();
 				if ((itemlightSize != 0) && item.isNowLighting()) {
@@ -2400,12 +2400,12 @@ public class L1Character extends L1Object {
 			final L1PcInstance pc = (L1PcInstance) this;
 			pc.sendPackets(new S_Light(pc.getId(), lightSize));
 		}
-		if (!isInvisble()) {
-			broadcastPacket(new S_Light(getId(), lightSize));
+		if (!this.isInvisble()) {
+			this.broadcastPacket(new S_Light(this.getId(), lightSize));
 		}
 
-		setOwnLightSize(lightSize); // S_OwnCharPackのライト范围
-		setChaLightSize(lightSize); // S_OtherCharPack, S_NPCPackなどのライト范围
+		this.setOwnLightSize(lightSize); // S_OwnCharPackのライト范围
+		this.setChaLightSize(lightSize); // S_OtherCharPack, S_NPCPackなどのライト范围
 	}
 
 	/**
@@ -2434,6 +2434,6 @@ public class L1Character extends L1Object {
 			timer = L1SkillTimerCreator.create(this, skillId, timeMillis);
 			timer.begin();
 		}
-		_skillEffect.put(skillId, timer);
+		this._skillEffect.put(skillId, timer);
 	}
 }

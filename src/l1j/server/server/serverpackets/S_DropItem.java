@@ -30,15 +30,15 @@ public class S_DropItem extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_DropItem(final L1ItemInstance item) {
-		buildPacket(item);
+		this.buildPacket(item);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -58,61 +58,61 @@ public class S_DropItem extends ServerBasePacket {
 		if (isId == 1) {
 			itemName = item.getItem().getIdentifiedNameId();
 		}
-		writeC(Opcodes.S_OPCODE_DROPITEM);
-		writeH(item.getX());
-		writeH(item.getY());
-		writeD(item.getId());
-		writeH(item.getItem().getGroundGfxId());
-		writeC(0);
-		writeC(0);
+		this.writeC(Opcodes.S_OPCODE_DROPITEM);
+		this.writeH(item.getX());
+		this.writeH(item.getY());
+		this.writeD(item.getId());
+		this.writeH(item.getItem().getGroundGfxId());
+		this.writeC(0);
+		this.writeC(0);
 		if (item.isNowLighting()) {
-			writeC(item.getItem().getLightRange());
+			this.writeC(item.getItem().getLightRange());
 		}
 		else {
-			writeC(0);
+			this.writeC(0);
 		}
-		writeC(0);
-		writeD(item.getCount());
-		writeC(0);
-		writeC(0);
+		this.writeC(0);
+		this.writeD(item.getCount());
+		this.writeC(0);
+		this.writeC(0);
 		if (item.getCount() > 1) {
 			if ((item.getItem().getItemId() == 40312) && (item.getKeyId() != 0)) { // 旅馆钥匙
-				writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
+				this.writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
 			}
 			else {
-				writeS(itemName + " (" + item.getCount() + ")");
+				this.writeS(itemName + " (" + item.getCount() + ")");
 			}
 		}
 		else {
 			final int itemId = item.getItem().getItemId();
 			if ((itemId == 20383) && (isId == 1)) { // 军马头盔
-				writeS(itemName + " [" + item.getChargeCount() + "]");
+				this.writeS(itemName + " [" + item.getChargeCount() + "]");
 			}
 			else if ((item.getChargeCount() != 0) && (isId == 1)) { // 可使用的次数
-				writeS(itemName + " (" + item.getChargeCount() + ")");
+				this.writeS(itemName + " (" + item.getChargeCount() + ")");
 			}
 			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) { // 灯具
-				writeS(itemName + " ($10)");
+				this.writeS(itemName + " ($10)");
 			}
 			else if ((item.getItem().getItemId() == 40312) && (item.getKeyId() != 0)) { // 旅馆钥匙
-				writeS(itemName + item.getInnKeyName());
+				this.writeS(itemName + item.getInnKeyName());
 			}
 			else {
-				writeS(itemName);
+				this.writeS(itemName);
 			}
 		}
-		writeC(0);
-		writeD(0);
-		writeD(0);
-		writeC(255);
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeH(65535);
+		this.writeC(0);
+		this.writeD(0);
+		this.writeD(0);
+		this.writeC(255);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeH(65535);
 		// writeD(0x401799a);
-		writeD(0);
-		writeC(8);
-		writeC(0);
+		this.writeD(0);
+		this.writeC(8);
+		this.writeC(0);
 	}
 
 }

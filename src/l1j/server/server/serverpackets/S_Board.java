@@ -36,7 +36,7 @@ public class S_Board extends ServerBasePacket {
 	 * @param boardObjId
 	 */
 	public S_Board(final int boardObjId) {
-		buildPacket(boardObjId, 0);
+		this.buildPacket(boardObjId, 0);
 	}
 
 	/**
@@ -46,15 +46,15 @@ public class S_Board extends ServerBasePacket {
 	 * @param number
 	 */
 	public S_Board(final int boardObjId, final int number) {
-		buildPacket(boardObjId, number);
+		this.buildPacket(boardObjId, number);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -64,25 +64,25 @@ public class S_Board extends ServerBasePacket {
 
 	private void buildPacket(final int boardObjId, final int number) {
 		final List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
-		writeC(Opcodes.S_OPCODE_BOARD);
-		writeC(0); // DragonKeybbs = 1
-		writeD(boardObjId);
+		this.writeC(Opcodes.S_OPCODE_BOARD);
+		this.writeC(0); // DragonKeybbs = 1
+		this.writeD(boardObjId);
 		if (number == 0) {
-			writeD(0x7FFFFFFF);
+			this.writeD(0x7FFFFFFF);
 		}
 		else {
-			writeD(number);
+			this.writeD(number);
 		}
-		writeC(topics.size());
+		this.writeC(topics.size());
 		if (number == 0) {
-			writeC(0);
-			writeH(300);
+			this.writeC(0);
+			this.writeH(300);
 		}
 		for (final L1BoardTopic topic : topics) {
-			writeD(topic.getId());
-			writeS(topic.getName());
-			writeS(topic.getDate());
-			writeS(topic.getTitle());
+			this.writeD(topic.getId());
+			this.writeS(topic.getName());
+			this.writeS(topic.getDate());
+			this.writeS(topic.getTitle());
 		}
 	}
 }

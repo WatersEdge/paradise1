@@ -25,14 +25,14 @@ import l1j.server.server.Opcodes;
 public class S_SkillIconWisdomPotion extends ServerBasePacket {
 
 	public S_SkillIconWisdomPotion(final int time) {
-		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
-		writeC(0x39);
-		writeC(0x2c);
-		writeC(time);
+		this.writeC(Opcodes.S_OPCODE_SKILLICONGFX);
+		this.writeC(0x39);
+		this.writeC(0x2c);
+		this.writeC(time);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

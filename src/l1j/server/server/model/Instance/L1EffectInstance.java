@@ -47,30 +47,30 @@ public class L1EffectInstance extends L1NpcInstance {
 		private final L1EffectInstance _effect;
 
 		public CubeTimer(final L1EffectInstance effect) {
-			_effect = effect;
+			this._effect = effect;
 		}
 
 		@Override
 		public void run() {
-			while (!_destroyed) {
+			while (!L1EffectInstance.this._destroyed) {
 				try {
-					for (final L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 3)) {
+					for (final L1Object objects : L1World.getInstance().getVisibleObjects(this._effect, 3)) {
 						if (objects instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) objects;
 							if (pc.isDead()) {
 								continue;
 							}
-							final L1PcInstance user = getUser(); // Cube使用者
+							final L1PcInstance user = L1EffectInstance.this.getUser(); // Cube使用者
 							if (pc.getId() == user.getId()) {
-								cubeToAlly(pc, _effect);
+								L1EffectInstance.this.cubeToAlly(pc, this._effect);
 								continue;
 							}
 							if ((pc.getClanid() != 0) && (user.getClanid() == pc.getClanid())) {
-								cubeToAlly(pc, _effect);
+								L1EffectInstance.this.cubeToAlly(pc, this._effect);
 								continue;
 							}
 							if (pc.isInParty() && pc.getParty().isMember(user)) {
-								cubeToAlly(pc, _effect);
+								L1EffectInstance.this.cubeToAlly(pc, this._effect);
 								continue;
 							}
 							if (pc.getZoneType() == 1) { // セーフティーゾーンでは戦争中を除き敵には無効
@@ -82,10 +82,10 @@ public class L1EffectInstance extends L1NpcInstance {
 								if (!isNowWar) {
 									continue;
 								}
-								cubeToEnemy(pc, _effect);
+								L1EffectInstance.this.cubeToEnemy(pc, this._effect);
 							}
 							else {
-								cubeToEnemy(pc, _effect);
+								L1EffectInstance.this.cubeToEnemy(pc, this._effect);
 							}
 						}
 						else if (objects instanceof L1MonsterInstance) {
@@ -93,7 +93,7 @@ public class L1EffectInstance extends L1NpcInstance {
 							if (mob.isDead()) {
 								continue;
 							}
-							cubeToEnemy(mob, _effect);
+							L1EffectInstance.this.cubeToEnemy(mob, this._effect);
 						}
 					}
 					Thread.sleep(CUBE_INTERVAL);
@@ -109,14 +109,14 @@ public class L1EffectInstance extends L1NpcInstance {
 		private final L1EffectInstance _effect;
 
 		public FwDamageTimer(final L1EffectInstance effect) {
-			_effect = effect;
+			this._effect = effect;
 		}
 
 		@Override
 		public void run() {
-			while (!_destroyed) {
+			while (!L1EffectInstance.this._destroyed) {
 				try {
-					for (final L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 0)) {
+					for (final L1Object objects : L1World.getInstance().getVisibleObjects(this._effect, 0)) {
 						if (objects instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) objects;
 							if (pc.isDead()) {
@@ -132,27 +132,27 @@ public class L1EffectInstance extends L1NpcInstance {
 									continue;
 								}
 							}
-							final L1Magic magic = new L1Magic(_effect, pc);
+							final L1Magic magic = new L1Magic(this._effect, pc);
 							final int damage = magic.calcPcFireWallDamage();
 							if (damage == 0) {
 								continue;
 							}
 							pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 							pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
-							pc.receiveDamage(_effect, damage, false);
+							pc.receiveDamage(this._effect, damage, false);
 						}
 						else if (objects instanceof L1MonsterInstance) {
 							final L1MonsterInstance mob = (L1MonsterInstance) objects;
 							if (mob.isDead()) {
 								continue;
 							}
-							final L1Magic magic = new L1Magic(_effect, mob);
+							final L1Magic magic = new L1Magic(this._effect, mob);
 							final int damage = magic.calcNpcFireWallDamage();
 							if (damage == 0) {
 								continue;
 							}
 							mob.broadcastPacket(new S_DoActionGFX(mob.getId(), ActionCodes.ACTION_Damage));
-							mob.receiveDamage(_effect, damage);
+							mob.receiveDamage(this._effect, damage);
 						}
 					}
 					Thread.sleep(FW_DAMAGE_INTERVAL);
@@ -168,17 +168,17 @@ public class L1EffectInstance extends L1NpcInstance {
 		private final L1EffectInstance _effect;
 
 		public PoisonTimer(final L1EffectInstance effect) {
-			_effect = effect;
+			this._effect = effect;
 		}
 
 		@Override
 		public void run() {
-			while (!_destroyed) {
+			while (!L1EffectInstance.this._destroyed) {
 				try {
-					for (final L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 0)) {
+					for (final L1Object objects : L1World.getInstance().getVisibleObjects(this._effect, 0)) {
 						if (!(objects instanceof L1MonsterInstance)) {
 							final L1Character cha = (L1Character) objects;
-							L1DamagePoison.doInfection(_effect, cha, 3000, 20);
+							L1DamagePoison.doInfection(this._effect, cha, 3000, 20);
 						}
 					}
 					Thread.sleep(POISON_INTERVAL);
@@ -207,7 +207,7 @@ public class L1EffectInstance extends L1NpcInstance {
 	public L1EffectInstance(final L1Npc template) {
 		super(template);
 
-		final int npcId = getNpcTemplate().get_npcId();
+		final int npcId = this.getNpcTemplate().get_npcId();
 		if (npcId == 81157) { // FW
 			GeneralThreadPool.getInstance().schedule(new FwDamageTimer(this), 0);
 		}
@@ -226,27 +226,27 @@ public class L1EffectInstance extends L1NpcInstance {
 
 	@Override
 	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
-		allTargetClear();
-		_master = null;
+		this.allTargetClear();
+		this._master = null;
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 	}
 
 	public int getSkillId() {
-		return _skillId;
+		return this._skillId;
 	}
 
 	public L1PcInstance getUser() {
-		return _pc;
+		return this._pc;
 	}
 
 	@Override
@@ -254,16 +254,16 @@ public class L1EffectInstance extends L1NpcInstance {
 	}
 
 	public void setSkillId(final int i) {
-		_skillId = i;
+		this._skillId = i;
 	}
 
 	public void setUser(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	private void cubeToAlly(final L1Character cha, final L1Character effect) {
-		final int npcId = getNpcTemplate().get_npcId();
-		final int castGfx = SkillsTable.getInstance().getTemplate(getSkillId()).getCastGfx();
+		final int npcId = this.getNpcTemplate().get_npcId();
+		final int castGfx = SkillsTable.getInstance().getTemplate(this.getSkillId()).getCastGfx();
 		L1PcInstance pc = null;
 
 		if (npcId == 80149) { // 立方：燃烧
@@ -317,8 +317,8 @@ public class L1EffectInstance extends L1NpcInstance {
 	}
 
 	private void cubeToEnemy(final L1Character cha, final L1Character effect) {
-		final int npcId = getNpcTemplate().get_npcId();
-		final int castGfx2 = SkillsTable.getInstance().getTemplate(getSkillId()).getCastGfx2();
+		final int npcId = this.getNpcTemplate().get_npcId();
+		final int castGfx2 = SkillsTable.getInstance().getTemplate(this.getSkillId()).getCastGfx2();
 		L1PcInstance pc = null;
 		if (npcId == 80149) { // 立方：燃烧
 			if (!cha.hasSkillEffect(STATUS_CUBE_IGNITION_TO_ENEMY)) {

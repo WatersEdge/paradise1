@@ -34,7 +34,7 @@ public class TelnetConnection {
 		private final Socket _socket;
 
 		public ConnectionThread(final Socket sock) {
-			_socket = sock;
+			this._socket = sock;
 		}
 
 		@Override
@@ -44,9 +44,9 @@ public class TelnetConnection {
 			OutputStreamWriter osw = null;
 			BufferedWriter out = null;
 			try {
-				isr = new InputStreamReader(_socket.getInputStream());
+				isr = new InputStreamReader(this._socket.getInputStream());
 				in = new BufferedReader(isr);
-				osw = new OutputStreamWriter(_socket.getOutputStream());
+				osw = new OutputStreamWriter(this._socket.getOutputStream());
 				out = new BufferedWriter(osw);
 
 				String cmd = null;
@@ -66,7 +66,7 @@ public class TelnetConnection {
 				StreamUtil.close(osw, out);
 			}
 			try {
-				_socket.close();
+				this._socket.close();
 			}
 			catch (final IOException e) {
 			}

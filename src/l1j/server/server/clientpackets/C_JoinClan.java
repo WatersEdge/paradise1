@@ -42,7 +42,7 @@ public class C_JoinClan extends ClientBasePacket {
 
 		final L1PcInstance target = FaceToFace.faceToFace(pc);
 		if (target != null) {
-			JoinClan(pc, target);
+			this.JoinClan(pc, target);
 		}
 	}
 

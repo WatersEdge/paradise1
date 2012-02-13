@@ -30,26 +30,26 @@ public class L1MapArea extends Rectangle {
 	public L1MapArea(final int left, final int top, final int right, final int bottom, final int mapId) {
 		super(left, top, right, bottom);
 
-		_map = L1WorldMap.getInstance().getMap((short) mapId);
+		this._map = L1WorldMap.getInstance().getMap((short) mapId);
 	}
 
 	/** 包含 */
 	public boolean contains(final L1Location loc) {
-		return (_map.getId() == loc.getMap().getId()) && super.contains(loc);
+		return (this._map.getId() == loc.getMap().getId()) && super.contains(loc);
 	}
 
 	/** 取得地图 */
 	public L1Map getMap() {
-		return _map;
+		return this._map;
 	}
 
 	/** 取得地图ID */
 	public int getMapId() {
-		return _map.getId();
+		return this._map.getId();
 	}
 
 	/** 设定地图 */
 	public void setMap(final L1Map map) {
-		_map = map;
+		this._map = map;
 	}
 }

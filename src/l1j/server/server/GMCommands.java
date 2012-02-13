@@ -65,7 +65,7 @@ public class GMCommands {
 		param = param.trim();
 
 		// 将使用过的指令存起来
-		if (executeDatabaseCommand(gm, cmd, param)) {
+		if (this.executeDatabaseCommand(gm, cmd, param)) {
 			if (!cmd.equalsIgnoreCase("r")) {
 				_lastCommands.put(gm.getId(), cmdLine);
 			}
@@ -76,7 +76,7 @@ public class GMCommands {
 				gm.sendPackets(new S_ServerMessage(74, "指令 " + cmd)); // \f1%0%o 无法使用。
 				return;
 			}
-			redo(gm, param);
+			this.redo(gm, param);
 			return;
 		}
 		gm.sendPackets(new S_SystemMessage("指令 " + cmd + " 不存在。"));
@@ -103,7 +103,7 @@ public class GMCommands {
 				return true;
 			}
 
-			final Class<?> cls = Class.forName(complementClassName(command.getExecutorClassName()));
+			final Class<?> cls = Class.forName(this.complementClassName(command.getExecutorClassName()));
 			final L1CommandExecutor exe = (L1CommandExecutor) cls.getMethod("getInstance").invoke(null);
 			exe.execute(pc, name, arg);
 			_log.info(pc.getName() + " 使用 ." + name + " " + arg + " 的指令。");
@@ -120,14 +120,14 @@ public class GMCommands {
 			final String lastCmd = _lastCommands.get(pc.getId());
 			if (arg.isEmpty()) {
 				pc.sendPackets(new S_SystemMessage("指令 " + lastCmd + " 重新执行。"));
-				handleCommands(pc, lastCmd);
+				this.handleCommands(pc, lastCmd);
 			}
 			else {
 				// 引数を变えて实行
 				final StringTokenizer token = new StringTokenizer(lastCmd);
 				final String cmd = token.nextToken() + " " + arg;
 				pc.sendPackets(new S_SystemMessage("指令 " + cmd + " 执行。"));
-				handleCommands(pc, cmd);
+				this.handleCommands(pc, cmd);
 			}
 		}
 		catch (final Exception e) {

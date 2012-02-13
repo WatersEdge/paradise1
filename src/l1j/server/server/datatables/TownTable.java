@@ -48,7 +48,7 @@ public class TownTable {
 	private final Map<Integer, L1Town> _towns = Maps.newConcurrentMap();
 
 	private TownTable() {
-		load();
+		this.load();
 	}
 
 	public synchronized void addSalesMoney(final int town_id, final int salesMoney) {
@@ -91,15 +91,15 @@ public class TownTable {
 	}
 
 	public L1Town getTownTable(final int id) {
-		return _towns.get(id);
+		return this._towns.get(id);
 	}
 
 	public L1Town[] getTownTableList() {
-		return _towns.values().toArray(new L1Town[_towns.size()]);
+		return this._towns.values().toArray(new L1Town[this._towns.size()]);
 	}
 
 	public boolean isLeader(final L1PcInstance pc, final int town_id) {
-		final L1Town town = getTownTable(town_id);
+		final L1Town town = this.getTownTable(town_id);
 		return (town.get_leader_id() == pc.getId());
 	}
 
@@ -108,7 +108,7 @@ public class TownTable {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 
-		_towns.clear();
+		this._towns.clear();
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
@@ -131,7 +131,7 @@ public class TownTable {
 				town.set_town_tax(rs.getInt("town_tax"));
 				town.set_town_fix_tax(rs.getInt("town_fix_tax"));
 
-				_towns.put(new Integer(townid), town);
+				this._towns.put(new Integer(townid), town);
 			}
 		}
 		catch (final SQLException e) {

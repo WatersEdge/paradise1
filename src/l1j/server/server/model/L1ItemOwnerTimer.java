@@ -29,18 +29,18 @@ public class L1ItemOwnerTimer extends TimerTask {
 	private final int _timeMillis;
 
 	public L1ItemOwnerTimer(final L1ItemInstance item, final int timeMillis) {
-		_item = item;
-		_timeMillis = timeMillis;
+		this._item = item;
+		this._timeMillis = timeMillis;
 	}
 
 	public void begin() {
 		final Timer timer = new Timer();
-		timer.schedule(this, _timeMillis);
+		timer.schedule(this, this._timeMillis);
 	}
 
 	@Override
 	public void run() {
-		_item.setItemOwnerId(0);
-		cancel();
+		this._item.setItemOwnerId(0);
+		this.cancel();
 	}
 }

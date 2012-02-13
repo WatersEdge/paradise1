@@ -30,15 +30,15 @@ public class S_SkillList extends ServerBasePacket {
 	 */
 	public S_SkillList(final boolean Insert, final L1Skills... skills) {
 		if (Insert) {
-			writeC(S_OPCODE_ADDSKILL);
+			this.writeC(S_OPCODE_ADDSKILL);
 		}
 		else {
-			writeC(S_OPCODE_DELSKILL);
+			this.writeC(S_OPCODE_DELSKILL);
 		}
 
 		final int[] SkillList = new int[0x20];
 
-		writeC(SkillList.length);
+		this.writeC(SkillList.length);
 
 		for (final L1Skills skill : skills) {
 			final int level = skill.getSkillLevel() - 1;
@@ -47,15 +47,15 @@ public class S_SkillList extends ServerBasePacket {
 		}
 
 		for (final int i : SkillList) {
-			writeC(i);
+			this.writeC(i);
 		}
 
-		writeC(0x00); // 区分用的数值
+		this.writeC(0x00); // 区分用的数值
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

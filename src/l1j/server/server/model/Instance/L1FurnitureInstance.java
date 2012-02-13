@@ -33,9 +33,9 @@ public class L1FurnitureInstance extends L1NpcInstance {
 
 	@Override
 	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
@@ -43,11 +43,11 @@ public class L1FurnitureInstance extends L1NpcInstance {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 	}
 
 	public int getItemObjId() {
-		return _itemObjId;
+		return this._itemObjId;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class L1FurnitureInstance extends L1NpcInstance {
 	}
 
 	public void setItemObjId(final int i) {
-		_itemObjId = i;
+		this._itemObjId = i;
 	}
 
 }

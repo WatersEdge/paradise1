@@ -63,50 +63,50 @@ public class L1DoorSpawn {
 
 	public L1DoorSpawn(final int id, final L1DoorGfx gfx, final int x, final int y, final int mapId, final int hp, final int keeper, final boolean isOpening) {
 		super();
-		_id = id;
-		_gfx = gfx;
-		_x = x;
-		_y = y;
-		_mapId = mapId;
-		_loc = new L1Location(_x, _y, _mapId);
-		_hp = hp;
-		_keeper = keeper;
-		_isOpening = isOpening;
+		this._id = id;
+		this._gfx = gfx;
+		this._x = x;
+		this._y = y;
+		this._mapId = mapId;
+		this._loc = new L1Location(this._x, this._y, this._mapId);
+		this._hp = hp;
+		this._keeper = keeper;
+		this._isOpening = isOpening;
 	}
 
 	public L1DoorGfx getGfx() {
-		return _gfx;
+		return this._gfx;
 	}
 
 	public int getHp() {
-		return _hp;
+		return this._hp;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getKeeper() {
-		return _keeper;
+		return this._keeper;
 	}
 
 	public L1Location getLocation() {
-		return _loc;
+		return this._loc;
 	}
 
 	public int getMapId() {
-		return _mapId;
+		return this._mapId;
 	}
 
 	public int getX() {
-		return _x;
+		return this._x;
 	}
 
 	public int getY() {
-		return _y;
+		return this._y;
 	}
 
 	public boolean isOpening() {
-		return _isOpening;
+		return this._isOpening;
 	}
 }

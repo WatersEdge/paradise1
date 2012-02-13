@@ -24,20 +24,20 @@ public class S_GameTime extends ServerBasePacket {
 
 	public S_GameTime() {
 		final int time = L1GameTimeClock.getInstance().currentTime().getSeconds();
-		buildPacket(time);
+		this.buildPacket(time);
 	}
 
 	public S_GameTime(final int time) {
-		buildPacket(time);
+		this.buildPacket(time);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	private void buildPacket(final int time) {
-		writeC(Opcodes.S_OPCODE_GAMETIME);
-		writeD(time);
+		this.writeC(Opcodes.S_OPCODE_GAMETIME);
+		this.writeD(time);
 	}
 }

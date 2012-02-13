@@ -49,13 +49,13 @@ public class L1Spawn extends L1GameTimeAdapter {
 		private final int _objectId;
 
 		private SpawnTask(final int spawnNumber, final int objectId) {
-			_spawnNumber = spawnNumber;
-			_objectId = objectId;
+			this._spawnNumber = spawnNumber;
+			this._objectId = objectId;
 		}
 
 		@Override
 		public void run() {
-			doSpawn(_spawnNumber, _objectId);
+			L1Spawn.this.doSpawn(this._spawnNumber, this._objectId);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	public L1Spawn(final L1Npc mobTemplate) {
-		_template = mobTemplate;
+		this._template = mobTemplate;
 	}
 
 	/**
@@ -157,180 +157,180 @@ public class L1Spawn extends L1GameTimeAdapter {
 	 */
 	public void executeSpawnTask(final int spawnNumber, final int objectId) {
 		final SpawnTask task = new SpawnTask(spawnNumber, objectId);
-		GeneralThreadPool.getInstance().schedule(task, calcRespawnDelay());
+		GeneralThreadPool.getInstance().schedule(task, this.calcRespawnDelay());
 	}
 
 	public int getAmount() {
-		return _maximumCount;
+		return this._maximumCount;
 	}
 
 	public int getGroupId() {
-		return _groupId;
+		return this._groupId;
 	}
 
 	public int getHeading() {
-		return _heading;
+		return this._heading;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public String getLocation() {
-		return _location;
+		return this._location;
 	}
 
 	public int getLocX() {
-		return _locx;
+		return this._locx;
 	}
 
 	public int getLocX1() {
-		return _locx1;
+		return this._locx1;
 	}
 
 	public int getLocX2() {
-		return _locx2;
+		return this._locx2;
 	}
 
 	public int getLocY() {
-		return _locy;
+		return this._locy;
 	}
 
 	public int getLocY1() {
-		return _locy1;
+		return this._locy1;
 	}
 
 	public int getLocY2() {
-		return _locy2;
+		return this._locy2;
 	}
 
 	public short getMapId() {
-		return _mapid;
+		return this._mapid;
 	}
 
 	public int getMaxRespawnDelay() {
-		return _maxRespawnDelay;
+		return this._maxRespawnDelay;
 	}
 
 	public int getMinRespawnDelay() {
-		return _minRespawnDelay;
+		return this._minRespawnDelay;
 	}
 
 	public int getMovementDistance() {
-		return _movementDistance;
+		return this._movementDistance;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public int getNpcId() {
-		return _npcid;
+		return this._npcid;
 	}
 
 	public int getRandomx() {
-		return Randomx;
+		return this.Randomx;
 	}
 
 	public int getRandomy() {
-		return Randomy;
+		return this.Randomy;
 	}
 
 	public L1SpawnTime getTime() {
-		return _time;
+		return this._time;
 	}
 
 	public void init() {
-		if ((_time != null) && _time.isDeleteAtEndTime()) {
+		if ((this._time != null) && this._time.isDeleteAtEndTime()) {
 			// 時間外削除が指定されているなら、時間経過の通知を受ける。
 			L1GameTimeClock.getInstance().addListener(this);
 		}
-		_delayInterval = _maxRespawnDelay - _minRespawnDelay;
-		_initSpawn = true;
+		this._delayInterval = this._maxRespawnDelay - this._minRespawnDelay;
+		this._initSpawn = true;
 		// ホームポイントを持たせるか
-		if (Config.SPAWN_HOME_POINT && (Config.SPAWN_HOME_POINT_COUNT <= getAmount()) && (Config.SPAWN_HOME_POINT_DELAY >= getMinRespawnDelay()) && isAreaSpawn()) {
-			_spawnHomePoint = true;
-			_homePoint = Maps.newMap();
+		if (Config.SPAWN_HOME_POINT && (Config.SPAWN_HOME_POINT_COUNT <= this.getAmount()) && (Config.SPAWN_HOME_POINT_DELAY >= this.getMinRespawnDelay()) && this.isAreaSpawn()) {
+			this._spawnHomePoint = true;
+			this._homePoint = Maps.newMap();
 		}
 
 		int spawnNum = 0;
-		while (spawnNum < _maximumCount) {
+		while (spawnNum < this._maximumCount) {
 			// spawnNumは1～maxmumCountまで
-			doSpawn(++spawnNum);
+			this.doSpawn(++spawnNum);
 		}
-		_initSpawn = false;
+		this._initSpawn = false;
 	}
 
 	public boolean isRespawnScreen() {
-		return _respaenScreen;
+		return this._respaenScreen;
 	}
 
 	public boolean isRest() {
-		return _rest;
+		return this._rest;
 	}
 
 	@Override
 	public void onMinuteChanged(final L1GameTime time) {
-		if (_time.getTimePeriod().includes(time)) {
+		if (this._time.getTimePeriod().includes(time)) {
 			return;
 		}
-		synchronized (_mobs) {
-			if (_mobs.isEmpty()) {
+		synchronized (this._mobs) {
+			if (this._mobs.isEmpty()) {
 				return;
 			}
 			// 不在指定的时间删除
-			for (final L1NpcInstance mob : _mobs) {
+			for (final L1NpcInstance mob : this._mobs) {
 				mob.setCurrentHpDirect(0);
 				mob.setDead(true);
 				mob.setStatus(ActionCodes.ACTION_Die);
 				mob.deleteMe();
 			}
-			_mobs.clear();
+			this._mobs.clear();
 		}
 	}
 
 	public void setAmount(final int amount) {
-		_maximumCount = amount;
+		this._maximumCount = amount;
 	}
 
 	public void setGroupId(final int i) {
-		_groupId = i;
+		this._groupId = i;
 	}
 
 	public void setHeading(final int heading) {
-		_heading = heading;
+		this._heading = heading;
 	}
 
 	public void setId(final int id) {
-		_id = id;
+		this._id = id;
 	}
 
 	public void setLocation(final String location) {
-		_location = location;
+		this._location = location;
 	}
 
 	public void setLocX(final int locx) {
-		_locx = locx;
+		this._locx = locx;
 	}
 
 	public void setLocX1(final int locx1) {
-		_locx1 = locx1;
+		this._locx1 = locx1;
 	}
 
 	public void setLocX2(final int locx2) {
-		_locx2 = locx2;
+		this._locx2 = locx2;
 	}
 
 	public void setLocY(final int locy) {
-		_locy = locy;
+		this._locy = locy;
 	}
 
 	public void setLocY1(final int locy1) {
-		_locy1 = locy1;
+		this._locy1 = locy1;
 	}
 
 	public void setLocY2(final int locy2) {
-		_locy2 = locy2;
+		this._locy2 = locy2;
 	}
 
 	public void setMapId(final short _mapid) {
@@ -338,57 +338,57 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	public void setMaxRespawnDelay(final int i) {
-		_maxRespawnDelay = i;
+		this._maxRespawnDelay = i;
 	}
 
 	public void setMinRespawnDelay(final int i) {
-		_minRespawnDelay = i;
+		this._minRespawnDelay = i;
 	}
 
 	public void setMovementDistance(final int i) {
-		_movementDistance = i;
+		this._movementDistance = i;
 	}
 
 	public void setName(final String name) {
-		_name = name;
+		this._name = name;
 	}
 
 	public void setNpcid(final int npcid) {
-		_npcid = npcid;
+		this._npcid = npcid;
 	}
 
 	public void setRandomx(final int randomx) {
-		Randomx = randomx;
+		this.Randomx = randomx;
 	}
 
 	public void setRandomy(final int randomy) {
-		Randomy = randomy;
+		this.Randomy = randomy;
 	}
 
 	public void setRespawnScreen(final boolean flag) {
-		_respaenScreen = flag;
+		this._respaenScreen = flag;
 	}
 
 	public void setRest(final boolean flag) {
-		_rest = flag;
+		this._rest = flag;
 	}
 
 	public void setSpawnType(final int type) {
-		_spawnType = type;
+		this._spawnType = type;
 	}
 
 	public void setTime(final L1SpawnTime time) {
-		_time = time;
+		this._time = time;
 	}
 
 	private int calcRespawnDelay() {
-		int respawnDelay = _minRespawnDelay * 1000;
-		if (_delayInterval > 0) {
-			respawnDelay += Random.nextInt(_delayInterval) * 1000;
+		int respawnDelay = this._minRespawnDelay * 1000;
+		if (this._delayInterval > 0) {
+			respawnDelay += Random.nextInt(this._delayInterval) * 1000;
 		}
 		final L1GameTime currentTime = L1GameTimeClock.getInstance().currentTime();
-		if ((_time != null) && !_time.getTimePeriod().includes(currentTime)) { // 指定時間外なら指定時間までの時間を足す
-			long diff = (_time.getTimeStart().getTime() - currentTime.toTime().getTime());
+		if ((this._time != null) && !this._time.getTimePeriod().includes(currentTime)) { // 指定時間外なら指定時間までの時間を足す
+			long diff = (this._time.getTimeStart().getTime() - currentTime.toTime().getTime());
 			if (diff < 0) {
 				diff += 24 * 1000L * 3600L;
 			}
@@ -399,15 +399,15 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	private int getSpawnType() {
-		return _spawnType;
+		return this._spawnType;
 	}
 
 	private boolean isAreaSpawn() {
-		return (getLocX1() != 0) && (getLocY1() != 0) && (getLocX2() != 0) && (getLocY2() != 0);
+		return (this.getLocX1() != 0) && (this.getLocY1() != 0) && (this.getLocX2() != 0) && (this.getLocY2() != 0);
 	}
 
 	private boolean isRandomSpawn() {
-		return (getRandomx() != 0) || (getRandomy() != 0);
+		return (this.getRandomx() != 0) || (this.getRandomy() != 0);
 	}
 
 	/**
@@ -415,23 +415,23 @@ public class L1Spawn extends L1GameTimeAdapter {
 	 */
 	protected void doSpawn(final int spawnNumber) { // 初期配置
 		// 指定時間外であれば、次spawnを予約して終わる。
-		if ((_time != null) && !_time.getTimePeriod().includes(L1GameTimeClock.getInstance().currentTime())) {
-			executeSpawnTask(spawnNumber, 0);
+		if ((this._time != null) && !this._time.getTimePeriod().includes(L1GameTimeClock.getInstance().currentTime())) {
+			this.executeSpawnTask(spawnNumber, 0);
 			return;
 		}
-		doSpawn(spawnNumber, 0);
+		this.doSpawn(spawnNumber, 0);
 	}
 
 	protected void doSpawn(final int spawnNumber, final int objectId) { // 再出現
 		L1NpcInstance mob = null;
 		try {
-			int newlocx = getLocX();
-			int newlocy = getLocY();
+			int newlocx = this.getLocX();
+			int newlocy = this.getLocY();
 			int tryCount = 0;
 
-			mob = NpcTable.getInstance().newNpcInstance(_template);
-			synchronized (_mobs) {
-				_mobs.add(mob);
+			mob = NpcTable.getInstance().newNpcInstance(this._template);
+			synchronized (this._mobs) {
+				this._mobs.add(mob);
 			}
 			if (objectId == 0) {
 				mob.setId(IdFactory.getInstance().nextId());
@@ -440,8 +440,8 @@ public class L1Spawn extends L1GameTimeAdapter {
 				mob.setId(objectId); // オブジェクトID再利用
 			}
 
-			if ((0 <= getHeading()) && (getHeading() <= 7)) {
-				mob.setHeading(getHeading());
+			if ((0 <= this.getHeading()) && (this.getHeading() <= 7)) {
+				mob.setHeading(this.getHeading());
 			}
 			else {
 				// heading値が正しくない
@@ -449,27 +449,27 @@ public class L1Spawn extends L1GameTimeAdapter {
 			}
 
 			final int npcId = mob.getNpcTemplate().get_npcId();
-			if ((npcId == 45488) && (getMapId() == 9)) { // 卡士伯
-				mob.setMap((short) (getMapId() + Random.nextInt(2)));
+			if ((npcId == 45488) && (this.getMapId() == 9)) { // 卡士伯
+				mob.setMap((short) (this.getMapId() + Random.nextInt(2)));
 			}
-			else if ((npcId == 45601) && (getMapId() == 11)) { // 死亡騎士
-				mob.setMap((short) (getMapId() + Random.nextInt(3)));
+			else if ((npcId == 45601) && (this.getMapId() == 11)) { // 死亡騎士
+				mob.setMap((short) (this.getMapId() + Random.nextInt(3)));
 			}
-			else if ((npcId == 81322) && (getMapId() == 25)) { // 黑騎士副隊長
-				mob.setMap((short) (getMapId() + Random.nextInt(2)));
+			else if ((npcId == 81322) && (this.getMapId() == 25)) { // 黑騎士副隊長
+				mob.setMap((short) (this.getMapId() + Random.nextInt(2)));
 			}
 			else {
-				mob.setMap(getMapId());
+				mob.setMap(this.getMapId());
 			}
-			mob.setMovementDistance(getMovementDistance());
-			mob.setRest(isRest());
+			mob.setMovementDistance(this.getMovementDistance());
+			mob.setRest(this.isRest());
 			while (tryCount <= 50) {
-				switch (getSpawnType()) {
+				switch (this.getSpawnType()) {
 					case SPAWN_TYPE_PC_AROUND: // PC周辺に湧くタイプ
-						if (!_initSpawn) { // 初期配置では無条件に通常spawn
+						if (!this._initSpawn) { // 初期配置では無条件に通常spawn
 							final List<L1PcInstance> players = Lists.newList();
 							for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-								if (getMapId() == pc.getMapId()) {
+								if (this.getMapId() == pc.getMapId()) {
 									players.add(pc);
 								}
 							}
@@ -483,31 +483,31 @@ public class L1Spawn extends L1GameTimeAdapter {
 						}
 						// フロアにPCがいなければ通常の出現方法
 					default:
-						if (isAreaSpawn()) { // 座標が範囲指定されている場合
+						if (this.isAreaSpawn()) { // 座標が範囲指定されている場合
 							Point pt = null;
-							if (_spawnHomePoint && (null != (pt = _homePoint.get(spawnNumber)))) { // ホームポイントを元に再出現させる場合
-								final L1Location loc = new L1Location(pt, getMapId()).randomLocation(Config.SPAWN_HOME_POINT_RANGE, false);
+							if (this._spawnHomePoint && (null != (pt = this._homePoint.get(spawnNumber)))) { // ホームポイントを元に再出現させる場合
+								final L1Location loc = new L1Location(pt, this.getMapId()).randomLocation(Config.SPAWN_HOME_POINT_RANGE, false);
 								newlocx = loc.getX();
 								newlocy = loc.getY();
 							}
 							else {
-								final int rangeX = getLocX2() - getLocX1();
-								final int rangeY = getLocY2() - getLocY1();
-								newlocx = Random.nextInt(rangeX) + getLocX1();
-								newlocy = Random.nextInt(rangeY) + getLocY1();
+								final int rangeX = this.getLocX2() - this.getLocX1();
+								final int rangeY = this.getLocY2() - this.getLocY1();
+								newlocx = Random.nextInt(rangeX) + this.getLocX1();
+								newlocy = Random.nextInt(rangeY) + this.getLocY1();
 							}
 							if (tryCount > 49) { // 出現位置が決まらない時はlocx,locyの値
-								newlocx = getLocX();
-								newlocy = getLocY();
+								newlocx = this.getLocX();
+								newlocy = this.getLocY();
 							}
 						}
-						else if (isRandomSpawn()) { // 座標のランダム値が指定されている場合
-							newlocx = (getLocX() + (Random.nextInt(getRandomx()) - Random.nextInt(getRandomx())));
-							newlocy = (getLocY() + (Random.nextInt(getRandomy()) - Random.nextInt(getRandomy())));
+						else if (this.isRandomSpawn()) { // 座標のランダム値が指定されている場合
+							newlocx = (this.getLocX() + (Random.nextInt(this.getRandomx()) - Random.nextInt(this.getRandomx())));
+							newlocy = (this.getLocY() + (Random.nextInt(this.getRandomy()) - Random.nextInt(this.getRandomy())));
 						}
 						else { // どちらも指定されていない場合
-							newlocx = getLocX();
-							newlocy = getLocY();
+							newlocx = this.getLocX();
+							newlocy = this.getLocY();
 						}
 				}
 				mob.setX(newlocx);
@@ -517,7 +517,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 
 				if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
 					if (mob instanceof L1MonsterInstance) {
-						if (isRespawnScreen()) {
+						if (this.isRespawnScreen()) {
 							break;
 						}
 						final L1MonsterInstance mobtemp = (L1MonsterInstance) mob;
@@ -539,9 +539,9 @@ public class L1Spawn extends L1GameTimeAdapter {
 			mob.setSpawn(this);
 			mob.setreSpawn(true);
 			mob.setSpawnNumber(spawnNumber); // L1Spawnでの管理番号(ホームポイントに使用)
-			if (_initSpawn && _spawnHomePoint) { // 初期配置でホームポイントを設定
+			if (this._initSpawn && this._spawnHomePoint) { // 初期配置でホームポイントを設定
 				final Point pt = new Point(mob.getX(), mob.getY());
-				_homePoint.put(spawnNumber, pt); // ここで保存したpointを再出現時に使う
+				this._homePoint.put(spawnNumber, pt); // ここで保存したpointを再出現時に使う
 			}
 
 			if (mob instanceof L1MonsterInstance) {
@@ -579,12 +579,12 @@ public class L1Spawn extends L1GameTimeAdapter {
 
 			if (mob instanceof L1MonsterInstance) {
 				final L1MonsterInstance mobtemp = (L1MonsterInstance) mob;
-				if (!_initSpawn && (mobtemp.getHiddenStatus() == 0)) {
+				if (!this._initSpawn && (mobtemp.getHiddenStatus() == 0)) {
 					mobtemp.onNpcAI(); // モンスターのＡＩを開始
 				}
 			}
-			if (getGroupId() != 0) {
-				L1MobGroupSpawn.getInstance().doSpawn(mob, getGroupId(), isRespawnScreen(), _initSpawn);
+			if (this.getGroupId() != 0) {
+				L1MobGroupSpawn.getInstance().doSpawn(mob, this.getGroupId(), this.isRespawnScreen(), this._initSpawn);
 			}
 			mob.turnOnOffLight();
 			mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始

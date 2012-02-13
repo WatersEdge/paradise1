@@ -43,17 +43,17 @@ public class LoginController {
 
 	/** 取得所有账户 */
 	public ClientThread[] getAllAccounts() {
-		return _accounts.values().toArray(new ClientThread[_accounts.size()]);
+		return this._accounts.values().toArray(new ClientThread[this._accounts.size()]);
 	}
 
 	/** 取得最大允许在线玩家 */
 	public int getMaxAllowedOnlinePlayers() {
-		return _maxAllowedOnlinePlayers;
+		return this._maxAllowedOnlinePlayers;
 	}
 
 	/** 取得在线玩家数量 */
 	public int getOnlinePlayerCount() {
-		return _accounts.size();
+		return this._accounts.size();
 	}
 
 	/** 登陆 */
@@ -63,15 +63,15 @@ public class LoginController {
 			// 此代码只存在的错误检测。
 			throw new IllegalArgumentException("账户沒有通过验证");
 		}
-		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount()) && !account.isGameMaster()) {
+		if ((this.getMaxAllowedOnlinePlayers() <= this.getOnlinePlayerCount()) && !account.isGameMaster()) {
 			throw new GameServerFullException();
 		}
-		if (_accounts.containsKey(account.getName())) {
-			kickClient(_accounts.remove(account.getName()));
+		if (this._accounts.containsKey(account.getName())) {
+			this.kickClient(this._accounts.remove(account.getName()));
 			throw new AccountAlreadyLoginException();
 		}
 
-		_accounts.put(account.getName(), client);
+		this._accounts.put(account.getName(), client);
 	}
 
 	/** 登出 */
@@ -79,12 +79,12 @@ public class LoginController {
 		if (client.getAccountName() == null) {
 			return false;
 		}
-		return _accounts.remove(client.getAccountName()) != null;
+		return this._accounts.remove(client.getAccountName()) != null;
 	}
 
 	/** 设置最大允许在线玩家 */
 	public void setMaxAllowedOnlinePlayers(final int maxAllowedOnlinePlayers) {
-		_maxAllowedOnlinePlayers = maxAllowedOnlinePlayers;
+		this._maxAllowedOnlinePlayers = maxAllowedOnlinePlayers;
 	}
 
 	/** 踢人 */

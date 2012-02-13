@@ -47,7 +47,7 @@ public class CookingBooks extends ItemExecutor {
 			pc.sendPackets(new S_PacketBox(S_PacketBox.COOK_WINDOW, (itemId - 41255)));
 		}
 		else {
-			makeCooking(pc, cookNo);
+			this.makeCooking(pc, cookNo);
 		}
 	}
 

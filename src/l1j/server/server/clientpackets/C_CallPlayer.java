@@ -38,7 +38,7 @@ public class C_CallPlayer extends ClientBasePacket {
 			return;
 		}
 
-		final String name = readS();
+		final String name = this.readS();
 		if (name.isEmpty()) {
 			return;
 		}

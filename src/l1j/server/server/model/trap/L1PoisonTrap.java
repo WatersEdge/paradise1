@@ -34,24 +34,24 @@ public class L1PoisonTrap extends L1Trap {
 	public L1PoisonTrap(final TrapStorage storage) {
 		super(storage);
 
-		_type = storage.getString("poisonType");
-		_delay = storage.getInt("poisonDelay");
-		_time = storage.getInt("poisonTime");
-		_damage = storage.getInt("poisonDamage");
+		this._type = storage.getString("poisonType");
+		this._delay = storage.getInt("poisonDelay");
+		this._time = storage.getInt("poisonTime");
+		this._damage = storage.getInt("poisonDamage");
 	}
 
 	@Override
 	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
-		sendEffect(trapObj);
+		this.sendEffect(trapObj);
 
-		if (_type.equals("d")) {
-			L1DamagePoison.doInfection(trodFrom, trodFrom, _time, _damage);
+		if (this._type.equals("d")) {
+			L1DamagePoison.doInfection(trodFrom, trodFrom, this._time, this._damage);
 		}
-		else if (_type.equals("s")) {
+		else if (this._type.equals("s")) {
 			L1SilencePoison.doInfection(trodFrom);
 		}
-		else if (_type.equals("p")) {
-			L1ParalysisPoison.doInfection(trodFrom, _delay, _time);
+		else if (this._type.equals("p")) {
+			L1ParalysisPoison.doInfection(trodFrom, this._delay, this._time);
 		}
 	}
 }

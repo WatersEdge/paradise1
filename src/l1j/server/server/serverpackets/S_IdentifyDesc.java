@@ -28,20 +28,20 @@ public class S_IdentifyDesc extends ServerBasePacket {
 	 * 物品资讯讯息 (使用String-h.tbl)
 	 */
 	public S_IdentifyDesc(final L1ItemInstance item) {
-		buildPacket(item);
+		this.buildPacket(item);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	private void buildPacket(final L1ItemInstance item) {
-		writeC(Opcodes.S_OPCODE_IDENTIFYDESC);
-		writeH(item.getItem().getItemDescId());
+		this.writeC(Opcodes.S_OPCODE_IDENTIFYDESC);
+		this.writeH(item.getItem().getItemDescId());
 
 		final StringBuilder name = new StringBuilder();
 
@@ -60,54 +60,54 @@ public class S_IdentifyDesc extends ServerBasePacket {
 		}
 
 		if (item.getItem().getType2() == 1) { // 武器 (weapon)
-			writeH(134); // \f1%0：对小怪物的伤害 %1 对大怪物的伤害 %2
-			writeC(3);
-			writeS(name.toString());
-			writeS(item.getItem().getDmgSmall() + "+" + item.getEnchantLevel());
-			writeS(item.getItem().getDmgLarge() + "+" + item.getEnchantLevel());
+			this.writeH(134); // \f1%0：对小怪物的伤害 %1 对大怪物的伤害 %2
+			this.writeC(3);
+			this.writeS(name.toString());
+			this.writeS(item.getItem().getDmgSmall() + "+" + item.getEnchantLevel());
+			this.writeS(item.getItem().getDmgLarge() + "+" + item.getEnchantLevel());
 
 		}
 		else if (item.getItem().getType2() == 2) { // 防具 (armor)
 			if (item.getItem().getItemId() == 20383) { // 军马头盔
-				writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
-				writeC(3);
-				writeS(name.toString());
-				writeS(String.valueOf(item.getChargeCount()));
+				this.writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
+				this.writeC(3);
+				this.writeS(name.toString());
+				this.writeS(String.valueOf(item.getChargeCount()));
 			}
 			else {
-				writeH(135); // \f1%0：防御力 %1 防御装备
-				writeC(2);
-				writeS(name.toString());
-				writeS(Math.abs(item.getItem().get_ac()) + "+" + item.getEnchantLevel());
+				this.writeH(135); // \f1%0：防御力 %1 防御装备
+				this.writeC(2);
+				this.writeS(name.toString());
+				this.writeS(Math.abs(item.getItem().get_ac()) + "+" + item.getEnchantLevel());
 			}
 
 		}
 		else if (item.getItem().getType2() == 0) { // 道具 (etcitem)
 			if (item.getItem().getType() == 1) { // wand
-				writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
-				writeC(3);
-				writeS(name.toString());
-				writeS(String.valueOf(item.getChargeCount()));
+				this.writeH(137); // \f1%0：可使用的次数 %1 [重量 %2]
+				this.writeC(3);
+				this.writeS(name.toString());
+				this.writeS(String.valueOf(item.getChargeCount()));
 			}
 			else if (item.getItem().getType() == 2) { // 照明类道具 (light)
-				writeH(138); // \f1%0 [重量 %1]
-				writeC(2);
+				this.writeH(138); // \f1%0 [重量 %1]
+				this.writeC(2);
 				name.append(": $231 "); // 剩余燃料量
 				name.append(String.valueOf(item.getRemainingTime()));
-				writeS(name.toString());
+				this.writeS(name.toString());
 			}
 			else if (item.getItem().getType() == 7) { // 食物 (food)
-				writeH(136); // \f1%0：营养度 %1 [重量 %2]
-				writeC(3);
-				writeS(name.toString());
-				writeS(String.valueOf(item.getItem().getFoodVolume()));
+				this.writeH(136); // \f1%0：营养度 %1 [重量 %2]
+				this.writeC(3);
+				this.writeS(name.toString());
+				this.writeS(String.valueOf(item.getItem().getFoodVolume()));
 			}
 			else {
-				writeH(138); // \f1%0 [重量 %1]
-				writeC(2);
-				writeS(name.toString());
+				this.writeH(138); // \f1%0 [重量 %1]
+				this.writeC(2);
+				this.writeS(name.toString());
 			}
-			writeS(String.valueOf(item.getWeight()));
+			this.writeS(String.valueOf(item.getWeight()));
 		}
 	}
 }

@@ -37,19 +37,19 @@ public class S_OtherCharPacks extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_OtherCharPacks(final L1PcInstance pc) {
-		buildPacket(pc, false);
+		this.buildPacket(pc, false);
 	}
 
 	public S_OtherCharPacks(final L1PcInstance pc, final boolean isFindInvis) {
-		buildPacket(pc, isFindInvis);
+		this.buildPacket(pc, isFindInvis);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -75,51 +75,51 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		// int addbyte = 0;
 		// int addbyte1 = 1;
 
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(pc.getX());
-		writeH(pc.getY());
-		writeD(pc.getId());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(pc.getX());
+		this.writeH(pc.getY());
+		this.writeD(pc.getId());
 		if (pc.isDead()) {
-			writeH(pc.getTempCharGfxAtDead());
+			this.writeH(pc.getTempCharGfxAtDead());
 		}
 		else {
-			writeH(pc.getTempCharGfx());
+			this.writeH(pc.getTempCharGfx());
 		}
 		if (pc.isDead()) {
-			writeC(pc.getStatus());
+			this.writeC(pc.getStatus());
 		}
 		else {
-			writeC(pc.getCurrentWeapon());
+			this.writeC(pc.getCurrentWeapon());
 		}
-		writeC(pc.getHeading());
+		this.writeC(pc.getHeading());
 		// writeC(0); // makes char invis (0x01), cannot move. spells display
-		writeC(pc.getChaLightSize());
-		writeC(pc.getMoveSpeed());
-		writeD(0x0000); // exp
+		this.writeC(pc.getChaLightSize());
+		this.writeC(pc.getMoveSpeed());
+		this.writeD(0x0000); // exp
 		// writeC(0x00);
-		writeH(pc.getLawful());
-		writeS(pc.getName()); // 名称
-		writeS(pc.getTitle()); // 封号
-		writeC(status); // 状态
-		writeD(pc.getClanid());
-		writeS(pc.getClanname()); // 血盟名称
-		writeS(null); // 主人名称？
-		writeC(0); // ？
+		this.writeH(pc.getLawful());
+		this.writeS(pc.getName()); // 名称
+		this.writeS(pc.getTitle()); // 封号
+		this.writeC(status); // 状态
+		this.writeD(pc.getClanid());
+		this.writeS(pc.getClanname()); // 血盟名称
+		this.writeS(null); // 主人名称？
+		this.writeC(0); // ？
 		/*
 		 * if(pc.is_isInParty()) // 组队中 { writeC(100 * pc.get_currentHp() / pc.get_maxHp()); } else { writeC(0xFF); }
 		 */
 
-		writeC(0xFF);
+		this.writeC(0xFF);
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
-			writeC(0x08); // 3段加速
+			this.writeC(0x08); // 3段加速
 		}
 		else {
-			writeC(0);
+			this.writeC(0);
 		}
-		writeC(0); // PC = 0, Mon = Lv
-		writeC(0); // ？
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(0); // PC = 0, Mon = Lv
+		this.writeC(0); // ？
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 }

@@ -28,19 +28,19 @@ public class S_NpcChangeShape extends ServerBasePacket {
 
 	/** 使用于怪物变身 */
 	public S_NpcChangeShape(final int objId, final int polyId, final int lawful, final int status) {
-		writeC(Opcodes.S_OPCODE_SPOLY);
-		writeD(objId);
-		writeD(0); // ???
-		writeH(polyId);
-		writeH(lawful); // 正义值
-		writeH(status); // 状态
+		this.writeC(Opcodes.S_OPCODE_SPOLY);
+		this.writeD(objId);
+		this.writeD(0); // ???
+		this.writeH(polyId);
+		this.writeH(lawful); // 正义值
+		this.writeH(status); // 状态
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 }

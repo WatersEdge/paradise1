@@ -39,8 +39,8 @@ public class C_AuthLogin extends ClientBasePacket {
 
 	public C_AuthLogin(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		final String accountName = readS().toLowerCase();
-		final String password = readS();
+		final String accountName = this.readS().toLowerCase();
+		final String password = this.readS();
 
 		final String ip = client.getIp();
 		final String host = client.getHostname();

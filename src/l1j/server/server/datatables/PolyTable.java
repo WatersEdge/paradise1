@@ -48,15 +48,15 @@ public class PolyTable {
 	private final Map<Integer, L1PolyMorph> _polyIdIndex = Maps.newMap();
 
 	private PolyTable() {
-		loadPolymorphs();
+		this.loadPolymorphs();
 	}
 
 	public L1PolyMorph getTemplate(final int polyId) {
-		return _polyIdIndex.get(polyId);
+		return this._polyIdIndex.get(polyId);
 	}
 
 	public L1PolyMorph getTemplate(final String name) {
-		return _polymorphs.get(name);
+		return this._polymorphs.get(name);
 	}
 
 	private void fillPolyTable(final ResultSet rs) throws SQLException {
@@ -72,11 +72,11 @@ public class PolyTable {
 
 			final L1PolyMorph poly = new L1PolyMorph(id, name, polyId, minLevel, weaponEquipFlg, armorEquipFlg, canUseSkill, causeFlg);
 
-			_polymorphs.put(name, poly);
-			_polyIdIndex.put(polyId, poly);
+			this._polymorphs.put(name, poly);
+			this._polyIdIndex.put(polyId, poly);
 		}
 
-		_log.config("变身名单 " + _polymorphs.size() + "件");
+		_log.config("变身名单 " + this._polymorphs.size() + "件");
 	}
 
 	private void loadPolymorphs() {
@@ -88,7 +88,7 @@ public class PolyTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM polymorphs");
 			rs = pstm.executeQuery();
-			fillPolyTable(rs);
+			this.fillPolyTable(rs);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);

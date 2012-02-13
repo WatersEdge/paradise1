@@ -43,20 +43,20 @@ public class TelnetCommandResult {
 	}
 
 	public TelnetCommandResult(final int code, final String result) {
-		_code = code;
-		_result = result;
-		_codeMessage = _codeMessages.get(code);
+		this._code = code;
+		this._result = result;
+		this._codeMessage = _codeMessages.get(code);
 	}
 
 	public int getCode() {
-		return _code;
+		return this._code;
 	}
 
 	public String getCodeMessage() {
-		return _codeMessage;
+		return this._codeMessage;
 	}
 
 	public String getResult() {
-		return _result;
+		return this._result;
 	}
 }

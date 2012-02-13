@@ -28,7 +28,7 @@ public class L1NpcDefaultAction {
 	}
 
 	private L1NpcDefaultAction() {
-		loadAction();
+		this.loadAction();
 	}
 
 	public int getDefaultAttack(final int gfxid) {

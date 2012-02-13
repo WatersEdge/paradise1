@@ -105,11 +105,11 @@ public class C_Attr extends ClientBasePacket {
 	@SuppressWarnings("static-access")
 	public C_Attr(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		readH(); // 3.51C未知的功能
+		this.readH(); // 3.51C未知的功能
 
 		@SuppressWarnings("unused")
-		final int count = readD(); // 纪录世界中发送YesNo的次数
-		final int i = readH();
+		final int count = this.readD(); // 纪录世界中发送YesNo的次数
+		final int i = this.readH();
 		String name;
 		int c;
 
@@ -117,7 +117,7 @@ public class C_Attr extends ClientBasePacket {
 
 		switch (i) {
 			case 97: // \f3%0%s 想加入你的血盟。你接受吗。(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance joinPc = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
 				pc.setTempID(0);
 				if (joinPc != null) {
@@ -163,7 +163,7 @@ public class C_Attr extends ClientBasePacket {
 							}
 							else { // 如果是王族加入（联合血盟）
 								if (Config.CLAN_ALLIANCE) {
-									changeClan(clientthread, pc, joinPc, maxMember);
+									this.changeClan(clientthread, pc, joinPc, maxMember);
 								}
 								else {
 									joinPc.sendPackets(new S_ServerMessage(89)); // \f1你已经有血盟了。
@@ -177,7 +177,7 @@ public class C_Attr extends ClientBasePacket {
 			case 217: // %0 血盟向你的血盟宣战。是否接受？(Y/N)
 			case 221: // %0 血盟要向你投降。是否接受？(Y/N)
 			case 222: // %0 血盟要结束战争。是否接受？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance enemyLeader = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
 				if (enemyLeader == null) {
 					return;
@@ -216,7 +216,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 252: // \f2%0%s 要与你交易。愿不愿交易？ (Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance().findObject(pc.getTradeID());
 				if (trading_partner != null) {
 					if (c == 0) // No
@@ -234,7 +234,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 321: // 是否要复活？ (Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance resusepc1 = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
 				pc.setTempID(0);
 				if (resusepc1 != null) { // 如果有这个人
@@ -242,13 +242,13 @@ public class C_Attr extends ClientBasePacket {
 
 					}
 					else if (c == 1) { // Yes
-						resurrection(pc, resusepc1, (short) (pc.getMaxHp() / 2));
+						this.resurrection(pc, resusepc1, (short) (pc.getMaxHp() / 2));
 					}
 				}
 				break;
 
 			case 322: // 是否要复活？ (Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance resusepc2 = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
 				pc.setTempID(0);
 				if (resusepc2 != null) { // 祝福复活卷轴、复活、大复活
@@ -256,7 +256,7 @@ public class C_Attr extends ClientBasePacket {
 
 					}
 					else if (c == 1) { // Yes
-						resurrection(pc, resusepc2, pc.getMaxHp());
+						this.resurrection(pc, resusepc2, pc.getMaxHp());
 						// EXP已经失去、G-RESを挂けられた、EXP死亡掉落
 						// 全有满足场合的EXP恢复
 						if ((pc.getExpRes() == 1) && pc.isGres() && pc.isGresValid()) {
@@ -269,16 +269,16 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 325: // 你想叫它什么名字？
-				c = readH(); // ?
-				name = readS();
+				c = this.readH(); // ?
+				name = this.readS();
 				final L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(pc.getTempID());
 				pc.setTempID(0);
 				renamePet(pet, name);
 				break;
 
 			case 512: // 请输入血盟小屋名称?
-				c = readH(); // ?
-				name = readS();
+				c = this.readH(); // ?
+				name = this.readS();
 				final int houseId = pc.getTempID();
 				pc.setTempID(0);
 				if (name.length() <= 16) {
@@ -292,7 +292,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 630: // %0%s 要与你决斗。你是否同意？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance fightPc = (L1PcInstance) L1World.getInstance().findObject(pc.getFightId());
 				if (c == 0) {
 					pc.setFightId(0);
@@ -306,7 +306,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 653: // 若你离婚，你的结婚戒指将会消失。你决定要离婚吗？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance target653 = (L1PcInstance) L1World.getInstance().findObject(pc.getPartnerId());
 				if (c == 0) { // No
 					return;
@@ -327,7 +327,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 654: // %0 向你(你)求婚，你(你)答应吗?
-				c = readH();
+				c = this.readH();
 				final L1PcInstance partner = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
 				pc.setTempID(0);
 				if (partner != null) {
@@ -350,17 +350,17 @@ public class C_Attr extends ClientBasePacket {
 
 			// 呼叫血盟成员
 			case 729: // 盟主正在呼唤你，你要接受他的呼唤吗？(Y/N)
-				c = readH();
+				c = this.readH();
 				if (c == 0) { // No
 
 				}
 				else if (c == 1) { // Yes
-					callClan(pc);
+					this.callClan(pc);
 				}
 				break;
 
 			case 738: // 恢复经验值需消耗%0金币。想要恢复经验值吗?
-				c = readH();
+				c = this.readH();
 				if ((c == 1) && (pc.getExpRes() == 1)) { // Yes
 					int cost = 0;
 					final int level = pc.getLevel();
@@ -385,7 +385,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 951: // 您要接受玩家 %0%s 提出的队伍对话邀请吗？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance chatPc = (L1PcInstance) L1World.getInstance().findObject(pc.getPartyID());
 				if (chatPc != null) {
 					if (c == 0) { // No
@@ -412,7 +412,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 953: // 玩家 %0%s 邀请您加入队伍？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance target = (L1PcInstance) L1World.getInstance().findObject(pc.getPartyID());
 				if (target != null) {
 					if (c == 0) // No
@@ -445,7 +445,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 954: // 玩家 %0%s 邀请您加入自动分配队伍？(Y/N)
-				c = readH();
+				c = this.readH();
 				final L1PcInstance target2 = (L1PcInstance) L1World.getInstance().findObject(pc.getPartyID());
 				if (target2 != null) {
 					if (c == 0) { // No
@@ -476,8 +476,8 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 			case 479: // 提升能力值？（str、dex、int、con、wis、cha）
-				if (readC() == 1) {
-					final String s = readS();
+				if (this.readC() == 1) {
+					final String s = this.readS();
 					if (!(pc.getLevel() - 50 > pc.getBonusStats())) {
 						return;
 					}
@@ -564,7 +564,7 @@ public class C_Attr extends ClientBasePacket {
 				}
 				break;
 			case 1256:// 宠物竞速 预约名单回应
-				l1j.server.server.model.game.L1PolyRace.getInstance().requsetAttr(pc, readC());
+				l1j.server.server.model.game.L1PolyRace.getInstance().requsetAttr(pc, this.readC());
 				break;
 			default:
 				break;

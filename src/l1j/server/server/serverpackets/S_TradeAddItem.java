@@ -35,29 +35,29 @@ public class S_TradeAddItem extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_TradeAddItem(final L1ItemInstance item, final int count, final int type) {
-		writeC(Opcodes.S_OPCODE_TRADEADDITEM);
-		writeC(type); // 0:最大的交易窗口 1:最小的交易窗口
-		writeH(item.getItem().getGfxId());
-		writeS(item.getNumberedViewName(count));
+		this.writeC(Opcodes.S_OPCODE_TRADEADDITEM);
+		this.writeC(type); // 0:最大的交易窗口 1:最小的交易窗口
+		this.writeH(item.getItem().getGfxId());
+		this.writeS(item.getNumberedViewName(count));
 		// 0:祝福 1:通常 2:诅咒 3:未鉴定
 		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鉴定&封印
 		if (!item.isIdentified()) {
-			writeC(3);
-			writeC(0);
+			this.writeC(3);
+			this.writeC(0);
 		}
 		else {
-			writeC(item.getBless());
+			this.writeC(item.getBless());
 			final byte[] status = item.getStatusBytes();
-			writeC(status.length);
+			this.writeC(status.length);
 			for (final byte b : status) {
-				writeC(b);
+				this.writeC(b);
 			}
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

@@ -47,18 +47,18 @@ public class FishingTimeController implements Runnable {
 
 	/** 增加成员 */
 	public void addMember(final L1PcInstance pc) {
-		if ((pc == null) || _fishingList.contains(pc)) {
+		if ((pc == null) || this._fishingList.contains(pc)) {
 			return;
 		}
-		_fishingList.add(pc);
+		this._fishingList.add(pc);
 	}
 
 	/** 删除成员 */
 	public void removeMember(final L1PcInstance pc) {
-		if ((pc == null) || !_fishingList.contains(pc)) {
+		if ((pc == null) || !this._fishingList.contains(pc)) {
 			return;
 		}
-		_fishingList.remove(pc);
+		this._fishingList.remove(pc);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class FishingTimeController implements Runnable {
 		try {
 			while (true) {
 				Thread.sleep(300);
-				fishing();
+				this.fishing();
 			}
 		}
 		catch (final Exception e1) {
@@ -91,7 +91,7 @@ public class FishingTimeController implements Runnable {
 		final int[] random = { 20, 40, 60, 80, 100, 110, 120, 130, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 198, 201, 204 };
 		for (int i = 0; i < fish.length; i++) {
 			if (random[i] > chance) {
-				successFishing(pc, fish[i]);
+				this.successFishing(pc, fish[i]);
 				finish = true;
 				break;
 			}
@@ -99,22 +99,22 @@ public class FishingTimeController implements Runnable {
 		if (!finish) {
 			pc.sendPackets(new S_ServerMessage(1517)); // 没有钓到鱼。
 			if (pc.isFishingReady()) {
-				restartFishing(pc);
+				this.restartFishing(pc);
 			}
 		}
 	}
 
 	/** 钓鱼 */
 	private void fishing() {
-		if (_fishingList.size() > 0) {
+		if (this._fishingList.size() > 0) {
 			final long currentTime = System.currentTimeMillis();
-			for (int i = 0; i < _fishingList.size(); i++) {
-				final L1PcInstance pc = _fishingList.get(i);
+			for (int i = 0; i < this._fishingList.size(); i++) {
+				final L1PcInstance pc = this._fishingList.get(i);
 				if (pc.isFishing()) { // 钓鱼中
 					final long time = pc.getFishingTime();
 					if ((currentTime <= (time + 500)) && (currentTime >= (time - 500)) && !pc.isFishingReady()) {
 						pc.setFishingReady(true);
-						finishFishing(pc);
+						this.finishFishing(pc);
 					}
 				}
 			}
@@ -130,7 +130,7 @@ public class FishingTimeController implements Runnable {
 		}
 		else {
 			pc.sendPackets(new S_ServerMessage(1137)); // 钓鱼需要有饵。
-			stopFishing(pc);
+			this.stopFishing(pc);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class FishingTimeController implements Runnable {
 				pc.getInventory().storeItem(item);
 			}
 			else { // 负重过重，结束钓鱼
-				stopFishing(pc);
+				this.stopFishing(pc);
 				item.startItemOwnerTimer(pc);
 				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
 				return;
@@ -164,17 +164,17 @@ public class FishingTimeController implements Runnable {
 		}
 		else { // 结束钓鱼
 			pc.sendPackets(new S_ServerMessage(1517)); // 没有钓到鱼。
-			stopFishing(pc);
+			this.stopFishing(pc);
 			return;
 		}
 
 		if (pc.isFishingReady()) {
 			if (itemId == 47104) {
 				pc.sendPackets(new S_ServerMessage(1739)); // 钓到了闪烁的鳞片，自动钓鱼已停止。
-				stopFishing(pc);
+				this.stopFishing(pc);
 				return;
 			}
-			restartFishing(pc);
+			this.restartFishing(pc);
 		}
 	}
 }

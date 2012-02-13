@@ -41,83 +41,83 @@ public class L1AuctionBoard {
 	}
 
 	public String getBidder() {
-		return _bidder;
+		return this._bidder;
 	}
 
 	public int getBidderId() {
-		return _bidderId;
+		return this._bidderId;
 	}
 
 	public Calendar getDeadline() {
-		return _deadline;
+		return this._deadline;
 	}
 
 	public int getHouseArea() {
-		return _houseArea;
+		return this._houseArea;
 	}
 
 	public int getHouseId() {
-		return _houseId;
+		return this._houseId;
 	}
 
 	public String getHouseName() {
-		return _houseName;
+		return this._houseName;
 	}
 
 	public String getLocation() {
-		return _location;
+		return this._location;
 	}
 
 	public String getOldOwner() {
-		return _oldOwner;
+		return this._oldOwner;
 	}
 
 	public int getOldOwnerId() {
-		return _oldOwnerId;
+		return this._oldOwnerId;
 	}
 
 	public int getPrice() {
-		return _price;
+		return this._price;
 	}
 
 	public void setBidder(final String s) {
-		_bidder = s;
+		this._bidder = s;
 	}
 
 	public void setBidderId(final int i) {
-		_bidderId = i;
+		this._bidderId = i;
 	}
 
 	public void setDeadline(final Calendar i) {
-		_deadline = i;
+		this._deadline = i;
 	}
 
 	public void setHouseArea(final int i) {
-		_houseArea = i;
+		this._houseArea = i;
 	}
 
 	public void setHouseId(final int i) {
-		_houseId = i;
+		this._houseId = i;
 	}
 
 	public void setHouseName(final String s) {
-		_houseName = s;
+		this._houseName = s;
 	}
 
 	public void setLocation(final String s) {
-		_location = s;
+		this._location = s;
 	}
 
 	public void setOldOwner(final String s) {
-		_oldOwner = s;
+		this._oldOwner = s;
 	}
 
 	public void setOldOwnerId(final int i) {
-		_oldOwnerId = i;
+		this._oldOwnerId = i;
 	}
 
 	public void setPrice(final int i) {
-		_price = i;
+		this._price = i;
 	}
 
 }

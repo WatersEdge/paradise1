@@ -72,7 +72,7 @@ public class ClanTable {
 					clan.setHouseId(rs.getInt(6));
 
 					L1World.getInstance().storeClan(clan);
-					_clans.put(clan_id, clan);
+					this._clans.put(clan_id, clan);
 				}
 
 			}
@@ -160,7 +160,7 @@ public class ClanTable {
 		}
 
 		L1World.getInstance().storeClan(clan);
-		_clans.put(clan.getClanId(), clan);
+		this._clans.put(clan.getClanId(), clan);
 
 		player.setClanid(clan.getClanId());
 		player.setClanname(clan.getClanName());
@@ -204,11 +204,11 @@ public class ClanTable {
 		clan.getDwarfForClanInventory().deleteAllItems();
 
 		L1World.getInstance().removeClan(clan);
-		_clans.remove(clan.getClanId());
+		this._clans.remove(clan.getClanId());
 	}
 
 	public L1Clan getTemplate(final int clan_id) {
-		return _clans.get(clan_id);
+		return this._clans.get(clan_id);
 	}
 
 	/**

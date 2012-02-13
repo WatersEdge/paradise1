@@ -50,7 +50,7 @@ public class CachedMapReader extends MapReader {
 	public Map<Integer, L1Map> read() throws IOException {
 		final Map<Integer, L1Map> maps = Maps.newMap();
 		for (final int id : TextMapReader.listMapIds()) {
-			maps.put(id, read(id));
+			maps.put(id, this.read(id));
 		}
 		return maps;
 	}
@@ -67,7 +67,7 @@ public class CachedMapReader extends MapReader {
 	public L1Map read(final int mapId) throws IOException {
 		final File file = new File(CACHE_DIR + mapId + ".map");
 		if (!file.exists()) {
-			return cacheMap(mapId);
+			return this.cacheMap(mapId);
 		}
 
 		final DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(CACHE_DIR + mapId + ".map")));

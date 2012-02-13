@@ -41,7 +41,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 	private final L1PcInstance _owner;
 
 	public L1DwarfForElfInventory(final L1PcInstance owner) {
-		_owner = owner;
+		this._owner = owner;
 	}
 
 	// ＤＢのcharacter_elf_warehouseから削除
@@ -62,7 +62,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			SQLUtil.close(con);
 		}
 
-		_items.remove(_items.indexOf(item));
+		this._items.remove(this._items.indexOf(item));
 	}
 
 	// ＤＢのcharacter_elf_warehouseへ登録
@@ -75,7 +75,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm = con
 					.prepareStatement("INSERT INTO character_elf_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
 			pstm.setInt(1, item.getId());
-			pstm.setString(2, _owner.getAccountName());
+			pstm.setString(2, this._owner.getAccountName());
 			pstm.setInt(3, item.getItemId());
 			pstm.setString(4, item.getName());
 			pstm.setInt(5, item.getCount());
@@ -118,7 +118,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM character_elf_warehouse WHERE account_name = ?");
-			pstm.setString(1, _owner.getAccountName());
+			pstm.setString(1, this._owner.getAccountName());
 
 			rs = pstm.executeQuery();
 
@@ -153,7 +153,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 				if (item.getItem().getItemId() == 40312) {
 					InnKeyTable.checkey(item);
 				}
-				_items.add(item);
+				this._items.add(item);
 				L1World.getInstance().storeObject(item);
 			}
 

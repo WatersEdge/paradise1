@@ -47,7 +47,7 @@ public class ChatLogTable {
 	}
 
 	private ChatLogTable() {
-		loadConfig();
+		this.loadConfig();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class ChatLogTable {
 	 * @param type
 	 */
 	public void storeChat(final L1PcInstance pc, final L1PcInstance target, final String text, final int type) {
-		if (!isLoggingTarget(type)) {
+		if (!this.isLoggingTarget(type)) {
 			return;
 		}
 
@@ -130,21 +130,21 @@ public class ChatLogTable {
 	 * @return
 	 */
 	private boolean isLoggingTarget(final int type) {
-		return loggingConfig[type];
+		return this.loggingConfig[type];
 	}
 
 	/**
 	 * 加载配置
 	 */
 	private void loadConfig() {
-		loggingConfig[0] = Config.LOGGING_CHAT_NORMAL;
-		loggingConfig[1] = Config.LOGGING_CHAT_WHISPER;
-		loggingConfig[2] = Config.LOGGING_CHAT_SHOUT;
-		loggingConfig[3] = Config.LOGGING_CHAT_WORLD;
-		loggingConfig[4] = Config.LOGGING_CHAT_CLAN;
-		loggingConfig[11] = Config.LOGGING_CHAT_PARTY;
-		loggingConfig[13] = Config.LOGGING_CHAT_COMBINED;
-		loggingConfig[14] = Config.LOGGING_CHAT_CHAT_PARTY;
+		this.loggingConfig[0] = Config.LOGGING_CHAT_NORMAL;
+		this.loggingConfig[1] = Config.LOGGING_CHAT_WHISPER;
+		this.loggingConfig[2] = Config.LOGGING_CHAT_SHOUT;
+		this.loggingConfig[3] = Config.LOGGING_CHAT_WORLD;
+		this.loggingConfig[4] = Config.LOGGING_CHAT_CLAN;
+		this.loggingConfig[11] = Config.LOGGING_CHAT_PARTY;
+		this.loggingConfig[13] = Config.LOGGING_CHAT_COMBINED;
+		this.loggingConfig[14] = Config.LOGGING_CHAT_CHAT_PARTY;
 	}
 
 }

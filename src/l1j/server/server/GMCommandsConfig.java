@@ -55,7 +55,7 @@ public class GMCommandsConfig {
 			final NodeList nodes = element.getChildNodes();
 			for (final Element elem : new IterableElementList(nodes)) {
 				if (elem.getNodeName().equalsIgnoreCase("Item")) {
-					list.add(loadItem(elem));
+					list.add(this.loadItem(elem));
 				}
 			}
 			final String name = element.getAttribute("Name");
@@ -74,15 +74,15 @@ public class GMCommandsConfig {
 		private final String _listName;
 
 		public ListLoaderAdapter(final String listName) {
-			_listName = listName;
+			this._listName = listName;
 		}
 
 		@Override
 		public final void load(final Element element) {
 			final NodeList nodes = element.getChildNodes();
 			for (final Element elem : new IterableElementList(nodes)) {
-				if (elem.getNodeName().equalsIgnoreCase(_listName)) {
-					loadElement(elem);
+				if (elem.getNodeName().equalsIgnoreCase(this._listName)) {
+					this.loadElement(elem);
 				}
 			}
 		}

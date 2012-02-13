@@ -38,9 +38,9 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 
 	@Override
 	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
+		this._destroyed = true;
+		if (this.getInventory() != null) {
+			this.getInventory().clearItems();
 		}
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
@@ -48,12 +48,12 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		removeAllKnownObjects();
+		this.removeAllKnownObjects();
 	}
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		if (getNpcTemplate().get_npcId() == 81171) { // おばけ屋敷のゴールの炎
+		if (this.getNpcTemplate().get_npcId() == 81171) { // おばけ屋敷のゴールの炎
 			if (L1HauntedHouse.getInstance().getHauntedHouseStatus() == L1HauntedHouse.STATUS_PLAYING) {
 				final int winnersCount = L1HauntedHouse.getInstance().getWinnersCount();
 				final int goalCount = L1HauntedHouse.getInstance().getGoalCount();

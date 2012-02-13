@@ -36,37 +36,37 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public void close() throws IOException {
-		inputStream.close();
+		this.inputStream.close();
 	}
 
 	@Override
 	public int read() throws IOException {
-		if ((buffer == null) || (bufferCounter == buffer.length)) {
-			if (eof) {
+		if ((this.buffer == null) || (this.bufferCounter == this.buffer.length)) {
+			if (this.eof) {
 				return -1;
 			}
-			acquire();
-			if (buffer.length == 0) {
-				buffer = null;
+			this.acquire();
+			if (this.buffer.length == 0) {
+				this.buffer = null;
 				return -1;
 			}
-			bufferCounter = 0;
+			this.bufferCounter = 0;
 		}
-		return buffer[bufferCounter++];
+		return this.buffer[this.bufferCounter++];
 	}
 
 	private void acquire() throws IOException {
 		final char[] four = new char[4];
 		int i = 0;
 		do {
-			final int b = inputStream.read();
+			final int b = this.inputStream.read();
 			if (b == -1) {
 				if (i != 0) {
 					throw new IOException("Bad base64 stream");
 				}
 				else {
-					buffer = new int[0];
-					eof = true;
+					this.buffer = new int[0];
+					this.eof = true;
 					return;
 				}
 			}
@@ -93,10 +93,10 @@ public class Base64InputStream extends InputStream {
 		}
 		int l;
 		if (four[3] == Base64.Shared.pad) {
-			if (inputStream.read() != -1) {
+			if (this.inputStream.read() != -1) {
 				throw new IOException("Bad base64 stream");
 			}
-			eof = true;
+			this.eof = true;
 			if (four[2] == Base64.Shared.pad) {
 				l = 1;
 			}
@@ -113,9 +113,9 @@ public class Base64InputStream extends InputStream {
 				aux = aux | (Base64.Shared.chars.indexOf(four[i]) << (6 * (3 - i)));
 			}
 		}
-		buffer = new int[l];
+		this.buffer = new int[l];
 		for (i = 0; i < l; i++) {
-			buffer[i] = (aux >>> (8 * (2 - i))) & 0xFF;
+			this.buffer[i] = (aux >>> (8 * (2 - i))) & 0xFF;
 		}
 	}
 }

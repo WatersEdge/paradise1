@@ -101,32 +101,32 @@ class AcHpMpBonusEffect implements L1ArmorSetEffect {
 	private final int _addMr;
 
 	public AcHpMpBonusEffect(final int ac, final int addHp, final int addMp, final int regenHp, final int regenMp, final int addMr) {
-		_ac = ac;
-		_addHp = addHp;
-		_addMp = addMp;
-		_regenHp = regenHp;
-		_regenMp = regenMp;
-		_addMr = addMr;
+		this._ac = ac;
+		this._addHp = addHp;
+		this._addMp = addMp;
+		this._regenHp = regenHp;
+		this._regenMp = regenMp;
+		this._addMr = addMr;
 	}
 
 	@Override
 	public void cancelEffect(final L1PcInstance pc) {
-		pc.addAc(-_ac);
-		pc.addMaxHp(-_addHp);
-		pc.addMaxMp(-_addMp);
-		pc.addHpr(-_regenHp);
-		pc.addMpr(-_regenMp);
-		pc.addMr(-_addMr);
+		pc.addAc(-this._ac);
+		pc.addMaxHp(-this._addHp);
+		pc.addMaxMp(-this._addMp);
+		pc.addHpr(-this._regenHp);
+		pc.addMpr(-this._regenMp);
+		pc.addMr(-this._addMr);
 	}
 
 	@Override
 	public void giveEffect(final L1PcInstance pc) {
-		pc.addAc(_ac);
-		pc.addMaxHp(_addHp);
-		pc.addMaxMp(_addMp);
-		pc.addHpr(_regenHp);
-		pc.addMpr(_regenMp);
-		pc.addMr(_addMr);
+		pc.addAc(this._ac);
+		pc.addMaxHp(this._addHp);
+		pc.addMaxMp(this._addMp);
+		pc.addHpr(this._regenHp);
+		pc.addMpr(this._regenMp);
+		pc.addMr(this._addMr);
 	}
 }
 
@@ -141,28 +141,28 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 	private final int _defenseEarth;
 
 	public DefenseBonusEffect(final int defenseWater, final int defenseWind, final int defenseFire, final int defenseEarth) {
-		_defenseWater = defenseWater;
-		_defenseWind = defenseWind;
-		_defenseFire = defenseFire;
-		_defenseEarth = defenseEarth;
+		this._defenseWater = defenseWater;
+		this._defenseWind = defenseWind;
+		this._defenseFire = defenseFire;
+		this._defenseEarth = defenseEarth;
 	}
 
 	// @Override
 	@Override
 	public void cancelEffect(final L1PcInstance pc) {
-		pc.addWater(-_defenseWater);
-		pc.addWind(-_defenseWind);
-		pc.addFire(-_defenseFire);
-		pc.addEarth(-_defenseEarth);
+		pc.addWater(-this._defenseWater);
+		pc.addWind(-this._defenseWind);
+		pc.addFire(-this._defenseFire);
+		pc.addEarth(-this._defenseEarth);
 	}
 
 	// @Override
 	@Override
 	public void giveEffect(final L1PcInstance pc) {
-		pc.addWater(_defenseWater);
-		pc.addWind(_defenseWind);
-		pc.addFire(_defenseFire);
-		pc.addEarth(_defenseEarth);
+		pc.addWater(this._defenseWater);
+		pc.addWind(this._defenseWind);
+		pc.addFire(this._defenseFire);
+		pc.addEarth(this._defenseEarth);
 	}
 }
 
@@ -179,31 +179,31 @@ class HitDmgModifierEffect implements L1ArmorSetEffect {
 	private final int _sp;
 
 	public HitDmgModifierEffect(final int hitModifier, final int dmgModifier, final int bowHitModifier, final int bowDmgModifier, final int sp) {
-		_hitModifier = hitModifier;
-		_dmgModifier = dmgModifier;
-		_bowHitModifier = bowHitModifier;
-		_bowDmgModifier = bowDmgModifier;
-		_sp = sp;
+		this._hitModifier = hitModifier;
+		this._dmgModifier = dmgModifier;
+		this._bowHitModifier = bowHitModifier;
+		this._bowDmgModifier = bowDmgModifier;
+		this._sp = sp;
 	}
 
 	// @Override
 	@Override
 	public void cancelEffect(final L1PcInstance pc) {
-		pc.addHitModifierByArmor(-_hitModifier);
-		pc.addDmgModifierByArmor(-_dmgModifier);
-		pc.addBowHitModifierByArmor(-_bowHitModifier);
-		pc.addBowDmgModifierByArmor(-_bowDmgModifier);
-		pc.addSp(-_sp);
+		pc.addHitModifierByArmor(-this._hitModifier);
+		pc.addDmgModifierByArmor(-this._dmgModifier);
+		pc.addBowHitModifierByArmor(-this._bowHitModifier);
+		pc.addBowDmgModifierByArmor(-this._bowDmgModifier);
+		pc.addSp(-this._sp);
 	}
 
 	// @Override
 	@Override
 	public void giveEffect(final L1PcInstance pc) {
-		pc.addHitModifierByArmor(_hitModifier);
-		pc.addDmgModifierByArmor(_dmgModifier);
-		pc.addBowHitModifierByArmor(_bowHitModifier);
-		pc.addBowDmgModifierByArmor(_bowDmgModifier);
-		pc.addSp(_sp);
+		pc.addHitModifierByArmor(this._hitModifier);
+		pc.addDmgModifierByArmor(this._dmgModifier);
+		pc.addBowHitModifierByArmor(this._bowHitModifier);
+		pc.addBowDmgModifierByArmor(this._bowDmgModifier);
+		pc.addSp(this._sp);
 	}
 }
 
@@ -219,24 +219,24 @@ class L1ArmorSetImpl extends L1ArmorSet {
 	private final List<L1ArmorSetEffect> _effects;
 
 	protected L1ArmorSetImpl(final int ids[]) {
-		_ids = ids;
-		_effects = Lists.newList();
+		this._ids = ids;
+		this._effects = Lists.newList();
 	}
 
 	public void addEffect(final L1ArmorSetEffect effect) {
-		_effects.add(effect);
+		this._effects.add(effect);
 	}
 
 	@Override
 	public void cancelEffect(final L1PcInstance pc) {
-		for (final L1ArmorSetEffect effect : _effects) {
+		for (final L1ArmorSetEffect effect : this._effects) {
 			effect.cancelEffect(pc);
 		}
 	}
 
 	@Override
 	public void giveEffect(final L1PcInstance pc) {
-		for (final L1ArmorSetEffect effect : _effects) {
+		for (final L1ArmorSetEffect effect : this._effects) {
 			effect.giveEffect(pc);
 		}
 	}
@@ -248,7 +248,7 @@ class L1ArmorSetImpl extends L1ArmorSet {
 		boolean isSetContainRing = false;
 
 		// セット装備にリングが含まれているか調べる
-		for (final int id : _ids) {
+		for (final int id : this._ids) {
 			armor = pcInventory.findItemId(id);
 			if ((armor.getItem().getType2() == 2) && (armor.getItem().getType() == 9)) { // ring
 				isSetContainRing = true;
@@ -272,7 +272,7 @@ class L1ArmorSetImpl extends L1ArmorSet {
 
 	@Override
 	public boolean isPartOfSet(final int id) {
-		for (final int i : _ids) {
+		for (final int i : this._ids) {
 			if (id == i) {
 				return true;
 			}
@@ -282,11 +282,11 @@ class L1ArmorSetImpl extends L1ArmorSet {
 
 	@Override
 	public final boolean isValid(final L1PcInstance pc) {
-		return pc.getInventory().checkEquipped(_ids);
+		return pc.getInventory().checkEquipped(this._ids);
 	}
 
 	public void removeEffect(final L1ArmorSetEffect effect) {
-		_effects.remove(effect);
+		this._effects.remove(effect);
 	}
 
 }
@@ -295,7 +295,7 @@ class PolymorphEffect implements L1ArmorSetEffect {
 	private int _gfxId;
 
 	public PolymorphEffect(final int gfxId) {
-		_gfxId = gfxId;
+		this._gfxId = gfxId;
 	}
 
 	@Override
@@ -305,12 +305,12 @@ class PolymorphEffect implements L1ArmorSetEffect {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
 		}
-		if (_gfxId == 6080) {
+		if (this._gfxId == 6080) {
 			if (pc.get_sex() == 0) {
-				_gfxId = 6094;
+				this._gfxId = 6094;
 			}
 		}
-		if (pc.getTempCharGfx() != _gfxId) {
+		if (pc.getTempCharGfx() != this._gfxId) {
 			return;
 		}
 		L1PolyMorph.undoPoly(pc);
@@ -323,18 +323,18 @@ class PolymorphEffect implements L1ArmorSetEffect {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
 		}
-		if ((_gfxId == 6080) || (_gfxId == 6094)) {
+		if ((this._gfxId == 6080) || (this._gfxId == 6094)) {
 			if (pc.get_sex() == 0) {
-				_gfxId = 6094;
+				this._gfxId = 6094;
 			}
 			else {
-				_gfxId = 6080;
+				this._gfxId = 6080;
 			}
-			if (!isRemainderOfCharge(pc)) { // 残チャージ数なし
+			if (!this.isRemainderOfCharge(pc)) { // 残チャージ数なし
 				return;
 			}
 		}
-		L1PolyMorph.doPoly(pc, _gfxId, 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
+		L1PolyMorph.doPoly(pc, this._gfxId, 0, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 	}
 
 	private boolean isRemainderOfCharge(final L1PcInstance pc) {
@@ -366,31 +366,31 @@ class StatBonusEffect implements L1ArmorSetEffect {
 	private final int _intl;
 
 	public StatBonusEffect(final int str, final int dex, final int con, final int wis, final int cha, final int intl) {
-		_str = str;
-		_dex = dex;
-		_con = con;
-		_wis = wis;
-		_cha = cha;
-		_intl = intl;
+		this._str = str;
+		this._dex = dex;
+		this._con = con;
+		this._wis = wis;
+		this._cha = cha;
+		this._intl = intl;
 	}
 
 	@Override
 	public void cancelEffect(final L1PcInstance pc) {
-		pc.addStr((byte) -_str);
-		pc.addDex((byte) -_dex);
-		pc.addCon((byte) -_con);
-		pc.addWis((byte) -_wis);
-		pc.addCha((byte) -_cha);
-		pc.addInt((byte) -_intl);
+		pc.addStr((byte) -this._str);
+		pc.addDex((byte) -this._dex);
+		pc.addCon((byte) -this._con);
+		pc.addWis((byte) -this._wis);
+		pc.addCha((byte) -this._cha);
+		pc.addInt((byte) -this._intl);
 	}
 
 	@Override
 	public void giveEffect(final L1PcInstance pc) {
-		pc.addStr((byte) _str);
-		pc.addDex((byte) _dex);
-		pc.addCon((byte) _con);
-		pc.addWis((byte) _wis);
-		pc.addCha((byte) _cha);
-		pc.addInt((byte) _intl);
+		pc.addStr((byte) this._str);
+		pc.addDex((byte) this._dex);
+		pc.addCon((byte) this._con);
+		pc.addWis((byte) this._wis);
+		pc.addCha((byte) this._cha);
+		pc.addInt((byte) this._intl);
 	}
 }

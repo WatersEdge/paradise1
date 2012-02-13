@@ -60,75 +60,75 @@ public class L1PetType {
 	private final boolean _canUseEquipment;
 
 	public L1PetType(final int baseNpcId, final String name, final int itemIdForTaming, final IntRange hpUpRange, final IntRange mpUpRange, final int evolvItemId, final int npcIdForEvolving, final int msgIds[], final int defyMsgId, final boolean canUseEquipment) {
-		_baseNpcId = baseNpcId;
-		_baseNpcTemplate = NpcTable.getInstance().getTemplate(baseNpcId);
-		_name = name;
-		_itemIdForTaming = itemIdForTaming;
-		_hpUpRange = hpUpRange;
-		_mpUpRange = mpUpRange;
-		_evolvItemId = evolvItemId;
-		_npcIdForEvolving = npcIdForEvolving;
-		_msgIds = msgIds;
-		_defyMsgId = defyMsgId;
-		_canUseEquipment = canUseEquipment;
+		this._baseNpcId = baseNpcId;
+		this._baseNpcTemplate = NpcTable.getInstance().getTemplate(baseNpcId);
+		this._name = name;
+		this._itemIdForTaming = itemIdForTaming;
+		this._hpUpRange = hpUpRange;
+		this._mpUpRange = mpUpRange;
+		this._evolvItemId = evolvItemId;
+		this._npcIdForEvolving = npcIdForEvolving;
+		this._msgIds = msgIds;
+		this._defyMsgId = defyMsgId;
+		this._canUseEquipment = canUseEquipment;
 
 	}
 
 	public boolean canEvolve() {
-		return _npcIdForEvolving != 0;
+		return this._npcIdForEvolving != 0;
 	}
 
 	public boolean canTame() {
-		return _itemIdForTaming != 0;
+		return this._itemIdForTaming != 0;
 	}
 
 	// 可使用宠物装备
 	public boolean canUseEquipment() {
-		return _canUseEquipment;
+		return this._canUseEquipment;
 	}
 
 	public int getBaseNpcId() {
-		return _baseNpcId;
+		return this._baseNpcId;
 	}
 
 	public L1Npc getBaseNpcTemplate() {
-		return _baseNpcTemplate;
+		return this._baseNpcTemplate;
 	}
 
 	public int getDefyMessageId() {
-		return _defyMsgId;
+		return this._defyMsgId;
 	}
 
 	// 进化道具
 	public int getEvolvItemId() {
-		return _evolvItemId;
+		return this._evolvItemId;
 	}
 
 	public IntRange getHpUpRange() {
-		return _hpUpRange;
+		return this._hpUpRange;
 	}
 
 	public int getItemIdForTaming() {
-		return _itemIdForTaming;
+		return this._itemIdForTaming;
 	}
 
 	public int getMessageId(final int num) {
 		if (num == 0) {
 			return 0;
 		}
-		return _msgIds[num - 1];
+		return this._msgIds[num - 1];
 	}
 
 	public IntRange getMpUpRange() {
-		return _mpUpRange;
+		return this._mpUpRange;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public int getNpcIdForEvolving() {
-		return _npcIdForEvolving;
+		return this._npcIdForEvolving;
 	}
 
 }

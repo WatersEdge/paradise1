@@ -38,75 +38,75 @@ public class S_AddSkill extends ServerBasePacket {
 		final boolean hasLevel5to8 = 0 < (ids[4] + ids[5] + ids[6] + ids[7]);
 		final boolean hasLevel9to10 = 0 < (ids[8] + ids[9]);
 
-		writeC(Opcodes.S_OPCODE_ADDSKILL);
+		this.writeC(Opcodes.S_OPCODE_ADDSKILL);
 		if (hasLevel5to8 && !hasLevel9to10) {
-			writeC(50);
+			this.writeC(50);
 		}
 		else if (hasLevel9to10) {
-			writeC(100);
+			this.writeC(100);
 		}
 		else {
-			writeC(32);
+			this.writeC(32);
 		}
 		for (final int i : ids) {
-			writeC(i);
+			this.writeC(i);
 		}
-		writeD(0);
-		writeD(0);
+		this.writeD(0);
+		this.writeD(0);
 	}
 
 	public S_AddSkill(final int level1, final int level2, final int level3, final int level4, final int level5, final int level6, final int level7, final int level8, final int level9, final int level10, final int knight, final int l2, final int de1, final int de2,
 			final int royal, final int l3, final int elf1, final int elf2, final int elf3, final int elf4, final int elf5, final int elf6, final int k5, final int l5, final int m5, final int n5, final int o5, final int p5) {
 		final int i6 = level5 + level6 + level7 + level8;
 		final int j6 = level9 + level10;
-		writeC(Opcodes.S_OPCODE_ADDSKILL);
+		this.writeC(Opcodes.S_OPCODE_ADDSKILL);
 		if ((i6 > 0) && (j6 == 0)) {
-			writeC(50);
+			this.writeC(50);
 		}
 		else if (j6 > 0) {
-			writeC(100);
+			this.writeC(100);
 		}
 		else {
-			writeC(32);
+			this.writeC(32);
 		}
-		writeC(level1);
-		writeC(level2);
-		writeC(level3);
-		writeC(level4);
-		writeC(level5);
-		writeC(level6);
-		writeC(level7);
-		writeC(level8);
-		writeC(level9);
-		writeC(level10);
-		writeC(knight);
-		writeC(l2);
-		writeC(de1);
-		writeC(de2);
-		writeC(royal);
-		writeC(l3);
-		writeC(elf1);
-		writeC(elf2);
-		writeC(elf3);
-		writeC(elf4);
-		writeC(elf5);
-		writeC(elf6);
-		writeC(k5);
-		writeC(l5);
-		writeC(m5);
-		writeC(n5);
-		writeC(o5);
-		writeC(p5);
-		writeD(0);
-		writeD(0);
+		this.writeC(level1);
+		this.writeC(level2);
+		this.writeC(level3);
+		this.writeC(level4);
+		this.writeC(level5);
+		this.writeC(level6);
+		this.writeC(level7);
+		this.writeC(level8);
+		this.writeC(level9);
+		this.writeC(level10);
+		this.writeC(knight);
+		this.writeC(l2);
+		this.writeC(de1);
+		this.writeC(de2);
+		this.writeC(royal);
+		this.writeC(l3);
+		this.writeC(elf1);
+		this.writeC(elf2);
+		this.writeC(elf3);
+		this.writeC(elf4);
+		this.writeC(elf5);
+		this.writeC(elf6);
+		this.writeC(k5);
+		this.writeC(l5);
+		this.writeC(m5);
+		this.writeC(n5);
+		this.writeC(o5);
+		this.writeC(p5);
+		this.writeD(0);
+		this.writeD(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

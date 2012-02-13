@@ -28,7 +28,7 @@ public class UseSpellBook_DarkElf implements UniversalUseItem {
 			case 40268:
 			case 40269:
 				if (level >= 15) {
-					DarkElfSpellBook(pc, item);
+					this.DarkElfSpellBook(pc, item);
 				}
 				break;
 
@@ -38,7 +38,7 @@ public class UseSpellBook_DarkElf implements UniversalUseItem {
 			case 40273:
 			case 40274:
 				if (level >= 30) {
-					DarkElfSpellBook(pc, item);
+					this.DarkElfSpellBook(pc, item);
 				}
 				break;
 
@@ -48,7 +48,7 @@ public class UseSpellBook_DarkElf implements UniversalUseItem {
 			case 40278:
 			case 40279:
 				if (level >= 45) {
-					DarkElfSpellBook(pc, item);
+					this.DarkElfSpellBook(pc, item);
 				}
 				break;
 

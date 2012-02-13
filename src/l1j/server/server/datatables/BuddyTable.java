@@ -70,7 +70,7 @@ public class BuddyTable {
 						buddy.add(buddysRS.getInt("buddy_id"), buddysRS.getString("buddy_name"));
 					}
 
-					_buddys.put(buddy.getCharId(), buddy);
+					this._buddys.put(buddy.getCharId(), buddy);
 				}
 				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -79,7 +79,7 @@ public class BuddyTable {
 					SQLUtil.close(buddysPS);
 				}
 			}
-			_log.config("加载 " + _buddys.size() + " 角色的好友列表");
+			_log.config("加载 " + this._buddys.size() + " 角色的好友列表");
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -124,10 +124,10 @@ public class BuddyTable {
 	 * @return 好友
 	 */
 	public L1Buddy getBuddyTable(final int charId) {
-		L1Buddy buddy = _buddys.get(charId);
+		L1Buddy buddy = this._buddys.get(charId);
 		if (buddy == null) {
 			buddy = new L1Buddy(charId);
-			_buddys.put(charId, buddy);
+			this._buddys.put(charId, buddy);
 		}
 		return buddy;
 	}
@@ -141,7 +141,7 @@ public class BuddyTable {
 	public void removeBuddy(final int charId, final String buddyName) {
 		Connection con = null;
 		PreparedStatement pstm = null;
-		final L1Buddy buddy = getBuddyTable(charId);
+		final L1Buddy buddy = this.getBuddyTable(charId);
 		if (!buddy.containsName(buddyName)) {
 			return;
 		}

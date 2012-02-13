@@ -36,9 +36,9 @@ public class C_SelectTarget extends ClientBasePacket {
 	public C_SelectTarget(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		final int petId = readD();
-		readC();
-		final int targetId = readD();
+		final int petId = this.readD();
+		this.readC();
+		final int targetId = this.readD();
 
 		final L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
 		final L1Character target = (L1Character) L1World.getInstance().findObject(targetId);

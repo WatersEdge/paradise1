@@ -35,15 +35,15 @@ public class S_CurseBlind extends ServerBasePacket {
 	 *            0:OFF 1:自己 2:周边物件可见
 	 */
 	public S_CurseBlind(final int type) {
-		buildPacket(type);
+		this.buildPacket(type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class S_CurseBlind extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int type) {
-		writeC(Opcodes.S_OPCODE_CURSEBLIND);
-		writeH(type);
+		this.writeC(Opcodes.S_OPCODE_CURSEBLIND);
+		this.writeH(type);
 	}
 }

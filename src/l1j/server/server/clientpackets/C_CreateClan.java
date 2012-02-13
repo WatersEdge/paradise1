@@ -34,7 +34,7 @@ public class C_CreateClan extends ClientBasePacket {
 
 	public C_CreateClan(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		final String s = readS();
+		final String s = this.readS();
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isCrown()) { // 是王族

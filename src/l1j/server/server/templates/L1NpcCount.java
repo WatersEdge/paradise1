@@ -19,19 +19,19 @@ public class L1NpcCount {
 	private final int _count;
 
 	public L1NpcCount(final int id, final int count) {
-		_id = id;
-		_count = count;
+		this._id = id;
+		this._count = count;
 	}
 
 	public int getCount() {
-		return _count;
+		return this._count;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public boolean isZero() {
-		return (_id == 0) && (_count == 0);
+		return (this._id == 0) && (this._count == 0);
 	}
 }

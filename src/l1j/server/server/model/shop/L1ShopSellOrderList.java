@@ -27,12 +27,12 @@ public class L1ShopSellOrderList {
 	private final List<L1ShopSellOrder> _list = Lists.newList();
 
 	L1ShopSellOrderList(final L1Shop shop, final L1PcInstance pc) {
-		_shop = shop;
-		_pc = pc;
+		this._shop = shop;
+		this._pc = pc;
 	}
 
 	public void add(final int itemObjectId, final int count) {
-		final L1AssessedItem assessedItem = _shop.assessItem(_pc.getInventory().getItem(itemObjectId));
+		final L1AssessedItem assessedItem = this._shop.assessItem(this._pc.getInventory().getItem(itemObjectId));
 		if (assessedItem == null) {
 			/*
 			 * 未指定道具的购买清单。 对流氓包的可能性。
@@ -40,15 +40,15 @@ public class L1ShopSellOrderList {
 			throw new IllegalArgumentException();
 		}
 
-		_list.add(new L1ShopSellOrder(assessedItem, count));
+		this._list.add(new L1ShopSellOrder(assessedItem, count));
 	}
 
 	List<L1ShopSellOrder> getList() {
-		return _list;
+		return this._list;
 	}
 
 	L1PcInstance getPc() {
-		return _pc;
+		return this._pc;
 	}
 }
 
@@ -60,16 +60,16 @@ class L1ShopSellOrder {
 	private final int _count;
 
 	public L1ShopSellOrder(final L1AssessedItem item, final int count) {
-		_item = item;
-		_count = count;
+		this._item = item;
+		this._count = count;
 	}
 
 	public int getCount() {
-		return _count;
+		return this._count;
 	}
 
 	public L1AssessedItem getItem() {
-		return _item;
+		return this._item;
 	}
 
 }

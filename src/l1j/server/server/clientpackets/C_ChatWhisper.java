@@ -35,8 +35,8 @@ public class C_ChatWhisper extends ClientBasePacket {
 
 	public C_ChatWhisper(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		final String targetName = readS();
-		final String text = readS();
+		final String targetName = this.readS();
+		final String text = this.readS();
 		final L1PcInstance whisperFrom = client.getActiveChar();
 
 		// 被魔封

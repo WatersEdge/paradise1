@@ -58,18 +58,18 @@ public class S_Fight extends ServerBasePacket {
 	 * @param flag
 	 */
 	public S_Fight(final int type, final int flag) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x72);
-		writeD(type);
-		writeD((flag == FLAG_OFF) ? FLAG_OFF : FLAG_ON);
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(0x72);
+		this.writeD(type);
+		this.writeD((flag == FLAG_OFF) ? FLAG_OFF : FLAG_ON);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

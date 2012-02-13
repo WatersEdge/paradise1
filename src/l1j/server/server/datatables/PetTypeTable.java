@@ -52,15 +52,15 @@ public class PetTypeTable {
 	private final Set<String> _defaultNames = new HashSet<String>();
 
 	private PetTypeTable() {
-		loadTypes();
+		this.loadTypes();
 	}
 
 	public L1PetType get(final int baseNpcId) {
-		return _types.get(baseNpcId);
+		return this._types.get(baseNpcId);
 	}
 
 	public boolean isNameDefault(final String name) {
-		return _defaultNames.contains(name.toLowerCase());
+		return this._defaultNames.contains(name.toLowerCase());
 	}
 
 	private void loadTypes() {
@@ -91,8 +91,8 @@ public class PetTypeTable {
 				final boolean canUseEquipment = rs.getBoolean("canUseEquipment");
 				final IntRange hpUpRange = new IntRange(hpUpMin, hpUpMax);
 				final IntRange mpUpRange = new IntRange(mpUpMin, mpUpMax);
-				_types.put(baseNpcId, new L1PetType(baseNpcId, name, itemIdForTaming, hpUpRange, mpUpRange, evolvItemId, npcIdForEvolving, msgIds, defyMsgId, canUseEquipment));
-				_defaultNames.add(name.toLowerCase());
+				this._types.put(baseNpcId, new L1PetType(baseNpcId, name, itemIdForTaming, hpUpRange, mpUpRange, evolvItemId, npcIdForEvolving, msgIds, defyMsgId, canUseEquipment));
+				this._defaultNames.add(name.toLowerCase());
 			}
 		}
 		catch (final SQLException e) {

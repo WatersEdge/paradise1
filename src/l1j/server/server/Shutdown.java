@@ -73,8 +73,8 @@ public class Shutdown extends Thread {
 	 * 
 	 */
 	public Shutdown() {
-		secondsShut = -1;
-		shutdownMode = SIGTERM;
+		this.secondsShut = -1;
+		this.shutdownMode = SIGTERM;
 	}
 
 	/**
@@ -90,12 +90,12 @@ public class Shutdown extends Thread {
 		if (seconds < 0) {
 			seconds = 0;
 		}
-		secondsShut = seconds;
+		this.secondsShut = seconds;
 		if (restart) {
-			shutdownMode = GM_RESTART;
+			this.shutdownMode = GM_RESTART;
 		}
 		else {
-			shutdownMode = GM_SHUTDOWN;
+			this.shutdownMode = GM_SHUTDOWN;
 		}
 	}
 
@@ -132,16 +132,16 @@ public class Shutdown extends Thread {
 		if (this == _instance) {
 			// last byebye, save all data and quit this server
 			// logging doesnt work here :(
-			saveData();
+			this.saveData();
 			// server will quit, when this function ends.
 		}
 		else {
 			// gm shutdown: send warnings and then call exit to start shutdown
 			// sequence
-			countdown();
+			this.countdown();
 			// last point where logging is operational :(
-			_log.warning("‘游戏管理员’ 关闭伺服器 倒数。" + _modeText[shutdownMode] + " NOW！");
-			switch (shutdownMode) {
+			_log.warning("‘游戏管理员’ 关闭伺服器 倒数。" + _modeText[this.shutdownMode] + " NOW！");
+			switch (this.shutdownMode) {
 				case GM_SHUTDOWN:
 					_instance.setMode(GM_SHUTDOWN);
 					System.gc();// 内存回收
@@ -168,8 +168,8 @@ public class Shutdown extends Thread {
 	 */
 	public void startShutdown(final L1PcInstance activeChar, final int seconds, final boolean restart) {
 		final Announcements _an = Announcements.getInstance();
-		_log.warning("‘游戏管理员’: " + activeChar.getId() + " 使用关机指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
-		_an.announceToAll("伺服器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
+		_log.warning("‘游戏管理员’: " + activeChar.getId() + " 使用关机指令。" + _modeText[this.shutdownMode] + " 在 " + seconds + " 秒！");
+		_an.announceToAll("伺服器 是 " + _modeText[this.shutdownMode] + " 在 " + seconds + " 秒！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -183,8 +183,8 @@ public class Shutdown extends Thread {
 
 	public void startTelnetShutdown(final String IP, final int seconds, final boolean restart) {
 		final Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
-		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
+		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[this.shutdownMode] + " 在 " + seconds + " 秒！");
+		_an.announceToAll("服务器 是 " + _modeText[this.shutdownMode] + " 在 " + seconds + " 秒！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -203,8 +203,8 @@ public class Shutdown extends Thread {
 	 */
 	public void Telnetabort(final String IP) {
 		final Announcements _an = Announcements.getInstance();
-		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[shutdownMode] + " 已停止！");
-		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode] + " 并维持正常运作！");
+		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[this.shutdownMode] + " 已停止！");
+		_an.announceToAll("伺服器中断了 " + _modeText[this.shutdownMode] + " 并维持正常运作！");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -216,7 +216,7 @@ public class Shutdown extends Thread {
 	 * 
 	 */
 	private void _abort() {
-		shutdownMode = ABORT;
+		this.shutdownMode = ABORT;
 	}
 
 	/**
@@ -227,9 +227,9 @@ public class Shutdown extends Thread {
 		final Announcements _an = Announcements.getInstance();
 
 		try {
-			while (secondsShut > 0) {
+			while (this.secondsShut > 0) {
 
-				switch (secondsShut) {
+				switch (this.secondsShut) {
 					case 240:
 						_an.announceToAll("服务器将在4分钟内关闭。");
 						break;
@@ -265,12 +265,12 @@ public class Shutdown extends Thread {
 						break;
 				}
 
-				secondsShut--;
+				this.secondsShut--;
 
 				final int delay = 1000; // 毫秒
 				Thread.sleep(delay);
 
-				if (shutdownMode == ABORT) {
+				if (this.shutdownMode == ABORT) {
 					break;
 				}
 			}
@@ -287,7 +287,7 @@ public class Shutdown extends Thread {
 	 */
 	private void saveData() {
 		final Announcements _an = Announcements.getInstance();
-		switch (shutdownMode) {
+		switch (this.shutdownMode) {
 			case SIGTERM:
 				System.err.println("【 动作：经由主程式 执行关闭 】");
 				break;
@@ -299,7 +299,7 @@ public class Shutdown extends Thread {
 				break;
 
 		}
-		_an.announceToAll("伺服器目前是" + _modeText[shutdownMode] + " NOW! bye bye");
+		_an.announceToAll("伺服器目前是" + _modeText[this.shutdownMode] + " NOW! bye bye");
 
 		// we cannt abort shutdown anymore, so i removed the "if"
 		GameServer.getInstance().disconnectAllCharacters();
@@ -321,7 +321,7 @@ public class Shutdown extends Thread {
 	 *            应设置什么样的模式
 	 */
 	private void setMode(final int mode) {
-		shutdownMode = mode;
+		this.shutdownMode = mode;
 	}
 
 	/**
@@ -331,6 +331,6 @@ public class Shutdown extends Thread {
 	 *            应设置什么样的模式
 	 */
 	int getMode() {
-		return shutdownMode;
+		return this.shutdownMode;
 	}
 }

@@ -32,14 +32,14 @@ public class S_DeleteInventoryItem extends ServerBasePacket {
 	 */
 	public S_DeleteInventoryItem(final L1ItemInstance item) {
 		if (item != null) {
-			writeC(Opcodes.S_OPCODE_DELETEINVENTORYITEM);
-			writeD(item.getId());
+			this.writeC(Opcodes.S_OPCODE_DELETEINVENTORYITEM);
+			this.writeD(item.getId());
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

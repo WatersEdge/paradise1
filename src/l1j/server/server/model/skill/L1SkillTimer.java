@@ -1507,9 +1507,9 @@ class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
 	private int _remainingTime;
 
 	public L1SkillTimerThreadImpl(final L1Character cha, final int skillId, final int timeMillis) {
-		_cha = cha;
-		_skillId = skillId;
-		_timeMillis = timeMillis;
+		this._cha = cha;
+		this._skillId = skillId;
+		this._timeMillis = timeMillis;
 	}
 
 	@Override
@@ -1520,12 +1520,12 @@ class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
 	@Override
 	public void end() {
 		super.interrupt();
-		L1SkillStop.stopSkill(_cha, _skillId);
+		L1SkillStop.stopSkill(this._cha, this._skillId);
 	}
 
 	@Override
 	public int getRemainingTime() {
-		return _remainingTime;
+		return this._remainingTime;
 	}
 
 	@Override
@@ -1538,16 +1538,16 @@ class L1SkillTimerThreadImpl extends Thread implements L1SkillTimer {
 
 	@Override
 	public void run() {
-		for (int timeCount = _timeMillis / 1000; timeCount > 0; timeCount--) {
+		for (int timeCount = this._timeMillis / 1000; timeCount > 0; timeCount--) {
 			try {
 				Thread.sleep(1000);
-				_remainingTime = timeCount;
+				this._remainingTime = timeCount;
 			}
 			catch (final InterruptedException e) {
 				return;
 			}
 		}
-		_cha.removeSkillEffect(_skillId);
+		this._cha.removeSkillEffect(this._skillId);
 	}
 }
 
@@ -1565,23 +1565,23 @@ class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
 	private int _remainingTime;
 
 	public L1SkillTimerTimerImpl(final L1Character cha, final int skillId, final int timeMillis) {
-		_cha = cha;
-		_skillId = skillId;
-		_timeMillis = timeMillis;
+		this._cha = cha;
+		this._skillId = skillId;
+		this._timeMillis = timeMillis;
 
-		_remainingTime = _timeMillis / 1000;
+		this._remainingTime = this._timeMillis / 1000;
 	}
 
 	@Override
 	public void begin() {
-		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 1000, 1000);
+		this._future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 1000, 1000);
 	}
 
 	@Override
 	public void end() {
-		kill();
+		this.kill();
 		try {
-			L1SkillStop.stopSkill(_cha, _skillId);
+			L1SkillStop.stopSkill(this._cha, this._skillId);
 		}
 		catch (final Throwable e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -1590,21 +1590,21 @@ class L1SkillTimerTimerImpl implements L1SkillTimer, Runnable {
 
 	@Override
 	public int getRemainingTime() {
-		return _remainingTime;
+		return this._remainingTime;
 	}
 
 	@Override
 	public void kill() {
-		if (_future != null) {
-			_future.cancel(false);
+		if (this._future != null) {
+			this._future.cancel(false);
 		}
 	}
 
 	@Override
 	public void run() {
-		_remainingTime--;
-		if (_remainingTime <= 0) {
-			_cha.removeSkillEffect(_skillId);
+		this._remainingTime--;
+		if (this._remainingTime <= 0) {
+			this._cha.removeSkillEffect(this._skillId);
 		}
 	}
 }

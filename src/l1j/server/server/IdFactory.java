@@ -44,12 +44,12 @@ public class IdFactory {
 	}
 
 	private IdFactory() {
-		loadState();
+		this.loadState();
 	}
 
 	public int nextId() {
-		synchronized (_monitor) {
-			return _curId++;
+		synchronized (this._monitor) {
+			return this._curId++;
 		}
 	}
 
@@ -72,8 +72,8 @@ public class IdFactory {
 			if (id < FIRST_ID) {
 				id = FIRST_ID;
 			}
-			_curId = id;
-			_log.info("目前的物件ID: " + _curId);
+			this._curId = id;
+			_log.info("目前的物件ID: " + this._curId);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

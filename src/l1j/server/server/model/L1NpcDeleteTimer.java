@@ -31,32 +31,32 @@ public class L1NpcDeleteTimer extends TimerTask {
 	private final int _timeMillis;
 
 	public L1NpcDeleteTimer(final L1NpcInstance npc, final int timeMillis) {
-		_npc = npc;
-		_timeMillis = timeMillis;
+		this._npc = npc;
+		this._timeMillis = timeMillis;
 	}
 
 	public void begin() {
 		final Timer timer = new Timer();
-		timer.schedule(this, _timeMillis);
+		timer.schedule(this, this._timeMillis);
 	}
 
 	@Override
 	public void run() {
 		// 龙之门扉存在时间到时
-		if (_npc != null) {
-			if ((_npc.getNpcId() == 81273) || (_npc.getNpcId() == 81274) || (_npc.getNpcId() == 81275) || (_npc.getNpcId() == 81276) || (_npc.getNpcId() == 81277)) {
-				if (_npc.getNpcId() == 81277) { // 隐匿的巨龙谷入口关闭
+		if (this._npc != null) {
+			if ((this._npc.getNpcId() == 81273) || (this._npc.getNpcId() == 81274) || (this._npc.getNpcId() == 81275) || (this._npc.getNpcId() == 81276) || (this._npc.getNpcId() == 81277)) {
+				if (this._npc.getNpcId() == 81277) { // 隐匿的巨龙谷入口关闭
 					L1DragonSlayer.getInstance().setHiddenDragonValleyStstus(0);
 				}
 				// 结束屠龙副本
-				L1DragonSlayer.getInstance().setPortalPack(_npc.getPortalNumber(), null);
-				L1DragonSlayer.getInstance().endDragonPortal(_npc.getPortalNumber());
+				L1DragonSlayer.getInstance().setPortalPack(this._npc.getPortalNumber(), null);
+				L1DragonSlayer.getInstance().endDragonPortal(this._npc.getPortalNumber());
 				// 门扉消失动作
-				_npc.setStatus(ActionCodes.ACTION_Die);
-				_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Die));
+				this._npc.setStatus(ActionCodes.ACTION_Die);
+				this._npc.broadcastPacket(new S_DoActionGFX(this._npc.getId(), ActionCodes.ACTION_Die));
 			}
-			_npc.deleteMe();
-			cancel();
+			this._npc.deleteMe();
+			this.cancel();
 		}
 	}
 }

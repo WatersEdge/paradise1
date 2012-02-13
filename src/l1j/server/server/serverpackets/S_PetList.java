@@ -36,15 +36,15 @@ public class S_PetList extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_PetList(final int npcObjId, final L1PcInstance pc) {
-		buildPacket(npcObjId, pc);
+		this.buildPacket(npcObjId, pc);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -57,31 +57,31 @@ public class S_PetList extends ServerBasePacket {
 		// 判断身上是否有宠物项圈！
 		for (final L1ItemInstance item : pc.getInventory().getItems()) {
 			if ((item.getItem().getItemId() == 40314) || (item.getItem().getItemId() == 40316)) {
-				if (!isWithdraw(pc, item)) {
+				if (!this.isWithdraw(pc, item)) {
 					amuletList.add(item);
 				}
 			}
 		}
 
 		if (amuletList.size() != 0) {
-			writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-			writeD(npcObjId);
-			writeH(amuletList.size());
-			writeC(0x0c);
+			this.writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+			this.writeD(npcObjId);
+			this.writeH(amuletList.size());
+			this.writeC(0x0c);
 			for (final L1ItemInstance item : amuletList) {
-				writeD(item.getId());
-				writeC(0x00);
-				writeH(item.get_gfxid());
-				writeC(item.getBless());
-				writeD(item.getCount());
-				writeC(item.isIdentified() ? 1 : 0);
-				writeS(item.getViewName());
+				this.writeD(item.getId());
+				this.writeC(0x00);
+				this.writeH(item.get_gfxid());
+				this.writeC(item.getBless());
+				this.writeD(item.getCount());
+				this.writeC(item.isIdentified() ? 1 : 0);
+				this.writeS(item.getViewName());
 			}
 		}
 		else {
 			return;
 		}
-		writeD(0x00000073); // Price
+		this.writeD(0x00000073); // Price
 	}
 
 	private boolean isWithdraw(final L1PcInstance pc, final L1ItemInstance item) {

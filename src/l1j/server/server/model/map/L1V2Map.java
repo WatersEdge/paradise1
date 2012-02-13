@@ -48,66 +48,66 @@ public class L1V2Map extends L1Map {
 
 	public L1V2Map(final int id, final byte map[], final int xLoc, final int yLoc, final int width, final int height, final boolean underwater, final boolean markable, final boolean teleportable, final boolean escapable, final boolean useResurrection, final boolean usePainwand,
 			final boolean enabledDeathPenalty, final boolean takePets, final boolean recallPets, final boolean usableItem, final boolean usableSkill) {
-		_id = id;
-		_map = map;
-		_xLoc = xLoc;
-		_yLoc = yLoc;
-		_width = width;
-		_height = height;
+		this._id = id;
+		this._map = map;
+		this._xLoc = xLoc;
+		this._yLoc = yLoc;
+		this._width = width;
+		this._height = height;
 
-		_isUnderwater = underwater;
-		_isMarkable = markable;
-		_isTeleportable = teleportable;
-		_isEscapable = escapable;
-		_isUseResurrection = useResurrection;
-		_isUsePainwand = usePainwand;
-		_isEnabledDeathPenalty = enabledDeathPenalty;
-		_isTakePets = takePets;
-		_isRecallPets = recallPets;
-		_isUsableItem = usableItem;
-		_isUsableSkill = usableSkill;
+		this._isUnderwater = underwater;
+		this._isMarkable = markable;
+		this._isTeleportable = teleportable;
+		this._isEscapable = escapable;
+		this._isUseResurrection = useResurrection;
+		this._isUsePainwand = usePainwand;
+		this._isEnabledDeathPenalty = enabledDeathPenalty;
+		this._isTakePets = takePets;
+		this._isRecallPets = recallPets;
+		this._isUsableItem = usableItem;
+		this._isUsableSkill = usableSkill;
 	}
 
 	@Override
 	public int getHeight() {
-		return _height;
+		return this._height;
 	}
 
 	@Override
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	@Override
 	public int getOriginalTile(final int x, final int y) {
-		final int lo = _map[offset(x, y)];
-		final int hi = _map[offset(x, y) + 1];
+		final int lo = this._map[this.offset(x, y)];
+		final int hi = this._map[this.offset(x, y) + 1];
 		return (lo | ((hi << 8) & 0xFF00));
 	}
 
 	@Override
 	public int getTile(final int x, final int y) {
-		return _map[offset(x, y)];
+		return this._map[this.offset(x, y)];
 	}
 
 	@Override
 	public int getWidth() {
-		return _width;
+		return this._width;
 	}
 
 	@Override
 	public int getX() {
-		return _xLoc;
+		return this._xLoc;
 	}
 
 	@Override
 	public int getY() {
-		return _yLoc;
+		return this._yLoc;
 	}
 
 	@Override
 	public boolean isArrowPassable(final int x, final int y) {
-		return (accessOriginalTile(x, y) != 1);
+		return (this.accessOriginalTile(x, y) != 1);
 	}
 
 	@Override
@@ -118,42 +118,42 @@ public class L1V2Map extends L1Map {
 		int newY;
 
 		if (heading == 0) {
-			tile = accessOriginalTile(x, y - 1);
+			tile = this.accessOriginalTile(x, y - 1);
 			newX = x;
 			newY = y - 1;
 		}
 		else if (heading == 1) {
-			tile = accessOriginalTile(x + 1, y - 1);
+			tile = this.accessOriginalTile(x + 1, y - 1);
 			newX = x + 1;
 			newY = y - 1;
 		}
 		else if (heading == 2) {
-			tile = accessOriginalTile(x + 1, y);
+			tile = this.accessOriginalTile(x + 1, y);
 			newX = x + 1;
 			newY = y;
 		}
 		else if (heading == 3) {
-			tile = accessOriginalTile(x + 1, y + 1);
+			tile = this.accessOriginalTile(x + 1, y + 1);
 			newX = x + 1;
 			newY = y + 1;
 		}
 		else if (heading == 4) {
-			tile = accessOriginalTile(x, y + 1);
+			tile = this.accessOriginalTile(x, y + 1);
 			newX = x;
 			newY = y + 1;
 		}
 		else if (heading == 5) {
-			tile = accessOriginalTile(x - 1, y + 1);
+			tile = this.accessOriginalTile(x - 1, y + 1);
 			newX = x - 1;
 			newY = y + 1;
 		}
 		else if (heading == 6) {
-			tile = accessOriginalTile(x - 1, y);
+			tile = this.accessOriginalTile(x - 1, y);
 			newX = x - 1;
 			newY = y;
 		}
 		else if (heading == 7) {
-			tile = accessOriginalTile(x - 1, y - 1);
+			tile = this.accessOriginalTile(x - 1, y - 1);
 			newX = x - 1;
 			newY = y - 1;
 		}
@@ -161,7 +161,7 @@ public class L1V2Map extends L1Map {
 			return false;
 		}
 
-		if (isExistDoor(newX, newY)) {
+		if (this.isExistDoor(newX, newY)) {
 			return false;
 		}
 
@@ -170,32 +170,32 @@ public class L1V2Map extends L1Map {
 
 	@Override
 	public boolean isArrowPassable(final Point pt) {
-		return isArrowPassable(pt.getX(), pt.getY());
+		return this.isArrowPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isArrowPassable(final Point pt, final int heading) {
-		return isArrowPassable(pt.getX(), pt.getY(), heading);
+		return this.isArrowPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
 	public boolean isCombatZone(final int x, final int y) {
-		return (accessOriginalTile(x, y) == 8);
+		return (this.accessOriginalTile(x, y) == 8);
 	}
 
 	@Override
 	public boolean isCombatZone(final Point pt) {
-		return isCombatZone(pt.getX(), pt.getY());
+		return this.isCombatZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isEnabledDeathPenalty() {
-		return _isEnabledDeathPenalty;
+		return this._isEnabledDeathPenalty;
 	}
 
 	@Override
 	public boolean isEscapable() {
-		return _isEscapable;
+		return this._isEscapable;
 	}
 
 	@Override
@@ -237,41 +237,41 @@ public class L1V2Map extends L1Map {
 
 	@Override
 	public boolean isFishingZone(final int x, final int y) {
-		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
+		return this.accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
 	}
 
 	@Override
 	public boolean isInMap(final int x, final int y) {
-		return ((_xLoc <= x) && (x < _xLoc + _width) && (_yLoc <= y) && (y < _yLoc + _height));
+		return ((this._xLoc <= x) && (x < this._xLoc + this._width) && (this._yLoc <= y) && (y < this._yLoc + this._height));
 	}
 
 	@Override
 	public boolean isInMap(final Point pt) {
-		return isInMap(pt.getX(), pt.getY());
+		return this.isInMap(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isMarkable() {
-		return _isMarkable;
+		return this._isMarkable;
 	}
 
 	@Override
 	public boolean isNormalZone(final int x, final int y) {
-		return (!isCombatZone(x, y) && !isSafetyZone(x, y));
+		return (!this.isCombatZone(x, y) && !this.isSafetyZone(x, y));
 	}
 
 	@Override
 	public boolean isNormalZone(final Point pt) {
-		return isNormalZone(pt.getX(), pt.getY());
+		return this.isNormalZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isPassable(final int x, final int y) {
-		final int tile = accessOriginalTile(x, y);
+		final int tile = this.accessOriginalTile(x, y);
 		if ((tile == 1) || (tile == 9) || (tile == 65) || (tile == 69) || (tile == 73)) {
 			return false;
 		}
-		if (0 != (_map[offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
+		if (0 != (this._map[this.offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
 			return false;
 		}
 		return true;
@@ -281,28 +281,28 @@ public class L1V2Map extends L1Map {
 	public boolean isPassable(final int x, final int y, final int heading) {
 		int tile;
 		if (heading == 0) {
-			tile = accessOriginalTile(x, y - 1);
+			tile = this.accessOriginalTile(x, y - 1);
 		}
 		else if (heading == 1) {
-			tile = accessOriginalTile(x + 1, y - 1);
+			tile = this.accessOriginalTile(x + 1, y - 1);
 		}
 		else if (heading == 2) {
-			tile = accessOriginalTile(x + 1, y);
+			tile = this.accessOriginalTile(x + 1, y);
 		}
 		else if (heading == 3) {
-			tile = accessOriginalTile(x + 1, y + 1);
+			tile = this.accessOriginalTile(x + 1, y + 1);
 		}
 		else if (heading == 4) {
-			tile = accessOriginalTile(x, y + 1);
+			tile = this.accessOriginalTile(x, y + 1);
 		}
 		else if (heading == 5) {
-			tile = accessOriginalTile(x - 1, y + 1);
+			tile = this.accessOriginalTile(x - 1, y + 1);
 		}
 		else if (heading == 6) {
-			tile = accessOriginalTile(x - 1, y);
+			tile = this.accessOriginalTile(x - 1, y);
 		}
 		else if (heading == 7) {
-			tile = accessOriginalTile(x - 1, y - 1);
+			tile = this.accessOriginalTile(x - 1, y - 1);
 		}
 		else {
 			return false;
@@ -311,7 +311,7 @@ public class L1V2Map extends L1Map {
 		if ((tile == 1) || (tile == 9) || (tile == 65) || (tile == 69) || (tile == 73)) {
 			return false;
 		}
-		if (0 != (_map[offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
+		if (0 != (this._map[this.offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
 			return false;
 		}
 		return true;
@@ -319,91 +319,91 @@ public class L1V2Map extends L1Map {
 
 	@Override
 	public boolean isPassable(final Point pt) {
-		return isPassable(pt.getX(), pt.getY());
+		return this.isPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isPassable(final Point pt, final int heading) {
-		return isPassable(pt.getX(), pt.getY(), heading);
+		return this.isPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
 	public boolean isRecallPets() {
-		return _isRecallPets;
+		return this._isRecallPets;
 	}
 
 	@Override
 	public boolean isSafetyZone(final int x, final int y) {
-		return accessOriginalTile(x, y) == 4;
+		return this.accessOriginalTile(x, y) == 4;
 	}
 
 	@Override
 	public boolean isSafetyZone(final Point pt) {
-		return isSafetyZone(pt.getX(), pt.getY());
+		return this.isSafetyZone(pt.getX(), pt.getY());
 	}
 
 	@Override
 	public boolean isTakePets() {
-		return _isTakePets;
+		return this._isTakePets;
 	}
 
 	@Override
 	public boolean isTeleportable() {
-		return _isTeleportable;
+		return this._isTeleportable;
 	}
 
 	@Override
 	public boolean isUnderwater() {
-		return _isUnderwater;
+		return this._isUnderwater;
 	}
 
 	@Override
 	public boolean isUsableItem() {
-		return _isUsableItem;
+		return this._isUsableItem;
 	}
 
 	@Override
 	public boolean isUsableSkill() {
-		return _isUsableSkill;
+		return this._isUsableSkill;
 	}
 
 	@Override
 	public boolean isUsePainwand() {
-		return _isUsePainwand;
+		return this._isUsePainwand;
 	}
 
 	@Override
 	public boolean isUseResurrection() {
-		return _isUseResurrection;
+		return this._isUseResurrection;
 	}
 
 	@Override
 	public void setPassable(final int x, final int y, final boolean isPassable) {
 		if (isPassable) {
-			_map[offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
+			this._map[this.offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
 		}
 		else {
-			_map[offset(x, y)] |= BITFLAG_IS_IMPASSABLE;
+			this._map[this.offset(x, y)] |= BITFLAG_IS_IMPASSABLE;
 		}
 	}
 
 	@Override
 	public void setPassable(final Point pt, final boolean isPassable) {
-		setPassable(pt.getX(), pt.getY(), isPassable);
+		this.setPassable(pt.getX(), pt.getY(), isPassable);
 	}
 
 	@Override
 	public String toString(final Point pt) {
-		final int tile = getOriginalTile(pt.getX(), pt.getY());
+		final int tile = this.getOriginalTile(pt.getX(), pt.getY());
 
 		return (tile & 0xFF) + " " + ((tile >> 8) & 0xFF);
 	}
 
 	private int accessOriginalTile(final int x, final int y) {
-		return _map[offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
+		return this._map[this.offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
 	}
 
 	private int offset(final int x, final int y) {
-		return ((y - _yLoc) * _width * 2) + ((x - _xLoc) * 2);
+		return ((y - this._yLoc) * this._width * 2) + ((x - this._xLoc) * 2);
 	}
 }

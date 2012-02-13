@@ -34,15 +34,15 @@ public class S_Weather extends ServerBasePacket {
 	 * @param weather
 	 */
 	public S_Weather(final int weather) {
-		buildPacket(weather);
+		this.buildPacket(weather);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class S_Weather extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int weather) {
-		writeC(Opcodes.S_OPCODE_WEATHER);
-		writeC(weather);
+		this.writeC(Opcodes.S_OPCODE_WEATHER);
+		this.writeC(weather);
 	}
 }

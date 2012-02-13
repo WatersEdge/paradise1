@@ -35,19 +35,19 @@ public class S_RetrieveElfList extends ServerBasePacket {
 		if (pc.getInventory().getSize() < 180) {
 			final int size = pc.getDwarfForElfInventory().getSize();
 			if (size > 0) {
-				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-				writeD(objid);
-				writeH(size);
-				writeC(9); // 精灵仓库
+				this.writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+				this.writeD(objid);
+				this.writeH(size);
+				this.writeC(9); // 精灵仓库
 				for (final Object itemObject : pc.getDwarfForElfInventory().getItems()) {
 					final L1ItemInstance item = (L1ItemInstance) itemObject;
-					writeD(item.getId());
-					writeC(0);
-					writeH(item.get_gfxid());
-					writeC(item.getBless());
-					writeD(item.getCount());
-					writeC(item.isIdentified() ? 1 : 0);
-					writeS(item.getViewName());
+					this.writeD(item.getId());
+					this.writeC(0);
+					this.writeH(item.get_gfxid());
+					this.writeC(item.getBless());
+					this.writeD(item.getCount());
+					this.writeC(item.isIdentified() ? 1 : 0);
+					this.writeS(item.getViewName());
 				}
 			}
 			else {
@@ -61,7 +61,7 @@ public class S_RetrieveElfList extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 
 }

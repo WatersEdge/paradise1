@@ -29,15 +29,15 @@ public class S_Party extends ServerBasePacket {
 	public S_Party(final int type, final L1PcInstance pc) { // 3.3C 组队系统
 		switch (type) {
 			case 104:
-				newMember(pc);
+				this.newMember(pc);
 				break;
 			case 105:
-				oldMember(pc);
+				this.oldMember(pc);
 				break;
 			case 106:
-				changeLeader(pc);
+				this.changeLeader(pc);
 			case 110:
-				refreshParty(pc);
+				this.refreshParty(pc);
 				break;
 			default:
 				break;
@@ -45,11 +45,11 @@ public class S_Party extends ServerBasePacket {
 	}
 
 	public S_Party(final String htmlid, final int objid) {
-		buildPacket(htmlid, objid, "", "", 0);
+		this.buildPacket(htmlid, objid, "", "", 0);
 	}
 
 	public S_Party(final String htmlid, final int objid, final String partyname, final String partymembers) {
-		buildPacket(htmlid, objid, partyname, partymembers, 1);
+		this.buildPacket(htmlid, objid, partyname, partymembers, 1);
 	}
 
 	/**
@@ -58,19 +58,19 @@ public class S_Party extends ServerBasePacket {
 	 * @param pc
 	 */
 	public void changeLeader(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(S_PacketBox.PATRY_SET_MASTER);
-		writeD(pc.getId());
-		writeH(0x0000);
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(S_PacketBox.PATRY_SET_MASTER);
+		this.writeD(pc.getId());
+		this.writeH(0x0000);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -92,31 +92,31 @@ public class S_Party extends ServerBasePacket {
 			return;
 		}
 		else {
-			writeC(Opcodes.S_OPCODE_PACKETBOX);
-			writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
+			this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+			this.writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
 			nowhp = leader.getCurrentHp();
 			maxhp = leader.getMaxHp();
-			writeC(member.length - 1);
-			writeD(leader.getId());
-			writeS(leader.getName());
-			writeC((int) (nowhp / maxhp) * 100);
-			writeD(leader.getMapId());
-			writeH(leader.getX());
-			writeH(leader.getY());
+			this.writeC(member.length - 1);
+			this.writeD(leader.getId());
+			this.writeS(leader.getName());
+			this.writeC((int) (nowhp / maxhp) * 100);
+			this.writeD(leader.getMapId());
+			this.writeH(leader.getX());
+			this.writeH(leader.getY());
 			for (final L1PcInstance element : member) {
 				if ((element.getId() == leader.getId()) || (element == null)) {
 					continue;
 				}
 				nowhp = element.getCurrentHp();
 				maxhp = element.getMaxHp();
-				writeD(element.getId());
-				writeS(element.getName());
-				writeC((int) (nowhp / maxhp) * 100);
-				writeD(element.getMapId());
-				writeH(element.getX());
-				writeH(element.getY());
+				this.writeD(element.getId());
+				this.writeS(element.getName());
+				this.writeC((int) (nowhp / maxhp) * 100);
+				this.writeD(element.getMapId());
+				this.writeH(element.getX());
+				this.writeH(element.getY());
 			}
-			writeC(0x00);
+			this.writeC(0x00);
 		}
 	}
 
@@ -126,13 +126,13 @@ public class S_Party extends ServerBasePacket {
 	 * @param pc
 	 */
 	public void oldMember(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(S_PacketBox.PATRY_UPDATE_MEMBER);
-		writeD(pc.getId());
-		writeS(pc.getName());
-		writeD(pc.getMapId());
-		writeH(pc.getX());
-		writeH(pc.getY());
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(S_PacketBox.PATRY_UPDATE_MEMBER);
+		this.writeD(pc.getId());
+		this.writeS(pc.getName());
+		this.writeD(pc.getMapId());
+		this.writeH(pc.getX());
+		this.writeH(pc.getY());
 	}
 
 	/**
@@ -146,27 +146,27 @@ public class S_Party extends ServerBasePacket {
 			return;
 		}
 		else {
-			writeC(Opcodes.S_OPCODE_PACKETBOX);
-			writeC(S_PacketBox.PATRY_MEMBERS);
-			writeC(member.length);
+			this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+			this.writeC(S_PacketBox.PATRY_MEMBERS);
+			this.writeC(member.length);
 			for (final L1PcInstance element : member) {
-				writeD(element.getId());
-				writeD(element.getMapId());
-				writeH(element.getX());
-				writeH(element.getY());
+				this.writeD(element.getId());
+				this.writeD(element.getMapId());
+				this.writeH(element.getX());
+				this.writeH(element.getY());
 			}
-			writeC(0x00);
+			this.writeC(0x00);
 		}
 	}
 
 	private void buildPacket(final String htmlid, final int objid, final String partyname, final String partymembers, final int type) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS(htmlid);
-		writeH(type);
-		writeH(0x02);
-		writeS(partyname);
-		writeS(partymembers);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS(htmlid);
+		this.writeH(type);
+		this.writeH(0x02);
+		this.writeS(partyname);
+		this.writeS(partymembers);
 	}
 
 }

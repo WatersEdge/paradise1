@@ -35,18 +35,18 @@ public class S_Teleport extends ServerBasePacket {
 	 * @param pc
 	 */
 	public S_Teleport(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_TELEPORT);
-		writeC(0x00);
-		writeC(0x40);
-		writeD(pc.getId());
+		this.writeC(Opcodes.S_OPCODE_TELEPORT);
+		this.writeC(0x00);
+		this.writeC(0x40);
+		this.writeD(pc.getId());
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

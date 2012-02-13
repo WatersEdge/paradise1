@@ -37,35 +37,35 @@ public class L1ShopItem {
 	private final int _packCount;
 
 	public L1ShopItem(final int itemId, final int price, final int packCount) {
-		_itemId = itemId;
-		_item = ItemTable.getInstance().getTemplate(itemId);
-		_price = price;
-		_packCount = packCount;
+		this._itemId = itemId;
+		this._item = ItemTable.getInstance().getTemplate(itemId);
+		this._price = price;
+		this._packCount = packCount;
 	}
 
 	public L1Item getItem() {
-		return _item;
+		return this._item;
 	}
 
 	public int getItemId() {
-		return _itemId;
+		return this._itemId;
 	}
 
 	public int getPackCount() {
-		return _packCount;
+		return this._packCount;
 	}
 
 	public int getPrice() {
-		return _price;
+		return this._price;
 	}
 
 	// 食人妖精賽跑用
 	public void setName(final int num) {
 		final int trueNum = L1BugBearRace.getInstance().getRunner(num).getNpcId() - 91350 + 1;
-		_item = (L1Item) _item.clone();
-		final String temp = "" + _item.getIdentifiedNameId() + " " + L1BugBearRace.getInstance().getRound() + "-" + trueNum;
-		_item.setName(temp);
-		_item.setUnidentifiedNameId(temp);
-		_item.setIdentifiedNameId(temp);
+		this._item = (L1Item) this._item.clone();
+		final String temp = "" + this._item.getIdentifiedNameId() + " " + L1BugBearRace.getInstance().getRound() + "-" + trueNum;
+		this._item.setName(temp);
+		this._item.setUnidentifiedNameId(temp);
+		this._item.setIdentifiedNameId(temp);
 	}
 }

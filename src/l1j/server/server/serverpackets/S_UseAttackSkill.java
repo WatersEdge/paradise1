@@ -67,30 +67,30 @@ public class S_UseAttackSkill extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_UseAttackSkill(final L1Character cha, final int targetobj, final int x, final int y, final int[] data) {
-		buildPacket(cha, targetobj, x, y, data, true);
+		this.buildPacket(cha, targetobj, x, y, data, true);
 	}
 
 	public S_UseAttackSkill(final L1Character cha, final int targetobj, final int x, final int y, final int[] data, final boolean withCastMotion) {
-		buildPacket(cha, targetobj, x, y, data, withCastMotion);
+		this.buildPacket(cha, targetobj, x, y, data, withCastMotion);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 		else {
 			int seq = 0;
 			synchronized (this) {
 				seq = _sequentialNumber.incrementAndGet();
 			}
-			_byte[13] = (byte) (seq & 0xff);
-			_byte[14] = (byte) (seq >> 8 & 0xff);
-			_byte[15] = (byte) (seq >> 16 & 0xff);
-			_byte[16] = (byte) (seq >> 24 & 0xff);
+			this._byte[13] = (byte) (seq & 0xff);
+			this._byte[14] = (byte) (seq >> 8 & 0xff);
+			this._byte[15] = (byte) (seq >> 16 & 0xff);
+			this._byte[16] = (byte) (seq >> 24 & 0xff);
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -120,22 +120,22 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		// 设置新面向
 		final int newheading = calcheading(cha.getX(), cha.getY(), x, y);
 		cha.setHeading(newheading);
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(data[0]); // actionId 动作代码
-		writeD(withCastMotion ? cha.getId() : 0); // 使用者的OBJ
-		writeD(targetobj); // 目标的OBJ
-		writeH(data[1]); // dmg 伤害值
-		writeC(newheading); // 新面向
-		writeD(_sequentialNumber.incrementAndGet()); // 以原子方式将当前值加 1。
-		writeH(data[2]); // spellgfx 远程动画代码
-		writeC(data[3]); // use_type 0:弓箭 6:远距离魔法 8:远距离范围魔法
-		writeH(cha.getX()); // 使用者X坐标
-		writeH(cha.getY()); // 使用者Y坐标
-		writeH(x); // 目标X坐标
-		writeH(y); // 目标Y坐标
-		writeC(0);
-		writeC(0);
-		writeC(0); // 0:none 2:爪痕 4:双击 8:镜返射
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(data[0]); // actionId 动作代码
+		this.writeD(withCastMotion ? cha.getId() : 0); // 使用者的OBJ
+		this.writeD(targetobj); // 目标的OBJ
+		this.writeH(data[1]); // dmg 伤害值
+		this.writeC(newheading); // 新面向
+		this.writeD(_sequentialNumber.incrementAndGet()); // 以原子方式将当前值加 1。
+		this.writeH(data[2]); // spellgfx 远程动画代码
+		this.writeC(data[3]); // use_type 0:弓箭 6:远距离魔法 8:远距离范围魔法
+		this.writeH(cha.getX()); // 使用者X坐标
+		this.writeH(cha.getY()); // 使用者Y坐标
+		this.writeH(x); // 目标X坐标
+		this.writeH(y); // 目标Y坐标
+		this.writeC(0);
+		this.writeC(0);
+		this.writeC(0); // 0:none 2:爪痕 4:双击 8:镜返射
 	}
 
 }

@@ -30,53 +30,53 @@ public class S_AttackMissPacket extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_AttackMissPacket(final int attackId, final int targetId) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(1);
-		writeD(attackId);
-		writeD(targetId);
-		writeH(0);
-		writeC(0);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(1);
+		this.writeD(attackId);
+		this.writeD(targetId);
+		this.writeH(0);
+		this.writeC(0);
+		this.writeD(0);
 	}
 
 	public S_AttackMissPacket(final int attackId, final int targetId, final int actId) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(actId);
-		writeD(attackId);
-		writeD(targetId);
-		writeH(0);
-		writeC(0);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(actId);
+		this.writeD(attackId);
+		this.writeD(targetId);
+		this.writeH(0);
+		this.writeC(0);
+		this.writeD(0);
 	}
 
 	public S_AttackMissPacket(final L1Character attacker, final int targetId) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(1);
-		writeD(attacker.getId());
-		writeD(targetId);
-		writeH(0);
-		writeC(attacker.getHeading());
-		writeD(0);
-		writeC(0);
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(1);
+		this.writeD(attacker.getId());
+		this.writeD(targetId);
+		this.writeH(0);
+		this.writeC(attacker.getHeading());
+		this.writeD(0);
+		this.writeC(0);
 	}
 
 	public S_AttackMissPacket(final L1Character attacker, final int targetId, final int actId) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(actId);
-		writeD(attacker.getId());
-		writeD(targetId);
-		writeH(0);
-		writeC(attacker.getHeading());
-		writeD(0);
-		writeC(0);
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(actId);
+		this.writeD(attacker.getId());
+		this.writeD(targetId);
+		this.writeH(0);
+		this.writeC(attacker.getHeading());
+		this.writeD(0);
+		this.writeC(0);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

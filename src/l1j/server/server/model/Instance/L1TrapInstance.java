@@ -50,79 +50,79 @@ public class L1TrapInstance extends L1Object {
 	private final List<L1PcInstance> _knownPlayers = Lists.newConcurrentList();
 
 	public L1TrapInstance(final int id, final L1Location loc) {
-		setId(id);
-		_trap = L1Trap.newNull();
-		getLocation().set(loc);
-		_span = 0;
-		_nameForView = "trap base";
+		this.setId(id);
+		this._trap = L1Trap.newNull();
+		this.getLocation().set(loc);
+		this._span = 0;
+		this._nameForView = "trap base";
 	}
 
 	public L1TrapInstance(final int id, final L1Trap trap, final L1Location loc, final Point rndPt, final int span) {
-		setId(id);
-		_trap = trap;
-		getLocation().set(loc);
-		_baseLoc.set(loc);
-		_rndPt.set(rndPt);
-		_span = span;
-		_nameForView = "trap";
+		this.setId(id);
+		this._trap = trap;
+		this.getLocation().set(loc);
+		this._baseLoc.set(loc);
+		this._rndPt.set(rndPt);
+		this._span = span;
+		this._nameForView = "trap";
 
-		resetLocation();
+		this.resetLocation();
 	}
 
 	public void disableTrap() {
-		_isEnable = false;
+		this._isEnable = false;
 
-		for (final L1PcInstance pc : _knownPlayers) {
+		for (final L1PcInstance pc : this._knownPlayers) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
-		_knownPlayers.clear();
+		this._knownPlayers.clear();
 	}
 
 	public void enableTrap() {
-		_isEnable = true;
+		this._isEnable = true;
 	}
 
 	public int getSpan() {
-		return _span;
+		return this._span;
 	}
 
 	public boolean isEnable() {
-		return _isEnable;
+		return this._isEnable;
 	}
 
 	public void onDetection(final L1PcInstance caster) {
-		_trap.onDetection(caster, this);
+		this._trap.onDetection(caster, this);
 	}
 
 	@Override
 	public void onPerceive(final L1PcInstance perceivedFrom) {
 		if (perceivedFrom.hasSkillEffect(GMSTATUS_SHOWTRAPS)) {
 			perceivedFrom.addKnownObject(this);
-			perceivedFrom.sendPackets(new S_Trap(this, _nameForView));
-			_knownPlayers.add(perceivedFrom);
+			perceivedFrom.sendPackets(new S_Trap(this, this._nameForView));
+			this._knownPlayers.add(perceivedFrom);
 		}
 	}
 
 	public void onTrod(final L1PcInstance trodFrom) {
-		_trap.onTrod(trodFrom, this);
+		this._trap.onTrod(trodFrom, this);
 	}
 
 	public void resetLocation() {
-		if ((_rndPt.getX() == 0) && (_rndPt.getY() == 0)) {
+		if ((this._rndPt.getX() == 0) && (this._rndPt.getY() == 0)) {
 			return;
 		}
 
 		for (int i = 0; i < 50; i++) {
-			int rndX = Random.nextInt(_rndPt.getX() + 1) * (Random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
-			int rndY = Random.nextInt(_rndPt.getY() + 1) * (Random.nextInt(2) == 1 ? 1 : -1);
+			int rndX = Random.nextInt(this._rndPt.getX() + 1) * (Random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
+			int rndY = Random.nextInt(this._rndPt.getY() + 1) * (Random.nextInt(2) == 1 ? 1 : -1);
 
-			rndX += _baseLoc.getX();
-			rndY += _baseLoc.getY();
+			rndX += this._baseLoc.getX();
+			rndY += this._baseLoc.getY();
 
-			final L1Map map = getLocation().getMap();
+			final L1Map map = this.getLocation().getMap();
 			if (map.isInMap(rndX, rndY) && map.isPassable(rndX, rndY)) {
-				getLocation().set(rndX, rndY);
+				this.getLocation().set(rndX, rndY);
 				break;
 			}
 		}

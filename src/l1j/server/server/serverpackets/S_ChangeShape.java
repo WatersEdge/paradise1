@@ -27,19 +27,19 @@ public class S_ChangeShape extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_ChangeShape(final int objId, final int polyId, final int currentWeapon) {
-		writeC(Opcodes.S_OPCODE_POLY);
-		writeD(objId);
-		writeH(polyId);
-		writeC(currentWeapon);
-		writeC(0xff);
-		writeC(0xff);
+		this.writeC(Opcodes.S_OPCODE_POLY);
+		this.writeD(objId);
+		this.writeH(polyId);
+		this.writeC(currentWeapon);
+		this.writeC(0xff);
+		this.writeC(0xff);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 }

@@ -40,12 +40,12 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		final int npcid = getNpcTemplate().get_npcId();
-		final int portalNumber = getPortalNumber(); // 龙门编号
+		final int npcid = this.getNpcTemplate().get_npcId();
+		final int portalNumber = this.getPortalNumber(); // 龙门编号
 		int X = 32599;
 		int Y = 32742;
 		short mapId = 1005;
-		final int objid = getId();
+		final int objid = this.getId();
 		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(npcid);
 		String htmlid = null;
 		final String[] htmldata = null;

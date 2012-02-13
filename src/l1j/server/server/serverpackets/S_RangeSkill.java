@@ -67,15 +67,15 @@ public class S_RangeSkill extends ServerBasePacket {
 	}
 
 	public S_RangeSkill(final L1Character cha, final L1Character[] target, final int spellgfx, final int actionId, final int type) {
-		buildPacket(cha, target, spellgfx, actionId, type);
+		this.buildPacket(cha, target, spellgfx, actionId, type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -93,27 +93,27 @@ public class S_RangeSkill extends ServerBasePacket {
 	 * @param type
 	 */
 	private void buildPacket(final L1Character cha, final L1Character[] target, final int spellgfx, final int actionId, final int type) {
-		writeC(Opcodes.S_OPCODE_RANGESKILLS);
-		writeC(actionId);
-		writeD(cha.getId());
-		writeH(cha.getX());
-		writeH(cha.getY());
+		this.writeC(Opcodes.S_OPCODE_RANGESKILLS);
+		this.writeC(actionId);
+		this.writeD(cha.getId());
+		this.writeH(cha.getX());
+		this.writeH(cha.getY());
 		if (type == TYPE_NODIR) {
-			writeC(cha.getHeading());
+			this.writeC(cha.getHeading());
 		}
 		else if (type == TYPE_DIR) {
 			final int newHeading = calcheading(cha.getX(), cha.getY(), target[0].getX(), target[0].getY());
 			cha.setHeading(newHeading);
-			writeC(cha.getHeading());
+			this.writeC(cha.getHeading());
 		}
-		writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
-		writeH(spellgfx);
-		writeC(type); // 0:范围 6:远距离 8:范围&远距离
-		writeH(0);
-		writeH(target.length);
+		this.writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
+		this.writeH(spellgfx);
+		this.writeC(type); // 0:范围 6:远距离 8:范围&远距离
+		this.writeH(0);
+		this.writeH(target.length);
 		for (final L1Character element : target) {
-			writeD(element.getId());
-			writeH(0x20); // 0:伤害动作 0以外:无
+			this.writeD(element.getId());
+			this.writeH(0x20); // 0:伤害动作 0以外:无
 		}
 	}
 

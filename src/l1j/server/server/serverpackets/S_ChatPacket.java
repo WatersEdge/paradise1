@@ -39,88 +39,88 @@ public class S_ChatPacket extends ServerBasePacket {
 	public S_ChatPacket(final L1PcInstance pc, final String chat, final int opcode, final int type) {
 
 		if (type == 0) { // 一般频道
-			writeC(opcode);
-			writeC(type);
+			this.writeC(opcode);
+			this.writeC(type);
 			if (pc.isInvisble()) {
-				writeD(0);
+				this.writeD(0);
 			}
 			else {
-				writeD(pc.getId());
+				this.writeD(pc.getId());
 			}
-			writeS(pc.getName() + ": " + chat);
+			this.writeS(pc.getName() + ": " + chat);
 		}
 		else if (type == 2) { // 大喊频道
-			writeC(opcode);
-			writeC(type);
+			this.writeC(opcode);
+			this.writeC(type);
 			if (pc.isInvisble()) {
-				writeD(0);
+				this.writeD(0);
 			}
 			else {
-				writeD(pc.getId());
+				this.writeD(pc.getId());
 			}
-			writeS("<" + pc.getName() + "> " + chat);
-			writeH(pc.getX());
-			writeH(pc.getY());
+			this.writeS("<" + pc.getName() + "> " + chat);
+			this.writeH(pc.getX());
+			this.writeH(pc.getY());
 		}
 		else if (type == 3) { // 全体频道
-			writeC(opcode);
-			writeC(type);
+			this.writeC(opcode);
+			this.writeC(type);
 			if (pc.isGm() == true) {
-				writeS("[******] " + chat);
+				this.writeS("[******] " + chat);
 			}
 			else {
-				writeS("[" + pc.getName() + "] " + chat);
+				this.writeS("[" + pc.getName() + "] " + chat);
 			}
 		}
 		else if (type == 4) { // 血盟频道
-			writeC(opcode);
-			writeC(type);
-			writeS("{" + pc.getName() + "} " + chat);
+			this.writeC(opcode);
+			this.writeC(type);
+			this.writeS("{" + pc.getName() + "} " + chat);
 		}
 		else if (type == 9) { // 密语频道 (发送)
-			writeC(opcode);
-			writeC(type);
-			writeS("-> (" + pc.getName() + ") " + chat);
+			this.writeC(opcode);
+			this.writeC(type);
+			this.writeS("-> (" + pc.getName() + ") " + chat);
 		}
 		else if (type == 11) { // 组队频道
-			writeC(opcode);
-			writeC(type);
-			writeS("(" + pc.getName() + ") " + chat);
+			this.writeC(opcode);
+			this.writeC(type);
+			this.writeS("(" + pc.getName() + ") " + chat);
 		}
 		else if (type == 12) { // 交易频道
-			writeC(opcode);
-			writeC(type);
-			writeS("[" + pc.getName() + "] " + chat);
+			this.writeC(opcode);
+			this.writeC(type);
+			this.writeS("[" + pc.getName() + "] " + chat);
 		}
 		else if (type == 13) { // 联盟频道
-			writeC(opcode);
-			writeC(type);
-			writeS("{{" + pc.getName() + "}} " + chat);
+			this.writeC(opcode);
+			this.writeC(type);
+			this.writeS("{{" + pc.getName() + "}} " + chat);
 		}
 		else if (type == 14) { // 组队频道 (聊天)
-			writeC(opcode);
-			writeC(type);
+			this.writeC(opcode);
+			this.writeC(type);
 			if (pc.isInvisble()) {
-				writeD(0);
+				this.writeD(0);
 			}
 			else {
-				writeD(pc.getId());
+				this.writeD(pc.getId());
 			}
-			writeS("(" + pc.getName() + ") " + chat);
+			this.writeS("(" + pc.getName() + ") " + chat);
 		}
 		else if (type == 16) { // 密语频道
-			writeC(opcode);
-			writeS(pc.getName());
-			writeS(chat);
+			this.writeC(opcode);
+			this.writeS(pc.getName());
+			this.writeS(chat);
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (null == _byte) {
-			_byte = _bao.toByteArray();
+		if (null == this._byte) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

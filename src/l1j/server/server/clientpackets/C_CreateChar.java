@@ -212,7 +212,7 @@ public class C_CreateChar extends ClientBasePacket {
 	public C_CreateChar(final byte[] abyte0, final ClientThread client) throws Exception {
 		super(abyte0);
 		final L1PcInstance pc = new L1PcInstance();
-		String name = readS();
+		String name = this.readS();
 
 		final Account account = Account.load(client.getAccountName());
 		final int characterSlot = account.getCharacterSlot();
@@ -247,14 +247,14 @@ public class C_CreateChar extends ClientBasePacket {
 		}
 
 		pc.setName(name);
-		pc.setType(readC());
-		pc.set_sex(readC());
-		pc.addBaseStr((byte) readC());
-		pc.addBaseDex((byte) readC());
-		pc.addBaseCon((byte) readC());
-		pc.addBaseWis((byte) readC());
-		pc.addBaseCha((byte) readC());
-		pc.addBaseInt((byte) readC());
+		pc.setType(this.readC());
+		pc.set_sex(this.readC());
+		pc.addBaseStr((byte) this.readC());
+		pc.addBaseDex((byte) this.readC());
+		pc.addBaseCon((byte) this.readC());
+		pc.addBaseWis((byte) this.readC());
+		pc.addBaseCha((byte) this.readC());
+		pc.addBaseInt((byte) this.readC());
 
 		boolean isStatusError = false;
 		final int originalStr = ORIGINAL_STR[pc.getType()];

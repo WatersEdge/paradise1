@@ -33,20 +33,20 @@ public class S_SummonPack extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_SummonPack(final L1SummonInstance pet, final L1PcInstance pc) {
-		buildPacket(pet, pc, true);
+		this.buildPacket(pet, pc, true);
 	}
 
 	public S_SummonPack(final L1SummonInstance pet, final L1PcInstance pc, final boolean isCheckMaster) {
-		buildPacket(pet, pc, isCheckMaster);
+		this.buildPacket(pet, pc, isCheckMaster);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -55,48 +55,48 @@ public class S_SummonPack extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1SummonInstance pet, final L1PcInstance pc, final boolean isCheckMaster) {
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(pet.getX());
-		writeH(pet.getY());
-		writeD(pet.getId());
-		writeH(pet.getGfxId()); // SpriteID in List.spr
-		writeC(pet.getStatus()); // Modes in List.spr
-		writeC(pet.getHeading());
-		writeC(pet.getChaLightSize()); // (Bright) - 0~15
-		writeC(pet.getMoveSpeed()); // 速度 - 0:normal, 1:fast, 2:slow
-		writeD(0);
-		writeH(0);
-		writeS(pet.getNameId());
-		writeS(pet.getTitle());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(pet.getX());
+		this.writeH(pet.getY());
+		this.writeD(pet.getId());
+		this.writeH(pet.getGfxId()); // SpriteID in List.spr
+		this.writeC(pet.getStatus()); // Modes in List.spr
+		this.writeC(pet.getHeading());
+		this.writeC(pet.getChaLightSize()); // (Bright) - 0~15
+		this.writeC(pet.getMoveSpeed()); // 速度 - 0:normal, 1:fast, 2:slow
+		this.writeD(0);
+		this.writeH(0);
+		this.writeS(pet.getNameId());
+		this.writeS(pet.getTitle());
 		int status = 0;
 		if (pet.getPoison() != null) { // 毒状态
 			if (pet.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
 		}
-		writeC(status);
-		writeD(0);
-		writeS(null);
+		this.writeC(status);
+		this.writeD(0);
+		this.writeS(null);
 		if (isCheckMaster && pet.isExsistMaster()) {
-			writeS(pet.getMaster().getName());
+			this.writeS(pet.getMaster().getName());
 		}
 		else {
-			writeS("");
+			this.writeS("");
 		}
-		writeC(0); // ??
+		this.writeC(0); // ??
 		// HP的百分比
 		if ((pet.getMaster() != null) && (pet.getMaster().getId() == pc.getId())) {
 			final int percent = pet.getMaxHp() != 0 ? 100 * pet.getCurrentHp() / pet.getMaxHp() : 100;
-			writeC(percent);
+			this.writeC(percent);
 		}
 		else {
-			writeC(0xFF);
+			this.writeC(0xFF);
 		}
-		writeC(0);
-		writeC(pet.getLevel()); // PC = 0, Mon = Lv
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(0);
+		this.writeC(pet.getLevel()); // PC = 0, Mon = Lv
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 }

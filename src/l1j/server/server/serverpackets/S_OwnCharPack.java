@@ -37,15 +37,15 @@ public class S_OwnCharPack extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_OwnCharPack(final L1PcInstance pc) {
-		buildPacket(pc);
+		this.buildPacket(pc);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -73,52 +73,52 @@ public class S_OwnCharPack extends ServerBasePacket {
 		}
 
 		// int addbyte = 0;
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(pc.getX());
-		writeH(pc.getY());
-		writeD(pc.getId());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(pc.getX());
+		this.writeH(pc.getY());
+		this.writeD(pc.getId());
 		if (pc.isDead()) {
-			writeH(pc.getTempCharGfxAtDead());
+			this.writeH(pc.getTempCharGfxAtDead());
 		}
 		else {
-			writeH(pc.getTempCharGfx());
+			this.writeH(pc.getTempCharGfx());
 		}
 		if (pc.isDead()) {
-			writeC(pc.getStatus());
+			this.writeC(pc.getStatus());
 		}
 		else {
-			writeC(pc.getCurrentWeapon());
+			this.writeC(pc.getCurrentWeapon());
 		}
-		writeC(pc.getHeading());
+		this.writeC(pc.getHeading());
 		// writeC(addbyte);
-		writeC(pc.getOwnLightSize());
-		writeC(pc.getMoveSpeed());
-		writeD((int) pc.getExp());
-		writeH(pc.getLawful());
-		writeS(pc.getName());
-		writeS(pc.getTitle());
-		writeC(status);
-		writeD(pc.getClanid());
-		writeS(pc.getClanname()); // 血盟名称
-		writeS(null); // 主人名称？
-		writeC(0); // ？
+		this.writeC(pc.getOwnLightSize());
+		this.writeC(pc.getMoveSpeed());
+		this.writeD((int) pc.getExp());
+		this.writeH(pc.getLawful());
+		this.writeS(pc.getName());
+		this.writeS(pc.getTitle());
+		this.writeC(status);
+		this.writeD(pc.getClanid());
+		this.writeS(pc.getClanname()); // 血盟名称
+		this.writeS(null); // 主人名称？
+		this.writeC(0); // ？
 		if (pc.isInParty()) // 组队中
 		{
-			writeC(100 * pc.getCurrentHp() / pc.getMaxHp());
+			this.writeC(100 * pc.getCurrentHp() / pc.getMaxHp());
 		}
 		else {
-			writeC(0xFF);
+			this.writeC(0xFF);
 		}
 		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
-			writeC(0x08); // 3段加速
+			this.writeC(0x08); // 3段加速
 		}
 		else {
-			writeC(0);
+			this.writeC(0);
 		}
-		writeC(0); // PC = 0, Mon = Lv
-		writeC(0); // ？
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(0); // PC = 0, Mon = Lv
+		this.writeC(0); // ？
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 }

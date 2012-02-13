@@ -31,8 +31,8 @@ public class C_BoardRead extends ClientBasePacket {
 
 	public C_BoardRead(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		final int objId = readD();
-		final int topicNumber = readD();
+		final int objId = this.readD();
+		final int topicNumber = this.readD();
 		final L1Object obj = L1World.getInstance().findObject(objId);
 		final L1BoardInstance board = (L1BoardInstance) obj;
 		board.onActionRead(client.getActiveChar(), topicNumber);

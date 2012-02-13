@@ -30,15 +30,15 @@ public class S_SkillIconBloodstain extends ServerBasePacket {
 	 * @param j
 	 */
 	public S_SkillIconBloodstain(final int i, final int j) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x64);
-		writeC(i); // 82:安塔瑞斯的血痕。 85:法利昂的血痕。 88:???的血痕。 91:???的血痕。
-		writeH(j); // 分
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(0x64);
+		this.writeC(i); // 82:安塔瑞斯的血痕。 85:法利昂的血痕。 88:???的血痕。 91:???的血痕。
+		this.writeH(j); // 分
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

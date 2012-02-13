@@ -45,13 +45,13 @@ public final class ResolventTable {
 	private final Map<Integer, Integer> _resolvent = Maps.newMap();
 
 	private ResolventTable() {
-		loadMapsFromDatabase();
+		this.loadMapsFromDatabase();
 	}
 
 	public int getCrystalCount(final int itemId) {
 		int crystalCount = 0;
-		if (_resolvent.containsKey(itemId)) {
-			crystalCount = _resolvent.get(itemId);
+		if (this._resolvent.containsKey(itemId)) {
+			crystalCount = this._resolvent.get(itemId);
 		}
 		return crystalCount;
 	}
@@ -68,10 +68,10 @@ public final class ResolventTable {
 				final int itemId = rs.getInt("item_id");
 				final int crystalCount = rs.getInt("crystal_count");
 
-				_resolvent.put(new Integer(itemId), crystalCount);
+				this._resolvent.put(new Integer(itemId), crystalCount);
 			}
 
-			_log.config("resolvent " + _resolvent.size());
+			_log.config("resolvent " + this._resolvent.size());
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

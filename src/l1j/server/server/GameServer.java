@@ -93,14 +93,14 @@ public class GameServer extends Thread {
 		private final int _secondsCount;
 
 		public ServerShutdownThread(final int secondsCount) {
-			_secondsCount = secondsCount;
+			this._secondsCount = secondsCount;
 		}
 
 		@Override
 		public void run() {
 			final L1World world = L1World.getInstance();
 			try {
-				int secondsCount = _secondsCount;
+				int secondsCount = this._secondsCount;
 				world.broadcastServerMessage("伺服器即将关闭。");
 				world.broadcastServerMessage("请玩家移动到安全区域先行登出");
 				while (0 < secondsCount) {
@@ -115,7 +115,7 @@ public class GameServer extends Thread {
 					Thread.sleep(1000);
 					secondsCount--;
 				}
-				shutdown();
+				GameServer.this.shutdown();
 			}
 			catch (final InterruptedException e) {
 				world.broadcastServerMessage("已取消伺服器关机。伺服器将会正常运作。");
@@ -165,14 +165,14 @@ public class GameServer extends Thread {
 
 	/** 中止关机 */
 	public synchronized void abortShutdown() {
-		if (_shutdownThread == null) {
+		if (this._shutdownThread == null) {
 			// 如果正在关闭
 			// TODO 可能要有错误通知之类的
 			return;
 		}
 
-		_shutdownThread.interrupt();
-		_shutdownThread = null;
+		this._shutdownThread.interrupt();
+		this._shutdownThread = null;
 	}
 
 	/**
@@ -205,17 +205,17 @@ public class GameServer extends Thread {
 		// Locale 多国语系
 		L1Message.getInstance();
 
-		chatlvl = Config.GLOBAL_CHAT_LEVEL;
-		_port = Config.GAME_SERVER_PORT;
+		this.chatlvl = Config.GLOBAL_CHAT_LEVEL;
+		this._port = Config.GAME_SERVER_PORT;
 		if (!"*".equals(s)) {
 			final InetAddress inetaddress = InetAddress.getByName(s);
 			inetaddress.getHostAddress();
-			_serverSocket = new ServerSocket(_port, 50, inetaddress);
-			System.out.println(L1Message.setporton + _port);
+			this._serverSocket = new ServerSocket(this._port, 50, inetaddress);
+			System.out.println(L1Message.setporton + this._port);
 		}
 		else {
-			_serverSocket = new ServerSocket(_port);
-			System.out.println(L1Message.setporton + _port);
+			this._serverSocket = new ServerSocket(this._port);
+			System.out.println(L1Message.setporton + this._port);
 		}
 
 		System.out.println("┌───────────────────────────────┐");
@@ -225,7 +225,7 @@ public class GameServer extends Thread {
 		System.out.println(L1Message.settingslist + "\n");
 		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x + "\n\r├" + L1Message.justice + ": " + (LA) + L1Message.x + "\n\r├" + L1Message.karma + ": " + (rateKarma) + L1Message.x + "\n\r├" + L1Message.dropitems + ": " + (rateDropItems) + L1Message.x
 				+ "\n\r├" + L1Message.dropadena + ": " + (rateDropAdena) + L1Message.x + "\n\r├" + L1Message.enchantweapon + ": " + (Config.ENCHANT_CHANCE_WEAPON) + "%" + "\n\r├" + L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR) + "%");
-		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl) + L1Message.level);
+		System.out.println("├" + L1Message.chatlevel + ": " + (this.chatlvl) + L1Message.level);
 
 		if (Config.ALT_NONPVP) { // Non-PvP设定
 			System.out.println("└" + L1Message.nonpvpNo + "\n");
@@ -243,8 +243,8 @@ public class GameServer extends Thread {
 
 		IdFactory.getInstance();
 		L1WorldMap.getInstance();
-		_loginController = LoginController.getInstance();
-		_loginController.setMaxAllowedOnlinePlayers(maxOnlineUsers);
+		this._loginController = LoginController.getInstance();
+		this._loginController.setMaxAllowedOnlinePlayers(maxOnlineUsers);
 
 		// 读取所有角色名称
 		CharacterTable.getInstance().loadAllCharName();
@@ -368,7 +368,7 @@ public class GameServer extends Thread {
 		final Thread cp = new ConsoleProcess(); // cmd互动指令
 		cp.start();
 
-		start();
+		this.start();
 	}
 
 	@Override
@@ -377,7 +377,7 @@ public class GameServer extends Thread {
 		System.out.println(L1Message.waitingforuser);
 		while (true) {
 			try {
-				final Socket socket = _serverSocket.accept();
+				final Socket socket = this._serverSocket.accept();
 				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
 				final String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
@@ -395,18 +395,18 @@ public class GameServer extends Thread {
 
 	/** 关机 */
 	public void shutdown() {
-		disconnectAllCharacters();
+		this.disconnectAllCharacters();
 		System.exit(0);
 	}
 
 	/** 关机倒计时 */
 	public synchronized void shutdownWithCountdown(final int secondsCount) {
-		if (_shutdownThread != null) {
+		if (this._shutdownThread != null) {
 			// 如果正在关闭
 			// TODO 可能要有错误通知之类的
 			return;
 		}
-		_shutdownThread = new ServerShutdownThread(secondsCount);
-		GeneralThreadPool.getInstance().execute(_shutdownThread);
+		this._shutdownThread = new ServerShutdownThread(secondsCount);
+		GeneralThreadPool.getInstance().execute(this._shutdownThread);
 	}
 }

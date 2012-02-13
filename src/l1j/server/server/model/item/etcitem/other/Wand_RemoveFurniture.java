@@ -40,7 +40,7 @@ public class Wand_RemoveFurniture extends ItemExecutor {
 
 		final int spellsc_objid = data[0];
 
-		useFurnitureRemovalWand(pc, spellsc_objid, item);
+		this.useFurnitureRemovalWand(pc, spellsc_objid, item);
 	}
 
 	// 移除家具

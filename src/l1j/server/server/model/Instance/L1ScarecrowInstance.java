@@ -39,7 +39,7 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -66,15 +66,15 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 
 	@Override
 	public void receiveDamage(final L1Character attacker, final int damage) {
-		if ((getCurrentHp() > 0) && !isDead()) {
+		if ((this.getCurrentHp() > 0) && !this.isDead()) {
 			if (damage > 0) {
-				if (getHeading() < 7) {
-					setHeading(getHeading() + 1);
+				if (this.getHeading() < 7) {
+					this.setHeading(this.getHeading() + 1);
 				}
 				else {
-					setHeading(0);
+					this.setHeading(0);
 				}
-				broadcastPacket(new S_ChangeHeading(this));
+				this.broadcastPacket(new S_ChangeHeading(this));
 
 				if ((attacker instanceof L1PcInstance)) {
 					final L1PcInstance pc = (L1PcInstance) attacker;
@@ -85,7 +85,7 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 						targetList.add(pc);
 						final List<Integer> hateList = Lists.newList();
 						hateList.add(1);
-						CalcExp.calcExp(pc, getId(), targetList, hateList, getExp());
+						CalcExp.calcExp(pc, this.getId(), targetList, hateList, this.getExp());
 					}
 				}
 			}

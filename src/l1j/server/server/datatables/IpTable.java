@@ -51,7 +51,7 @@ public class IpTable {
 	private IpTable() {
 		if (!isInitialized) {
 			_banip = Lists.newList();
-			getIpTable();
+			this.getIpTable();
 		}
 	}
 

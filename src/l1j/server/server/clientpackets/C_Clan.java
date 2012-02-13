@@ -32,7 +32,7 @@ public class C_Clan extends ClientBasePacket {
 
 	public C_Clan(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		final int clanId = readD();
+		final int clanId = this.readD();
 
 		final L1PcInstance pc = client.getActiveChar();
 		final L1Clan clan = ClanTable.getInstance().getTemplate(clanId);

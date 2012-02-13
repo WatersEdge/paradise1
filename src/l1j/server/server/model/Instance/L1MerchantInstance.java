@@ -48,7 +48,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 	public class RestMonitor extends TimerTask {
 		@Override
 		public void run() {
-			setRest(false);
+			L1MerchantInstance.this.setRest(false);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(final L1PcInstance pc) {
-		onAction(pc, 0);
+		this.onAction(pc, 0);
 	}
 
 	@Override
@@ -116,33 +116,33 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 	@Override
 	public void onNpcAI() {
-		if (isAiRunning()) {
+		if (this.isAiRunning()) {
 			return;
 		}
-		setActived(false);
-		startAI();
+		this.setActived(false);
+		this.startAI();
 	}
 
 	@Override
 	public void onTalkAction(final L1PcInstance player) {
-		final int objid = getId();
-		final int npcid = getNpcTemplate().get_npcId();
+		final int objid = this.getId();
+		final int npcid = this.getNpcTemplate().get_npcId();
 		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(npcid);
 		final L1Quest quest = player.getQuest();
 		String htmlid = null;
 		String[] htmldata = null;
 
-		if (getNpcTemplate().getChangeHead()) {
-			setHeading(targetDirection(player.getX(), player.getY()));
-			broadcastPacket(new S_ChangeHeading(this));
+		if (this.getNpcTemplate().getChangeHead()) {
+			this.setHeading(this.targetDirection(player.getX(), player.getY()));
+			this.broadcastPacket(new S_ChangeHeading(this));
 
 			synchronized (this) {
-				if (_monitor != null) {
-					_monitor.cancel();
+				if (this._monitor != null) {
+					this._monitor.cancel();
 				}
-				setRest(true);
-				_monitor = new RestMonitor();
-				_restTimer.schedule(_monitor, REST_MILLISEC);
+				this.setRest(true);
+				this._monitor = new RestMonitor();
+				_restTimer.schedule(this._monitor, REST_MILLISEC);
 			}
 		}
 
@@ -1042,9 +1042,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70553) { // ケント城 侍従長 イスマエル
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.KENT_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "ishmael1";
 					}
 					else {
@@ -1057,9 +1057,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70822) { // オークの森 セゲム アトゥバ
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.OT_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.OT_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "seghem1";
 					}
 					else {
@@ -1072,9 +1072,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70784) { // ウィンダウッド城 侍従長 オスモンド
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.WW_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "othmond1";
 					}
 					else {
@@ -1087,9 +1087,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70623) { // ギラン城 侍従長 オービル
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.GIRAN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "orville1";
 					}
 					else {
@@ -1102,9 +1102,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70880) { // ハイネ城 侍従長 フィッシャー
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.HEINE_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "fisher1";
 					}
 					else {
@@ -1117,9 +1117,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70665) { // ドワーフ城 侍従長 ポテンピン
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.DOWA_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "potempin1";
 					}
 					else {
@@ -1132,9 +1132,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 70721) { // アデン城 侍従長 ティモン
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.ADEN_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.ADEN_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "timon1";
 					}
 					else {
@@ -1147,9 +1147,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 			}
 			else if (npcid == 81155) { // ディアド要塞 オーレ
-				final boolean hascastle = checkHasCastle(player, L1CastleLocation.DIAD_CASTLE_ID);
+				final boolean hascastle = this.checkHasCastle(player, L1CastleLocation.DIAD_CASTLE_ID);
 				if (hascastle) { // 城主クラン員
-					if (checkClanLeader(player)) { // 血盟主
+					if (this.checkClanLeader(player)) { // 血盟主
 						htmlid = "olle1";
 					}
 					else {
@@ -1207,9 +1207,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "wpass04";
 				}
 				else if (player.getInventory().checkItem(40909)) { // 地の通行証
-					final int count = getNecessarySealCount(player);
+					final int count = this.getNecessarySealCount(player);
 					if (player.getInventory().checkItem(40913, count)) { // 地の印章
-						createRuler(player, 1, count);
+						this.createRuler(player, 1, count);
 						htmlid = "wpass06";
 					}
 					else {
@@ -1239,9 +1239,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "wpass04";
 				}
 				else if (player.getInventory().checkItem(40912)) { // 風の通行証
-					final int count = getNecessarySealCount(player);
+					final int count = this.getNecessarySealCount(player);
 					if (player.getInventory().checkItem(40916, count)) { // 風の印章
-						createRuler(player, 8, count);
+						this.createRuler(player, 8, count);
 						htmlid = "wpass06";
 					}
 					else {
@@ -1271,9 +1271,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "wpass04";
 				}
 				else if (player.getInventory().checkItem(40910)) { // 水の通行証
-					final int count = getNecessarySealCount(player);
+					final int count = this.getNecessarySealCount(player);
 					if (player.getInventory().checkItem(40914, count)) { // 水の印章
-						createRuler(player, 4, count);
+						this.createRuler(player, 4, count);
 						htmlid = "wpass06";
 					}
 					else {
@@ -1303,9 +1303,9 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "wpass04";
 				}
 				else if (player.getInventory().checkItem(40911)) { // 火の通行証
-					final int count = getNecessarySealCount(player);
+					final int count = this.getNecessarySealCount(player);
 					if (player.getInventory().checkItem(40915, count)) { // 火の印章
-						createRuler(player, 2, count);
+						this.createRuler(player, 2, count);
 						htmlid = "wpass06";
 					}
 					else {
@@ -1731,25 +1731,25 @@ public class L1MerchantInstance extends L1NpcInstance {
 				htmlid = talkToTownadviser(player, L1TownLocation.TOWNID_OREN);
 			}
 			else if (npcid == 70997) { // ドロモンド
-				htmlid = talkToDoromond(player);
+				htmlid = this.talkToDoromond(player);
 			}
 			else if (npcid == 70998) { // 歌う島のガイド
-				htmlid = talkToSIGuide(player);
+				htmlid = this.talkToSIGuide(player);
 			}
 			else if (npcid == 70999) { // アレックス(歌う島)
-				htmlid = talkToAlex(player);
+				htmlid = this.talkToAlex(player);
 			}
 			else if (npcid == 71000) { // アレックス(訓練場)
-				htmlid = talkToAlexInTrainingRoom(player);
+				htmlid = this.talkToAlexInTrainingRoom(player);
 			}
 			else if (npcid == 71002) { // キャンセレーション師
-				htmlid = cancellation(player);
+				htmlid = this.cancellation(player);
 			}
 			else if (npcid == 70506) { // ルバー
-				htmlid = talkToRuba(player);
+				htmlid = this.talkToRuba(player);
 			}
 			else if (npcid == 71005) { // ポピレア
-				htmlid = talkToPopirea(player);
+				htmlid = this.talkToPopirea(player);
 			}
 			else if (npcid == 71009) { // ブリアナ
 				if (player.getLevel() < 13) {
@@ -2109,47 +2109,47 @@ public class L1MerchantInstance extends L1NpcInstance {
 			}
 			else if (npcid == 71064) { // 小さな箱-2番目-ｂ地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 2) {
-					htmlid = talkToSecondtbox(player);
+					htmlid = this.talkToSecondtbox(player);
 				}
 			}
 			else if (npcid == 71065) { // 小さな箱-2番目-c地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 3) {
-					htmlid = talkToSecondtbox(player);
+					htmlid = this.talkToSecondtbox(player);
 				}
 			}
 			else if (npcid == 71066) { // 小さな箱-2番目-d地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 4) {
-					htmlid = talkToSecondtbox(player);
+					htmlid = this.talkToSecondtbox(player);
 				}
 			}
 			else if (npcid == 71067) { // 小さな箱-3番目-e地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 5) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71068) { // 小さな箱-3番目-f地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 6) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71069) { // 小さな箱-3番目-g地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 7) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71070) { // 小さな箱-3番目-h地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 8) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71071) { // 小さな箱-3番目-i地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 9) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71072) { // 小さな箱-3番目-j地点（海賊島の秘密）
 				if (player.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 10) {
-					htmlid = talkToThirdtbox(player);
+					htmlid = this.talkToThirdtbox(player);
 				}
 			}
 			else if (npcid == 71056) { // シミズ（消えた息子）
@@ -3725,7 +3725,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 				final int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);// 任務編號階段
 				final int playerLv = player.getLevel();// 角色等級
 				if (playerLv < 13) {
-					newUserHelp(player, 1);// HASTE & Full HP MP
+					this.newUserHelp(player, 1);// HASTE & Full HP MP
 				}
 				if ((playerLv < 2) && (quest_step == 0)) {
 					player.addExp(125);// 給予 LV2 EXP
@@ -3769,7 +3769,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 				final int quest_step = quest.get_step(L1Quest.QUEST_TUTOR2);// 任務編號階段
 				final int playerLv = player.getLevel();// 角色等級
 				if ((playerLv > 4) && (playerLv < 13) && (quest_step > 2)) {
-					newUserHelp(player, 2);// HASTE
+					this.newUserHelp(player, 2);// HASTE
 				}
 				else if ((playerLv > 4) && (playerLv < 13) && (quest_step < 2)) {
 					if (playerLv < 12) {
@@ -3778,25 +3778,25 @@ public class L1MerchantInstance extends L1NpcInstance {
 																				// lv
 																				// +1
 					}
-					newUserHelp(player, 2);// HASTE
+					this.newUserHelp(player, 2);// HASTE
 					quest.set_step(L1Quest.QUEST_TUTOR2, 2); // 設定任務
 					htmlid = "admin3";// 獲得裝備
 				}
 				else if ((playerLv > 1) && (playerLv < 12) && (quest_step == 0)) {
-					newUserHelp(player, 2);// HASTE
+					this.newUserHelp(player, 2);// HASTE
 					if (playerLv < 6) {
 						player.addExp(ExpTable.getNeedExpNextLevel(playerLv));// 給予
 																				// up
 																				// lv
 																				// +1
-						newUserHelp(player, 3);// 神聖
+						this.newUserHelp(player, 3);// 神聖
 					}
 					quest.set_step(L1Quest.QUEST_TUTOR2, 1); // 設定任務
 					htmlid = "admin2";
 				}
 				else if (playerLv < 5) {
-					newUserHelp(player, 2);// HASTE
-					newUserHelp(player, 3);// 神聖
+					this.newUserHelp(player, 2);// HASTE
+					this.newUserHelp(player, 3);// 神聖
 					htmlid = "admin2";
 				}
 			}
@@ -3953,7 +3953,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 		pc.getInventory().consumeItem(sealId, sealCount);
 		final L1ItemInstance item = pc.getInventory().storeItem(rulerId, 1);
 		if (item != null) {
-			pc.sendPackets(new S_ServerMessage(143, getNpcTemplate().get_name(), item.getLogName())); // \f1%0が%1をくれました。
+			pc.sendPackets(new S_ServerMessage(143, this.getNpcTemplate().get_name(), item.getLogName())); // \f1%0が%1をくれました。
 		}
 	}
 

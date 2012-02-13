@@ -131,51 +131,51 @@ public class L1BookMark {
 	}
 
 	public int getCharId() {
-		return _charId;
+		return this._charId;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getLocX() {
-		return _locX;
+		return this._locX;
 	}
 
 	public int getLocY() {
-		return _locY;
+		return this._locY;
 	}
 
 	public short getMapId() {
-		return _mapId;
+		return this._mapId;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public void setCharId(final int i) {
-		_charId = i;
+		this._charId = i;
 	}
 
 	public void setId(final int i) {
-		_id = i;
+		this._id = i;
 	}
 
 	public void setLocX(final int i) {
-		_locX = i;
+		this._locX = i;
 	}
 
 	public void setLocY(final int i) {
-		_locY = i;
+		this._locY = i;
 	}
 
 	public void setMapId(final short i) {
-		_mapId = i;
+		this._mapId = i;
 	}
 
 	public void setName(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 }

@@ -102,12 +102,12 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 			growth[5] = Int - Initial[5];
 		}
 
-		buildPacket(pc, growth[0], growth[1], growth[2], growth[3], growth[4], growth[5]);
+		this.buildPacket(pc, growth[0], growth[1], growth[2], growth[3], growth[4], growth[5]);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	/**
@@ -131,11 +131,11 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		final int write1 = (Int * 16) + Str;
 		final int write2 = (Dex * 16) + Wis;
 		final int write3 = (Cha * 16) + Con;
-		writeC(Opcodes.S_OPCODE_CHARRESET);
-		writeC(0x04);
-		writeC(write1);// 智力&力量
-		writeC(write2);// 敏捷&精神
-		writeC(write3);// 魅力&体质
-		writeC(0x00);
+		this.writeC(Opcodes.S_OPCODE_CHARRESET);
+		this.writeC(0x04);
+		this.writeC(write1);// 智力&力量
+		this.writeC(write2);// 敏捷&精神
+		this.writeC(write3);// 魅力&体质
+		this.writeC(0x00);
 	}
 }

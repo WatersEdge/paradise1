@@ -31,16 +31,16 @@ public class L1ItemSetItem {
 
 	/** 取得数量 */
 	public int getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	/** 取得加成 */
 	public int getEnchant() {
-		return enchant;
+		return this.enchant;
 	}
 
 	/** 取得ID */
 	public int getId() {
-		return id;
+		return this.id;
 	}
 }

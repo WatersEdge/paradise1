@@ -47,37 +47,37 @@ public class L1Weapon extends L1Item {
 
 	@Override
 	public int get_canbedmg() {
-		return _canbedmg;
+		return this._canbedmg;
 	}
 
 	@Override
 	public int getDmgModifier() {
-		return _dmgModifier;
+		return this._dmgModifier;
 	}
 
 	@Override
 	public int getDoubleDmgChance() {
-		return _doubleDmgChance;
+		return this._doubleDmgChance;
 	}
 
 	@Override
 	public int getHitModifier() {
-		return _hitModifier;
+		return this._hitModifier;
 	}
 
 	@Override
 	public int getMagicDmgModifier() {
-		return _magicDmgModifier;
+		return this._magicDmgModifier;
 	}
 
 	@Override
 	public int getRange() {
-		return _range;
+		return this._range;
 	}
 
 	@Override
 	public boolean isTwohandedWeapon() {
-		final int weapon_type = getType();
+		final int weapon_type = this.getType();
 
 		final boolean bool = ((weapon_type == 3 // 巨剑
 				)
@@ -96,31 +96,31 @@ public class L1Weapon extends L1Item {
 
 	/** 设定有无损伤 */
 	public void set_canbedmg(final int i) {
-		_canbedmg = i;
+		this._canbedmg = i;
 	}
 
 	/** 设定伤害修正 */
 	public void setDmgModifier(final int i) {
-		_dmgModifier = i;
+		this._dmgModifier = i;
 	}
 
 	/** 设定DB、双倍伤害发动几率 */
 	public void setDoubleDmgChance(final int i) {
-		_doubleDmgChance = i;
+		this._doubleDmgChance = i;
 	}
 
 	/** 设定命中率修正 */
 	public void setHitModifier(final int i) {
-		_hitModifier = i;
+		this._hitModifier = i;
 	}
 
 	/** 设定魔法攻击的伤害修正 */
 	public void setMagicDmgModifier(final int i) {
-		_magicDmgModifier = i;
+		this._magicDmgModifier = i;
 	}
 
 	/** 设定射程范围 */
 	public void setRange(final int i) {
-		_range = i;
+		this._range = i;
 	}
 }

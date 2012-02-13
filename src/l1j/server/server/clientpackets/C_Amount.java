@@ -55,10 +55,10 @@ public class C_Amount extends ClientBasePacket {
 
 	public C_Amount(final byte[] decrypt, final ClientThread client) throws Exception {
 		super(decrypt);
-		final int objectId = readD();
-		final int amount = readD();
-		readC();
-		final String s = readS();
+		final int objectId = this.readD();
+		final int amount = this.readD();
+		this.readC();
+		final String s = this.readS();
 
 		final L1PcInstance pc = client.getActiveChar();
 		final L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(objectId);

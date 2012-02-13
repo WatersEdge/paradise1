@@ -28,26 +28,26 @@ public class L1MobGroup {
 	private final boolean _isRemoveGroupIfLeaderDie;
 
 	public L1MobGroup(final int id, final int leaderId, final List<L1NpcCount> minions, final boolean isRemoveGroupIfLeaderDie) {
-		_id = id;
-		_leaderId = leaderId;
-		_minions.addAll(minions); // 参照コピーの方が速いが、不変性が保証できない
-		_isRemoveGroupIfLeaderDie = isRemoveGroupIfLeaderDie;
+		this._id = id;
+		this._leaderId = leaderId;
+		this._minions.addAll(minions); // 参照コピーの方が速いが、不変性が保証できない
+		this._isRemoveGroupIfLeaderDie = isRemoveGroupIfLeaderDie;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getLeaderId() {
-		return _leaderId;
+		return this._leaderId;
 	}
 
 	public List<L1NpcCount> getMinions() {
-		return Collections.unmodifiableList(_minions);
+		return Collections.unmodifiableList(this._minions);
 	}
 
 	public boolean isRemoveGroupIfLeaderDie() {
-		return _isRemoveGroupIfLeaderDie;
+		return this._isRemoveGroupIfLeaderDie;
 	}
 
 }

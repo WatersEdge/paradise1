@@ -68,13 +68,13 @@ public class NpcActionTable {
 	private NpcActionTable() throws Exception {
 		final File usersDir = new File("./data/xml/NpcActions/users/");
 		if (usersDir.exists()) {
-			loadDirectoryActions(usersDir);
+			this.loadDirectoryActions(usersDir);
 		}
-		loadDirectoryActions(new File("./data/xml/NpcActions/"));
+		this.loadDirectoryActions(new File("./data/xml/NpcActions/"));
 	}
 
 	public L1NpcAction get(final L1PcInstance pc, final L1Object obj) {
-		for (final L1NpcAction action : _talkActions) {
+		for (final L1NpcAction action : this._talkActions) {
 			if (action.acceptsRequest("", pc, obj)) {
 				return action;
 			}
@@ -83,7 +83,7 @@ public class NpcActionTable {
 	}
 
 	public L1NpcAction get(final String actionName, final L1PcInstance pc, final L1Object obj) {
-		for (final L1NpcAction action : _actions) {
+		for (final L1NpcAction action : this._actions) {
 			if (action.acceptsRequest(actionName, pc, obj)) {
 				return action;
 			}
@@ -92,7 +92,7 @@ public class NpcActionTable {
 	}
 
 	private void loadAction(final File file) throws Exception {
-		_actions.addAll(loadAction(file, "NpcActionList"));
+		this._actions.addAll(this.loadAction(file, "NpcActionList"));
 	}
 
 	private List<L1NpcAction> loadAction(final File file, final String nodeName)
@@ -111,13 +111,13 @@ public class NpcActionTable {
 		for (final String file : dir.list()) {
 			final File f = new File(dir, file);
 			if (FileUtil.getExtension(f).equalsIgnoreCase("xml")) {
-				loadAction(f);
-				loadTalkAction(f);
+				this.loadAction(f);
+				this.loadTalkAction(f);
 			}
 		}
 	}
 
 	private void loadTalkAction(final File file) throws Exception {
-		_talkActions.addAll(loadAction(file, "NpcTalkActionList"));
+		this._talkActions.addAll(this.loadAction(file, "NpcTalkActionList"));
 	}
 }

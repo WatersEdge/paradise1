@@ -34,7 +34,7 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 
 	public C_DeleteInventoryItem(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		final int itemObjectId = readD();
+		final int itemObjectId = this.readD();
 		final L1PcInstance pc = client.getActiveChar();
 		final L1ItemInstance item = pc.getInventory().getItem(itemObjectId);
 

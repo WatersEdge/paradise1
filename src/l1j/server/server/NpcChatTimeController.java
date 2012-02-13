@@ -53,7 +53,7 @@ public class NpcChatTimeController implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				checkNpcChatTime(); // 检查开始聊天时间
+				this.checkNpcChatTime(); // 检查开始聊天时间
 				Thread.sleep(60000);
 			}
 		}
@@ -65,7 +65,7 @@ public class NpcChatTimeController implements Runnable {
 	// 检查NPC聊天时间
 	private void checkNpcChatTime() {
 		for (final L1NpcChat npcChat : NpcChatTable.getInstance().getAllGameTime()) {
-			if (isChatTime(npcChat.getGameTime())) {
+			if (this.isChatTime(npcChat.getGameTime())) {
 				final int npcId = npcChat.getNpcId();
 				for (final L1Object obj : L1World.getInstance().getObject()) {
 					if (!(obj instanceof L1NpcInstance)) {

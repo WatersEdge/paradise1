@@ -50,11 +50,11 @@ public class DungeonRandom {
 
 		private NewDungeonRandom(final int[] newX, final int[] newY, final short[] newMapId, final int heading) {
 			for (int i = 0; i < 5; i++) {
-				_newX[i] = newX[i];
-				_newY[i] = newY[i];
-				_newMapId[i] = newMapId[i];
+				this._newX[i] = newX[i];
+				this._newY[i] = newY[i];
+				this._newMapId[i] = newMapId[i];
 			}
-			_heading = heading;
+			this._heading = heading;
 		}
 	}
 

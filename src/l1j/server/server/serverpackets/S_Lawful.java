@@ -32,15 +32,15 @@ public class S_Lawful extends ServerBasePacket {
 	 * @param lawful
 	 */
 	public S_Lawful(final int objid, final int lawful) {
-		buildPacket(objid, lawful);
+		this.buildPacket(objid, lawful);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class S_Lawful extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int objid, final int lawful) {
-		writeC(Opcodes.S_OPCODE_LAWFUL);
-		writeD(objid);
-		writeH(lawful);
-		writeD(0);
+		this.writeC(Opcodes.S_OPCODE_LAWFUL);
+		this.writeD(objid);
+		this.writeH(lawful);
+		this.writeD(0);
 	}
 
 }

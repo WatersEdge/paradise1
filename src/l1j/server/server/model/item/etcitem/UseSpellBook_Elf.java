@@ -22,20 +22,20 @@ public class UseSpellBook_Elf implements UniversalUseItem {
 	public void useItem(final L1PcInstance pc, final L1ItemInstance item, final int itemId, final int effect, final int time, final int gfxid) {
 
 		final int level = pc.getLevel();
-		if (isLearnElfMagic(pc) || pc.isGm()) {
+		if (this.isLearnElfMagic(pc) || pc.isGm()) {
 			switch (itemId) {
 				case 40232:
 				case 40233:
 				case 40234:
 					if (level >= 10) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40235:
 				case 40236:
 					if (level >= 20) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
@@ -44,7 +44,7 @@ public class UseSpellBook_Elf implements UniversalUseItem {
 				case 40239:
 				case 40240:
 					if (level >= 30) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
@@ -52,7 +52,7 @@ public class UseSpellBook_Elf implements UniversalUseItem {
 				case 40242:
 				case 40243:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
@@ -60,105 +60,105 @@ public class UseSpellBook_Elf implements UniversalUseItem {
 				case 40245:
 				case 40246:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40247:
 				case 40248:
 					if (level >= 30) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40249:
 				case 40250:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40251:
 				case 40252:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40253:
 					if (level >= 30) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40254:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40255:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40256:
 					if (level >= 30) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40257:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40258:
 				case 40259:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40260:
 				case 40261:
 					if (level >= 30) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40262:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 40263:
 				case 40264:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 41149:
 				case 41150:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 41151:
 					if (level >= 40) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 
 				case 41152:
 				case 41153:
 					if (level >= 50) {
-						ElfSpellBook(pc, item);
+						this.ElfSpellBook(pc, item);
 					}
 					break;
 

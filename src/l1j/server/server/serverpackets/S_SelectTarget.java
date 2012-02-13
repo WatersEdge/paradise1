@@ -34,19 +34,19 @@ public class S_SelectTarget extends ServerBasePacket {
 	 * @param ObjectId
 	 */
 	public S_SelectTarget(final int ObjectId) {
-		writeC(Opcodes.S_OPCODE_SELECTTARGET);
-		writeD(ObjectId);
-		writeC(0x00); // TYPE 未知用途
-		writeC(0x00);
-		writeC(0x02);
+		this.writeC(Opcodes.S_OPCODE_SELECTTARGET);
+		this.writeD(ObjectId);
+		this.writeC(0x00); // TYPE 未知用途
+		this.writeC(0x00);
+		this.writeC(0x02);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

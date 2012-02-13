@@ -38,9 +38,9 @@ public class C_Attack extends ClientBasePacket {
 
 		// 载入资料
 		super(decrypt);
-		final int targetId = readD(); // 目标ID
-		final int x = readH(); // X坐标
-		final int y = readH(); // Y坐标
+		final int targetId = this.readD(); // 目标ID
+		final int x = this.readH(); // X坐标
+		final int y = this.readH(); // Y坐标
 
 		// 取得在线角色
 		final L1PcInstance pc = client.getActiveChar();

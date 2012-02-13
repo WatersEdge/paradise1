@@ -47,13 +47,13 @@ public class RaceTicketTable {
 	private int _maxRoundNumber;
 
 	private RaceTicketTable() {
-		load();
+		this.load();
 	}
 
 	public void deleteTicket(final int itemobjid) {
 		// PCのインベントリーが減少する再に使用
-		if (_tickets.containsKey(itemobjid)) {
-			_tickets.remove(itemobjid);
+		if (this._tickets.containsKey(itemobjid)) {
+			this._tickets.remove(itemobjid);
 		}
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -72,16 +72,16 @@ public class RaceTicketTable {
 	}
 
 	public L1RaceTicket[] getRaceTicketTableList() {
-		return _tickets.values().toArray(new L1RaceTicket[_tickets.size()]);
+		return this._tickets.values().toArray(new L1RaceTicket[this._tickets.size()]);
 	}
 
 	public int getRoundNumOfMax() {
-		return _maxRoundNumber;
+		return this._maxRoundNumber;
 	}
 
 	public L1RaceTicket getTemplate(final int itemobjid) {
-		if (_tickets.containsKey(itemobjid)) {
-			return _tickets.get(itemobjid);
+		if (this._tickets.containsKey(itemobjid)) {
+			return this._tickets.get(itemobjid);
 		}
 		return null;
 	}
@@ -107,7 +107,7 @@ public class RaceTicketTable {
 		// PCのインベントリーが増える場合に実行
 		// XXX 呼ばれる前と処理の重複
 		if (ticket.get_itemobjid() != 0) {
-			_tickets.put(new Integer(ticket.get_itemobjid()), ticket);
+			this._tickets.put(new Integer(ticket.get_itemobjid()), ticket);
 		}
 
 		Connection con = null;
@@ -133,7 +133,7 @@ public class RaceTicketTable {
 	}
 
 	public void updateTicket(final int round, final int num, final double allotment_percentage) {
-		for (final L1RaceTicket ticket : getRaceTicketTableList()) {
+		for (final L1RaceTicket ticket : this.getRaceTicketTableList()) {
 			if ((ticket.get_round() == round) && (ticket.get_runner_num() == num)) {
 				ticket.set_victory(1);
 				ticket.set_allotment_percentage(allotment_percentage);
@@ -180,9 +180,9 @@ public class RaceTicketTable {
 				if (ticket.get_round() > temp) {
 					temp = ticket.get_round();
 				}
-				_tickets.put(new Integer(itemobjid), ticket);
+				this._tickets.put(new Integer(itemobjid), ticket);
 			}
-			_maxRoundNumber = temp;
+			this._maxRoundNumber = temp;
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

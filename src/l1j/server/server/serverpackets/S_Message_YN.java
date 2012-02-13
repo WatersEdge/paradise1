@@ -31,7 +31,7 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param msg1
 	 */
 	public S_Message_YN(final int type, final String msg1) {
-		buildPacket(type, msg1, null, null, 1);
+		this.buildPacket(type, msg1, null, null, 1);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param msg2
 	 */
 	public S_Message_YN(final int type, final String msg1, final String msg2) {
-		buildPacket(type, msg1, msg2, null, 2);
+		this.buildPacket(type, msg1, msg2, null, 2);
 	}
 
 	/**
@@ -54,15 +54,15 @@ public class S_Message_YN extends ServerBasePacket {
 	 * @param msg3
 	 */
 	public S_Message_YN(final int type, final String msg1, final String msg2, final String msg3) {
-		buildPacket(type, msg1, msg2, msg3, 3);
+		this.buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -71,21 +71,21 @@ public class S_Message_YN extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final int check) {
-		writeC(Opcodes.S_OPCODE_YES_NO);
-		writeH(0x0000); // 3.51未知封包
-		writeD(GameServer.getYesNoCount());
-		writeH(type);
+		this.writeC(Opcodes.S_OPCODE_YES_NO);
+		this.writeH(0x0000); // 3.51未知封包
+		this.writeD(GameServer.getYesNoCount());
+		this.writeH(type);
 		if (check == 1) {
-			writeS(msg1);
+			this.writeS(msg1);
 		}
 		else if (check == 2) {
-			writeS(msg1);
-			writeS(msg2);
+			this.writeS(msg1);
+			this.writeS(msg2);
 		}
 		else if (check == 3) {
-			writeS(msg1);
-			writeS(msg2);
-			writeS(msg3);
+			this.writeS(msg1);
+			this.writeS(msg2);
+			this.writeS(msg3);
 		}
 	}
 }

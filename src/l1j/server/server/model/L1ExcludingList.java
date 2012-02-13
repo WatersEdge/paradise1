@@ -26,14 +26,14 @@ public class L1ExcludingList {
 	private final List<String> _nameList = Lists.newList();
 
 	public void add(final String name) {
-		_nameList.add(name);
+		this._nameList.add(name);
 	}
 
 	/**
 	 * 返回封锁角色的指定名称场合true
 	 */
 	public boolean contains(final String name) {
-		for (final String each : _nameList) {
+		for (final String each : this._nameList) {
 			if (each.equalsIgnoreCase(name)) {
 				return true;
 			}
@@ -45,7 +45,7 @@ public class L1ExcludingList {
 	 * 返回该表是否已达到16名的截止上限
 	 */
 	public boolean isFull() {
-		return (_nameList.size() >= 16) ? true : false;
+		return (this._nameList.size() >= 16) ? true : false;
 	}
 
 	/**
@@ -56,9 +56,9 @@ public class L1ExcludingList {
 	 * @return 实际的删除、客户端的封锁列表的角色。如果没有名称在列表中指定的，则返回null。
 	 */
 	public String remove(final String name) {
-		for (final String each : _nameList) {
+		for (final String each : this._nameList) {
 			if (each.equalsIgnoreCase(name)) {
-				_nameList.remove(each);
+				this._nameList.remove(each);
 				return each;
 			}
 		}

@@ -65,16 +65,16 @@ public class C_Shop extends ClientBasePacket {
 		L1ItemInstance checkItem;
 		boolean tradable = true;
 
-		final int type = readC();
+		final int type = this.readC();
 		if (type == 0) { // 开始
-			final int sellTotalCount = readH();
+			final int sellTotalCount = this.readH();
 			int sellObjectId;
 			int sellPrice;
 			int sellCount;
 			for (int i = 0; i < sellTotalCount; i++) {
-				sellObjectId = readD();
-				sellPrice = readD();
-				sellCount = readD();
+				sellObjectId = this.readD();
+				sellPrice = this.readD();
+				sellCount = this.readD();
 				// 检查交易项目
 				checkItem = pc.getInventory().getItem(sellObjectId);
 				if (!checkItem.getItem().isTradable()) {
@@ -99,14 +99,14 @@ public class C_Shop extends ClientBasePacket {
 				pssl.setSellTotalCount(sellCount);
 				sellList.add(pssl);
 			}
-			final int buyTotalCount = readH();
+			final int buyTotalCount = this.readH();
 			int buyObjectId;
 			int buyPrice;
 			int buyCount;
 			for (int i = 0; i < buyTotalCount; i++) {
-				buyObjectId = readD();
-				buyPrice = readD();
-				buyCount = readD();
+				buyObjectId = this.readD();
+				buyPrice = this.readD();
+				buyCount = this.readD();
 				// 检查交易项目
 				checkItem = pc.getInventory().getItem(buyObjectId);
 				if (!checkItem.getItem().isTradable()) {
@@ -162,7 +162,7 @@ public class C_Shop extends ClientBasePacket {
 				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 				return;
 			}
-			final byte[] chat = readByte();
+			final byte[] chat = this.readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
 			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));

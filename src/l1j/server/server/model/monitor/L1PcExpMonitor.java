@@ -47,35 +47,35 @@ public class L1PcExpMonitor extends L1PcMonitor {
 		// .includes(pc.getLawful(), 9000, 32767)) || (IntRange
 		// .includes(_old_lawful, -32768, -2000) && IntRange
 		// .includes(pc.getLawful(), -32768, -2000)))) {
-		if (_old_lawful != pc.getLawful()) {
-			_old_lawful = pc.getLawful();
-			final S_Lawful s_lawful = new S_Lawful(pc.getId(), _old_lawful);
+		if (this._old_lawful != pc.getLawful()) {
+			this._old_lawful = pc.getLawful();
+			final S_Lawful s_lawful = new S_Lawful(pc.getId(), this._old_lawful);
 			pc.sendPackets(s_lawful);
 			pc.broadcastPacket(s_lawful);
 
 			// 处理战斗特化系统
 			if (Config.FIGHT_IS_ACTIVE) {
 				// 计算目前的战斗特化组别
-				final int fightType = _old_lawful / 10000;
+				final int fightType = this._old_lawful / 10000;
 
 				// 判断战斗特化组别是否有所变更
-				if (_oldFight != fightType) {
+				if (this._oldFight != fightType) {
 					// 进行战斗特化组别的变更
-					pc.changeFightType(_oldFight, fightType);
+					pc.changeFightType(this._oldFight, fightType);
 
-					_oldFight = fightType;
+					this._oldFight = fightType;
 				}
 			}
 
 		}
 
-		if (_old_karma != pc.getKarma()) {
-			_old_karma = pc.getKarma();
+		if (this._old_karma != pc.getKarma()) {
+			this._old_karma = pc.getKarma();
 			pc.sendPackets(new S_Karma(pc));
 		}
 
-		if (_old_exp != pc.getExp()) {
-			_old_exp = pc.getExp();
+		if (this._old_exp != pc.getExp()) {
+			this._old_exp = pc.getExp();
 			pc.onChangeExp();
 		}
 	}

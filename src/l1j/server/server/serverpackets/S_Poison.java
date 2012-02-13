@@ -35,20 +35,20 @@ public class S_Poison extends ServerBasePacket {
 	 *            外观类型 0 = 通常色, 1 = 绿色, 2 = 灰色
 	 */
 	public S_Poison(final int objId, final int type) {
-		writeC(Opcodes.S_OPCODE_POISON);
-		writeD(objId);
+		this.writeC(Opcodes.S_OPCODE_POISON);
+		this.writeD(objId);
 
 		if (type == 0) { // 通常
-			writeC(0);
-			writeC(0);
+			this.writeC(0);
+			this.writeC(0);
 		}
 		else if (type == 1) { // 绿色
-			writeC(1);
-			writeC(0);
+			this.writeC(1);
+			this.writeC(0);
 		}
 		else if (type == 2) { // 灰色
-			writeC(0);
-			writeC(1);
+			this.writeC(0);
+			this.writeC(1);
 		}
 		else {
 			throw new IllegalArgumentException("非法参数。type = " + type);
@@ -57,7 +57,7 @@ public class S_Poison extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

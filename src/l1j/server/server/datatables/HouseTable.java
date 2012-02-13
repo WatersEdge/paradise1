@@ -101,8 +101,8 @@ public class HouseTable {
 				house.setKeeperId(rs.getInt(5));
 				house.setOnSale(rs.getInt(6) == 1 ? true : false);
 				house.setPurchaseBasement(rs.getInt(7) == 1 ? true : false);
-				house.setTaxDeadline(timestampToCalendar((Timestamp) rs.getObject(8)));
-				_house.put(house.getHouseId(), house);
+				house.setTaxDeadline(this.timestampToCalendar((Timestamp) rs.getObject(8)));
+				this._house.put(house.getHouseId(), house);
 			}
 		}
 		catch (final SQLException e) {
@@ -120,7 +120,7 @@ public class HouseTable {
 	 * @return
 	 */
 	public L1House getHouseTable(final int houseId) {
-		return _house.get(houseId);
+		return this._house.get(houseId);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class HouseTable {
 	 * @return
 	 */
 	public L1House[] getHouseTableList() {
-		return _house.values().toArray(new L1House[_house.size()]);
+		return this._house.values().toArray(new L1House[this._house.size()]);
 	}
 
 	/**

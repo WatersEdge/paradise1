@@ -36,9 +36,9 @@ public class C_CreateParty extends ClientBasePacket {
 
 		final L1PcInstance pc = client.getActiveChar();
 
-		final int type = readC();
+		final int type = this.readC();
 		if ((type == 0) || (type == 1)) { // 自动接受组队 on 与 off 的同
-			final int targetId = readD();
+			final int targetId = this.readD();
 			final L1Object temp = L1World.getInstance().findObject(targetId);
 			if (temp instanceof L1PcInstance) {
 				final L1PcInstance targetPc = (L1PcInstance) temp;
@@ -88,7 +88,7 @@ public class C_CreateParty extends ClientBasePacket {
 			}
 		}
 		else if (type == 2) { // 聊天组队
-			final String name = readS();
+			final String name = this.readS();
 			final L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
 				pc.sendPackets(new S_ServerMessage(109)); // 没有叫%0的人。
@@ -131,7 +131,7 @@ public class C_CreateParty extends ClientBasePacket {
 			}
 
 			// 取得目标物件编号
-			final int targetId = readD();
+			final int targetId = this.readD();
 
 			// 尝试取得目标
 			final L1Object obj = L1World.getInstance().findObject(targetId);

@@ -39,7 +39,7 @@ public class C_Door extends ClientBasePacket {
 		private final L1DoorInstance _door;
 
 		public CloseTimer(final L1DoorInstance door) {
-			_door = door;
+			this._door = door;
 		}
 
 		public void begin() {
@@ -49,8 +49,8 @@ public class C_Door extends ClientBasePacket {
 
 		@Override
 		public void run() {
-			if (_door.getOpenStatus() == ActionCodes.ACTION_Open) {
-				_door.close();
+			if (this._door.getOpenStatus() == ActionCodes.ACTION_Open) {
+				this._door.close();
 			}
 		}
 	}
@@ -59,9 +59,9 @@ public class C_Door extends ClientBasePacket {
 
 	public C_Door(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		readH();
-		readH();
-		final int objectId = readD();
+		this.readH();
+		this.readH();
+		final int objectId = this.readD();
 
 		final L1PcInstance pc = client.getActiveChar();
 		final L1DoorInstance door = (L1DoorInstance) L1World.getInstance().findObject(objectId);
@@ -92,7 +92,7 @@ public class C_Door extends ClientBasePacket {
 				closetimer.begin();
 			}
 		}
-		else if (!isExistKeeper(pc, door.getKeeperId())) {
+		else if (!this.isExistKeeper(pc, door.getKeeperId())) {
 			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
 				door.close();
 			}

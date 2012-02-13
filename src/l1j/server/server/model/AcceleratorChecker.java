@@ -69,13 +69,13 @@ public class AcceleratorChecker {
 	public static final int R_DISPOSED = 2;
 
 	public AcceleratorChecker(final L1PcInstance pc) {
-		_pc = pc;
-		_injusticeCount = 0;
-		_justiceCount = 0;
+		this._pc = pc;
+		this._injusticeCount = 0;
+		this._justiceCount = 0;
 		final long now = System.currentTimeMillis();
 		for (final ACT_TYPE each : ACT_TYPE.values()) {
-			_actTimers.put(each, now);
-			_checkTimers.put(each, now);
+			this._actTimers.put(each, now);
+			this._checkTimers.put(each, now);
 		}
 	}
 
@@ -89,25 +89,25 @@ public class AcceleratorChecker {
 	public int checkInterval(final ACT_TYPE type) {
 		int result = R_OK;
 		final long now = System.currentTimeMillis();
-		long interval = now - _actTimers.get(type);
-		final int rightInterval = getRightInterval(type);
+		long interval = now - this._actTimers.get(type);
+		final int rightInterval = this.getRightInterval(type);
 
 		interval *= CHECK_STRICTNESS;
 
 		if ((0 < interval) && (interval < rightInterval)) {
-			_injusticeCount++;
-			_justiceCount = 0;
-			if (_injusticeCount >= INJUSTICE_COUNT_LIMIT) {
-				doPunishment(Config.ILLEGAL_SPEEDUP_PUNISHMENT);
+			this._injusticeCount++;
+			this._justiceCount = 0;
+			if (this._injusticeCount >= INJUSTICE_COUNT_LIMIT) {
+				this.doPunishment(Config.ILLEGAL_SPEEDUP_PUNISHMENT);
 				return R_DISPOSED;
 			}
 			result = R_DETECTED;
 		}
 		else if (interval >= rightInterval) {
-			_justiceCount++;
-			if (_justiceCount >= JUSTICE_COUNT_LIMIT) {
-				_injusticeCount = 0;
-				_justiceCount = 0;
+			this._justiceCount++;
+			if (this._justiceCount >= JUSTICE_COUNT_LIMIT) {
+				this._injusticeCount = 0;
+				this._justiceCount = 0;
 			}
 		}
 
@@ -117,7 +117,7 @@ public class AcceleratorChecker {
 		// type.toString(), interval, rightInterval, rate,
 		// _justiceCount, _injusticeCount));
 
-		_actTimers.put(type, now);
+		this._actTimers.put(type, now);
 		return result;
 	}
 
@@ -128,55 +128,55 @@ public class AcceleratorChecker {
 	 *            处罚模式
 	 */
 	private void doPunishment(final int punishmaent) {
-		if (!_pc.isGm()) { // 如果不是GM才执行处罚
-			final int x = _pc.getX(), y = _pc.getY(), mapid = _pc.getMapId(); // 记录坐标
+		if (!this._pc.isGm()) { // 如果不是GM才执行处罚
+			final int x = this._pc.getX(), y = this._pc.getY(), mapid = this._pc.getMapId(); // 记录坐标
 			switch (punishmaent) {
 				case 0: // 剔除
-					_pc.sendPackets(new S_ServerMessage(945));
-					_pc.sendPackets(new S_Disconnect());
-					_log.info(String.format("因为检测到%s正在使用加速器，强制切断其连线。", _pc.getName()));
+					this._pc.sendPackets(new S_ServerMessage(945));
+					this._pc.sendPackets(new S_Disconnect());
+					_log.info(String.format("因为检测到%s正在使用加速器，强制切断其连线。", this._pc.getName()));
 					break;
 				case 1: // 锁定人物10秒
-					_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
+					this._pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
 					try {
 						Thread.sleep(10000); // 暂停十秒
 					}
 					catch (final Exception e) {
 						System.out.println(e.getLocalizedMessage());
 					}
-					_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, false));
+					this._pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, false));
 					break;
 				case 2: // 传到地狱
-					L1Teleport.teleport(_pc, 32737, 32796, (short) 99, 5, false);
-					_pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了地域，10秒后传回。"));
+					L1Teleport.teleport(this._pc, 32737, 32796, (short) 99, 5, false);
+					this._pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了地域，10秒后传回。"));
 					try {
 						Thread.sleep(10000); // 暂停十秒
 					}
 					catch (final Exception e) {
 						System.out.println(e.getLocalizedMessage());
 					}
-					L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
+					L1Teleport.teleport(this._pc, x, y, (short) mapid, 5, false);
 					break;
 				case 3: // 传到GM房，30秒后传回
-					L1Teleport.teleport(_pc, 32737, 32796, (short) 99, 5, false);
-					_pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了GM房，30秒后传回。"));
+					L1Teleport.teleport(this._pc, 32737, 32796, (short) 99, 5, false);
+					this._pc.sendPackets(new S_SystemMessage("因为你使用加速器，被传送到了GM房，30秒后传回。"));
 					try {
 						Thread.sleep(30000); // 暂停30秒
 					}
 					catch (final Exception e) {
 						System.out.println(e.getLocalizedMessage());
 					}
-					L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
+					L1Teleport.teleport(this._pc, x, y, (short) mapid, 5, false);
 					break;
 			}
 		}
 		else {
 			// GM不需要断线
-			_pc.sendPackets(new S_SystemMessage("游戏管理员在游戏中使用加速器检测中。"));
-			_injusticeCount = 0;
+			this._pc.sendPackets(new S_SystemMessage("游戏管理员在游戏中使用加速器检测中。"));
+			this._injusticeCount = 0;
 		}
 		if (Config.writeRobotsLog) {
-			LogRecorder.writeRobotsLog(_pc); // 加速器记录
+			LogRecorder.writeRobotsLog(this._pc); // 加速器记录
 		}
 	}
 
@@ -195,23 +195,23 @@ public class AcceleratorChecker {
 		// 动作判断
 		switch (type) {
 			case ATTACK:
-				interval = SprTable.getInstance().getAttackSpeed(_pc.getTempCharGfx(), _pc.getCurrentWeapon() + 1);
+				interval = SprTable.getInstance().getAttackSpeed(this._pc.getTempCharGfx(), this._pc.getCurrentWeapon() + 1);
 				break;
 			case MOVE:
-				interval = SprTable.getInstance().getMoveSpeed(_pc.getTempCharGfx(), _pc.getCurrentWeapon());
+				interval = SprTable.getInstance().getMoveSpeed(this._pc.getTempCharGfx(), this._pc.getCurrentWeapon());
 				break;
 			case SPELL_DIR:
-				interval = SprTable.getInstance().getDirSpellSpeed(_pc.getTempCharGfx());
+				interval = SprTable.getInstance().getDirSpellSpeed(this._pc.getTempCharGfx());
 				break;
 			case SPELL_NODIR:
-				interval = SprTable.getInstance().getNodirSpellSpeed(_pc.getTempCharGfx());
+				interval = SprTable.getInstance().getNodirSpellSpeed(this._pc.getTempCharGfx());
 				break;
 			default:
 				return 0;
 		}
 
 		// 一段加速
-		switch (_pc.getMoveSpeed()) {
+		switch (this._pc.getMoveSpeed()) {
 			case 1: // 加速术
 				interval *= HASTE_RATE;
 				break;
@@ -223,7 +223,7 @@ public class AcceleratorChecker {
 		}
 
 		// 二段加速
-		switch (_pc.getBraveSpeed()) {
+		switch (this._pc.getBraveSpeed()) {
 			case 1: // 勇水
 				interval *= HASTE_RATE; // 攻速、移速 * 1.33倍
 				break;
@@ -248,18 +248,18 @@ public class AcceleratorChecker {
 		}
 
 		// 生命之树果实
-		if (_pc.isRibrave() && type.equals(ACT_TYPE.MOVE)) { // 移速 * 1.15倍
+		if (this._pc.isRibrave() && type.equals(ACT_TYPE.MOVE)) { // 移速 * 1.15倍
 			interval *= WAFFLE_RATE;
 		}
 		// 三段加速
-		if (_pc.isThirdSpeed()) { // 攻速、移速 * 1.15倍
+		if (this._pc.isThirdSpeed()) { // 攻速、移速 * 1.15倍
 			interval *= WAFFLE_RATE;
 		}
 		// 风之枷锁
-		if (_pc.isWindShackle() && !type.equals(ACT_TYPE.MOVE)) { // 攻速or施法速度 / 2倍
+		if (this._pc.isWindShackle() && !type.equals(ACT_TYPE.MOVE)) { // 攻速or施法速度 / 2倍
 			interval /= 2;
 		}
-		if (_pc.getMapId() == 5143) { // 宠物竞速例外
+		if (this._pc.getMapId() == 5143) { // 宠物竞速例外
 			interval *= 0.1;
 		}
 		return interval;

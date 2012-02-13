@@ -33,7 +33,7 @@ public class C_AddBookmark extends ClientBasePacket {
 
 	public C_AddBookmark(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		final String s = readS();
+		final String s = this.readS();
 
 		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {

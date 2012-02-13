@@ -49,15 +49,15 @@ public class CastleTable {
 	private final Map<Integer, L1Castle> _castles = Maps.newConcurrentMap();
 
 	private CastleTable() {
-		load();
+		this.load();
 	}
 
 	public L1Castle getCastleTable(final int id) {
-		return _castles.get(id);
+		return this._castles.get(id);
 	}
 
 	public L1Castle[] getCastleTableList() {
-		return _castles.values().toArray(new L1Castle[_castles.size()]);
+		return this._castles.values().toArray(new L1Castle[this._castles.size()]);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class CastleTable {
 			pstm.setInt(5, castle.getId());
 			pstm.execute();
 
-			_castles.put(castle.getId(), castle);
+			this._castles.put(castle.getId(), castle);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -103,11 +103,11 @@ public class CastleTable {
 
 			while (rs.next()) {
 				final L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
-				castle.setWarTime(timestampToCalendar((Timestamp) rs.getObject(3)));
+				castle.setWarTime(this.timestampToCalendar((Timestamp) rs.getObject(3)));
 				castle.setTaxRate(rs.getInt(4));
 				castle.setPublicMoney(rs.getInt(5));
 
-				_castles.put(castle.getId(), castle);
+				this._castles.put(castle.getId(), castle);
 			}
 		}
 		catch (final SQLException e) {

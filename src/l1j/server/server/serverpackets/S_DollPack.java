@@ -38,39 +38,39 @@ public class S_DollPack extends ServerBasePacket {
 		/*
 		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting = 4;
 		 */
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(doll.getX());
-		writeH(doll.getY());
-		writeD(doll.getId());
-		writeH(doll.getGfxId()); // SpriteID in List.spr
-		writeC(doll.getStatus()); // Modes in List.spr
-		writeC(doll.getHeading());
-		writeC(0); // (Bright) - 0~15
-		writeC(doll.getMoveSpeed()); // 1段加速状态
-		writeD(0);
-		writeH(0);
-		writeS(doll.getNameId());
-		writeS(doll.getTitle());
-		writeC((doll.getBraveSpeed() * 16)); // 状态、2段加速状态
-		writeD(0); // ??
-		writeS(null); // ??
-		writeS(doll.getMaster() != null ? doll.getMaster().getName() : "");
-		writeC(0); // 物件分类
-		writeC(0xFF); // HP
-		writeC(0);
-		writeC(doll.getLevel()); // PC = 0, Mon = Lv
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(doll.getX());
+		this.writeH(doll.getY());
+		this.writeD(doll.getId());
+		this.writeH(doll.getGfxId()); // SpriteID in List.spr
+		this.writeC(doll.getStatus()); // Modes in List.spr
+		this.writeC(doll.getHeading());
+		this.writeC(0); // (Bright) - 0~15
+		this.writeC(doll.getMoveSpeed()); // 1段加速状态
+		this.writeD(0);
+		this.writeH(0);
+		this.writeS(doll.getNameId());
+		this.writeS(doll.getTitle());
+		this.writeC((doll.getBraveSpeed() * 16)); // 状态、2段加速状态
+		this.writeD(0); // ??
+		this.writeS(null); // ??
+		this.writeS(doll.getMaster() != null ? doll.getMaster().getName() : "");
+		this.writeC(0); // 物件分类
+		this.writeC(0xFF); // HP
+		this.writeC(0);
+		this.writeC(doll.getLevel()); // PC = 0, Mon = Lv
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

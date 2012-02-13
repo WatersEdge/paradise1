@@ -29,23 +29,23 @@ public class L1Buddy {
 	private final LinkedHashMap<Integer, String> _buddys = new LinkedHashMap<Integer, String>();
 
 	public L1Buddy(final int charId) {
-		_charId = charId;
+		this._charId = charId;
 	}
 
 	public boolean add(final int objId, final String name) {
-		if (_buddys.containsKey(objId)) {
+		if (this._buddys.containsKey(objId)) {
 			return false;
 		}
-		_buddys.put(objId, name);
+		this._buddys.put(objId, name);
 		return true;
 	}
 
 	public boolean containsId(final int objId) {
-		return _buddys.containsKey(objId);
+		return this._buddys.containsKey(objId);
 	}
 
 	public boolean containsName(final String name) {
-		for (final String buddyName : _buddys.values()) {
+		for (final String buddyName : this._buddys.values()) {
 			if (name.equalsIgnoreCase(buddyName)) {
 				return true;
 			}
@@ -55,20 +55,20 @@ public class L1Buddy {
 
 	public String getBuddyListString() {
 		String result = new String("");
-		for (final String name : _buddys.values()) {
+		for (final String name : this._buddys.values()) {
 			result += name + " ";
 		}
 		return result;
 	}
 
 	public int getCharId() {
-		return _charId;
+		return this._charId;
 	}
 
 	public String getOnlineBuddyListString() {
 		String result = new String("");
 		for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (_buddys.containsKey(pc.getId())) {
+			if (this._buddys.containsKey(pc.getId())) {
 				result += pc.getName() + " ";
 			}
 		}
@@ -76,13 +76,13 @@ public class L1Buddy {
 	}
 
 	public boolean remove(final int objId) {
-		final String result = _buddys.remove(objId);
+		final String result = this._buddys.remove(objId);
 		return (result != null ? true : false);
 	}
 
 	public boolean remove(final String name) {
 		int id = 0;
-		for (final Map.Entry<Integer, String> buddy : _buddys.entrySet()) {
+		for (final Map.Entry<Integer, String> buddy : this._buddys.entrySet()) {
 			if (name.equalsIgnoreCase(buddy.getValue())) {
 				id = buddy.getKey();
 				break;
@@ -91,11 +91,11 @@ public class L1Buddy {
 		if (id == 0) {
 			return false;
 		}
-		_buddys.remove(id);
+		this._buddys.remove(id);
 		return true;
 	}
 
 	public int size() {
-		return _buddys.size();
+		return this._buddys.size();
 	}
 }

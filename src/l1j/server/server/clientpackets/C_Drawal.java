@@ -38,8 +38,8 @@ public class C_Drawal extends ClientBasePacket {
 
 	public C_Drawal(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		readD();
-		final int j = Math.abs(readD());
+		this.readD();
+		final int j = Math.abs(this.readD());
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());

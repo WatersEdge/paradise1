@@ -37,8 +37,8 @@ public class Point {
 	 * @param y
 	 */
 	public Point(final int x, final int y) {
-		_x = x;
-		_y = y;
+		this._x = x;
+		this._y = y;
 	}
 
 	/**
@@ -47,8 +47,8 @@ public class Point {
 	 * @param pt
 	 */
 	public Point(final Point pt) {
-		_x = pt._x;
-		_y = pt._y;
+		this._x = pt._x;
+		this._y = pt._y;
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class Point {
 	 *            面向(0~7)
 	 */
 	public void backward(final int heading) {
-		_x -= HEADING_TABLE_X[heading];
-		_y -= HEADING_TABLE_Y[heading];
+		this._x -= HEADING_TABLE_X[heading];
+		this._y -= HEADING_TABLE_Y[heading];
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class Point {
 			return false;
 		}
 		final Point pt = (Point) obj;
-		return (getX() == pt.getX()) && (getY() == pt.getY());
+		return (this.getX() == pt.getX()) && (this.getY() == pt.getY());
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class Point {
 	 *            面向(0~7)
 	 */
 	public void forward(final int heading) {
-		_x += HEADING_TABLE_X[heading];
-		_y += HEADING_TABLE_Y[heading];
+		this._x += HEADING_TABLE_X[heading];
+		this._y += HEADING_TABLE_Y[heading];
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class Point {
 	 * @return 直线距离值
 	 */
 	public double getLineDistance(final Point pt) {
-		final long diffX = pt.getX() - getX();
-		final long diffY = pt.getY() - getY();
+		final long diffX = pt.getX() - this.getX();
+		final long diffY = pt.getY() - this.getY();
 		return Math.sqrt((diffX * diffX) + (diffY * diffY));
 	}
 
@@ -103,7 +103,7 @@ public class Point {
 	 * @return 直线距离值。
 	 */
 	public int getTileDistance(final Point pt) {
-		return Math.abs(pt.getX() - getX()) + Math.abs(pt.getY() - getY());
+		return Math.abs(pt.getX() - this.getX()) + Math.abs(pt.getY() - this.getY());
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Point {
 	 * @return 直线距离值。
 	 */
 	public int getTileLineDistance(final Point pt) {
-		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
+		return Math.max(Math.abs(pt.getX() - this.getX()), Math.abs(pt.getY() - this.getY()));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Point {
 	 * @return
 	 */
 	public int getX() {
-		return _x;
+		return this._x;
 	}
 
 	/**
@@ -132,12 +132,12 @@ public class Point {
 	 * @return
 	 */
 	public int getY() {
-		return _y;
+		return this._y;
 	}
 
 	@Override
 	public int hashCode() {
-		return 7 * getX() + getY();
+		return 7 * this.getX() + this.getY();
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class Point {
 	 * @return 指定された座標が画面内に見える場合はtrue。そうでない場合はfalse。
 	 */
 	public boolean isInScreen(final Point pt) {
-		final int dist = getTileDistance(pt);
+		final int dist = this.getTileDistance(pt);
 
 		if (dist > 19) { // 当tile距离 > 19 的时候，判定为不在画面内(false)
 			return false;
@@ -162,7 +162,7 @@ public class Point {
 			// Point pointZero = new Point(this.getX() - 18, this.getY() - 18);
 			// int dist2 = pointZero.getTileDistance(pt);
 			// 显示区的坐标系统 (18, 18)
-			final int dist2 = Math.abs(pt.getX() - (getX() - 18)) + Math.abs(pt.getY() - (getY() - 18));
+			final int dist2 = Math.abs(pt.getX() - (this.getX() - 18)) + Math.abs(pt.getY() - (this.getY() - 18));
 			if ((19 <= dist2) && (dist2 <= 52)) {
 				return true;
 			}
@@ -178,7 +178,7 @@ public class Point {
 	 * @return true是 false否。
 	 */
 	public boolean isSamePoint(final Point pt) {
-		return ((pt.getX() == getX()) && (pt.getY() == getY()));
+		return ((pt.getX() == this.getX()) && (pt.getY() == this.getY()));
 	}
 
 	/**
@@ -190,8 +190,8 @@ public class Point {
 	 *            坐标点Y
 	 */
 	public void set(final int x, final int y) {
-		_x = x;
-		_y = y;
+		this._x = x;
+		this._y = y;
 	}
 
 	/**
@@ -201,8 +201,8 @@ public class Point {
 	 *            坐标点
 	 */
 	public void set(final Point pt) {
-		_x = pt._x;
-		_y = pt._y;
+		this._x = pt._x;
+		this._y = pt._y;
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class Point {
 	 * @param x
 	 */
 	public void setX(final int x) {
-		_x = x;
+		this._x = x;
 	}
 
 	/**
@@ -220,11 +220,11 @@ public class Point {
 	 * @param y
 	 */
 	public void setY(final int y) {
-		_y = y;
+		this._y = y;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("(%d, %d)", _x, _y);
+		return String.format("(%d, %d)", this._x, this._y);
 	}
 }

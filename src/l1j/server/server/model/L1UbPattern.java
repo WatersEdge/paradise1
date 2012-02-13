@@ -31,41 +31,41 @@ public class L1UbPattern {
 	private final Map<Integer, List<L1UbSpawn>> _groups = Maps.newMap();
 
 	public void addSpawn(final int groupNumber, final L1UbSpawn spawn) {
-		if (_isFrozen) {
+		if (this._isFrozen) {
 			return;
 		}
 
-		List<L1UbSpawn> spawnList = _groups.get(groupNumber);
+		List<L1UbSpawn> spawnList = this._groups.get(groupNumber);
 		if (spawnList == null) {
 			spawnList = Lists.newList();
-			_groups.put(groupNumber, spawnList);
+			this._groups.put(groupNumber, spawnList);
 		}
 
 		spawnList.add(spawn);
 	}
 
 	public void freeze() {
-		if (_isFrozen) {
+		if (this._isFrozen) {
 			return;
 		}
 
 		// 按ID排序，产生一个组包含列表
-		for (final List<L1UbSpawn> spawnList : _groups.values()) {
+		for (final List<L1UbSpawn> spawnList : this._groups.values()) {
 			Collections.sort(spawnList);
 		}
 
-		_isFrozen = true;
+		this._isFrozen = true;
 	}
 
 	public List<L1UbSpawn> getSpawnList(final int groupNumber) {
-		if (!_isFrozen) {
+		if (!this._isFrozen) {
 			return null;
 		}
 
-		return _groups.get(groupNumber);
+		return this._groups.get(groupNumber);
 	}
 
 	public boolean isFrozen() {
-		return _isFrozen;
+		return this._isFrozen;
 	}
 }

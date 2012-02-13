@@ -40,14 +40,14 @@ public class L1Object implements Serializable {
 	 * @return 唯一的ID
 	 */
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	/**
 	 * 取得与另一个对象间的直线距离。
 	 */
 	public double getLineDistance(final L1Object obj) {
-		return getLocation().getLineDistance(obj.getLocation());
+		return this.getLocation().getLineDistance(obj.getLocation());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class L1Object implements Serializable {
 	 * @return L1Location的座标对应
 	 */
 	public L1Location getLocation() {
-		return _loc;
+		return this._loc;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class L1Object implements Serializable {
 	 * 
 	 */
 	public L1Map getMap() {
-		return _loc.getMap();
+		return this._loc.getMap();
 	}
 
 	/**
@@ -73,21 +73,21 @@ public class L1Object implements Serializable {
 	 * @return 地图ID
 	 */
 	public short getMapId() {
-		return (short) _loc.getMap().getId();
+		return (short) this._loc.getMap().getId();
 	}
 
 	/**
 	 * 取得与另一个对象间的X轴+Y轴的距离。
 	 */
 	public int getTileDistance(final L1Object obj) {
-		return getLocation().getTileDistance(obj.getLocation());
+		return this.getLocation().getTileDistance(obj.getLocation());
 	}
 
 	/**
 	 * 取得与另一个对象间的距离X轴或Y轴较大的那一个。
 	 */
 	public int getTileLineDistance(final L1Object obj) {
-		return getLocation().getTileLineDistance(obj.getLocation());
+		return this.getLocation().getTileLineDistance(obj.getLocation());
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class L1Object implements Serializable {
 	 * @return 座标X轴值
 	 */
 	public int getX() {
-		return _loc.getX();
+		return this._loc.getX();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class L1Object implements Serializable {
 	 * @return 座标Y轴值
 	 */
 	public int getY() {
-		return _loc.getY();
+		return this._loc.getY();
 	}
 
 	/**
@@ -146,25 +146,25 @@ public class L1Object implements Serializable {
 	 *            唯一的ID
 	 */
 	public void setId(final int id) {
-		_id = id;
+		this._id = id;
 	}
 
 	/**
 	 * 设置对象存在在地图上的L1Location
 	 */
 	public void setLocation(final int x, final int y, final int mapid) {
-		_loc.setX(x);
-		_loc.setY(y);
-		_loc.setMap(mapid);
+		this._loc.setX(x);
+		this._loc.setY(y);
+		this._loc.setMap(mapid);
 	}
 
 	/**
 	 * 设置对象存在在地图上的L1Location
 	 */
 	public void setLocation(final L1Location loc) {
-		_loc.setX(loc.getX());
-		_loc.setY(loc.getY());
-		_loc.setMap(loc.getMapId());
+		this._loc.setX(loc.getX());
+		this._loc.setY(loc.getY());
+		this._loc.setMap(loc.getMapId());
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class L1Object implements Serializable {
 		if (map == null) {
 			throw new NullPointerException();
 		}
-		_loc.setMap(map);
+		this._loc.setMap(map);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class L1Object implements Serializable {
 	 *            地图ID
 	 */
 	public void setMap(final short mapId) {
-		_loc.setMap(L1WorldMap.getInstance().getMap(mapId));
+		this._loc.setMap(L1WorldMap.getInstance().getMap(mapId));
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class L1Object implements Serializable {
 	 *            座标X轴值
 	 */
 	public void setX(final int x) {
-		_loc.setX(x);
+		this._loc.setX(x);
 	}
 
 	/**
@@ -207,6 +207,6 @@ public class L1Object implements Serializable {
 	 *            座标Y轴值
 	 */
 	public void setY(final int y) {
-		_loc.setY(y);
+		this._loc.setY(y);
 	}
 }

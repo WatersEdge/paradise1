@@ -48,44 +48,44 @@ public class L1MobGroupInfo {
 		}
 
 		// 最初のメンバーであればリーダーにする
-		if (_membersList.isEmpty()) {
-			setLeader(npc);
+		if (this._membersList.isEmpty()) {
+			this.setLeader(npc);
 			// リーダーの再ポップ情報を保存する
 			if (npc.isReSpawn()) {
-				setSpawn(npc.getSpawn());
+				this.setSpawn(npc.getSpawn());
 			}
 		}
 
-		if (!_membersList.contains(npc)) {
-			_membersList.add(npc);
+		if (!this._membersList.contains(npc)) {
+			this._membersList.add(npc);
 		}
 		npc.setMobGroupInfo(this);
-		npc.setMobGroupId(_leader.getId());
+		npc.setMobGroupId(this._leader.getId());
 	}
 
 	/** 取得领导者 */
 	public L1NpcInstance getLeader() {
-		return _leader;
+		return this._leader;
 	}
 
 	/** NUM各成员 */
 	public int getNumOfMembers() {
-		return _membersList.size();
+		return this._membersList.size();
 	}
 
 	/** 取得产生 */
 	public L1Spawn getSpawn() {
-		return _spawn;
+		return this._spawn;
 	}
 
 	/** 领导者 */
 	public boolean isLeader(final L1NpcInstance npc) {
-		return npc.getId() == _leader.getId();
+		return npc.getId() == this._leader.getId();
 	}
 
 	/** 删除群组 */
 	public boolean isRemoveGroup() {
-		return _isRemoveGroup;
+		return this._isRemoveGroup;
 	}
 
 	/** 删除成员 */
@@ -94,43 +94,43 @@ public class L1MobGroupInfo {
 			throw new NullPointerException();
 		}
 
-		if (_membersList.contains(npc)) {
-			_membersList.remove(npc);
+		if (this._membersList.contains(npc)) {
+			this._membersList.remove(npc);
 		}
 		npc.setMobGroupInfo(null);
 
 		// リーダーで他のメンバーがいる場合は、新リーダーにする
-		if (isLeader(npc)) {
-			if (isRemoveGroup() && (_membersList.size() != 0)) { // リーダーが死亡したらグループ解除する場合
-				for (final L1NpcInstance minion : _membersList) {
+		if (this.isLeader(npc)) {
+			if (this.isRemoveGroup() && (this._membersList.size() != 0)) { // リーダーが死亡したらグループ解除する場合
+				for (final L1NpcInstance minion : this._membersList) {
 					minion.setMobGroupInfo(null);
 					minion.setSpawn(null);
 					minion.setreSpawn(false);
 				}
 				return 0;
 			}
-			if (_membersList.size() != 0) {
-				setLeader(_membersList.get(0));
+			if (this._membersList.size() != 0) {
+				this.setLeader(this._membersList.get(0));
 			}
 		}
 
 		// 返回剩余的成员数目
-		return _membersList.size();
+		return this._membersList.size();
 	}
 
 	/** 设定领导者 */
 	public void setLeader(final L1NpcInstance npc) {
-		_leader = npc;
+		this._leader = npc;
 	}
 
 	/** 设定删除群组 */
 	public void setRemoveGroup(final boolean flag) {
-		_isRemoveGroup = flag;
+		this._isRemoveGroup = flag;
 	}
 
 	/** 设定产生 */
 	public void setSpawn(final L1Spawn spawn) {
-		_spawn = spawn;
+		this._spawn = spawn;
 	}
 
 }

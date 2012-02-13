@@ -27,14 +27,14 @@ public class S_ShowSummonList extends ServerBasePacket {
 	 * @param objid
 	 */
 	public S_ShowSummonList(final int objid) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS("summonlist");
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS("summonlist");
 	}
 
 	@Override
 	public byte[] getContent() {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	@Override

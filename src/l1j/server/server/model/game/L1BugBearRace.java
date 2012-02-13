@@ -45,8 +45,8 @@ public class L1BugBearRace {
 		int _runnerNumber;
 
 		BugBearRunning(final int runnerNumber) {
-			_bugBear = _runner[runnerNumber];
-			_runnerNumber = runnerNumber;
+			this._bugBear = L1BugBearRace.this._runner[runnerNumber];
+			this._runnerNumber = runnerNumber;
 		}
 
 		public void begin(final int startTime) {
@@ -57,34 +57,34 @@ public class L1BugBearRace {
 		@Override
 		public void run() {
 			int sleepTime = 0;
-			while (getGameStatus() == STATUS_PLAYING) {
+			while (L1BugBearRace.this.getGameStatus() == STATUS_PLAYING) {
 				try {
 					Thread.sleep(sleepTime);
 				}
 				catch (final InterruptedException e) {
 					e.printStackTrace();
 				}
-				while (!_bugBear.getMap().isPassable(_bugBear.getX(), _bugBear.getY(), _bugBear.getHeading())) {
-					if (_bugBear.getMap().isPassable(_bugBear.getX(), _bugBear.getY(), _bugBear.getHeading() + 1)) {
-						_bugBear.setHeading(rePressHeading(_bugBear.getHeading() + 1));
+				while (!this._bugBear.getMap().isPassable(this._bugBear.getX(), this._bugBear.getY(), this._bugBear.getHeading())) {
+					if (this._bugBear.getMap().isPassable(this._bugBear.getX(), this._bugBear.getY(), this._bugBear.getHeading() + 1)) {
+						this._bugBear.setHeading(L1BugBearRace.this.rePressHeading(this._bugBear.getHeading() + 1));
 						break;
 					}
 					else {
-						_bugBear.setHeading(rePressHeading(_bugBear.getHeading() - 1));
-						if (_bugBear.getMap().isPassable(_bugBear.getX(), _bugBear.getY(), _bugBear.getHeading())) {
+						this._bugBear.setHeading(L1BugBearRace.this.rePressHeading(this._bugBear.getHeading() - 1));
+						if (this._bugBear.getMap().isPassable(this._bugBear.getX(), this._bugBear.getY(), this._bugBear.getHeading())) {
 							break;
 						}
 					}
 				}
-				_bugBear.setDirectionMove(_bugBear.getHeading());// ヘッジ方向
-				if (checkPosition(_runnerNumber)) {
-					_bugBear = null;
+				this._bugBear.setDirectionMove(this._bugBear.getHeading());// ヘッジ方向
+				if (L1BugBearRace.this.checkPosition(this._runnerNumber)) {
+					this._bugBear = null;
 					return;
 				}
 				else {
 					// new BugBearRunning(_runnerNumber).
 					// インスタンスを生成しないでください　メモリリークが発生します
-					sleepTime = calcSleepTime(_bugBear.getPassispeed(), _runnerNumber);
+					sleepTime = L1BugBearRace.this.calcSleepTime(this._bugBear.getPassispeed(), this._runnerNumber);
 				}
 			}
 		}
@@ -94,12 +94,12 @@ public class L1BugBearRace {
 		int _startTime;
 
 		RaceTimer(final int startTime) {
-			_startTime = startTime;
+			this._startTime = startTime;
 		}
 
 		public void begin() {
 			final Timer timer = new Timer();
-			timer.schedule(this, _startTime * 1000);
+			timer.schedule(this, this._startTime * 1000);
 		}
 
 		@Override
@@ -107,25 +107,25 @@ public class L1BugBearRace {
 
 			try {
 				// 游戏的状态为NONE（10分前）
-				setGameStatus(STATUS_NONE);
-				sendMessage("$376 10 $377");
+				L1BugBearRace.this.setGameStatus(STATUS_NONE);
+				L1BugBearRace.this.sendMessage("$376 10 $377");
 				for (int loop = 0; loop < WAIT_TIME; loop++) {
 					Thread.sleep(1000);
 				}
-				clearRunner();
-				setRound(getRound() + 1);
+				L1BugBearRace.this.clearRunner();
+				L1BugBearRace.this.setRound(L1BugBearRace.this.getRound() + 1);
 				/* 比赛时间 - 录制过程 */
 				final L1RaceTicket ticket = new L1RaceTicket();
 				ticket.set_itemobjid(FIRST_ID); // 重複可能
 				ticket.set_allotment_percentage(0);
-				ticket.set_round(getRound());
+				ticket.set_round(L1BugBearRace.this.getRound());
 				ticket.set_runner_num(0);
 				ticket.set_victory(0);
 				RaceTicketTable.getInstance().storeNewTiket(ticket); // 记录用
-				RaceTicketTable.getInstance().oldTicketDelete(getRound()); // 删除旧记录
+				RaceTicketTable.getInstance().oldTicketDelete(L1BugBearRace.this.getRound()); // 删除旧记录
 				/**/
-				setRandomRunner(); // 运动员准备
-				setRandomCondition();
+				L1BugBearRace.this.setRandomRunner(); // 运动员准备
+				L1BugBearRace.this.setRandomCondition();
 				/* 存储SHOP BuyList */
 				final L1Shop shop1 = ShopTable.getInstance().get(70035);
 				final L1Shop shop2 = ShopTable.getInstance().get(70041);
@@ -142,22 +142,22 @@ public class L1BugBearRace {
 					shop3.getSellingItems().add(shopItem3);
 				}
 				/**/
-				setWinnigAverage();
-				setGameStatus(STATUS_READY);
+				L1BugBearRace.this.setWinnigAverage();
+				L1BugBearRace.this.setGameStatus(STATUS_READY);
 				for (int loop = 0; loop < READY_TIME - 1; loop++) {
 					if (loop % 60 == 0) {
-						sendMessage("$376 " + (1 + (READY_TIME - loop) / 60) + " $377");
+						L1BugBearRace.this.sendMessage("$376 " + (1 + (READY_TIME - loop) / 60) + " $377");
 					}
 					Thread.sleep(1000);
 				}
-				sendMessage("$363");// 363 レディー！
+				L1BugBearRace.this.sendMessage("$363");// 363 レディー！
 				Thread.sleep(1000);
 				for (int loop = 10; loop > 0; loop--) {
-					sendMessage("" + loop);
+					L1BugBearRace.this.sendMessage("" + loop);
 					Thread.sleep(1000);
 				}
-				sendMessage("$364");// 364 ゴー！
-				setGameStatus(STATUS_PLAYING);
+				L1BugBearRace.this.sendMessage("$364");// 364 ゴー！
+				L1BugBearRace.this.setGameStatus(STATUS_PLAYING);
 				/* 删除SHOP BuyList */
 				shop1.getSellingItems().clear();
 				shop2.getSellingItems().clear();
@@ -168,27 +168,27 @@ public class L1BugBearRace {
 						door.open();
 					}
 				}
-				for (int i = 0; i < _runner.length; i++) {
+				for (int i = 0; i < L1BugBearRace.this._runner.length; i++) {
 					new BugBearRunning(i).begin(0);
 				}
 
 				new StartBuffTimer().begin();
 
-				for (int i = 0; i < _runner.length; i++) {
-					if (getBetCount(i) > 0) {
-						_allotment_percentage[i] = (getAllBet() / (getBetCount(i)) / 500D);
+				for (int i = 0; i < L1BugBearRace.this._runner.length; i++) {
+					if (L1BugBearRace.this.getBetCount(i) > 0) {
+						L1BugBearRace.this._allotment_percentage[i] = (L1BugBearRace.this.getAllBet() / (L1BugBearRace.this.getBetCount(i)) / 500D);
 					}
 					else {
-						_allotment_percentage[i] = 0.0;
+						L1BugBearRace.this._allotment_percentage[i] = 0.0;
 					}
 				}
-				for (int i = 0; i < _runner.length; i++) {
+				for (int i = 0; i < L1BugBearRace.this._runner.length; i++) {
 					Thread.sleep(1000);
-					sendMessage(NpcTable.getInstance().getTemplate(_runner[i].getNpcId()).get_nameid() + " $402 "// 一文字3バイトだが面倒なのでネームIDを復元しない・・・
-							+ String.valueOf(_allotment_percentage[i]));// 402
-																		// の配当率は
+					L1BugBearRace.this.sendMessage(NpcTable.getInstance().getTemplate(L1BugBearRace.this._runner[i].getNpcId()).get_nameid() + " $402 "// 一文字3バイトだが面倒なのでネームIDを復元しない・・・
+							+ String.valueOf(L1BugBearRace.this._allotment_percentage[i]));// 402
+					// の配当率は
 				}
-				cancel();
+				this.cancel();
 			}
 			catch (final InterruptedException e) {
 				e.printStackTrace();
@@ -208,18 +208,18 @@ public class L1BugBearRace {
 
 		@Override
 		public void run() {
-			if (getGameStatus() == STATUS_PLAYING) {
-				for (int i = 0; i < _runner.length; i++) {
-					if (getRandomProbability() <= _winning_average[i] * (1 + (0.2 * getCondition(i)))) {
-						_runner[i].setBraveSpeed(1);
+			if (L1BugBearRace.this.getGameStatus() == STATUS_PLAYING) {
+				for (int i = 0; i < L1BugBearRace.this._runner.length; i++) {
+					if (L1BugBearRace.this.getRandomProbability() <= L1BugBearRace.this._winning_average[i] * (1 + (0.2 * L1BugBearRace.this.getCondition(i)))) {
+						L1BugBearRace.this._runner[i].setBraveSpeed(1);
 					}
 					else {
-						_runner[i].setBraveSpeed(0);
+						L1BugBearRace.this._runner[i].setBraveSpeed(0);
 					}
 				}
 			}
 			else {
-				cancel();
+				this.cancel();
 			}
 		}
 	}
@@ -264,26 +264,26 @@ public class L1BugBearRace {
 	private int _status = 0;
 
 	L1BugBearRace() {
-		setRound(RaceTicketTable.getInstance().getRoundNumOfMax());
-		_runner = new L1NpcInstance[5];
+		this.setRound(RaceTicketTable.getInstance().getRoundNumOfMax());
+		this._runner = new L1NpcInstance[5];
 		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70041) {
-					parkin = (L1MerchantInstance) obj;
+					this.parkin = (L1MerchantInstance) obj;
 				}
 			}
 		}
 		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70035) {
-					cecile = (L1MerchantInstance) obj;
+					this.cecile = (L1MerchantInstance) obj;
 				}
 			}
 		}
 		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (obj instanceof L1MerchantInstance) {
 				if (((L1MerchantInstance) obj).getNpcId() == 70042) {
-					pory = (L1MerchantInstance) obj;
+					this.pory = (L1MerchantInstance) obj;
 				}
 			}
 		}
@@ -293,118 +293,118 @@ public class L1BugBearRace {
 	/** 检查当前的位置 */
 	public boolean checkPosition(final int runnerNumber) {
 		final int[] defaultHead = { 6, 7, 0, 1, 2, 2 };
-		if (getGameStatus() != STATUS_PLAYING) {
+		if (this.getGameStatus() != STATUS_PLAYING) {
 			return false;
 		}
 		boolean flag = false;// ゴールするまではfalseを返す
-		final L1NpcInstance npc = _runner[runnerNumber];
+		final L1NpcInstance npc = this._runner[runnerNumber];
 		final int x = npc.getX();
 		final int y = npc.getY();
-		if (_runnerStatus[runnerNumber] == 0) {// スタート　直線
+		if (this._runnerStatus[runnerNumber] == 0) {// スタート　直線
 			if (// x==33476+(runnerNumber*2)&&y==32861+(runnerNumber*2)
 			((x >= 33476) && (x <= 33476 + 8)) && ((y >= 32861) && (y <= 32861 + 8))) {
-				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
+				this._runnerStatus[runnerNumber] = this._runnerStatus[runnerNumber] + 1;
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
-		else if (_runnerStatus[runnerNumber] == 1) {//
+		else if (this._runnerStatus[runnerNumber] == 1) {//
 			if (((x <= 33473) && (x >= 33473 - 9)) && (y == 32858)) {
-				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
+				this._runnerStatus[runnerNumber] = this._runnerStatus[runnerNumber] + 1;
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
-		else if (_runnerStatus[runnerNumber] == 2) {//
+		else if (this._runnerStatus[runnerNumber] == 2) {//
 			if (((x <= 33473) && (x >= 33473 - 9)) && (y == 32852)) {
-				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
+				this._runnerStatus[runnerNumber] = this._runnerStatus[runnerNumber] + 1;
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
-		else if (_runnerStatus[runnerNumber] == 3) {//
+		else if (this._runnerStatus[runnerNumber] == 3) {//
 			if (((x == 33478) && ((y <= 32847) && (y >= 32847 - 9)))) {
-				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
+				this._runnerStatus[runnerNumber] = this._runnerStatus[runnerNumber] + 1;
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
-		else if (_runnerStatus[runnerNumber] == 4) {//
+		else if (this._runnerStatus[runnerNumber] == 4) {//
 			if ((x == 33523) && ((y >= 32847 - 9) && (y <= 32847))) {
-				_runnerStatus[runnerNumber] = _runnerStatus[runnerNumber] + 1;
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
+				this._runnerStatus[runnerNumber] = this._runnerStatus[runnerNumber] + 1;
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
 				// goal
-				goal(runnerNumber);
+				this.goal(runnerNumber);
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
-		else if (_runnerStatus[runnerNumber] == 5) {//
+		else if (this._runnerStatus[runnerNumber] == 5) {//
 			if ((x == 33527) && ((y >= 32847 - 8) && (y <= 32847))) {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを変更
-				finish();
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを変更
+				this.finish();
 				flag = true;
 			}
 			else {
-				npc.setHeading(defaultHead[_runnerStatus[runnerNumber]]);// ヘッジを復元
+				npc.setHeading(defaultHead[this._runnerStatus[runnerNumber]]);// ヘッジを復元
 			}
 		}
 		return flag;
 	}
 
 	public int getAllBet() {
-		return _allBet;
+		return this._allBet;
 	}
 
 	public int getBetCount(final int i) {
-		return _betCount[i];
+		return this._betCount[i];
 	}
 
 	public int getCondition(final int num) {
-		return _condition[num];
+		return this._condition[num];
 	}
 
 	// TODO 判定圈数　end
 
 	public int getGameStatus() {
-		return _status;
+		return this._status;
 	}
 
 	public int getRound() {
-		return _round;
+		return this._round;
 	}
 
 	public L1NpcInstance getRunner(final int num) {
-		return _runner[num];
+		return this._runner[num];
 	}
 
 	public double getWinningAverage(final int num) {
-		return _winning_average[num];
+		return this._winning_average[num];
 	}
 
 	public void setAllBet(final int allBet) {// allbetは3桁の整数
-		_allBet = (int) (allBet * 0.9);// 1割は管理人が取得
+		this._allBet = (int) (allBet * 0.9);// 1割は管理人が取得
 	}
 
 	public void setBetCount(final int i, final int count) {
-		_betCount[i] = count;
+		this._betCount[i] = count;
 	}
 
 	public void setGameStatus(final int i) {
-		_status = i;
+		this._status = i;
 	}
 
 	private int calcSleepTime(int sleepTime, final int runnerNumber) {
-		final L1NpcInstance npc = _runner[runnerNumber];
+		final L1NpcInstance npc = this._runner[runnerNumber];
 		if (npc.getBraveSpeed() == 1) {
 			sleepTime -= (sleepTime * 0.25);
 		}
@@ -414,8 +414,8 @@ public class L1BugBearRace {
 
 	private boolean checkDuplicate(final int npcid, final int curi) {
 		for (int i = 0; i < curi; i++) {
-			if (_runner[i] != null) {
-				if (_runner[i].getNpcId() == npcid) {
+			if (this._runner[i] != null) {
+				if (this._runner[i].getNpcId() == npcid) {
 					return true;
 				}
 			}
@@ -427,7 +427,7 @@ public class L1BugBearRace {
 	private boolean checkDuplicateAverage(final double winning_average, final int curi) {
 		// 胜率跟状态都一样算重复
 		for (int i = 0; i < curi; i++) {
-			if ((_winning_average[i] == winning_average) && (_condition[i] == _condition[curi])) {
+			if ((this._winning_average[i] == winning_average) && (this._condition[i] == this._condition[curi])) {
 				return true;
 			}
 		}
@@ -436,20 +436,20 @@ public class L1BugBearRace {
 
 	private void clearRunner() {
 		for (int i = 0; i < 5; i++) {
-			if (_runner[i] != null) {
-				_runner[i].deleteMe();
-				if (_runner[i].getMap().isInMap(_runner[i].getX(), _runner[i].getY())) {
-					_runner[i].getMap().setPassable(_runner[i].getX(), _runner[i].getY(), true);
+			if (this._runner[i] != null) {
+				this._runner[i].deleteMe();
+				if (this._runner[i].getMap().isInMap(this._runner[i].getX(), this._runner[i].getY())) {
+					this._runner[i].getMap().setPassable(this._runner[i].getX(), this._runner[i].getY(), true);
 				}
 			}
-			_runner[i] = null;
-			_runnerStatus[i] = 0;
-			_condition[i] = 0;
-			_winning_average[i] = 0;
-			_allotment_percentage[i] = 0.0;
-			setBetCount(i, 0);
+			this._runner[i] = null;
+			this._runnerStatus[i] = 0;
+			this._condition[i] = 0;
+			this._winning_average[i] = 0;
+			this._allotment_percentage[i] = 0.0;
+			this.setBetCount(i, 0);
 		}
-		setAllBet(0);
+		this.setAllBet(0);
 		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if ((door.getDoorId() <= 812) && (door.getDoorId() >= 808)) {
 				door.close();
@@ -459,13 +459,13 @@ public class L1BugBearRace {
 
 	private void finish() {
 		int cnt = 0;
-		for (final int _runnerStatu : _runnerStatus) {
+		for (final int _runnerStatu : this._runnerStatus) {
 			if (_runnerStatu == 5) {
 				cnt++;
 			}
 		}
 		if (cnt == 5) {
-			setGameStatus(STATUS_END);
+			this.setGameStatus(STATUS_END);
 			new RaceTimer(30).begin();
 			/* 存储SHOP */
 
@@ -479,15 +479,15 @@ public class L1BugBearRace {
 
 	private void goal(final int runnberNumber) {
 		int cnt = 0;
-		for (final int _runnerStatu : _runnerStatus) {
+		for (final int _runnerStatu : this._runnerStatus) {
 			if (_runnerStatu == 5) {
 				cnt++;
 			}
 		}
 		if (cnt == 1) {
-			cecile.wideBroadcastPacket(new S_NpcChatPacket(cecile, "第 " + getRound() + " $366 " + NpcTable.getInstance().getTemplate(_runner[runnberNumber].getNpcId()).get_nameid() + " $367", 2));// 5>3字节
+			this.cecile.wideBroadcastPacket(new S_NpcChatPacket(this.cecile, "第 " + this.getRound() + " $366 " + NpcTable.getInstance().getTemplate(this._runner[runnberNumber].getNpcId()).get_nameid() + " $367", 2));// 5>3字节
 			/* 存储DB */
-			RaceTicketTable.getInstance().updateTicket(getRound(), _runner[runnberNumber].getNpcId() - FIRST_NPCID + 1, _allotment_percentage[runnberNumber]);
+			RaceTicketTable.getInstance().updateTicket(this.getRound(), this._runner[runnberNumber].getNpcId() - FIRST_NPCID + 1, this._allotment_percentage[runnberNumber]);
 			/**/
 		}
 	}
@@ -503,14 +503,14 @@ public class L1BugBearRace {
 	}
 
 	private void sendMessage(final String id) {
-		parkin.wideBroadcastPacket(new S_NpcChatPacket(parkin, id, 2));
+		this.parkin.wideBroadcastPacket(new S_NpcChatPacket(this.parkin, id, 2));
 		// cecile.broadcastPacket(new S_NpcChatPacket(cecile,id, 2));
-		pory.wideBroadcastPacket(new S_NpcChatPacket(pory, id, 2));
+		this.pory.wideBroadcastPacket(new S_NpcChatPacket(this.pory, id, 2));
 	}
 
 	private void setRandomCondition() {
-		for (int i = 0; i < _condition.length; i++) {
-			_condition[i] = -1 + _random.nextInt(3);
+		for (int i = 0; i < this._condition.length; i++) {
+			this._condition[i] = -1 + _random.nextInt(3);
 		}
 	}
 
@@ -521,27 +521,27 @@ public class L1BugBearRace {
 	private void setRandomRunner() {
 		for (int i = 0; i < 5; i++) {
 			int npcid = FIRST_NPCID + _random.nextInt(20);
-			while (checkDuplicate(npcid, i)) {
+			while (this.checkDuplicate(npcid, i)) {
 				npcid = FIRST_NPCID + _random.nextInt(20);
 			}
 			final L1Location loc = new L1Location(33522 - (i * 2), 32861 + (i * 2), 4);
-			_runner[i] = spawnOne(loc, npcid, 6);
+			this._runner[i] = this.spawnOne(loc, npcid, 6);
 
 		}
 	}
 
 	private void setRound(final int round) {
-		_round = round;
+		this._round = round;
 	}
 
 	private void setWinnigAverage() {
-		for (int i = 0; i < _winning_average.length; i++) {
-			double winningAverage = getRandomProbability();
+		for (int i = 0; i < this._winning_average.length; i++) {
+			double winningAverage = this.getRandomProbability();
 
-			while (checkDuplicateAverage(winningAverage, i)) {
-				winningAverage = getRandomProbability();
+			while (this.checkDuplicateAverage(winningAverage, i)) {
+				winningAverage = this.getRandomProbability();
 			}
-			_winning_average[i] = winningAverage;
+			this._winning_average[i] = winningAverage;
 		}
 	}
 

@@ -89,7 +89,7 @@ public class PetTable {
 	private final Map<Integer, L1Pet> _pets = Maps.newMap();
 
 	private PetTable() {
-		load();
+		this.load();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class PetTable {
 		l1pet.set_exp((int) lvExp); // upLv EXP
 		l1pet.set_lawful(0);
 		l1pet.set_food(50);
-		_pets.put(new Integer(itemobjid), l1pet);
+		this._pets.put(new Integer(itemobjid), l1pet);
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -163,15 +163,15 @@ public class PetTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-		_pets.remove(itemobjid);
+		this._pets.remove(itemobjid);
 	}
 
 	public L1Pet[] getPetTableList() {
-		return _pets.values().toArray(new L1Pet[_pets.size()]);
+		return this._pets.values().toArray(new L1Pet[this._pets.size()]);
 	}
 
 	public L1Pet getTemplate(final int itemobjid) {
-		return _pets.get(new Integer(itemobjid));
+		return this._pets.get(new Integer(itemobjid));
 	}
 
 	public void storeNewPet(final L1NpcInstance pet, final int objid, final int itemobjid) {
@@ -187,7 +187,7 @@ public class PetTable {
 		l1pet.set_exp(750); // Lv.5のEXP
 		l1pet.set_lawful(0);
 		l1pet.set_food(50);
-		_pets.put(new Integer(itemobjid), l1pet);
+		this._pets.put(new Integer(itemobjid), l1pet);
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -284,7 +284,7 @@ public class PetTable {
 				pet.set_lawful(rs.getInt(9));
 				pet.set_food(rs.getInt(10));
 
-				_pets.put(new Integer(itemobjid), pet);
+				this._pets.put(new Integer(itemobjid), pet);
 			}
 		}
 		catch (final SQLException e) {

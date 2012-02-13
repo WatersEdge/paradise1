@@ -31,27 +31,27 @@ public class L1PartyRefresh extends TimerTask {
 	private final L1PcInstance _pc;
 
 	public L1PartyRefresh(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	/**
 	 * 3.3C 更新队伍封包
 	 */
 	public void fresh() {
-		_pc.sendPackets(new S_Party(110, _pc));
+		this._pc.sendPackets(new S_Party(110, this._pc));
 	}
 
 	@Override
 	public void run() {
 		try {
-			if (_pc.isDead() || (_pc.getParty() == null)) {
-				_pc.stopRefreshParty();
+			if (this._pc.isDead() || (this._pc.getParty() == null)) {
+				this._pc.stopRefreshParty();
 				return;
 			}
-			fresh();
+			this.fresh();
 		}
 		catch (final Throwable e) {
-			_pc.stopRefreshParty();
+			this._pc.stopRefreshParty();
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

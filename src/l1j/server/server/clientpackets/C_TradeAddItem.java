@@ -37,8 +37,8 @@ public class C_TradeAddItem extends ClientBasePacket {
 	public C_TradeAddItem(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
 
-		final int itemid = readD();
-		final int itemcount = readD();
+		final int itemid = this.readD();
+		final int itemcount = this.readD();
 		final L1PcInstance pc = client.getActiveChar();
 		final L1Trade trade = new L1Trade();
 		final L1ItemInstance item = pc.getInventory().getItem(itemid);

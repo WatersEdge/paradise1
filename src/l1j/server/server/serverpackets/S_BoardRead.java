@@ -32,15 +32,15 @@ public class S_BoardRead extends ServerBasePacket {
 	 * @param number
 	 */
 	public S_BoardRead(final int number) {
-		buildPacket(number);
+		this.buildPacket(number);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -50,11 +50,11 @@ public class S_BoardRead extends ServerBasePacket {
 
 	private void buildPacket(final int number) {
 		final L1BoardTopic topic = L1BoardTopic.findById(number);
-		writeC(Opcodes.S_OPCODE_BOARDREAD);
-		writeD(number);
-		writeS(topic.getName());
-		writeS(topic.getTitle());
-		writeS(topic.getDate());
-		writeS(topic.getContent());
+		this.writeC(Opcodes.S_OPCODE_BOARDREAD);
+		this.writeD(number);
+		this.writeS(topic.getName());
+		this.writeS(topic.getTitle());
+		this.writeS(topic.getDate());
+		this.writeS(topic.getContent());
 	}
 }

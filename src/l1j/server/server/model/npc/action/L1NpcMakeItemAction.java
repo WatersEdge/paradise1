@@ -51,55 +51,55 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 	public L1NpcMakeItemAction(final Element element) {
 		super(element);
 
-		_isAmountInputable = L1NpcXmlParser.getBoolAttribute(element, "AmountInputable", true);
+		this._isAmountInputable = L1NpcXmlParser.getBoolAttribute(element, "AmountInputable", true);
 		final NodeList list = element.getChildNodes();
 		for (final Element elem : new IterableElementList(list)) {
 			if (elem.getNodeName().equalsIgnoreCase("Material")) {
 				final int id = Integer.valueOf(elem.getAttribute("ItemId"));
 				final int amount = Integer.valueOf(elem.getAttribute("Amount"));
-				_materials.add(new L1ObjectAmount<Integer>(id, amount));
+				this._materials.add(new L1ObjectAmount<Integer>(id, amount));
 				continue;
 			}
 			if (elem.getNodeName().equalsIgnoreCase("Item")) {
 				final int id = Integer.valueOf(elem.getAttribute("ItemId"));
 				final int amount = Integer.valueOf(elem.getAttribute("Amount"));
-				_items.add(new L1ObjectAmount<Integer>(id, amount));
+				this._items.add(new L1ObjectAmount<Integer>(id, amount));
 				continue;
 			}
 		}
 
-		if (_items.isEmpty() || _materials.isEmpty()) {
+		if (this._items.isEmpty() || this._materials.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 
 		Element elem = L1NpcXmlParser.getFirstChildElementByTagName(element, "Succeed");
-		_actionOnSucceed = elem == null ? null : new L1NpcListedAction(elem);
+		this._actionOnSucceed = elem == null ? null : new L1NpcListedAction(elem);
 		elem = L1NpcXmlParser.getFirstChildElementByTagName(element, "Fail");
-		_actionOnFail = elem == null ? null : new L1NpcListedAction(elem);
+		this._actionOnFail = elem == null ? null : new L1NpcListedAction(elem);
 	}
 
 	@Override
 	public L1NpcHtml execute(final String actionName, final L1PcInstance pc, final L1Object obj, final byte[] args) {
-		final int numOfMaterials = countNumOfMaterials(pc.getInventory());
-		if ((1 < numOfMaterials) && _isAmountInputable) {
+		final int numOfMaterials = this.countNumOfMaterials(pc.getInventory());
+		if ((1 < numOfMaterials) && this._isAmountInputable) {
 			pc.sendPackets(new S_HowManyMake(obj.getId(), numOfMaterials, actionName));
 			return null;
 		}
-		return executeWithAmount(actionName, pc, obj, 1);
+		return this.executeWithAmount(actionName, pc, obj, 1);
 	}
 
 	@Override
 	public L1NpcHtml executeWithAmount(final String actionName, final L1PcInstance pc, final L1Object obj, final int amount) {
 		final L1NpcInstance npc = (L1NpcInstance) obj;
 		L1NpcHtml result = null;
-		if (makeItems(pc, npc.getNpcTemplate().get_name(), amount)) {
-			if (_actionOnSucceed != null) {
-				result = _actionOnSucceed.execute(actionName, pc, obj, new byte[0]);
+		if (this.makeItems(pc, npc.getNpcTemplate().get_name(), amount)) {
+			if (this._actionOnSucceed != null) {
+				result = this._actionOnSucceed.execute(actionName, pc, obj, new byte[0]);
 			}
 		}
 		else {
-			if (_actionOnFail != null) {
-				result = _actionOnFail.execute(actionName, pc, obj, new byte[0]);
+			if (this._actionOnFail != null) {
+				result = this._actionOnFail.execute(actionName, pc, obj, new byte[0]);
 			}
 		}
 		return result == null ? L1NpcHtml.HTML_CLOSE : result;
@@ -110,7 +110,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 	 */
 	private int countNumOfMaterials(final L1PcInventory inv) {
 		int count = Integer.MAX_VALUE;
-		for (final L1ObjectAmount<Integer> material : _materials) {
+		for (final L1ObjectAmount<Integer> material : this._materials) {
 			final int numOfSet = inv.countItems(material.getObject()) / material.getAmount();
 			count = Math.min(count, numOfSet);
 		}
@@ -123,7 +123,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		}
 
 		boolean isEnoughMaterials = true;
-		for (final L1ObjectAmount<Integer> material : _materials) {
+		for (final L1ObjectAmount<Integer> material : this._materials) {
 			if (!pc.getInventory().checkItemNotEquipped(material.getObject(), material.getAmount() * amount)) {
 				final L1Item temp = ItemTable.getInstance().getTemplate(material.getObject());
 				pc.sendPackets(new S_ServerMessage(337, temp.getName() + "(" + ((material.getAmount() * amount) - pc.getInventory().countItems(temp.getItemId())) + ")")); // \f1%0が不足しています。
@@ -138,7 +138,7 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 		int countToCreate = 0; // アイテムの個数（纏まる物は1個）
 		int weight = 0;
 
-		for (final L1ObjectAmount<Integer> makingItem : _items) {
+		for (final L1ObjectAmount<Integer> makingItem : this._items) {
 			final L1Item temp = ItemTable.getInstance().getTemplate(makingItem.getObject());
 			if (temp.isStackable()) {
 				if (!pc.getInventory().checkItem(makingItem.getObject())) {
@@ -161,12 +161,12 @@ public class L1NpcMakeItemAction extends L1NpcXmlAction {
 			return false;
 		}
 
-		for (final L1ObjectAmount<Integer> material : _materials) {
+		for (final L1ObjectAmount<Integer> material : this._materials) {
 			// 材料消費
 			pc.getInventory().consumeItem(material.getObject(), material.getAmount() * amount);
 		}
 
-		for (final L1ObjectAmount<Integer> makingItem : _items) {
+		for (final L1ObjectAmount<Integer> makingItem : this._items) {
 			final L1ItemInstance item = pc.getInventory().storeItem(makingItem.getObject(), makingItem.getAmount() * amount);
 			if (item != null) {
 				String itemName = ItemTable.getInstance().getTemplate(makingItem.getObject()).getName();

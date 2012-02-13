@@ -24,21 +24,21 @@ public class L1Command {
 	private final String _executorClassName;
 
 	public L1Command(final String name, final int level, final String executorClassName) {
-		_name = name;
-		_level = level;
-		_executorClassName = executorClassName;
+		this._name = name;
+		this._level = level;
+		this._executorClassName = executorClassName;
 	}
 
 	/** 执行者的CLASS名称 */
 	public String getExecutorClassName() {
-		return _executorClassName;
+		return this._executorClassName;
 	}
 
 	public int getLevel() {
-		return _level;
+		return this._level;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 }

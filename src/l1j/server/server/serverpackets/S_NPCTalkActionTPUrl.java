@@ -34,15 +34,15 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 	 * @param objid
 	 */
 	public S_NPCTalkActionTPUrl(final L1NpcTalkData cha, final Object[] prices, final int objid) {
-		buildPacket(cha, prices, objid);
+		this.buildPacket(cha, prices, objid);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -53,14 +53,14 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 	private void buildPacket(final L1NpcTalkData npc, final Object[] prices, final int objid) {
 		String htmlid = "";
 		htmlid = npc.getTeleportURL();
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objid);
-		writeS(htmlid);
-		writeH(0x01); // 不明
-		writeH(prices.length); // 数的参数
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(objid);
+		this.writeS(htmlid);
+		this.writeH(0x01); // 不明
+		this.writeH(prices.length); // 数的参数
 
 		for (final Object price : prices) {
-			writeS(String.valueOf(((Integer) price).intValue()));
+			this.writeS(String.valueOf(((Integer) price).intValue()));
 		}
 	}
 }

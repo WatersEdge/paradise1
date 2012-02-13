@@ -50,7 +50,7 @@ public class InnTable {
 	}
 
 	private InnTable() {
-		load();
+		this.load();
 	}
 
 	public L1Inn getTemplate(final int npcid, final int roomNumber) {

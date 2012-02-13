@@ -35,15 +35,15 @@ public class S_SellHouse extends ServerBasePacket {
 	 * @param houseNumber
 	 */
 	public S_SellHouse(final int objectId, final String houseNumber) {
-		buildPacket(objectId, houseNumber);
+		this.buildPacket(objectId, houseNumber);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -52,14 +52,14 @@ public class S_SellHouse extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int objectId, final String houseNumber) {
-		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
-		writeD(objectId);
-		writeD(0); // ?
-		writeD(100000); // 初始价格
-		writeD(100000); // 价格下限
-		writeD(2000000000); // 价格上限
-		writeH(0); // ?
-		writeS("agsell");
-		writeS("agsell " + houseNumber);
+		this.writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
+		this.writeD(objectId);
+		this.writeD(0); // ?
+		this.writeD(100000); // 初始价格
+		this.writeD(100000); // 价格下限
+		this.writeD(2000000000); // 价格上限
+		this.writeH(0); // ?
+		this.writeS("agsell");
+		this.writeS("agsell " + houseNumber);
 	}
 }

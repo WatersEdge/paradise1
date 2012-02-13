@@ -116,12 +116,12 @@ public class L1Inventory extends L1Object {
 		}
 
 		// 超过最大数量
-		if ((getSize() > Config.MAX_NPC_ITEM) || ((getSize() == Config.MAX_NPC_ITEM) && (!item.isStackable() || !this.checkItem(item.getItem().getItemId())))) { // 容量确认
+		if ((this.getSize() > Config.MAX_NPC_ITEM) || ((this.getSize() == Config.MAX_NPC_ITEM) && (!item.isStackable() || !this.checkItem(item.getItem().getItemId())))) { // 容量确认
 			return SIZE_OVER;
 		}
 
 		// 超重
-		final int weight = getWeight() + item.getItem().getWeight() * count / 1000 + 1;
+		final int weight = this.getWeight() + item.getItem().getWeight() * count / 1000 + 1;
 		if ((weight < 0) || ((item.getItem().getWeight() * count / 1000) < 0)) {
 			return WEIGHT_OVER;
 		}
@@ -132,7 +132,7 @@ public class L1Inventory extends L1Object {
 		}
 
 		// 超过最大数量 (20亿)
-		final L1ItemInstance itemExist = findItemId(item.getItemId());
+		final L1ItemInstance itemExist = this.findItemId(item.getItemId());
 		if ((itemExist != null) && ((itemExist.getCount() + count) > MAX_AMOUNT)) {
 			return AMOUNT_OVER;
 		}
@@ -177,7 +177,7 @@ public class L1Inventory extends L1Object {
 		}
 
 		// 超过数量
-		if ((getSize() > maxSize) || ((getSize() == maxSize) && (!item.isStackable() || !this.checkItem(item.getItem().getItemId())))) { // 容量确认
+		if ((this.getSize() > maxSize) || ((this.getSize() == maxSize) && (!item.isStackable() || !this.checkItem(item.getItem().getItemId())))) { // 容量确认
 			return SIZE_OVER;
 		}
 
@@ -199,7 +199,7 @@ public class L1Inventory extends L1Object {
 	 */
 	public boolean checkEnchantItem(final int id, final int enchant, final int count) {
 		int num = 0;
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.isEquipped()) { // 道具为装备状态
 				continue;
 			}
@@ -242,13 +242,13 @@ public class L1Inventory extends L1Object {
 
 		// 可堆叠
 		if (ItemTable.getInstance().getTemplate(id).isStackable()) {
-			final L1ItemInstance item = findItemId(id);
+			final L1ItemInstance item = this.findItemId(id);
 			if ((item != null) && (item.getCount() >= count)) {
 				return true;
 			}
 		}
 		else { // 不可堆叠
-			final Object[] itemList = findItemsId(id);
+			final Object[] itemList = this.findItemsId(id);
 			if (itemList.length >= count) {
 				return true;
 			}
@@ -306,18 +306,18 @@ public class L1Inventory extends L1Object {
 		if (count == 0) {
 			return true;
 		}
-		return count <= countItems(id);
+		return count <= this.countItems(id);
 	}
 
 	/**
 	 * 刪除背包内全部物件
 	 */
 	public void clearItems() {
-		for (final Object itemObject : _items) {
+		for (final Object itemObject : this._items) {
 			final L1ItemInstance item = (L1ItemInstance) itemObject;
 			L1World.getInstance().removeObject(item);
 		}
-		_items.clear();
+		this._items.clear();
 	}
 
 	// 強化された特定のアイテムを消費する
@@ -334,7 +334,7 @@ public class L1Inventory extends L1Object {
 	 * @return true:刪除完成 false:刪除失败
 	 */
 	public boolean consumeEnchantItem(final int id, final int enchant, final int count) {
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.isEquipped()) { // 道具装备状态
 				continue;
 			}
@@ -364,17 +364,17 @@ public class L1Inventory extends L1Object {
 
 		// 可堆叠
 		if (ItemTable.getInstance().getTemplate(itemid).isStackable()) {
-			final L1ItemInstance item = findItemId(itemid);
+			final L1ItemInstance item = this.findItemId(itemid);
 			if ((item != null) && (item.getCount() >= count)) {
-				removeItem(item, count);
+				this.removeItem(item, count);
 				return true;
 			}
 		}
 		else {
-			final L1ItemInstance[] itemList = findItemsId(itemid);
+			final L1ItemInstance[] itemList = this.findItemsId(itemid);
 			if (itemList.length == count) {
 				for (int i = 0; i < count; i++) {
-					removeItem(itemList[i], 1);
+					this.removeItem(itemList[i], 1);
 				}
 				return true;
 			}
@@ -382,7 +382,7 @@ public class L1Inventory extends L1Object {
 				final DataComparator<L1ItemInstance> dc = new DataComparator<L1ItemInstance>();
 				Arrays.sort(itemList, dc); // 按照强化值 由低至高排列
 				for (int i = 0; i < count; i++) {
-					removeItem(itemList[i], 1); // 先由强化值低的开始移除
+					this.removeItem(itemList[i], 1); // 先由强化值低的开始移除
 				}
 				return true;
 			}
@@ -400,13 +400,13 @@ public class L1Inventory extends L1Object {
 
 		// 可堆叠
 		if (ItemTable.getInstance().getTemplate(id).isStackable()) {
-			final L1ItemInstance item = findItemId(id);
+			final L1ItemInstance item = this.findItemId(id);
 			if (item != null) {
 				return item.getCount();
 			}
 		}
 		else { // 不可堆叠
-			final Object[] itemList = findItemsIdNotEquipped(id);
+			final Object[] itemList = this.findItemsIdNotEquipped(id);
 			return itemList.length;
 		}
 		return 0;
@@ -424,7 +424,7 @@ public class L1Inventory extends L1Object {
 		if (item.getItem().getItemId() == 40312) {
 			InnKeyTable.DeleteKey(item);
 		}
-		_items.remove(item);
+		this._items.remove(item);
 	}
 
 	/**
@@ -435,7 +435,7 @@ public class L1Inventory extends L1Object {
 	 * @return 如果没有找到 null
 	 */
 	public L1ItemInstance findItemId(final int id) {
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.getItem().getItemId() == id) {
 				return item;
 			}
@@ -450,7 +450,7 @@ public class L1Inventory extends L1Object {
 	 * @return item null 如果沒有找到。
 	 */
 	public L1ItemInstance findItemNameId(final String nameId) {
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (nameId.equals(item.getItem().getIdentifiedNameId())) {
 				return item;
 			}
@@ -467,7 +467,7 @@ public class L1Inventory extends L1Object {
 	 */
 	public L1ItemInstance[] findItemsId(final int id) {
 		final List<L1ItemInstance> itemList = Lists.newList();
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.getItemId() == id) {
 				itemList.add(item);
 			}
@@ -484,7 +484,7 @@ public class L1Inventory extends L1Object {
 	 */
 	public L1ItemInstance[] findItemsIdNotEquipped(final int id) {
 		final List<L1ItemInstance> itemList = Lists.newList();
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.getItemId() == id) {
 				if (!item.isEquipped()) {
 					itemList.add(item);
@@ -502,7 +502,7 @@ public class L1Inventory extends L1Object {
 	 * @return 如果没有找到 null
 	 */
 	public L1ItemInstance findKeyId(final int id) {
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			if (item.getKeyId() == id) {
 				return item;
 			}
@@ -517,7 +517,7 @@ public class L1Inventory extends L1Object {
 	 * @return 如果没有找到 null
 	 */
 	public L1ItemInstance getItem(final int objectId) {
-		for (final Object itemObject : _items) {
+		for (final Object itemObject : this._items) {
 			final L1ItemInstance item = (L1ItemInstance) itemObject;
 			if (item.getId() == objectId) {
 				return item;
@@ -532,7 +532,7 @@ public class L1Inventory extends L1Object {
 	 * @return 全部道具
 	 */
 	public List<L1ItemInstance> getItems() {
-		return _items;
+		return this._items;
 	}
 
 	/**
@@ -541,10 +541,10 @@ public class L1Inventory extends L1Object {
 	 * @return 道具总数
 	 */
 	public int getSize() {
-		if (_items.isEmpty()) {
+		if (this._items.isEmpty()) {
 			return 0;
 		}
-		return _items.size();
+		return this._items.size();
 	}
 
 	/**
@@ -555,7 +555,7 @@ public class L1Inventory extends L1Object {
 	public int getWeight() {
 		int weight = 0;
 
-		for (final L1ItemInstance item : _items) {
+		for (final L1ItemInstance item : this._items) {
 			weight += item.getWeight();
 		}
 
@@ -577,7 +577,7 @@ public class L1Inventory extends L1Object {
 	 * @return
 	 */
 	public L1ItemInstance receiveDamage(final int objectId) {
-		final L1ItemInstance item = getItem(objectId);
+		final L1ItemInstance item = this.getItem(objectId);
 		return this.receiveDamage(item);
 	}
 
@@ -685,7 +685,7 @@ public class L1Inventory extends L1Object {
 	 * @return 实际删除数量
 	 */
 	public int removeItem(final int objectId, final int count) {
-		final L1ItemInstance item = getItem(objectId);
+		final L1ItemInstance item = this.getItem(objectId);
 		return this.removeItem(item, count);
 	}
 
@@ -713,7 +713,7 @@ public class L1Inventory extends L1Object {
 			return 0;
 		}
 
-		if (!_items.contains(item)) {
+		if (!this._items.contains(item)) {
 			return 0;
 		}
 
@@ -747,12 +747,12 @@ public class L1Inventory extends L1Object {
 			else if (item.getItemId() == 40309) {// Race Tickets
 				RaceTicketTable.getInstance().deleteTicket(item.getId());
 			}
-			deleteItem(item);
+			this.deleteItem(item);
 			L1World.getInstance().removeObject(item);
 		}
 		else {
 			item.setCount(item.getCount() - count);
-			updateItem(item);
+			this.updateItem(item);
 		}
 		return count;
 	}
@@ -761,7 +761,7 @@ public class L1Inventory extends L1Object {
 	 * 
 	 */
 	public void shuffle() {
-		Collections.shuffle(_items);
+		Collections.shuffle(this._items);
 	}
 
 	/**
@@ -794,7 +794,7 @@ public class L1Inventory extends L1Object {
 			if (id == 40312) {
 				final L1ItemInstance item = new L1ItemInstance(temp, count);
 
-				if (findKeyId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
+				if (this.findKeyId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
 					item.setId(IdFactory.getInstance().nextId());
 					L1World.getInstance().storeObject(item);
 				}
@@ -804,7 +804,7 @@ public class L1Inventory extends L1Object {
 			else if (temp.isStackable()) {
 				final L1ItemInstance item = new L1ItemInstance(temp, count);
 
-				if (findItemId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
+				if (this.findItemId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
 					item.setId(IdFactory.getInstance().nextId());
 					L1World.getInstance().storeObject(item);
 				}
@@ -856,19 +856,19 @@ public class L1Inventory extends L1Object {
 
 			// 是可堆叠道具
 			if (item.isStackable()) {
-				L1ItemInstance findItem = findItemId(itemId);
+				L1ItemInstance findItem = this.findItemId(itemId);
 				if (itemId == 40309) { // Race Tickets (食人妖精竞赛票)
-					findItem = findItemNameId(item.getItem().getIdentifiedNameId());
+					findItem = this.findItemNameId(item.getItem().getIdentifiedNameId());
 				}
 				else if (itemId == 40312) { // 旅馆钥匙
-					findItem = findKeyId(itemId);
+					findItem = this.findKeyId(itemId);
 				}
 				else {
-					findItem = findItemId(itemId);
+					findItem = this.findItemId(itemId);
 				}
 				if (findItem != null) {
 					findItem.setCount(findItem.getCount() + item.getCount());
-					updateItem(findItem);
+					this.updateItem(findItem);
 					return findItem;
 				}
 			}
@@ -884,9 +884,9 @@ public class L1Inventory extends L1Object {
 				ticket.set_runner_num(Integer.parseInt(temp[1]));
 				RaceTicketTable.getInstance().storeNewTiket(ticket);
 			}
-			item.setX(getX());
-			item.setY(getY());
-			item.setMap(getMapId());
+			item.setX(this.getX());
+			item.setY(this.getY());
+			item.setMap(this.getMapId());
 
 			// 取回最大可用次数
 			int chargeCount = item.getItem().getMaxChargeCount();
@@ -927,8 +927,8 @@ public class L1Inventory extends L1Object {
 				}
 			}
 
-			_items.add(item);
-			insertItem(item);
+			this._items.add(item);
+			this.insertItem(item);
 			return item;
 
 		}
@@ -963,24 +963,24 @@ public class L1Inventory extends L1Object {
 
 			// 旅馆钥匙
 			if (item.getItem().getItemId() == 40312) {
-				final L1ItemInstance findItem = findKeyId(item.getKeyId()); // 检查钥匙编号是否相同
+				final L1ItemInstance findItem = this.findKeyId(item.getKeyId()); // 检查钥匙编号是否相同
 				if (findItem != null) {
 					findItem.setCount(findItem.getCount() + item.getCount());
-					updateItem(findItem);
+					this.updateItem(findItem);
 					return findItem;
 				}
 			}
 			else if (item.isStackable()) {
-				final L1ItemInstance findItem = findItemId(item.getItem().getItemId());
+				final L1ItemInstance findItem = this.findItemId(item.getItem().getItemId());
 				if (findItem != null) {
 					findItem.setCount(findItem.getCount() + item.getCount());
-					updateItem(findItem);
+					this.updateItem(findItem);
 					return findItem;
 				}
 			}
-			item.setX(getX());
-			item.setY(getY());
-			item.setMap(getMapId());
+			item.setX(this.getX());
+			item.setY(this.getY());
+			item.setMap(this.getMapId());
 
 			// 登入钥匙记录
 			if (item.getItem().getItemId() == 40312) {
@@ -988,8 +988,8 @@ public class L1Inventory extends L1Object {
 					InnKeyTable.StoreKey(item);
 				}
 			}
-			_items.add(item);
-			insertItem(item);
+			this._items.add(item);
+			this.insertItem(item);
 			return item;
 		}
 		catch (final Exception e) {
@@ -1010,7 +1010,7 @@ public class L1Inventory extends L1Object {
 	 * @return
 	 */
 	public synchronized L1ItemInstance tradeItem(final int objectId, final int count, final L1Inventory inventory) {
-		final L1ItemInstance item = getItem(objectId);
+		final L1ItemInstance item = this.getItem(objectId);
 		return this.tradeItem(item, count, inventory);
 	}
 
@@ -1042,19 +1042,19 @@ public class L1Inventory extends L1Object {
 			return null;
 		}
 
-		if (!checkItem(item.getItem().getItemId(), count)) {
+		if (!this.checkItem(item.getItem().getItemId(), count)) {
 			return null;
 		}
 
 		L1ItemInstance carryItem;
 
 		if (item.getCount() <= count) {
-			deleteItem(item);
+			this.deleteItem(item);
 			carryItem = item;
 		}
 		else {
 			item.setCount(item.getCount() - count);
-			updateItem(item);
+			this.updateItem(item);
 			carryItem = ItemTable.getInstance().createItem(item.getItem().getItemId());
 			carryItem.setCount(count);
 			carryItem.setEnchantLevel(item.getEnchantLevel());

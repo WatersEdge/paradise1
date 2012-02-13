@@ -44,9 +44,9 @@ public class L1PetMatch {
 		private final L1PetInstance _pet;
 
 		public L1PetMatchReadyTimer(final int petMatchNo, final L1PcInstance pc, final L1PetInstance pet) {
-			_petMatchNo = petMatchNo;
-			_pc = pc;
-			_pet = pet;
+			this._petMatchNo = petMatchNo;
+			this._pc = pc;
+			this._pet = pet;
 		}
 
 		public void begin() {
@@ -59,23 +59,23 @@ public class L1PetMatch {
 			try {
 				for (;;) {
 					Thread.sleep(1000);
-					if ((_pc == null) || (_pet == null)) {
-						cancel();
+					if ((this._pc == null) || (this._pet == null)) {
+						this.cancel();
 						return;
 					}
 
-					if (_pc.isTeleport()) {
+					if (this._pc.isTeleport()) {
 						continue;
 					}
-					if (L1PetMatch.getInstance().setPetMatchPc(_petMatchNo, _pc, _pet) == L1PetMatch.STATUS_PLAYING) {
-						L1PetMatch.getInstance().startPetMatch(_petMatchNo);
+					if (L1PetMatch.getInstance().setPetMatchPc(this._petMatchNo, this._pc, this._pet) == L1PetMatch.STATUS_PLAYING) {
+						L1PetMatch.getInstance().startPetMatch(this._petMatchNo);
 					}
-					cancel();
+					this.cancel();
 					return;
 				}
 			}
 			catch (final Throwable e) {
-				_log.log(Level.WARNING, e.getLocalizedMessage(), e);
+				this._log.log(Level.WARNING, e.getLocalizedMessage(), e);
 			}
 		}
 
@@ -93,9 +93,9 @@ public class L1PetMatch {
 		private int _counter = 0;
 
 		public L1PetMatchTimer(final L1PetInstance pet1, final L1PetInstance pet2, final int petMatchNo) {
-			_pet1 = pet1;
-			_pet2 = pet2;
-			_petMatchNo = petMatchNo;
+			this._pet1 = pet1;
+			this._pet2 = pet2;
+			this._petMatchNo = petMatchNo;
 		}
 
 		public void begin() {
@@ -108,37 +108,37 @@ public class L1PetMatch {
 			try {
 				for (;;) {
 					Thread.sleep(3000);
-					_counter++;
-					if ((_pet1 == null) || (_pet2 == null)) {
-						cancel();
+					this._counter++;
+					if ((this._pet1 == null) || (this._pet2 == null)) {
+						this.cancel();
 						return;
 					}
 
-					if (_pet1.isDead() || _pet2.isDead()) {
+					if (this._pet1.isDead() || this._pet2.isDead()) {
 						int winner = 0;
-						if (!_pet1.isDead() && _pet2.isDead()) {
+						if (!this._pet1.isDead() && this._pet2.isDead()) {
 							winner = 1;
 						}
-						else if (_pet1.isDead() && !_pet2.isDead()) {
+						else if (this._pet1.isDead() && !this._pet2.isDead()) {
 							winner = 2;
 						}
 						else {
 							winner = 3;
 						}
-						L1PetMatch.getInstance().endPetMatch(_petMatchNo, winner);
-						cancel();
+						L1PetMatch.getInstance().endPetMatch(this._petMatchNo, winner);
+						this.cancel();
 						return;
 					}
 
-					if (_counter == 100) { // 5分経っても終わらない場合は引き分け
-						L1PetMatch.getInstance().endPetMatch(_petMatchNo, 3);
-						cancel();
+					if (this._counter == 100) { // 5分経っても終わらない場合は引き分け
+						L1PetMatch.getInstance().endPetMatch(this._petMatchNo, 3);
+						this.cancel();
 						return;
 					}
 				}
 			}
 			catch (final Throwable e) {
-				_log.log(Level.WARNING, e.getLocalizedMessage(), e);
+				this._log.log(Level.WARNING, e.getLocalizedMessage(), e);
 			}
 		}
 
@@ -174,30 +174,30 @@ public class L1PetMatch {
 	}
 
 	public void endPetMatch(final int petMatchNo, final int winNo) {
-		final L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
-		final L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
+		final L1PcInstance pc1 = L1World.getInstance().getPlayer(this._pc1Name[petMatchNo]);
+		final L1PcInstance pc2 = L1World.getInstance().getPlayer(this._pc2Name[petMatchNo]);
 		if (winNo == 1) {
-			giveMedal(pc1, petMatchNo, true);
-			giveMedal(pc2, petMatchNo, false);
+			this.giveMedal(pc1, petMatchNo, true);
+			this.giveMedal(pc2, petMatchNo, false);
 		}
 		else if (winNo == 2) {
-			giveMedal(pc1, petMatchNo, false);
-			giveMedal(pc2, petMatchNo, true);
+			this.giveMedal(pc1, petMatchNo, false);
+			this.giveMedal(pc2, petMatchNo, true);
 		}
 		else if (winNo == 3) { // 引き分け
-			giveMedal(pc1, petMatchNo, false);
-			giveMedal(pc2, petMatchNo, false);
+			this.giveMedal(pc1, petMatchNo, false);
+			this.giveMedal(pc2, petMatchNo, false);
 		}
-		qiutPetMatch(petMatchNo);
+		this.qiutPetMatch(petMatchNo);
 	}
 
 	public synchronized boolean enterPetMatch(final L1PcInstance pc, final int amuletId) {
-		final int petMatchNo = decidePetMatchNo();
+		final int petMatchNo = this.decidePetMatchNo();
 		if (petMatchNo == -1) {
 			return false;
 		}
 
-		final L1PetInstance pet = withdrawPet(pc, amuletId);
+		final L1PetInstance pet = this.withdrawPet(pc, amuletId);
 		L1Teleport.teleport(pc, 32799, 32868, PET_MATCH_MAPID[petMatchNo], 0, true);
 
 		final L1PetMatchReadyTimer timer = new L1PetMatchReadyTimer(petMatchNo, pc, pet);
@@ -206,47 +206,47 @@ public class L1PetMatch {
 	}
 
 	public int setPetMatchPc(final int petMatchNo, final L1PcInstance pc, final L1PetInstance pet) {
-		final int status = getPetMatchStatus(petMatchNo);
+		final int status = this.getPetMatchStatus(petMatchNo);
 		if (status == STATUS_NONE) {
-			_pc1Name[petMatchNo] = pc.getName();
-			_pet1[petMatchNo] = pet;
+			this._pc1Name[petMatchNo] = pc.getName();
+			this._pet1[petMatchNo] = pet;
 			return STATUS_READY1;
 		}
 		else if (status == STATUS_READY1) {
-			_pc2Name[petMatchNo] = pc.getName();
-			_pet2[petMatchNo] = pet;
+			this._pc2Name[petMatchNo] = pc.getName();
+			this._pet2[petMatchNo] = pet;
 			return STATUS_PLAYING;
 		}
 		else if (status == STATUS_READY2) {
-			_pc1Name[petMatchNo] = pc.getName();
-			_pet1[petMatchNo] = pet;
+			this._pc1Name[petMatchNo] = pc.getName();
+			this._pet1[petMatchNo] = pet;
 			return STATUS_PLAYING;
 		}
 		return STATUS_NONE;
 	}
 
 	public void startPetMatch(final int petMatchNo) {
-		_pet1[petMatchNo].setCurrentPetStatus(1);
-		_pet1[petMatchNo].setTarget(_pet2[petMatchNo]);
+		this._pet1[petMatchNo].setCurrentPetStatus(1);
+		this._pet1[petMatchNo].setTarget(this._pet2[petMatchNo]);
 
-		_pet2[petMatchNo].setCurrentPetStatus(1);
-		_pet2[petMatchNo].setTarget(_pet1[petMatchNo]);
+		this._pet2[petMatchNo].setCurrentPetStatus(1);
+		this._pet2[petMatchNo].setTarget(this._pet1[petMatchNo]);
 
-		final L1PetMatchTimer timer = new L1PetMatchTimer(_pet1[petMatchNo], _pet2[petMatchNo], petMatchNo);
+		final L1PetMatchTimer timer = new L1PetMatchTimer(this._pet1[petMatchNo], this._pet2[petMatchNo], petMatchNo);
 		timer.begin();
 	}
 
 	private int decidePetMatchNo() {
 		// 相手が待機中の試合を探す
 		for (int i = 0; i < MAX_PET_MATCH; i++) {
-			final int status = getPetMatchStatus(i);
+			final int status = this.getPetMatchStatus(i);
 			if ((status == STATUS_READY1) || (status == STATUS_READY2)) {
 				return i;
 			}
 		}
 		// 待機中の試合がなければ空いている試合を探す
 		for (int i = 0; i < MAX_PET_MATCH; i++) {
-			final int status = getPetMatchStatus(i);
+			final int status = this.getPetMatchStatus(i);
 			if (status == STATUS_NONE) {
 				return i;
 			}
@@ -256,12 +256,12 @@ public class L1PetMatch {
 
 	private synchronized int getPetMatchStatus(final int petMatchNo) {
 		L1PcInstance pc1 = null;
-		if (_pc1Name[petMatchNo] != null) {
-			pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
+		if (this._pc1Name[petMatchNo] != null) {
+			pc1 = L1World.getInstance().getPlayer(this._pc1Name[petMatchNo]);
 		}
 		L1PcInstance pc2 = null;
-		if (_pc2Name[petMatchNo] != null) {
-			pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
+		if (this._pc2Name[petMatchNo] != null) {
+			pc2 = L1World.getInstance().getPlayer(this._pc2Name[petMatchNo]);
 		}
 
 		if ((pc1 == null) && (pc2 == null)) {
@@ -272,8 +272,8 @@ public class L1PetMatch {
 				return STATUS_READY2;
 			}
 			else {
-				_pc2Name[petMatchNo] = null;
-				_pet2[petMatchNo] = null;
+				this._pc2Name[petMatchNo] = null;
+				this._pet2[petMatchNo] = null;
 				return STATUS_NONE;
 			}
 		}
@@ -282,8 +282,8 @@ public class L1PetMatch {
 				return STATUS_READY1;
 			}
 			else {
-				_pc1Name[petMatchNo] = null;
-				_pet1[petMatchNo] = null;
+				this._pc1Name[petMatchNo] = null;
+				this._pet1[petMatchNo] = null;
 				return STATUS_NONE;
 			}
 		}
@@ -295,13 +295,13 @@ public class L1PetMatch {
 
 		// PCが試合場に1人いる場合
 		if (pc1.getMapId() == PET_MATCH_MAPID[petMatchNo]) {
-			_pc2Name[petMatchNo] = null;
-			_pet2[petMatchNo] = null;
+			this._pc2Name[petMatchNo] = null;
+			this._pet2[petMatchNo] = null;
 			return STATUS_READY1;
 		}
 		if (pc2.getMapId() == PET_MATCH_MAPID[petMatchNo]) {
-			_pc1Name[petMatchNo] = null;
-			_pet1[petMatchNo] = null;
+			this._pc1Name[petMatchNo] = null;
+			this._pet1[petMatchNo] = null;
 			return STATUS_READY2;
 		}
 		return STATUS_NONE;
@@ -340,7 +340,7 @@ public class L1PetMatch {
 	}
 
 	private void qiutPetMatch(final int petMatchNo) {
-		final L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
+		final L1PcInstance pc1 = L1World.getInstance().getPlayer(this._pc1Name[petMatchNo]);
 		if ((pc1 != null) && (pc1.getMapId() == PET_MATCH_MAPID[petMatchNo])) {
 			for (final Object object : pc1.getPetList().values().toArray()) {
 				if (object instanceof L1PetInstance) {
@@ -352,10 +352,10 @@ public class L1PetMatch {
 			}
 			L1Teleport.teleport(pc1, 32630, 32744, (short) 4, 4, true);
 		}
-		_pc1Name[petMatchNo] = null;
-		_pet1[petMatchNo] = null;
+		this._pc1Name[petMatchNo] = null;
+		this._pet1[petMatchNo] = null;
 
-		final L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
+		final L1PcInstance pc2 = L1World.getInstance().getPlayer(this._pc2Name[petMatchNo]);
 		if ((pc2 != null) && (pc2.getMapId() == PET_MATCH_MAPID[petMatchNo])) {
 			for (final Object object : pc2.getPetList().values().toArray()) {
 				if (object instanceof L1PetInstance) {
@@ -367,8 +367,8 @@ public class L1PetMatch {
 			}
 			L1Teleport.teleport(pc2, 32630, 32744, (short) 4, 4, true);
 		}
-		_pc2Name[petMatchNo] = null;
-		_pet2[petMatchNo] = null;
+		this._pc2Name[petMatchNo] = null;
+		this._pet2[petMatchNo] = null;
 	}
 
 	private L1PetInstance withdrawPet(final L1PcInstance pc, final int amuletId) {

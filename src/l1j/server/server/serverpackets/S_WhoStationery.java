@@ -39,20 +39,20 @@ public class S_WhoStationery extends ServerBasePacket {
 
 		// 当前的 年、月、日 (范例:12/01/10)
 		final SimpleDateFormat setDateFormat = new SimpleDateFormat("yy/MM/dd");
-		writeC(Opcodes.S_OPCODE_BOARDREAD);
-		writeD(0x00);
-		writeS("Lineage"); // 作者
-		writeS("系统讯息"); // 标题
-		writeS(setDateFormat.format(Calendar.getInstance().getTime())); // 讨论编号
-		writeS(S_WhoCharinfo); // 显示查询信息
+		this.writeC(Opcodes.S_OPCODE_BOARDREAD);
+		this.writeD(0x00);
+		this.writeS("Lineage"); // 作者
+		this.writeS("系统讯息"); // 标题
+		this.writeS(setDateFormat.format(Calendar.getInstance().getTime())); // 讨论编号
+		this.writeS(S_WhoCharinfo); // 显示查询信息
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

@@ -38,14 +38,14 @@ public class S_SkillHaste extends ServerBasePacket {
 	 *            时间
 	 */
 	public S_SkillHaste(final int i, final int j, final int k) {
-		writeC(Opcodes.S_OPCODE_SKILLHASTE);
-		writeD(i);
-		writeC(j);
-		writeH(k);
+		this.writeC(Opcodes.S_OPCODE_SKILLHASTE);
+		this.writeD(i);
+		this.writeC(j);
+		this.writeH(k);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

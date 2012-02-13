@@ -31,7 +31,7 @@ public class C_SkillBuy extends ClientBasePacket {
 	public C_SkillBuy(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		final int i = readD();
+		final int i = this.readD();
 
 		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {

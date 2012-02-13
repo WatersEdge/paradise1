@@ -33,13 +33,13 @@ public class L1BossSpawn extends L1Spawn {
 		private final int _objectId;
 
 		private SpawnTask(final int spawnNumber, final int objectId) {
-			_spawnNumber = spawnNumber;
-			_objectId = objectId;
+			this._spawnNumber = spawnNumber;
+			this._objectId = objectId;
 		}
 
 		@Override
 		public void run() {
-			doSpawn(_spawnNumber, _objectId);
+			L1BossSpawn.this.doSpawn(this._spawnNumber, this._objectId);
 		}
 	}
 
@@ -68,56 +68,56 @@ public class L1BossSpawn extends L1Spawn {
 	@Override
 	public void executeSpawnTask(final int spawnNumber, final int objectId) {
 		// countをデクリメントして全部死んだかチェック
-		if (subAndGetCount() != 0) {
+		if (this.subAndGetCount() != 0) {
 			return; // 没有全部死
 		}
 		// 前回出现时间に对して、次の出现时间を算出
 		Calendar spawnTime;
 		final Calendar now = Calendar.getInstance(); // 现时刻
-		final Calendar latestStart = _cycle.getLatestStartTime(now); // 现时刻に对する最近の周期の开始时间
+		final Calendar latestStart = this._cycle.getLatestStartTime(now); // 现时刻に对する最近の周期の开始时间
 
-		final Calendar activeStart = _cycle.getSpawnStartTime(_activeSpawnTime); // アクティブだった周期の开始时间
+		final Calendar activeStart = this._cycle.getSpawnStartTime(this._activeSpawnTime); // アクティブだった周期の开始时间
 		// アクティブだった周期の开始时间 >= 最近の周期开始时间の场合、次の出现
 		if (!activeStart.before(latestStart)) {
-			spawnTime = calcNextSpawnTime(activeStart);
+			spawnTime = this.calcNextSpawnTime(activeStart);
 		}
 		else {
 			// アクティブだった周期の开始时间 < 最近の周期开始时间の场合は、最近の周期で出现
 			// わかりづらいが确率计算する为に、无理やりcalcNextSpawnTimeを通している。
 			latestStart.add(Calendar.SECOND, -1);
-			spawnTime = calcNextSpawnTime(_cycle.getLatestStartTime(latestStart));
+			spawnTime = this.calcNextSpawnTime(this._cycle.getLatestStartTime(latestStart));
 		}
-		spawnBoss(spawnTime, objectId);
+		this.spawnBoss(spawnTime, objectId);
 	}
 
 	@Override
 	public void init() {
-		if (_percentage <= 0) {
+		if (this._percentage <= 0) {
 			return;
 		}
-		_cycle = L1BossCycle.getBossCycle(_cycleType);
-		if (_cycle == null) {
-			throw new RuntimeException(_cycleType + " not found");
+		this._cycle = L1BossCycle.getBossCycle(this._cycleType);
+		if (this._cycle == null) {
+			throw new RuntimeException(this._cycleType + " not found");
 		}
 		final Calendar now = Calendar.getInstance();
 		// 出现时间
 		Calendar spawnTime;
-		if (Config.INIT_BOSS_SPAWN && (_percentage > Random.nextInt(100))) {
-			spawnTime = _cycle.calcSpawnTime(now);
+		if (Config.INIT_BOSS_SPAWN && (this._percentage > Random.nextInt(100))) {
+			spawnTime = this._cycle.calcSpawnTime(now);
 
 		}
 		else {
-			spawnTime = calcNextSpawnTime(now);
+			spawnTime = this.calcNextSpawnTime(now);
 		}
-		spawnBoss(spawnTime, 0);
+		this.spawnBoss(spawnTime, 0);
 	}
 
 	public void setCycleType(final String type) {
-		_cycleType = type;
+		this._cycleType = type;
 	}
 
 	public void setPercentage(final int percentage) {
-		_percentage = percentage;
+		this._percentage = percentage;
 	}
 
 	/**
@@ -126,42 +126,42 @@ public class L1BossSpawn extends L1Spawn {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("[MOB]npcid:" + getNpcId());
-		builder.append(" name:" + getName());
-		builder.append("[Type]" + _cycle.getName());
+		builder.append("[MOB]npcid:" + this.getNpcId());
+		builder.append(" name:" + this.getName());
+		builder.append("[Type]" + this._cycle.getName());
 		builder.append("[现在周期]");
-		builder.append(_cycle.getSpawnStartTime(_activeSpawnTime).getTime());
+		builder.append(this._cycle.getSpawnStartTime(this._activeSpawnTime).getTime());
 		builder.append(" - ");
-		builder.append(_cycle.getSpawnEndTime(_activeSpawnTime).getTime());
+		builder.append(this._cycle.getSpawnEndTime(this._activeSpawnTime).getTime());
 		builder.append("[出现时间]");
-		builder.append(_activeSpawnTime.getTime());
+		builder.append(this._activeSpawnTime.getTime());
 		return builder.toString();
 	}
 
 	// 计算出确率计算下一次的出现时间
 	private Calendar calcNextSpawnTime(Calendar cal) {
 		do {
-			cal = _cycle.nextSpawnTime(cal);
-		} while (!(_percentage > Random.nextInt(100)));
+			cal = this._cycle.nextSpawnTime(cal);
+		} while (!(this._percentage > Random.nextInt(100)));
 		return cal;
 	}
 
 	// 指定时间BOSS出现计划
 	private void spawnBoss(final Calendar spawnTime, final int objectId) {
 		// 保存这次的出现时间。再出现时使用。
-		_activeSpawnTime = spawnTime;
+		this._activeSpawnTime = spawnTime;
 		final long delay = spawnTime.getTimeInMillis() - System.currentTimeMillis();
 
-		int cnt = _spawnCount;
-		_spawnCount = getAmount();
-		while (cnt < getAmount()) {
+		int cnt = this._spawnCount;
+		this._spawnCount = this.getAmount();
+		while (cnt < this.getAmount()) {
 			cnt++;
 			GeneralThreadPool.getInstance().schedule(new SpawnTask(0, objectId), delay);
 		}
-		_log.log(Level.FINE, toString());
+		_log.log(Level.FINE, this.toString());
 	}
 
 	private synchronized int subAndGetCount() {
-		return --_spawnCount;
+		return --this._spawnCount;
 	}
 }

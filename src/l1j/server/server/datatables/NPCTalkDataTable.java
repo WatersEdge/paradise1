@@ -45,11 +45,11 @@ public class NPCTalkDataTable {
 	private final Map<Integer, L1NpcTalkData> _datatable = Maps.newMap();
 
 	private NPCTalkDataTable() {
-		parseList();
+		this.parseList();
 	}
 
 	public L1NpcTalkData getTemplate(final int i) {
-		return _datatable.get(new Integer(i));
+		return this._datatable.get(new Integer(i));
 	}
 
 	private void parseList() {
@@ -69,9 +69,9 @@ public class NPCTalkDataTable {
 				l1npctalkdata.setCaoticAction(rs.getString(3));
 				l1npctalkdata.setTeleportURL(rs.getString(4));
 				l1npctalkdata.setTeleportURLA(rs.getString(5));
-				_datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
+				this._datatable.put(new Integer(l1npctalkdata.getNpcID()), l1npctalkdata);
 			}
-			_log.config("NPC说话动作列表 " + _datatable.size() + "件");
+			_log.config("NPC说话动作列表 " + this._datatable.size() + "件");
 		}
 		catch (final SQLException e) {
 			_log.warning("创建NPC说话表时出现错误 " + e);

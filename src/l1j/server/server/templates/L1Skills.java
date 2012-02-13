@@ -154,12 +154,12 @@ public class L1Skills {
 
 	/** 取得技能动作ID */
 	public int getActionId() {
-		return _actionId;
+		return this._actionId;
 	}
 
 	/** 取得技能范围 */
 	public int getArea() {
-		return _area;
+		return this._area;
 	}
 
 	/**
@@ -167,136 +167,136 @@ public class L1Skills {
 	 * 0.无属性魔法,1.地魔法,2.火魔法,4.水魔法,8.风魔法,16.光魔法
 	 */
 	public int getAttr() {
-		return _attr;
+		return this._attr;
 	}
 
 	/** 取得BUFF持续时间 (单位:秒) */
 	public int getBuffDuration() {
-		return _buffDuration;
+		return this._buffDuration;
 	}
 
 	/** 取得技能图像Gfx */
 	public int getCastGfx() {
-		return _castGfx;
+		return this._castGfx;
 	}
 
 	/** 取得技能图像Gfx2 */
 	public int getCastGfx2() {
-		return _castGfx2;
+		return this._castGfx2;
 	}
 
 	/** 取得伤害骰子 */
 	public int getDamageDice() {
-		return _damageDice;
+		return this._damageDice;
 	}
 
 	/** 取得伤害骰子数量 */
 	public int getDamageDiceCount() {
-		return _damageDiceCount;
+		return this._damageDiceCount;
 	}
 
 	/** 取得伤害值 */
 	public int getDamageValue() {
-		return _damageValue;
+		return this._damageValue;
 	}
 
 	/** 取得消耗HP */
 	public int getHpConsume() {
-		return _hpConsume;
+		return this._hpConsume;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	/** 取得消耗道具数量 */
 	public int getItemConsumeCount() {
-		return _itmeConsumeCount;
+		return this._itmeConsumeCount;
 	}
 
 	/** 取得消耗道具ID */
 	public int getItemConsumeId() {
-		return _itmeConsumeId;
+		return this._itmeConsumeId;
 	}
 
 	/** 取得技能正义值 */
 	public int getLawful() {
-		return _lawful;
+		return this._lawful;
 	}
 
 	/** 取得消耗MP */
 	public int getMpConsume() {
-		return _mpConsume;
+		return this._mpConsume;
 	}
 
 	/** 取得技能名称 */
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	/** 取得技能名称ID */
 	public String getNameId() {
-		return _nameId;
+		return this._nameId;
 	}
 
 	/** 取得概率骰子 */
 	public int getProbabilityDice() {
-		return _probabilityDice;
+		return this._probabilityDice;
 	}
 
 	/** 取得概率值 */
 	public int getProbabilityValue() {
-		return _probabilityValue;
+		return this._probabilityValue;
 	}
 
 	/** 取得远程技能 */
 	public int getRanged() {
-		return _ranged;
+		return this._ranged;
 	}
 
 	/** 取得技能重用延迟 (单位:毫秒) */
 	public int getReuseDelay() {
-		return _reuseDelay;
+		return this._reuseDelay;
 	}
 
 	/** 取得技能ID */
 	public int getSkillId() {
-		return _skillId;
+		return this._skillId;
 	}
 
 	/** 取得技能等级 */
 	public int getSkillLevel() {
-		return _skillLevel;
+		return this._skillLevel;
 	}
 
 	/** 取得技能编号 */
 	public int getSkillNumber() {
-		return _skillNumber;
+		return this._skillNumber;
 	}
 
 	/** 取得缺少系统消息表 */
 	public int getSysmsgIdFail() {
-		return _sysmsgIdFail;
+		return this._sysmsgIdFail;
 	}
 
 	/** 取得开始系统消息表ID */
 	public int getSysmsgIdHappen() {
-		return _sysmsgIdHappen;
+		return this._sysmsgIdHappen;
 	}
 
 	/** 取得停止系统消息表ID */
 	public int getSysmsgIdStop() {
-		return _sysmsgIdStop;
+		return this._sysmsgIdStop;
 	}
 
 	/** 取得目标 */
 	public String getTarget() {
-		return _target;
+		return this._target;
 	}
 
 	/** 取得对象 0:自身 1:PC 2:NPC 4:血盟 8:组队 16:宠物 32:地点 */
 	public int getTargetTo() {
-		return _targetTo;
+		return this._targetTo;
 	}
 
 	/**
@@ -304,164 +304,164 @@ public class L1Skills {
 	 * 1.几率系,2.变化,4.诅咒,8.死亡,16.治疗,32.复活,64.攻击,128.其他特殊
 	 */
 	public int getType() {
-		return _type;
+		return this._type;
 	}
 
 	public boolean isThrough() {
-		return _isThrough;
+		return this._isThrough;
 	}
 
 	/** 设定技能动作ID */
 	public void setActionId(final int i) {
-		_actionId = i;
+		this._actionId = i;
 	}
 
 	/** 设定技能范围 */
 	public void setArea(final int i) {
-		_area = i;
+		this._area = i;
 	}
 
 	/** 设定技能属性 */
 	public void setAttr(final int i) {
-		_attr = i;
+		this._attr = i;
 	}
 
 	/** 设定BUFF持续时间 (单位:秒) */
 	public void setBuffDuration(final int i) {
-		_buffDuration = i;
+		this._buffDuration = i;
 	}
 
 	/** 设定技能图像Gfx */
 	public void setCastGfx(final int i) {
-		_castGfx = i;
+		this._castGfx = i;
 	}
 
 	/** 设定技能图像Gfx2 */
 	public void setCastGfx2(final int i) {
-		_castGfx2 = i;
+		this._castGfx2 = i;
 	}
 
 	/** 设定伤害骰子 */
 	public void setDamageDice(final int i) {
-		_damageDice = i;
+		this._damageDice = i;
 	}
 
 	/** 设定伤害骰子数量 */
 	public void setDamageDiceCount(final int i) {
-		_damageDiceCount = i;
+		this._damageDiceCount = i;
 	}
 
 	/** 设定伤害值 */
 	public void setDamageValue(final int i) {
-		_damageValue = i;
+		this._damageValue = i;
 	}
 
 	/** 设定消耗HP */
 	public void setHpConsume(final int i) {
-		_hpConsume = i;
+		this._hpConsume = i;
 	}
 
 	public void setId(final int i) {
-		_id = i;
+		this._id = i;
 	}
 
 	/** 设定消耗道具数量 */
 	public void setItemConsumeCount(final int i) {
-		_itmeConsumeCount = i;
+		this._itmeConsumeCount = i;
 	}
 
 	/** 设定消耗道具ID */
 	public void setItemConsumeId(final int i) {
-		_itmeConsumeId = i;
+		this._itmeConsumeId = i;
 	}
 
 	/** 设定技能正义值 */
 	public void setLawful(final int i) {
-		_lawful = i;
+		this._lawful = i;
 	}
 
 	/** 设定消耗MP */
 	public void setMpConsume(final int i) {
-		_mpConsume = i;
+		this._mpConsume = i;
 	}
 
 	/** 设定技能名称 */
 	public void setName(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 	/** 设定技能名称ID */
 	public void setNameId(final String s) {
-		_nameId = s;
+		this._nameId = s;
 	}
 
 	/** 设定概率骰子 */
 	public void setProbabilityDice(final int i) {
-		_probabilityDice = i;
+		this._probabilityDice = i;
 	}
 
 	/** 设定概率值 */
 	public void setProbabilityValue(final int i) {
-		_probabilityValue = i;
+		this._probabilityValue = i;
 	}
 
 	/** 设定远程技能 */
 	public void setRanged(final int i) {
-		_ranged = i;
+		this._ranged = i;
 	}
 
 	/** 设定技能重用延迟 (单位:毫秒) */
 	public void setReuseDelay(final int i) {
-		_reuseDelay = i;
+		this._reuseDelay = i;
 	}
 
 	/** 设定技能ID */
 	public void setSkillId(final int i) {
-		_skillId = i;
+		this._skillId = i;
 	}
 
 	/** 设定技能等级 */
 	public void setSkillLevel(final int i) {
-		_skillLevel = i;
+		this._skillLevel = i;
 	}
 
 	/** 设定技能编号 */
 	public void setSkillNumber(final int i) {
-		_skillNumber = i;
+		this._skillNumber = i;
 	}
 
 	/** 设定缺少系统消息表 */
 	public void setSysmsgIdFail(final int i) {
-		_sysmsgIdFail = i;
+		this._sysmsgIdFail = i;
 	}
 
 	/** 设定开始系统消息表ID */
 	public void setSysmsgIdHappen(final int i) {
-		_sysmsgIdHappen = i;
+		this._sysmsgIdHappen = i;
 	}
 
 	/** 设定停止系统消息表ID */
 	public void setSysmsgIdStop(final int i) {
-		_sysmsgIdStop = i;
+		this._sysmsgIdStop = i;
 	}
 
 	/** 设定目标 */
 	public void setTarget(final String s) {
-		_target = s;
+		this._target = s;
 	}
 
 	/** 设定对象 0:自身 1:PC 2:NPC 4:血盟 8:组队 16:宠物 32:地点 */
 	public void setTargetTo(final int i) {
-		_targetTo = i;
+		this._targetTo = i;
 	}
 
 	public void setThrough(final boolean flag) {
-		_isThrough = flag;
+		this._isThrough = flag;
 	}
 
 	/** 设定技能效果类型 */
 	public void setType(final int i) {
-		_type = i;
+		this._type = i;
 	}
 
 }

@@ -45,15 +45,15 @@ public class S_PrivateShop extends ServerBasePacket {
 			return;
 		}
 
-		writeC(Opcodes.S_OPCODE_PRIVATESHOPLIST);
-		writeC(type);
-		writeD(objectId);
+		this.writeC(Opcodes.S_OPCODE_PRIVATESHOPLIST);
+		this.writeC(type);
+		this.writeD(objectId);
 
 		if (type == 0) { // 卖出物品
 			final List<L1PrivateShopSellList> list = shopPc.getSellList();
 			final int size = list.size();
 			pc.setPartnersPrivateShopItemCount(size);
-			writeH(size);
+			this.writeH(size);
 			for (int i = 0; i < size; i++) {
 				final L1PrivateShopSellList pssl = list.get(i);
 				final int itemObjectId = pssl.getItemObjectId();
@@ -61,20 +61,20 @@ public class S_PrivateShop extends ServerBasePacket {
 				final int price = pssl.getSellPrice();
 				final L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
 				if (item != null) {
-					writeC(i);
-					writeC(item.getBless());
-					writeH(item.getItem().getGfxId());
-					writeD(count);
-					writeD(price);
-					writeS(item.getNumberedViewName(count));
-					writeC(0);
+					this.writeC(i);
+					this.writeC(item.getBless());
+					this.writeH(item.getItem().getGfxId());
+					this.writeD(count);
+					this.writeD(price);
+					this.writeS(item.getNumberedViewName(count));
+					this.writeC(0);
 				}
 			}
 		}
 		else if (type == 1) { // 回收物品
 			final List<L1PrivateShopBuyList> list = shopPc.getBuyList();
 			final int size = list.size();
-			writeH(size);
+			this.writeH(size);
 			for (int i = 0; i < size; i++) {
 				final L1PrivateShopBuyList psbl = list.get(i);
 				final int itemObjectId = psbl.getItemObjectId();
@@ -83,10 +83,10 @@ public class S_PrivateShop extends ServerBasePacket {
 				final L1ItemInstance item = shopPc.getInventory().getItem(itemObjectId);
 				for (final L1ItemInstance pcItem : pc.getInventory().getItems()) {
 					if ((item.getItemId() == pcItem.getItemId()) && (item.getEnchantLevel() == pcItem.getEnchantLevel())) {
-						writeC(i);
-						writeD(pcItem.getId());
-						writeD(count);
-						writeD(price);
+						this.writeC(i);
+						this.writeD(pcItem.getId());
+						this.writeD(count);
+						this.writeD(price);
 					}
 				}
 			}
@@ -95,6 +95,6 @@ public class S_PrivateShop extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

@@ -186,7 +186,7 @@ public class CharacterTable {
 	private final Map<String, L1CharName> _charNameList = Maps.newConcurrentMap();
 
 	private CharacterTable() {
-		_charStorage = new MySqlCharacterStorage();
+		this._charStorage = new MySqlCharacterStorage();
 	}
 
 	/**
@@ -199,9 +199,9 @@ public class CharacterTable {
 	 */
 	public void deleteCharacter(final String accountName, final String charName) throws Exception {
 		// 也许，不需要同步
-		_charStorage.deleteCharacter(accountName, charName);
-		if (_charNameList.containsKey(charName)) {
-			_charNameList.remove(charName);
+		this._charStorage.deleteCharacter(accountName, charName);
+		if (this._charNameList.containsKey(charName)) {
+			this._charNameList.remove(charName);
 		}
 		_log.finest("删除角色");
 	}
@@ -212,7 +212,7 @@ public class CharacterTable {
 	 * @return
 	 */
 	public L1CharName[] getCharNameList() {
-		return _charNameList.values().toArray(new L1CharName[_charNameList.size()]);
+		return this._charNameList.values().toArray(new L1CharName[this._charNameList.size()]);
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class CharacterTable {
 				name = rs.getString("char_name");
 				cn.setName(name);
 				cn.setId(rs.getInt("objid"));
-				_charNameList.put(name, cn);
+				this._charNameList.put(name, cn);
 			}
 		}
 		catch (final SQLException e) {
@@ -254,7 +254,7 @@ public class CharacterTable {
 	public L1PcInstance loadCharacter(final String charName) throws Exception {
 		L1PcInstance pc = null;
 		try {
-			pc = restoreCharacter(charName);
+			pc = this.restoreCharacter(charName);
 
 			// 取回角色所在地图ID
 			final L1Map map = L1WorldMap.getInstance().getMap(pc.getMapId());
@@ -286,7 +286,7 @@ public class CharacterTable {
 	 * @return pc
 	 */
 	public L1PcInstance restoreCharacter(final String charName) throws Exception {
-		final L1PcInstance pc = _charStorage.loadCharacter(charName);
+		final L1PcInstance pc = this._charStorage.loadCharacter(charName);
 		return pc;
 	}
 
@@ -308,7 +308,7 @@ public class CharacterTable {
 	 */
 	public void storeCharacter(final L1PcInstance pc) throws Exception {
 		synchronized (pc) {
-			_charStorage.storeCharacter(pc);
+			this._charStorage.storeCharacter(pc);
 			_log.finest("储存角色: " + pc.getName());
 		}
 	}
@@ -320,13 +320,13 @@ public class CharacterTable {
 	 */
 	public void storeNewCharacter(final L1PcInstance pc) throws Exception {
 		synchronized (pc) {
-			_charStorage.createCharacter(pc);
+			this._charStorage.createCharacter(pc);
 			final String name = pc.getName();
-			if (!_charNameList.containsKey(name)) {
+			if (!this._charNameList.containsKey(name)) {
 				final L1CharName cn = new L1CharName();
 				cn.setName(name);
 				cn.setId(pc.getId());
-				_charNameList.put(name, cn);
+				this._charNameList.put(name, cn);
 			}
 			_log.finest("储存新的角色");
 		}

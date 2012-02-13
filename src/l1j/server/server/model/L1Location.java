@@ -134,12 +134,12 @@ public class L1Location extends Point {
 
 	public L1Location(final int x, final int y, final int mapId) {
 		super(x, y);
-		setMap(mapId);
+		this.setMap(mapId);
 	}
 
 	public L1Location(final int x, final int y, final L1Map map) {
 		super(x, y);
-		_map = map;
+		this._map = map;
 	}
 
 	public L1Location(final L1Location loc) {
@@ -148,12 +148,12 @@ public class L1Location extends Point {
 
 	public L1Location(final Point pt, final int mapId) {
 		super(pt);
-		setMap(mapId);
+		this.setMap(mapId);
 	}
 
 	public L1Location(final Point pt, final L1Map map) {
 		super(pt);
-		_map = map;
+		this._map = map;
 	}
 
 	@Override
@@ -162,20 +162,20 @@ public class L1Location extends Point {
 			return false;
 		}
 		final L1Location loc = (L1Location) obj;
-		return (getMap() == loc.getMap()) && (getX() == loc.getX()) && (getY() == loc.getY());
+		return (this.getMap() == loc.getMap()) && (this.getX() == loc.getX()) && (this.getY() == loc.getY());
 	}
 
 	public L1Map getMap() {
-		return _map;
+		return this._map;
 	}
 
 	public int getMapId() {
-		return _map.getId();
+		return this._map.getId();
 	}
 
 	@Override
 	public int hashCode() {
-		return 7 * _map.getId() + super.hashCode();
+		return 7 * this._map.getId() + super.hashCode();
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class L1Location extends Point {
 	 * @return 新Location
 	 */
 	public L1Location randomLocation(final int max, final boolean isRandomTeleport) {
-		return randomLocation(0, max, isRandomTeleport);
+		return this.randomLocation(0, max, isRandomTeleport);
 	}
 
 	/**
@@ -207,41 +207,41 @@ public class L1Location extends Point {
 	}
 
 	public void set(final int x, final int y, final int mapId) {
-		set(x, y);
-		setMap(mapId);
+		this.set(x, y);
+		this.setMap(mapId);
 	}
 
 	public void set(final int x, final int y, final L1Map map) {
-		set(x, y);
-		_map = map;
+		this.set(x, y);
+		this._map = map;
 	}
 
 	public void set(final L1Location loc) {
-		_map = loc._map;
-		_x = loc._x;
-		_y = loc._y;
+		this._map = loc._map;
+		this._x = loc._x;
+		this._y = loc._y;
 	}
 
 	public void set(final Point pt, final int mapId) {
-		set(pt);
-		setMap(mapId);
+		this.set(pt);
+		this.setMap(mapId);
 	}
 
 	public void set(final Point pt, final L1Map map) {
-		set(pt);
-		_map = map;
+		this.set(pt);
+		this._map = map;
 	}
 
 	public void setMap(final int mapId) {
-		_map = L1WorldMap.getInstance().getMap((short) mapId);
+		this._map = L1WorldMap.getInstance().getMap((short) mapId);
 	}
 
 	public void setMap(final L1Map map) {
-		_map = map;
+		this._map = map;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("(%d, %d) on %d", _x, _y, _map.getId());
+		return String.format("(%d, %d) on %d", this._x, this._y, this._map.getId());
 	}
 }

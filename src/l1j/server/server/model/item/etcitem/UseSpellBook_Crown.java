@@ -25,38 +25,38 @@ public class UseSpellBook_Crown implements UniversalUseItem {
 
 			case 40226: // 魔法书(精准目标)
 				if (level >= 15) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 
 			case 40228: // 魔法书(呼唤盟友)
 				if (level >= 30) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 
 			case 40227: // 魔法书(激励士气)
 				if (level >= 40) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 
 			case 40231: // 魔法书(援护盟友)
 				// case 40232: // 精灵水晶(魔法防御)
 				if (level >= 45) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 
 			case 40230: // 魔法书(冲击士气)
 				if (level >= 50) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 
 			case 40229: // 魔法书(钢铁士气)
 				if (level >= 55) {
-					CrownSpellBook(pc, item);
+					this.CrownSpellBook(pc, item);
 				}
 				break;
 

@@ -25,23 +25,23 @@ public class S_PetCtrlMenu extends ServerBasePacket {
 
 	public S_PetCtrlMenu(final L1Character cha, final L1NpcInstance npc, final boolean open) {
 		// int index = open ? 1 : cha.getPetList().size() - 1;
-		writeC(Opcodes.S_OPCODE_PETCTRL);
-		writeC(0x0c);
+		this.writeC(Opcodes.S_OPCODE_PETCTRL);
+		this.writeC(0x0c);
 
 		if (open) {
-			writeH(cha.getPetList().size() * 3);
-			writeD(0x00000000);
-			writeD(npc.getId());
-			writeH(npc.getMapId());
-			writeH(0x0000);
-			writeH(npc.getX());
-			writeH(npc.getY());
-			writeS(npc.getName());
+			this.writeH(cha.getPetList().size() * 3);
+			this.writeD(0x00000000);
+			this.writeD(npc.getId());
+			this.writeH(npc.getMapId());
+			this.writeH(0x0000);
+			this.writeH(npc.getX());
+			this.writeH(npc.getY());
+			this.writeS(npc.getName());
 		}
 		else {
-			writeH(cha.getPetList().size() * 3 - 3);
-			writeD(0x00000001);
-			writeD(npc.getId());
+			this.writeH(cha.getPetList().size() * 3 - 3);
+			this.writeD(0x00000001);
+			this.writeD(npc.getId());
 		}
 
 		/*
@@ -57,6 +57,6 @@ public class S_PetCtrlMenu extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

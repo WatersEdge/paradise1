@@ -31,7 +31,7 @@ public class C_ExtraCommand extends ClientBasePacket {
 
 	public C_ExtraCommand(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		final int actionId = readC();
+		final int actionId = this.readC();
 		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;

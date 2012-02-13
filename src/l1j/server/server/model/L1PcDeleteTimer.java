@@ -28,7 +28,7 @@ public class L1PcDeleteTimer extends TimerTask {
 	private final L1PcInstance _pc;
 
 	public L1PcDeleteTimer(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	public void begin() {
@@ -38,8 +38,8 @@ public class L1PcDeleteTimer extends TimerTask {
 
 	@Override
 	public void run() {
-		_pc.sendPackets(new S_Disconnect());
-		cancel();
+		this._pc.sendPackets(new S_Disconnect());
+		this.cancel();
 	}
 
 }

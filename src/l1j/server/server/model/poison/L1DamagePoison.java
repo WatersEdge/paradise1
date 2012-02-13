@@ -30,31 +30,31 @@ public class L1DamagePoison extends L1Poison {
 		public void run() {
 			while (true) {
 				try {
-					Thread.sleep(_damageSpan);
+					Thread.sleep(L1DamagePoison.this._damageSpan);
 				}
 				catch (final InterruptedException e) {
 					break;
 				}
 
-				if (!_target.hasSkillEffect(STATUS_POISON)) {
+				if (!L1DamagePoison.this._target.hasSkillEffect(STATUS_POISON)) {
 					break;
 				}
-				if (_target instanceof L1PcInstance) {
-					final L1PcInstance player = (L1PcInstance) _target;
-					player.receiveDamage(_attacker, _damage, false);
+				if (L1DamagePoison.this._target instanceof L1PcInstance) {
+					final L1PcInstance player = (L1PcInstance) L1DamagePoison.this._target;
+					player.receiveDamage(L1DamagePoison.this._attacker, L1DamagePoison.this._damage, false);
 					if (player.isDead()) { // 死亡时解毒
 						break;
 					}
 				}
-				else if (_target instanceof L1MonsterInstance) {
-					final L1MonsterInstance mob = (L1MonsterInstance) _target;
-					mob.receiveDamage(_attacker, _damage);
+				else if (L1DamagePoison.this._target instanceof L1MonsterInstance) {
+					final L1MonsterInstance mob = (L1MonsterInstance) L1DamagePoison.this._target;
+					mob.receiveDamage(L1DamagePoison.this._attacker, L1DamagePoison.this._damage);
 					if (mob.isDead()) { // 死亡时解毒
 						return;
 					}
 				}
 			}
-			cure(); // 解毒处理
+			L1DamagePoison.this.cure(); // 解毒处理
 		}
 	}
 
@@ -78,23 +78,23 @@ public class L1DamagePoison extends L1Poison {
 	private final int _damage;
 
 	private L1DamagePoison(final L1Character attacker, final L1Character cha, final int damageSpan, final int damage) {
-		_attacker = attacker;
-		_target = cha;
-		_damageSpan = damageSpan;
-		_damage = damage;
+		this._attacker = attacker;
+		this._target = cha;
+		this._damageSpan = damageSpan;
+		this._damage = damage;
 
-		doInfection();
+		this.doInfection();
 	}
 
 	@Override
 	public void cure() {
-		if (_timer != null) {
-			_timer.interrupt(); // 解毒计时器
+		if (this._timer != null) {
+			this._timer.interrupt(); // 解毒计时器
 		}
 
-		_target.setPoisonEffect(0);
-		_target.killSkillEffectTimer(STATUS_POISON);
-		_target.setPoison(null);
+		this._target.setPoisonEffect(0);
+		this._target.killSkillEffectTimer(STATUS_POISON);
+		this._target.setPoison(null);
 	}
 
 	@Override
@@ -103,12 +103,12 @@ public class L1DamagePoison extends L1Poison {
 	}
 
 	private void doInfection() {
-		_target.setSkillEffect(STATUS_POISON, 30000);
-		_target.setPoisonEffect(1);
+		this._target.setSkillEffect(STATUS_POISON, 30000);
+		this._target.setPoisonEffect(1);
 
-		if (isDamageTarget(_target)) {
-			_timer = new NormalPoisonTimer();
-			GeneralThreadPool.getInstance().execute(_timer); // 通常毒タイマー開始
+		if (this.isDamageTarget(this._target)) {
+			this._timer = new NormalPoisonTimer();
+			GeneralThreadPool.getInstance().execute(this._timer); // 通常毒タイマー開始
 		}
 	}
 

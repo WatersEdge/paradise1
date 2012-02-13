@@ -42,38 +42,38 @@ public class L1Party {
 		if (pc == null) {
 			throw new NullPointerException();
 		}
-		if (((_membersList.size() == Config.MAX_PT) && !_leader.isGm()) || _membersList.contains(pc)) {
+		if (((this._membersList.size() == Config.MAX_PT) && !this._leader.isGm()) || this._membersList.contains(pc)) {
 			return;
 		}
 
-		if (_membersList.isEmpty()) {
+		if (this._membersList.isEmpty()) {
 			// 最初のPTメンバーであればリーダーにする
-			setLeader(pc);
+			this.setLeader(pc);
 		}
 		else {
-			createMiniHp(pc);
+			this.createMiniHp(pc);
 		}
 
-		_membersList.add(pc);
+		this._membersList.add(pc);
 		pc.setParty(this);
-		showAddPartyInfo(pc);
+		this.showAddPartyInfo(pc);
 		pc.startRefreshParty();
 	}
 
 	/** 获得领导者 */
 	public L1PcInstance getLeader() {
-		return _leader;
+		return this._leader;
 	}
 
 	/** 获得成员 */
 	public L1PcInstance[] getMembers() {
-		return _membersList.toArray(new L1PcInstance[_membersList.size()]);
+		return this._membersList.toArray(new L1PcInstance[this._membersList.size()]);
 	}
 
 	/** 获得成员名称列表 */
 	public String getMembersNameList() {
 		String _result = new String("");
-		for (final L1PcInstance pc : _membersList) {
+		for (final L1PcInstance pc : this._membersList) {
 			_result = _result + pc.getName() + " ";
 		}
 		return _result;
@@ -81,56 +81,56 @@ public class L1Party {
 
 	/** 成员数量 */
 	public int getNumOfMembers() {
-		return _membersList.size();
+		return this._membersList.size();
 	}
 
 	/** 获得空闲 */
 	public int getVacancy() {
-		return Config.MAX_PT - _membersList.size();
+		return Config.MAX_PT - this._membersList.size();
 	}
 
 	/** 是领导者 */
 	public boolean isLeader(final L1PcInstance pc) {
-		return pc.getId() == _leader.getId();
+		return pc.getId() == this._leader.getId();
 	}
 
 	/** 是成员 */
 	public boolean isMember(final L1PcInstance pc) {
-		return _membersList.contains(pc);
+		return this._membersList.contains(pc);
 	}
 
 	/** 空闲的 */
 	public boolean isVacancy() {
-		return _membersList.size() < Config.MAX_PT;
+		return this._membersList.size() < Config.MAX_PT;
 	}
 
 	/** 踢成员 */
 	public void kickMember(final L1PcInstance pc) {
-		if (getNumOfMembers() == 2) {
+		if (this.getNumOfMembers() == 2) {
 			// パーティーメンバーが自分とリーダーのみ
-			breakup();
+			this.breakup();
 		}
 		else {
-			removeMember(pc);
-			for (final L1PcInstance member : getMembers()) {
-				sendLeftMessage(member, pc);
+			this.removeMember(pc);
+			for (final L1PcInstance member : this.getMembers()) {
+				this.sendLeftMessage(member, pc);
 			}
-			sendKickMessage(pc);
+			this.sendKickMessage(pc);
 		}
 	}
 
 	/** 离开队员 */
 	public void leaveMember(final L1PcInstance pc) {
-		if (isLeader(pc) || (getNumOfMembers() == 2)) {
+		if (this.isLeader(pc) || (this.getNumOfMembers() == 2)) {
 			// 有组队领导者的场合
-			breakup();
+			this.breakup();
 		}
 		else {
-			removeMember(pc);
-			for (final L1PcInstance member : getMembers()) {
-				sendLeftMessage(member, pc);
+			this.removeMember(pc);
+			for (final L1PcInstance member : this.getMembers()) {
+				this.sendLeftMessage(member, pc);
 			}
-			sendLeftMessage(pc, pc);
+			this.sendLeftMessage(pc, pc);
 			// 没有组队领导者的场合
 			/*
 			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ removeMember(pc); L1PcInstance leader = getLeader(); removeMember(leader); sendLeftMessage(pc, pc); sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる removeMember(pc); for (L1PcInstance member :
@@ -142,14 +142,14 @@ public class L1Party {
 	/** 通过领导者 */
 	public void passLeader(final L1PcInstance pc) {
 		pc.getParty().setLeader(pc);
-		for (final L1PcInstance member : getMembers()) {
+		for (final L1PcInstance member : this.getMembers()) {
 			member.sendPackets(new S_Party(0x6A, pc));
 		}
 	}
 
 	/** 更新组队血条 */
 	public void updateMiniHP(final L1PcInstance pc) {
-		final L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = this.getMembers();
 
 		for (final L1PcInstance member : members) { // パーティーメンバー分更新
 			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
@@ -158,10 +158,10 @@ public class L1Party {
 
 	/** 解散队伍 */
 	private void breakup() {
-		final L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = this.getMembers();
 
 		for (final L1PcInstance member : members) {
-			removeMember(member);
+			this.removeMember(member);
 			member.sendPackets(new S_ServerMessage(418)); // 您解散您的队伍了!!
 		}
 	}
@@ -169,7 +169,7 @@ public class L1Party {
 	/** 创建组队血条 */
 	private void createMiniHp(final L1PcInstance pc) {
 		// 成员加入时、显示对方的HP血条
-		final L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = this.getMembers();
 
 		for (final L1PcInstance member : members) {
 			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
@@ -180,7 +180,7 @@ public class L1Party {
 	/** 删除组队血条 */
 	private void deleteMiniHp(final L1PcInstance pc) {
 		// 队员离队时、删除HP血条。
-		final L1PcInstance[] members = getMembers();
+		final L1PcInstance[] members = this.getMembers();
 
 		for (final L1PcInstance member : members) {
 			pc.sendPackets(new S_HPMeter(member.getId(), 0xff));
@@ -190,14 +190,14 @@ public class L1Party {
 
 	/** 删除成员 */
 	private void removeMember(final L1PcInstance pc) {
-		if (!_membersList.contains(pc)) {
+		if (!this._membersList.contains(pc)) {
 			return;
 		}
 		pc.stopRefreshParty();
-		_membersList.remove(pc);
+		this._membersList.remove(pc);
 		pc.setParty(null);
-		if (!_membersList.isEmpty()) {
-			deleteMiniHp(pc);
+		if (!this._membersList.isEmpty()) {
+			this.deleteMiniHp(pc);
 		}
 	}
 
@@ -214,13 +214,13 @@ public class L1Party {
 
 	/** 设置领导者 */
 	private void setLeader(final L1PcInstance pc) {
-		_leader = pc;
+		this._leader = pc;
 	}
 
 	/** 显示加入队伍的信息 */
 	private void showAddPartyInfo(final L1PcInstance pc) {
-		for (final L1PcInstance member : getMembers()) {
-			if ((pc.getId() == getLeader().getId()) && (getNumOfMembers() == 1)) {
+		for (final L1PcInstance member : this.getMembers()) {
+			if ((pc.getId() == this.getLeader().getId()) && (this.getNumOfMembers() == 1)) {
 				continue;
 			}
 			// 发送给队长的封包
@@ -231,7 +231,7 @@ public class L1Party {
 				member.sendPackets(new S_Party(0x69, pc));
 			}
 			member.sendPackets(new S_Party(0x6e, member));
-			createMiniHp(member);
+			this.createMiniHp(member);
 		}
 	}
 

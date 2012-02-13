@@ -24,15 +24,15 @@ public class L1ObjectAmount<T> {
 	private final int _amount;
 
 	public L1ObjectAmount(final T obj, final int amount) {
-		_obj = obj;
-		_amount = amount;
+		this._obj = obj;
+		this._amount = amount;
 	}
 
 	public int getAmount() {
-		return _amount;
+		return this._amount;
 	}
 
 	public T getObject() {
-		return _obj;
+		return this._obj;
 	}
 }

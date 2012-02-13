@@ -103,19 +103,19 @@ public class SpawnTable {
 	private SpawnTable() {
 		final PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╠》正在产生 Mob...");
-		fillSpawnTable();
-		_log.config("怪物配置清单  " + _spawntable.size() + "件");
+		this.fillSpawnTable();
+		_log.config("怪物配置清单  " + this._spawntable.size() + "件");
 		System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
 	}
 
 	public void addNewSpawn(final L1Spawn spawn) {
-		_highestId++;
-		spawn.setId(_highestId);
-		_spawntable.put(new Integer(spawn.getId()), spawn);
+		this._highestId++;
+		spawn.setId(this._highestId);
+		this._spawntable.put(new Integer(spawn.getId()), spawn);
 	}
 
 	public L1Spawn getTemplate(final int Id) {
-		return _spawntable.get(new Integer(Id));
+		return this._spawntable.get(new Integer(Id));
 	}
 
 	private void fillSpawnTable() {
@@ -196,9 +196,9 @@ public class SpawnTable {
 					spawnCount += spawnDat.getAmount();
 				}
 
-				_spawntable.put(new Integer(spawnDat.getId()), spawnDat);
-				if (spawnDat.getId() > _highestId) {
-					_highestId = spawnDat.getId();
+				this._spawntable.put(new Integer(spawnDat.getId()), spawnDat);
+				if (spawnDat.getId() > this._highestId) {
+					this._highestId = spawnDat.getId();
 				}
 			}
 

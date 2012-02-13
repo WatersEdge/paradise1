@@ -33,13 +33,13 @@ public class S_DeleteCharOK extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_DeleteCharOK(final int type) {
-		writeC(Opcodes.S_OPCODE_DETELECHAROK);
-		writeC(type);
+		this.writeC(Opcodes.S_OPCODE_DETELECHAROK);
+		this.writeC(type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

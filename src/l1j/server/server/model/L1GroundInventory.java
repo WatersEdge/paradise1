@@ -36,17 +36,17 @@ public class L1GroundInventory extends L1Inventory {
 		private final L1ItemInstance _item;
 
 		public DeletionTimer(final L1ItemInstance item) {
-			_item = item;
+			this._item = item;
 		}
 
 		@Override
 		public void run() {
 			try {
 				synchronized (L1GroundInventory.this) {
-					if (!_items.contains(_item)) {// 拾われたタイミングによってはこの条件を満たし得る
+					if (!L1GroundInventory.this._items.contains(this._item)) {// 拾われたタイミングによってはこの条件を満たし得る
 						return; // 已经捡起
 					}
-					removeItem(_item);
+					L1GroundInventory.this.removeItem(this._item);
 				}
 			}
 			catch (final Throwable t) {
@@ -64,24 +64,24 @@ public class L1GroundInventory extends L1Inventory {
 	private final Map<Integer, DeletionTimer> _reservedTimers = Maps.newMap();
 
 	public L1GroundInventory(final int objectId, final int x, final int y, final short map) {
-		setId(objectId);
-		setX(x);
-		setY(y);
-		setMap(map);
+		this.setId(objectId);
+		this.setX(x);
+		this.setY(y);
+		this.setMap(map);
 		L1World.getInstance().addVisibleObject(this);
 	}
 
 	// 空インベントリ破棄及び見える範囲内にいるプレイヤーのオブジェクト削除
 	@Override
 	public void deleteItem(final L1ItemInstance item) {
-		cancelTimer(item);
+		this.cancelTimer(item);
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
 			pc.sendPackets(new S_RemoveObject(item));
 			pc.removeKnownObject(item);
 		}
 
-		_items.remove(item);
-		if (_items.size() == 0) {
+		this._items.remove(item);
+		if (this._items.size() == 0) {
 			L1World.getInstance().removeVisibleObject(this);
 		}
 	}
@@ -89,7 +89,7 @@ public class L1GroundInventory extends L1Inventory {
 	// 对可见范围内的玩家送信
 	@Override
 	public void insertItem(final L1ItemInstance item) {
-		setTimer(item);
+		this.setTimer(item);
 
 		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(item)) {
 			pc.sendPackets(new S_DropItem(item));
@@ -99,7 +99,7 @@ public class L1GroundInventory extends L1Inventory {
 
 	@Override
 	public void onPerceive(final L1PcInstance perceivedFrom) {
-		for (final L1ItemInstance item : getItems()) {
+		for (final L1ItemInstance item : this.getItems()) {
 			if (!perceivedFrom.knownsObject(item)) {
 				perceivedFrom.addKnownObject(item);
 				perceivedFrom.sendPackets(new S_DropItem(item)); // プレイヤーへDROPITEM情報を通知
@@ -116,7 +116,7 @@ public class L1GroundInventory extends L1Inventory {
 	}
 
 	private void cancelTimer(final L1ItemInstance item) {
-		final DeletionTimer timer = _reservedTimers.get(item.getId());
+		final DeletionTimer timer = this._reservedTimers.get(item.getId());
 		if (timer == null) {
 			return;
 		}

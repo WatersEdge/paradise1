@@ -36,7 +36,7 @@ public class C_SkillBuyOK extends ClientBasePacket {
 	public C_SkillBuyOK(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		final int count = readH();
+		final int count = this.readH();
 		final int sid[] = new int[count];
 		int price = 0;
 		int level1 = 0;
@@ -53,7 +53,7 @@ public class C_SkillBuyOK extends ClientBasePacket {
 			return;
 		}
 		for (int i = 0; i < count; i++) {
-			sid[i] = readD();
+			sid[i] = this.readD();
 			switch (sid[i]) {
 				// Lv1魔法
 				case 0:

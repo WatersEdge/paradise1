@@ -39,7 +39,7 @@ public class UbTimeController implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				checkUbTime(); // 开始检查无限大战的时间
+				this.checkUbTime(); // 开始检查无限大战的时间
 				Thread.sleep(15000);
 			}
 		}

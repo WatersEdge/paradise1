@@ -46,8 +46,8 @@ public class V2MapReader extends MapReader {
 	@Override
 	public Map<Integer, L1Map> read() throws IOException {
 		final Map<Integer, L1Map> maps = Maps.newMap();
-		for (final int id : listMapIds()) {
-			maps.put(id, read(id));
+		for (final int id : this.listMapIds()) {
+			maps.put(id, this.read(id));
 		}
 		return maps;
 	}

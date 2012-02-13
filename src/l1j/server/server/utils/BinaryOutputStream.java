@@ -36,22 +36,22 @@ public class BinaryOutputStream extends OutputStream {
 	}
 
 	public byte[] getBytes() {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 
 	public int getLength() {
-		return _bao.size() + 2;
+		return this._bao.size() + 2;
 	}
 
 	@Override
 	public void write(final int b) throws IOException {
-		_bao.write(b);
+		this._bao.write(b);
 	}
 
 	public void writeByte(final byte[] text) {
 		try {
 			if (text != null) {
-				_bao.write(text);
+				this._bao.write(text);
 			}
 		}
 		catch (final Exception e) {
@@ -59,50 +59,50 @@ public class BinaryOutputStream extends OutputStream {
 	}
 
 	public void writeC(final int value) {
-		_bao.write(value & 0xff);
+		this._bao.write(value & 0xff);
 	}
 
 	public void writeD(final int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
-		_bao.write(value >> 16 & 0xff);
-		_bao.write(value >> 24 & 0xff);
+		this._bao.write(value & 0xff);
+		this._bao.write(value >> 8 & 0xff);
+		this._bao.write(value >> 16 & 0xff);
+		this._bao.write(value >> 24 & 0xff);
 	}
 
 	public void writeF(final double org) {
 		final long value = Double.doubleToRawLongBits(org);
-		_bao.write((int) (value & 0xff));
-		_bao.write((int) (value >> 8 & 0xff));
-		_bao.write((int) (value >> 16 & 0xff));
-		_bao.write((int) (value >> 24 & 0xff));
-		_bao.write((int) (value >> 32 & 0xff));
-		_bao.write((int) (value >> 40 & 0xff));
-		_bao.write((int) (value >> 48 & 0xff));
-		_bao.write((int) (value >> 56 & 0xff));
+		this._bao.write((int) (value & 0xff));
+		this._bao.write((int) (value >> 8 & 0xff));
+		this._bao.write((int) (value >> 16 & 0xff));
+		this._bao.write((int) (value >> 24 & 0xff));
+		this._bao.write((int) (value >> 32 & 0xff));
+		this._bao.write((int) (value >> 40 & 0xff));
+		this._bao.write((int) (value >> 48 & 0xff));
+		this._bao.write((int) (value >> 56 & 0xff));
 	}
 
 	public void writeH(final int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
+		this._bao.write(value & 0xff);
+		this._bao.write(value >> 8 & 0xff);
 	}
 
 	public void writeL(final long value) {
-		_bao.write((int) (value & 0xff));
+		this._bao.write((int) (value & 0xff));
 	}
 
 	public void writeP(final int value) {
-		_bao.write(value);
+		this._bao.write(value);
 	}
 
 	public void writeS(final String text) {
 		try {
 			if (text != null) {
-				_bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
+				this._bao.write(text.getBytes(CLIENT_LANGUAGE_CODE));
 			}
 		}
 		catch (final Exception e) {
 		}
 
-		_bao.write(0);
+		this._bao.write(0);
 	}
 }

@@ -35,17 +35,17 @@ public class S_MapID extends ServerBasePacket {
 	 *            是否在水中
 	 */
 	public S_MapID(final int mapid, final boolean isUnderwater) {
-		writeC(Opcodes.S_OPCODE_MAPID);
-		writeH(mapid);
-		writeC(isUnderwater ? 1 : 0); // 水底:1
-		writeC(0);
-		writeH(0);
-		writeC(0);
-		writeD(0); // 正服值 2
+		this.writeC(Opcodes.S_OPCODE_MAPID);
+		this.writeH(mapid);
+		this.writeC(isUnderwater ? 1 : 0); // 水底:1
+		this.writeC(0);
+		this.writeH(0);
+		this.writeC(0);
+		this.writeD(0); // 正服值 2
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

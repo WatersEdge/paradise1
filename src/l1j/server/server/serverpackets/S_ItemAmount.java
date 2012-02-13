@@ -37,12 +37,12 @@ public class S_ItemAmount extends ServerBasePacket {
 			return;
 		}
 
-		buildPacket(item);
+		this.buildPacket(item);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override
@@ -56,18 +56,18 @@ public class S_ItemAmount extends ServerBasePacket {
 		// writeD(item.getCount());
 		// writeC(0);
 		// 3.0
-		writeC(Opcodes.S_OPCODE_ITEMAMOUNT);
-		writeD(item.getId());
-		writeS(item.getViewName());
-		writeD(item.getCount());
+		this.writeC(Opcodes.S_OPCODE_ITEMAMOUNT);
+		this.writeD(item.getId());
+		this.writeS(item.getViewName());
+		this.writeD(item.getCount());
 		if (!item.isIdentified()) { // 未鉴定状态不发送详细资料
-			writeC(0);
+			this.writeC(0);
 		}
 		else {
 			final byte[] status = item.getStatusBytes();
-			writeC(status.length);
+			this.writeC(status.length);
 			for (final byte b : status) {
-				writeC(b);
+				this.writeC(b);
 			}
 		}
 		// 3.0 end

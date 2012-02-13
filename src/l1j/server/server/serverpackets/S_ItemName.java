@@ -36,14 +36,14 @@ public class S_ItemName extends ServerBasePacket {
 		}
 		// 至于jump、Opcode目的很可能是只用于更新道具的名称（装备上之后OE後専用？）
 		// 之后继续发送数据 全部无视
-		writeC(Opcodes.S_OPCODE_ITEMNAME);
-		writeD(item.getId());
-		writeS(item.getViewName());
+		this.writeC(Opcodes.S_OPCODE_ITEMNAME);
+		this.writeD(item.getId());
+		this.writeS(item.getViewName());
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

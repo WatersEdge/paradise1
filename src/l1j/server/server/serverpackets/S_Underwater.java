@@ -25,14 +25,14 @@ import l1j.server.server.Opcodes;
 public class S_Underwater extends ServerBasePacket {
 
 	public S_Underwater(final int playerobjecId, final int type) {
-		writeC(Opcodes.S_OPCODE_UNDERWATER);
-		writeD(playerobjecId);
-		writeC(type);
+		this.writeC(Opcodes.S_OPCODE_UNDERWATER);
+		this.writeD(playerobjecId);
+		this.writeC(type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

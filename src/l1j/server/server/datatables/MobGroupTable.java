@@ -49,11 +49,11 @@ public class MobGroupTable {
 	private final Map<Integer, L1MobGroup> _mobGroupIndex = Maps.newMap();
 
 	private MobGroupTable() {
-		loadMobGroup();
+		this.loadMobGroup();
 	}
 
 	public L1MobGroup getTemplate(final int mobGroupId) {
-		return _mobGroupIndex.get(mobGroupId);
+		return this._mobGroupIndex.get(mobGroupId);
 	}
 
 	private void loadMobGroup() {
@@ -75,9 +75,9 @@ public class MobGroupTable {
 					minions.add(new L1NpcCount(id, count));
 				}
 				final L1MobGroup mobGroup = new L1MobGroup(mobGroupId, leaderId, minions, isRemoveGroup);
-				_mobGroupIndex.put(mobGroupId, mobGroup);
+				this._mobGroupIndex.put(mobGroupId, mobGroup);
 			}
-			_log.config("MOB集团名单 " + _mobGroupIndex.size() + "件");
+			_log.config("MOB集团名单 " + this._mobGroupIndex.size() + "件");
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建mobgroup表时出现错误", e);

@@ -198,6 +198,6 @@ public class Getback {
 	}
 
 	private boolean isSpecifyArea() {
-		return ((_areaX1 != 0) && (_areaY1 != 0) && (_areaX2 != 0) && (_areaY2 != 0));
+		return ((this._areaX1 != 0) && (this._areaY1 != 0) && (this._areaX2 != 0) && (this._areaY2 != 0));
 	}
 }

@@ -54,7 +54,7 @@ public final class DropItemTable {
 	private final Map<Integer, dropItemData> _dropItem = Maps.newMap();
 
 	private DropItemTable() {
-		loadMapsFromDatabase();
+		this.loadMapsFromDatabase();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public final class DropItemTable {
 	 * @param itemId
 	 */
 	public double getDropAmount(final int itemId) {
-		final dropItemData data = _dropItem.get(itemId);
+		final dropItemData data = this._dropItem.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -76,7 +76,7 @@ public final class DropItemTable {
 	 * @param itemId
 	 */
 	public double getDropRate(final int itemId) {
-		final dropItemData data = _dropItem.get(itemId);
+		final dropItemData data = this._dropItem.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -100,10 +100,10 @@ public final class DropItemTable {
 				data.dropRate = rs.getDouble("drop_rate");
 				data.dropAmount = rs.getDouble("drop_amount");
 
-				_dropItem.put(new Integer(itemId), data);
+				this._dropItem.put(new Integer(itemId), data);
 			}
 
-			_log.config("drop_item " + _dropItem.size());
+			_log.config("drop_item " + this._dropItem.size());
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

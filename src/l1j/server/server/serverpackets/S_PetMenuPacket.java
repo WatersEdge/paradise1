@@ -33,49 +33,49 @@ public class S_PetMenuPacket extends ServerBasePacket {
 	 * @param exppercet
 	 */
 	public S_PetMenuPacket(final L1NpcInstance npc, final int exppercet) {
-		buildpacket(npc, exppercet);
+		this.buildpacket(npc, exppercet);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	private void buildpacket(final L1NpcInstance npc, final int exppercet) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
 
 		if (npc instanceof L1PetInstance) { // 宠物
 			final L1PetInstance pet = (L1PetInstance) npc;
-			writeD(pet.getId());
-			writeS("anicom");
-			writeC(0x00);
-			writeH(10);
+			this.writeD(pet.getId());
+			this.writeS("anicom");
+			this.writeC(0x00);
+			this.writeH(10);
 			switch (pet.getCurrentPetStatus()) {
 				case 1:
-					writeS("$469"); // 攻击态势
+					this.writeS("$469"); // 攻击态势
 					break;
 				case 2:
-					writeS("$470"); // 防御态势
+					this.writeS("$470"); // 防御态势
 					break;
 				case 3:
-					writeS("$471"); // 休憩
+					this.writeS("$471"); // 休憩
 					break;
 				case 5:
-					writeS("$472"); // 警戒
+					this.writeS("$472"); // 警戒
 					break;
 				default:
-					writeS("$471"); // 休憩
+					this.writeS("$471"); // 休憩
 					break;
 			}
-			writeS(Integer.toString(pet.getCurrentHp())); // 现在ＨＰ
-			writeS(Integer.toString(pet.getMaxHp())); // 最大ＨＰ
-			writeS(Integer.toString(pet.getCurrentMp())); // 现在ＭＰ
-			writeS(Integer.toString(pet.getMaxMp())); // 最大ＭＰ
-			writeS(Integer.toString(pet.getLevel())); // 等级
+			this.writeS(Integer.toString(pet.getCurrentHp())); // 现在ＨＰ
+			this.writeS(Integer.toString(pet.getMaxHp())); // 最大ＨＰ
+			this.writeS(Integer.toString(pet.getCurrentMp())); // 现在ＭＰ
+			this.writeS(Integer.toString(pet.getMaxMp())); // 最大ＭＰ
+			this.writeS(Integer.toString(pet.getLevel())); // 等级
 
 			// 名前の文字数が8を超えると落ちる
 			// なぜか"セント バーナード","ブレイブ ラビット"はOK
@@ -87,7 +87,7 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			// pet_name = "ハイ セントバー";
 			// }
 			// writeS(pet_name);
-			writeS(""); // ペットの名前を表示させると不安定になるので、非表示にする
+			this.writeS(""); // ペットの名前を表示させると不安定になるので、非表示にする
 
 			String s = "$610";
 			if (pet.get_food() > 80) {
@@ -105,38 +105,38 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			else if (pet.get_food() >= 0) {
 				s = "$608"; // 非常饿。
 			}
-			writeS(s); // 饱食度
-			writeS(Integer.toString(exppercet)); // 经验值
-			writeS(Integer.toString(pet.getLawful())); // 正义值
+			this.writeS(s); // 饱食度
+			this.writeS(Integer.toString(exppercet)); // 经验值
+			this.writeS(Integer.toString(pet.getLawful())); // 正义值
 		}
 		else if (npc instanceof L1SummonInstance) { // 召唤兽
 			final L1SummonInstance summon = (L1SummonInstance) npc;
-			writeD(summon.getId());
-			writeS("moncom");
-			writeC(0x00);
-			writeH(6); // 渡す引数文字の数の模样
+			this.writeD(summon.getId());
+			this.writeS("moncom");
+			this.writeC(0x00);
+			this.writeH(6); // 渡す引数文字の数の模样
 			switch (summon.get_currentPetStatus()) {
 				case 1:
-					writeS("$469"); // 攻击态势
+					this.writeS("$469"); // 攻击态势
 					break;
 				case 2:
-					writeS("$470"); // 防御态势
+					this.writeS("$470"); // 防御态势
 					break;
 				case 3:
-					writeS("$471"); // 休憩
+					this.writeS("$471"); // 休憩
 					break;
 				case 5:
-					writeS("$472"); // 警戒
+					this.writeS("$472"); // 警戒
 					break;
 				default:
-					writeS("$471"); // 休憩
+					this.writeS("$471"); // 休憩
 					break;
 			}
-			writeS(Integer.toString(summon.getCurrentHp())); // 现在ＨＰ
-			writeS(Integer.toString(summon.getMaxHp())); // 最大ＨＰ
-			writeS(Integer.toString(summon.getCurrentMp())); // 现在ＭＰ
-			writeS(Integer.toString(summon.getMaxMp())); // 最大ＭＰ
-			writeS(Integer.toString(summon.getLevel())); // 等级
+			this.writeS(Integer.toString(summon.getCurrentHp())); // 现在ＨＰ
+			this.writeS(Integer.toString(summon.getMaxHp())); // 最大ＨＰ
+			this.writeS(Integer.toString(summon.getCurrentMp())); // 现在ＭＰ
+			this.writeS(Integer.toString(summon.getMaxMp())); // 最大ＭＰ
+			this.writeS(Integer.toString(summon.getLevel())); // 等级
 			// writeS(summon.getNpcTemplate().get_nameid());
 			// writeS(Integer.toString(0));
 			// writeS(Integer.toString(790));

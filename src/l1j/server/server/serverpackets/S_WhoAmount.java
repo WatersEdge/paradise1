@@ -24,15 +24,15 @@ public class S_WhoAmount extends ServerBasePacket {
 	private static final String S_WHO_AMOUNT = "[S] S_WhoAmount";
 
 	public S_WhoAmount(final String amount) {
-		writeC(Opcodes.S_OPCODE_SERVERMSG);
-		writeH(0x0051);
-		writeC(0x01);
-		writeS(amount);
+		this.writeC(Opcodes.S_OPCODE_SERVERMSG);
+		this.writeH(0x0051);
+		this.writeC(0x01);
+		this.writeS(amount);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

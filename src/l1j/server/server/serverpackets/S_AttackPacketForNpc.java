@@ -35,16 +35,16 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 	 *            动作编号
 	 */
 	public S_AttackPacketForNpc(final L1Character cha, final int npcObjectId, final int type) {
-		buildpacket(cha, npcObjectId, type);
+		this.buildpacket(cha, npcObjectId, type);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -53,14 +53,14 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 	}
 
 	private void buildpacket(final L1Character cha, final int npcObjectId, final int type) {
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(type);
-		writeD(npcObjectId);
-		writeD(cha.getId());
-		writeH(0x01); // 3.3C damage
-		writeC(cha.getHeading());
-		writeH(0x0000); // target x
-		writeH(0x0000); // target y
-		writeC(0x00); // 0x00:none 0x04:Claw 0x08:CounterMirror
+		this.writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		this.writeC(type);
+		this.writeD(npcObjectId);
+		this.writeD(cha.getId());
+		this.writeH(0x01); // 3.3C damage
+		this.writeC(cha.getHeading());
+		this.writeH(0x0000); // target x
+		this.writeH(0x0000); // target y
+		this.writeC(0x00); // 0x00:none 0x04:Claw 0x08:CounterMirror
 	}
 }

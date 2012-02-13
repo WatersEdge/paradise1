@@ -84,7 +84,7 @@ public class SprTable {
 	}
 
 	private SprTable() {
-		loadSprAction();
+		this.loadSprAction();
 	}
 
 	/**
@@ -198,13 +198,13 @@ public class SprTable {
 			case ACTION_ClawWalk:
 			case ACTION_ThrowingKnifeWalk:
 				// 移动
-				return getMoveSpeed(sprid, actid);
+				return this.getMoveSpeed(sprid, actid);
 			case ACTION_SkillAttack:
 				// 有向施法
-				return getDirSpellSpeed(sprid);
+				return this.getDirSpellSpeed(sprid);
 			case ACTION_SkillBuff:
 				// 无向施法
-				return getNodirSpellSpeed(sprid);
+				return this.getNodirSpellSpeed(sprid);
 			case ACTION_Attack:
 			case ACTION_SwordAttack:
 			case ACTION_AxeAttack:
@@ -219,11 +219,11 @@ public class SprTable {
 			case ACTION_ClawAttack:
 			case ACTION_ThrowingKnifeAttack:
 				// 攻击
-				return getAttackSpeed(sprid, actid);
+				return this.getAttackSpeed(sprid, actid);
 			case ACTION_Think:
 			case ACTION_Aggress:
 				// 魔法娃娃表情动作
-				return getSpecialSpeed(sprid, actid);
+				return this.getSpecialSpeed(sprid, actid);
 			default:
 				break;
 		}
@@ -255,7 +255,7 @@ public class SprTable {
 				final int actid = rs.getInt("act_id");
 				final int frameCount = rs.getInt("framecount");
 				final int frameRate = rs.getInt("framerate");
-				final int speed = calcActionSpeed(frameCount, frameRate);
+				final int speed = this.calcActionSpeed(frameCount, frameRate);
 
 				switch (actid) {
 					case ACTION_Walk:

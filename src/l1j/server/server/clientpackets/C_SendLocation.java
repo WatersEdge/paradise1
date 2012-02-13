@@ -33,7 +33,7 @@ public class C_SendLocation extends ClientBasePacket {
 
 	public C_SendLocation(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		final int type = readC();
+		final int type = this.readC();
 
 		// 客户端在主动,非主动转换时
 		// オペコード 0x57 0x0dパケットを送ってくるが详细不明の为无视
@@ -46,11 +46,11 @@ public class C_SendLocation extends ClientBasePacket {
 		}
 
 		if (type == 0x0b) {
-			final String name = readS();
-			final int mapId = readH();
-			final int x = readH();
-			final int y = readH();
-			final int msgId = readC();
+			final String name = this.readS();
+			final int mapId = this.readH();
+			final int x = this.readH();
+			final int y = this.readH();
+			final int msgId = this.readC();
 
 			if (name.isEmpty()) {
 				return;
@@ -65,8 +65,8 @@ public class C_SendLocation extends ClientBasePacket {
 		}
 		else if (type == 0x06) {
 			@SuppressWarnings("unused")
-			final int objectId = readD();
-			final int gate = readD();
+			final int objectId = this.readD();
+			final int gate = this.readD();
 			final int dragonGate[] = { 81273, // 龙之门扉 (安塔瑞斯副本)
 					81274, // 龙之门扉 (法利昂副本)
 					81275, // 龙之门扉 (林德拜尔副本)

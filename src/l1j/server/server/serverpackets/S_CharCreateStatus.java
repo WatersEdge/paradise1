@@ -36,15 +36,15 @@ public class S_CharCreateStatus extends ServerBasePacket {
 	 * @param reason
 	 */
 	public S_CharCreateStatus(final int reason) {
-		writeC(Opcodes.S_OPCODE_NEWCHARWRONG);
-		writeC(reason);
-		writeD(0x00000000);
-		writeD(0x0000);
+		this.writeC(Opcodes.S_OPCODE_NEWCHARWRONG);
+		this.writeC(reason);
+		this.writeD(0x00000000);
+		this.writeD(0x0000);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

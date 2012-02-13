@@ -31,12 +31,12 @@ public class S_ItemColor extends ServerBasePacket {
 		if (item == null) {
 			return;
 		}
-		buildPacket(item);
+		this.buildPacket(item);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override
@@ -45,11 +45,11 @@ public class S_ItemColor extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1ItemInstance item) {
-		writeC(Opcodes.S_OPCODE_ITEMCOLOR);
-		writeD(item.getId());
+		this.writeC(Opcodes.S_OPCODE_ITEMCOLOR);
+		this.writeD(item.getId());
 		// 0:祝福 1:一般 2:诅咒 3:未鉴定
 		// 128:祝福&封印 129:&封印 130:诅咒&封印 131:未鉴定&封印
-		writeC(item.getBless());
+		this.writeC(item.getBless());
 	}
 
 }

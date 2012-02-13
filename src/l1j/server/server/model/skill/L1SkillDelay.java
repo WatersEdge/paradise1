@@ -30,16 +30,16 @@ public class L1SkillDelay {
 		private final L1Character _cha;
 
 		public SkillDelayTimer(final L1Character cha, final int time) {
-			_cha = cha;
+			this._cha = cha;
 		}
 
 		@Override
 		public void run() {
-			stopDelayTimer();
+			this.stopDelayTimer();
 		}
 
 		public void stopDelayTimer() {
-			_cha.setSkillDelay(false);
+			this._cha.setSkillDelay(false);
 		}
 	}
 

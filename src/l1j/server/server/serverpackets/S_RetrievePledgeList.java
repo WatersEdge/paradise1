@@ -49,21 +49,21 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 			final int size = clan.getDwarfForClanInventory().getSize();
 			if (size > 0) {
 				clan.setWarehouseUsingChar(pc.getId()); // 锁定血盟仓库
-				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-				writeD(objid);
-				writeH(size);
-				writeC(5); // 血盟仓库
+				this.writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+				this.writeD(objid);
+				this.writeH(size);
+				this.writeC(5); // 血盟仓库
 				for (final Object itemObject : clan.getDwarfForClanInventory().getItems()) {
 					final L1ItemInstance item = (L1ItemInstance) itemObject;
-					writeD(item.getId());
-					writeC(0);
-					writeH(item.get_gfxid());
-					writeC(item.getBless());
-					writeD(item.getCount());
-					writeC(item.isIdentified() ? 1 : 0);
-					writeS(item.getViewName());
+					this.writeD(item.getId());
+					this.writeC(0);
+					this.writeH(item.get_gfxid());
+					this.writeC(item.getBless());
+					this.writeD(item.getCount());
+					this.writeC(item.isIdentified() ? 1 : 0);
+					this.writeS(item.getViewName());
 				}
-				writeH(0x001e); // 金币30
+				this.writeH(0x001e); // 金币30
 			}
 			else {
 				pc.sendPackets(new S_ServerMessage(1625)); // 仓库里没有委托的物品。
@@ -76,6 +76,6 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return getBytes();
+		return this.getBytes();
 	}
 }

@@ -36,8 +36,8 @@ public class C_SelectList extends ClientBasePacket {
 	public C_SelectList(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 		// アイテム每にリクエストが来る。
-		final int itemObjectId = readD();
-		final int npcObjectId = readD();
+		final int itemObjectId = this.readD();
+		final int npcObjectId = this.readD();
 		final L1PcInstance pc = clientthread.getActiveChar();
 
 		if (npcObjectId != 0) { // 武器的修理

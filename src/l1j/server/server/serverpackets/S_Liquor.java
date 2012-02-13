@@ -31,14 +31,14 @@ public class S_Liquor extends ServerBasePacket {
 	 * @param type
 	 */
 	public S_Liquor(final int objecId, final int j) {
-		writeC(Opcodes.S_OPCODE_LIQUOR);
-		writeD(objecId);
-		writeC(j);
+		this.writeC(Opcodes.S_OPCODE_LIQUOR);
+		this.writeD(objecId);
+		this.writeC(j);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

@@ -40,41 +40,41 @@ public class S_PetInventory extends ServerBasePacket {
 	public S_PetInventory(final L1PetInstance pet) {
 		final List<L1ItemInstance> itemList = pet.getInventory().getItems();
 
-		writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
-		writeD(pet.getId());
-		writeH(itemList.size());
-		writeC(0x0b);
+		this.writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+		this.writeD(pet.getId());
+		this.writeH(itemList.size());
+		this.writeC(0x0b);
 
 		for (final Object itemObject : itemList) {
 			final L1ItemInstance petItem = (L1ItemInstance) itemObject;
 			if (petItem == null) {
 				continue;
 			}
-			writeD(petItem.getId());
-			writeC(0x02); // 值:0x00 无、0x01:武器类、0x02:防具类、0x16:牙齿类 、0x33:药水类
-			writeH(petItem.get_gfxid());
-			writeC(petItem.getBless());
-			writeD(petItem.getCount());
+			this.writeD(petItem.getId());
+			this.writeC(0x02); // 值:0x00 无、0x01:武器类、0x02:防具类、0x16:牙齿类 、0x33:药水类
+			this.writeH(petItem.get_gfxid());
+			this.writeC(petItem.getBless());
+			this.writeD(petItem.getCount());
 
 			// 显示装备中的宠物装备
 			if ((petItem.getItem().getType2() == 0) && (petItem.getItem().getType() == 11) && petItem.isEquipped()) {
-				writeC(petItem.isIdentified() ? 3 : 2);
+				this.writeC(petItem.isIdentified() ? 3 : 2);
 			}
 			else {
-				writeC(petItem.isIdentified() ? 1 : 0);
+				this.writeC(petItem.isIdentified() ? 1 : 0);
 			}
-			writeS(petItem.getViewName());
+			this.writeS(petItem.getViewName());
 
 		}
-		writeC(pet.getAc()); // 宠物防御
+		this.writeC(pet.getAc()); // 宠物防御
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

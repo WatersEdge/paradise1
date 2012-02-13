@@ -33,16 +33,16 @@ public class S_bonusstats extends ServerBasePacket {
 	 * @param j
 	 */
 	public S_bonusstats(final int i, final int j) {
-		buildPacket(i, j);
+		this.buildPacket(i, j);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class S_bonusstats extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int i, final int j) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(i);
-		writeS("RaiseAttr");
+		this.writeC(Opcodes.S_OPCODE_SHOWHTML);
+		this.writeD(i);
+		this.writeS("RaiseAttr");
 	}
 }

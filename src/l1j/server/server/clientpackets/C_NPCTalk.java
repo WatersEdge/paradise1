@@ -40,7 +40,7 @@ public class C_NPCTalk extends ClientBasePacket {
 	public C_NPCTalk(final byte abyte0[], final ClientThread client) throws Exception {
 
 		super(abyte0);
-		final int objid = readD();
+		final int objid = this.readD();
 		final L1Object obj = L1World.getInstance().findObject(objid);
 		final L1PcInstance pc = client.getActiveChar();
 		if ((obj != null) && (pc != null)) {

@@ -49,7 +49,7 @@ public class Furniture extends ItemExecutor {
 
 		final int itemObjid = item.getId();
 		final int itemId = item.getItemId();
-		useFurnitureItem(pc, itemId, itemObjid);
+		this.useFurnitureItem(pc, itemId, itemObjid);
 	}
 
 	private void useFurnitureItem(final L1PcInstance pc, final int itemId, final int itemObjectId) {

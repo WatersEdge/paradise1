@@ -35,15 +35,15 @@ public class S_HouseMap extends ServerBasePacket {
 	 * @param house_number
 	 */
 	public S_HouseMap(final int objectId, final String house_number) {
-		buildPacket(objectId, house_number);
+		this.buildPacket(objectId, house_number);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class S_HouseMap extends ServerBasePacket {
 	private void buildPacket(final int objectId, final String house_number) {
 		final int number = Integer.valueOf(house_number);
 
-		writeC(Opcodes.S_OPCODE_HOUSEMAP);
-		writeD(objectId);
-		writeD(number);
+		this.writeC(Opcodes.S_OPCODE_HOUSEMAP);
+		this.writeD(objectId);
+		this.writeD(number);
 	}
 }

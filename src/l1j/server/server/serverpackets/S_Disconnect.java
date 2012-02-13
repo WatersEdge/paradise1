@@ -26,22 +26,22 @@ public class S_Disconnect extends ServerBasePacket {
 	 */
 	public S_Disconnect() {
 		final int content = 500;
-		writeC(Opcodes.S_OPCODE_DISCONNECT);
-		writeH(content);
-		writeD(0x00000000);
+		this.writeC(Opcodes.S_OPCODE_DISCONNECT);
+		this.writeH(content);
+		this.writeD(0x00000000);
 	}
 
 	/**
 	 * 0~21, 连线中断 22, 有人以同样的账号登入，请注意，您的密码可能已经外泄
 	 */
 	public S_Disconnect(final int id) {
-		writeC(Opcodes.S_OPCODE_DISCONNECT);
-		writeC(id);
-		writeD(0x00000000);
+		this.writeC(Opcodes.S_OPCODE_DISCONNECT);
+		this.writeC(id);
+		this.writeD(0x00000000);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

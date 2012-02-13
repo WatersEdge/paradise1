@@ -32,21 +32,21 @@ public class S_HireSoldier extends ServerBasePacket {
 	// 表示HTML打开后发送的数据包npcdeloy-j.html
 	// 按OK按钮飞C_127
 	public S_HireSoldier(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_HIRESOLDIER);
-		writeH(0); // ? 包含客户端返回的数据包
-		writeH(0); // ? 包含客户端返回的数据包
-		writeH(0); // 雇佣佣兵的总数
-		writeS(pc.getName());
-		writeD(0); // ? 包含客户端返回的数据包
-		writeH(0); // 可以雇佣佣兵的总数
+		this.writeC(Opcodes.S_OPCODE_HIRESOLDIER);
+		this.writeH(0); // ? 包含客户端返回的数据包
+		this.writeH(0); // ? 包含客户端返回的数据包
+		this.writeH(0); // 雇佣佣兵的总数
+		this.writeS(pc.getName());
+		this.writeD(0); // ? 包含客户端返回的数据包
+		this.writeH(0); // 可以雇佣佣兵的总数
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

@@ -100,19 +100,19 @@ public class L1SkillUse {
 										// (你需要计算魔法伤害和确率？)
 
 		public TargetStatus(final L1Character _cha) {
-			_target = _cha;
+			this._target = _cha;
 		}
 
 		public TargetStatus(final L1Character _cha, final boolean _flg) {
-			_isCalc = _flg;
+			this._isCalc = _flg;
 		}
 
 		public L1Character getTarget() {
-			return _target;
+			return this._target;
 		}
 
 		public boolean isCalc() {
-			return _isCalc;
+			return this._isCalc;
 		}
 	}
 
@@ -237,7 +237,7 @@ public class L1SkillUse {
 	 * @return
 	 */
 	public boolean checkUseSkill(final L1PcInstance player, final int skillid, final int target_id, final int x, final int y, final String message, final int time, final int type, final L1Character attacker) {
-		return checkUseSkill(player, skillid, target_id, x, y, message, time, type, attacker, 0, 0, 0);
+		return this.checkUseSkill(player, skillid, target_id, x, y, message, time, type, attacker, 0, 0, 0);
 	}
 
 	/**
@@ -267,46 +267,46 @@ public class L1SkillUse {
 	 */
 	public boolean checkUseSkill(final L1PcInstance player, final int skillid, final int target_id, final int x, final int y, final String message, final int time, final int type, final L1Character attacker, final int actid, final int gfxid, final int mpConsume) {
 		// 初期从这里设定
-		setCheckedUseSkill(true);
-		_targetList = Lists.newList(); // 目标名单的初始化
+		this.setCheckedUseSkill(true);
+		this._targetList = Lists.newList(); // 目标名单的初始化
 
-		_skill = SkillsTable.getInstance().getTemplate(skillid);
-		_skillId = skillid;
-		_targetX = x;
-		_targetY = y;
-		_message = message;
-		_skillTime = time;
-		_type = type;
-		_actid = actid;
-		_gfxid = gfxid;
-		_mpConsume = mpConsume;
+		this._skill = SkillsTable.getInstance().getTemplate(skillid);
+		this._skillId = skillid;
+		this._targetX = x;
+		this._targetY = y;
+		this._message = message;
+		this._skillTime = time;
+		this._type = type;
+		this._actid = actid;
+		this._gfxid = gfxid;
+		this._mpConsume = mpConsume;
 		boolean checkedResult = true;
 
 		if (attacker == null) {
 			// pc
-			_player = player;
-			_user = _player;
+			this._player = player;
+			this._user = this._player;
 		}
 		else {
 			// npc
-			_npc = (L1NpcInstance) attacker;
-			_user = _npc;
+			this._npc = (L1NpcInstance) attacker;
+			this._user = this._npc;
 		}
 
-		if (_skill.getTarget().equals("none")) {
-			_targetID = _user.getId();
-			_targetX = _user.getX();
-			_targetY = _user.getY();
+		if (this._skill.getTarget().equals("none")) {
+			this._targetID = this._user.getId();
+			this._targetX = this._user.getX();
+			this._targetY = this._user.getY();
 		}
 		else {
-			_targetID = target_id;
+			this._targetID = target_id;
 		}
 
 		if (type == TYPE_NORMAL) { // 通使用一般魔法
-			checkedResult = isNormalSkillUsable();
+			checkedResult = this.isNormalSkillUsable();
 		}
 		else if (type == TYPE_SPELLSC) { // 使用魔法卷轴
-			checkedResult = isSpellScrollUsable();
+			checkedResult = this.isSpellScrollUsable();
 		}
 		else if (type == TYPE_NPCBUFF) {
 			checkedResult = true;
@@ -317,11 +317,11 @@ public class L1SkillUse {
 
 		// 火牢、治愈能量风暴对象坐标
 		// 精准目标的使用者坐标例外
-		if ((_skillId == FIRE_WALL) || (_skillId == LIFE_STREAM) || (_skillId == TRUE_TARGET)) {
+		if ((this._skillId == FIRE_WALL) || (this._skillId == LIFE_STREAM) || (this._skillId == TRUE_TARGET)) {
 			return true;
 		}
 
-		final L1Object l1object = L1World.getInstance().findObject(_targetID);
+		final L1Object l1object = L1World.getInstance().findObject(this._targetID);
 		if (l1object instanceof L1ItemInstance) {
 			_log.fine("技能目标项目名称: " + ((L1ItemInstance) l1object).getViewName());
 			// 精灵石可以成为技能目标。
@@ -329,32 +329,32 @@ public class L1SkillUse {
 			// 2008.5.4追加：对地面和物品使用魔法。继续发生错误时return
 			return false;
 		}
-		if (_user instanceof L1PcInstance) {
+		if (this._user instanceof L1PcInstance) {
 			if (l1object instanceof L1PcInstance) {
-				_calcType = PC_PC;
+				this._calcType = PC_PC;
 			}
 			else {
-				_calcType = PC_NPC;
+				this._calcType = PC_NPC;
 			}
 		}
-		else if (_user instanceof L1NpcInstance) {
+		else if (this._user instanceof L1NpcInstance) {
 			if (l1object instanceof L1PcInstance) {
-				_calcType = NPC_PC;
+				this._calcType = NPC_PC;
 			}
-			else if (_skill.getTarget().equals("none")) {
-				_calcType = NPC_PC;
+			else if (this._skill.getTarget().equals("none")) {
+				this._calcType = NPC_PC;
 			}
 			else {
-				_calcType = NPC_NPC;
+				this._calcType = NPC_NPC;
 			}
 		}
 
-		switch (_skillId) {
+		switch (this._skillId) {
 
 			// 可使用传送控制戒指的技能
 			case TELEPORT: // 法师魔法 (指定传送)
 			case MASS_TELEPORT: // 法师魔法 (集体传送术)
-				_bookmarkId = target_id;
+				this._bookmarkId = target_id;
 				break;
 
 			// 技能对象为道具
@@ -363,15 +363,15 @@ public class L1SkillUse {
 			case BLESSED_ARMOR: // 法师魔法 (铠甲护持)
 			case ENCHANT_WEAPON: // 法师魔法 (拟似魔法武器)
 			case SHADOW_FANG: // 黑暗妖精魔法 (暗影之牙)
-				_itemobjid = target_id;
+				this._itemobjid = target_id;
 				break;
 		}
 
-		_target = (L1Character) l1object;
+		this._target = (L1Character) l1object;
 
 		// 在目标怪物以外的攻击技能、其他场合与PK模式。
-		if (!(_target instanceof L1MonsterInstance) && _skill.getTarget().equals("attack") && (_user.getId() != target_id)) {
-			_isPK = true;
+		if (!(this._target instanceof L1MonsterInstance) && this._skill.getTarget().equals("attack") && (this._user.getId() != target_id)) {
+			this._isPK = true;
 		}
 
 		// 到目前为止的初期设定
@@ -383,10 +383,10 @@ public class L1SkillUse {
 		}
 
 		// 技能发动 目标清单判定
-		makeTargetList();
+		this.makeTargetList();
 
 		// 目标列表为空&&使用者为NPC
-		if (_targetList.isEmpty() && (_user instanceof L1NpcInstance)) {
+		if (this._targetList.isEmpty() && (this._user instanceof L1NpcInstance)) {
 			checkedResult = false;
 		}
 		// 预先检查结果
@@ -399,7 +399,7 @@ public class L1SkillUse {
 	 * @return
 	 */
 	public int getLeverage() {
-		return _leverage;
+		return this._leverage;
 	}
 
 	/**
@@ -408,10 +408,10 @@ public class L1SkillUse {
 	 * @return
 	 */
 	public int getSkillArea() {
-		if (_skillArea == 0) {
-			return _skill.getArea();
+		if (this._skillArea == 0) {
+			return this._skill.getArea();
 		}
-		return _skillArea;
+		return this._skillArea;
 	}
 
 	/**
@@ -420,10 +420,10 @@ public class L1SkillUse {
 	 * @return
 	 */
 	public int getSkillRanged() {
-		if (_skillRanged == 0) {
-			return _skill.getRanged();
+		if (this._skillRanged == 0) {
+			return this._skill.getRanged();
 		}
-		return _skillRanged;
+		return this._skillRanged;
 	}
 
 	/**
@@ -448,7 +448,7 @@ public class L1SkillUse {
 	 */
 	public void handleCommands(final L1PcInstance player, final int skillId, final int targetId, final int x, final int y, final String message, final int timeSecs, final int type) {
 		final L1Character attacker = null;
-		handleCommands(player, skillId, targetId, x, y, message, timeSecs, type, attacker);
+		this.handleCommands(player, skillId, targetId, x, y, message, timeSecs, type, attacker);
 	}
 
 	/**
@@ -477,47 +477,47 @@ public class L1SkillUse {
 
 		try {
 			// 提前检查？
-			if (!isCheckedUseSkill()) {
-				final boolean isUseSkill = checkUseSkill(player, skillId, targetId, x, y, message, timeSecs, type, attacker);
+			if (!this.isCheckedUseSkill()) {
+				final boolean isUseSkill = this.checkUseSkill(player, skillId, targetId, x, y, message, timeSecs, type, attacker);
 
 				// 不能使用技能
 				if (!isUseSkill) {
-					failSkill(); // 做失败处理
+					this.failSkill(); // 做失败处理
 					return;
 				}
 			}
 
 			switch (type) {
 				case TYPE_NORMAL: // 魔法咏唱时
-					if (!_isGlanceCheckFail || (getSkillArea() > 0) || _skill.getTarget().equals("none")) {
-						runSkill();
-						useConsume();
-						sendGrfx(true);
-						sendFailMessageHandle();
-						setDelay();
+					if (!this._isGlanceCheckFail || (this.getSkillArea() > 0) || this._skill.getTarget().equals("none")) {
+						this.runSkill();
+						this.useConsume();
+						this.sendGrfx(true);
+						this.sendFailMessageHandle();
+						this.setDelay();
 					}
 					break;
 
 				case TYPE_LOGIN: // 登陆时（不消耗材料与HPMP、没有图形）
-					runSkill();
+					this.runSkill();
 					break;
 
 				case TYPE_SPELLSC: // 使用魔法卷轴时 (不消耗材料与HPMP)
-					runSkill();
-					sendGrfx(true);
+					this.runSkill();
+					this.sendGrfx(true);
 					break;
 
 				case TYPE_GMBUFF: // GMBUFF使用时（不消耗材料与HPMP、没有魔法动作）
-					runSkill();
-					sendGrfx(false);
+					this.runSkill();
+					this.sendGrfx(false);
 					break;
 
 				case TYPE_NPCBUFF: // NPCBUFF使用时（不消耗材料与HPMP）
-					runSkill();
-					sendGrfx(true);
+					this.runSkill();
+					this.sendGrfx(true);
 					break;
 			}
-			setCheckedUseSkill(false);
+			this.setCheckedUseSkill(false);
 		}
 		catch (final Exception e) {
 			_log.log(Level.SEVERE, "", e);
@@ -530,7 +530,7 @@ public class L1SkillUse {
 	 * @param i
 	 */
 	public void setLeverage(final int i) {
-		_leverage = i;
+		this._leverage = i;
 	}
 
 	/**
@@ -539,7 +539,7 @@ public class L1SkillUse {
 	 * @param i
 	 */
 	public void setSkillArea(final int i) {
-		_skillArea = i;
+		this._skillArea = i;
 	}
 
 	/**
@@ -548,70 +548,70 @@ public class L1SkillUse {
 	 * @param i
 	 */
 	public void setSkillRanged(final int i) {
-		_skillRanged = i;
+		this._skillRanged = i;
 	}
 
 	/**
 	 * 使用相应技能要对玩家人物或者使用的相应道具追加效果时间
 	 */
 	private void addMagicList(final L1Character cha, final boolean repetition) {
-		if (_skillTime == 0) {
-			_getBuffDuration = _skill.getBuffDuration() * 1000; // 效果时间
-			if (_skill.getBuffDuration() == 0) {
-				if (_skillId == INVISIBILITY) { // 隐身术
+		if (this._skillTime == 0) {
+			this._getBuffDuration = this._skill.getBuffDuration() * 1000; // 效果时间
+			if (this._skill.getBuffDuration() == 0) {
+				if (this._skillId == INVISIBILITY) { // 隐身术
 					cha.setSkillEffect(INVISIBILITY, 0);
 				}
 				return;
 			}
 		}
 		else {
-			_getBuffDuration = _skillTime * 1000; // 如果参数time非0、设定效果时间
+			this._getBuffDuration = this._skillTime * 1000; // 如果参数time非0、设定效果时间
 		}
 
-		if (_skillId == SHOCK_STUN) {
-			_getBuffDuration = _shockStunDuration;
+		if (this._skillId == SHOCK_STUN) {
+			this._getBuffDuration = this._shockStunDuration;
 		}
-		if (_skillId == CURSE_POISON) { // 毒咒効果移至L1Poison处理。
+		if (this._skillId == CURSE_POISON) { // 毒咒効果移至L1Poison处理。
 			return;
 		}
-		if ((_skillId == CURSE_PARALYZE) || (_skillId == CURSE_PARALYZE2)) { // 木乃伊的咀咒、石化持续时间移至
-																				// L1CurseParalysis
-																				// 处理。
+		if ((this._skillId == CURSE_PARALYZE) || (this._skillId == CURSE_PARALYZE2)) { // 木乃伊的咀咒、石化持续时间移至
+			// L1CurseParalysis
+			// 处理。
 			return;
 		}
-		if (_skillId == SHAPE_CHANGE) { // 变形术持续时间移至 L1PolyMorph 处理。
+		if (this._skillId == SHAPE_CHANGE) { // 变形术持续时间移至 L1PolyMorph 处理。
 			return;
 		}
-		if ((_skillId == BLESSED_ARMOR) || (_skillId == HOLY_WEAPON // 武器・防具に效果がある处理はL1ItemInstanceに移让。
-				) || (_skillId == ENCHANT_WEAPON) || (_skillId == BLESS_WEAPON) || (_skillId == SHADOW_FANG)) {
+		if ((this._skillId == BLESSED_ARMOR) || (this._skillId == HOLY_WEAPON // 武器・防具に效果がある处理はL1ItemInstanceに移让。
+				) || (this._skillId == ENCHANT_WEAPON) || (this._skillId == BLESS_WEAPON) || (this._skillId == SHADOW_FANG)) {
 			return;
 		}
-		if (((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH) || (_skillId == ICE_LANCE_COCKATRICE) || (_skillId == ICE_LANCE_BASILISK)) && !_isFreeze) { // 冻结失败
+		if (((this._skillId == ICE_LANCE) || (this._skillId == FREEZING_BLIZZARD) || (this._skillId == FREEZING_BREATH) || (this._skillId == ICE_LANCE_COCKATRICE) || (this._skillId == ICE_LANCE_BASILISK)) && !this._isFreeze) { // 冻结失败
 			return;
 		}
-		if ((_skillId == AWAKEN_ANTHARAS) || (_skillId == AWAKEN_FAFURION) || (_skillId == AWAKEN_VALAKAS)) { // 觉醒の效果处理はL1Awakeに移让。
+		if ((this._skillId == AWAKEN_ANTHARAS) || (this._skillId == AWAKEN_FAFURION) || (this._skillId == AWAKEN_VALAKAS)) { // 觉醒の效果处理はL1Awakeに移让。
 			return;
 		}
 		// 骷髅毁坏持续时间另外处理
-		if ((_skillId == BONE_BREAK) || (_skillId == CONFUSION)) {
+		if ((this._skillId == BONE_BREAK) || (this._skillId == CONFUSION)) {
 			return;
 		}
-		cha.setSkillEffect(_skillId, _getBuffDuration);
+		cha.setSkillEffect(this._skillId, this._getBuffDuration);
 
-		if ((_skillId == ELEMENTAL_FALL_DOWN) && repetition) { // 弱化属性重复施放
-			if (_skillTime == 0) {
-				_getBuffIconDuration = _skill.getBuffDuration(); // 效果时间
+		if ((this._skillId == ELEMENTAL_FALL_DOWN) && repetition) { // 弱化属性重复施放
+			if (this._skillTime == 0) {
+				this._getBuffIconDuration = this._skill.getBuffDuration(); // 效果时间
 			}
 			else {
-				_getBuffIconDuration = _skillTime;
+				this._getBuffIconDuration = this._skillTime;
 			}
-			_target.removeSkillEffect(ELEMENTAL_FALL_DOWN);
-			runSkill();
+			this._target.removeSkillEffect(ELEMENTAL_FALL_DOWN);
+			this.runSkill();
 			return;
 		}
 		if ((cha instanceof L1PcInstance) && repetition) { // 对象がPCで既にスキルが重复している场合
 			final L1PcInstance pc = (L1PcInstance) cha;
-			sendIcon(pc);
+			this.sendIcon(pc);
 		}
 	}
 
@@ -644,8 +644,8 @@ public class L1SkillUse {
 
 		for (final int[] skills : repeatedSkills) {
 			for (final int id : skills) {
-				if (id == _skillId) {
-					stopSkillList(cha, skills);
+				if (id == this._skillId) {
+					this.stopSkillList(cha, skills);
 				}
 			}
 		}
@@ -674,28 +674,28 @@ public class L1SkillUse {
 	 * 技能失败处理(仅PC)
 	 */
 	private void failSkill() {
-		setCheckedUseSkill(false);
-		switch (_skillId) {
+		this.setCheckedUseSkill(false);
+		switch (this._skillId) {
 			// 瞬移技能
 			case TELEPORT:
 			case MASS_TELEPORT:
 			case TELEPORT_TO_MATHER:
 				// 解除传送锁定状态
-				_player.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
+				this._player.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
 				break;
 		}
 	}
 
 	/** 精灵魔法的属性与使用者的属性不一致 */
 	private boolean isAttrAgrees() {
-		final int magicattr = _skill.getAttr();
-		if (_user instanceof L1NpcInstance) { // NPC使用的任何场合都OK
+		final int magicattr = this._skill.getAttr();
+		if (this._user instanceof L1NpcInstance) { // NPC使用的任何场合都OK
 			return true;
 		}
 
-		if ((_skill.getSkillLevel() >= 17) && (_skill.getSkillLevel() <= 22) && (magicattr != 0 // 精灵魔法、无属性魔法、
-				) && (magicattr != _player.getElfAttr() // 使用者魔法的属性不一致。
-				) && !_player.isGm()) { // GM例外
+		if ((this._skill.getSkillLevel() >= 17) && (this._skill.getSkillLevel() <= 22) && (magicattr != 0 // 精灵魔法、无属性魔法、
+				) && (magicattr != this._player.getElfAttr() // 使用者魔法的属性不一致。
+				) && !this._player.isGm()) { // GM例外
 			return false;
 		}
 		return true;
@@ -707,7 +707,7 @@ public class L1SkillUse {
 	 * @return
 	 */
 	private boolean isCheckedUseSkill() {
-		return _checkedUseSkill;
+		return this._checkedUseSkill;
 	}
 
 	/**
@@ -716,56 +716,56 @@ public class L1SkillUse {
 	 * @return
 	 */
 	private boolean isHPMPConsume() {
-		if (_mpConsume == 0) {
-			_mpConsume = _skill.getMpConsume();
+		if (this._mpConsume == 0) {
+			this._mpConsume = this._skill.getMpConsume();
 		}
-		_hpConsume = _skill.getHpConsume();
+		this._hpConsume = this._skill.getHpConsume();
 		int currentMp = 0;
 		int currentHp = 0;
 
-		if (_user instanceof L1NpcInstance) {
-			currentMp = _npc.getCurrentMp();
-			currentHp = _npc.getCurrentHp();
+		if (this._user instanceof L1NpcInstance) {
+			currentMp = this._npc.getCurrentMp();
+			currentHp = this._npc.getCurrentHp();
 		}
 		else {
-			currentMp = _player.getCurrentMp();
-			currentHp = _player.getCurrentHp();
+			currentMp = this._player.getCurrentMp();
+			currentHp = this._player.getCurrentHp();
 
 			// 智力的MP减免
-			if ((_player.getInt() > 12) && (_skillId > HOLY_WEAPON) && (_skillId <= FREEZING_BLIZZARD)) { // LV2以上
-				_mpConsume--;
+			if ((this._player.getInt() > 12) && (this._skillId > HOLY_WEAPON) && (this._skillId <= FREEZING_BLIZZARD)) { // LV2以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 13) && (_skillId > STALAC) && (_skillId <= FREEZING_BLIZZARD)) { // LV3以上
-				_mpConsume--;
+			if ((this._player.getInt() > 13) && (this._skillId > STALAC) && (this._skillId <= FREEZING_BLIZZARD)) { // LV3以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 14) && (_skillId > WEAK_ELEMENTAL) && (_skillId <= FREEZING_BLIZZARD)) { // LV4以上
-				_mpConsume--;
+			if ((this._player.getInt() > 14) && (this._skillId > WEAK_ELEMENTAL) && (this._skillId <= FREEZING_BLIZZARD)) { // LV4以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 15) && (_skillId > MEDITATION) && (_skillId <= FREEZING_BLIZZARD)) { // LV5以上
-				_mpConsume--;
+			if ((this._player.getInt() > 15) && (this._skillId > MEDITATION) && (this._skillId <= FREEZING_BLIZZARD)) { // LV5以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 16) && (_skillId > DARKNESS) && (_skillId <= FREEZING_BLIZZARD)) { // LV6以上
-				_mpConsume--;
+			if ((this._player.getInt() > 16) && (this._skillId > DARKNESS) && (this._skillId <= FREEZING_BLIZZARD)) { // LV6以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 17) && (_skillId > BLESS_WEAPON) && (_skillId <= FREEZING_BLIZZARD)) { // LV7以上
-				_mpConsume--;
+			if ((this._player.getInt() > 17) && (this._skillId > BLESS_WEAPON) && (this._skillId <= FREEZING_BLIZZARD)) { // LV7以上
+				this._mpConsume--;
 			}
-			if ((_player.getInt() > 18) && (_skillId > DISEASE) && (_skillId <= FREEZING_BLIZZARD)) { // LV8以上
-				_mpConsume--;
+			if ((this._player.getInt() > 18) && (this._skillId > DISEASE) && (this._skillId <= FREEZING_BLIZZARD)) { // LV8以上
+				this._mpConsume--;
 			}
 
 			// 骑士智力减免
-			if ((_player.getInt() > 12) && (_skillId >= SHOCK_STUN) && (_skillId <= COUNTER_BARRIER)) {
-				if (_player.getInt() <= 17) {
-					_mpConsume -= (_player.getInt() - 12);
+			if ((this._player.getInt() > 12) && (this._skillId >= SHOCK_STUN) && (this._skillId <= COUNTER_BARRIER)) {
+				if (this._player.getInt() <= 17) {
+					this._mpConsume -= (this._player.getInt() - 12);
 				}
 				else {
-					_mpConsume -= 5; // int > 18
-					if (_mpConsume > 1) { // 法术还可以减免
-						final byte extraInt = (byte) (_player.getInt() - 17);
+					this._mpConsume -= 5; // int > 18
+					if (this._mpConsume > 1) { // 法术还可以减免
+						final byte extraInt = (byte) (this._player.getInt() - 17);
 						// 减免公式
 						for (int first = 1, range = 2; first <= extraInt; first += range, range++) {
-							_mpConsume--;
+							this._mpConsume--;
 						}
 					}
 				}
@@ -773,56 +773,56 @@ public class L1SkillUse {
 			}
 
 			// 装备MP减免 一次只需判断一个
-			if ((_skillId == PHYSICAL_ENCHANT_DEX) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法头盔使用通畅气脉术
-				_mpConsume /= 2;
+			if ((this._skillId == PHYSICAL_ENCHANT_DEX) && this._player.getInventory().checkEquipped(20013)) { // 敏捷魔法头盔使用通畅气脉术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法头盔使用加速术
-				_mpConsume /= 2;
+			else if ((this._skillId == HASTE) && this._player.getInventory().checkEquipped(20013)) { // 敏捷魔法头盔使用加速术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == HEAL) && _player.getInventory().checkEquipped(20014)) { // 治愈魔法头盔使用初级治愈术
-				_mpConsume /= 2;
+			else if ((this._skillId == HEAL) && this._player.getInventory().checkEquipped(20014)) { // 治愈魔法头盔使用初级治愈术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == EXTRA_HEAL) && _player.getInventory().checkEquipped(20014)) { // 治愈魔法头盔使用中级治愈术
-				_mpConsume /= 2;
+			else if ((this._skillId == EXTRA_HEAL) && this._player.getInventory().checkEquipped(20014)) { // 治愈魔法头盔使用中级治愈术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == ENCHANT_WEAPON) && _player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用拟似魔法武器
-				_mpConsume /= 2;
+			else if ((this._skillId == ENCHANT_WEAPON) && this._player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用拟似魔法武器
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == DETECTION) && _player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用无所遁形术
-				_mpConsume /= 2;
+			else if ((this._skillId == DETECTION) && this._player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用无所遁形术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == PHYSICAL_ENCHANT_STR) && _player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用体魄强健术
-				_mpConsume /= 2;
+			else if ((this._skillId == PHYSICAL_ENCHANT_STR) && this._player.getInventory().checkEquipped(20015)) { // 力量魔法头盔使用体魄强健术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20008)) { // 小型风之头盔使用加速术
-				_mpConsume /= 2;
+			else if ((this._skillId == HASTE) && this._player.getInventory().checkEquipped(20008)) { // 小型风之头盔使用加速术
+				this._mpConsume /= 2;
 			}
-			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20023)) { // 风之头盔使用加速术
-				_mpConsume = 25;
+			else if ((this._skillId == HASTE) && this._player.getInventory().checkEquipped(20023)) { // 风之头盔使用加速术
+				this._mpConsume = 25;
 			}
-			else if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // 风之头盔使用强力加速术
-				_mpConsume /= 2;
+			else if ((this._skillId == GREATER_HASTE) && this._player.getInventory().checkEquipped(20023)) { // 风之头盔使用强力加速术
+				this._mpConsume /= 2;
 			}
 
 			// 初始能力减免
-			if (_player.getOriginalMagicConsumeReduction() > 0) {
-				_mpConsume -= _player.getOriginalMagicConsumeReduction();
+			if (this._player.getOriginalMagicConsumeReduction() > 0) {
+				this._mpConsume -= this._player.getOriginalMagicConsumeReduction();
 			}
 
-			if (0 < _skill.getMpConsume()) {
-				_mpConsume = Math.max(_mpConsume, 1); // 最小值 1
+			if (0 < this._skill.getMpConsume()) {
+				this._mpConsume = Math.max(this._mpConsume, 1); // 最小值 1
 			}
 		}
 
-		if (currentHp < _hpConsume + 1) {
-			if (_user instanceof L1PcInstance) {
-				_player.sendPackets(new S_ServerMessage(279)); // \f1因体力不足而无法使用魔法。
+		if (currentHp < this._hpConsume + 1) {
+			if (this._user instanceof L1PcInstance) {
+				this._player.sendPackets(new S_ServerMessage(279)); // \f1因体力不足而无法使用魔法。
 			}
 			return false;
 		}
-		else if (currentMp < _mpConsume) {
-			if (_user instanceof L1PcInstance) {
-				_player.sendPackets(new S_ServerMessage(278)); // \f1因魔力不足而无法使用魔法。
+		else if (currentMp < this._mpConsume) {
+			if (this._user instanceof L1PcInstance) {
+				this._player.sendPackets(new S_ServerMessage(278)); // \f1因魔力不足而无法使用魔法。
 			}
 			return false;
 		}
@@ -837,7 +837,7 @@ public class L1SkillUse {
 	 */
 	private boolean isInvisUsableSkill() {
 		for (final int skillId : CAST_WITH_INVIS) {
-			if (skillId == _skillId) {
+			if (skillId == this._skillId) {
 				return true;
 			}
 		}
@@ -851,8 +851,8 @@ public class L1SkillUse {
 	 */
 	private boolean isItemConsume() {
 
-		final int itemConsume = _skill.getItemConsumeId();
-		final int itemConsumeCount = _skill.getItemConsumeCount();
+		final int itemConsume = this._skill.getItemConsumeId();
+		final int itemConsumeCount = this._skill.getItemConsumeCount();
 
 		// 施放魔法不需要材料
 		if (itemConsume == 0) {
@@ -860,7 +860,7 @@ public class L1SkillUse {
 		}
 
 		// 必要材料不足。
-		if (!_player.getInventory().checkItem(itemConsume, itemConsumeCount)) {
+		if (!this._player.getInventory().checkItem(itemConsume, itemConsumeCount)) {
 			return false;
 		}
 
@@ -875,10 +875,10 @@ public class L1SkillUse {
 	private boolean isNormalSkillUsable() {
 
 		// 检查PC使用技能的场合
-		if (_user instanceof L1PcInstance) {
+		if (this._user instanceof L1PcInstance) {
 
 			// 取得使用者 (PC)
-			final L1PcInstance pc = (L1PcInstance) _user;
+			final L1PcInstance pc = (L1PcInstance) this._user;
 
 			// 传送中
 			if (pc.isTeleport()) {
@@ -891,7 +891,7 @@ public class L1SkillUse {
 			}
 
 			// 隐身中无法使用技能
-			if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) {
+			if ((pc.isInvisble() || pc.isInvisDelay()) && !this.isInvisUsableSkill()) {
 				return false;
 			}
 
@@ -914,18 +914,18 @@ public class L1SkillUse {
 			}
 
 			// 精灵魔法、属性不一致不能使用。
-			if (!isAttrAgrees()) {
+			if (!this.isAttrAgrees()) {
 				return false;
 			}
 
 			// 精灵没有定系无法使用单属性防御
-			if ((_skillId == ELEMENTAL_PROTECTION) && (pc.getElfAttr() == 0)) {
+			if ((this._skillId == ELEMENTAL_PROTECTION) && (pc.getElfAttr() == 0)) {
 				pc.sendPackets(new S_ServerMessage(280)); // \f1施咒失败。
 				return false;
 			}
 
 			// 水中无法使用火属性魔法
-			if (pc.getMap().isUnderwater() && (_skill.getAttr() == 2)) {
+			if (pc.getMap().isUnderwater() && (this._skill.getAttr() == 2)) {
 				pc.sendPackets(new S_ServerMessage(280)); // \f1施咒失败。
 				return false;
 			}
@@ -942,7 +942,7 @@ public class L1SkillUse {
 			}
 
 			// 正义值小于500不能使用 究极光裂术
-			if ((_skillId == DISINTEGRATE) && (pc.getLawful() < 500)) {
+			if ((this._skillId == DISINTEGRATE) && (pc.getLawful() < 500)) {
 				// 未确认得到这个信息
 				pc.sendPackets(new S_ServerMessage(352, "$967")); // 若要使用这个法术，属性必须成为
 																	// (正义)。
@@ -950,11 +950,11 @@ public class L1SkillUse {
 			}
 
 			// 在同样的立方体效果范围中无法再次使用
-			if ((_skillId == CUBE_IGNITION // 幻术士魔法 (立方：燃烧)
+			if ((this._skillId == CUBE_IGNITION // 幻术士魔法 (立方：燃烧)
 					)
-					|| (_skillId == CUBE_QUAKE // 幻术士魔法 (立方：地裂)
-					) || (_skillId == CUBE_SHOCK // 幻术士魔法 (立方：冲击)
-					) || (_skillId == CUBE_BALANCE // 幻术士魔法 (立方：和谐)
+					|| (this._skillId == CUBE_QUAKE // 幻术士魔法 (立方：地裂)
+					) || (this._skillId == CUBE_SHOCK // 幻术士魔法 (立方：冲击)
+					) || (this._skillId == CUBE_BALANCE // 幻术士魔法 (立方：和谐)
 					)) {
 
 				// 附近有无立方体
@@ -967,7 +967,7 @@ public class L1SkillUse {
 					if (obj instanceof L1EffectInstance) {
 						final L1EffectInstance effect = (L1EffectInstance) obj;
 						gfxId = effect.getGfxId();
-						if (((_skillId == CUBE_IGNITION) && (gfxId == 6706)) || ((_skillId == CUBE_QUAKE) && (gfxId == 6712)) || ((_skillId == CUBE_SHOCK) && (gfxId == 6718)) || ((_skillId == CUBE_BALANCE) && (gfxId == 6724))) {
+						if (((this._skillId == CUBE_IGNITION) && (gfxId == 6706)) || ((this._skillId == CUBE_QUAKE) && (gfxId == 6712)) || ((this._skillId == CUBE_SHOCK) && (gfxId == 6718)) || ((this._skillId == CUBE_BALANCE) && (gfxId == 6724))) {
 							isNearSameCube = true;
 							break;
 						}
@@ -980,32 +980,32 @@ public class L1SkillUse {
 			}
 
 			// 觉醒状态 - 非觉醒技能无法使用
-			if (((pc.getAwakeSkillId() == AWAKEN_ANTHARAS) && (_skillId != AWAKEN_ANTHARAS)) || ((pc.getAwakeSkillId() == AWAKEN_FAFURION) && (_skillId != AWAKEN_FAFURION))
-					|| (((pc.getAwakeSkillId() == AWAKEN_VALAKAS) && (_skillId != AWAKEN_VALAKAS)) && (_skillId != MAGMA_BREATH) && (_skillId != SHOCK_SKIN) && (_skillId != FREEZING_BREATH))) {
+			if (((pc.getAwakeSkillId() == AWAKEN_ANTHARAS) && (this._skillId != AWAKEN_ANTHARAS)) || ((pc.getAwakeSkillId() == AWAKEN_FAFURION) && (this._skillId != AWAKEN_FAFURION))
+					|| (((pc.getAwakeSkillId() == AWAKEN_VALAKAS) && (this._skillId != AWAKEN_VALAKAS)) && (this._skillId != MAGMA_BREATH) && (this._skillId != SHOCK_SKIN) && (this._skillId != FREEZING_BREATH))) {
 				pc.sendPackets(new S_ServerMessage(1385)); // 目前状态中无法使用觉醒魔法。
 				return false;
 			}
 
 			// 法术消耗道具判断。
-			if ((isItemConsume() == false) && !_player.isGm()) {
-				_player.sendPackets(new S_ServerMessage(299)); // \f1施放魔法所需材料不足。
+			if ((this.isItemConsume() == false) && !this._player.isGm()) {
+				this._player.sendPackets(new S_ServerMessage(299)); // \f1施放魔法所需材料不足。
 				return false;
 			}
 		}
 
 		// 检查使用者技能对NPC的情况
-		else if (_user instanceof L1NpcInstance) {
+		else if (this._user instanceof L1NpcInstance) {
 
 			// 禁言状态无法使用
-			if (_user.hasSkillEffect(SILENCE)) {
+			if (this._user.hasSkillEffect(SILENCE)) {
 				// NPC禁言状态只能有1回的效果。(只能使用一次)
-				_user.removeSkillEffect(SILENCE);
+				this._user.removeSkillEffect(SILENCE);
 				return false;
 			}
 		}
 
 		// PC、NPC共通检查HP、MP是否足够
-		if (!isHPMPConsume()) { // 花费的HP、MP计算
+		if (!this.isHPMPConsume()) { // 花费的HP、MP计算
 			return false;
 		}
 		return true;
@@ -1018,11 +1018,11 @@ public class L1SkillUse {
 	 * @return
 	 */
 	private boolean isPcSummonPet(final L1Character cha) {
-		if (_calcType == PC_PC) { // 对象为PC
+		if (this._calcType == PC_PC) { // 对象为PC
 			return true;
 		}
 
-		if (_calcType == PC_NPC) {
+		if (this._calcType == PC_NPC) {
 			if (cha instanceof L1SummonInstance) { // 对象召唤物
 				final L1SummonInstance summon = (L1SummonInstance) cha;
 				if (summon.isExsistMaster()) { // 有主人
@@ -1044,7 +1044,7 @@ public class L1SkillUse {
 	private boolean isSpellScrollUsable() {
 
 		// 要使用魔法卷轴的PC
-		final L1PcInstance pc = (L1PcInstance) _user;
+		final L1PcInstance pc = (L1PcInstance) this._user;
 
 		// 传送中
 		if (pc.isTeleport()) {
@@ -1057,7 +1057,7 @@ public class L1SkillUse {
 		}
 
 		// 隐身中无法使用
-		if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) {
+		if ((pc.isInvisble() || pc.isInvisDelay()) && !this.isInvisUsableSkill()) {
 			return false;
 		}
 
@@ -1090,7 +1090,7 @@ public class L1SkillUse {
 		boolean _flg = false;
 
 		// NPC 对 PC 目标为PC或PC的宠物召唤物
-		if ((_calcType == NPC_PC) && ((cha instanceof L1PcInstance) || (cha instanceof L1PetInstance) || (cha instanceof L1SummonInstance))) {
+		if ((this._calcType == NPC_PC) && ((cha instanceof L1PcInstance) || (cha instanceof L1PetInstance) || (cha instanceof L1SummonInstance))) {
 			_flg = true;
 		}
 
@@ -1102,60 +1102,60 @@ public class L1SkillUse {
 		}
 
 		// 只能对魔法娃娃释放加速术
-		if ((cha instanceof L1DollInstance) && (_skillId != HASTE)) {
+		if ((cha instanceof L1DollInstance) && (this._skillId != HASTE)) {
 			return false;
 		}
 
 		// 元のターゲットがPet、Summon以外のNPCの场合、PC、Pet、Summonは对象外
-		if ((_calcType == PC_NPC) && (_target instanceof L1NpcInstance) && !(_target instanceof L1PetInstance) && !(_target instanceof L1SummonInstance) && ((cha instanceof L1PetInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PcInstance))) {
+		if ((this._calcType == PC_NPC) && (this._target instanceof L1NpcInstance) && !(this._target instanceof L1PetInstance) && !(this._target instanceof L1SummonInstance) && ((cha instanceof L1PetInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PcInstance))) {
 			return false;
 		}
 
 		// 元のターゲットがガード以外のNPCの场合、ガードは对象外
-		if ((_calcType == PC_NPC) && (_target instanceof L1NpcInstance) && !(_target instanceof L1GuardInstance) && (cha instanceof L1GuardInstance)) {
+		if ((this._calcType == PC_NPC) && (this._target instanceof L1NpcInstance) && !(this._target instanceof L1GuardInstance) && (cha instanceof L1GuardInstance)) {
 			return false;
 		}
 
 		// NPC对PCでターゲットがモンスターの场合ターゲットではない。
-		if ((_skill.getTarget().equals("attack") || (_skill.getType() == L1Skills.TYPE_ATTACK)) && (_calcType == NPC_PC) && !(cha instanceof L1PetInstance) && !(cha instanceof L1SummonInstance) && !(cha instanceof L1PcInstance)) {
+		if ((this._skill.getTarget().equals("attack") || (this._skill.getType() == L1Skills.TYPE_ATTACK)) && (this._calcType == NPC_PC) && !(cha instanceof L1PetInstance) && !(cha instanceof L1SummonInstance) && !(cha instanceof L1PcInstance)) {
 			return false;
 		}
 
 		// NPC对NPCで使用者がMOBで、ターゲットがMOBの场合ターゲットではない。
-		if ((_skill.getTarget().equals("attack") || (_skill.getType() == L1Skills.TYPE_ATTACK)) && (_calcType == NPC_NPC) && (_user instanceof L1MonsterInstance) && (cha instanceof L1MonsterInstance)) {
+		if ((this._skill.getTarget().equals("attack") || (this._skill.getType() == L1Skills.TYPE_ATTACK)) && (this._calcType == NPC_NPC) && (this._user instanceof L1MonsterInstance) && (cha instanceof L1MonsterInstance)) {
 			return false;
 		}
 
 		// 无方向范围攻击魔法 不能攻击NPC对象外
-		if (_skill.getTarget().equals("none")
-				&& (_skill.getType() == L1Skills.TYPE_ATTACK)
+		if (this._skill.getTarget().equals("none")
+				&& (this._skill.getType() == L1Skills.TYPE_ATTACK)
 				&& ((cha instanceof L1AuctionBoardInstance) || (cha instanceof L1BoardInstance) || (cha instanceof L1CrownInstance) || (cha instanceof L1DwarfInstance) || (cha instanceof L1EffectInstance) || (cha instanceof L1FieldObjectInstance)
 						|| (cha instanceof L1FurnitureInstance) || (cha instanceof L1HousekeeperInstance) || (cha instanceof L1MerchantInstance) || (cha instanceof L1TeleporterInstance))) {
 			return false;
 		}
 
 		// 攻击型魔法无法攻击自己
-		if ((_skill.getType() == L1Skills.TYPE_ATTACK) && (cha.getId() == _user.getId())) {
+		if ((this._skill.getType() == L1Skills.TYPE_ATTACK) && (cha.getId() == this._user.getId())) {
 			return false;
 		}
 
 		// 体力回复术判断施法者不补血
-		if ((cha.getId() == _user.getId()) && (_skillId == HEAL_ALL)) {
+		if ((cha.getId() == this._user.getId()) && (this._skillId == HEAL_ALL)) {
 			return false;
 		}
 
-		if ((((_skill.getTargetTo() & L1Skills.TARGET_TO_PC) == L1Skills.TARGET_TO_PC) || ((_skill.getTargetTo() & L1Skills.TARGET_TO_CLAN) == L1Skills.TARGET_TO_CLAN) || ((_skill.getTargetTo() & L1Skills.TARGET_TO_PARTY) == L1Skills.TARGET_TO_PARTY))
-				&& (cha.getId() == _user.getId()) && (_skillId != HEAL_ALL)) {
+		if ((((this._skill.getTargetTo() & L1Skills.TARGET_TO_PC) == L1Skills.TARGET_TO_PC) || ((this._skill.getTargetTo() & L1Skills.TARGET_TO_CLAN) == L1Skills.TARGET_TO_CLAN) || ((this._skill.getTargetTo() & L1Skills.TARGET_TO_PARTY) == L1Skills.TARGET_TO_PARTY))
+				&& (cha.getId() == this._user.getId()) && (this._skillId != HEAL_ALL)) {
 			return true; // ターゲットがパーティーかクラン员のものは自分に效果がある。（ただし、ヒールオールは除外）
 		}
 
 		// 技能使用者为PC、不是PK模式、自己召唤的宠物以外
-		if ((_user instanceof L1PcInstance) && (_skill.getTarget().equals("attack") || (_skill.getType() == L1Skills.TYPE_ATTACK)) && (_isPK == false)) {
+		if ((this._user instanceof L1PcInstance) && (this._skill.getTarget().equals("attack") || (this._skill.getType() == L1Skills.TYPE_ATTACK)) && (this._isPK == false)) {
 			// 目标为召唤物
 			if (cha instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) cha;
 				// 自己的召唤物
-				if (_player.getId() == summon.getMaster().getId()) {
+				if (this._player.getId() == summon.getMaster().getId()) {
 					return false;
 				}
 			}
@@ -1163,30 +1163,30 @@ public class L1SkillUse {
 			else if (cha instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) cha;
 				// 自己的宠物
-				if (_player.getId() == pet.getMaster().getId()) {
+				if (this._player.getId() == pet.getMaster().getId()) {
 					return false;
 				}
 			}
 		}
 
-		if ((_skill.getTarget().equals("attack") || (_skill.getType() == L1Skills.TYPE_ATTACK))
+		if ((this._skill.getTarget().equals("attack") || (this._skill.getType() == L1Skills.TYPE_ATTACK))
 		// 目标不是怪物
 				&& !(cha instanceof L1MonsterInstance)
 				// 不是PK状态
-				&& (_isPK == false)
+				&& (this._isPK == false)
 				// 目标是人物
-				&& (_target instanceof L1PcInstance)) {
+				&& (this._target instanceof L1PcInstance)) {
 			final L1PcInstance enemy = (L1PcInstance) cha;
 			// 强力无所遁形术
-			if ((_skillId == COUNTER_DETECTION) && (enemy.getZoneType() != 1) && (cha.hasSkillEffect(INVISIBILITY) || cha.hasSkillEffect(BLIND_HIDING))) {
+			if ((this._skillId == COUNTER_DETECTION) && (enemy.getZoneType() != 1) && (cha.hasSkillEffect(INVISIBILITY) || cha.hasSkillEffect(BLIND_HIDING))) {
 				return true; // 隐身术或暗隐术中
 			}
-			if ((_player.getClanid() != 0) && (enemy.getClanid() != 0)) { // 有血盟
+			if ((this._player.getClanid() != 0) && (enemy.getClanid() != 0)) { // 有血盟
 				// 取得全部战争列表
 				for (final L1War war : L1World.getInstance().getWarList()) {
-					if (war.CheckClanInWar(_player.getClanname())) { // 自己在盟战中
+					if (war.CheckClanInWar(this._player.getClanname())) { // 自己在盟战中
 						if (war.CheckClanInSameWar( // 俩血盟在同一场战争中
-								_player.getClanname(), enemy.getClanname())) {
+								this._player.getClanname(), enemy.getClanname())) {
 							if (L1CastleLocation.checkInAllWarArea(enemy.getX(), enemy.getY(), enemy.getMapId())) {
 								return true;
 							}
@@ -1197,42 +1197,42 @@ public class L1SkillUse {
 			return false; // 攻击スキルでPKモードじゃない场合
 		}
 
-		if ((_user.glanceCheck(cha.getX(), cha.getY()) == false) && (_skill.isThrough() == false)) {
+		if ((this._user.glanceCheck(cha.getX(), cha.getY()) == false) && (this._skill.isThrough() == false)) {
 			// 变形术、复活术判断有无障碍物
-			if (!((_skill.getType() == L1Skills.TYPE_CHANGE) || (_skill.getType() == L1Skills.TYPE_RESTORE))) {
-				_isGlanceCheckFail = true;
+			if (!((this._skill.getType() == L1Skills.TYPE_CHANGE) || (this._skill.getType() == L1Skills.TYPE_RESTORE))) {
+				this._isGlanceCheckFail = true;
 				return false; // 直线距离上有障碍物
 			}
 		}
 
 		if (cha.hasSkillEffect(ICE_LANCE) || cha.hasSkillEffect(FREEZING_BLIZZARD) || cha.hasSkillEffect(FREEZING_BREATH) || cha.hasSkillEffect(ICE_LANCE_COCKATRICE) || cha.hasSkillEffect(ICE_LANCE_BASILISK)) {
-			if ((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH) || (_skillId == ICE_LANCE_COCKATRICE) || (_skillId == ICE_LANCE_BASILISK)) {
+			if ((this._skillId == ICE_LANCE) || (this._skillId == FREEZING_BLIZZARD) || (this._skillId == FREEZING_BREATH) || (this._skillId == ICE_LANCE_COCKATRICE) || (this._skillId == ICE_LANCE_BASILISK)) {
 				return false;
 			}
 		}
 
 		// 大地屏障不能连续使用
-		if (cha.hasSkillEffect(EARTH_BIND) && (_skillId == EARTH_BIND)) {
+		if (cha.hasSkillEffect(EARTH_BIND) && (this._skillId == EARTH_BIND)) {
 			return false;
 		}
 
 		// 目标不是怪物 不能使用 迷魅或造尸
-		if (!(cha instanceof L1MonsterInstance) && ((_skillId == TAMING_MONSTER) || (_skillId == CREATE_ZOMBIE))) {
+		if (!(cha instanceof L1MonsterInstance) && ((this._skillId == TAMING_MONSTER) || (this._skillId == CREATE_ZOMBIE))) {
 			return false;
 		}
 
 		// 目标已死亡 法术非复活类
-		if (cha.isDead() && ((_skillId != CREATE_ZOMBIE) && (_skillId != RESURRECTION) && (_skillId != GREATER_RESURRECTION) && (_skillId != CALL_OF_NATURE))) {
+		if (cha.isDead() && ((this._skillId != CREATE_ZOMBIE) && (this._skillId != RESURRECTION) && (this._skillId != GREATER_RESURRECTION) && (this._skillId != CALL_OF_NATURE))) {
 			return false;
 		}
 
 		// 目标未死亡 法术复活类
-		if ((cha.isDead() == false) && ((_skillId == CREATE_ZOMBIE) || (_skillId == RESURRECTION) || (_skillId == GREATER_RESURRECTION) || (_skillId == CALL_OF_NATURE))) {
+		if ((cha.isDead() == false) && ((this._skillId == CREATE_ZOMBIE) || (this._skillId == RESURRECTION) || (this._skillId == GREATER_RESURRECTION) || (this._skillId == CALL_OF_NATURE))) {
 			return false;
 		}
 
 		// 塔跟门不可放复活法术
-		if (((cha instanceof L1TowerInstance) || (cha instanceof L1DoorInstance)) && ((_skillId == CREATE_ZOMBIE) || (_skillId == RESURRECTION) || (_skillId == GREATER_RESURRECTION) || (_skillId == CALL_OF_NATURE))) {
+		if (((cha instanceof L1TowerInstance) || (cha instanceof L1DoorInstance)) && ((this._skillId == CREATE_ZOMBIE) || (this._skillId == RESURRECTION) || (this._skillId == GREATER_RESURRECTION) || (this._skillId == CALL_OF_NATURE))) {
 			return false;
 		}
 
@@ -1240,7 +1240,7 @@ public class L1SkillUse {
 		if (cha instanceof L1PcInstance) {
 			final L1PcInstance pc = (L1PcInstance) cha;
 			if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 绝对屏障状态中
-				switch (_skillId) {
+				switch (this._skillId) {
 					case CURSE_BLIND:
 					case WEAPON_BREAK:
 					case DARKNESS:
@@ -1275,7 +1275,7 @@ public class L1SkillUse {
 			final int hiddenStatus = ((L1NpcInstance) cha).getHiddenStatus();
 			switch (hiddenStatus) {
 				case L1NpcInstance.HIDDEN_STATUS_SINK:
-					switch (_skillId) {
+					switch (this._skillId) {
 						case DETECTION:
 						case COUNTER_DETECTION: // 无所遁形、强力无所遁形
 							return true;
@@ -1288,19 +1288,19 @@ public class L1SkillUse {
 		}
 
 		// 目标PC
-		if (((_skill.getTargetTo() & L1Skills.TARGET_TO_PC) == L1Skills.TARGET_TO_PC) && (cha instanceof L1PcInstance)) {
+		if (((this._skill.getTargetTo() & L1Skills.TARGET_TO_PC) == L1Skills.TARGET_TO_PC) && (cha instanceof L1PcInstance)) {
 			_flg = true;
 		}
 		// 目标NPC
-		else if (((_skill.getTargetTo() & L1Skills.TARGET_TO_NPC) == L1Skills.TARGET_TO_NPC) && ((cha instanceof L1MonsterInstance) || (cha instanceof L1NpcInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance))) {
+		else if (((this._skill.getTargetTo() & L1Skills.TARGET_TO_NPC) == L1Skills.TARGET_TO_NPC) && ((cha instanceof L1MonsterInstance) || (cha instanceof L1NpcInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance))) {
 			_flg = true;
 		}
 		// 目标 召唤怪与宠物
-		else if (((_skill.getTargetTo() & L1Skills.TARGET_TO_PET) == L1Skills.TARGET_TO_PET) && (_user instanceof L1PcInstance)) {
+		else if (((this._skill.getTargetTo() & L1Skills.TARGET_TO_PET) == L1Skills.TARGET_TO_PET) && (this._user instanceof L1PcInstance)) {
 			if (cha instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) cha;
 				if (summon.getMaster() != null) {
-					if (_player.getId() == summon.getMaster().getId()) {
+					if (this._player.getId() == summon.getMaster().getId()) {
 						_flg = true;
 					}
 				}
@@ -1308,20 +1308,20 @@ public class L1SkillUse {
 			else if (cha instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) cha;
 				if (pet.getMaster() != null) {
-					if (_player.getId() == pet.getMaster().getId()) {
+					if (this._player.getId() == pet.getMaster().getId()) {
 						_flg = true;
 					}
 				}
 			}
 		}
 
-		if ((_calcType == PC_PC) && (cha instanceof L1PcInstance)) {
+		if ((this._calcType == PC_PC) && (cha instanceof L1PcInstance)) {
 			// 目标血盟
-			if (((_skill.getTargetTo() & L1Skills.TARGET_TO_CLAN) == L1Skills.TARGET_TO_CLAN) && (((_player.getClanid() != 0) && (_player.getClanid() == ((L1PcInstance) cha).getClanid())) || _player.isGm())) {
+			if (((this._skill.getTargetTo() & L1Skills.TARGET_TO_CLAN) == L1Skills.TARGET_TO_CLAN) && (((this._player.getClanid() != 0) && (this._player.getClanid() == ((L1PcInstance) cha).getClanid())) || this._player.isGm())) {
 				return true;
 			}
 			// 目标组队
-			if (((_skill.getTargetTo() & L1Skills.TARGET_TO_PARTY) == L1Skills.TARGET_TO_PARTY) && (_player.getParty().isMember((L1PcInstance) cha) || _player.isGm())) {
+			if (((this._skill.getTargetTo() & L1Skills.TARGET_TO_PARTY) == L1Skills.TARGET_TO_PARTY) && (this._player.getParty().isMember((L1PcInstance) cha) || this._player.isGm())) {
 				return true;
 			}
 		}
@@ -1338,46 +1338,46 @@ public class L1SkillUse {
 	 */
 	private boolean isTargetCalc(final L1Character cha) {
 		// 三重矢、屠宰者、暴击、骷髅毁坏
-		if ((_user instanceof L1PcInstance) && ((_skillId == TRIPLE_ARROW) || (_skillId == FOE_SLAYER) || (_skillId == SMASH) || (_skillId == BONE_BREAK))) {
+		if ((this._user instanceof L1PcInstance) && ((this._skillId == TRIPLE_ARROW) || (this._skillId == FOE_SLAYER) || (this._skillId == SMASH) || (this._skillId == BONE_BREAK))) {
 			return true;
 		}
 		// 攻击魔法のNon－PvP判定
-		if (_skill.getTarget().equals("attack") && (_skillId != 18)) { // 攻击魔法
-			if (isPcSummonPet(cha)) { // 对象为PC、召唤、宠物
-				if ((_player.getZoneType() == 1) || (cha.getZoneType() == 1 // 攻击方或被攻击方在安全区
-						) || _player.checkNonPvP(_player, cha)) { // Non-PvP设定
+		if (this._skill.getTarget().equals("attack") && (this._skillId != 18)) { // 攻击魔法
+			if (this.isPcSummonPet(cha)) { // 对象为PC、召唤、宠物
+				if ((this._player.getZoneType() == 1) || (cha.getZoneType() == 1 // 攻击方或被攻击方在安全区
+						) || this._player.checkNonPvP(this._player, cha)) { // Non-PvP设定
 					return false;
 				}
 			}
 		}
 
 		// 沉睡之雾的对象是自己
-		if ((_skillId == FOG_OF_SLEEPING) && (_user.getId() == cha.getId())) {
+		if ((this._skillId == FOG_OF_SLEEPING) && (this._user.getId() == cha.getId())) {
 			return false;
 		}
 
 		// 集体缓速对自己和自己的宠物
-		if (_skillId == MASS_SLOW) {
-			if (_user.getId() == cha.getId()) {
+		if (this._skillId == MASS_SLOW) {
+			if (this._user.getId() == cha.getId()) {
 				return false;
 			}
 			if (cha instanceof L1SummonInstance) {
 				final L1SummonInstance summon = (L1SummonInstance) cha;
-				if (_user.getId() == summon.getMaster().getId()) {
+				if (this._user.getId() == summon.getMaster().getId()) {
 					return false;
 				}
 			}
 			else if (cha instanceof L1PetInstance) {
 				final L1PetInstance pet = (L1PetInstance) cha;
-				if (_user.getId() == pet.getMaster().getId()) {
+				if (this._user.getId() == pet.getMaster().getId()) {
 					return false;
 				}
 			}
 		}
 
 		// 集体传送的对象只是自己（同血盟成员可以传送）
-		if (_skillId == MASS_TELEPORT) {
-			if (_user.getId() != cha.getId()) {
+		if (this._skillId == MASS_TELEPORT) {
+			if (this._user.getId() != cha.getId()) {
 				return false;
 			}
 		}
@@ -1402,9 +1402,9 @@ public class L1SkillUse {
 		}
 
 		if (cha instanceof L1PcInstance) { // 对PCの场合
-			if ((_calcType == PC_PC) && _player.checkNonPvP(_player, cha)) { // Non-PvP设定
+			if ((this._calcType == PC_PC) && this._player.checkNonPvP(this._player, cha)) { // Non-PvP设定
 				final L1PcInstance pc = (L1PcInstance) cha;
-				if ((_player.getId() == pc.getId()) || ((pc.getClanid() != 0) && (_player.getClanid() == pc.getClanid()))) {
+				if ((this._player.getId() == pc.getId()) || ((pc.getClanid() != 0) && (this._player.getClanid() == pc.getClanid()))) {
 					return false;
 				}
 				return true;
@@ -1431,8 +1431,9 @@ public class L1SkillUse {
 		/*
 		 * 成功除外条件１：T-Uが成功したが、对象がアンデットではない。 成功除外条件２：T-Uが成功したが、对象にはターンアンデット无效。 成功除外条件３：スロー、マススロー、マナドレイン、エンタングル、イレースマジック、ウィンドシャックル无效 成功除外条件４：マナドレインが成功したが、モンスター以外の场合
 		 */
-		if (((_skillId == TURN_UNDEAD) && ((undeadType == 0) || (undeadType == 2))) || ((_skillId == TURN_UNDEAD) && (isTU == false))
-				|| (((_skillId == ERASE_MAGIC) || (_skillId == SLOW) || (_skillId == MANA_DRAIN) || (_skillId == MASS_SLOW) || (_skillId == ENTANGLE) || (_skillId == WIND_SHACKLE)) && (isErase == false)) || ((_skillId == MANA_DRAIN) && (isManaDrain == false))) {
+		if (((this._skillId == TURN_UNDEAD) && ((undeadType == 0) || (undeadType == 2))) || ((this._skillId == TURN_UNDEAD) && (isTU == false))
+				|| (((this._skillId == ERASE_MAGIC) || (this._skillId == SLOW) || (this._skillId == MANA_DRAIN) || (this._skillId == MASS_SLOW) || (this._skillId == ENTANGLE) || (this._skillId == WIND_SHACKLE)) && (isErase == false))
+				|| ((this._skillId == MANA_DRAIN) && (isManaDrain == false))) {
 			return true;
 		}
 		return false;
@@ -1444,7 +1445,7 @@ public class L1SkillUse {
 	 * @param cha
 	 */
 	private boolean isUseCounterMagic(final L1Character cha) {
-		if (_isCounterMagic && cha.hasSkillEffect(COUNTER_MAGIC)) {
+		if (this._isCounterMagic && cha.hasSkillEffect(COUNTER_MAGIC)) {
 			cha.removeSkillEffect(COUNTER_MAGIC);
 			final int castgfx = SkillsTable.getInstance().getTemplate(COUNTER_MAGIC).getCastGfx();
 			cha.broadcastPacket(new S_SkillSound(cha.getId(), castgfx));
@@ -1462,37 +1463,37 @@ public class L1SkillUse {
 	 */
 	private void makeTargetList() {
 		try {
-			if (_type == TYPE_LOGIN) { // 仅用于登录时 (死亡时 包括取消死亡状态？)
-				_targetList.add(new TargetStatus(_user));
+			if (this._type == TYPE_LOGIN) { // 仅用于登录时 (死亡时 包括取消死亡状态？)
+				this._targetList.add(new TargetStatus(this._user));
 				return;
 			}
-			if ((_skill.getTargetTo() == L1Skills.TARGET_TO_ME) && ((_skill.getType() & L1Skills.TYPE_ATTACK) != L1Skills.TYPE_ATTACK)) {
-				_targetList.add(new TargetStatus(_user)); // 目标使用者
+			if ((this._skill.getTargetTo() == L1Skills.TARGET_TO_ME) && ((this._skill.getType() & L1Skills.TYPE_ATTACK) != L1Skills.TYPE_ATTACK)) {
+				this._targetList.add(new TargetStatus(this._user)); // 目标使用者
 				return;
 			}
 
 			// 具有攻击范围 (画面内的对象)
-			if (getSkillRanged() != -1) {
-				if (_user.getLocation().getTileLineDistance(_target.getLocation()) > getSkillRanged()) {
+			if (this.getSkillRanged() != -1) {
+				if (this._user.getLocation().getTileLineDistance(this._target.getLocation()) > this.getSkillRanged()) {
 					return; // 射程范围外
 				}
 			}
 			else {
-				if (!_user.getLocation().isInScreen(_target.getLocation())) {
+				if (!this._user.getLocation().isInScreen(this._target.getLocation())) {
 					return; // 射程范围外
 				}
 			}
 
-			if ((isTarget(_target) == false) && !(_skill.getTarget().equals("none"))) {
+			if ((this.isTarget(this._target) == false) && !(this._skill.getTarget().equals("none"))) {
 				// 对象が违うのでスキルが発动しない。
 				return;
 			}
 
 			// 直线的范围
-			switch (_skillId) {
+			switch (this._skillId) {
 				case LIGHTNING:
 				case FREEZING_BREATH: // 极光雷电、寒冰喷吐
-					final List<L1Object> al1object = L1World.getInstance().getVisibleLineObjects(_user, _target);
+					final List<L1Object> al1object = L1World.getInstance().getVisibleLineObjects(this._user, this._target);
 
 					for (final L1Object tgobj : al1object) {
 						if (tgobj == null) {
@@ -1502,46 +1503,46 @@ public class L1SkillUse {
 							continue;
 						}
 						final L1Character cha = (L1Character) tgobj;
-						if (isTarget(cha) == false) {
+						if (this.isTarget(cha) == false) {
 							continue;
 						}
-						_targetList.add(new TargetStatus(cha));
+						this._targetList.add(new TargetStatus(cha));
 					}
 					return;
 			}
 
 			// 单体攻击
-			if (getSkillArea() == 0) {
-				if (!_user.glanceCheck(_target.getX(), _target.getY())) { // 直线上有障碍物
-					if (((_skill.getType() & L1Skills.TYPE_ATTACK) == L1Skills.TYPE_ATTACK) && (_skillId != 10026) && (_skillId != 10027) && (_skillId != 10028) && (_skillId != 10029)) { // 安息攻击以外の攻击スキル
-						_targetList.add(new TargetStatus(_target, false)); // 不能发生伤害、ダメージモーションも発生しないが、スキルは発动
+			if (this.getSkillArea() == 0) {
+				if (!this._user.glanceCheck(this._target.getX(), this._target.getY())) { // 直线上有障碍物
+					if (((this._skill.getType() & L1Skills.TYPE_ATTACK) == L1Skills.TYPE_ATTACK) && (this._skillId != 10026) && (this._skillId != 10027) && (this._skillId != 10028) && (this._skillId != 10029)) { // 安息攻击以外の攻击スキル
+						this._targetList.add(new TargetStatus(this._target, false)); // 不能发生伤害、ダメージモーションも発生しないが、スキルは発动
 						return;
 					}
 				}
-				_targetList.add(new TargetStatus(_target));
+				this._targetList.add(new TargetStatus(this._target));
 			}
 
 			// 范围攻击
 			else {
-				if (!_skill.getTarget().equals("none")) {
-					_targetList.add(new TargetStatus(_target));
+				if (!this._skill.getTarget().equals("none")) {
+					this._targetList.add(new TargetStatus(this._target));
 				}
 
 				// 法师魔法 (体力回复术)
-				if ((_skillId != HEAL_ALL) && !(_skill.getTarget().equals("attack") || (_skill.getType() == L1Skills.TYPE_ATTACK))) {
+				if ((this._skillId != HEAL_ALL) && !(this._skill.getTarget().equals("attack") || (this._skill.getType() == L1Skills.TYPE_ATTACK))) {
 					// 攻击系以外のスキルとH-A以外はターゲット自身を含める
-					_targetList.add(new TargetStatus(_user));
+					this._targetList.add(new TargetStatus(this._user));
 				}
 
 				List<L1Object> objects;
 
 				// 全画面物件
-				if (getSkillArea() == -1) {
-					objects = L1World.getInstance().getVisibleObjects(_user);
+				if (this.getSkillArea() == -1) {
+					objects = L1World.getInstance().getVisibleObjects(this._user);
 				}
 				// 指定范围物件
 				else {
-					objects = L1World.getInstance().getVisibleObjects(_target, getSkillArea());
+					objects = L1World.getInstance().getVisibleObjects(this._target, this.getSkillArea());
 				}
 				for (final L1Object tgobj : objects) {
 					if (tgobj == null) {
@@ -1551,12 +1552,12 @@ public class L1SkillUse {
 						continue;
 					}
 					final L1Character cha = (L1Character) tgobj;
-					if (!isTarget(cha)) {
+					if (!this.isTarget(cha)) {
 						continue;
 					}
 
 					// 技能发动 目标清单判定:加入目标清单 - 回圈
-					_targetList.add(new TargetStatus(cha));
+					this._targetList.add(new TargetStatus(cha));
 				}
 				return;
 			}
@@ -1572,48 +1573,48 @@ public class L1SkillUse {
 	 */
 	private void runSkill() {
 
-		switch (_skillId) {
+		switch (this._skillId) {
 			case LIFE_STREAM: // 治愈能量风暴
-				L1EffectSpawn.getInstance().spawnEffect(81169, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId());
+				L1EffectSpawn.getInstance().spawnEffect(81169, this._skill.getBuffDuration() * 1000, this._targetX, this._targetY, this._user.getMapId());
 				return;
 			case CUBE_IGNITION: // 立方:燃烧
-				L1EffectSpawn.getInstance().spawnEffect(80149, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(), (L1PcInstance) _user, _skillId);
+				L1EffectSpawn.getInstance().spawnEffect(80149, this._skill.getBuffDuration() * 1000, this._targetX, this._targetY, this._user.getMapId(), (L1PcInstance) this._user, this._skillId);
 				return;
 			case CUBE_QUAKE: // 立方:地裂
-				L1EffectSpawn.getInstance().spawnEffect(80150, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(), (L1PcInstance) _user, _skillId);
+				L1EffectSpawn.getInstance().spawnEffect(80150, this._skill.getBuffDuration() * 1000, this._targetX, this._targetY, this._user.getMapId(), (L1PcInstance) this._user, this._skillId);
 				return;
 			case CUBE_SHOCK: // 立方:冲击
-				L1EffectSpawn.getInstance().spawnEffect(80151, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(), (L1PcInstance) _user, _skillId);
+				L1EffectSpawn.getInstance().spawnEffect(80151, this._skill.getBuffDuration() * 1000, this._targetX, this._targetY, this._user.getMapId(), (L1PcInstance) this._user, this._skillId);
 				return;
 			case CUBE_BALANCE: // 立方:和谐
-				L1EffectSpawn.getInstance().spawnEffect(80152, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(), (L1PcInstance) _user, _skillId);
+				L1EffectSpawn.getInstance().spawnEffect(80152, this._skill.getBuffDuration() * 1000, this._targetX, this._targetY, this._user.getMapId(), (L1PcInstance) this._user, this._skillId);
 				return;
 			case FIRE_WALL: // 火牢
-				L1EffectSpawn.getInstance().doSpawnFireWall(_user, _targetX, _targetY);
+				L1EffectSpawn.getInstance().doSpawnFireWall(this._user, this._targetX, this._targetY);
 				return;
 			case BLKS_FIRE_WALL: // 巴拉卡斯火牢
-				_user.setSkillEffect(_skillId, 11 * 1000);
-				L1EffectSpawn.getInstance().doSpawnFireWallforNpc(_user, _target);
+				this._user.setSkillEffect(this._skillId, 11 * 1000);
+				L1EffectSpawn.getInstance().doSpawnFireWallforNpc(this._user, this._target);
 				return;
 			case TRUE_TARGET: // 精准目标
-				if (_user instanceof L1PcInstance) {
-					final L1PcInstance pri = (L1PcInstance) _user;
-					final L1EffectInstance effect = L1EffectSpawn.getInstance().spawnEffect(80153, 5 * 1000, _targetX + 2, _targetY - 1, _user.getMapId());
-					if (_targetID != 0) {
-						pri.sendPackets(new S_TrueTarget(_targetID, pri.getId(), _message));
+				if (this._user instanceof L1PcInstance) {
+					final L1PcInstance pri = (L1PcInstance) this._user;
+					final L1EffectInstance effect = L1EffectSpawn.getInstance().spawnEffect(80153, 5 * 1000, this._targetX + 2, this._targetY - 1, this._user.getMapId());
+					if (this._targetID != 0) {
+						pri.sendPackets(new S_TrueTarget(this._targetID, pri.getId(), this._message));
 						if (pri.getClanid() != 0) {
 							final L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
 							for (final L1PcInstance pc : players) {
-								pc.sendPackets(new S_TrueTarget(_targetID, pc.getId(), _message));
+								pc.sendPackets(new S_TrueTarget(this._targetID, pc.getId(), this._message));
 							}
 						}
 					}
 					else if (effect != null) {
-						pri.sendPackets(new S_TrueTarget(effect.getId(), pri.getId(), _message));
+						pri.sendPackets(new S_TrueTarget(effect.getId(), pri.getId(), this._message));
 						if (pri.getClanid() != 0) {
 							final L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
 							for (final L1PcInstance pc : players) {
-								pc.sendPackets(new S_TrueTarget(effect.getId(), pc.getId(), _message));
+								pc.sendPackets(new S_TrueTarget(effect.getId(), pc.getId(), this._message));
 							}
 						}
 					}
@@ -1625,19 +1626,19 @@ public class L1SkillUse {
 
 		// 魔法屏障不可抵挡的魔法
 		for (final int skillId : EXCEPT_COUNTER_MAGIC) {
-			if (_skillId == skillId) {
-				_isCounterMagic = false; // 无效
+			if (this._skillId == skillId) {
+				this._isCounterMagic = false; // 无效
 				break;
 			}
 		}
 
 		// NPCにショックスタンを使用させるとonActionでNullPointerExceptionが発生するため
 		// とりあえずPCが使用した时のみ
-		if ((_skillId == SHOCK_STUN) && (_user instanceof L1PcInstance)) {
-			_target.onAction(_player);
+		if ((this._skillId == SHOCK_STUN) && (this._user instanceof L1PcInstance)) {
+			this._target.onAction(this._player);
 		}
 
-		if (!isTargetCalc(_target)) {
+		if (!this.isTargetCalc(this._target)) {
 			return;
 		}
 
@@ -1650,7 +1651,7 @@ public class L1SkillUse {
 			boolean isSuccess = false;
 			int undeadType = 0;
 
-			for (final Iterator<TargetStatus> iter = _targetList.iterator(); iter.hasNext();) {
+			for (final Iterator<TargetStatus> iter = this._targetList.iterator(); iter.hasNext();) {
 				ts = null;
 				cha = null;
 				dmg = 0;
@@ -1661,60 +1662,60 @@ public class L1SkillUse {
 				ts = iter.next();
 				cha = ts.getTarget();
 
-				if (!ts.isCalc() || !isTargetCalc(cha)) {
+				if (!ts.isCalc() || !this.isTargetCalc(cha)) {
 					continue; // 计算する必要がない。
 				}
 
-				final L1Magic _magic = new L1Magic(_user, cha);
-				_magic.setLeverage(getLeverage());
+				final L1Magic _magic = new L1Magic(this._user, cha);
+				_magic.setLeverage(this.getLeverage());
 
 				if (cha instanceof L1MonsterInstance) { // 不死系判断
 					undeadType = ((L1MonsterInstance) cha).getNpcTemplate().get_undead();
 				}
 
 				// 确率系技能失败确定
-				if (((_skill.getType() == L1Skills.TYPE_CURSE) || (_skill.getType() == L1Skills.TYPE_PROBABILITY)) && isTargetFailure(cha)) {
+				if (((this._skill.getType() == L1Skills.TYPE_CURSE) || (this._skill.getType() == L1Skills.TYPE_PROBABILITY)) && this.isTargetFailure(cha)) {
 					iter.remove();
 					continue;
 				}
 
 				if (cha instanceof L1PcInstance) { // 只有在目标为PC的情况下发送图标，代表使用成功。
-					if (_skillTime == 0) {
-						_getBuffIconDuration = _skill.getBuffDuration(); // 效果时间
+					if (this._skillTime == 0) {
+						this._getBuffIconDuration = this._skill.getBuffDuration(); // 效果时间
 					}
 					else {
-						_getBuffIconDuration = _skillTime; // パラメータのtimeが0以外なら、效果时间として设定する
+						this._getBuffIconDuration = this._skillTime; // パラメータのtimeが0以外なら、效果时间として设定する
 					}
 				}
 
-				deleteRepeatedSkills(cha); // 删除无法共同存在的魔法状态
+				this.deleteRepeatedSkills(cha); // 删除无法共同存在的魔法状态
 
 				// 攻击系技能和使用者除外。
-				if ((_skill.getType() == L1Skills.TYPE_ATTACK) && (_user.getId() != cha.getId())) {
-					if (isUseCounterMagic(cha)) { // カウンターマジックが発动した场合、リストから削除
+				if ((this._skill.getType() == L1Skills.TYPE_ATTACK) && (this._user.getId() != cha.getId())) {
+					if (this.isUseCounterMagic(cha)) { // カウンターマジックが発动した场合、リストから削除
 						iter.remove();
 						continue;
 					}
-					dmg = _magic.calcMagicDamage(_skillId);
-					_dmg = dmg;
+					dmg = _magic.calcMagicDamage(this._skillId);
+					this._dmg = dmg;
 					cha.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻击魔法で解除
 				}
-				else if ((_skill.getType() == L1Skills.TYPE_CURSE) || (_skill.getType() == L1Skills.TYPE_PROBABILITY)) { // 确率系スキル
-					isSuccess = _magic.calcProbabilityMagic(_skillId);
-					if (_skillId != ERASE_MAGIC) {
+				else if ((this._skill.getType() == L1Skills.TYPE_CURSE) || (this._skill.getType() == L1Skills.TYPE_PROBABILITY)) { // 确率系スキル
+					isSuccess = _magic.calcProbabilityMagic(this._skillId);
+					if (this._skillId != ERASE_MAGIC) {
 						cha.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、确率魔法で解除
 					}
-					if (_skillId != FOG_OF_SLEEPING) {
+					if (this._skillId != FOG_OF_SLEEPING) {
 						cha.removeSkillEffect(FOG_OF_SLEEPING); // フォグオブスリーピング中なら、确率魔法で解除
 					}
 					if (isSuccess) { // 成功したがカウンターマジックが発动した场合、リストから削除
-						if (isUseCounterMagic(cha)) { // カウンターマジックが発动したか
+						if (this.isUseCounterMagic(cha)) { // カウンターマジックが発动したか
 							iter.remove();
 							continue;
 						}
 					}
 					else { // 失败した场合、リストから削除
-						if ((_skillId == FOG_OF_SLEEPING) && (cha instanceof L1PcInstance)) {
+						if ((this._skillId == FOG_OF_SLEEPING) && (cha instanceof L1PcInstance)) {
 							final L1PcInstance pc = (L1PcInstance) cha;
 							pc.sendPackets(new S_ServerMessage(297)); // 你感觉些微地晕眩。
 						}
@@ -1724,9 +1725,9 @@ public class L1SkillUse {
 				}
 
 				// 治愈性魔法
-				else if (_skill.getType() == L1Skills.TYPE_HEAL) {
+				else if (this._skill.getType() == L1Skills.TYPE_HEAL) {
 					// 回复量
-					dmg = -1 * _magic.calcHealing(_skillId);
+					dmg = -1 * _magic.calcHealing(this._skillId);
 					if (cha.hasSkillEffect(WATER_LIFE)) { // 水之元气-效果 2倍
 						dmg *= 2;
 						cha.killSkillEffectTimer(WATER_LIFE); // 效果只有一次
@@ -1740,29 +1741,29 @@ public class L1SkillUse {
 					}
 				}
 				// 显示团体魔法效果在队友或盟友
-				else if (((_skillId == FIRE_BLESS) || (_skillId == STORM_EYE // 烈炎气息、暴风之眼
-						) || (_skillId == EARTH_BLESS // 大地的祝福
-						) || (_skillId == GLOWING_AURA // 激励士气
-						) || (_skillId == SHINING_AURA) || (_skillId == BRAVE_AURA)) // 钢铁士气、冲击士气
-						&& (_user.getId() != cha.getId())) {
+				else if (((this._skillId == FIRE_BLESS) || (this._skillId == STORM_EYE // 烈炎气息、暴风之眼
+						) || (this._skillId == EARTH_BLESS // 大地的祝福
+						) || (this._skillId == GLOWING_AURA // 激励士气
+						) || (this._skillId == SHINING_AURA) || (this._skillId == BRAVE_AURA)) // 钢铁士气、冲击士气
+						&& (this._user.getId() != cha.getId())) {
 					if (cha instanceof L1PcInstance) {
 						final L1PcInstance _targetPc = (L1PcInstance) cha;
-						_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), _skill.getCastGfx()));
-						_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), _skill.getCastGfx()));
+						_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), this._skill.getCastGfx()));
+						_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), this._skill.getCastGfx()));
 					}
 				}
 
 				// ■■■■ 个别处理のあるスキルのみ书いてください。 ■■■■
 
 				// 除了冲晕、骷髅毁坏之外魔法效果存在时，只更新效果时间跟图示。
-				if (cha.hasSkillEffect(_skillId) && ((_skillId != SHOCK_STUN) && (_skillId != BONE_BREAK) && (_skillId != CONFUSION) && (_skillId != THUNDER_GRAB))) {
-					addMagicList(cha, true); // 魔法效果已存在时
-					if (_skillId != SHAPE_CHANGE) { // 除了变形术之外
+				if (cha.hasSkillEffect(this._skillId) && ((this._skillId != SHOCK_STUN) && (this._skillId != BONE_BREAK) && (this._skillId != CONFUSION) && (this._skillId != THUNDER_GRAB))) {
+					this.addMagicList(cha, true); // 魔法效果已存在时
+					if (this._skillId != SHAPE_CHANGE) { // 除了变形术之外
 						continue;
 					}
 				}
 
-				switch (_skillId) {
+				switch (this._skillId) {
 					// 加速术
 					case HASTE:
 						if (cha.getMoveSpeed() != 2) { // 缓速中以外
@@ -1772,7 +1773,7 @@ public class L1SkillUse {
 									continue;
 								}
 								pc.setDrink(false);
-								pc.sendPackets(new S_SkillHaste(pc.getId(), 1, _getBuffIconDuration));
+								pc.sendPackets(new S_SkillHaste(pc.getId(), 1, this._getBuffIconDuration));
 							}
 							cha.broadcastPacket(new S_SkillHaste(cha.getId(), 1, 0));
 							cha.setMoveSpeed(1);
@@ -1806,7 +1807,7 @@ public class L1SkillUse {
 							if (pc.getMoveSpeed() != 2) { // 缓速中以外
 								pc.setDrink(false);
 								pc.setMoveSpeed(1);
-								pc.sendPackets(new S_SkillHaste(pc.getId(), 1, _getBuffIconDuration));
+								pc.sendPackets(new S_SkillHaste(pc.getId(), 1, this._getBuffIconDuration));
 								pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
 							}
 							else { // 缓速中
@@ -1842,9 +1843,9 @@ public class L1SkillUse {
 						if (cha.getMoveSpeed() == 0) {
 							if (cha instanceof L1PcInstance) {
 								final L1PcInstance pc = (L1PcInstance) cha;
-								pc.sendPackets(new S_SkillHaste(pc.getId(), 2, _getBuffIconDuration));
+								pc.sendPackets(new S_SkillHaste(pc.getId(), 2, this._getBuffIconDuration));
 							}
-							cha.broadcastPacket(new S_SkillHaste(cha.getId(), 2, _getBuffIconDuration));
+							cha.broadcastPacket(new S_SkillHaste(cha.getId(), 2, this._getBuffIconDuration));
 							cha.setMoveSpeed(2);
 						}
 						else if (cha.getMoveSpeed() == 1) {
@@ -1860,7 +1861,7 @@ public class L1SkillUse {
 							}
 							if (skillNum != 0) {
 								cha.removeSkillEffect(skillNum);
-								cha.removeSkillEffect(_skillId);
+								cha.removeSkillEffect(this._skillId);
 								cha.setMoveSpeed(0);
 								continue;
 							}
@@ -1879,9 +1880,9 @@ public class L1SkillUse {
 					case ICE_LANCE:
 					case FREEZING_BLIZZARD:
 					case FREEZING_BREATH:
-						_isFreeze = _magic.calcProbabilityMagic(_skillId);
-						if (_isFreeze) {
-							final int time = _skill.getBuffDuration() * 1000;
+						this._isFreeze = _magic.calcProbabilityMagic(this._skillId);
+						if (this._isFreeze) {
+							final int time = this._skill.getBuffDuration() * 1000;
 							L1EffectSpawn.getInstance().spawnEffect(81168, time, cha.getX(), cha.getY(), cha.getMapId());
 							if (cha instanceof L1PcInstance) {
 								final L1PcInstance pc = (L1PcInstance) cha;
@@ -1909,16 +1910,16 @@ public class L1SkillUse {
 							final L1NpcInstance npc = (L1NpcInstance) cha;
 							npc.broadcastPacket(new S_Poison(npc.getId(), 2));
 							npc.setParalyzed(true);
-							npc.setParalysisTime(_skill.getBuffDuration() * 1000);
+							npc.setParalysisTime(this._skill.getBuffDuration() * 1000);
 						}
 						break;
 					case 20011: // 毒雾-前方 3X3
-						_user.setHeading(_user.targetDirection(_targetX, _targetY)); // 改变面向
+						this._user.setHeading(this._user.targetDirection(this._targetX, this._targetY)); // 改变面向
 						int locX = 0;
 						int locY = 0;
 						for (int i = 0; i < 3; i++) {
 							for (int j = 0; j < 3; j++) {
-								switch (_user.getHeading()) {
+								switch (this._user.getHeading()) {
 									case 0:
 										locX = (-1 + j);
 										locY = -1 * (-3 + i);
@@ -1952,7 +1953,7 @@ public class L1SkillUse {
 										locY = -1 * (-2 - j + i);
 										break;
 								}
-								L1EffectSpawn.getInstance().spawnEffect(93002, 10000, _user.getX() - locX, _user.getY() - locY, _user.getMapId());
+								L1EffectSpawn.getInstance().spawnEffect(93002, 10000, this._user.getX() - locX, this._user.getY() - locY, this._user.getMapId());
 							}
 						}
 						break;
@@ -1960,12 +1961,12 @@ public class L1SkillUse {
 					case SHOCK_STUN:
 						final int[] stunTimeArray = { 500, 1000, 1500, 2000, 2500, 3000 };
 						final int rnd = Random.nextInt(stunTimeArray.length);
-						_shockStunDuration = stunTimeArray[rnd];
+						this._shockStunDuration = stunTimeArray[rnd];
 						if ((cha instanceof L1PcInstance) && cha.hasSkillEffect(SHOCK_STUN)) {
-							_shockStunDuration += cha.getSkillEffectTimeSec(SHOCK_STUN) * 1000;
+							this._shockStunDuration += cha.getSkillEffectTimeSec(SHOCK_STUN) * 1000;
 						}
 
-						L1EffectSpawn.getInstance().spawnEffect(81162, _shockStunDuration, cha.getX(), cha.getY(), cha.getMapId());
+						L1EffectSpawn.getInstance().spawnEffect(81162, this._shockStunDuration, cha.getX(), cha.getY(), cha.getMapId());
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
 							pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, true));
@@ -1973,12 +1974,12 @@ public class L1SkillUse {
 						else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
 							final L1NpcInstance npc = (L1NpcInstance) cha;
 							npc.setParalyzed(true);
-							npc.setParalysisTime(_shockStunDuration);
+							npc.setParalysisTime(this._shockStunDuration);
 						}
 						break;
 					// 夺命之雷
 					case THUNDER_GRAB:
-						isSuccess = _magic.calcProbabilityMagic(_skillId);
+						isSuccess = _magic.calcProbabilityMagic(this._skillId);
 						if (isSuccess) {
 							if (!cha.hasSkillEffect(THUNDER_GRAB_START) && !cha.hasSkillEffect(STATUS_FREEZE)) {
 								if (cha instanceof L1PcInstance) {
@@ -2005,7 +2006,7 @@ public class L1SkillUse {
 					// 魔力夺取
 					case MANA_DRAIN:
 						final int chance = Random.nextInt(10) + 5;
-						drainMana = chance + (_user.getInt() / 2);
+						drainMana = chance + (this._user.getInt() / 2);
 						if (cha.getCurrentMp() < drainMana) {
 							drainMana = cha.getCurrentMp();
 						}
@@ -2015,14 +2016,14 @@ public class L1SkillUse {
 					case MASS_TELEPORT:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1BookMark bookm = pc.getBookMark(_bookmarkId);
+							final L1BookMark bookm = pc.getBookMark(this._bookmarkId);
 							if (bookm != null) { // 从书签中取出一个传送坐标
 								if (pc.getMap().isEscapable() || pc.isGm()) {
 									final int newX = bookm.getLocX();
 									final int newY = bookm.getLocY();
 									final short mapId = bookm.getMapId();
 
-									if (_skillId == MASS_TELEPORT) { // 集体传送术
+									if (this._skillId == MASS_TELEPORT) { // 集体传送术
 										final List<L1PcInstance> clanMember = L1World.getInstance().getVisiblePlayer(pc);
 										for (final L1PcInstance member : clanMember) {
 											if ((pc.getLocation().getTileLineDistance(member.getLocation()) <= 3) && (member.getClanid() == pc.getClanid()) && (pc.getClanid() != 0) && (member.getId() != pc.getId())) {
@@ -2044,7 +2045,7 @@ public class L1SkillUse {
 									final int newY = newLocation.getY();
 									final short mapId = (short) newLocation.getMapId();
 
-									if (_skillId == MASS_TELEPORT) {
+									if (this._skillId == MASS_TELEPORT) {
 										final List<L1PcInstance> clanMember = L1World.getInstance().getVisiblePlayer(pc);
 										for (final L1PcInstance member : clanMember) {
 											if ((pc.getLocation().getTileLineDistance(member.getLocation()) <= 3) && (member.getClanid() == pc.getClanid()) && (pc.getClanid() != 0) && (member.getId() != pc.getId())) {
@@ -2065,7 +2066,7 @@ public class L1SkillUse {
 					case CALL_CLAN:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1PcInstance clanPc = (L1PcInstance) L1World.getInstance().findObject(_targetID);
+							final L1PcInstance clanPc = (L1PcInstance) L1World.getInstance().findObject(this._targetID);
 							if (clanPc != null) {
 								clanPc.setTempID(pc.getId());
 								clanPc.sendPackets(new S_Message_YN(729, "")); // 盟主正在呼唤你，你要接受他的呼唤吗？(Y/N)
@@ -2076,7 +2077,7 @@ public class L1SkillUse {
 					case RUN_CLAN:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1PcInstance clanPc = (L1PcInstance) L1World.getInstance().findObject(_targetID);
+							final L1PcInstance clanPc = (L1PcInstance) L1World.getInstance().findObject(this._targetID);
 							if (clanPc != null) {
 								if (pc.getMap().isEscapable() || pc.isGm()) {
 									final boolean castle_area = L1CastleLocation.checkInAllWarArea(clanPc.getX(), clanPc.getY(), clanPc.getMapId());
@@ -2098,13 +2099,13 @@ public class L1SkillUse {
 					// 强力无所遁形
 					case COUNTER_DETECTION:
 						if (cha instanceof L1PcInstance) {
-							dmg = _magic.calcMagicDamage(_skillId);
+							dmg = _magic.calcMagicDamage(this._skillId);
 						}
 						else if (cha instanceof L1NpcInstance) {
 							final L1NpcInstance npc = (L1NpcInstance) cha;
 							final int hiddenStatus = npc.getHiddenStatus();
 							if (hiddenStatus == L1NpcInstance.HIDDEN_STATUS_SINK) {
-								npc.appearOnGround(_player);
+								npc.appearOnGround(this._player);
 							}
 							else {
 								dmg = 0;
@@ -2118,7 +2119,7 @@ public class L1SkillUse {
 					case CREATE_MAGICAL_WEAPON:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1ItemInstance item = pc.getInventory().getItem(_itemobjid);
+							final L1ItemInstance item = pc.getInventory().getItem(this._itemobjid);
 							if ((item != null) && (item.getItem().getType2() == 1)) {
 								final int item_type = item.getItem().getType2();
 								final int safe_enchant = item.getItem().get_safeenchant();
@@ -2161,7 +2162,7 @@ public class L1SkillUse {
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
 
-							final L1ItemInstance item = pc.getInventory().getItem(_itemobjid);
+							final L1ItemInstance item = pc.getInventory().getItem(this._itemobjid);
 							if (item != null) {
 								final int dark = (int) (10 + (pc.getLevel() * 0.8) + (pc.getWis() - 6) * 1.2);
 								final int brave = (int) (dark / 2.1);
@@ -2220,9 +2221,9 @@ public class L1SkillUse {
 					case SHADOW_FANG:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1ItemInstance item = pc.getInventory().getItem(_itemobjid);
+							final L1ItemInstance item = pc.getInventory().getItem(this._itemobjid);
 							if ((item != null) && (item.getItem().getType2() == 1)) {
-								item.setSkillWeaponEnchant(pc, _skillId, _skill.getBuffDuration() * 1000);
+								item.setSkillWeaponEnchant(pc, this._skillId, this._skill.getBuffDuration() * 1000);
 							}
 							else {
 								pc.sendPackets(new S_ServerMessage(79));
@@ -2233,10 +2234,10 @@ public class L1SkillUse {
 					case ENCHANT_WEAPON:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1ItemInstance item = pc.getInventory().getItem(_itemobjid);
+							final L1ItemInstance item = pc.getInventory().getItem(this._itemobjid);
 							if ((item != null) && (item.getItem().getType2() == 1)) {
 								pc.sendPackets(new S_ServerMessage(161, item.getLogName(), "$245", "$247"));
-								item.setSkillWeaponEnchant(pc, _skillId, _skill.getBuffDuration() * 1000);
+								item.setSkillWeaponEnchant(pc, this._skillId, this._skill.getBuffDuration() * 1000);
 							}
 							else {
 								pc.sendPackets(new S_ServerMessage(79));
@@ -2258,7 +2259,7 @@ public class L1SkillUse {
 							for (final L1ItemInstance item : pc.getInventory().getItems()) {
 								if (pc.getWeapon().equals(item)) {
 									pc.sendPackets(new S_ServerMessage(161, item.getLogName(), "$245", "$247"));
-									item.setSkillWeaponEnchant(pc, _skillId, _skill.getBuffDuration() * 1000);
+									item.setSkillWeaponEnchant(pc, this._skillId, this._skill.getBuffDuration() * 1000);
 									return;
 								}
 							}
@@ -2268,10 +2269,10 @@ public class L1SkillUse {
 					case BLESSED_ARMOR:
 						if (cha instanceof L1PcInstance) {
 							final L1PcInstance pc = (L1PcInstance) cha;
-							final L1ItemInstance item = pc.getInventory().getItem(_itemobjid);
+							final L1ItemInstance item = pc.getInventory().getItem(this._itemobjid);
 							if ((item != null) && (item.getItem().getType2() == 2) && (item.getItem().getType() == 2)) {
 								pc.sendPackets(new S_ServerMessage(161, item.getLogName(), "$245", "$247"));
-								item.setSkillArmorEnchant(pc, _skillId, _skill.getBuffDuration() * 1000);
+								item.setSkillArmorEnchant(pc, this._skillId, this._skill.getBuffDuration() * 1000);
 							}
 							else {
 								pc.sendPackets(new S_ServerMessage(79));
@@ -2279,18 +2280,18 @@ public class L1SkillUse {
 						}
 						break;
 					default:
-						L1BuffUtil.skillEffect(_user, cha, _target, _skillId, _getBuffIconDuration, dmg);
+						L1BuffUtil.skillEffect(this._user, cha, this._target, this._skillId, this._getBuffIconDuration, dmg);
 						break;
 				}
 
 				// ■■■■ 到目前为止的个别处理 ■■■■
 
 				// 治愈性魔法攻击不死系的怪物。
-				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (_calcType == PC_NPC) && (undeadType == 1)) {
+				if ((this._skill.getType() == L1Skills.TYPE_HEAL) && (this._calcType == PC_NPC) && (undeadType == 1)) {
 					dmg *= -1;
 				}
 				// 治愈性魔法无法对此不死系起作用
-				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (_calcType == PC_NPC) && (undeadType == 3)) {
+				if ((this._skill.getType() == L1Skills.TYPE_HEAL) && (this._calcType == PC_NPC) && (undeadType == 3)) {
 					dmg = 0;
 				}
 				// 无法对城门、守护塔补血
@@ -2302,12 +2303,12 @@ public class L1SkillUse {
 					_magic.commit(dmg, drainMana);
 				}
 				// 补血判断
-				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (dmg < 0)) {
+				if ((this._skill.getType() == L1Skills.TYPE_HEAL) && (dmg < 0)) {
 					cha.setCurrentHp((dmg * -1) + cha.getCurrentHp());
 				}
 				// 非治愈性魔法补血判断(寒战、吸吻等)
 				if (heal > 0) {
-					_user.setCurrentHp(heal + _user.getCurrentHp());
+					this._user.setCurrentHp(heal + this._user.getCurrentHp());
 				}
 
 				if (cha instanceof L1PcInstance) { // 更新自身状态
@@ -2315,10 +2316,10 @@ public class L1SkillUse {
 					pc.turnOnOffLight();
 					pc.sendPackets(new S_OwnCharAttrDef(pc));
 					pc.sendPackets(new S_OwnCharStatus(pc));
-					sendHappenMessage(pc); // 发送消息到目标
+					this.sendHappenMessage(pc); // 发送消息到目标
 				}
 
-				addMagicList(cha, false); // 为目标设定魔法效果时间
+				this.addMagicList(cha, false); // 为目标设定魔法效果时间
 
 				if (cha instanceof L1PcInstance) { // 如果目标为PC、更新灯光状态
 					final L1PcInstance pc = (L1PcInstance) cha;
@@ -2327,8 +2328,8 @@ public class L1SkillUse {
 			}
 
 			// 解除隐身
-			if ((_skillId == DETECTION) || (_skillId == COUNTER_DETECTION)) { // 无所遁形、强力无所遁形
-				detection(_player);
+			if ((this._skillId == DETECTION) || (this._skillId == COUNTER_DETECTION)) { // 无所遁形、强力无所遁形
+				this.detection(this._player);
 			}
 
 		}
@@ -2339,9 +2340,9 @@ public class L1SkillUse {
 
 	/** 发送失败信息（失败） */
 	private void sendFailMessage() {
-		final int msgID = _skill.getSysmsgIdFail();
-		if ((msgID > 0) && (_user instanceof L1PcInstance)) {
-			_player.sendPackets(new S_ServerMessage(msgID));
+		final int msgID = this._skill.getSysmsgIdFail();
+		if ((msgID > 0) && (this._user instanceof L1PcInstance)) {
+			this._player.sendPackets(new S_ServerMessage(msgID));
 		}
 	}
 
@@ -2349,8 +2350,8 @@ public class L1SkillUse {
 	private void sendFailMessageHandle() {
 		// 攻击スキル以外で对象を指定するスキルが失败した场合は失败したメッセージをクライアントに送信
 		// ※攻击スキルは障害物があっても成功时と同じアクションであるべき。
-		if ((_skill.getType() != L1Skills.TYPE_ATTACK) && !_skill.getTarget().equals("none") && _targetList.isEmpty()) {
-			sendFailMessage();
+		if ((this._skill.getType() != L1Skills.TYPE_ATTACK) && !this._skill.getTarget().equals("none") && this._targetList.isEmpty()) {
+			this.sendFailMessage();
 		}
 	}
 
@@ -2360,51 +2361,51 @@ public class L1SkillUse {
 	 * @param isSkillAction
 	 */
 	private void sendGrfx(final boolean isSkillAction) {
-		if (_actid == 0) {
-			_actid = _skill.getActionId();
+		if (this._actid == 0) {
+			this._actid = this._skill.getActionId();
 		}
-		if (_gfxid == 0) {
-			_gfxid = _skill.getCastGfx();
+		if (this._gfxid == 0) {
+			this._gfxid = this._skill.getCastGfx();
 		}
-		if (_gfxid == 0) {
+		if (this._gfxid == 0) {
 			return; // 如果图形显示 无
 		}
 		int[] data = null;
 
 		// 使用者为PC
-		if (_user instanceof L1PcInstance) {
+		if (this._user instanceof L1PcInstance) {
 
 			int targetid = 0;
-			if (_skillId != FIRE_WALL) {
-				targetid = _target.getId();
+			if (this._skillId != FIRE_WALL) {
+				targetid = this._target.getId();
 			}
-			final L1PcInstance pc = (L1PcInstance) _user;
+			final L1PcInstance pc = (L1PcInstance) this._user;
 
-			switch (_skillId) {
+			switch (this._skillId) {
 				case FIRE_WALL: // 火牢
 				case LIFE_STREAM: // 治愈能量风暴
 				case ELEMENTAL_FALL_DOWN: // 弱化属性
-					if (_skillId == FIRE_WALL) {
-						pc.setHeading(pc.targetDirection(_targetX, _targetY));
+					if (this._skillId == FIRE_WALL) {
+						pc.setHeading(pc.targetDirection(this._targetX, this._targetY));
 						pc.sendPackets(new S_ChangeHeading(pc));
 						pc.broadcastPacket(new S_ChangeHeading(pc));
 					}
-					final S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), _actid);
+					final S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), this._actid);
 					pc.sendPackets(gfx);
 					pc.broadcastPacket(gfx);
 					return;
 				case SHOCK_STUN: // 冲击之晕
-					if (_targetList.isEmpty()) { // 失败
+					if (this._targetList.isEmpty()) { // 失败
 						return;
 					}
 					else {
-						if (_target instanceof L1PcInstance) {
-							final L1PcInstance targetPc = (L1PcInstance) _target;
+						if (this._target instanceof L1PcInstance) {
+							final L1PcInstance targetPc = (L1PcInstance) this._target;
 							targetPc.sendPackets(new S_SkillSound(targetid, 4434));
 							targetPc.broadcastPacket(new S_SkillSound(targetid, 4434));
 						}
-						else if (_target instanceof L1NpcInstance) {
-							_target.broadcastPacket(new S_SkillSound(targetid, 4434));
+						else if (this._target instanceof L1NpcInstance) {
+							this._target.broadcastPacket(new S_SkillSound(targetid, 4434));
 						}
 						return;
 					}
@@ -2413,134 +2414,134 @@ public class L1SkillUse {
 					break;
 				case MIND_BREAK: // 心灵破坏
 				case JOY_OF_PAIN: // 疼痛的欢愉
-					data = new int[] { _actid, _dmg, 0 }; // data = {actid, dmg,
-															// effect}
+					data = new int[] { this._actid, this._dmg, 0 }; // data = {actid, dmg,
+					// effect}
 					pc.sendPackets(new S_AttackPacket(pc, targetid, data));
 					pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
-					pc.sendPackets(new S_SkillSound(targetid, _gfxid));
-					pc.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+					pc.sendPackets(new S_SkillSound(targetid, this._gfxid));
+					pc.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 					return;
 				case CONFUSION: // 混乱
-					data = new int[] { _actid, _dmg, 0 }; // data = {actid, dmg,
-															// effect}
+					data = new int[] { this._actid, this._dmg, 0 }; // data = {actid, dmg,
+					// effect}
 					pc.sendPackets(new S_AttackPacket(pc, targetid, data));
 					pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
 					return;
 				case SMASH: // 暴击
-					pc.sendPackets(new S_SkillSound(targetid, _gfxid));
-					pc.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+					pc.sendPackets(new S_SkillSound(targetid, this._gfxid));
+					pc.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 					return;
 				case TAMING_MONSTER: // 迷魅
-					pc.sendPackets(new S_EffectLocation(_targetX, _targetY, _gfxid));
-					pc.broadcastPacket(new S_EffectLocation(_targetX, _targetY, _gfxid));
+					pc.sendPackets(new S_EffectLocation(this._targetX, this._targetY, this._gfxid));
+					pc.broadcastPacket(new S_EffectLocation(this._targetX, this._targetY, this._gfxid));
 					return;
 				default:
 					break;
 			}
 
-			if (_targetList.isEmpty() && !(_skill.getTarget().equals("none"))) {
+			if (this._targetList.isEmpty() && !(this._skill.getTarget().equals("none"))) {
 
-				final int tempchargfx = _player.getTempCharGfx();
+				final int tempchargfx = this._player.getTempCharGfx();
 
 				switch (tempchargfx) {
 					case 5727:
 					case 5730:
-						_actid = ActionCodes.ACTION_SkillBuff;
+						this._actid = ActionCodes.ACTION_SkillBuff;
 						break;
 
 					case 5733:
 					case 5736:
-						_actid = ActionCodes.ACTION_Attack;
+						this._actid = ActionCodes.ACTION_Attack;
 						break;
 				}
 				if (isSkillAction) {
-					final S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(), _actid);
-					_player.sendPackets(gfx);
-					_player.broadcastPacket(gfx);
+					final S_DoActionGFX gfx = new S_DoActionGFX(this._player.getId(), this._actid);
+					this._player.sendPackets(gfx);
+					this._player.broadcastPacket(gfx);
 				}
 				return;
 			}
 
-			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
-				if (isPcSummonPet(_target)) { // 目标玩家、宠物、召唤兽
-					if ((_player.getZoneType() == 1) // 自己在安全区
-							|| (_target.getZoneType() == 1) // 目标在安全区
-							|| _player.checkNonPvP(_player, _target)) { // Non-PvP设定
-						data = new int[] { _actid, 0, _gfxid, 6 };
-						_player.sendPackets(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
-						_player.broadcastPacket(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
+			if (this._skill.getTarget().equals("attack") && (this._skillId != 18)) {
+				if (this.isPcSummonPet(this._target)) { // 目标玩家、宠物、召唤兽
+					if ((this._player.getZoneType() == 1) // 自己在安全区
+							|| (this._target.getZoneType() == 1) // 目标在安全区
+							|| this._player.checkNonPvP(this._player, this._target)) { // Non-PvP设定
+						data = new int[] { this._actid, 0, this._gfxid, 6 };
+						this._player.sendPackets(new S_UseAttackSkill(this._player, this._target.getId(), this._targetX, this._targetY, data));
+						this._player.broadcastPacket(new S_UseAttackSkill(this._player, this._target.getId(), this._targetX, this._targetY, data));
 						return;
 					}
 				}
 
 				// 单体攻击魔法 (NPC / PC 技能使用)
-				if (getSkillArea() == 0) {
-					data = new int[] { _actid, _dmg, _gfxid, 6 };
-					_player.sendPackets(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
-					_player.broadcastPacket(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _player);
+				if (this.getSkillArea() == 0) {
+					data = new int[] { this._actid, this._dmg, this._gfxid, 6 };
+					this._player.sendPackets(new S_UseAttackSkill(this._player, targetid, this._targetX, this._targetY, data));
+					this._player.broadcastPacket(new S_UseAttackSkill(this._player, targetid, this._targetX, this._targetY, data));
+					this._target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), this._player);
 				}
 
 				// 有方向范围攻击魔法
 				else {
-					final L1Character[] cha = new L1Character[_targetList.size()];
+					final L1Character[] cha = new L1Character[this._targetList.size()];
 					int i = 0;
-					for (final TargetStatus ts : _targetList) {
+					for (final TargetStatus ts : this._targetList) {
 						cha[i] = ts.getTarget();
 						i++;
 					}
-					_player.sendPackets(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
-					_player.broadcastPacket(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
+					this._player.sendPackets(new S_RangeSkill(this._player, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_DIR));
+					this._player.broadcastPacket(new S_RangeSkill(this._player, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_DIR));
 				}
 			}
 
 			// 无方向范围攻击魔法
-			else if (_skill.getTarget().equals("none") && (_skill.getType() == L1Skills.TYPE_ATTACK)) { // 无方向范围攻击魔法
-				final L1Character[] cha = new L1Character[_targetList.size()];
+			else if (this._skill.getTarget().equals("none") && (this._skill.getType() == L1Skills.TYPE_ATTACK)) { // 无方向范围攻击魔法
+				final L1Character[] cha = new L1Character[this._targetList.size()];
 				int i = 0;
-				for (final TargetStatus ts : _targetList) {
+				for (final TargetStatus ts : this._targetList) {
 					cha[i] = ts.getTarget();
-					cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), _player);
+					cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), this._player);
 					i++;
 				}
-				_player.sendPackets(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
-				_player.broadcastPacket(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
+				this._player.sendPackets(new S_RangeSkill(this._player, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_NODIR));
+				this._player.broadcastPacket(new S_RangeSkill(this._player, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_NODIR));
 			}
 
 			// 辅助魔法
 			else {
 				// 指定传送、集体传送术、世界树的呼唤以外
-				if ((_skillId != TELEPORT) && (_skillId != MASS_TELEPORT) && (_skillId != TELEPORT_TO_MATHER)) {
+				if ((this._skillId != TELEPORT) && (this._skillId != MASS_TELEPORT) && (this._skillId != TELEPORT_TO_MATHER)) {
 					// 施法动作
 					if (isSkillAction) {
-						final S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(), _skill.getActionId());
-						_player.sendPackets(gfx);
-						_player.broadcastPacket(gfx);
+						final S_DoActionGFX gfx = new S_DoActionGFX(this._player.getId(), this._skill.getActionId());
+						this._player.sendPackets(gfx);
+						this._player.broadcastPacket(gfx);
 					}
 					// 魔法屏障、反击屏障、镜反射 魔法效果只有自身显示
-					if ((_skillId == COUNTER_MAGIC) || (_skillId == COUNTER_BARRIER) || (_skillId == COUNTER_MIRROR)) {
-						_player.sendPackets(new S_SkillSound(targetid, _gfxid));
+					if ((this._skillId == COUNTER_MAGIC) || (this._skillId == COUNTER_BARRIER) || (this._skillId == COUNTER_MIRROR)) {
+						this._player.sendPackets(new S_SkillSound(targetid, this._gfxid));
 					}
-					else if ((_skillId == AWAKEN_ANTHARAS // 觉醒：安塔瑞斯
+					else if ((this._skillId == AWAKEN_ANTHARAS // 觉醒：安塔瑞斯
 							)
-							|| (_skillId == AWAKEN_FAFURION // 觉醒：法利昂
-							) || (_skillId == AWAKEN_VALAKAS)) { // 觉醒：巴拉卡斯
-						if (_skillId == _player.getAwakeSkillId()) { // 再次使用就解除觉醒状态
-							_player.sendPackets(new S_SkillSound(targetid, _gfxid));
-							_player.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+							|| (this._skillId == AWAKEN_FAFURION // 觉醒：法利昂
+							) || (this._skillId == AWAKEN_VALAKAS)) { // 觉醒：巴拉卡斯
+						if (this._skillId == this._player.getAwakeSkillId()) { // 再次使用就解除觉醒状态
+							this._player.sendPackets(new S_SkillSound(targetid, this._gfxid));
+							this._player.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 						}
 						else {
 							return;
 						}
 					}
 					else {
-						_player.sendPackets(new S_SkillSound(targetid, _gfxid));
-						_player.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+						this._player.sendPackets(new S_SkillSound(targetid, this._gfxid));
+						this._player.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 					}
 				}
 
 				// スキルのエフェクト表示はターゲット全员だが、あまり必要性がないので、ステータスのみ送信
-				for (final TargetStatus ts : _targetList) {
+				for (final TargetStatus ts : this._targetList) {
 					final L1Character cha = ts.getTarget();
 					if (cha instanceof L1PcInstance) {
 						final L1PcInstance chaPc = (L1PcInstance) cha;
@@ -2551,63 +2552,63 @@ public class L1SkillUse {
 		}
 
 		// 施法者为NPC
-		else if (_user instanceof L1NpcInstance) {
-			final int targetid = _target.getId();
+		else if (this._user instanceof L1NpcInstance) {
+			final int targetid = this._target.getId();
 
-			if (_user instanceof L1MerchantInstance) {
-				_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+			if (this._user instanceof L1MerchantInstance) {
+				this._user.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 				return;
 			}
 
-			if ((_skillId == CURSE_PARALYZE) || (_skillId == WEAKNESS) || (_skillId == DISEASE)) { // 木乃伊的诅咒、弱化术、疾病术
-				_user.setHeading(_user.targetDirection(_targetX, _targetY)); // 改变面向
-				_user.broadcastPacket(new S_ChangeHeading(_user));
+			if ((this._skillId == CURSE_PARALYZE) || (this._skillId == WEAKNESS) || (this._skillId == DISEASE)) { // 木乃伊的诅咒、弱化术、疾病术
+				this._user.setHeading(this._user.targetDirection(this._targetX, this._targetY)); // 改变面向
+				this._user.broadcastPacket(new S_ChangeHeading(this._user));
 			}
 
-			if (_targetList.isEmpty() && !(_skill.getTarget().equals("none"))) {
+			if (this._targetList.isEmpty() && !(this._skill.getTarget().equals("none"))) {
 				// ターゲット数が０で对象を指定するスキルの场合、魔法使用エフェクトだけ表示して终了
-				final S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _actid);
-				_user.broadcastPacket(gfx);
+				final S_DoActionGFX gfx = new S_DoActionGFX(this._user.getId(), this._actid);
+				this._user.broadcastPacket(gfx);
 				return;
 			}
 
-			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
-				if (getSkillArea() == 0) { // 单体攻击魔法
-					data = new int[] { _actid, _dmg, _gfxid, 6 };
-					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid, _targetX, _targetY, data));
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _user);
+			if (this._skill.getTarget().equals("attack") && (this._skillId != 18)) {
+				if (this.getSkillArea() == 0) { // 单体攻击魔法
+					data = new int[] { this._actid, this._dmg, this._gfxid, 6 };
+					this._user.broadcastPacket(new S_UseAttackSkill(this._user, targetid, this._targetX, this._targetY, data));
+					this._target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), this._user);
 				}
 				else { // 有方向范围攻击魔法
-					final L1Character[] cha = new L1Character[_targetList.size()];
+					final L1Character[] cha = new L1Character[this._targetList.size()];
 					int i = 0;
-					for (final TargetStatus ts : _targetList) {
+					for (final TargetStatus ts : this._targetList) {
 						cha[i] = ts.getTarget();
-						cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), _user);
+						cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), this._user);
 						i++;
 					}
-					_user.broadcastPacket(new S_RangeSkill(_user, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
+					this._user.broadcastPacket(new S_RangeSkill(this._user, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_DIR));
 				}
 			}
 
 			// 无方向范围魔法
-			else if (_skill.getTarget().equals("none") && (_skill.getType() == L1Skills.TYPE_ATTACK)) { // 无方向范围攻击魔法
-				final L1Character[] cha = new L1Character[_targetList.size()];
+			else if (this._skill.getTarget().equals("none") && (this._skill.getType() == L1Skills.TYPE_ATTACK)) { // 无方向范围攻击魔法
+				final L1Character[] cha = new L1Character[this._targetList.size()];
 				int i = 0;
-				for (final TargetStatus ts : _targetList) {
+				for (final TargetStatus ts : this._targetList) {
 					cha[i] = ts.getTarget();
 					i++;
 				}
-				_user.broadcastPacket(new S_RangeSkill(_user, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
+				this._user.broadcastPacket(new S_RangeSkill(this._user, cha, this._gfxid, this._actid, S_RangeSkill.TYPE_NODIR));
 			}
 
 			// 辅助魔法
 			else {
 				// テレポート、マステレ、テレポートトゥマザー以外
-				if ((_skillId != 5) && (_skillId != 69) && (_skillId != 131)) {
+				if ((this._skillId != 5) && (this._skillId != 69) && (this._skillId != 131)) {
 					// 魔法を使う动作のエフェクトは使用者だけ
-					final S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _actid);
-					_user.broadcastPacket(gfx);
-					_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));
+					final S_DoActionGFX gfx = new S_DoActionGFX(this._user.getId(), this._actid);
+					this._user.broadcastPacket(gfx);
+					this._user.broadcastPacket(new S_SkillSound(targetid, this._gfxid));
 				}
 			}
 		}
@@ -2619,10 +2620,10 @@ public class L1SkillUse {
 	 * @param pc
 	 */
 	private void sendHappenMessage(final L1PcInstance pc) {
-		final int msgID = _skill.getSysmsgIdHappen();
+		final int msgID = this._skill.getSysmsgIdHappen();
 		if (msgID > 0) {
 			// 效果讯息排除施法者本身。
-			if ((_skillId == AREA_OF_SILENCE) && (_user.getId() == pc.getId())) { // 封印禁地
+			if ((this._skillId == AREA_OF_SILENCE) && (this._user.getId() == pc.getId())) { // 封印禁地
 				return;
 			}
 			pc.sendPackets(new S_ServerMessage(msgID));
@@ -2635,118 +2636,118 @@ public class L1SkillUse {
 	 * @param pc
 	 */
 	private void sendIcon(final L1PcInstance pc) {
-		if (_skillTime == 0) {
-			_getBuffIconDuration = _skill.getBuffDuration(); // 效果时间
+		if (this._skillTime == 0) {
+			this._getBuffIconDuration = this._skill.getBuffDuration(); // 效果时间
 		}
 		else {
-			_getBuffIconDuration = _skillTime; // パラメータのtimeが0以外なら、效果时间として设定する
+			this._getBuffIconDuration = this._skillTime; // パラメータのtimeが0以外なら、效果时间として设定する
 		}
 
-		switch (_skillId) {
+		switch (this._skillId) {
 			case SHIELD: // 防护罩
-				pc.sendPackets(new S_SkillIconShield(5, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconShield(5, this._getBuffIconDuration));
 				break;
 
 			case SHADOW_ARMOR: // 影之防护
-				pc.sendPackets(new S_SkillIconShield(3, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconShield(3, this._getBuffIconDuration));
 				break;
 
 			case DRESS_DEXTERITY: // 敏捷提升
-				pc.sendPackets(new S_Dexup(pc, 2, _getBuffIconDuration));
+				pc.sendPackets(new S_Dexup(pc, 2, this._getBuffIconDuration));
 				break;
 
 			case DRESS_MIGHTY: // 力量提升
-				pc.sendPackets(new S_Strup(pc, 2, _getBuffIconDuration));
+				pc.sendPackets(new S_Strup(pc, 2, this._getBuffIconDuration));
 				break;
 
 			case GLOWING_AURA: // 激励士气
-				pc.sendPackets(new S_SkillIconAura(113, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(113, this._getBuffIconDuration));
 				break;
 
 			case SHINING_AURA: // 钢铁士气
-				pc.sendPackets(new S_SkillIconAura(114, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(114, this._getBuffIconDuration));
 				break;
 
 			case BRAVE_AURA: // 冲击士气
-				pc.sendPackets(new S_SkillIconAura(116, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(116, this._getBuffIconDuration));
 				break;
 
 			case FIRE_WEAPON: // 火焰武器
-				pc.sendPackets(new S_SkillIconAura(147, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(147, this._getBuffIconDuration));
 				break;
 
 			case WIND_SHOT: // 风之神射
-				pc.sendPackets(new S_SkillIconAura(148, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(148, this._getBuffIconDuration));
 				break;
 
 			case FIRE_BLESS: // 烈炎气息
-				pc.sendPackets(new S_SkillIconAura(154, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(154, this._getBuffIconDuration));
 				break;
 
 			case STORM_EYE: // 暴风之眼
-				pc.sendPackets(new S_SkillIconAura(155, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(155, this._getBuffIconDuration));
 				break;
 
 			case EARTH_BLESS: // 大地的祝福
-				pc.sendPackets(new S_SkillIconShield(7, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconShield(7, this._getBuffIconDuration));
 				break;
 
 			case BURNING_WEAPON: // 烈炎武器
-				pc.sendPackets(new S_SkillIconAura(162, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(162, this._getBuffIconDuration));
 				break;
 
 			case STORM_SHOT: // 暴风神射
-				pc.sendPackets(new S_SkillIconAura(165, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconAura(165, this._getBuffIconDuration));
 				break;
 
 			case IRON_SKIN: // 钢铁防护
-				pc.sendPackets(new S_SkillIconShield(10, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconShield(10, this._getBuffIconDuration));
 				break;
 
 			case EARTH_SKIN: // 大地防护
-				pc.sendPackets(new S_SkillIconShield(6, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconShield(6, this._getBuffIconDuration));
 				break;
 
 			case PHYSICAL_ENCHANT_STR: // 体魄强健术：STR
-				pc.sendPackets(new S_Strup(pc, 5, _getBuffIconDuration));
+				pc.sendPackets(new S_Strup(pc, 5, this._getBuffIconDuration));
 				break;
 
 			case PHYSICAL_ENCHANT_DEX: // 通畅气脉术：DEX
-				pc.sendPackets(new S_Dexup(pc, 5, _getBuffIconDuration));
+				pc.sendPackets(new S_Dexup(pc, 5, this._getBuffIconDuration));
 				break;
 
 			case HASTE:
 			case GREATER_HASTE: // 加速术,强力加速术
-				pc.sendPackets(new S_SkillHaste(pc.getId(), 1, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillHaste(pc.getId(), 1, this._getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
 				break;
 
 			case HOLY_WALK:
 			case MOVING_ACCELERATION:
 			case WIND_WALK: // 神圣疾走、行走加速、风之疾走
-				pc.sendPackets(new S_SkillBrave(pc.getId(), 4, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillBrave(pc.getId(), 4, this._getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 4, 0));
 				break;
 
 			case BLOODLUST: // 血之渴望
-				pc.sendPackets(new S_SkillBrave(pc.getId(), 6, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillBrave(pc.getId(), 6, this._getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 6, 0));
 				break;
 
 			case SLOW:
 			case MASS_SLOW:
 			case ENTANGLE: // 缓速、集体缓速、地面障碍
-				pc.sendPackets(new S_SkillHaste(pc.getId(), 2, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillHaste(pc.getId(), 2, this._getBuffIconDuration));
 				pc.broadcastPacket(new S_SkillHaste(pc.getId(), 2, 0));
 				break;
 
 			case IMMUNE_TO_HARM: // 圣结界
-				pc.sendPackets(new S_SkillIconGFX(40, _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconGFX(40, this._getBuffIconDuration));
 				break;
 
 			case WIND_SHACKLE: // 风之枷锁
-				pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
-				pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
+				pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), this._getBuffIconDuration));
+				pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), this._getBuffIconDuration));
 				break;
 		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
@@ -2758,13 +2759,13 @@ public class L1SkillUse {
 	 * @param flg
 	 */
 	private void setCheckedUseSkill(final boolean flg) {
-		_checkedUseSkill = flg;
+		this._checkedUseSkill = flg;
 	}
 
 	// 设定技能使用延迟
 	private void setDelay() {
-		if (_skill.getReuseDelay() > 0) {
-			L1SkillDelay.onSkillUse(_user, _skill.getReuseDelay());
+		if (this._skill.getReuseDelay() > 0) {
+			L1SkillDelay.onSkillUse(this._user, this._skill.getReuseDelay());
 		}
 	}
 
@@ -2776,7 +2777,7 @@ public class L1SkillUse {
 	 */
 	private void stopSkillList(final L1Character cha, final int[] repeat_skill) {
 		for (final int skillId : repeat_skill) {
-			if (skillId != _skillId) {
+			if (skillId != this._skillId) {
 				cha.removeSkillEffect(skillId);
 			}
 		}
@@ -2788,47 +2789,47 @@ public class L1SkillUse {
 	private void useConsume() {
 
 		// 如果为NPC、仅减少HP、MP
-		if (_user instanceof L1NpcInstance) {
-			final int current_hp = _npc.getCurrentHp() - _hpConsume;
-			_npc.setCurrentHp(current_hp);
+		if (this._user instanceof L1NpcInstance) {
+			final int current_hp = this._npc.getCurrentHp() - this._hpConsume;
+			this._npc.setCurrentHp(current_hp);
 
-			final int current_mp = _npc.getCurrentMp() - _mpConsume;
-			_npc.setCurrentMp(current_mp);
+			final int current_mp = this._npc.getCurrentMp() - this._mpConsume;
+			this._npc.setCurrentMp(current_mp);
 			return;
 		}
 
 		// HP・MP消耗 已经计算使用量
-		if (_skillId == FINAL_BURN) { // 会心一击
-			_player.setCurrentHp(1);
-			_player.setCurrentMp(0);
+		if (this._skillId == FINAL_BURN) { // 会心一击
+			this._player.setCurrentHp(1);
+			this._player.setCurrentMp(0);
 		}
 		else {
-			final int current_hp = _player.getCurrentHp() - _hpConsume;
-			_player.setCurrentHp(current_hp);
+			final int current_hp = this._player.getCurrentHp() - this._hpConsume;
+			this._player.setCurrentHp(current_hp);
 
-			final int current_mp = _player.getCurrentMp() - _mpConsume;
-			_player.setCurrentMp(current_mp);
+			final int current_mp = this._player.getCurrentMp() - this._mpConsume;
+			this._player.setCurrentMp(current_mp);
 		}
 
 		// 减去Lawful
-		int lawful = _player.getLawful() + _skill.getLawful();
+		int lawful = this._player.getLawful() + this._skill.getLawful();
 		if (lawful > 32767) {
 			lawful = 32767;
 		}
 		else if (lawful < -32767) {
 			lawful = -32767;
 		}
-		_player.setLawful(lawful);
+		this._player.setLawful(lawful);
 
-		final int itemConsume = _skill.getItemConsumeId();
-		final int itemConsumeCount = _skill.getItemConsumeCount();
+		final int itemConsume = this._skill.getItemConsumeId();
+		final int itemConsumeCount = this._skill.getItemConsumeCount();
 
 		if (itemConsume == 0) {
 			return; // 施放魔法没有必要材料
 		}
 
 		// 减去使用材料
-		_player.getInventory().consumeItem(itemConsume, itemConsumeCount);
+		this._player.getInventory().consumeItem(itemConsume, itemConsumeCount);
 	}
 
 }

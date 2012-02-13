@@ -30,16 +30,16 @@ public class S_DoorPack extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_DoorPack(final L1DoorInstance door) {
-		buildPacket(door);
+		this.buildPacket(door);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -48,49 +48,49 @@ public class S_DoorPack extends ServerBasePacket {
 	}
 
 	private void buildPacket(final L1DoorInstance door) {
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(door.getX());
-		writeH(door.getY());
-		writeD(door.getId());
-		writeH(door.getGfxId());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(door.getX());
+		this.writeH(door.getY());
+		this.writeD(door.getId());
+		this.writeH(door.getGfxId());
 		final int doorStatus = door.getStatus();
 		final int openStatus = door.getOpenStatus();
 		if (door.isDead()) {
-			writeC(doorStatus);
+			this.writeC(doorStatus);
 		}
 		else if (openStatus == ActionCodes.ACTION_Open) {
-			writeC(openStatus);
+			this.writeC(openStatus);
 		}
 		else if ((door.getMaxHp() > 1) && (doorStatus != 0)) {
-			writeC(doorStatus);
+			this.writeC(doorStatus);
 		}
 		else {
-			writeC(openStatus);
+			this.writeC(openStatus);
 		}
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeD(1);
-		writeH(0);
-		writeS(null);
-		writeS(null);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeD(1);
+		this.writeH(0);
+		this.writeS(null);
+		this.writeS(null);
 		int status = 0;
 		if (door.getPoison() != null) { // 毒状態
 			if (door.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
 		}
-		writeC(status);
-		writeD(0);
-		writeS(null);
-		writeS(null);
-		writeC(0);
-		writeC(0xFF);
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(status);
+		this.writeD(0);
+		this.writeS(null);
+		this.writeS(null);
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 }

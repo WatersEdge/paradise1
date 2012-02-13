@@ -39,70 +39,70 @@ public class S_Paralysis extends ServerBasePacket {
 	public static final int TYPE_TELEPORT_UNLOCK = 7;
 
 	public S_Paralysis(final int type, final boolean flag) {
-		writeC(Opcodes.S_OPCODE_PARALYSIS);
+		this.writeC(Opcodes.S_OPCODE_PARALYSIS);
 		if (type == TYPE_PARALYSIS) // 你的身体完全麻痹了。
 		{
 			if (flag == true) {
-				writeC(2);
+				this.writeC(2);
 			}
 			else {
-				writeC(3);
+				this.writeC(3);
 			}
 		}
 		else if (type == TYPE_PARALYSIS2) // 你的身体完全麻痹了。
 		{
 			if (flag == true) {
-				writeC(4);
+				this.writeC(4);
 			}
 			else {
-				writeC(5);
+				this.writeC(5);
 			}
 		}
 		else if (type == TYPE_TELEPORT_UNLOCK) // 解除传送锁定
 		{
-			writeC(7);
+			this.writeC(7);
 		}
 		else if (type == TYPE_SLEEP) // 你开始沉睡。
 		{
 			if (flag == true) {
-				writeC(10);
+				this.writeC(10);
 			}
 			else {
-				writeC(11);
+				this.writeC(11);
 			}
 		}
 		else if (type == TYPE_FREEZE) // 被冻结了。
 		{
 			if (flag == true) {
-				writeC(12);
+				this.writeC(12);
 			}
 			else {
-				writeC(13);
+				this.writeC(13);
 			}
 		}
 		else if (type == TYPE_STUN) // 处于昏迷状态。
 		{
 			if (flag == true) {
-				writeC(22);
+				this.writeC(22);
 			}
 			else {
-				writeC(23);
+				this.writeC(23);
 			}
 		}
 		else if (type == TYPE_BIND) // 双脚受困无法移动。
 		{
 			if (flag == true) {
-				writeC(24);
+				this.writeC(24);
 			}
 			else {
-				writeC(25);
+				this.writeC(25);
 			}
 		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

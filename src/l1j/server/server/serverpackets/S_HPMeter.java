@@ -33,7 +33,7 @@ public class S_HPMeter extends ServerBasePacket {
 	 * @param hpRatio
 	 */
 	public S_HPMeter(final int objId, final int hpRatio) {
-		buildPacket(objId, hpRatio);
+		this.buildPacket(objId, hpRatio);
 	}
 
 	/**
@@ -48,16 +48,16 @@ public class S_HPMeter extends ServerBasePacket {
 			hpRatio = 100 * cha.getCurrentHp() / cha.getMaxHp();
 		}
 
-		buildPacket(objId, hpRatio);
+		this.buildPacket(objId, hpRatio);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class S_HPMeter extends ServerBasePacket {
 	}
 
 	private void buildPacket(final int objId, final int hpRatio) {
-		writeC(Opcodes.S_OPCODE_HPMETER);
-		writeD(objId);
-		writeC(hpRatio);
+		this.writeC(Opcodes.S_OPCODE_HPMETER);
+		this.writeD(objId);
+		this.writeC(hpRatio);
 	}
 }

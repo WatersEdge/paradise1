@@ -327,45 +327,45 @@ public class L1PolyMorph {
 	private final int _causeFlg;
 
 	public L1PolyMorph(final int id, final String name, final int polyId, final int minLevel, final int weaponEquipFlg, final int armorEquipFlg, final boolean canUseSkill, final int causeFlg) {
-		_id = id;
-		_name = name;
-		_polyId = polyId;
-		_minLevel = minLevel;
-		_weaponEquipFlg = weaponEquipFlg;
-		_armorEquipFlg = armorEquipFlg;
-		_canUseSkill = canUseSkill;
-		_causeFlg = causeFlg;
+		this._id = id;
+		this._name = name;
+		this._polyId = polyId;
+		this._minLevel = minLevel;
+		this._weaponEquipFlg = weaponEquipFlg;
+		this._armorEquipFlg = armorEquipFlg;
+		this._canUseSkill = canUseSkill;
+		this._causeFlg = causeFlg;
 	}
 
 	public boolean canUseSkill() {
-		return _canUseSkill;
+		return this._canUseSkill;
 	}
 
 	public int getArmorEquipFlg() {
-		return _armorEquipFlg;
+		return this._armorEquipFlg;
 	}
 
 	public int getCauseFlg() {
-		return _causeFlg;
+		return this._causeFlg;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getMinLevel() {
-		return _minLevel;
+		return this._minLevel;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public int getPolyId() {
-		return _polyId;
+		return this._polyId;
 	}
 
 	public int getWeaponEquipFlg() {
-		return _weaponEquipFlg;
+		return this._weaponEquipFlg;
 	}
 }

@@ -45,27 +45,27 @@ public class S_ActiveSpells extends ServerBasePacket {
 		// 取得技能剩余时间
 		CharBuffTable.buffRemainingTime(pc);
 
-		writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
-		writeC(0x14);
+		this.writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
+		this.writeC(0x14);
 
-		for (final int i : activeSpells(pc)) {
+		for (final int i : this.activeSpells(pc)) {
 			if (i != 72) {
-				writeC(i);
+				this.writeC(i);
 			}
 			else {
-				writeD((int) (System.currentTimeMillis() / 1000));
+				this.writeD((int) (System.currentTimeMillis() / 1000));
 			}
 		}
-		writeByte(randBox);
+		this.writeByte(randBox);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	// 登入时给于角色状态剩余时间

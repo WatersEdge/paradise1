@@ -39,45 +39,45 @@ public class S_FollowerPack extends ServerBasePacket {
 	 * @param pc
 	 */
 	public S_FollowerPack(final L1FollowerInstance follower, final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(follower.getX());
-		writeH(follower.getY());
-		writeD(follower.getId());
-		writeH(follower.getGfxId());
-		writeC(follower.getStatus());
-		writeC(follower.getHeading());
-		writeC(follower.getChaLightSize());
-		writeC(follower.getMoveSpeed());
-		writeD(0);
-		writeH(0);
-		writeS(follower.getNameId());
-		writeS(follower.getTitle());
+		this.writeC(Opcodes.S_OPCODE_CHARPACK);
+		this.writeH(follower.getX());
+		this.writeH(follower.getY());
+		this.writeD(follower.getId());
+		this.writeH(follower.getGfxId());
+		this.writeC(follower.getStatus());
+		this.writeC(follower.getHeading());
+		this.writeC(follower.getChaLightSize());
+		this.writeC(follower.getMoveSpeed());
+		this.writeD(0);
+		this.writeH(0);
+		this.writeS(follower.getNameId());
+		this.writeS(follower.getTitle());
 		int status = 0;
 		if (follower.getPoison() != null) { // 毒状态
 			if (follower.getPoison().getEffectId() == 1) {
 				status |= STATUS_POISON;
 			}
 		}
-		writeC(status); // 状态
-		writeD(0);
-		writeS(null);
-		writeS(null);
-		writeC(0); // 物件分类
-		writeC(0xFF); // HP
-		writeC(0);
-		writeC(follower.getLevel()); // LV
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		this.writeC(status); // 状态
+		this.writeD(0);
+		this.writeS(null);
+		this.writeS(null);
+		this.writeC(0); // 物件分类
+		this.writeC(0xFF); // HP
+		this.writeC(0);
+		this.writeC(follower.getLevel()); // LV
+		this.writeC(0);
+		this.writeC(0xFF);
+		this.writeC(0xFF);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
+		if (this._byte == null) {
+			this._byte = this._bao.toByteArray();
 		}
 
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

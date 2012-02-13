@@ -80,182 +80,182 @@ public class L1Armor extends L1Item {
 
 	@Override
 	public int get_ac() {
-		return _ac;
+		return this._ac;
 	}
 
 	@Override
 	public int get_defense_earth() {
-		return _defense_earth;
+		return this._defense_earth;
 	}
 
 	@Override
 	public int get_defense_fire() {
-		return _defense_fire;
+		return this._defense_fire;
 	}
 
 	@Override
 	public int get_defense_water() {
-		return _defense_water;
+		return this._defense_water;
 	}
 
 	@Override
 	public int get_defense_wind() {
-		return _defense_wind;
+		return this._defense_wind;
 	}
 
 	@Override
 	public int get_regist_blind() {
-		return _regist_blind;
+		return this._regist_blind;
 	}
 
 	@Override
 	public int get_regist_freeze() {
-		return _regist_freeze;
+		return this._regist_freeze;
 	}
 
 	@Override
 	public int get_regist_sleep() {
-		return _regist_sleep;
+		return this._regist_sleep;
 	}
 
 	@Override
 	public int get_regist_stone() {
-		return _regist_stone;
+		return this._regist_stone;
 	}
 
 	@Override
 	public int get_regist_stun() {
-		return _regist_stun;
+		return this._regist_stun;
 	}
 
 	@Override
 	public int get_regist_sustain() {
-		return _regist_sustain;
+		return this._regist_sustain;
 	}
 
 	@Override
 	public int getBowDmgModifierByArmor() {
-		return _bowDmgModifierByArmor;
+		return this._bowDmgModifierByArmor;
 	}
 
 	@Override
 	public int getBowHitModifierByArmor() {
-		return _bowHitModifierByArmor;
+		return this._bowHitModifierByArmor;
 	}
 
 	@Override
 	public int getDamageReduction() {
-		return _damageReduction;
+		return this._damageReduction;
 	}
 
 	@Override
 	public int getDmgModifierByArmor() {
-		return _dmgModifierByArmor;
+		return this._dmgModifierByArmor;
 	}
 
 	@Override
 	public int getGrade() {
-		return _grade;
+		return this._grade;
 	}
 
 	@Override
 	public int getHitModifierByArmor() {
-		return _hitModifierByArmor;
+		return this._hitModifierByArmor;
 	}
 
 	@Override
 	public int getWeightReduction() {
-		return _weightReduction;
+		return this._weightReduction;
 	}
 
 	/** 设定物理防御 */
 	public void set_ac(final int i) {
-		_ac = i;
+		this._ac = i;
 	}
 
 	/** 设定地属性防御 */
 	public void set_defense_earth(final int i) {
-		_defense_earth = i;
+		this._defense_earth = i;
 	}
 
 	/** 设定火属性防御 */
 	public void set_defense_fire(final int i) {
-		_defense_fire = i;
+		this._defense_fire = i;
 	}
 
 	/** 设定水属性防御 */
 	public void set_defense_water(final int i) {
-		_defense_water = i;
+		this._defense_water = i;
 	}
 
 	/** 设定风属性防御 */
 	public void set_defense_wind(final int i) {
-		_defense_wind = i;
+		this._defense_wind = i;
 	}
 
 	/** 设定暗闇耐性 */
 	public void set_regist_blind(final int i) {
-		_regist_blind = i;
+		this._regist_blind = i;
 	}
 
 	/** 设定寒冰耐性 */
 	public void set_regist_freeze(final int i) {
-		_regist_freeze = i;
+		this._regist_freeze = i;
 	}
 
 	/** 设定睡眠耐性 */
 	public void set_regist_sleep(final int i) {
-		_regist_sleep = i;
+		this._regist_sleep = i;
 	}
 
 	/** 设定石化耐性 */
 	public void set_regist_stone(final int i) {
-		_regist_stone = i;
+		this._regist_stone = i;
 	}
 
 	/** 设定昏迷耐性 */
 	public void set_regist_stun(final int i) {
-		_regist_stun = i;
+		this._regist_stun = i;
 	}
 
 	/** 设定支撑耐性 */
 	public void set_regist_sustain(final int i) {
-		_regist_sustain = i;
+		this._regist_sustain = i;
 	}
 
 	/** 设定弓类装备的伤害修正 */
 	public void setBowDmgModifierByArmor(final int i) {
-		_bowDmgModifierByArmor = i;
+		this._bowDmgModifierByArmor = i;
 	}
 
 	/** 设定弓类装备的命中率修正 */
 	public void setBowHitModifierByArmor(final int i) {
-		_bowHitModifierByArmor = i;
+		this._bowHitModifierByArmor = i;
 	}
 
 	/** 设定伤害减免 */
 	public void setDamageReduction(final int i) {
-		_damageReduction = i;
+		this._damageReduction = i;
 	}
 
 	/** 设定装备的伤害修正 */
 	public void setDmgModifierByArmor(final int i) {
-		_dmgModifierByArmor = i;
+		this._dmgModifierByArmor = i;
 	}
 
 	/** 设定饰品级别 */
 	public void setGrade(final int i) {
-		_grade = i;
+		this._grade = i;
 	}
 
 	/** 设定装备的命中率修正 */
 	public void setHitModifierByArmor(final int i) {
-		_hitModifierByArmor = i;
+		this._hitModifierByArmor = i;
 	}
 
 	/** 设定负重轻减 */
 	public void setWeightReduction(final int i) {
-		_weightReduction = i;
+		this._weightReduction = i;
 	}
 
 }

@@ -35,47 +35,47 @@ public class S_Race extends ServerBasePacket {
 	public static final int GameEnd = 0x46;
 
 	public S_Race(final FastTable<L1PcInstance> playerList, final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(PlayerInfo);
-		writeH(playerList.size()); // 參賽者人數
-		writeH(playerList.indexOf(pc)); // 名次
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(PlayerInfo);
+		this.writeH(playerList.size()); // 參賽者人數
+		this.writeH(playerList.indexOf(pc)); // 名次
 		for (final L1PcInstance player : playerList) {
 			if (player == null) {
 				continue;
 			}
-			writeS(player.getName());
+			this.writeS(player.getName());
 		}
 	}
 
 	// GameStart// CountDown// GameOver// GameEnd
 	public S_Race(final int type) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(type);
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(type);
 		if (type == GameStart) {
-			writeC(0x05); // 倒數5秒
+			this.writeC(0x05); // 倒數5秒
 		}
 	}
 
 	public S_Race(final int maxLap, final int lap) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(Lap);
-		writeH(maxLap); // 最大圈數
-		writeH(lap); // 目前圈數
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(Lap);
+		this.writeH(maxLap); // 最大圈數
+		this.writeH(lap); // 目前圈數
 	}
 
 	public S_Race(final String winnerName, final int time) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(Winner);
-		writeS(winnerName);
-		writeD(time * 1000);
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(Winner);
+		this.writeS(winnerName);
+		this.writeD(time * 1000);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override

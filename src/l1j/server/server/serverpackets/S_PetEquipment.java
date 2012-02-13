@@ -17,17 +17,17 @@ public class S_PetEquipment extends ServerBasePacket {
 	 */
 
 	public S_PetEquipment(final int i, final L1PetInstance pet, final int j) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x25);
-		writeC(i);
-		writeD(pet.getId());
-		writeC(j);
-		writeC(pet.getAc()); // 宠物防御
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(0x25);
+		this.writeC(i);
+		this.writeD(pet.getId());
+		this.writeC(j);
+		this.writeC(pet.getAc()); // 宠物防御
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

@@ -32,15 +32,15 @@ public class L1NpcHtml {
 		if ((name == null) || (args == null)) {
 			throw new NullPointerException();
 		}
-		_name = name;
-		_args = args;
+		this._name = name;
+		this._args = args;
 	}
 
 	public String[] getArgs() {
-		return _args;
+		return this._args;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 }

@@ -49,7 +49,7 @@ public class L1WarSpawn {
 		final L1Npc l1npc = NpcTable.getInstance().getTemplate(81125); // 王冠
 		int[] loc = new int[3];
 		loc = L1CastleLocation.getTowerLoc(castleId);
-		SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
+		this.SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
 	}
 
 	public void SpawnFlag(final int castleId) {
@@ -65,16 +65,16 @@ public class L1WarSpawn {
 		final short mapid = (short) loc[4];
 
 		for (x = locx1, y = locy1; x <= locx2; x += 8) {
-			SpawnWarObject(l1npc, x, y, mapid);
+			this.SpawnWarObject(l1npc, x, y, mapid);
 		}
 		for (x = locx2, y = locy1; y <= locy2; y += 8) {
-			SpawnWarObject(l1npc, x, y, mapid);
+			this.SpawnWarObject(l1npc, x, y, mapid);
 		}
 		for (x = locx2, y = locy2; x >= locx1; x -= 8) {
-			SpawnWarObject(l1npc, x, y, mapid);
+			this.SpawnWarObject(l1npc, x, y, mapid);
 		}
 		for (x = locx1, y = locy2; y >= locy1; y -= 8) {
-			SpawnWarObject(l1npc, x, y, mapid);
+			this.SpawnWarObject(l1npc, x, y, mapid);
 		}
 	}
 
@@ -86,9 +86,9 @@ public class L1WarSpawn {
 		final L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId); // 塔守护者
 		int[] loc = new int[3];
 		loc = L1CastleLocation.getTowerLoc(castleId);
-		SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
+		this.SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
 		if (castleId == L1CastleLocation.ADEN_CASTLE_ID) {
-			spawnSubTower();
+			this.spawnSubTower();
 		}
 	}
 
@@ -98,7 +98,7 @@ public class L1WarSpawn {
 		for (int i = 1; i <= 4; i++) {
 			l1npc = NpcTable.getInstance().getTemplate(81189 + i); // 守护者之塔
 			loc = L1CastleLocation.getSubTowerLoc(i);
-			SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
+			this.SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
 		}
 	}
 
@@ -106,9 +106,9 @@ public class L1WarSpawn {
 		try {
 			if (l1npc != null) {
 				final String s = l1npc.getImpl();
-				_constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(s).append("Instance").toString()).getConstructors()[0];
+				this._constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(s).append("Instance").toString()).getConstructors()[0];
 				final Object aobj[] = { l1npc };
-				final L1NpcInstance npc = (L1NpcInstance) _constructor.newInstance(aobj);
+				final L1NpcInstance npc = (L1NpcInstance) this._constructor.newInstance(aobj);
 				npc.setId(IdFactory.getInstance().nextId());
 				npc.setX(locx);
 				npc.setY(locy);

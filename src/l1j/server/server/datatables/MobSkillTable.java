@@ -48,18 +48,18 @@ public class MobSkillTable {
 	private final Map<Integer, L1MobSkill> _mobskills;
 
 	private MobSkillTable() {
-		_mobskills = Maps.newMap();
-		loadMobSkillData();
-		_initialized = true;
+		this._mobskills = Maps.newMap();
+		this.loadMobSkillData();
+		this._initialized = true;
 	}
 
 	public L1MobSkill getTemplate(final int id) {
-		return _mobskills.get(id);
+		return this._mobskills.get(id);
 	}
 
 	/** 初始化 */
 	public boolean isInitialized() {
-		return _initialized;
+		return this._initialized;
 	}
 
 	private void loadMobSkillData() {
@@ -114,7 +114,7 @@ public class MobSkillTable {
 						mobskill.setPolyId(actNo, rs2.getInt("PolyId"));
 					}
 
-					_mobskills.put(new Integer(mobid), mobskill);
+					this._mobskills.put(new Integer(mobid), mobskill);
 				}
 				catch (final SQLException e1) {
 					_log.log(Level.SEVERE, e1.getLocalizedMessage(), e1);

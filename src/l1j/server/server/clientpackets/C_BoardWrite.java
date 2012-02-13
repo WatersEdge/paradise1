@@ -37,9 +37,9 @@ public class C_BoardWrite extends ClientBasePacket {
 
 	public C_BoardWrite(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		final int id = readD();
-		final String title = readS();
-		final String content = readS();
+		final int id = this.readD();
+		final String title = this.readS();
+		final String content = this.readS();
 
 		final L1Object tg = L1World.getInstance().findObject(id);
 

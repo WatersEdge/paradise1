@@ -40,12 +40,12 @@ public class S_ShopSellList extends ServerBasePacket {
 	 * 表示商店道具清单。角色按下购买按钮时发送。
 	 */
 	public S_ShopSellList(final int objId, final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_SHOWSHOPBUYLIST);
-		writeD(objId);
+		this.writeC(Opcodes.S_OPCODE_SHOWSHOPBUYLIST);
+		this.writeD(objId);
 
 		final L1Object npcObj = L1World.getInstance().findObject(objId);
 		if (!(npcObj instanceof L1NpcInstance)) {
-			writeH(0);
+			this.writeH(0);
 			return;
 		}
 		final int npcId = ((L1NpcInstance) npcObj).getNpcTemplate().get_npcId();
@@ -54,7 +54,7 @@ public class S_ShopSellList extends ServerBasePacket {
 		final L1Shop shop = ShopTable.getInstance().get(npcId);
 		final List<L1ShopItem> shopItems = shop.getSellingItems();
 
-		writeH(shopItems.size());
+		this.writeH(shopItems.size());
 
 		// L1ItemInstanceのgetStatusBytesを利用するため
 		final L1ItemInstance dummy = new L1ItemInstance();
@@ -63,43 +63,43 @@ public class S_ShopSellList extends ServerBasePacket {
 			final L1ShopItem shopItem = shopItems.get(i);
 			final L1Item item = shopItem.getItem();
 			final int price = calc.layTax((int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE));
-			writeD(i); // 排序
-			writeH(shopItem.getItem().getGfxId()); // 圆形
-			writeD(price); // 售价
+			this.writeD(i); // 排序
+			this.writeH(shopItem.getItem().getGfxId()); // 圆形
+			this.writeD(price); // 售价
 
 			if (shopItem.getPackCount() > 1) {
-				writeS(item.getName() + " (" + shopItem.getPackCount() + ")");
+				this.writeS(item.getName() + " (" + shopItem.getPackCount() + ")");
 			}
 			else {
 				if (item.getItemId() == 40309) {// 食人妖精RaceTicket
 					String[] temp = item.getName().split(" ");
 					final String buf = temp[temp.length - 1];
 					temp = buf.split("-");
-					writeS(buf + " $" + (1212 + Integer.parseInt(temp[temp.length - 1])));
+					this.writeS(buf + " $" + (1212 + Integer.parseInt(temp[temp.length - 1])));
 				}
 				else {
-					writeS(item.getName());
+					this.writeS(item.getName());
 				}
 			}
 
 			final L1Item template = ItemTable.getInstance().getTemplate(item.getItemId());
 			if (template == null) {
-				writeC(0);
+				this.writeC(0);
 			}
 			else {
 				dummy.setItem(template);
 				final byte[] status = dummy.getStatusBytes();
-				writeC(status.length);
+				this.writeC(status.length);
 				for (final byte b : status) {
-					writeC(b);
+					this.writeC(b);
 				}
 			}
 		}
-		writeH(0x07); // 0x00:无显示 0x01:珍珠 0x07:金币
+		this.writeH(0x07); // 0x00:无显示 0x01:珍珠 0x07:金币
 	}
 
 	@Override
 	public byte[] getContent() throws IOException {
-		return _bao.toByteArray();
+		return this._bao.toByteArray();
 	}
 }

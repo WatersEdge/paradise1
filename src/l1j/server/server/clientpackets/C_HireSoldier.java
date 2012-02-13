@@ -30,11 +30,11 @@ public class C_HireSoldier extends ClientBasePacket {
 	@SuppressWarnings("unused")
 	public C_HireSoldier(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		final int something1 = readH(); // S_HireSoldier封包の引数
-		final int something2 = readH(); // S_HireSoldier封包の引数
-		final int something3 = readD(); // 1以外入らない？
-		final int something4 = readD(); // S_HireSoldier封包の引数
-		final int number = readH(); // 雇用人数
+		final int something1 = this.readH(); // S_HireSoldier封包の引数
+		final int something2 = this.readH(); // S_HireSoldier封包の引数
+		final int something3 = this.readD(); // 1以外入らない？
+		final int something4 = this.readD(); // S_HireSoldier封包の引数
+		final int number = this.readH(); // 雇用人数
 
 		// < 佣兵雇用处理
 	}

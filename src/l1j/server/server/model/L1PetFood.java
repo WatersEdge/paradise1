@@ -36,36 +36,36 @@ public class L1PetFood extends TimerTask {
 
 	/** 宠物饱食度计时器 */
 	public L1PetFood(final L1PetInstance pet, final int itemObj) {
-		_pet = pet;
-		_l1pet = PetTable.getInstance().getTemplate(itemObj);
+		this._pet = pet;
+		this._l1pet = PetTable.getInstance().getTemplate(itemObj);
 	}
 
 	@Override
 	public void run() {
-		if ((_pet != null) && !_pet.isDead()) {
-			_food = _pet.get_food() - 2;
-			if (_food <= 0) {
-				_pet.set_food(0);
-				_pet.setCurrentPetStatus(3);
+		if ((this._pet != null) && !this._pet.isDead()) {
+			this._food = this._pet.get_food() - 2;
+			if (this._food <= 0) {
+				this._pet.set_food(0);
+				this._pet.setCurrentPetStatus(3);
 
 				// 非常饿时提醒主人
-				final L1PetType type = PetTypeTable.getInstance().get(_pet.getNpcTemplate().get_npcId());
+				final L1PetType type = PetTypeTable.getInstance().get(this._pet.getNpcTemplate().get_npcId());
 				final int id = type.getDefyMessageId();
 				if (id != 0) {
-					_pet.broadcastPacket(new S_NpcChatPacket(_pet, "$" + id, 0));
+					this._pet.broadcastPacket(new S_NpcChatPacket(this._pet, "$" + id, 0));
 				}
 			}
 			else {
-				_pet.set_food(_food);
+				this._pet.set_food(this._food);
 			}
-			if (_l1pet != null) {
+			if (this._l1pet != null) {
 				// 纪录宠物饱食度
-				_l1pet.set_food(_pet.get_food());
-				PetTable.getInstance().storePetFood(_l1pet);
+				this._l1pet.set_food(this._pet.get_food());
+				PetTable.getInstance().storePetFood(this._l1pet);
 			}
 		}
 		else {
-			cancel();
+			this.cancel();
 		}
 	}
 

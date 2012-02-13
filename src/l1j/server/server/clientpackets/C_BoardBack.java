@@ -31,8 +31,8 @@ public class C_BoardBack extends ClientBasePacket {
 
 	public C_BoardBack(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		final int objId = readD();
-		final int topicNumber = readD();
+		final int objId = this.readD();
+		final int topicNumber = this.readD();
 		final L1Object obj = L1World.getInstance().findObject(objId);
 		final L1BoardInstance board = (L1BoardInstance) obj;
 		board.onAction(client.getActiveChar(), topicNumber);

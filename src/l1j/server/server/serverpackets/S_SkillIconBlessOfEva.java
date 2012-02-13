@@ -31,13 +31,13 @@ public class S_SkillIconBlessOfEva extends ServerBasePacket {
 	 * @param time
 	 */
 	public S_SkillIconBlessOfEva(final int objectId, final int time) {
-		writeC(Opcodes.S_OPCODE_BLESSOFEVA);
-		writeD(objectId);
-		writeH(time);
+		this.writeC(Opcodes.S_OPCODE_BLESSOFEVA);
+		this.writeD(objectId);
+		this.writeH(time);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 }

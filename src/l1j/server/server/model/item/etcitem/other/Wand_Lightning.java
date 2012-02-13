@@ -46,7 +46,7 @@ public class Wand_Lightning extends ItemExecutor {
 		int[] data1 = null;
 		final L1Object target = L1World.getInstance().findObject(spellsc_objid);
 		if (target != null) {
-			dmg = doWandAction(pc, target);
+			dmg = this.doWandAction(pc, target);
 		}
 		data1 = new int[] { ActionCodes.ACTION_Wand, dmg, 10, 6 }; // data = {actid, dmg, spellgfx, use_type}
 		pc.sendPackets(new S_UseAttackSkill(pc, spellsc_objid, spellsc_x, spellsc_y, data1));

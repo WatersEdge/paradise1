@@ -38,67 +38,67 @@ public class L1Mail {
 	}
 
 	public byte[] getContent() {
-		return _content;
+		return this._content;
 	}
 
 	public String getDate() {
-		return _date;
+		return this._date;
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public int getReadStatus() {
-		return _readStatus;
+		return this._readStatus;
 	}
 
 	public String getReceiverName() {
-		return _receiverName;
+		return this._receiverName;
 	}
 
 	public String getSenderName() {
-		return _senderName;
+		return this._senderName;
 	}
 
 	public byte[] getSubject() {
-		return _subject;
+		return this._subject;
 	}
 
 	public int getType() {
-		return _type;
+		return this._type;
 	}
 
 	public void setContent(final byte[] arg) {
-		_content = arg;
+		this._content = arg;
 	}
 
 	public void setDate(final String s) {
-		_date = s;
+		this._date = s;
 	}
 
 	public void setId(final int i) {
-		_id = i;
+		this._id = i;
 	}
 
 	public void setReadStatus(final int i) {
-		_readStatus = i;
+		this._readStatus = i;
 	}
 
 	public void setReceiverName(final String s) {
-		_receiverName = s;
+		this._receiverName = s;
 	}
 
 	public void setSenderName(final String s) {
-		_senderName = s;
+		this._senderName = s;
 	}
 
 	public void setSubject(final byte[] arg) {
-		_subject = arg;
+		this._subject = arg;
 	}
 
 	public void setType(final int i) {
-		_type = i;
+		this._type = i;
 	}
 
 }

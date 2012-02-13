@@ -44,15 +44,15 @@ public class S_ApplyAuction extends ServerBasePacket {
 	 * @param houseNumber
 	 */
 	public S_ApplyAuction(final int objectId, final String houseNumber) {
-		buildPacket(objectId, houseNumber);
+		this.buildPacket(objectId, houseNumber);
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
+		if (this._byte == null) {
+			this._byte = this.getBytes();
 		}
-		return _byte;
+		return this._byte;
 	}
 
 	@Override
@@ -73,21 +73,21 @@ public class S_ApplyAuction extends ServerBasePacket {
 			while (rs.next()) {
 				final int nowPrice = rs.getInt(5);
 				final int bidderId = rs.getInt(10);
-				writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
-				writeD(objectId);
-				writeD(0); // ?
+				this.writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
+				this.writeD(objectId);
+				this.writeD(0); // ?
 				if (bidderId == 0) { // 无投标人
-					writeD(nowPrice); // 控制的初始价格
-					writeD(nowPrice); // 价格下限
+					this.writeD(nowPrice); // 控制的初始价格
+					this.writeD(nowPrice); // 价格下限
 				}
 				else { // 有竞标者
-					writeD(nowPrice + 1); // 控制的初始价格
-					writeD(nowPrice + 1); // 价格下限
+					this.writeD(nowPrice + 1); // 控制的初始价格
+					this.writeD(nowPrice + 1); // 价格下限
 				}
-				writeD(2000000000); // 价格上限
-				writeH(0); // ?
-				writeS("agapply"); // HTML
-				writeS("agapply " + houseNumber); // 命令
+				this.writeD(2000000000); // 价格上限
+				this.writeH(0); // ?
+				this.writeS("agapply"); // HTML
+				this.writeS("agapply " + houseNumber); // 命令
 			}
 		}
 		catch (final SQLException e) {

@@ -30,15 +30,15 @@ public class IterableNodeList implements Iterable<Node> {
 
 		@Override
 		public boolean hasNext() {
-			return _idx < _list.getLength();
+			return this._idx < IterableNodeList.this._list.getLength();
 		}
 
 		@Override
 		public Node next() {
-			if (!hasNext()) {
+			if (!this.hasNext()) {
 				throw new NoSuchElementException();
 			}
-			return _list.item(_idx++);
+			return IterableNodeList.this._list.item(this._idx++);
 		}
 
 		@Override
@@ -50,7 +50,7 @@ public class IterableNodeList implements Iterable<Node> {
 	private final NodeList _list;
 
 	public IterableNodeList(final NodeList list) {
-		_list = list;
+		this._list = list;
 	}
 
 	@Override

@@ -32,9 +32,9 @@ public class L1GameTimeClock {
 		@Override
 		public void run() {
 			while (true) {
-				_previousTime = _currentTime;
-				_currentTime = L1GameTime.fromSystemCurrentTime();
-				notifyChanged();
+				L1GameTimeClock.this._previousTime = L1GameTimeClock.this._currentTime;
+				L1GameTimeClock.this._currentTime = L1GameTime.fromSystemCurrentTime();
+				L1GameTimeClock.this.notifyChanged();
 
 				try {
 					Thread.sleep(500);
@@ -73,44 +73,44 @@ public class L1GameTimeClock {
 
 	/** 增加监听 */
 	public void addListener(final L1GameTimeListener listener) {
-		_listeners.add(listener);
+		this._listeners.add(listener);
 	}
 
 	/** 当前时间 */
 	public L1GameTime currentTime() {
-		return _currentTime;
+		return this._currentTime;
 	}
 
 	/** 删除监听 */
 	public void removeListener(final L1GameTimeListener listener) {
-		_listeners.remove(listener);
+		this._listeners.remove(listener);
 	}
 
 	/** 改变 */
 	private boolean isFieldChanged(final int field) {
-		return _previousTime.get(field) != _currentTime.get(field);
+		return this._previousTime.get(field) != this._currentTime.get(field);
 	}
 
 	/** 通知改变 */
 	private void notifyChanged() {
-		if (isFieldChanged(Calendar.MONTH)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onMonthChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.MONTH)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onMonthChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.DAY_OF_MONTH)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onDayChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.DAY_OF_MONTH)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onDayChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.HOUR_OF_DAY)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onHourChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.HOUR_OF_DAY)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onHourChanged(this._currentTime);
 			}
 		}
-		if (isFieldChanged(Calendar.MINUTE)) {
-			for (final L1GameTimeListener listener : _listeners) {
-				listener.onMinuteChanged(_currentTime);
+		if (this.isFieldChanged(Calendar.MINUTE)) {
+			for (final L1GameTimeListener listener : this._listeners) {
+				listener.onMinuteChanged(this._currentTime);
 			}
 		}
 	}

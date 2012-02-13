@@ -23,19 +23,19 @@ public class L1CharName {
 	}
 
 	public int getId() {
-		return _id;
+		return this._id;
 	}
 
 	public String getName() {
-		return _name;
+		return this._name;
 	}
 
 	public void setId(final int i) {
-		_id = i;
+		this._id = i;
 	}
 
 	public void setName(final String s) {
-		_name = s;
+		this._name = s;
 	}
 
 }

@@ -30,8 +30,8 @@ public class C_LoginToServerOK extends ClientBasePacket {
 	public C_LoginToServerOK(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
 
-		final int type = readC();
-		final int button = readC();
+		final int type = this.readC();
+		final int button = this.readC();
 
 		final L1PcInstance pc = client.getActiveChar();
 

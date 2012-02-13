@@ -32,11 +32,11 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * @param status
 	 */
 	public S_CharVisualUpdate(final L1Character cha, final int status) {
-		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
-		writeD(cha.getId());
-		writeC(status);
-		writeC(0xff);
-		writeC(0xff);
+		this.writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
+		this.writeD(cha.getId());
+		this.writeC(status);
+		this.writeC(0xff);
+		this.writeC(0xff);
 	}
 
 	/**
@@ -45,16 +45,16 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * @param cha
 	 */
 	public S_CharVisualUpdate(final L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
-		writeD(pc.getId());
-		writeC(pc.getCurrentWeapon());
-		writeC(0xff);
-		writeC(0xff);
+		this.writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
+		this.writeD(pc.getId());
+		this.writeC(pc.getCurrentWeapon());
+		this.writeC(0xff);
+		this.writeC(0xff);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

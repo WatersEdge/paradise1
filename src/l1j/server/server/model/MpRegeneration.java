@@ -45,12 +45,12 @@ public class MpRegeneration extends TimerTask {
 	private int _curPoint = 4;
 
 	public MpRegeneration(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	public void regenMp() {
 		int baseMpr = 1;
-		int wis = _pc.getWis();
+		int wis = this._pc.getWis();
 		if ((wis == 15) || (wis == 16)) {
 			baseMpr = 2;
 		}
@@ -58,62 +58,63 @@ public class MpRegeneration extends TimerTask {
 			baseMpr = 3;
 		}
 
-		if (_pc.hasSkillEffect(STATUS_BLUE_POTION)) { // 在使用蓝色药水
+		if (this._pc.hasSkillEffect(STATUS_BLUE_POTION)) { // 在使用蓝色药水
 			if (wis < 11) { // WIS11未满MPR+1
 				wis = 11;
 			}
 			baseMpr += wis - 10;
 		}
-		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
+		if (L1HouseLocation.isInHouse(this._pc.getX(), this._pc.getY(), this._pc.getMapId())) {
 			baseMpr += 3;
 		}
-		if ((_pc.getMapId() == 16384) || (_pc.getMapId() == 16896) || (_pc.getMapId() == 17408) || (_pc.getMapId() == 17920) || (_pc.getMapId() == 18432) || (_pc.getMapId() == 18944) || (_pc.getMapId() == 19968) || (_pc.getMapId() == 19456) || (_pc.getMapId() == 20480)
-				|| (_pc.getMapId() == 20992) || (_pc.getMapId() == 21504) || (_pc.getMapId() == 22016) || (_pc.getMapId() == 22528) || (_pc.getMapId() == 23040) || (_pc.getMapId() == 23552) || (_pc.getMapId() == 24064) || (_pc.getMapId() == 24576) || (_pc.getMapId() == 25088)) { // 旅馆
+		if ((this._pc.getMapId() == 16384) || (this._pc.getMapId() == 16896) || (this._pc.getMapId() == 17408) || (this._pc.getMapId() == 17920) || (this._pc.getMapId() == 18432) || (this._pc.getMapId() == 18944) || (this._pc.getMapId() == 19968)
+				|| (this._pc.getMapId() == 19456) || (this._pc.getMapId() == 20480) || (this._pc.getMapId() == 20992) || (this._pc.getMapId() == 21504) || (this._pc.getMapId() == 22016) || (this._pc.getMapId() == 22528) || (this._pc.getMapId() == 23040)
+				|| (this._pc.getMapId() == 23552) || (this._pc.getMapId() == 24064) || (this._pc.getMapId() == 24576) || (this._pc.getMapId() == 25088)) { // 旅馆
 			baseMpr += 3;
 		}
-		if ((_pc.getLocation().isInScreen(new Point(33055, 32336)) && (_pc.getMapId() == 4) && _pc.isElf())) {
+		if ((this._pc.getLocation().isInScreen(new Point(33055, 32336)) && (this._pc.getMapId() == 4) && this._pc.isElf())) {
 			baseMpr += 3;
 		}
-		if (_pc.hasSkillEffect(COOKING_1_2_N) || _pc.hasSkillEffect(COOKING_1_2_S)) {
+		if (this._pc.hasSkillEffect(COOKING_1_2_N) || this._pc.hasSkillEffect(COOKING_1_2_S)) {
 			baseMpr += 3;
 		}
-		if (_pc.hasSkillEffect(COOKING_2_4_N) || _pc.hasSkillEffect(COOKING_2_4_S) || _pc.hasSkillEffect(COOKING_3_5_N) || _pc.hasSkillEffect(COOKING_3_5_S)) {
+		if (this._pc.hasSkillEffect(COOKING_2_4_N) || this._pc.hasSkillEffect(COOKING_2_4_S) || this._pc.hasSkillEffect(COOKING_3_5_N) || this._pc.hasSkillEffect(COOKING_3_5_S)) {
 			baseMpr += 2;
 		}
-		if (_pc.getOriginalMpr() > 0) { // 原始的WIS MPR補正
-			baseMpr += _pc.getOriginalMpr();
+		if (this._pc.getOriginalMpr() > 0) { // 原始的WIS MPR補正
+			baseMpr += this._pc.getOriginalMpr();
 		}
 
-		int itemMpr = _pc.getInventory().mpRegenPerTick();
-		itemMpr += _pc.getMpr();
+		int itemMpr = this._pc.getInventory().mpRegenPerTick();
+		itemMpr += this._pc.getMpr();
 
-		if ((_pc.get_food() < 3) || isOverWeight(_pc)) {
+		if ((this._pc.get_food() < 3) || this.isOverWeight(this._pc)) {
 			baseMpr = 0;
 			if (itemMpr > 0) {
 				itemMpr = 0;
 			}
 		}
 		final int mpr = baseMpr + itemMpr;
-		int newMp = _pc.getCurrentMp() + mpr;
+		int newMp = this._pc.getCurrentMp() + mpr;
 		if (newMp < 0) {
 			newMp = 0;
 		}
-		_pc.setCurrentMp(newMp);
+		this._pc.setCurrentMp(newMp);
 	}
 
 	@Override
 	public void run() {
 		try {
-			if (_pc.isDead()) {
+			if (this._pc.isDead()) {
 				return;
 			}
 
-			_regenPoint += _curPoint;
-			_curPoint = 4;
+			this._regenPoint += this._curPoint;
+			this._curPoint = 4;
 
-			if (64 <= _regenPoint) {
-				_regenPoint = 0;
-				regenMp();
+			if (64 <= this._regenPoint) {
+				this._regenPoint = 0;
+				this.regenMp();
 			}
 		}
 		catch (final Throwable e) {
@@ -122,11 +123,11 @@ public class MpRegeneration extends TimerTask {
 	}
 
 	public void setState(final int state) {
-		if (_curPoint < state) {
+		if (this._curPoint < state) {
 			return;
 		}
 
-		_curPoint = state;
+		this._curPoint = state;
 	}
 
 	private boolean isOverWeight(final L1PcInstance pc) {

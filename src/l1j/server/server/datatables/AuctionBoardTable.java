@@ -55,14 +55,14 @@ public class AuctionBoardTable {
 				board.setHouseId(rs.getInt(1)); // 盟屋ID
 				board.setHouseName(rs.getString(2)); // 盟屋名称
 				board.setHouseArea(rs.getInt(3)); // 盟屋面积
-				board.setDeadline(timestampToCalendar((Timestamp) rs.getObject(4))); // 盟屋期限
+				board.setDeadline(this.timestampToCalendar((Timestamp) rs.getObject(4))); // 盟屋期限
 				board.setPrice(rs.getInt(5)); // 盟屋价格
 				board.setLocation(rs.getString(6)); // 盟屋位置
 				board.setOldOwner(rs.getString(7)); // 盟屋以前的所有者
 				board.setOldOwnerId(rs.getInt(8)); // 盟屋以前的所有者ID
 				board.setBidder(rs.getString(9)); // 盟屋购买者
 				board.setBidderId(rs.getInt(10)); // 盟屋购买者ID
-				_boards.put(board.getHouseId(), board);
+				this._boards.put(board.getHouseId(), board);
 			}
 		}
 		catch (final SQLException e) {
@@ -89,7 +89,7 @@ public class AuctionBoardTable {
 			pstm.setInt(1, houseId);
 			pstm.execute();
 
-			_boards.remove(houseId);
+			this._boards.remove(houseId);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -107,7 +107,7 @@ public class AuctionBoardTable {
 	 * @return
 	 */
 	public L1AuctionBoard getAuctionBoardTable(final int houseId) {
-		return _boards.get(houseId);
+		return this._boards.get(houseId);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class AuctionBoardTable {
 	 * @return
 	 */
 	public L1AuctionBoard[] getAuctionBoardTableList() {
-		return _boards.values().toArray(new L1AuctionBoard[_boards.size()]);
+		return this._boards.values().toArray(new L1AuctionBoard[this._boards.size()]);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class AuctionBoardTable {
 			pstm.setInt(10, board.getBidderId());
 			pstm.execute();
 
-			_boards.put(board.getHouseId(), board);
+			this._boards.put(board.getHouseId(), board);
 		}
 		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

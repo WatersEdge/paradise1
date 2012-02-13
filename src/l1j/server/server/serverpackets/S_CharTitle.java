@@ -31,14 +31,14 @@ public class S_CharTitle extends ServerBasePacket {
 	 * @param title
 	 */
 	public S_CharTitle(final int objid, final String title) {
-		writeC(Opcodes.S_OPCODE_CHARTITLE);
-		writeD(objid);
-		writeS(title);
+		this.writeC(Opcodes.S_OPCODE_CHARTITLE);
+		this.writeD(objid);
+		this.writeS(title);
 	}
 
 	@Override
 	public byte[] getContent() {
-		return getBytes();
+		return this.getBytes();
 	}
 
 	@Override

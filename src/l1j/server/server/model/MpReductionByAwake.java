@@ -30,25 +30,25 @@ public class MpReductionByAwake extends TimerTask {
 	private final L1PcInstance _pc;
 
 	public MpReductionByAwake(final L1PcInstance pc) {
-		_pc = pc;
+		this._pc = pc;
 	}
 
 	public void decreaseMp() {
-		int newMp = _pc.getCurrentMp() - 8;
+		int newMp = this._pc.getCurrentMp() - 8;
 		if (newMp < 0) {
 			newMp = 0;
-			L1Awake.stop(_pc);
+			L1Awake.stop(this._pc);
 		}
-		_pc.setCurrentMp(newMp);
+		this._pc.setCurrentMp(newMp);
 	}
 
 	@Override
 	public void run() {
 		try {
-			if (_pc.isDead()) {
+			if (this._pc.isDead()) {
 				return;
 			}
-			decreaseMp();
+			this.decreaseMp();
 		}
 		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
