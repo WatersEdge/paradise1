@@ -32,18 +32,6 @@ public class S_SPMR extends ServerBasePacket {
 		buildPacket(pc);
 	}
 
-	private void buildPacket(L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_SPMR);
-		// 智慧药水增加的SP在S_SkillBrave送信时更新
-		if (pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
-			writeC(pc.getSp() - pc.getTrueSp() - 2); // 装备增加的SP
-		}
-		else {
-			writeC(pc.getSp() - pc.getTrueSp()); // 装备增加的SP
-		}
-		writeH(pc.getTrueMr() - pc.getBaseMr()); // 装备与魔法增加的MR
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -55,5 +43,17 @@ public class S_SPMR extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_SPMR;
+	}
+
+	private void buildPacket(L1PcInstance pc) {
+		writeC(Opcodes.S_OPCODE_SPMR);
+		// 智慧药水增加的SP在S_SkillBrave送信时更新
+		if (pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
+			writeC(pc.getSp() - pc.getTrueSp() - 2); // 装备增加的SP
+		}
+		else {
+			writeC(pc.getSp() - pc.getTrueSp()); // 装备增加的SP
+		}
+		writeH(pc.getTrueMr() - pc.getBaseMr()); // 装备与魔法增加的MR
 	}
 }

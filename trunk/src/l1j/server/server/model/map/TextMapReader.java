@@ -58,128 +58,6 @@ public class TextMapReader extends MapReader {
 	public static final int MAPINFO_END_Y = 4;
 
 	/**
-	 * 依照输入大小读取指定编号地图
-	 * 
-	 * @param mapId
-	 *            地图编号
-	 * @param xSize
-	 *            X座标大小
-	 * @param ySize
-	 *            Y座标大小
-	 * @return byte[][]
-	 * @throws IOException
-	 */
-	public byte[][] read(final int mapId, final int xSize, final int ySize) throws IOException {
-		byte[][] map = new byte[xSize][ySize];
-		LineNumberReader in = new LineNumberReader(new BufferedReader(new FileReader(MAP_DIR + mapId + ".txt")));
-
-		int y = 0;
-		String line;
-		while ((line = in.readLine()) != null) {
-			if ((line.trim().length() == 0) || line.startsWith("#")) {
-				continue; // 跳过空行与注解
-			}
-
-			int x = 0;
-			StringTokenizer tok = new StringTokenizer(line, ",");
-			while (tok.hasMoreTokens()) {
-				byte tile = Byte.parseByte(tok.nextToken());
-				map[x][y] = tile;
-
-				x++;
-			}
-			y++;
-		}
-		in.close();
-		return map;
-	}
-
-	/**
-	 * 读取指定编号的地图
-	 * 
-	 * @param id
-	 *            地图编号
-	 * @return L1Map
-	 * @throws IOException
-	 */
-	@Override
-	public L1Map read(final int id) throws IOException {
-		for (int[] info : MAP_INFO) {
-			int mapId = info[MAPINFO_MAP_NO];
-			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
-			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
-
-			if (mapId == id) {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
-						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
-						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
-				return map;
-			}
-		}
-		throw new FileNotFoundException("地图编号: " + id);
-	}
-
-	/**
-	 * 取得所有地图与编号的 Mapping
-	 * 
-	 * @return Map
-	 * @throws IOException
-	 */
-	@Override
-	public Map<Integer, L1Map> read() throws IOException {
-		Map<Integer, L1Map> maps = Maps.newMap();
-
-		for (int[] info : MAP_INFO) {
-			int mapId = info[MAPINFO_MAP_NO];
-			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
-			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
-
-			try {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
-						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
-						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
-
-				maps.put(mapId, map);
-			}
-			catch (IOException e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-		}
-
-		return maps;
-	}
-
-	/**
-	 * 传回所有地图的编号
-	 * 
-	 * @return ArraryList
-	 */
-	public static List<Integer> listMapIds() {
-		List<Integer> ids = Lists.newList();
-
-		File mapDir = new File(MAP_DIR);
-		for (String name : mapDir.list()) {
-			File mapFile = new File(mapDir, name);
-			if (!mapFile.exists()) {
-				continue;
-			}
-			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("txt")) {
-				continue;
-			}
-			int id = 0;
-			try {
-				String idStr = FileUtil.getNameWithoutExtension(mapFile);
-				id = Integer.parseInt(idStr);
-			}
-			catch (NumberFormatException e) {
-				continue;
-			}
-			ids.add(id);
-		}
-		return ids;
-	}
-
-	/**
 	 * mapInfo：地图编号、地图构成大小. 格式为 {mapNo,StartX,EndX,StartY,EndY}
 	 */
 	private static final int[][] MAP_INFO = { //
@@ -800,4 +678,126 @@ public class TextMapReader extends MapReader {
 			{ 24576, 32704, 32767, 32768, 32831 }, // 旅馆房间
 			{ 25088, 32704, 32767, 32768, 32831 } // 旅馆房间
 	};
+
+	/**
+	 * 传回所有地图的编号
+	 * 
+	 * @return ArraryList
+	 */
+	public static List<Integer> listMapIds() {
+		List<Integer> ids = Lists.newList();
+
+		File mapDir = new File(MAP_DIR);
+		for (String name : mapDir.list()) {
+			File mapFile = new File(mapDir, name);
+			if (!mapFile.exists()) {
+				continue;
+			}
+			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("txt")) {
+				continue;
+			}
+			int id = 0;
+			try {
+				String idStr = FileUtil.getNameWithoutExtension(mapFile);
+				id = Integer.parseInt(idStr);
+			}
+			catch (NumberFormatException e) {
+				continue;
+			}
+			ids.add(id);
+		}
+		return ids;
+	}
+
+	/**
+	 * 取得所有地图与编号的 Mapping
+	 * 
+	 * @return Map
+	 * @throws IOException
+	 */
+	@Override
+	public Map<Integer, L1Map> read() throws IOException {
+		Map<Integer, L1Map> maps = Maps.newMap();
+
+		for (int[] info : MAP_INFO) {
+			int mapId = info[MAPINFO_MAP_NO];
+			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
+			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
+
+			try {
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
+						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
+						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
+
+				maps.put(mapId, map);
+			}
+			catch (IOException e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
+		}
+
+		return maps;
+	}
+
+	/**
+	 * 读取指定编号的地图
+	 * 
+	 * @param id
+	 *            地图编号
+	 * @return L1Map
+	 * @throws IOException
+	 */
+	@Override
+	public L1Map read(final int id) throws IOException {
+		for (int[] info : MAP_INFO) {
+			int mapId = info[MAPINFO_MAP_NO];
+			int xSize = info[MAPINFO_END_X] - info[MAPINFO_START_X] + 1;
+			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
+
+			if (mapId == id) {
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize), info[MAPINFO_START_X], info[MAPINFO_START_Y], MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId), MapsTable.getInstance().isTeleportable(mapId), MapsTable
+						.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance()
+						.isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId), MapsTable.getInstance().isUsableSkill(mapId));
+				return map;
+			}
+		}
+		throw new FileNotFoundException("地图编号: " + id);
+	}
+
+	/**
+	 * 依照输入大小读取指定编号地图
+	 * 
+	 * @param mapId
+	 *            地图编号
+	 * @param xSize
+	 *            X座标大小
+	 * @param ySize
+	 *            Y座标大小
+	 * @return byte[][]
+	 * @throws IOException
+	 */
+	public byte[][] read(final int mapId, final int xSize, final int ySize) throws IOException {
+		byte[][] map = new byte[xSize][ySize];
+		LineNumberReader in = new LineNumberReader(new BufferedReader(new FileReader(MAP_DIR + mapId + ".txt")));
+
+		int y = 0;
+		String line;
+		while ((line = in.readLine()) != null) {
+			if ((line.trim().length() == 0) || line.startsWith("#")) {
+				continue; // 跳过空行与注解
+			}
+
+			int x = 0;
+			StringTokenizer tok = new StringTokenizer(line, ",");
+			while (tok.hasMoreTokens()) {
+				byte tile = Byte.parseByte(tok.nextToken());
+				map[x][y] = tile;
+
+				x++;
+			}
+			y++;
+		}
+		in.close();
+		return map;
+	}
 }

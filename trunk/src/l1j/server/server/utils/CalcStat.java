@@ -21,10 +21,6 @@ import l1j.server.Config;
  */
 public class CalcStat {
 
-	private CalcStat() {
-
-	}
-
 	/**
 	 * 追加敏捷对AC的影响
 	 * 
@@ -51,70 +47,6 @@ public class CalcStat {
 			acBonus -= level / 4;
 		}
 		return acBonus;
-	}
-
-	/**
-	 * <b> 追加精神对抗魔的影响 </b>
-	 * 
-	 * @param wis
-	 *            精神点数
-	 * 
-	 * @return mrBonus 抗魔值
-	 */
-	public static int calcStatMr(int wis) {
-		int mrBonus = 0;
-		if (wis <= 14) {
-			mrBonus = 0;
-		}
-		else if (wis >= 15 && wis <= 16) {
-			mrBonus = 3;
-		}
-		else if (wis == 17) {
-			mrBonus = 6;
-		}
-		else if (wis == 18) {
-			mrBonus = 10;
-		}
-		else if (wis == 19) {
-			mrBonus = 15;
-		}
-		else if (wis == 20) {
-			mrBonus = 21;
-		}
-		else if (wis == 21) {
-			mrBonus = 28;
-		}
-		else if (wis == 22) {
-			mrBonus = 37;
-		}
-		else if (wis == 23) {
-			mrBonus = 47;
-		}
-		else if (wis >= 24 && wis <= 29) {
-			mrBonus = 50;
-		}
-		else if (wis >= 30 && wis <= 34) {
-			mrBonus = 52;
-		}
-		else if (wis >= 35 && wis <= 39) {
-			mrBonus = 55;
-		}
-		else if (wis >= 40 && wis <= 43) {
-			mrBonus = 59;
-		}
-		else if (wis >= 44 && wis <= 46) {
-			mrBonus = 62;
-		}
-		else if (wis >= 47 && wis <= 49) {
-			mrBonus = 64;
-		}
-		else if (wis == 50) {
-			mrBonus = 65;
-		}
-		else {
-			mrBonus = 65;
-		}
-		return mrBonus;
 	}
 
 	public static int calcDiffMr(int wis, int diff) {
@@ -302,5 +234,73 @@ public class CalcStat {
 			randommp = 0;
 		}
 		return (short) randommp;
+	}
+
+	/**
+	 * <b> 追加精神对抗魔的影响 </b>
+	 * 
+	 * @param wis
+	 *            精神点数
+	 * 
+	 * @return mrBonus 抗魔值
+	 */
+	public static int calcStatMr(int wis) {
+		int mrBonus = 0;
+		if (wis <= 14) {
+			mrBonus = 0;
+		}
+		else if (wis >= 15 && wis <= 16) {
+			mrBonus = 3;
+		}
+		else if (wis == 17) {
+			mrBonus = 6;
+		}
+		else if (wis == 18) {
+			mrBonus = 10;
+		}
+		else if (wis == 19) {
+			mrBonus = 15;
+		}
+		else if (wis == 20) {
+			mrBonus = 21;
+		}
+		else if (wis == 21) {
+			mrBonus = 28;
+		}
+		else if (wis == 22) {
+			mrBonus = 37;
+		}
+		else if (wis == 23) {
+			mrBonus = 47;
+		}
+		else if (wis >= 24 && wis <= 29) {
+			mrBonus = 50;
+		}
+		else if (wis >= 30 && wis <= 34) {
+			mrBonus = 52;
+		}
+		else if (wis >= 35 && wis <= 39) {
+			mrBonus = 55;
+		}
+		else if (wis >= 40 && wis <= 43) {
+			mrBonus = 59;
+		}
+		else if (wis >= 44 && wis <= 46) {
+			mrBonus = 62;
+		}
+		else if (wis >= 47 && wis <= 49) {
+			mrBonus = 64;
+		}
+		else if (wis == 50) {
+			mrBonus = 65;
+		}
+		else {
+			mrBonus = 65;
+		}
+		return mrBonus;
+	}
+
+	private CalcStat() {
+
 	}
 }

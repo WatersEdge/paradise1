@@ -38,81 +38,23 @@ public class DoorTable {
 
 	private static DoorTable _instance;
 
-	/** 门 */
-	private final Map<L1Location, L1DoorInstance> _doors = Maps.newConcurrentHashMap();
-
-	/** 门的方向 */
-	private final Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
+	public static DoorTable getInstance() {
+		return _instance;
+	}
 
 	/** 初始化 */
 	public static void initialize() {
 		_instance = new DoorTable();
 	}
 
-	public static DoorTable getInstance() {
-		return _instance;
-	}
+	/** 门 */
+	private final Map<L1Location, L1DoorInstance> _doors = Maps.newConcurrentHashMap();
+
+	/** 门的方向 */
+	private final Map<L1Location, L1DoorInstance> _doorDirections = Maps.newConcurrentHashMap();
 
 	private DoorTable() {
 		loadDoors();
-	}
-
-	/**
-	 * 加载门
-	 */
-	private void loadDoors() {
-		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
-			L1Location loc = spawn.getLocation();
-			if (_doors.containsKey(loc)) {
-				_log.log(Level.WARNING, String.format("重复的门 位置: id = %d", spawn.getId()));
-				continue;
-			}
-			createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(), spawn.getKeeper(), spawn.isOpening());
-		}
-	}
-
-	/**
-	 * 打开方向
-	 * 
-	 * @param door
-	 */
-	private void putDirections(L1DoorInstance door) {
-		for (L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.put(key, door);
-		}
-	}
-
-	/**
-	 * 删除方向
-	 * 
-	 * @param door
-	 */
-	private void removeDirections(L1DoorInstance door) {
-		for (L1Location key : makeDirectionsKeys(door)) {
-			_doorDirections.remove(key);
-		}
-	}
-
-	/**
-	 * 创建方向Keys
-	 * 
-	 * @param door
-	 */
-	private List<L1Location> makeDirectionsKeys(L1DoorInstance door) {
-		List<L1Location> keys = Lists.newArrayList();
-		int left = door.getLeftEdgeLocation();
-		int right = door.getRightEdgeLocation();
-		if (door.getDirection() == 0) {
-			for (int x = left; x <= right; x++) {
-				keys.add(new L1Location(x, door.getY(), door.getMapId()));
-			}
-		}
-		else {
-			for (int y = left; y <= right; y++) {
-				keys.add(new L1Location(door.getX(), y, door.getMapId()));
-			}
-		}
-		return keys;
 	}
 
 	/**
@@ -155,19 +97,6 @@ public class DoorTable {
 	}
 
 	/**
-	 * 取得门的方向
-	 * 
-	 * @param loc
-	 */
-	public int getDoorDirection(L1Location loc) {
-		L1DoorInstance door = _doorDirections.get(loc);
-		if (door == null || door.getOpenStatus() == ActionCodes.ACTION_Open) {
-			return -1;
-		}
-		return door.getDirection();
-	}
-
-	/**
 	 * 查找门的ID
 	 * 
 	 * @param doorId
@@ -182,11 +111,82 @@ public class DoorTable {
 	}
 
 	/**
+	 * 取得门的方向
+	 * 
+	 * @param loc
+	 */
+	public int getDoorDirection(L1Location loc) {
+		L1DoorInstance door = _doorDirections.get(loc);
+		if (door == null || door.getOpenStatus() == ActionCodes.ACTION_Open) {
+			return -1;
+		}
+		return door.getDirection();
+	}
+
+	/**
 	 * 取得门列表
 	 * 
 	 * @return
 	 */
 	public L1DoorInstance[] getDoorList() {
 		return _doors.values().toArray(new L1DoorInstance[_doors.size()]);
+	}
+
+	/**
+	 * 加载门
+	 */
+	private void loadDoors() {
+		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
+			L1Location loc = spawn.getLocation();
+			if (_doors.containsKey(loc)) {
+				_log.log(Level.WARNING, String.format("重复的门 位置: id = %d", spawn.getId()));
+				continue;
+			}
+			createDoor(spawn.getId(), spawn.getGfx(), loc, spawn.getHp(), spawn.getKeeper(), spawn.isOpening());
+		}
+	}
+
+	/**
+	 * 创建方向Keys
+	 * 
+	 * @param door
+	 */
+	private List<L1Location> makeDirectionsKeys(L1DoorInstance door) {
+		List<L1Location> keys = Lists.newArrayList();
+		int left = door.getLeftEdgeLocation();
+		int right = door.getRightEdgeLocation();
+		if (door.getDirection() == 0) {
+			for (int x = left; x <= right; x++) {
+				keys.add(new L1Location(x, door.getY(), door.getMapId()));
+			}
+		}
+		else {
+			for (int y = left; y <= right; y++) {
+				keys.add(new L1Location(door.getX(), y, door.getMapId()));
+			}
+		}
+		return keys;
+	}
+
+	/**
+	 * 打开方向
+	 * 
+	 * @param door
+	 */
+	private void putDirections(L1DoorInstance door) {
+		for (L1Location key : makeDirectionsKeys(door)) {
+			_doorDirections.put(key, door);
+		}
+	}
+
+	/**
+	 * 删除方向
+	 * 
+	 * @param door
+	 */
+	private void removeDirections(L1DoorInstance door) {
+		for (L1Location key : makeDirectionsKeys(door)) {
+			_doorDirections.remove(key);
+		}
 	}
 }

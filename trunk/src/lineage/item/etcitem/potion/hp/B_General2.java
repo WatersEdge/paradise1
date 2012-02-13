@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class B_General2 extends ItemExecutor {
 
-	private B_General2() {
-	}
-
 	public static ItemExecutor get() {
 		return new B_General2();
+	}
+
+	private B_General2() {
 	}
 
 	/**

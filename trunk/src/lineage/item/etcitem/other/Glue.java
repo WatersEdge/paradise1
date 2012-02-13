@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Glue extends ItemExecutor {
 
-	private Glue() {
-	}
-
 	public static ItemExecutor get() {
 		return new Glue();
+	}
+
+	private Glue() {
 	}
 
 	/**

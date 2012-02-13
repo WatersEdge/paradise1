@@ -28,27 +28,11 @@ import l1j.server.server.utils.L1SpawnUtil;
 public class L1SpawnCmd implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1SpawnCmd.class.getName());
 
-	private L1SpawnCmd() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1SpawnCmd();
 	}
 
-	private void sendErrorMessage(L1PcInstance pc, String cmdName) {
-		String errorMsg = "请输入: " + cmdName + " npcid|name [数量] [范围] 。";
-		pc.sendPackets(new S_SystemMessage(errorMsg));
-	}
-
-	private int parseNpcId(String nameId) {
-		int npcid = 0;
-		try {
-			npcid = Integer.parseInt(nameId);
-		}
-		catch (NumberFormatException e) {
-			npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameId);
-		}
-		return npcid;
+	private L1SpawnCmd() {
 	}
 
 	@Override
@@ -87,5 +71,21 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(cmdName + " 内部错误。"));
 		}
+	}
+
+	private int parseNpcId(String nameId) {
+		int npcid = 0;
+		try {
+			npcid = Integer.parseInt(nameId);
+		}
+		catch (NumberFormatException e) {
+			npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameId);
+		}
+		return npcid;
+	}
+
+	private void sendErrorMessage(L1PcInstance pc, String cmdName) {
+		String errorMsg = "请输入: " + cmdName + " npcid|name [数量] [范围] 。";
+		pc.sendPackets(new S_SystemMessage(errorMsg));
 	}
 }

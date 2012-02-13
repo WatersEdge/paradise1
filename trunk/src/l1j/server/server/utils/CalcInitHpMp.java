@@ -21,9 +21,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class CalcInitHpMp {
 
-	private CalcInitHpMp() {
-	}
-
 	/**
 	 * 初始化各职业的HP
 	 * 
@@ -198,6 +195,9 @@ public class CalcInitHpMp {
 			}
 		}
 		return mp;
+	}
+
+	private CalcInitHpMp() {
 	}
 
 }

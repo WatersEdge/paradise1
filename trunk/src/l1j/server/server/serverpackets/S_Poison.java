@@ -24,6 +24,8 @@ import l1j.server.server.Opcodes;
  */
 public class S_Poison extends ServerBasePacket {
 
+	private static final String S_POISON = "[S] S_Poison";
+
 	/**
 	 * 发送一个使角色外观因为中毒而改变的数据包
 	 * 
@@ -62,6 +64,4 @@ public class S_Poison extends ServerBasePacket {
 	public String getType() {
 		return S_POISON;
 	}
-
-	private static final String S_POISON = "[S] S_Poison";
 }

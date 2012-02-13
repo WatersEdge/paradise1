@@ -17,11 +17,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Firewood extends ItemExecutor {
 
-	private Firewood() {
-	}
-
 	public static ItemExecutor get() {
 		return new Firewood();
+	}
+
+	private Firewood() {
 	}
 
 	/**

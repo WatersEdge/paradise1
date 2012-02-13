@@ -38,18 +38,6 @@ public class S_SellHouse extends ServerBasePacket {
 		buildPacket(objectId, houseNumber);
 	}
 
-	private void buildPacket(int objectId, String houseNumber) {
-		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
-		writeD(objectId);
-		writeD(0); // ?
-		writeD(100000); // 初始价格
-		writeD(100000); // 价格下限
-		writeD(2000000000); // 价格上限
-		writeH(0); // ?
-		writeS("agsell");
-		writeS("agsell " + houseNumber);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -61,5 +49,17 @@ public class S_SellHouse extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_SELLHOUSE;
+	}
+
+	private void buildPacket(int objectId, String houseNumber) {
+		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
+		writeD(objectId);
+		writeD(0); // ?
+		writeD(100000); // 初始价格
+		writeD(100000); // 价格下限
+		writeD(2000000000); // 价格上限
+		writeH(0); // ?
+		writeS("agsell");
+		writeS("agsell " + houseNumber);
 	}
 }

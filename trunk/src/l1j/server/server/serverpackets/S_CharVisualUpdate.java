@@ -29,11 +29,12 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * 物件动作种类 (长时间)
 	 * 
 	 * @param cha
+	 * @param status
 	 */
-	public S_CharVisualUpdate(L1PcInstance pc) {
+	public S_CharVisualUpdate(L1Character cha, int status) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
-		writeD(pc.getId());
-		writeC(pc.getCurrentWeapon());
+		writeD(cha.getId());
+		writeC(status);
 		writeC(0xff);
 		writeC(0xff);
 	}
@@ -42,12 +43,11 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * 物件动作种类 (长时间)
 	 * 
 	 * @param cha
-	 * @param status
 	 */
-	public S_CharVisualUpdate(L1Character cha, int status) {
+	public S_CharVisualUpdate(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
-		writeD(cha.getId());
-		writeC(status);
+		writeD(pc.getId());
+		writeC(pc.getCurrentWeapon());
 		writeC(0xff);
 		writeC(0xff);
 	}

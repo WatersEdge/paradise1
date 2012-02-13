@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 public class L1Loc implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1Loc.class.getName());
 
-	private L1Loc() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Loc();
+	}
+
+	private L1Loc() {
 	}
 
 	@Override

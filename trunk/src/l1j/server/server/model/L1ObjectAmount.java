@@ -28,11 +28,11 @@ public class L1ObjectAmount<T> {
 		_amount = amount;
 	}
 
-	public T getObject() {
-		return _obj;
-	}
-
 	public int getAmount() {
 		return _amount;
+	}
+
+	public T getObject() {
+		return _obj;
 	}
 }

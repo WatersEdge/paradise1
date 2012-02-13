@@ -38,18 +38,18 @@ public class L1MobGroupSpawn {
 
 	private static L1MobGroupSpawn _instance;
 
-	private boolean _isRespawnScreen;
-
-	private boolean _isInitSpawn;
-
-	private L1MobGroupSpawn() {
-	}
-
 	public static L1MobGroupSpawn getInstance() {
 		if (_instance == null) {
 			_instance = new L1MobGroupSpawn();
 		}
 		return _instance;
+	}
+
+	private boolean _isRespawnScreen;
+
+	private boolean _isInitSpawn;
+
+	private L1MobGroupSpawn() {
 	}
 
 	public void doSpawn(L1NpcInstance leader, int groupId, boolean isRespawnScreen, boolean isInitSpawn) {
@@ -79,6 +79,18 @@ public class L1MobGroupSpawn {
 				}
 			}
 		}
+	}
+
+	private boolean canSpawn(L1NpcInstance mob) {
+		if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
+			if (_isRespawnScreen) {
+				return true;
+			}
+			if (L1World.getInstance().getVisiblePlayer(mob).isEmpty()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private L1NpcInstance spawn(L1NpcInstance leader, int npcId) {
@@ -132,18 +144,6 @@ public class L1MobGroupSpawn {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return mob;
-	}
-
-	private boolean canSpawn(L1NpcInstance mob) {
-		if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
-			if (_isRespawnScreen) {
-				return true;
-			}
-			if (L1World.getInstance().getVisiblePlayer(mob).isEmpty()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

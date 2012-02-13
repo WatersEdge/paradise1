@@ -21,11 +21,11 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1FindInvis implements L1CommandExecutor {
-	private L1FindInvis() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1FindInvis();
+	}
+
+	private L1FindInvis() {
 	}
 
 	@Override

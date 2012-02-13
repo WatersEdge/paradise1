@@ -21,83 +21,11 @@ import l1j.server.Config;
  */
 public final class ExpTable {
 
-	private ExpTable() {
-	}
-
 	/** 最高等级 */
 	public static final int MAX_LEVEL = 110;
 
 	/** 最高经验 */
 	public static final long MAX_EXP = 0x86747EC6L; // 99级经验:1859065562
-
-	/**
-	 * 取得升级累积的必须经验值。
-	 * 
-	 * @param level
-	 *            等级
-	 * @return 累积所需经验
-	 */
-	public static long getExpByLevel(int level) {
-		return _expTable[level - 1];
-	}
-
-	/**
-	 * 取得升到下一等级所需要的经验值。
-	 * 
-	 * @param level
-	 *            现在的等级
-	 * @return 必须的经验值
-	 */
-	public static long getNeedExpNextLevel(int level) {
-		return getExpByLevel(level + 1) - getExpByLevel(level);
-	}
-
-	/**
-	 * 取得经验值对应的等级。
-	 * 
-	 * @param exp
-	 *            累积经验值
-	 * @return 等级获得
-	 */
-	public static int getLevelByExp(long exp) {
-
-		int level;
-		for (level = 1; level < _expTable.length; level++) {
-			// トリッキーかもしれない・・・
-			if (exp < _expTable[level]) {
-				break;
-			}
-		}
-		return Math.min(level, MAX_LEVEL);
-	}
-
-	/**
-	 * 取得经验值百分比 (宠物等级显示使用)
-	 * 
-	 * @param level
-	 * @param exp
-	 * @return
-	 */
-	public static int getExpPercentage(int level, long exp) {
-		return (int) (100.0 * ((double) (exp - getExpByLevel(level)) / (double) getNeedExpNextLevel(level)));
-	}
-
-	/**
-	 * 现在的等级可取回的经验值
-	 * 
-	 * @param level
-	 *            现在的等级
-	 * @return 取得经验值惩罚几率
-	 */
-	public static double getPenaltyRate(int level) {
-		if (level < 50) {
-			return 1.0;
-		}
-		double expPenalty = 1.0;
-		expPenalty = 1.0 / _expPenalty[level - 50];
-
-		return expPenalty;
-	}
 
 	/**
 	 * 经验值表(累积值) Lv0-101
@@ -127,4 +55,76 @@ public final class ExpTable {
 			Config.LV78_EXP, Config.LV79_EXP, Config.LV80_EXP, Config.LV81_EXP, Config.LV82_EXP, Config.LV83_EXP, Config.LV84_EXP, Config.LV85_EXP, Config.LV86_EXP, Config.LV87_EXP, Config.LV88_EXP, Config.LV89_EXP, Config.LV90_EXP, Config.LV91_EXP, Config.LV92_EXP,
 			Config.LV93_EXP, Config.LV94_EXP, Config.LV95_EXP, Config.LV96_EXP, Config.LV97_EXP, Config.LV98_EXP, Config.LV99_EXP, Config.LV100_EXP, Config.LV101_EXP, Config.LV102_EXP, Config.LV103_EXP, Config.LV104_EXP, Config.LV105_EXP, Config.LV106_EXP, Config.LV107_EXP,
 			Config.LV108_EXP, Config.LV109_EXP, Config.LV110_EXP };
+
+	/**
+	 * 取得升级累积的必须经验值。
+	 * 
+	 * @param level
+	 *            等级
+	 * @return 累积所需经验
+	 */
+	public static long getExpByLevel(int level) {
+		return _expTable[level - 1];
+	}
+
+	/**
+	 * 取得经验值百分比 (宠物等级显示使用)
+	 * 
+	 * @param level
+	 * @param exp
+	 * @return
+	 */
+	public static int getExpPercentage(int level, long exp) {
+		return (int) (100.0 * ((double) (exp - getExpByLevel(level)) / (double) getNeedExpNextLevel(level)));
+	}
+
+	/**
+	 * 取得经验值对应的等级。
+	 * 
+	 * @param exp
+	 *            累积经验值
+	 * @return 等级获得
+	 */
+	public static int getLevelByExp(long exp) {
+
+		int level;
+		for (level = 1; level < _expTable.length; level++) {
+			// トリッキーかもしれない・・・
+			if (exp < _expTable[level]) {
+				break;
+			}
+		}
+		return Math.min(level, MAX_LEVEL);
+	}
+
+	/**
+	 * 取得升到下一等级所需要的经验值。
+	 * 
+	 * @param level
+	 *            现在的等级
+	 * @return 必须的经验值
+	 */
+	public static long getNeedExpNextLevel(int level) {
+		return getExpByLevel(level + 1) - getExpByLevel(level);
+	}
+
+	/**
+	 * 现在的等级可取回的经验值
+	 * 
+	 * @param level
+	 *            现在的等级
+	 * @return 取得经验值惩罚几率
+	 */
+	public static double getPenaltyRate(int level) {
+		if (level < 50) {
+			return 1.0;
+		}
+		double expPenalty = 1.0;
+		expPenalty = 1.0 / _expPenalty[level - 50];
+
+		return expPenalty;
+	}
+
+	private ExpTable() {
+	}
 }

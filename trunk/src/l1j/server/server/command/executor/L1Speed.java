@@ -19,11 +19,11 @@ import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Speed implements L1CommandExecutor {
-	private L1Speed() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Speed();
+	}
+
+	private L1Speed() {
 	}
 
 	@Override

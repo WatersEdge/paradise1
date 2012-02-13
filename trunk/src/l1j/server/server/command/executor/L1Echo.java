@@ -21,11 +21,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：返回指令被输入不带任何参数。测试，调试和命令执行情况的样本。
  */
 public class L1Echo implements L1CommandExecutor {
-	private L1Echo() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Echo();
+	}
+
+	private L1Echo() {
 	}
 
 	@Override

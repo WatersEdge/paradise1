@@ -23,6 +23,10 @@ public class Point {
 
 	protected int _y = 0;
 
+	private static final int HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+
+	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+
 	public Point() {
 	}
 
@@ -48,68 +52,24 @@ public class Point {
 	}
 
 	/**
-	 * 取得X坐标点
+	 * 指定面向反向前进位置坐标。
 	 * 
-	 * @return
+	 * @param heading
+	 *            面向(0~7)
 	 */
-	public int getX() {
-		return _x;
+	public void backward(int heading) {
+		_x -= HEADING_TABLE_X[heading];
+		_y -= HEADING_TABLE_Y[heading];
 	}
 
-	/**
-	 * 设定X坐标点
-	 * 
-	 * @param x
-	 */
-	public void setX(int x) {
-		_x = x;
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Point)) {
+			return false;
+		}
+		Point pt = (Point) obj;
+		return (getX() == pt.getX()) && (getY() == pt.getY());
 	}
-
-	/**
-	 * 取得Y坐标点
-	 * 
-	 * @return
-	 */
-	public int getY() {
-		return _y;
-	}
-
-	/**
-	 * 设定Y坐标点
-	 * 
-	 * @param y
-	 */
-	public void setY(int y) {
-		_y = y;
-	}
-
-	/**
-	 * 设定坐标点
-	 * 
-	 * @param pt
-	 *            坐标点
-	 */
-	public void set(Point pt) {
-		_x = pt._x;
-		_y = pt._y;
-	}
-
-	/**
-	 * 设定坐标点
-	 * 
-	 * @param x
-	 *            坐标点X
-	 * @param y
-	 *            坐标点Y
-	 */
-	public void set(int x, int y) {
-		_x = x;
-		_y = y;
-	}
-
-	private static final int HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-
-	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	/**
 	 * 指定面向前进位置坐标。
@@ -120,17 +80,6 @@ public class Point {
 	public void forward(int heading) {
 		_x += HEADING_TABLE_X[heading];
 		_y += HEADING_TABLE_Y[heading];
-	}
-
-	/**
-	 * 指定面向反向前进位置坐标。
-	 * 
-	 * @param heading
-	 *            面向(0~7)
-	 */
-	public void backward(int heading) {
-		_x -= HEADING_TABLE_X[heading];
-		_y -= HEADING_TABLE_Y[heading];
 	}
 
 	/**
@@ -153,8 +102,8 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 直线距离值。
 	 */
-	public int getTileLineDistance(Point pt) {
-		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
+	public int getTileDistance(Point pt) {
+		return Math.abs(pt.getX() - getX()) + Math.abs(pt.getY() - getY());
 	}
 
 	/**
@@ -164,8 +113,31 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 直线距离值。
 	 */
-	public int getTileDistance(Point pt) {
-		return Math.abs(pt.getX() - getX()) + Math.abs(pt.getY() - getY());
+	public int getTileLineDistance(Point pt) {
+		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
+	}
+
+	/**
+	 * 取得X坐标点
+	 * 
+	 * @return
+	 */
+	public int getX() {
+		return _x;
+	}
+
+	/**
+	 * 取得Y坐标点
+	 * 
+	 * @return
+	 */
+	public int getY() {
+		return _y;
+	}
+
+	@Override
+	public int hashCode() {
+		return 7 * getX() + getY();
 	}
 
 	/**
@@ -209,18 +181,46 @@ public class Point {
 		return ((pt.getX() == getX()) && (pt.getY() == getY()));
 	}
 
-	@Override
-	public int hashCode() {
-		return 7 * getX() + getY();
+	/**
+	 * 设定坐标点
+	 * 
+	 * @param x
+	 *            坐标点X
+	 * @param y
+	 *            坐标点Y
+	 */
+	public void set(int x, int y) {
+		_x = x;
+		_y = y;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Point)) {
-			return false;
-		}
-		Point pt = (Point) obj;
-		return (getX() == pt.getX()) && (getY() == pt.getY());
+	/**
+	 * 设定坐标点
+	 * 
+	 * @param pt
+	 *            坐标点
+	 */
+	public void set(Point pt) {
+		_x = pt._x;
+		_y = pt._y;
+	}
+
+	/**
+	 * 设定X坐标点
+	 * 
+	 * @param x
+	 */
+	public void setX(int x) {
+		_x = x;
+	}
+
+	/**
+	 * 设定Y坐标点
+	 * 
+	 * @param y
+	 */
+	public void setY(int y) {
+		_y = y;
 	}
 
 	@Override

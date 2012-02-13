@@ -39,12 +39,12 @@ public class IdFactory {
 
 	private static IdFactory _instance = new IdFactory();
 
-	private IdFactory() {
-		loadState();
-	}
-
 	public static IdFactory getInstance() {
 		return _instance;
+	}
+
+	private IdFactory() {
+		loadState();
 	}
 
 	public int nextId() {

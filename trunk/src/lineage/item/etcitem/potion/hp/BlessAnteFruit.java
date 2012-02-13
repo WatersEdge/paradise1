@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class BlessAnteFruit extends ItemExecutor {
 
-	private BlessAnteFruit() {
-	}
-
 	public static ItemExecutor get() {
 		return new BlessAnteFruit();
+	}
+
+	private BlessAnteFruit() {
 	}
 
 	/**

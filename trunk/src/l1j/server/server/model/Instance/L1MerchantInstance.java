@@ -45,13 +45,52 @@ import l1j.server.server.templates.L1Npc;
  */
 public class L1MerchantInstance extends L1NpcInstance {
 
+	public class RestMonitor extends TimerTask {
+		@Override
+		public void run() {
+			setRest(false);
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	private static final long REST_MILLISEC = 10000;
+
+	private static final Timer _restTimer = new Timer(true);
+
+	private static String talkToTownadviser(L1PcInstance pc, int town_id) {
+		String htmlid;
+		if ((pc.getHomeTownId() == town_id) && TownTable.getInstance().isLeader(pc, town_id)) {
+			htmlid = "secretary1";
+		}
+		else {
+			htmlid = "secretary2";
+		}
+
+		return htmlid;
+	}
+
+	private static String talkToTownmaster(L1PcInstance pc, int town_id) {
+		String htmlid;
+		if (pc.getHomeTownId() == town_id) {
+			htmlid = "hometown";
+		}
+		else {
+			htmlid = "othertown";
+		}
+		return htmlid;
+	}
+
+	private RestMonitor _monitor;
 
 	/**
 	 * @param template
 	 */
 	public L1MerchantInstance(L1Npc template) {
 		super(template);
+	}
+
+	public void doFinalAction(L1PcInstance player) {
 	}
 
 	@Override
@@ -69,6 +108,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
+	}
+
+	@Override
+	public void onFinalAction(L1PcInstance player, String action) {
 	}
 
 	@Override
@@ -3844,46 +3887,16 @@ public class L1MerchantInstance extends L1NpcInstance {
 		}
 	}
 
-	private static String talkToTownadviser(L1PcInstance pc, int town_id) {
-		String htmlid;
-		if ((pc.getHomeTownId() == town_id) && TownTable.getInstance().isLeader(pc, town_id)) {
-			htmlid = "secretary1";
+	private String cancellation(L1PcInstance pc) {
+		String htmlid = "";
+		if (pc.getLevel() < 13) {
+			htmlid = "jpe0161";
 		}
 		else {
-			htmlid = "secretary2";
+			htmlid = "jpe0162";
 		}
 
 		return htmlid;
-	}
-
-	private static String talkToTownmaster(L1PcInstance pc, int town_id) {
-		String htmlid;
-		if (pc.getHomeTownId() == town_id) {
-			htmlid = "hometown";
-		}
-		else {
-			htmlid = "othertown";
-		}
-		return htmlid;
-	}
-
-	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
-	}
-
-	public void doFinalAction(L1PcInstance player) {
-	}
-
-	private boolean checkHasCastle(L1PcInstance player, int castle_id) {
-		if (player.getClanid() != 0) { // クラン所属中
-			L1Clan clan = L1World.getInstance().getClan(player.getClanname());
-			if (clan != null) {
-				if (clan.getCastleId() == castle_id) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	private boolean checkClanLeader(L1PcInstance player) {
@@ -3898,34 +3911,16 @@ public class L1MerchantInstance extends L1NpcInstance {
 		return false;
 	}
 
-	private int getNecessarySealCount(L1PcInstance pc) {
-		int rulerCount = 0;
-		int necessarySealCount = 10;
-		if (pc.getInventory().checkItem(40917)) { // 地の支配者
-			rulerCount++;
+	private boolean checkHasCastle(L1PcInstance player, int castle_id) {
+		if (player.getClanid() != 0) { // クラン所属中
+			L1Clan clan = L1World.getInstance().getClan(player.getClanname());
+			if (clan != null) {
+				if (clan.getCastleId() == castle_id) {
+					return true;
+				}
+			}
 		}
-		if (pc.getInventory().checkItem(40920)) { // 風の支配者
-			rulerCount++;
-		}
-		if (pc.getInventory().checkItem(40918)) { // 水の支配者
-			rulerCount++;
-		}
-		if (pc.getInventory().checkItem(40919)) { // 火の支配者
-			rulerCount++;
-		}
-		if (rulerCount == 0) {
-			necessarySealCount = 10;
-		}
-		else if (rulerCount == 1) {
-			necessarySealCount = 100;
-		}
-		else if (rulerCount == 2) {
-			necessarySealCount = 200;
-		}
-		else if (rulerCount == 3) {
-			necessarySealCount = 500;
-		}
-		return necessarySealCount;
+		return false;
 	}
 
 	private void createRuler(L1PcInstance pc, int attr, int sealCount) {
@@ -3961,16 +3956,83 @@ public class L1MerchantInstance extends L1NpcInstance {
 		}
 	}
 
-	private String talkToDoromond(L1PcInstance pc) {
-		String htmlid = "";
-		if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 0) {
-			htmlid = "jpe0011";
+	private int getNecessarySealCount(L1PcInstance pc) {
+		int rulerCount = 0;
+		int necessarySealCount = 10;
+		if (pc.getInventory().checkItem(40917)) { // 地の支配者
+			rulerCount++;
 		}
-		else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 1) {
-			htmlid = "jpe0015";
+		if (pc.getInventory().checkItem(40920)) { // 風の支配者
+			rulerCount++;
 		}
+		if (pc.getInventory().checkItem(40918)) { // 水の支配者
+			rulerCount++;
+		}
+		if (pc.getInventory().checkItem(40919)) { // 火の支配者
+			rulerCount++;
+		}
+		if (rulerCount == 0) {
+			necessarySealCount = 10;
+		}
+		else if (rulerCount == 1) {
+			necessarySealCount = 100;
+		}
+		else if (rulerCount == 2) {
+			necessarySealCount = 200;
+		}
+		else if (rulerCount == 3) {
+			necessarySealCount = 500;
+		}
+		return necessarySealCount;
+	}
 
-		return htmlid;
+	private void newUserHelp(L1PcInstance pc, int helpNo) {
+		switch (helpNo) {
+		case 1:// 加速 & Full HP MP
+			pc.sendPackets(new S_ServerMessage(183));
+			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
+			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+			pc.sendPackets(new S_SkillSound(pc.getId(), 755));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
+			pc.setMoveSpeed(1);
+			pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
+
+			pc.setCurrentHp(pc.getMaxHp());
+			if (pc.getLevel() < 13) {
+				pc.setCurrentMp(pc.getMaxMp());
+			}
+			pc.sendPackets(new S_ServerMessage(77));
+			pc.sendPackets(new S_SkillSound(pc.getId(), 830));
+			break;
+
+		case 2:// 加速
+			pc.sendPackets(new S_ServerMessage(183));
+			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
+			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+			pc.sendPackets(new S_SkillSound(pc.getId(), 755));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
+			pc.setMoveSpeed(1);
+			pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
+			break;
+
+		case 3:// 神聖武器
+			if (pc.getWeapon() == null) {
+				pc.sendPackets(new S_ServerMessage(79));
+			}
+			else {
+				for (L1ItemInstance item : pc.getInventory().getItems()) {
+					if (pc.getWeapon().equals(item)) {
+						L1SkillUse l1skilluse = new L1SkillUse();
+						l1skilluse.handleCommands(pc, HOLY_WEAPON, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_SPELLSC);
+						break;
+					}
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	private String talkToAlex(L1PcInstance pc) {
@@ -4030,15 +4092,32 @@ public class L1MerchantInstance extends L1NpcInstance {
 		return htmlid;
 	}
 
-	private String cancellation(L1PcInstance pc) {
+	private String talkToDoromond(L1PcInstance pc) {
 		String htmlid = "";
-		if (pc.getLevel() < 13) {
-			htmlid = "jpe0161";
+		if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 0) {
+			htmlid = "jpe0011";
 		}
-		else {
-			htmlid = "jpe0162";
+		else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 1) {
+			htmlid = "jpe0015";
 		}
 
+		return htmlid;
+	}
+
+	private String talkToPopirea(L1PcInstance pc) {
+		String htmlid = "";
+		if (pc.getLevel() < 25) {
+			htmlid = "jpe0041";
+			if (pc.getInventory().checkItem(41209) || pc.getInventory().checkItem(41210) || pc.getInventory().checkItem(41211) || pc.getInventory().checkItem(41212)) {
+				htmlid = "jpe0043";
+			}
+			if (pc.getInventory().checkItem(41213)) {
+				htmlid = "jpe0044";
+			}
+		}
+		else {
+			htmlid = "jpe0045";
+		}
 		return htmlid;
 	}
 
@@ -4052,6 +4131,22 @@ public class L1MerchantInstance extends L1NpcInstance {
 			htmlid = "en0102";
 		}
 
+		return htmlid;
+	}
+
+	private String talkToSecondtbox(L1PcInstance pc) {
+		String htmlid = "";
+		if (pc.getQuest().get_step(L1Quest.QUEST_TBOX1) == L1Quest.QUEST_END) {
+			if (pc.getInventory().checkItem(40701)) {
+				htmlid = "maptboxa";
+			}
+			else {
+				htmlid = "maptbox0";
+			}
+		}
+		else {
+			htmlid = "maptbox0";
+		}
 		return htmlid;
 	}
 
@@ -4081,39 +4176,6 @@ public class L1MerchantInstance extends L1NpcInstance {
 		return htmlid;
 	}
 
-	private String talkToPopirea(L1PcInstance pc) {
-		String htmlid = "";
-		if (pc.getLevel() < 25) {
-			htmlid = "jpe0041";
-			if (pc.getInventory().checkItem(41209) || pc.getInventory().checkItem(41210) || pc.getInventory().checkItem(41211) || pc.getInventory().checkItem(41212)) {
-				htmlid = "jpe0043";
-			}
-			if (pc.getInventory().checkItem(41213)) {
-				htmlid = "jpe0044";
-			}
-		}
-		else {
-			htmlid = "jpe0045";
-		}
-		return htmlid;
-	}
-
-	private String talkToSecondtbox(L1PcInstance pc) {
-		String htmlid = "";
-		if (pc.getQuest().get_step(L1Quest.QUEST_TBOX1) == L1Quest.QUEST_END) {
-			if (pc.getInventory().checkItem(40701)) {
-				htmlid = "maptboxa";
-			}
-			else {
-				htmlid = "maptbox0";
-			}
-		}
-		else {
-			htmlid = "maptbox0";
-		}
-		return htmlid;
-	}
-
 	private String talkToThirdtbox(L1PcInstance pc) {
 		String htmlid = "";
 		if (pc.getQuest().get_step(L1Quest.QUEST_TBOX2) == L1Quest.QUEST_END) {
@@ -4128,67 +4190,5 @@ public class L1MerchantInstance extends L1NpcInstance {
 			htmlid = "maptbox0";
 		}
 		return htmlid;
-	}
-
-	private static final long REST_MILLISEC = 10000;
-
-	private static final Timer _restTimer = new Timer(true);
-
-	private RestMonitor _monitor;
-
-	public class RestMonitor extends TimerTask {
-		@Override
-		public void run() {
-			setRest(false);
-		}
-	}
-
-	private void newUserHelp(L1PcInstance pc, int helpNo) {
-		switch (helpNo) {
-		case 1:// 加速 & Full HP MP
-			pc.sendPackets(new S_ServerMessage(183));
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-			pc.sendPackets(new S_SkillSound(pc.getId(), 755));
-			pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
-			pc.setMoveSpeed(1);
-			pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
-
-			pc.setCurrentHp(pc.getMaxHp());
-			if (pc.getLevel() < 13) {
-				pc.setCurrentMp(pc.getMaxMp());
-			}
-			pc.sendPackets(new S_ServerMessage(77));
-			pc.sendPackets(new S_SkillSound(pc.getId(), 830));
-			break;
-
-		case 2:// 加速
-			pc.sendPackets(new S_ServerMessage(183));
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-			pc.sendPackets(new S_SkillSound(pc.getId(), 755));
-			pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
-			pc.setMoveSpeed(1);
-			pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
-			break;
-
-		case 3:// 神聖武器
-			if (pc.getWeapon() == null) {
-				pc.sendPackets(new S_ServerMessage(79));
-			}
-			else {
-				for (L1ItemInstance item : pc.getInventory().getItems()) {
-					if (pc.getWeapon().equals(item)) {
-						L1SkillUse l1skilluse = new L1SkillUse();
-						l1skilluse.handleCommands(pc, HOLY_WEAPON, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_SPELLSC);
-						break;
-					}
-				}
-			}
-			break;
-
-		default:
-			break;
-		}
 	}
 }

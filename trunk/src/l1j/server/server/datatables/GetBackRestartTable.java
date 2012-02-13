@@ -36,14 +36,14 @@ public class GetBackRestartTable {
 
 	private static GetBackRestartTable _instance;
 
-	private final Map<Integer, L1GetBackRestart> _getbackrestart = Maps.newMap();
-
 	public static GetBackRestartTable getInstance() {
 		if (_instance == null) {
 			_instance = new GetBackRestartTable();
 		}
 		return _instance;
 	}
+
+	private final Map<Integer, L1GetBackRestart> _getbackrestart = Maps.newMap();
 
 	public GetBackRestartTable() {
 		Connection con = null;

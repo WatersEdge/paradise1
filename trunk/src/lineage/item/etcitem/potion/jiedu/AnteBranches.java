@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class AnteBranches extends ItemExecutor {
 
-	private AnteBranches() {
-	}
-
 	public static ItemExecutor get() {
 		return new AnteBranches();
+	}
+
+	private AnteBranches() {
 	}
 
 	/**

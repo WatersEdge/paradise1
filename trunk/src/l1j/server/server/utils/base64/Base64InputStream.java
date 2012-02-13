@@ -35,6 +35,11 @@ public class Base64InputStream extends InputStream {
 	}
 
 	@Override
+	public void close() throws IOException {
+		inputStream.close();
+	}
+
+	@Override
 	public int read() throws IOException {
 		if (buffer == null || bufferCounter == buffer.length) {
 			if (eof) {
@@ -112,10 +117,5 @@ public class Base64InputStream extends InputStream {
 		for (i = 0; i < l; i++) {
 			buffer[i] = (aux >>> (8 * (2 - i))) & 0xFF;
 		}
-	}
-
-	@Override
-	public void close() throws IOException {
-		inputStream.close();
 	}
 }

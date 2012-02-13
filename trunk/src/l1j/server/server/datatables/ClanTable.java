@@ -177,33 +177,6 @@ public class ClanTable {
 	}
 
 	/**
-	 * 更新血盟
-	 * 
-	 * @param clan
-	 */
-	public void updateClan(L1Clan clan) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE clan_data SET clan_id=?, leader_id=?, leader_name=?, hascastle=?, hashouse=? WHERE clan_name=?");
-			pstm.setInt(1, clan.getClanId());
-			pstm.setInt(2, clan.getLeaderId());
-			pstm.setString(3, clan.getLeaderName());
-			pstm.setInt(4, clan.getCastleId());
-			pstm.setInt(5, clan.getHouseId());
-			pstm.setString(6, clan.getClanName());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
 	 * 删除血盟
 	 * 
 	 * @param clan_name
@@ -236,6 +209,33 @@ public class ClanTable {
 
 	public L1Clan getTemplate(int clan_id) {
 		return _clans.get(clan_id);
+	}
+
+	/**
+	 * 更新血盟
+	 * 
+	 * @param clan
+	 */
+	public void updateClan(L1Clan clan) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE clan_data SET clan_id=?, leader_id=?, leader_name=?, hascastle=?, hashouse=? WHERE clan_name=?");
+			pstm.setInt(1, clan.getClanId());
+			pstm.setInt(2, clan.getLeaderId());
+			pstm.setString(3, clan.getLeaderName());
+			pstm.setInt(4, clan.getCastleId());
+			pstm.setInt(5, clan.getHouseId());
+			pstm.setString(6, clan.getClanName());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 }

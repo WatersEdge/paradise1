@@ -72,34 +72,12 @@ public class L1MobSkillUse {
 		_skillUseCount = new int[getMobSkillTemplate().getSkillSize()];
 	}
 
-	private int getSkillUseCount(int idx) {
-		return _skillUseCount[idx];
-	}
-
-	private void skillUseCountUp(int idx) {
-		_skillUseCount[idx]++;
-	}
-
-	public void resetAllSkillUseCount() {
-		if (getMobSkillTemplate() == null) {
-			return;
-		}
-
-		for (int i = 0; i < getMobSkillTemplate().getSkillSize(); i++) {
-			_skillUseCount[i] = 0;
-		}
+	public L1MobSkill getMobSkillTemplate() {
+		return _mobSkillTemplate;
 	}
 
 	public int getSleepTime() {
 		return _sleepTime;
-	}
-
-	public void setSleepTime(int i) {
-		_sleepTime = i;
-	}
-
-	public L1MobSkill getMobSkillTemplate() {
-		return _mobSkillTemplate;
 	}
 
 	/**
@@ -124,6 +102,20 @@ public class L1MobSkillUse {
 			}
 		}
 		return false;
+	}
+
+	public void resetAllSkillUseCount() {
+		if (getMobSkillTemplate() == null) {
+			return;
+		}
+
+		for (int i = 0; i < getMobSkillTemplate().getSkillSize(); i++) {
+			_skillUseCount[i] = 0;
+		}
+	}
+
+	public void setSleepTime(int i) {
+		_sleepTime = i;
 	}
 
 	/**
@@ -169,114 +161,137 @@ public class L1MobSkillUse {
 		return false;
 	}
 
-	/** 使用技能 */
-	private boolean useSkill(int i) {
-		// 对自身施法判断
-		int changeType = getMobSkillTemplate().getChangeTarget(i);
-		if (changeType == 2) {
-			_target = changeTarget(changeType, i);
-		}
+	// 现在ChangeTargetで有效な值は2,3のみ
+	private L1Character changeTarget(int type, int idx) {
+		L1Character target;
 
-		boolean isUseSkill = false;
-		int type = getMobSkillTemplate().getType(i);
-		if (type == L1MobSkill.TYPE_PHYSICAL_ATTACK) { // 物理攻击
-			if (physicalAttack(i) == true) {
-				skillUseCountUp(i);
-				isUseSkill = true;
+		switch (type) {
+		case L1MobSkill.CHANGE_TARGET_ME:
+			target = _attacker;
+			break;
+		case L1MobSkill.CHANGE_TARGET_RANDOM:
+			// 选定候补目标
+			List<L1Character> targetList = Lists.newList();
+			for (L1Object obj : L1World.getInstance().getVisibleObjects(_attacker)) {
+				if ((obj instanceof L1PcInstance) || (obj instanceof L1PetInstance) || (obj instanceof L1SummonInstance)) {
+					L1Character cha = (L1Character) obj;
+
+					int distance = _attacker.getLocation().getTileLineDistance(cha.getLocation());
+
+					// 目标在发动范围外
+					if (!getMobSkillTemplate().isTriggerDistance(idx, distance)) {
+						continue;
+					}
+
+					// 有障碍物
+					if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
+						continue;
+					}
+
+					if (!_attacker.getHateList().containsKey(cha)) { // 无攻击对象
+						continue;
+					}
+
+					if (cha.isDead()) { // 死亡
+						continue;
+					}
+
+					// 幽灵状态
+					if (cha instanceof L1PcInstance) {
+						if (((L1PcInstance) cha).isGhost()) {
+							continue;
+						}
+					}
+					targetList.add((L1Character) obj);
+				}
 			}
-		}
-		else if (type == L1MobSkill.TYPE_MAGIC_ATTACK) { // 魔法攻击
-			if (magicAttack(i) == true) {
-				skillUseCountUp(i);
-				isUseSkill = true;
+
+			if (targetList.isEmpty()) {
+				target = _target;
 			}
-		}
-		else if (type == L1MobSkill.TYPE_SUMMON) { // サモンする
-			if (summon(i) == true) {
-				skillUseCountUp(i);
-				isUseSkill = true;
+			else {
+				int randomSize = targetList.size() * 100;
+				int targetIndex = Random.nextInt(randomSize) / 100;
+				target = targetList.get(targetIndex);
 			}
+			break;
+
+		default:
+			target = _target;
+			break;
 		}
-		else if (type == L1MobSkill.TYPE_POLY) { // 强制变身させる
-			if (poly(i) == true) {
-				skillUseCountUp(i);
-				isUseSkill = true;
-			}
-		}
-		return isUseSkill;
+		return target;
 	}
 
-	private boolean summon(int idx) {
-		int summonId = getMobSkillTemplate().getSummon(idx);
-		int min = getMobSkillTemplate().getSummonMin(idx);
-		int max = getMobSkillTemplate().getSummonMax(idx);
-		int count = 0;
-		int actId = getMobSkillTemplate().getActid(idx);
-		int gfxId = getMobSkillTemplate().getGfxid(idx);
-
-		if (summonId == 0) {
-			return false;
-		}
-
-		// 施法动作
-		if (actId > 0) {
-			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
-			_attacker.broadcastPacket(gfx);
-			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
-		}
-		// 魔方阵
-		if (gfxId > 0) {
-			_attacker.broadcastPacket(new S_SkillSound(_attacker.getId(), gfxId));
-		}
-		count = Random.nextInt(max) + min;
-		mobspawn(summonId, count);
-		return true;
+	private int getSkillUseCount(int idx) {
+		return _skillUseCount[idx];
 	}
 
-	/*
-	 * 15セル以内で射线が通るPCを指定したモンスターに强制变身させる。 对PCしか使えない。
+	/**
+	 * 只检查触发条件
 	 */
-	private boolean poly(int idx) {
-		int polyId = getMobSkillTemplate().getPolyId(idx);
-		int actId = getMobSkillTemplate().getActid(idx);
-		boolean usePoly = false;
+	private boolean isSkillUseble(int skillIdx, boolean isTriRnd) {
+		boolean useble = false;
+		int type = getMobSkillTemplate().getType(skillIdx);
+		int chance = Random.nextInt(100) + 1;
 
-		if (polyId == 0) {
+		if (chance > getMobSkillTemplate().getTriggerRandom(skillIdx)) {
 			return false;
 		}
-		// 施法动作
-		if (actId > 0) {
-			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
-			_attacker.broadcastPacket(gfx);
-			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
+
+		if (isTriRnd || (type == L1MobSkill.TYPE_SUMMON) || (type == L1MobSkill.TYPE_POLY)) {
+			/*
+			 * if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) { int chance = Random.nextInt(100) + 1; if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) { useble = true; } else { return false; } }
+			 */// 确定此修改后的模式是仿正的，再移除此注解掉的程式码
+			useble = true;
 		}
 
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(_attacker)) {
-			if (pc.isDead()) { // 死亡
-				continue;
+		if (getMobSkillTemplate().getTriggerHp(skillIdx) > 0) {
+			int hpRatio = (_attacker.getCurrentHp() * 100) / _attacker.getMaxHp();
+			if (hpRatio <= getMobSkillTemplate().getTriggerHp(skillIdx)) {
+				useble = true;
 			}
-			if (pc.isGhost()) {
-				continue;
+			else {
+				return false;
 			}
-			if (pc.isGmInvis()) {
-				continue;
-			}
-			if (_attacker.glanceCheck(pc.getX(), pc.getY()) == false) {
-				continue; // 射线が通らない
+		}
+
+		if (getMobSkillTemplate().getTriggerCompanionHp(skillIdx) > 0) {
+			L1NpcInstance companionNpc = searchMinCompanionHp();
+			if (companionNpc == null) {
+				return false;
 			}
 
-			switch (_attacker.getNpcTemplate().get_npcId()) {
-			case 81082: // 火焰之影
-				pc.getInventory().takeoffEquip(945); // 将目标装备卸下。
-				break;
-			default:
-				break;
+			int hpRatio = (companionNpc.getCurrentHp() * 100) / companionNpc.getMaxHp();
+			if (hpRatio <= getMobSkillTemplate().getTriggerCompanionHp(skillIdx)) {
+				useble = true;
+				_target = companionNpc; // 更换目标
 			}
-			_attacker.broadcastPacket(new S_SkillSound(pc.getId(), 230));
-			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
-			usePoly = true;
+			else {
+				return false;
+			}
 		}
-		return usePoly;
+
+		if (getMobSkillTemplate().getTriggerRange(skillIdx) != 0) {
+			int distance = _attacker.getLocation().getTileLineDistance(_target.getLocation());
+
+			if (getMobSkillTemplate().isTriggerDistance(skillIdx, distance)) {
+				useble = true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		if (getMobSkillTemplate().getTriggerCount(skillIdx) > 0) {
+			if (getSkillUseCount(skillIdx) < getMobSkillTemplate().getTriggerCount(skillIdx)) {
+				useble = true;
+			}
+			else {
+				return false;
+			}
+		}
+		return useble;
 	}
 
 	/** 魔法攻击 */
@@ -314,6 +329,63 @@ public class L1MobSkillUse {
 			return true;
 		}
 		return false;
+	}
+
+	private void mobspawn(int summonId) {
+		try {
+			L1Npc spawnmonster = NpcTable.getInstance().getTemplate(summonId);
+			if (spawnmonster != null) {
+				L1NpcInstance mob = null;
+				try {
+					String implementationName = spawnmonster.getImpl();
+					Constructor<?> _constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString()).getConstructors()[0];
+					mob = (L1NpcInstance) _constructor.newInstance(new Object[] { spawnmonster });
+					mob.setId(IdFactory.getInstance().nextId());
+					L1Location loc = _attacker.getLocation().randomLocation(8, false);
+					int heading = Random.nextInt(8);
+					mob.setX(loc.getX());
+					mob.setY(loc.getY());
+					mob.setHomeX(loc.getX());
+					mob.setHomeY(loc.getY());
+					short mapid = _attacker.getMapId();
+					mob.setMap(mapid);
+					mob.setHeading(heading);
+					L1World.getInstance().storeObject(mob);
+					L1World.getInstance().addVisibleObject(mob);
+					L1Object object = L1World.getInstance().findObject(mob.getId());
+					L1MonsterInstance newnpc = (L1MonsterInstance) object;
+					newnpc.set_storeDroped(true); // 召唤怪不会掉落道具
+					if (newnpc.getTempCharGfx() == 145) { // 史巴托
+						newnpc.setStatus(11);
+						newnpc.broadcastPacket(new S_NPCPack(newnpc));
+						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_Appear));
+						newnpc.setStatus(0);
+						newnpc.broadcastPacket(new S_CharVisualUpdate(newnpc, newnpc.getStatus()));
+					}
+					else if (newnpc.getTempCharGfx() == 7591) { // 泥龙(地)
+						newnpc.broadcastPacket(new S_NPCPack(newnpc));
+						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_AxeWalk));
+					}
+					newnpc.onNpcAI();
+					newnpc.turnOnOffLight();
+					newnpc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
+				}
+				catch (Exception e) {
+					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+	}
+
+	private void mobspawn(int summonId, int count) {
+		int i;
+
+		for (i = 0; i < count; i++) {
+			mobspawn(summonId);
+		}
 	}
 
 	/**
@@ -420,71 +492,50 @@ public class L1MobSkillUse {
 		return true;
 	}
 
-	/**
-	 * 只检查触发条件
+	/*
+	 * 15セル以内で射线が通るPCを指定したモンスターに强制变身させる。 对PCしか使えない。
 	 */
-	private boolean isSkillUseble(int skillIdx, boolean isTriRnd) {
-		boolean useble = false;
-		int type = getMobSkillTemplate().getType(skillIdx);
-		int chance = Random.nextInt(100) + 1;
+	private boolean poly(int idx) {
+		int polyId = getMobSkillTemplate().getPolyId(idx);
+		int actId = getMobSkillTemplate().getActid(idx);
+		boolean usePoly = false;
 
-		if (chance > getMobSkillTemplate().getTriggerRandom(skillIdx)) {
+		if (polyId == 0) {
 			return false;
 		}
-
-		if (isTriRnd || (type == L1MobSkill.TYPE_SUMMON) || (type == L1MobSkill.TYPE_POLY)) {
-			/*
-			 * if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) { int chance = Random.nextInt(100) + 1; if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) { useble = true; } else { return false; } }
-			 */// 确定此修改后的模式是仿正的，再移除此注解掉的程式码
-			useble = true;
+		// 施法动作
+		if (actId > 0) {
+			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
+			_attacker.broadcastPacket(gfx);
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 		}
 
-		if (getMobSkillTemplate().getTriggerHp(skillIdx) > 0) {
-			int hpRatio = (_attacker.getCurrentHp() * 100) / _attacker.getMaxHp();
-			if (hpRatio <= getMobSkillTemplate().getTriggerHp(skillIdx)) {
-				useble = true;
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(_attacker)) {
+			if (pc.isDead()) { // 死亡
+				continue;
 			}
-			else {
-				return false;
+			if (pc.isGhost()) {
+				continue;
 			}
+			if (pc.isGmInvis()) {
+				continue;
+			}
+			if (_attacker.glanceCheck(pc.getX(), pc.getY()) == false) {
+				continue; // 射线が通らない
+			}
+
+			switch (_attacker.getNpcTemplate().get_npcId()) {
+			case 81082: // 火焰之影
+				pc.getInventory().takeoffEquip(945); // 将目标装备卸下。
+				break;
+			default:
+				break;
+			}
+			_attacker.broadcastPacket(new S_SkillSound(pc.getId(), 230));
+			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
+			usePoly = true;
 		}
-
-		if (getMobSkillTemplate().getTriggerCompanionHp(skillIdx) > 0) {
-			L1NpcInstance companionNpc = searchMinCompanionHp();
-			if (companionNpc == null) {
-				return false;
-			}
-
-			int hpRatio = (companionNpc.getCurrentHp() * 100) / companionNpc.getMaxHp();
-			if (hpRatio <= getMobSkillTemplate().getTriggerCompanionHp(skillIdx)) {
-				useble = true;
-				_target = companionNpc; // 更换目标
-			}
-			else {
-				return false;
-			}
-		}
-
-		if (getMobSkillTemplate().getTriggerRange(skillIdx) != 0) {
-			int distance = _attacker.getLocation().getTileLineDistance(_target.getLocation());
-
-			if (getMobSkillTemplate().isTriggerDistance(skillIdx, distance)) {
-				useble = true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		if (getMobSkillTemplate().getTriggerCount(skillIdx) > 0) {
-			if (getSkillUseCount(skillIdx) < getMobSkillTemplate().getTriggerCount(skillIdx)) {
-				useble = true;
-			}
-			else {
-				return false;
-			}
-		}
-		return useble;
+		return usePoly;
 	}
 
 	private L1NpcInstance searchMinCompanionHp() {
@@ -509,122 +560,71 @@ public class L1MobSkillUse {
 		return minHpNpc;
 	}
 
-	private void mobspawn(int summonId, int count) {
-		int i;
-
-		for (i = 0; i < count; i++) {
-			mobspawn(summonId);
-		}
+	private void skillUseCountUp(int idx) {
+		_skillUseCount[idx]++;
 	}
 
-	private void mobspawn(int summonId) {
-		try {
-			L1Npc spawnmonster = NpcTable.getInstance().getTemplate(summonId);
-			if (spawnmonster != null) {
-				L1NpcInstance mob = null;
-				try {
-					String implementationName = spawnmonster.getImpl();
-					Constructor<?> _constructor = Class.forName((new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString()).getConstructors()[0];
-					mob = (L1NpcInstance) _constructor.newInstance(new Object[] { spawnmonster });
-					mob.setId(IdFactory.getInstance().nextId());
-					L1Location loc = _attacker.getLocation().randomLocation(8, false);
-					int heading = Random.nextInt(8);
-					mob.setX(loc.getX());
-					mob.setY(loc.getY());
-					mob.setHomeX(loc.getX());
-					mob.setHomeY(loc.getY());
-					short mapid = _attacker.getMapId();
-					mob.setMap(mapid);
-					mob.setHeading(heading);
-					L1World.getInstance().storeObject(mob);
-					L1World.getInstance().addVisibleObject(mob);
-					L1Object object = L1World.getInstance().findObject(mob.getId());
-					L1MonsterInstance newnpc = (L1MonsterInstance) object;
-					newnpc.set_storeDroped(true); // 召唤怪不会掉落道具
-					if (newnpc.getTempCharGfx() == 145) { // 史巴托
-						newnpc.setStatus(11);
-						newnpc.broadcastPacket(new S_NPCPack(newnpc));
-						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_Appear));
-						newnpc.setStatus(0);
-						newnpc.broadcastPacket(new S_CharVisualUpdate(newnpc, newnpc.getStatus()));
-					}
-					else if (newnpc.getTempCharGfx() == 7591) { // 泥龙(地)
-						newnpc.broadcastPacket(new S_NPCPack(newnpc));
-						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_AxeWalk));
-					}
-					newnpc.onNpcAI();
-					newnpc.turnOnOffLight();
-					newnpc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
-				}
-				catch (Exception e) {
-					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				}
-			}
+	private boolean summon(int idx) {
+		int summonId = getMobSkillTemplate().getSummon(idx);
+		int min = getMobSkillTemplate().getSummonMin(idx);
+		int max = getMobSkillTemplate().getSummonMax(idx);
+		int count = 0;
+		int actId = getMobSkillTemplate().getActid(idx);
+		int gfxId = getMobSkillTemplate().getGfxid(idx);
+
+		if (summonId == 0) {
+			return false;
 		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		// 施法动作
+		if (actId > 0) {
+			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
+			_attacker.broadcastPacket(gfx);
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 		}
+		// 魔方阵
+		if (gfxId > 0) {
+			_attacker.broadcastPacket(new S_SkillSound(_attacker.getId(), gfxId));
+		}
+		count = Random.nextInt(max) + min;
+		mobspawn(summonId, count);
+		return true;
 	}
 
-	// 现在ChangeTargetで有效な值は2,3のみ
-	private L1Character changeTarget(int type, int idx) {
-		L1Character target;
-
-		switch (type) {
-		case L1MobSkill.CHANGE_TARGET_ME:
-			target = _attacker;
-			break;
-		case L1MobSkill.CHANGE_TARGET_RANDOM:
-			// 选定候补目标
-			List<L1Character> targetList = Lists.newList();
-			for (L1Object obj : L1World.getInstance().getVisibleObjects(_attacker)) {
-				if ((obj instanceof L1PcInstance) || (obj instanceof L1PetInstance) || (obj instanceof L1SummonInstance)) {
-					L1Character cha = (L1Character) obj;
-
-					int distance = _attacker.getLocation().getTileLineDistance(cha.getLocation());
-
-					// 目标在发动范围外
-					if (!getMobSkillTemplate().isTriggerDistance(idx, distance)) {
-						continue;
-					}
-
-					// 有障碍物
-					if (!_attacker.glanceCheck(cha.getX(), cha.getY())) {
-						continue;
-					}
-
-					if (!_attacker.getHateList().containsKey(cha)) { // 无攻击对象
-						continue;
-					}
-
-					if (cha.isDead()) { // 死亡
-						continue;
-					}
-
-					// 幽灵状态
-					if (cha instanceof L1PcInstance) {
-						if (((L1PcInstance) cha).isGhost()) {
-							continue;
-						}
-					}
-					targetList.add((L1Character) obj);
-				}
-			}
-
-			if (targetList.isEmpty()) {
-				target = _target;
-			}
-			else {
-				int randomSize = targetList.size() * 100;
-				int targetIndex = Random.nextInt(randomSize) / 100;
-				target = targetList.get(targetIndex);
-			}
-			break;
-
-		default:
-			target = _target;
-			break;
+	/** 使用技能 */
+	private boolean useSkill(int i) {
+		// 对自身施法判断
+		int changeType = getMobSkillTemplate().getChangeTarget(i);
+		if (changeType == 2) {
+			_target = changeTarget(changeType, i);
 		}
-		return target;
+
+		boolean isUseSkill = false;
+		int type = getMobSkillTemplate().getType(i);
+		if (type == L1MobSkill.TYPE_PHYSICAL_ATTACK) { // 物理攻击
+			if (physicalAttack(i) == true) {
+				skillUseCountUp(i);
+				isUseSkill = true;
+			}
+		}
+		else if (type == L1MobSkill.TYPE_MAGIC_ATTACK) { // 魔法攻击
+			if (magicAttack(i) == true) {
+				skillUseCountUp(i);
+				isUseSkill = true;
+			}
+		}
+		else if (type == L1MobSkill.TYPE_SUMMON) { // サモンする
+			if (summon(i) == true) {
+				skillUseCountUp(i);
+				isUseSkill = true;
+			}
+		}
+		else if (type == L1MobSkill.TYPE_POLY) { // 强制变身させる
+			if (poly(i) == true) {
+				skillUseCountUp(i);
+				isUseSkill = true;
+			}
+		}
+		return isUseSkill;
 	}
 }

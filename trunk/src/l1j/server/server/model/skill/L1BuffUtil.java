@@ -73,47 +73,34 @@ import l1j.server.server.utils.Random;
  */
 public class L1BuffUtil {
 
-	/** 一段加速 */
-	public static void haste(L1PcInstance pc, int timeMillis) {
+	/** 龙之血痕 */
+	public static void bloodstain(L1PcInstance pc, byte type, int time, boolean showGfx) {
 
-		int objId = pc.getId();
-
-		// 已存在加速状态消除
-		if (pc.hasSkillEffect(HASTE) || pc.hasSkillEffect(GREATER_HASTE) || pc.hasSkillEffect(STATUS_HASTE)) {
-			if (pc.hasSkillEffect(HASTE)) { // 加速术
-				pc.killSkillEffectTimer(HASTE);
-			}
-			else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
-				pc.killSkillEffectTimer(GREATER_HASTE);
-			}
-			else if (pc.hasSkillEffect(STATUS_HASTE)) { // 自我加速药水
-				pc.killSkillEffectTimer(STATUS_HASTE);
-			}
+		if (showGfx) {
+			pc.sendPackets(new S_SkillSound(pc.getId(), 7783));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), 7783));
 		}
 
-		// 抵消缓速魔法效果 缓速术 集体缓速术 地面障碍
-		if (pc.hasSkillEffect(SLOW) || pc.hasSkillEffect(MASS_SLOW) || pc.hasSkillEffect(ENTANGLE)) {
-			if (pc.hasSkillEffect(SLOW)) { // 缓速术
-				pc.killSkillEffectTimer(SLOW);
+		int skillId = EFFECT_BLOODSTAIN_OF_ANTHARAS;
+		int iconType = 0;
+		if (type == 0) { // 安塔瑞斯
+			if (!pc.hasSkillEffect(skillId)) {
+				pc.addAc(-2); // 防御 -2
+				pc.addWater(50); // 水属性 +50
 			}
-			else if (pc.hasSkillEffect(MASS_SLOW)) { // 集体缓速术
-				pc.killSkillEffectTimer(MASS_SLOW);
-			}
-			else if (pc.hasSkillEffect(ENTANGLE)) { // 地面障碍
-				pc.killSkillEffectTimer(ENTANGLE);
-			}
-			pc.sendPackets(new S_SkillHaste(objId, 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(objId, 0, 0));
+			iconType = 82;
+			// 安塔瑞斯的血痕
 		}
-
-		pc.setSkillEffect(STATUS_HASTE, timeMillis);
-
-		pc.sendPackets(new S_SkillSound(objId, 191));
-		pc.broadcastPacket(new S_SkillSound(objId, 191));
-		pc.sendPackets(new S_SkillHaste(objId, 1, timeMillis / 1000));
-		pc.broadcastPacket(new S_SkillHaste(objId, 1, 0));
-		pc.sendPackets(new S_ServerMessage(184)); // \f1你的动作突然变快。
-		pc.setMoveSpeed(1);
+		else if (type == 1) { // 法利昂
+			skillId = EFFECT_BLOODSTAIN_OF_FAFURION;
+			if (!pc.hasSkillEffect(skillId)) {
+				pc.addWind(50); // 风属性 +50
+			}
+			iconType = 85;
+		}
+		pc.sendPackets(new S_OwnCharAttrDef(pc));
+		pc.sendPackets(new S_SkillIconBloodstain(iconType, time));
+		pc.setSkillEffect(skillId, (time * 60 * 1000));
 	}
 
 	/** 二段加速 */
@@ -149,51 +136,6 @@ public class L1BuffUtil {
 		pc.sendPackets(new S_SkillBrave(objId, 1, timeMillis / 1000));
 		pc.broadcastPacket(new S_SkillBrave(objId, 1, 0));
 		pc.setBraveSpeed(1);
-	}
-
-	/** 三段加速 */
-	public static void thirdSpeed(L1PcInstance pc) {
-		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
-			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
-		}
-
-		pc.setSkillEffect(STATUS_THIRD_SPEED, 600 * 1000);
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
-		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-		pc.sendPackets(new S_ServerMessage(1065)); // 将发生神秘的奇迹力量。
-	}
-
-	/** 龙之血痕 */
-	public static void bloodstain(L1PcInstance pc, byte type, int time, boolean showGfx) {
-
-		if (showGfx) {
-			pc.sendPackets(new S_SkillSound(pc.getId(), 7783));
-			pc.broadcastPacket(new S_SkillSound(pc.getId(), 7783));
-		}
-
-		int skillId = EFFECT_BLOODSTAIN_OF_ANTHARAS;
-		int iconType = 0;
-		if (type == 0) { // 安塔瑞斯
-			if (!pc.hasSkillEffect(skillId)) {
-				pc.addAc(-2); // 防御 -2
-				pc.addWater(50); // 水属性 +50
-			}
-			iconType = 82;
-			// 安塔瑞斯的血痕
-		}
-		else if (type == 1) { // 法利昂
-			skillId = EFFECT_BLOODSTAIN_OF_FAFURION;
-			if (!pc.hasSkillEffect(skillId)) {
-				pc.addWind(50); // 风属性 +50
-			}
-			iconType = 85;
-		}
-		pc.sendPackets(new S_OwnCharAttrDef(pc));
-		pc.sendPackets(new S_SkillIconBloodstain(iconType, time));
-		pc.setSkillEffect(skillId, (time * 60 * 1000));
 	}
 
 	/** 卡瑞、莎尔的祝福 */
@@ -237,6 +179,49 @@ public class L1BuffUtil {
 			pc.sendPackets(new S_OwnCharAttrDef(pc));
 		}
 		pc.setSkillEffect(skillId, (time * 1000));
+	}
+
+	/** 一段加速 */
+	public static void haste(L1PcInstance pc, int timeMillis) {
+
+		int objId = pc.getId();
+
+		// 已存在加速状态消除
+		if (pc.hasSkillEffect(HASTE) || pc.hasSkillEffect(GREATER_HASTE) || pc.hasSkillEffect(STATUS_HASTE)) {
+			if (pc.hasSkillEffect(HASTE)) { // 加速术
+				pc.killSkillEffectTimer(HASTE);
+			}
+			else if (pc.hasSkillEffect(GREATER_HASTE)) { // 强力加速术
+				pc.killSkillEffectTimer(GREATER_HASTE);
+			}
+			else if (pc.hasSkillEffect(STATUS_HASTE)) { // 自我加速药水
+				pc.killSkillEffectTimer(STATUS_HASTE);
+			}
+		}
+
+		// 抵消缓速魔法效果 缓速术 集体缓速术 地面障碍
+		if (pc.hasSkillEffect(SLOW) || pc.hasSkillEffect(MASS_SLOW) || pc.hasSkillEffect(ENTANGLE)) {
+			if (pc.hasSkillEffect(SLOW)) { // 缓速术
+				pc.killSkillEffectTimer(SLOW);
+			}
+			else if (pc.hasSkillEffect(MASS_SLOW)) { // 集体缓速术
+				pc.killSkillEffectTimer(MASS_SLOW);
+			}
+			else if (pc.hasSkillEffect(ENTANGLE)) { // 地面障碍
+				pc.killSkillEffectTimer(ENTANGLE);
+			}
+			pc.sendPackets(new S_SkillHaste(objId, 0, 0));
+			pc.broadcastPacket(new S_SkillHaste(objId, 0, 0));
+		}
+
+		pc.setSkillEffect(STATUS_HASTE, timeMillis);
+
+		pc.sendPackets(new S_SkillSound(objId, 191));
+		pc.broadcastPacket(new S_SkillSound(objId, 191));
+		pc.sendPackets(new S_SkillHaste(objId, 1, timeMillis / 1000));
+		pc.broadcastPacket(new S_SkillHaste(objId, 1, 0));
+		pc.sendPackets(new S_ServerMessage(184)); // \f1你的动作突然变快。
+		pc.setMoveSpeed(1);
 	}
 
 	/** 设置技能效果 */
@@ -1327,6 +1312,21 @@ public class L1BuffUtil {
 			break;
 		}
 		return dmg;
+	}
+
+	/** 三段加速 */
+	public static void thirdSpeed(L1PcInstance pc) {
+		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
+			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
+		}
+
+		pc.setSkillEffect(STATUS_THIRD_SPEED, 600 * 1000);
+
+		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
+		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+		pc.sendPackets(new S_ServerMessage(1065)); // 将发生神秘的奇迹力量。
 	}
 
 	/** 不可取消 */

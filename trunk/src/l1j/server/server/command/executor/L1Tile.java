@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 public class L1Tile implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1Tile.class.getName());
 
-	private L1Tile() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Tile();
+	}
+
+	private L1Tile() {
 	}
 
 	@Override

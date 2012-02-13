@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyPotion_Cheesecake extends ItemExecutor {
 
-	private PolyPotion_Cheesecake() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyPotion_Cheesecake();
+	}
+
+	private PolyPotion_Cheesecake() {
 	}
 
 	/**

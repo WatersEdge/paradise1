@@ -38,6 +38,9 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 		super(template);
 	}
 
+	public void doFinalAction(L1PcInstance pc) {
+	}
+
 	@Override
 	public void onAction(L1PcInstance pc) {
 		onAction(pc, 0);
@@ -53,6 +56,10 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
+	}
+
+	@Override
+	public void onFinalAction(L1PcInstance pc, String action) {
 	}
 
 	@Override
@@ -130,13 +137,6 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onFinalAction(L1PcInstance pc, String action) {
-	}
-
-	public void doFinalAction(L1PcInstance pc) {
 	}
 
 }

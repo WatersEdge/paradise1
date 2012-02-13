@@ -88,51 +88,107 @@ import l1j.server.server.utils.SystemUtil;
  */
 public class GameServer extends Thread {
 
+	/** 关闭服务器线程 */
+	private class ServerShutdownThread extends Thread {
+		private final int _secondsCount;
+
+		public ServerShutdownThread(int secondsCount) {
+			_secondsCount = secondsCount;
+		}
+
+		@Override
+		public void run() {
+			L1World world = L1World.getInstance();
+			try {
+				int secondsCount = _secondsCount;
+				world.broadcastServerMessage("伺服器即将关闭。");
+				world.broadcastServerMessage("请玩家移动到安全区域先行登出");
+				while (0 < secondsCount) {
+					if (secondsCount <= 30) {
+						world.broadcastServerMessage("伺服器將在" + secondsCount + "秒后关闭，请玩家移动到安全区域先行登出。");
+					}
+					else {
+						if (secondsCount % 60 == 0) {
+							world.broadcastServerMessage("伺服器将在" + secondsCount / 60 + "分钟后关闭。");
+						}
+					}
+					Thread.sleep(1000);
+					secondsCount--;
+				}
+				shutdown();
+			}
+			catch (InterruptedException e) {
+				world.broadcastServerMessage("已取消伺服器关机。伺服器将会正常运作。");
+				return;
+			}
+		}
+	}
+
 	/** 提示信息 */
 	private static Logger _log = Logger.getLogger(GameServer.class.getName());
 
 	private ServerSocket _serverSocket;
 
 	private static int YesNoCount = 0;
-
-	private int _port;
-	// private Logins _logins;
-	private LoginController _loginController;
-	private int chatlvl;
-
-	@Override
-	public void run() {
-		System.out.println(L1Message.memoryUse + SystemUtil.getUsedMemoryMB() + L1Message.memory);
-		System.out.println(L1Message.waitingforuser);
-		while (true) {
-			try {
-				Socket socket = _serverSocket.accept();
-				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
-				String host = socket.getInetAddress().getHostAddress();
-				if (IpTable.getInstance().isBannedIp(host)) {
-					_log.info("禁用IP (" + host + ")");
-				}
-				else {
-					ClientThread client = new ClientThread(socket);
-					GeneralThreadPool.getInstance().execute(client);
-				}
-			}
-			catch (IOException ioexception) {
-			}
-		}
-	}
-
-	private static GameServer _instance;
-
-	private GameServer() {
-		super("GameServer");
-	}
-
 	public static GameServer getInstance() {
 		if (_instance == null) {
 			_instance = new GameServer();
 		}
 		return _instance;
+	}
+	private int _port;
+
+	// private Logins _logins;
+	private LoginController _loginController;
+
+	private int chatlvl;
+
+	private static GameServer _instance;
+
+	/**
+	 * 取得世界中发送YesNo总次数
+	 * 
+	 * @return YesNo总次数
+	 */
+	public static int getYesNoCount() {
+		YesNoCount += 1;
+		return YesNoCount;
+	}
+
+	private ServerShutdownThread _shutdownThread = null;
+
+	private GameServer() {
+		super("GameServer");
+	}
+
+	/** 中止关机 */
+	public synchronized void abortShutdown() {
+		if (_shutdownThread == null) {
+			// 如果正在关闭
+			// TODO 可能要有错误通知之类的
+			return;
+		}
+
+		_shutdownThread.interrupt();
+		_shutdownThread = null;
+	}
+
+	/**
+	 * 踢掉世界地图中所有的玩家与储存资料。
+	 */
+	public void disconnectAllCharacters() {
+		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
+		for (L1PcInstance pc : players) {
+			pc.getNetConnection().setActiveChar(null);
+			pc.getNetConnection().kick();
+		}
+		// 踢除所有在线上的玩家
+		for (L1PcInstance pc : players) {
+			ClientThread.quitGame(pc);
+			L1World.getInstance().removeObject(pc);
+			Account account = Account.load(pc.getAccountName());
+			Account.online(account, false);
+		}
 	}
 
 	/** 初始化 */
@@ -313,61 +369,33 @@ public class GameServer extends Thread {
 		this.start();
 	}
 
-	/**
-	 * 踢掉世界地图中所有的玩家与储存资料。
-	 */
-	public void disconnectAllCharacters() {
-		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
-		for (L1PcInstance pc : players) {
-			pc.getNetConnection().setActiveChar(null);
-			pc.getNetConnection().kick();
-		}
-		// 踢除所有在线上的玩家
-		for (L1PcInstance pc : players) {
-			ClientThread.quitGame(pc);
-			L1World.getInstance().removeObject(pc);
-			Account account = Account.load(pc.getAccountName());
-			Account.online(account, false);
-		}
-	}
-
-	/** 关闭服务器线程 */
-	private class ServerShutdownThread extends Thread {
-		private final int _secondsCount;
-
-		public ServerShutdownThread(int secondsCount) {
-			_secondsCount = secondsCount;
-		}
-
-		@Override
-		public void run() {
-			L1World world = L1World.getInstance();
+	@Override
+	public void run() {
+		System.out.println(L1Message.memoryUse + SystemUtil.getUsedMemoryMB() + L1Message.memory);
+		System.out.println(L1Message.waitingforuser);
+		while (true) {
 			try {
-				int secondsCount = _secondsCount;
-				world.broadcastServerMessage("伺服器即将关闭。");
-				world.broadcastServerMessage("请玩家移动到安全区域先行登出");
-				while (0 < secondsCount) {
-					if (secondsCount <= 30) {
-						world.broadcastServerMessage("伺服器將在" + secondsCount + "秒后关闭，请玩家移动到安全区域先行登出。");
-					}
-					else {
-						if (secondsCount % 60 == 0) {
-							world.broadcastServerMessage("伺服器将在" + secondsCount / 60 + "分钟后关闭。");
-						}
-					}
-					Thread.sleep(1000);
-					secondsCount--;
+				Socket socket = _serverSocket.accept();
+				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
+				String host = socket.getInetAddress().getHostAddress();
+				if (IpTable.getInstance().isBannedIp(host)) {
+					_log.info("禁用IP (" + host + ")");
 				}
-				shutdown();
+				else {
+					ClientThread client = new ClientThread(socket);
+					GeneralThreadPool.getInstance().execute(client);
+				}
 			}
-			catch (InterruptedException e) {
-				world.broadcastServerMessage("已取消伺服器关机。伺服器将会正常运作。");
-				return;
+			catch (IOException ioexception) {
 			}
 		}
 	}
 
-	private ServerShutdownThread _shutdownThread = null;
+	/** 关机 */
+	public void shutdown() {
+		disconnectAllCharacters();
+		System.exit(0);
+	}
 
 	/** 关机倒计时 */
 	public synchronized void shutdownWithCountdown(int secondsCount) {
@@ -378,33 +406,5 @@ public class GameServer extends Thread {
 		}
 		_shutdownThread = new ServerShutdownThread(secondsCount);
 		GeneralThreadPool.getInstance().execute(_shutdownThread);
-	}
-
-	/** 关机 */
-	public void shutdown() {
-		disconnectAllCharacters();
-		System.exit(0);
-	}
-
-	/** 中止关机 */
-	public synchronized void abortShutdown() {
-		if (_shutdownThread == null) {
-			// 如果正在关闭
-			// TODO 可能要有错误通知之类的
-			return;
-		}
-
-		_shutdownThread.interrupt();
-		_shutdownThread = null;
-	}
-
-	/**
-	 * 取得世界中发送YesNo总次数
-	 * 
-	 * @return YesNo总次数
-	 */
-	public static int getYesNoCount() {
-		YesNoCount += 1;
-		return YesNoCount;
 	}
 }

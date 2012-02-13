@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class AssassinCard extends ItemExecutor {
 
-	private AssassinCard() {
-	}
-
 	public static ItemExecutor get() {
 		return new AssassinCard();
+	}
+
+	private AssassinCard() {
 	}
 
 	/**

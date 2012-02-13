@@ -46,13 +46,6 @@ public class ElementalStoneGenerator implements Runnable {
 	private static final int LAST_Y = 32500;
 	private static final int ELEMENTAL_STONE_ID = 40515; // 元素石
 
-	private ArrayList<L1GroundInventory> _itemList = new ArrayList<L1GroundInventory>(MAX_COUNT);
-
-	private static ElementalStoneGenerator _instance = null;
-
-	private ElementalStoneGenerator() {
-	}
-
 	public static ElementalStoneGenerator getInstance() {
 		if (_instance == null) {
 			_instance = new ElementalStoneGenerator();
@@ -60,7 +53,41 @@ public class ElementalStoneGenerator implements Runnable {
 		return _instance;
 	}
 
+	private ArrayList<L1GroundInventory> _itemList = new ArrayList<L1GroundInventory>(MAX_COUNT);
+
+	private static ElementalStoneGenerator _instance = null;
+
 	private final L1Object _dummy = new L1Object();
+
+	private ElementalStoneGenerator() {
+	}
+
+	@Override
+	public void run() {
+		try {
+			L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
+			while (true) {
+				removeItemsPickedUp();
+
+				while (_itemList.size() < MAX_COUNT) { // 减少的情况
+					L1Location loc = new L1Location(nextPoint(), map);
+
+					if (!canPut(loc)) {
+						// XXX 设置范围内全てにPCが居た场合无限循环…
+						continue;
+					}
+
+					putElementalStone(loc);
+
+					Thread.sleep(INTERVAL * 1000); // 设置时间间隔
+				}
+				Thread.sleep(SLEEP_TIME * 1000); // maxまで设置终了后一定时间は再设置しない
+			}
+		}
+		catch (Throwable e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+	}
 
 	/**
 	 * 返回在指定地点放置精灵石。
@@ -88,19 +115,6 @@ public class ElementalStoneGenerator implements Runnable {
 	}
 
 	/**
-	 * 捡起石头从名单中删除。
-	 */
-	private void removeItemsPickedUp() {
-		for (int i = 0; i < _itemList.size(); i++) {
-			L1GroundInventory gInventory = _itemList.get(i);
-			if (!gInventory.checkItem(ELEMENTAL_STONE_ID)) {
-				_itemList.remove(i);
-				i--;
-			}
-		}
-	}
-
-	/**
 	 * 把石头放入指定地点。
 	 */
 	private void putElementalStone(L1Location loc) {
@@ -113,30 +127,16 @@ public class ElementalStoneGenerator implements Runnable {
 		_itemList.add(gInventory);
 	}
 
-	@Override
-	public void run() {
-		try {
-			L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
-			while (true) {
-				removeItemsPickedUp();
-
-				while (_itemList.size() < MAX_COUNT) { // 减少的情况
-					L1Location loc = new L1Location(nextPoint(), map);
-
-					if (!canPut(loc)) {
-						// XXX 设置范围内全てにPCが居た场合无限循环…
-						continue;
-					}
-
-					putElementalStone(loc);
-
-					Thread.sleep(INTERVAL * 1000); // 设置时间间隔
-				}
-				Thread.sleep(SLEEP_TIME * 1000); // maxまで设置终了后一定时间は再设置しない
+	/**
+	 * 捡起石头从名单中删除。
+	 */
+	private void removeItemsPickedUp() {
+		for (int i = 0; i < _itemList.size(); i++) {
+			L1GroundInventory gInventory = _itemList.get(i);
+			if (!gInventory.checkItem(ELEMENTAL_STONE_ID)) {
+				_itemList.remove(i);
+				i--;
 			}
-		}
-		catch (Throwable e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
 }

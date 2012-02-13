@@ -31,6 +31,8 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class S_CommonNews extends ServerBasePacket {
 
+	private List<String> _announcements;
+
 	public S_CommonNews() {
 		_announcements = Lists.newList();
 		loadAnnouncements();
@@ -50,6 +52,16 @@ public class S_CommonNews extends ServerBasePacket {
 	public S_CommonNews(String s) {
 		writeC(Opcodes.S_OPCODE_COMMONNEWS);
 		writeS(s);
+	}
+
+	@Override
+	public byte[] getContent() {
+		return getBytes();
+	}
+
+	@Override
+	public String getType() {
+		return "[S] S_CommonNews";
 	}
 
 	/** 载入公告 */
@@ -84,17 +96,5 @@ public class S_CommonNews extends ServerBasePacket {
 		catch (Exception e) {
 		}
 	}
-
-	@Override
-	public byte[] getContent() {
-		return getBytes();
-	}
-
-	@Override
-	public String getType() {
-		return "[S] S_CommonNews";
-	}
-
-	private List<String> _announcements;
 
 }

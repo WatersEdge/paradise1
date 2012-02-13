@@ -51,6 +51,15 @@ public class AuctionTimeController implements Runnable {
 		return _instance;
 	}
 
+	/**
+	 * 取得现实时间
+	 */
+	public Calendar getRealTime() {
+		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		Calendar cal = Calendar.getInstance(tz);
+		return cal;
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -64,15 +73,6 @@ public class AuctionTimeController implements Runnable {
 	}
 
 	/**
-	 * 取得现实时间
-	 */
-	public Calendar getRealTime() {
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(tz);
-		return cal;
-	}
-
-	/**
 	 * 检查拍卖截止时间
 	 */
 	private void checkAuctionDeadline() {
@@ -82,6 +82,45 @@ public class AuctionTimeController implements Runnable {
 				endAuction(board);
 			}
 		}
+	}
+
+	/**
+	 * 取消拥有者的血盟小屋
+	 * 
+	 * @param houseId
+	 *            血盟小屋的编号
+	 * @return
+	 */
+	private void deleteHouseInfo(int houseId) {
+		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+			if (clan.getHouseId() == houseId) {
+				clan.setHouseId(0);
+				ClanTable.getInstance().updateClan(clan);
+			}
+		}
+	}
+
+	/**
+	 * 将血盟小屋拍卖的告示取消、设定血盟小屋为不拍卖状态
+	 * 
+	 * @param houseId
+	 *            血盟小屋的编号
+	 * @return
+	 */
+	private void deleteNote(int houseId) {
+		// 将血盟小屋的状态设定为不拍卖
+		L1House house = HouseTable.getInstance().getHouseTable(houseId);
+		house.setOnSale(false);
+		Calendar cal = getRealTime();
+		cal.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		house.setTaxDeadline(cal);
+		HouseTable.getInstance().updateHouse(house);
+
+		// 取消拍卖告示
+		AuctionBoardTable boardTable = new AuctionBoardTable();
+		boardTable.deleteAuctionBoard(houseId);
 	}
 
 	/**
@@ -157,22 +196,6 @@ public class AuctionTimeController implements Runnable {
 	}
 
 	/**
-	 * 取消拥有者的血盟小屋
-	 * 
-	 * @param houseId
-	 *            血盟小屋的编号
-	 * @return
-	 */
-	private void deleteHouseInfo(int houseId) {
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
-			if (clan.getHouseId() == houseId) {
-				clan.setHouseId(0);
-				ClanTable.getInstance().updateClan(clan);
-			}
-		}
-	}
-
-	/**
 	 * 设定得标者血盟小屋的编号
 	 * 
 	 * @param houseId
@@ -189,28 +212,5 @@ public class AuctionTimeController implements Runnable {
 				break;
 			}
 		}
-	}
-
-	/**
-	 * 将血盟小屋拍卖的告示取消、设定血盟小屋为不拍卖状态
-	 * 
-	 * @param houseId
-	 *            血盟小屋的编号
-	 * @return
-	 */
-	private void deleteNote(int houseId) {
-		// 将血盟小屋的状态设定为不拍卖
-		L1House house = HouseTable.getInstance().getHouseTable(houseId);
-		house.setOnSale(false);
-		Calendar cal = getRealTime();
-		cal.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		house.setTaxDeadline(cal);
-		HouseTable.getInstance().updateHouse(house);
-
-		// 取消拍卖告示
-		AuctionBoardTable boardTable = new AuctionBoardTable();
-		boardTable.deleteAuctionBoard(houseId);
 	}
 }

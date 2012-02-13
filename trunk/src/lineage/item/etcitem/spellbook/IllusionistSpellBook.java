@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpellBook_Illusionist;
  */
 public class IllusionistSpellBook extends ItemExecutor {
 
-	private IllusionistSpellBook() {
-	}
-
 	public static ItemExecutor get() {
 		return new IllusionistSpellBook();
+	}
+
+	private IllusionistSpellBook() {
 	}
 
 	/**

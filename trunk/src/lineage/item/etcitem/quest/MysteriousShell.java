@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MysteriousShell extends ItemExecutor {
 
-	private MysteriousShell() {
-	}
-
 	public static ItemExecutor get() {
 		return new MysteriousShell();
+	}
+
+	private MysteriousShell() {
 	}
 
 	/**

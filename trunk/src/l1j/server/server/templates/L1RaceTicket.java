@@ -25,44 +25,44 @@ public class L1RaceTicket {
 	private int victory;
 	private int _runner_num;
 
-	public int get_itemobjid() {
-		return _itemobjid;
-	}
-
-	public void set_itemobjid(int i) {
-		_itemobjid = i;
-	}
-
-	public void set_allotment_percentage(double allotment_percentage) {
-		this._allotment_percentage = allotment_percentage;
-	}
-
 	public double get_allotment_percentage() {
 		return _allotment_percentage;
 	}
 
-	public void set_round(int _round) {
-		this._round = _round;
+	public int get_itemobjid() {
+		return _itemobjid;
 	}
 
 	public int get_round() {
 		return _round;
 	}
 
-	public void set_victory(int victory) {
-		this.victory = victory;
+	public int get_runner_num() {
+		return _runner_num;
 	}
 
 	public int get_victory() {
 		return victory;
 	}
 
+	public void set_allotment_percentage(double allotment_percentage) {
+		this._allotment_percentage = allotment_percentage;
+	}
+
+	public void set_itemobjid(int i) {
+		_itemobjid = i;
+	}
+
+	public void set_round(int _round) {
+		this._round = _round;
+	}
+
 	public void set_runner_num(int _runner_num) {
 		this._runner_num = _runner_num;
 	}
 
-	public int get_runner_num() {
-		return _runner_num;
+	public void set_victory(int victory) {
+		this.victory = victory;
 	}
 
 }

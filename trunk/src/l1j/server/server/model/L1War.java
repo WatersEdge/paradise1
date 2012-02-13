@@ -35,26 +35,6 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class L1War {
 
-	/**  */
-	private String _param1 = null;
-	/**  */
-	private String _param2 = null;
-	/** 攻击方血盟名称 */
-	private final List<String> _attackClanList = Lists.newList();
-	/** 防守方血盟名称 */
-	private String _defenceClanName = null;
-	/** 战争类型 */
-	private int _warType = 0;
-	/** 城堡 */
-	private L1Castle _castle = null;
-	/** 战争结束时间 */
-	private Calendar _warEndTime;
-	/** 删除战争定时器中 */
-	private boolean _isWarTimerDelete = false;
-
-	public L1War() {
-	}
-
 	class CastleWarTimer implements Runnable {
 		public CastleWarTimer() {
 		}
@@ -79,7 +59,6 @@ public class L1War {
 			delete();
 		}
 	}
-
 	class SimWarTimer implements Runnable {
 		public SimWarTimer() {
 		}
@@ -100,6 +79,196 @@ public class L1War {
 			CeaseWar(_param1, _param2); // 终结
 			delete();
 		}
+	}
+	/**  */
+	private String _param1 = null;
+	/**  */
+	private String _param2 = null;
+	/** 攻击方血盟名称 */
+	private final List<String> _attackClanList = Lists.newList();
+	/** 防守方血盟名称 */
+	private String _defenceClanName = null;
+	/** 战争类型 */
+	private int _warType = 0;
+	/** 城堡 */
+	private L1Castle _castle = null;
+
+	/** 战争结束时间 */
+	private Calendar _warEndTime;
+
+	/** 删除战争定时器中 */
+	private boolean _isWarTimerDelete = false;
+
+	public L1War() {
+	}
+
+	public void AddAttackClan(String attack_clan_name) {
+		if (!_attackClanList.contains(attack_clan_name)) {
+			_attackClanList.add(attack_clan_name);
+		}
+	}
+
+	/** 停止攻城战 */
+	public void CeaseCastleWar() { // 到战争结束时间、防守方胜利
+		String defence_clan_name = GetDefenceClanName();
+		String clanList[] = GetAttackClanList();
+		if (defence_clan_name != null) {
+			L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟赢了对 %1 血盟的战争。
+					231, defence_clan_name, clanList[0]));
+		}
+
+		L1Clan defence_clan = L1World.getInstance().getClan(defence_clan_name);
+		if (defence_clan != null) {
+			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
+			for (L1PcInstance element : defence_clan_member) {
+				element.sendPackets(new S_War(4, defence_clan_name, clanList[0]));
+			}
+		}
+
+		for (String element : clanList) {
+			if (element != null) {
+				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟与 %1血盟之间的战争结束了。
+						227, defence_clan_name, element));
+				L1Clan clan = L1World.getInstance().getClan(element);
+				if (clan != null) {
+					L1PcInstance clan_member[] = clan.getOnlineClanMember();
+					for (L1PcInstance element2 : clan_member) {
+						element2.sendPackets(new S_War(3, element, defence_clan_name));
+					}
+				}
+			}
+		}
+
+		_isWarTimerDelete = true;
+		delete();
+	}
+
+	/** 停止战争 */
+	public void CeaseWar(String clan1_name, String clan2_name) { // _血盟と_血盟との战争が终结しました。
+		if (GetWarType() == 1) {
+			RequestCastleWar(3, clan1_name, clan2_name);
+		}
+		else {
+			RequestSimWar(3, clan1_name, clan2_name);
+		}
+	}
+
+	public boolean CheckAttackClan(String attack_clan_name) {
+		if (_attackClanList.contains(attack_clan_name)) {
+			return true;
+		}
+		return false;
+	}
+
+	/** 检查在同一场战争的血盟 */
+	public boolean CheckClanInSameWar(String player_clan_name, String target_clan_name) { // 自クランと相手クランが同じ战争に参加しているかチェックする（同じクランの场合も含む）
+		boolean player_clan_flag;
+		boolean target_clan_flag;
+
+		if (GetDefenceClanName().toLowerCase().equals(player_clan_name.toLowerCase())) { // 自クランに对して防卫侧クランをチェック
+			player_clan_flag = true;
+		}
+		else {
+			player_clan_flag = CheckAttackClan(player_clan_name); // 自クランに对して攻击侧クランをチェック
+		}
+
+		if (GetDefenceClanName().toLowerCase().equals(target_clan_name.toLowerCase())) { // 相手クランに对して防卫侧クランをチェック
+			target_clan_flag = true;
+		}
+		else {
+			target_clan_flag = CheckAttackClan(target_clan_name); // 相手クランに对して攻击侧クランをチェック
+		}
+
+		if ((player_clan_flag == true) && (target_clan_flag == true)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/** 检查在战争的血盟 */
+	public boolean CheckClanInWar(String clan_name) { // 检查是否已加入血盟战争
+		boolean ret;
+		if (GetDefenceClanName().toLowerCase().equals(clan_name.toLowerCase())) { // 防卫侧クランをチェック
+			ret = true;
+		}
+		else {
+			ret = CheckAttackClan(clan_name); // 攻击侧クランをチェック
+		}
+		return ret;
+	}
+
+	/** 宣战 */
+	public void DeclareWar(String clan1_name, String clan2_name) { // _血盟が_血盟に宣战布告しました。
+		if (GetWarType() == 1) { // 攻城战
+			RequestCastleWar(1, clan1_name, clan2_name);
+		}
+		else { // 模拟战
+			RequestSimWar(1, clan1_name, clan2_name);
+		}
+	}
+
+	public void delete() {
+		L1World.getInstance().removeWar(this); // 从名单中删除战争
+	}
+
+	public String[] GetAttackClanList() {
+		return _attackClanList.toArray(new String[_attackClanList.size()]);
+	}
+
+	public int GetAttackClanListSize() {
+		return _attackClanList.size();
+	}
+
+	public L1Castle GetCastle() {
+		L1Castle l1castle = null;
+		if (GetWarType() == 1) { // 攻城战
+			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
+			if (clan != null) {
+				int castle_id = clan.getCastleId();
+				l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+			}
+		}
+		return l1castle;
+	}
+
+	public int GetCastleId() {
+		int castle_id = 0;
+		if (GetWarType() == 1) { // 攻城战
+			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
+			if (clan != null) {
+				castle_id = clan.getCastleId();
+			}
+		}
+		return castle_id;
+	}
+
+	public String GetDefenceClanName() {
+		return _defenceClanName;
+	}
+
+	/** 取得敌对方血盟名称 */
+	public String GetEnemyClanName(String player_clan_name) { // 相手のクラン名を取得する
+		String enemy_clan_name = null;
+		if (GetDefenceClanName().toLowerCase().equals(player_clan_name.toLowerCase())) { // 自クランが防卫侧
+			String clanList[] = GetAttackClanList();
+			for (String element : clanList) {
+				if (element != null) {
+					enemy_clan_name = element;
+					return enemy_clan_name; // リストの先头のクラン名を返す
+				}
+			}
+		}
+		else { // 自クランが攻击侧
+			enemy_clan_name = GetDefenceClanName();
+			return enemy_clan_name;
+		}
+		return enemy_clan_name;
+	}
+
+	public int GetWarType() {
+		return _warType;
 	}
 
 	/** 处理命令 */
@@ -135,6 +304,79 @@ public class L1War {
 			GeneralThreadPool.getInstance().execute(sim_war_timer); // 定时器启动
 		}
 		L1World.getInstance().addWar(this); // 添加到战争列表
+	}
+
+	public void InitAttackClan() {
+		_attackClanList.clear();
+	}
+
+	public void RemoveAttackClan(String attack_clan_name) {
+		if (_attackClanList.contains(attack_clan_name)) {
+			_attackClanList.remove(attack_clan_name);
+		}
+	}
+
+	public void SetDefenceClanName(String defence_clan_name) {
+		_defenceClanName = defence_clan_name;
+	}
+
+	public void SetWarType(int war_type) {
+		_warType = war_type;
+	}
+
+	/** 投降 */
+	public void SurrenderWar(String clan1_name, String clan2_name) { // _血盟が_血盟に降伏しました。
+		if (GetWarType() == 1) {
+			RequestCastleWar(2, clan1_name, clan2_name);
+		}
+		else {
+			RequestSimWar(2, clan1_name, clan2_name);
+		}
+	}
+
+	/** 赢得胜利 */
+	public void WinCastleWar(String clan_name) { // 取得王冠、攻击方胜利
+		String defence_clan_name = GetDefenceClanName();
+		L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟赢了对 %1 血盟的战争。
+				231, clan_name, defence_clan_name));
+
+		L1Clan defence_clan = L1World.getInstance().getClan(defence_clan_name);
+		if (defence_clan != null) {
+			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
+			for (L1PcInstance element : defence_clan_member) {
+				for (String clanName : GetAttackClanList()) {
+					element.sendPackets(new S_War(3, defence_clan_name, clanName));
+				}
+			}
+		}
+
+		String clanList[] = GetAttackClanList();
+		for (String element : clanList) {
+			if (element != null) {
+				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟与 %1血盟之间的战争结束了。
+						227, defence_clan_name, element));
+				L1Clan clan = L1World.getInstance().getClan(element);
+				if (clan != null) {
+					L1PcInstance clan_member[] = clan.getOnlineClanMember();
+					for (L1PcInstance element2 : clan_member) {
+						element2.sendPackets(new S_War(3, element, defence_clan_name));
+					}
+				}
+			}
+		}
+
+		_isWarTimerDelete = true;
+		delete();
+	}
+
+	/** 赢得战争 */
+	public void WinWar(String clan1_name, String clan2_name) { // _血盟が_血盟との战争で胜利しました。
+		if (GetWarType() == 1) {
+			RequestCastleWar(4, clan1_name, clan2_name);
+		}
+		else {
+			RequestSimWar(4, clan1_name, clan2_name);
+		}
 	}
 
 	/** 请求攻城战 */
@@ -227,247 +469,5 @@ public class L1War {
 			_isWarTimerDelete = true;
 			delete();
 		}
-	}
-
-	/** 赢得胜利 */
-	public void WinCastleWar(String clan_name) { // 取得王冠、攻击方胜利
-		String defence_clan_name = GetDefenceClanName();
-		L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟赢了对 %1 血盟的战争。
-				231, clan_name, defence_clan_name));
-
-		L1Clan defence_clan = L1World.getInstance().getClan(defence_clan_name);
-		if (defence_clan != null) {
-			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
-			for (L1PcInstance element : defence_clan_member) {
-				for (String clanName : GetAttackClanList()) {
-					element.sendPackets(new S_War(3, defence_clan_name, clanName));
-				}
-			}
-		}
-
-		String clanList[] = GetAttackClanList();
-		for (String element : clanList) {
-			if (element != null) {
-				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟与 %1血盟之间的战争结束了。
-						227, defence_clan_name, element));
-				L1Clan clan = L1World.getInstance().getClan(element);
-				if (clan != null) {
-					L1PcInstance clan_member[] = clan.getOnlineClanMember();
-					for (L1PcInstance element2 : clan_member) {
-						element2.sendPackets(new S_War(3, element, defence_clan_name));
-					}
-				}
-			}
-		}
-
-		_isWarTimerDelete = true;
-		delete();
-	}
-
-	/** 停止攻城战 */
-	public void CeaseCastleWar() { // 到战争结束时间、防守方胜利
-		String defence_clan_name = GetDefenceClanName();
-		String clanList[] = GetAttackClanList();
-		if (defence_clan_name != null) {
-			L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟赢了对 %1 血盟的战争。
-					231, defence_clan_name, clanList[0]));
-		}
-
-		L1Clan defence_clan = L1World.getInstance().getClan(defence_clan_name);
-		if (defence_clan != null) {
-			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
-			for (L1PcInstance element : defence_clan_member) {
-				element.sendPackets(new S_War(4, defence_clan_name, clanList[0]));
-			}
-		}
-
-		for (String element : clanList) {
-			if (element != null) {
-				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage( // %0 血盟与 %1血盟之间的战争结束了。
-						227, defence_clan_name, element));
-				L1Clan clan = L1World.getInstance().getClan(element);
-				if (clan != null) {
-					L1PcInstance clan_member[] = clan.getOnlineClanMember();
-					for (L1PcInstance element2 : clan_member) {
-						element2.sendPackets(new S_War(3, element, defence_clan_name));
-					}
-				}
-			}
-		}
-
-		_isWarTimerDelete = true;
-		delete();
-	}
-
-	/** 宣战 */
-	public void DeclareWar(String clan1_name, String clan2_name) { // _血盟が_血盟に宣战布告しました。
-		if (GetWarType() == 1) { // 攻城战
-			RequestCastleWar(1, clan1_name, clan2_name);
-		}
-		else { // 模拟战
-			RequestSimWar(1, clan1_name, clan2_name);
-		}
-	}
-
-	/** 投降 */
-	public void SurrenderWar(String clan1_name, String clan2_name) { // _血盟が_血盟に降伏しました。
-		if (GetWarType() == 1) {
-			RequestCastleWar(2, clan1_name, clan2_name);
-		}
-		else {
-			RequestSimWar(2, clan1_name, clan2_name);
-		}
-	}
-
-	/** 停止战争 */
-	public void CeaseWar(String clan1_name, String clan2_name) { // _血盟と_血盟との战争が终结しました。
-		if (GetWarType() == 1) {
-			RequestCastleWar(3, clan1_name, clan2_name);
-		}
-		else {
-			RequestSimWar(3, clan1_name, clan2_name);
-		}
-	}
-
-	/** 赢得战争 */
-	public void WinWar(String clan1_name, String clan2_name) { // _血盟が_血盟との战争で胜利しました。
-		if (GetWarType() == 1) {
-			RequestCastleWar(4, clan1_name, clan2_name);
-		}
-		else {
-			RequestSimWar(4, clan1_name, clan2_name);
-		}
-	}
-
-	/** 检查在战争的血盟 */
-	public boolean CheckClanInWar(String clan_name) { // 检查是否已加入血盟战争
-		boolean ret;
-		if (GetDefenceClanName().toLowerCase().equals(clan_name.toLowerCase())) { // 防卫侧クランをチェック
-			ret = true;
-		}
-		else {
-			ret = CheckAttackClan(clan_name); // 攻击侧クランをチェック
-		}
-		return ret;
-	}
-
-	/** 检查在同一场战争的血盟 */
-	public boolean CheckClanInSameWar(String player_clan_name, String target_clan_name) { // 自クランと相手クランが同じ战争に参加しているかチェックする（同じクランの场合も含む）
-		boolean player_clan_flag;
-		boolean target_clan_flag;
-
-		if (GetDefenceClanName().toLowerCase().equals(player_clan_name.toLowerCase())) { // 自クランに对して防卫侧クランをチェック
-			player_clan_flag = true;
-		}
-		else {
-			player_clan_flag = CheckAttackClan(player_clan_name); // 自クランに对して攻击侧クランをチェック
-		}
-
-		if (GetDefenceClanName().toLowerCase().equals(target_clan_name.toLowerCase())) { // 相手クランに对して防卫侧クランをチェック
-			target_clan_flag = true;
-		}
-		else {
-			target_clan_flag = CheckAttackClan(target_clan_name); // 相手クランに对して攻击侧クランをチェック
-		}
-
-		if ((player_clan_flag == true) && (target_clan_flag == true)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/** 取得敌对方血盟名称 */
-	public String GetEnemyClanName(String player_clan_name) { // 相手のクラン名を取得する
-		String enemy_clan_name = null;
-		if (GetDefenceClanName().toLowerCase().equals(player_clan_name.toLowerCase())) { // 自クランが防卫侧
-			String clanList[] = GetAttackClanList();
-			for (String element : clanList) {
-				if (element != null) {
-					enemy_clan_name = element;
-					return enemy_clan_name; // リストの先头のクラン名を返す
-				}
-			}
-		}
-		else { // 自クランが攻击侧
-			enemy_clan_name = GetDefenceClanName();
-			return enemy_clan_name;
-		}
-		return enemy_clan_name;
-	}
-
-	public void delete() {
-		L1World.getInstance().removeWar(this); // 从名单中删除战争
-	}
-
-	public int GetWarType() {
-		return _warType;
-	}
-
-	public void SetWarType(int war_type) {
-		_warType = war_type;
-	}
-
-	public String GetDefenceClanName() {
-		return _defenceClanName;
-	}
-
-	public void SetDefenceClanName(String defence_clan_name) {
-		_defenceClanName = defence_clan_name;
-	}
-
-	public void InitAttackClan() {
-		_attackClanList.clear();
-	}
-
-	public void AddAttackClan(String attack_clan_name) {
-		if (!_attackClanList.contains(attack_clan_name)) {
-			_attackClanList.add(attack_clan_name);
-		}
-	}
-
-	public void RemoveAttackClan(String attack_clan_name) {
-		if (_attackClanList.contains(attack_clan_name)) {
-			_attackClanList.remove(attack_clan_name);
-		}
-	}
-
-	public boolean CheckAttackClan(String attack_clan_name) {
-		if (_attackClanList.contains(attack_clan_name)) {
-			return true;
-		}
-		return false;
-	}
-
-	public String[] GetAttackClanList() {
-		return _attackClanList.toArray(new String[_attackClanList.size()]);
-	}
-
-	public int GetAttackClanListSize() {
-		return _attackClanList.size();
-	}
-
-	public int GetCastleId() {
-		int castle_id = 0;
-		if (GetWarType() == 1) { // 攻城战
-			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
-			if (clan != null) {
-				castle_id = clan.getCastleId();
-			}
-		}
-		return castle_id;
-	}
-
-	public L1Castle GetCastle() {
-		L1Castle l1castle = null;
-		if (GetWarType() == 1) { // 攻城战
-			L1Clan clan = L1World.getInstance().getClan(GetDefenceClanName());
-			if (clan != null) {
-				int castle_id = clan.getCastleId();
-				l1castle = CastleTable.getInstance().getCastleTable(castle_id);
-			}
-		}
-		return l1castle;
 	}
 }

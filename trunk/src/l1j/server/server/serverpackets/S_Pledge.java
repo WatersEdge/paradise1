@@ -37,6 +37,19 @@ public class S_Pledge extends ServerBasePacket {
 		buildPacket(htmlid, objid, 2, clanname, olmembers, allmembers);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S_Pledge;
+	}
+
 	private void buildPacket(String htmlid, int objid, int type, String clanname, String olmembers, String allmembers) {
 
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
@@ -49,18 +62,5 @@ public class S_Pledge extends ServerBasePacket {
 		writeS(allmembers); // all clan members names with a space in the
 		// end
 		// example: "player1 player2 player3 "
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S_Pledge;
 	}
 }

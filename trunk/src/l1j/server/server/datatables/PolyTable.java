@@ -36,10 +36,6 @@ public class PolyTable {
 
 	private static PolyTable _instance;
 
-	private final Map<String, L1PolyMorph> _polymorphs = Maps.newMap();
-
-	private final Map<Integer, L1PolyMorph> _polyIdIndex = Maps.newMap();
-
 	public static PolyTable getInstance() {
 		if (_instance == null) {
 			_instance = new PolyTable();
@@ -47,28 +43,20 @@ public class PolyTable {
 		return _instance;
 	}
 
+	private final Map<String, L1PolyMorph> _polymorphs = Maps.newMap();
+
+	private final Map<Integer, L1PolyMorph> _polyIdIndex = Maps.newMap();
+
 	private PolyTable() {
 		loadPolymorphs();
 	}
 
-	private void loadPolymorphs() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
+	public L1PolyMorph getTemplate(int polyId) {
+		return _polyIdIndex.get(polyId);
+	}
 
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM polymorphs");
-			rs = pstm.executeQuery();
-			fillPolyTable(rs);
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	public L1PolyMorph getTemplate(String name) {
+		return _polymorphs.get(name);
 	}
 
 	private void fillPolyTable(ResultSet rs) throws SQLException {
@@ -91,12 +79,24 @@ public class PolyTable {
 		_log.config("变身名单 " + _polymorphs.size() + "件");
 	}
 
-	public L1PolyMorph getTemplate(String name) {
-		return _polymorphs.get(name);
-	}
+	private void loadPolymorphs() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
 
-	public L1PolyMorph getTemplate(int polyId) {
-		return _polyIdIndex.get(polyId);
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM polymorphs");
+			rs = pstm.executeQuery();
+			fillPolyTable(rs);
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建polymorph表时出现错误", e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 }

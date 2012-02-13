@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Liquor extends ItemExecutor {
 
-	private Liquor() {
-	}
-
 	public static ItemExecutor get() {
 		return new Liquor();
+	}
+
+	private Liquor() {
 	}
 
 	/**

@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class WeakSoul extends ItemExecutor {
 
-	private WeakSoul() {
-	}
-
 	public static ItemExecutor get() {
 		return new WeakSoul();
+	}
+
+	private WeakSoul() {
 	}
 
 	/**

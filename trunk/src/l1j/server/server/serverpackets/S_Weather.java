@@ -37,11 +37,6 @@ public class S_Weather extends ServerBasePacket {
 		buildPacket(weather);
 	}
 
-	private void buildPacket(int weather) {
-		writeC(Opcodes.S_OPCODE_WEATHER);
-		writeC(weather);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -53,5 +48,10 @@ public class S_Weather extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_WEATHER;
+	}
+
+	private void buildPacket(int weather) {
+		writeC(Opcodes.S_OPCODE_WEATHER);
+		writeC(weather);
 	}
 }

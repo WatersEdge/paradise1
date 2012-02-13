@@ -36,6 +36,27 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  */
 public class AnnouncementsCycle {
 
+	/**
+	 * 处理广播字串任务
+	 */
+	class AnnouncementsCycleTask implements Runnable {
+		@Override
+		public void run() {
+			scanfile();
+			// 启用修改时间显示 - 〈yyyy.MM.dd〉
+			if (AnnounceTimeDisplay) {
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
+				ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
+			}
+			Iterator<String> iterator = list.listIterator();
+			if (iterator.hasNext()) {
+				round %= list.size();
+				ShowAnnouncementsCycle(list.get(round));
+				round++;
+			}
+		}
+	}
+
 	private int round = 0;
 
 	private String line = null;
@@ -55,6 +76,13 @@ public class AnnouncementsCycle {
 	/** 纪录上一次修改时间 */
 	private static long lastmodify = dir.lastModified();
 
+	public static AnnouncementsCycle getInstance() {
+		if (_instance == null) {
+			_instance = new AnnouncementsCycle();
+		}
+		return _instance;
+	}
+
 	/** 在公告首显示公告修改时间 */
 	private final boolean AnnounceTimeDisplay = Config.Announcements_Cycle_Modify_Time;
 
@@ -65,11 +93,20 @@ public class AnnouncementsCycle {
 		cycle();
 	}
 
-	public static AnnouncementsCycle getInstance() {
-		if (_instance == null) {
-			_instance = new AnnouncementsCycle();
-		}
-		return _instance;
+	private void cycle() {
+		AnnouncementsCycleTask task = new AnnouncementsCycleTask();
+		GeneralThreadPool.getInstance().scheduleAtFixedRate(task, 100000, 60000 * Config.Announcements_Cycle_Time); // 10分钟公告一次
+	}
+
+	/**
+	 * 确保announcementsCycle.txt存在
+	 * 
+	 * @throws IOException
+	 *             产生档案错误
+	 */
+	private void fileEnsure() throws IOException {
+		if (!dir.exists())
+			dir.createNewFile();
 	}
 
 	/**
@@ -102,43 +139,6 @@ public class AnnouncementsCycle {
 			}
 			catch (IOException e) {
 				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * 确保announcementsCycle.txt存在
-	 * 
-	 * @throws IOException
-	 *             产生档案错误
-	 */
-	private void fileEnsure() throws IOException {
-		if (!dir.exists())
-			dir.createNewFile();
-	}
-
-	private void cycle() {
-		AnnouncementsCycleTask task = new AnnouncementsCycleTask();
-		GeneralThreadPool.getInstance().scheduleAtFixedRate(task, 100000, 60000 * Config.Announcements_Cycle_Time); // 10分钟公告一次
-	}
-
-	/**
-	 * 处理广播字串任务
-	 */
-	class AnnouncementsCycleTask implements Runnable {
-		@Override
-		public void run() {
-			scanfile();
-			// 启用修改时间显示 - 〈yyyy.MM.dd〉
-			if (AnnounceTimeDisplay) {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
-				ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
-			}
-			Iterator<String> iterator = list.listIterator();
-			if (iterator.hasNext()) {
-				round %= list.size();
-				ShowAnnouncementsCycle(list.get(round));
-				round++;
 			}
 		}
 	}

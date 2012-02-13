@@ -61,11 +61,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Cooking extends ItemExecutor {
 
-	private Cooking() {
-	}
-
 	public static ItemExecutor get() {
 		return new Cooking();
+	}
+
+	private Cooking() {
 	}
 
 	/**

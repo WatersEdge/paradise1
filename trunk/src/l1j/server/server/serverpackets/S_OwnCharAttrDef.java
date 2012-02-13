@@ -36,15 +36,6 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 		buildPacket(pc);
 	}
 
-	private void buildPacket(L1PcInstance pc) {
-		writeC(Opcodes.S_OPCODE_OWNCHARATTRDEF);
-		writeC(pc.getAc());
-		writeC(pc.getFire());
-		writeC(pc.getWater());
-		writeC(pc.getWind());
-		writeC(pc.getEarth());
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -56,5 +47,14 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_OWNCHARATTRDEF;
+	}
+
+	private void buildPacket(L1PcInstance pc) {
+		writeC(Opcodes.S_OPCODE_OWNCHARATTRDEF);
+		writeC(pc.getAc());
+		writeC(pc.getFire());
+		writeC(pc.getWater());
+		writeC(pc.getWind());
+		writeC(pc.getEarth());
 	}
 }

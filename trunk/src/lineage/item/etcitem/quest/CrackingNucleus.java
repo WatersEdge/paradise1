@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class CrackingNucleus extends ItemExecutor {
 
-	private CrackingNucleus() {
-	}
-
 	public static ItemExecutor get() {
 		return new CrackingNucleus();
+	}
+
+	private CrackingNucleus() {
 	}
 
 	/**

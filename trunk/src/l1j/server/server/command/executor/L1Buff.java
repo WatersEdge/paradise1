@@ -29,11 +29,11 @@ import l1j.server.server.utils.collections.Lists;
  * GM指令：辅助魔法
  */
 public class L1Buff implements L1CommandExecutor {
-	private L1Buff() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Buff();
+	}
+
+	private L1Buff() {
 	}
 
 	@Override

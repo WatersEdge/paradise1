@@ -40,10 +40,34 @@ import org.xml.sax.SAXException;
  */
 public class GMCommandsConfig {
 
-	private static Logger _log = Logger.getLogger(GMCommandsConfig.class.getName());
-
 	private interface ConfigLoader {
 		public void load(Element element);
+	}
+
+	private class ItemSetLoader extends ListLoaderAdapter {
+		public ItemSetLoader() {
+			super("ItemSet");
+		}
+
+		@Override
+		public void loadElement(Element element) {
+			List<L1ItemSetItem> list = Lists.newList();
+			NodeList nodes = element.getChildNodes();
+			for (Element elem : new IterableElementList(nodes)) {
+				if (elem.getNodeName().equalsIgnoreCase("Item")) {
+					list.add(loadItem(elem));
+				}
+			}
+			String name = element.getAttribute("Name");
+			ITEM_SETS.put(name.toLowerCase(), list);
+		}
+
+		public L1ItemSetItem loadItem(Element element) {
+			int id = Integer.valueOf(element.getAttribute("Id"));
+			int amount = Integer.valueOf(element.getAttribute("Amount"));
+			int enchant = Integer.valueOf(element.getAttribute("Enchant"));
+			return new L1ItemSetItem(id, amount, enchant);
+		}
 	}
 
 	private abstract class ListLoaderAdapter implements ConfigLoader {
@@ -81,31 +105,7 @@ public class GMCommandsConfig {
 		}
 	}
 
-	private class ItemSetLoader extends ListLoaderAdapter {
-		public ItemSetLoader() {
-			super("ItemSet");
-		}
-
-		public L1ItemSetItem loadItem(Element element) {
-			int id = Integer.valueOf(element.getAttribute("Id"));
-			int amount = Integer.valueOf(element.getAttribute("Amount"));
-			int enchant = Integer.valueOf(element.getAttribute("Enchant"));
-			return new L1ItemSetItem(id, amount, enchant);
-		}
-
-		@Override
-		public void loadElement(Element element) {
-			List<L1ItemSetItem> list = Lists.newList();
-			NodeList nodes = element.getChildNodes();
-			for (Element elem : new IterableElementList(nodes)) {
-				if (elem.getNodeName().equalsIgnoreCase("Item")) {
-					list.add(loadItem(elem));
-				}
-			}
-			String name = element.getAttribute("Name");
-			ITEM_SETS.put(name.toLowerCase(), list);
-		}
-	}
+	private static Logger _log = Logger.getLogger(GMCommandsConfig.class.getName());
 
 	private static Map<String, ConfigLoader> _loaders = Maps.newMap();
 	static {
@@ -117,11 +117,6 @@ public class GMCommandsConfig {
 	public static Map<String, L1Location> ROOMS = Maps.newMap();
 
 	public static Map<String, List<L1ItemSetItem>> ITEM_SETS = Maps.newMap();
-
-	private static Document loadXml(String file) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		return builder.parse(file);
-	}
 
 	public static void load() {
 		try {
@@ -137,5 +132,10 @@ public class GMCommandsConfig {
 		catch (Exception e) {
 			_log.log(Level.SEVERE, "读取 GMCommands.xml 失败", e);
 		}
+	}
+
+	private static Document loadXml(String file) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		return builder.parse(file);
 	}
 }

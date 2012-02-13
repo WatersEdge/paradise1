@@ -31,22 +31,6 @@ import l1j.server.server.utils.collections.Maps;
  */
 public final class MapsTable {
 
-	private static Logger _log = Logger.getLogger(MapsTable.class.getName());
-
-	private static MapsTable _instance;
-
-	/**
-	 * 返回一个MapsTable的实例。
-	 * 
-	 * @return MapsTable的实例
-	 */
-	public static MapsTable getInstance() {
-		if (_instance == null) {
-			_instance = new MapsTable();
-		}
-		return _instance;
-	}
-
 	private class MapData {
 		/** 开始坐标X */
 		public int startX = 0;
@@ -84,6 +68,22 @@ public final class MapsTable {
 		public boolean isUsableSkill = false;
 	}
 
+	private static Logger _log = Logger.getLogger(MapsTable.class.getName());
+
+	private static MapsTable _instance;
+
+	/**
+	 * 返回一个MapsTable的实例。
+	 * 
+	 * @return MapsTable的实例
+	 */
+	public static MapsTable getInstance() {
+		if (_instance == null) {
+			_instance = new MapsTable();
+		}
+		return _instance;
+	}
+
 	/**
 	 * 地图ID的Key、Valueにテレポート可否フラグが格納されるHashMap
 	 */
@@ -94,6 +94,269 @@ public final class MapsTable {
 	 */
 	private MapsTable() {
 		loadMapsFromDatabase();
+	}
+
+	/**
+	 * 返回地图的掉宝倍率
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return 掉宝倍率
+	 */
+	public double getDropRate(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return map.dropRate;
+	}
+
+	/**
+	 * 取得地图的X结束坐标。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return X结束坐标
+	 */
+	public int getEndX(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return _maps.get(mapId).endX;
+	}
+
+	/**
+	 * 取得地图的Y结束坐标。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return Y结束坐标
+	 */
+	public int getEndY(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return _maps.get(mapId).endY;
+	}
+
+	/**
+	 * 返回地图的怪物数量规模
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return 怪物数量规模
+	 */
+	public double getMonsterAmount(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return map.monster_amount;
+	}
+
+	/**
+	 * 取得地图的X开始坐标。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return X开始坐标
+	 */
+	public int getStartX(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return _maps.get(mapId).startX;
+	}
+
+	/**
+	 * 取得地图的Y开始坐标。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return Y开始坐标
+	 */
+	public int getStartY(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return 0;
+		}
+		return _maps.get(mapId).startY;
+	}
+
+	/**
+	 * 地图、返回是否有死亡惩罚。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果有死亡惩罚true
+	 */
+	public boolean isEnabledDeathPenalty(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isEnabledDeathPenalty;
+	}
+
+	/**
+	 * 地图、返回是否可以整个MAP传送。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return 如果可能true
+	 */
+	public boolean isEscapable(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).escapable;
+	}
+
+	/**
+	 * 地图、返回能否记忆坐标。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return 如果能记忆坐标true
+	 */
+	public boolean isMarkable(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).markable;
+	}
+
+	/**
+	 * 地图、返回是否可以召回宠物。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果可以 召回宠物true
+	 */
+	public boolean isRecallPets(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isRecallPets;
+	}
+
+	/**
+	 * 地图、返回是否可以召唤宠物。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果可以召唤宠物true
+	 */
+	public boolean isTakePets(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isTakePets;
+	}
+
+	/**
+	 * 地图、返回能否随机传送。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * @return 如果可能true
+	 */
+	public boolean isTeleportable(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).teleportable;
+	}
+
+	/**
+	 * 地图、返回是否在水中。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果在水中true
+	 */
+	public boolean isUnderwater(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isUnderwater;
+	}
+
+	/**
+	 * 地图、返回是否可以使用道具。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果可以使用道具true
+	 */
+	public boolean isUsableItem(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isUsableItem;
+	}
+
+	/**
+	 * 地图、返回是否可以使用技能。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果可以使用技能true
+	 */
+	public boolean isUsableSkill(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isUsableSkill;
+	}
+
+	/**
+	 * 地图、返回能否使用魔杖。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果能使用魔杖 true
+	 */
+	public boolean isUsePainwand(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isUsePainwand;
+	}
+
+	/**
+	 * 地图、返回能否复活。
+	 * 
+	 * @param mapId
+	 *            检查地图的地图ID
+	 * 
+	 * @return 如果能复活true
+	 */
+	public boolean isUseResurrection(int mapId) {
+		MapData map = _maps.get(mapId);
+		if (map == null) {
+			return false;
+		}
+		return _maps.get(mapId).isUseResurrection;
 	}
 
 	/**
@@ -141,269 +404,6 @@ public final class MapsTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	/**
-	 * 取得地图的X开始坐标。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return X开始坐标
-	 */
-	public int getStartX(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return _maps.get(mapId).startX;
-	}
-
-	/**
-	 * 取得地图的X结束坐标。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return X结束坐标
-	 */
-	public int getEndX(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return _maps.get(mapId).endX;
-	}
-
-	/**
-	 * 取得地图的Y开始坐标。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return Y开始坐标
-	 */
-	public int getStartY(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return _maps.get(mapId).startY;
-	}
-
-	/**
-	 * 取得地图的Y结束坐标。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return Y结束坐标
-	 */
-	public int getEndY(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return _maps.get(mapId).endY;
-	}
-
-	/**
-	 * 返回地图的怪物数量规模
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return 怪物数量规模
-	 */
-	public double getMonsterAmount(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return map.monster_amount;
-	}
-
-	/**
-	 * 返回地图的掉宝倍率
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return 掉宝倍率
-	 */
-	public double getDropRate(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return 0;
-		}
-		return map.dropRate;
-	}
-
-	/**
-	 * 地图、返回是否在水中。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果在水中true
-	 */
-	public boolean isUnderwater(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isUnderwater;
-	}
-
-	/**
-	 * 地图、返回能否记忆坐标。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return 如果能记忆坐标true
-	 */
-	public boolean isMarkable(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).markable;
-	}
-
-	/**
-	 * 地图、返回能否随机传送。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return 如果可能true
-	 */
-	public boolean isTeleportable(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).teleportable;
-	}
-
-	/**
-	 * 地图、返回是否可以整个MAP传送。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * @return 如果可能true
-	 */
-	public boolean isEscapable(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).escapable;
-	}
-
-	/**
-	 * 地图、返回能否复活。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果能复活true
-	 */
-	public boolean isUseResurrection(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isUseResurrection;
-	}
-
-	/**
-	 * 地图、返回能否使用魔杖。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果能使用魔杖 true
-	 */
-	public boolean isUsePainwand(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isUsePainwand;
-	}
-
-	/**
-	 * 地图、返回是否有死亡惩罚。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果有死亡惩罚true
-	 */
-	public boolean isEnabledDeathPenalty(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isEnabledDeathPenalty;
-	}
-
-	/**
-	 * 地图、返回是否可以召唤宠物。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果可以召唤宠物true
-	 */
-	public boolean isTakePets(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isTakePets;
-	}
-
-	/**
-	 * 地图、返回是否可以召回宠物。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果可以 召回宠物true
-	 */
-	public boolean isRecallPets(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isRecallPets;
-	}
-
-	/**
-	 * 地图、返回是否可以使用道具。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果可以使用道具true
-	 */
-	public boolean isUsableItem(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isUsableItem;
-	}
-
-	/**
-	 * 地图、返回是否可以使用技能。
-	 * 
-	 * @param mapId
-	 *            检查地图的地图ID
-	 * 
-	 * @return 如果可以使用技能true
-	 */
-	public boolean isUsableSkill(int mapId) {
-		MapData map = _maps.get(mapId);
-		if (map == null) {
-			return false;
-		}
-		return _maps.get(mapId).isUsableSkill;
 	}
 
 }

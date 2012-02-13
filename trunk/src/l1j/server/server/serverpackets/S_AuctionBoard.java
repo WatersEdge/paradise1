@@ -48,6 +48,19 @@ public class S_AuctionBoard extends ServerBasePacket {
 		buildPacket(board);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_AUCTIONBOARD;
+	}
+
 	private void buildPacket(L1NpcInstance board) {
 		List<Integer> houseList = Lists.newList();
 		int houseId = 0;
@@ -141,18 +154,5 @@ public class S_AuctionBoard extends ServerBasePacket {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_AUCTIONBOARD;
 	}
 }

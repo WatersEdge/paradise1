@@ -18,11 +18,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Wand_Lightning extends ItemExecutor {
 
-	private Wand_Lightning() {
-	}
-
 	public static ItemExecutor get() {
 		return new Wand_Lightning();
+	}
+
+	private Wand_Lightning() {
 	}
 
 	/**

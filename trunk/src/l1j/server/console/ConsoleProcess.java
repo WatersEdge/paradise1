@@ -44,6 +44,41 @@ public class ConsoleProcess extends Thread {
 		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");
 	}
 
+	@Override
+	public void run() {
+		while (onStarup && stillrun) {
+			String action = UserInput.nextLine();
+			String word[] = action.split(" ");
+			if (word.length == 1) {
+				execute(word[0]);
+			}
+			if (word.length == 2) {
+				execute(word[0], word[1]);
+			}
+		}
+		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");
+	}
+
+	/**
+	 * 指令执行
+	 * 
+	 * @param cmd
+	 *            指令名称
+	 */
+	private void execute(String cmd) {
+		if (cmd == null) {
+			System.out.println("错误, 请输入CMD指令.");
+			return;
+		}
+		if (cmd.equalsIgnoreCase("lookup")) { // cmd查看游戏内对话功能
+			// TODO 开启另一个视窗并显示游戏内对话
+		}
+		else {
+			System.out.println("错误, 没有指令.");
+			return;
+		}
+	}
+
 	/**
 	 * 指令执行(有引数)
 	 * 
@@ -73,40 +108,5 @@ public class ConsoleProcess extends Thread {
 			return;
 		}
 
-	}
-
-	/**
-	 * 指令执行
-	 * 
-	 * @param cmd
-	 *            指令名称
-	 */
-	private void execute(String cmd) {
-		if (cmd == null) {
-			System.out.println("错误, 请输入CMD指令.");
-			return;
-		}
-		if (cmd.equalsIgnoreCase("lookup")) { // cmd查看游戏内对话功能
-			// TODO 开启另一个视窗并显示游戏内对话
-		}
-		else {
-			System.out.println("错误, 没有指令.");
-			return;
-		}
-	}
-
-	@Override
-	public void run() {
-		while (onStarup && stillrun) {
-			String action = UserInput.nextLine();
-			String word[] = action.split(" ");
-			if (word.length == 1) {
-				execute(word[0]);
-			}
-			if (word.length == 2) {
-				execute(word[0], word[1]);
-			}
-		}
-		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");
 	}
 }

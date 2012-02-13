@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class BreadCrumbs1 extends ItemExecutor {
 
-	private BreadCrumbs1() {
-	}
-
 	public static ItemExecutor get() {
 		return new BreadCrumbs1();
+	}
+
+	private BreadCrumbs1() {
 	}
 
 	/**

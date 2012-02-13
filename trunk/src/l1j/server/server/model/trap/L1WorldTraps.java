@@ -40,7 +40,44 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class L1WorldTraps {
 
+	private class TrapSpawnTimer extends TimerTask {
+		private final L1TrapInstance _targetTrap;
+
+		public TrapSpawnTimer(L1TrapInstance trap) {
+			_targetTrap = trap;
+		}
+
+		@Override
+		public void run() {
+			_targetTrap.resetLocation();
+			_targetTrap.enableTrap();
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(L1WorldTraps.class.getName());
+
+	public static L1WorldTraps getInstance() {
+		if (_instance == null) {
+			_instance = new L1WorldTraps();
+		}
+		return _instance;
+	}
+
+	public static void reloadTraps() {
+		TrapTable.reload();
+		L1WorldTraps oldInstance = _instance;
+		_instance = new L1WorldTraps();
+		oldInstance.resetTimer();
+		removeTraps(oldInstance._allTraps);
+		removeTraps(oldInstance._allBases);
+	}
+
+	private static void removeTraps(List<L1TrapInstance> traps) {
+		for (L1TrapInstance trap : traps) {
+			trap.disableTrap();
+			L1World.getInstance().removeVisibleObject(trap);
+		}
+	}
 
 	private List<L1TrapInstance> _allTraps = Lists.newList();
 
@@ -54,11 +91,41 @@ public class L1WorldTraps {
 		initialize();
 	}
 
-	public static L1WorldTraps getInstance() {
-		if (_instance == null) {
-			_instance = new L1WorldTraps();
+	public void onDetection(L1PcInstance caster) {
+		L1Location loc = caster.getLocation();
+
+		for (L1TrapInstance trap : _allTraps) {
+			if (trap.isEnable() && loc.isInScreen(trap.getLocation())) {
+				trap.onDetection(caster);
+				disableTrap(trap);
+			}
 		}
-		return _instance;
+	}
+
+	public void onPlayerMoved(L1PcInstance player) {
+		L1Location loc = player.getLocation();
+
+		for (L1TrapInstance trap : _allTraps) {
+			if (trap.isEnable() && loc.equals(trap.getLocation())) {
+				trap.onTrod(player);
+				disableTrap(trap);
+			}
+		}
+	}
+
+	public void resetAllTraps() {
+		for (L1TrapInstance trap : _allTraps) {
+			trap.resetLocation();
+			trap.enableTrap();
+		}
+	}
+
+	private void disableTrap(L1TrapInstance trap) {
+		trap.disableTrap();
+
+		synchronized (this) {
+			_timer.schedule(new TrapSpawnTimer(trap), trap.getSpan());
+		}
 	}
 
 	private void initialize() {
@@ -106,77 +173,10 @@ public class L1WorldTraps {
 		}
 	}
 
-	public static void reloadTraps() {
-		TrapTable.reload();
-		L1WorldTraps oldInstance = _instance;
-		_instance = new L1WorldTraps();
-		oldInstance.resetTimer();
-		removeTraps(oldInstance._allTraps);
-		removeTraps(oldInstance._allBases);
-	}
-
-	private static void removeTraps(List<L1TrapInstance> traps) {
-		for (L1TrapInstance trap : traps) {
-			trap.disableTrap();
-			L1World.getInstance().removeVisibleObject(trap);
-		}
-	}
-
 	private void resetTimer() {
 		synchronized (this) {
 			_timer.cancel();
 			_timer = new Timer();
-		}
-	}
-
-	private void disableTrap(L1TrapInstance trap) {
-		trap.disableTrap();
-
-		synchronized (this) {
-			_timer.schedule(new TrapSpawnTimer(trap), trap.getSpan());
-		}
-	}
-
-	public void resetAllTraps() {
-		for (L1TrapInstance trap : _allTraps) {
-			trap.resetLocation();
-			trap.enableTrap();
-		}
-	}
-
-	public void onPlayerMoved(L1PcInstance player) {
-		L1Location loc = player.getLocation();
-
-		for (L1TrapInstance trap : _allTraps) {
-			if (trap.isEnable() && loc.equals(trap.getLocation())) {
-				trap.onTrod(player);
-				disableTrap(trap);
-			}
-		}
-	}
-
-	public void onDetection(L1PcInstance caster) {
-		L1Location loc = caster.getLocation();
-
-		for (L1TrapInstance trap : _allTraps) {
-			if (trap.isEnable() && loc.isInScreen(trap.getLocation())) {
-				trap.onDetection(caster);
-				disableTrap(trap);
-			}
-		}
-	}
-
-	private class TrapSpawnTimer extends TimerTask {
-		private final L1TrapInstance _targetTrap;
-
-		public TrapSpawnTimer(L1TrapInstance trap) {
-			_targetTrap = trap;
-		}
-
-		@Override
-		public void run() {
-			_targetTrap.resetLocation();
-			_targetTrap.enableTrap();
 		}
 	}
 }

@@ -132,9 +132,6 @@ public class L1TownLocation {
 
 	private static final Point[] GETBACK_LOC_RECLUSE_VILLAGE = { new Point(32599, 32916), new Point(32599, 32923), new Point(32603, 32908), new Point(32595, 32908), new Point(32591, 32918), };
 
-	private L1TownLocation() {
-	}
-
 	public static int[] getGetBackLoc(int town_id) { // town_idから帰還先の座標をランダムに返す
 		int[] loc = new int[3];
 
@@ -247,17 +244,6 @@ public class L1TownLocation {
 			loc[2] = GETBACK_MAP_SILVER_KNIGHT_TOWN;
 		}
 		return loc;
-	}
-
-	public static int getTownTaxRateByNpcid(int npcid) { // npcidから町税率を返す
-		int tax_rate = 0;
-
-		int town_id = getTownIdByNpcid(npcid);
-		if ((town_id >= 1) && (town_id <= 10)) {
-			L1Town town = TownTable.getInstance().getTownTable(town_id);
-			tax_rate = town.get_tax_rate() + 2; // 2%は固定税
-		}
-		return tax_rate;
 	}
 
 	public static int getTownIdByNpcid(int npcid) { // npcidからtown_idを返す
@@ -399,5 +385,19 @@ public class L1TownLocation {
 			break;
 		}
 		return town_id;
+	}
+
+	public static int getTownTaxRateByNpcid(int npcid) { // npcidから町税率を返す
+		int tax_rate = 0;
+
+		int town_id = getTownIdByNpcid(npcid);
+		if ((town_id >= 1) && (town_id <= 10)) {
+			L1Town town = TownTable.getInstance().getTownTable(town_id);
+			tax_rate = town.get_tax_rate() + 2; // 2%は固定税
+		}
+		return tax_rate;
+	}
+
+	private L1TownLocation() {
 	}
 }

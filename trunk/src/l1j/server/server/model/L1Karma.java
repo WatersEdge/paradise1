@@ -30,19 +30,14 @@ public class L1Karma {
 	/** 友好度 */
 	private int _karma = 0;
 
-	/** 取得友好度 */
-	public int get() {
-		return _karma;
-	}
-
-	/** 设定友好度 */
-	public void set(int i) {
-		_karma = KARMA_RANGE.ensure(i);
-	}
-
 	/** 增加友好度 */
 	public void add(int i) {
 		set(_karma + i);
+	}
+
+	/** 取得友好度 */
+	public int get() {
+		return _karma;
 	}
 
 	/** 取得友好度等级 */
@@ -88,5 +83,10 @@ public class L1Karma {
 		}
 
 		return 100 * (karma - KARMA_POINT[karmaLevel - 1]) / (KARMA_POINT[karmaLevel] - KARMA_POINT[karmaLevel - 1]);
+	}
+
+	/** 设定友好度 */
+	public void set(int i) {
+		_karma = KARMA_RANGE.ensure(i);
 	}
 }

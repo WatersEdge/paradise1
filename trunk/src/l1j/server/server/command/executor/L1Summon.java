@@ -23,11 +23,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.templates.L1Npc;
 
 public class L1Summon implements L1CommandExecutor {
-	private L1Summon() {
-	}
-
 	public static L1Summon getInstance() {
 		return new L1Summon();
+	}
+
+	private L1Summon() {
 	}
 
 	@Override

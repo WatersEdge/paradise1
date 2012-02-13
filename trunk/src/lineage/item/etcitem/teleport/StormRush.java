@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class StormRush extends ItemExecutor {
 
-	private StormRush() {
-	}
-
 	public static ItemExecutor get() {
 		return new StormRush();
+	}
+
+	private StormRush() {
 	}
 
 	/**

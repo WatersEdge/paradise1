@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class LiftTheSealScroll extends ItemExecutor {
 
-	private LiftTheSealScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new LiftTheSealScroll();
+	}
+
+	private LiftTheSealScroll() {
 	}
 
 	/**

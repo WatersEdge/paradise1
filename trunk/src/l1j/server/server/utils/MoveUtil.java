@@ -25,17 +25,6 @@ public class MoveUtil {
 	private static final int[] HEADING_TABLE_Y = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	/**
-	 * 移动面向
-	 * 
-	 * @param loc
-	 * @param heading
-	 */
-	public static void MoveLoc(int[] loc, final int heading) {
-		loc[0] += MoveX(heading);
-		loc[1] += MoveY(heading);
-	}
-
-	/**
 	 * 移动坐标
 	 * 
 	 * @param loc
@@ -46,13 +35,14 @@ public class MoveUtil {
 	}
 
 	/**
-	 * 移动坐标X
+	 * 移动面向
 	 * 
+	 * @param loc
 	 * @param heading
-	 * @return 面向 X
 	 */
-	public static int MoveX(final int heading) {
-		return HEADING_TABLE_X[heading];
+	public static void MoveLoc(int[] loc, final int heading) {
+		loc[0] += MoveX(heading);
+		loc[1] += MoveY(heading);
 	}
 
 	/**
@@ -67,16 +57,6 @@ public class MoveUtil {
 	}
 
 	/**
-	 * 移动坐标Y
-	 * 
-	 * @param heading
-	 * @return 面向 Y
-	 */
-	public static int MoveY(final int heading) {
-		return HEADING_TABLE_Y[heading];
-	}
-
-	/**
 	 * 移动坐标Y + 面向
 	 * 
 	 * @param y
@@ -85,6 +65,26 @@ public class MoveUtil {
 	 */
 	public static int MoveLocY(final int y, final int heading) {
 		return y + MoveY(heading);
+	}
+
+	/**
+	 * 移动坐标X
+	 * 
+	 * @param heading
+	 * @return 面向 X
+	 */
+	public static int MoveX(final int heading) {
+		return HEADING_TABLE_X[heading];
+	}
+
+	/**
+	 * 移动坐标Y
+	 * 
+	 * @param heading
+	 * @return 面向 Y
+	 */
+	public static int MoveY(final int heading) {
+		return HEADING_TABLE_Y[heading];
 	}
 
 }

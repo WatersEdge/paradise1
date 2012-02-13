@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_Gludio extends ItemExecutor {
 
-	private Hitlist_Gludio() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_Gludio();
+	}
+
+	private Hitlist_Gludio() {
 	}
 
 	/**

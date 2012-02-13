@@ -14,11 +14,11 @@ import lineage.item.etcitem.UsePolyScroll;
  */
 public class PolyScroll_Welfare extends ItemExecutor {
 
-	private PolyScroll_Welfare() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScroll_Welfare();
+	}
+
+	private PolyScroll_Welfare() {
 	}
 
 	/**

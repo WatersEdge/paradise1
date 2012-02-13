@@ -18,11 +18,11 @@ public class Nostrum_CON extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(Nostrum_CON.class.getName());
 
-	private Nostrum_CON() {
-	}
-
 	public static ItemExecutor get() {
 		return new Nostrum_CON();
+	}
+
+	private Nostrum_CON() {
 	}
 
 	/**

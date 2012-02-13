@@ -43,15 +43,36 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class Dungeon {
 
+	private enum DungeonType {
+		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI, TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
+	}
+
+	private static class NewDungeon {
+		int _newX;
+
+		int _newY;
+
+		short _newMapId;
+
+		int _heading;
+
+		DungeonType _dungeonType;
+
+		private NewDungeon(int newX, int newY, short newMapId, int heading, DungeonType dungeonType) {
+			_newX = newX;
+			_newY = newY;
+			_newMapId = newMapId;
+			_heading = heading;
+			_dungeonType = dungeonType;
+
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(Dungeon.class.getName());
 
 	private static Dungeon _instance = null;
 
 	private static Map<String, NewDungeon> _dungeonMap = Maps.newMap();
-
-	private enum DungeonType {
-		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI, TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
-	}
 
 	public static Dungeon getInstance() {
 		if (_instance == null) {
@@ -144,27 +165,6 @@ public class Dungeon {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
-		}
-	}
-
-	private static class NewDungeon {
-		int _newX;
-
-		int _newY;
-
-		short _newMapId;
-
-		int _heading;
-
-		DungeonType _dungeonType;
-
-		private NewDungeon(int newX, int newY, short newMapId, int heading, DungeonType dungeonType) {
-			_newX = newX;
-			_newY = newY;
-			_newMapId = newMapId;
-			_heading = heading;
-			_dungeonType = dungeonType;
-
 		}
 	}
 

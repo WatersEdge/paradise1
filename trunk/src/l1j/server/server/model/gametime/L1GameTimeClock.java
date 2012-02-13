@@ -27,16 +27,6 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class L1GameTimeClock {
 
-	private static Logger _log = Logger.getLogger(L1GameTimeClock.class.getName());
-
-	private static L1GameTimeClock _instance;
-	/** 当前时间 */
-	private volatile L1GameTime _currentTime = L1GameTime.fromSystemCurrentTime();
-	/** 以前的时间 */
-	private L1GameTime _previousTime = null;
-	/**  */
-	private List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
-
 	/** 更新时间 */
 	private class TimeUpdater implements Runnable {
 		@Override
@@ -54,6 +44,44 @@ public class L1GameTimeClock {
 				}
 			}
 		}
+	}
+
+	private static Logger _log = Logger.getLogger(L1GameTimeClock.class.getName());
+	private static L1GameTimeClock _instance;
+	public static L1GameTimeClock getInstance() {
+		return _instance;
+	}
+	/** 初始化 */
+	public static void init() {
+		_instance = new L1GameTimeClock();
+	}
+
+	/** 当前时间 */
+	private volatile L1GameTime _currentTime = L1GameTime.fromSystemCurrentTime();
+
+	/** 以前的时间 */
+	private L1GameTime _previousTime = null;
+
+	/**  */
+	private List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
+
+	private L1GameTimeClock() {
+		GeneralThreadPool.getInstance().execute(new TimeUpdater());
+	}
+
+	/** 增加监听 */
+	public void addListener(L1GameTimeListener listener) {
+		_listeners.add(listener);
+	}
+
+	/** 当前时间 */
+	public L1GameTime currentTime() {
+		return _currentTime;
+	}
+
+	/** 删除监听 */
+	public void removeListener(L1GameTimeListener listener) {
+		_listeners.remove(listener);
 	}
 
 	/** 改变 */
@@ -83,33 +111,5 @@ public class L1GameTimeClock {
 				listener.onMinuteChanged(_currentTime);
 			}
 		}
-	}
-
-	private L1GameTimeClock() {
-		GeneralThreadPool.getInstance().execute(new TimeUpdater());
-	}
-
-	/** 初始化 */
-	public static void init() {
-		_instance = new L1GameTimeClock();
-	}
-
-	public static L1GameTimeClock getInstance() {
-		return _instance;
-	}
-
-	/** 当前时间 */
-	public L1GameTime currentTime() {
-		return _currentTime;
-	}
-
-	/** 增加监听 */
-	public void addListener(L1GameTimeListener listener) {
-		_listeners.add(listener);
-	}
-
-	/** 删除监听 */
-	public void removeListener(L1GameTimeListener listener) {
-		_listeners.remove(listener);
 	}
 }

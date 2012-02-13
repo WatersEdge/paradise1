@@ -40,18 +40,34 @@ public class Announcements {
 
 	private static Announcements _instance;
 
-	private final List<String> _announcements = Lists.newList();
-
-	private Announcements() {
-		loadAnnouncements();
-	}
-
 	public static Announcements getInstance() {
 		if (_instance == null) {
 			_instance = new Announcements();
 		}
 
 		return _instance;
+	}
+
+	private final List<String> _announcements = Lists.newList();
+
+	private Announcements() {
+		loadAnnouncements();
+	}
+
+	/**
+	 * 全体公告
+	 */
+	public void announceToAll(String msg) {
+		L1World.getInstance().broadcastServerMessage(msg);
+	}
+
+	/**
+	 * 显示公告
+	 */
+	public void showAnnouncements(L1PcInstance showTo) {
+		for (String msg : _announcements) {
+			showTo.sendPackets(new S_SystemMessage(msg));
+		}
 	}
 
 	/**
@@ -65,15 +81,6 @@ public class Announcements {
 		}
 		else {
 			_log.config("data/announcements.txt 不存在");
-		}
-	}
-
-	/**
-	 * 显示公告
-	 */
-	public void showAnnouncements(L1PcInstance showTo) {
-		for (String msg : _announcements) {
-			showTo.sendPackets(new S_SystemMessage(msg));
 		}
 	}
 
@@ -106,12 +113,5 @@ public class Announcements {
 		} finally {
 			StreamUtil.close(lnr);
 		}
-	}
-
-	/**
-	 * 全体公告
-	 */
-	public void announceToAll(String msg) {
-		L1World.getInstance().broadcastServerMessage(msg);
 	}
 }

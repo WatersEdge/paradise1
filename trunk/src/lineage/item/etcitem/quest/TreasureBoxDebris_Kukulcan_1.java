@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class TreasureBoxDebris_Kukulcan_1 extends ItemExecutor {
 
-	private TreasureBoxDebris_Kukulcan_1() {
-	}
-
 	public static ItemExecutor get() {
 		return new TreasureBoxDebris_Kukulcan_1();
+	}
+
+	private TreasureBoxDebris_Kukulcan_1() {
 	}
 
 	/**

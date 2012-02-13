@@ -15,11 +15,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Short extends ItemExecutor {
 
-	private MagicScroll_Short() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Short();
+	}
+
+	private MagicScroll_Short() {
 	}
 
 	/**

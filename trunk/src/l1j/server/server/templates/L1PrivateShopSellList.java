@@ -22,46 +22,46 @@ package l1j.server.server.templates;
  */
 public class L1PrivateShopSellList {
 
-	public L1PrivateShopSellList() {
-	}
-
 	private int _itemObjectId;
 
-	public void setItemObjectId(int i) {
-		_itemObjectId = i;
+	private int _sellTotalCount; // 预期销售数量
+
+	private int _sellPrice;
+
+	private int _sellCount; // 共售出
+
+	public L1PrivateShopSellList() {
 	}
 
 	public int getItemObjectId() {
 		return _itemObjectId;
 	}
 
-	private int _sellTotalCount; // 预期销售数量
-
-	public void setSellTotalCount(int i) {
-		_sellTotalCount = i;
-	}
-
-	public int getSellTotalCount() {
-		return _sellTotalCount;
-	}
-
-	private int _sellPrice;
-
-	public void setSellPrice(int i) {
-		_sellPrice = i;
+	public int getSellCount() {
+		return _sellCount;
 	}
 
 	public int getSellPrice() {
 		return _sellPrice;
 	}
 
-	private int _sellCount; // 共售出
+	public int getSellTotalCount() {
+		return _sellTotalCount;
+	}
+
+	public void setItemObjectId(int i) {
+		_itemObjectId = i;
+	}
 
 	public void setSellCount(int i) {
 		_sellCount = i;
 	}
 
-	public int getSellCount() {
-		return _sellCount;
+	public void setSellPrice(int i) {
+		_sellPrice = i;
+	}
+
+	public void setSellTotalCount(int i) {
+		_sellTotalCount = i;
 	}
 }

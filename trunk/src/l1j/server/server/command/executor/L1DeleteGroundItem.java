@@ -30,11 +30,11 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * GM指令：删除地上道具
  */
 public class L1DeleteGroundItem implements L1CommandExecutor {
-	private L1DeleteGroundItem() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1DeleteGroundItem();
+	}
+
+	private L1DeleteGroundItem() {
 	}
 
 	@Override

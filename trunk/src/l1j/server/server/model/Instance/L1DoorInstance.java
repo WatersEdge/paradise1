@@ -36,9 +36,17 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	private static final int DOOR_NPC_ID = 81158;
 
-	public L1DoorInstance(L1Npc template) {
-		super(template);
-	}
+	private int _doorId = 0;
+
+	private int _direction = 0; // ドアの向き
+
+	private int _leftEdgeLocation = 0; // ドアの左端の座標(ドアの向きからX軸orY軸を決定する)
+
+	private int _rightEdgeLocation = 0; // ドアの右端の座標(ドアの向きからX軸orY軸を決定する)
+
+	private int _openStatus = ActionCodes.ACTION_Close;
+
+	private int _keeperId = 0;
 
 	public L1DoorInstance(int doorId, L1DoorGfx gfx, L1Location loc, int hp, int keeper, boolean isOpening) {
 		super(NpcTable.getInstance().getTemplate(DOOR_NPC_ID));
@@ -57,6 +65,87 @@ public class L1DoorInstance extends L1NpcInstance {
 		if (isOpening) {
 			open();
 		}
+	}
+
+	public L1DoorInstance(L1Npc template) {
+		super(template);
+	}
+
+	public void close() {
+		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Close) {
+			return;
+		}
+
+		setOpenStatus(ActionCodes.ACTION_Close);
+		broadcastPacket(new S_DoorPack(this));
+		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Close));
+		sendDoorPacket(null);
+	}
+
+	@Override
+	public void deleteMe() {
+		setDead(true);
+		sendDoorPacket(null);
+
+		_destroyed = true;
+		if (getInventory() != null) {
+			getInventory().clearItems();
+		}
+		allTargetClear();
+		_master = null;
+		L1World.getInstance().removeVisibleObject(this);
+		L1World.getInstance().removeObject(this);
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+			pc.removeKnownObject(this);
+			pc.sendPackets(new S_RemoveObject(this));
+		}
+		removeAllKnownObjects();
+	}
+
+	public int getDirection() {
+		return _direction;
+	}
+
+	public int getDoorId() {
+		return _doorId;
+	}
+
+	public int getEntranceX() {
+		int entranceX = 0;
+		if (getDirection() == 0) { // ／向き
+			entranceX = getX();
+		}
+		else { // ＼向き
+			entranceX = getX() - 1;
+		}
+		return entranceX;
+	}
+
+	public int getEntranceY() {
+		int entranceY = 0;
+		if (getDirection() == 0) { // ／向き
+			entranceY = getY() + 1;
+		}
+		else { // ＼向き
+			entranceY = getY();
+		}
+		return entranceY;
+	}
+
+	public int getKeeperId() {
+		return _keeperId;
+	}
+
+	public int getLeftEdgeLocation() {
+		return _leftEdgeLocation;
+	}
+
+	public int getOpenStatus() {
+		return _openStatus;
+	}
+
+	public int getRightEdgeLocation() {
+		return _rightEdgeLocation;
 	}
 
 	@Override
@@ -84,24 +173,15 @@ public class L1DoorInstance extends L1NpcInstance {
 		sendDoorPacket(perceivedFrom);
 	}
 
-	@Override
-	public void deleteMe() {
-		setDead(true);
-		sendDoorPacket(null);
+	public void open() {
+		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Open) {
+			return;
+		}
 
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
-		}
-		allTargetClear();
-		_master = null;
-		L1World.getInstance().removeVisibleObject(this);
-		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			pc.removeKnownObject(this);
-			pc.sendPackets(new S_RemoveObject(this));
-		}
-		removeAllKnownObjects();
+		setOpenStatus(ActionCodes.ACTION_Open);
+		broadcastPacket(new S_DoorPack(this));
+		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Open));
+		sendDoorPacket(null);
 	}
 
 	@Override
@@ -123,48 +203,16 @@ public class L1DoorInstance extends L1NpcInstance {
 		updateStatus();
 	}
 
-	private void updateStatus() {
-		int newStatus = 0;
-		if ((getMaxHp() * 1 / 6) > getCurrentHp()) {
-			newStatus = ActionCodes.ACTION_DoorAction5;
-		}
-		else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
-			newStatus = ActionCodes.ACTION_DoorAction4;
-		}
-		else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
-			newStatus = ActionCodes.ACTION_DoorAction3;
-		}
-		else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
-			newStatus = ActionCodes.ACTION_DoorAction2;
-		}
-		else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
-			newStatus = ActionCodes.ACTION_DoorAction1;
-		}
-		if (getStatus() == newStatus) {
+	public void repairGate() {
+		if (getMaxHp() <= 1) {
 			return;
 		}
-		setStatus(newStatus);
-		broadcastPacket(new S_DoActionGFX(getId(), newStatus));
-	}
 
-	@Override
-	public void setCurrentHp(int i) {
-		int currentHp = i;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
-		}
-		setCurrentHpDirect(currentHp);
-	}
-
-	private void die() {
-		setCurrentHpDirect(0);
-		setDead(true);
-		setStatus(ActionCodes.ACTION_DoorDie);
-
-		getMap().setPassable(getLocation(), true);
-
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorDie));
-		sendDoorPacket(null);
+		setDead(false);
+		setCurrentHp(getMaxHp());
+		setStatus(0);
+		setOpenStatus(ActionCodes.ACTION_Open);
+		close();
 	}
 
 	public void sendDoorPacket(L1PcInstance pc) {
@@ -191,6 +239,49 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 	}
 
+	@Override
+	public void setCurrentHp(int i) {
+		int currentHp = i;
+		if (currentHp >= getMaxHp()) {
+			currentHp = getMaxHp();
+		}
+		setCurrentHpDirect(currentHp);
+	}
+
+	public void setDirection(int i) {
+		if (i != 0 && i != 1) {
+			throw new IllegalArgumentException();
+		}
+		_direction = i;
+	}
+
+	public void setDoorId(int i) {
+		_doorId = i;
+	}
+
+	public void setKeeperId(int i) {
+		_keeperId = i;
+	}
+
+	public void setLeftEdgeLocation(int i) {
+		_leftEdgeLocation = i;
+	}
+
+	public void setRightEdgeLocation(int i) {
+		_rightEdgeLocation = i;
+	}
+
+	private void die() {
+		setCurrentHpDirect(0);
+		setDead(true);
+		setStatus(ActionCodes.ACTION_DoorDie);
+
+		getMap().setPassable(getLocation(), true);
+
+		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorDie));
+		sendDoorPacket(null);
+	}
+
 	private boolean isPassable() {
 		return isDead() || getOpenStatus() == ActionCodes.ACTION_Open;
 	}
@@ -208,111 +299,6 @@ public class L1DoorInstance extends L1NpcInstance {
 		}
 	}
 
-	public void open() {
-		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Open) {
-			return;
-		}
-
-		setOpenStatus(ActionCodes.ACTION_Open);
-		broadcastPacket(new S_DoorPack(this));
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Open));
-		sendDoorPacket(null);
-	}
-
-	public void close() {
-		if (isDead() || getOpenStatus() == ActionCodes.ACTION_Close) {
-			return;
-		}
-
-		setOpenStatus(ActionCodes.ACTION_Close);
-		broadcastPacket(new S_DoorPack(this));
-		broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Close));
-		sendDoorPacket(null);
-	}
-
-	public void repairGate() {
-		if (getMaxHp() <= 1) {
-			return;
-		}
-
-		setDead(false);
-		setCurrentHp(getMaxHp());
-		setStatus(0);
-		setOpenStatus(ActionCodes.ACTION_Open);
-		close();
-	}
-
-	private int _doorId = 0;
-
-	public int getDoorId() {
-		return _doorId;
-	}
-
-	public void setDoorId(int i) {
-		_doorId = i;
-	}
-
-	private int _direction = 0; // ドアの向き
-
-	public int getDirection() {
-		return _direction;
-	}
-
-	public void setDirection(int i) {
-		if (i != 0 && i != 1) {
-			throw new IllegalArgumentException();
-		}
-		_direction = i;
-	}
-
-	public int getEntranceX() {
-		int entranceX = 0;
-		if (getDirection() == 0) { // ／向き
-			entranceX = getX();
-		}
-		else { // ＼向き
-			entranceX = getX() - 1;
-		}
-		return entranceX;
-	}
-
-	public int getEntranceY() {
-		int entranceY = 0;
-		if (getDirection() == 0) { // ／向き
-			entranceY = getY() + 1;
-		}
-		else { // ＼向き
-			entranceY = getY();
-		}
-		return entranceY;
-	}
-
-	private int _leftEdgeLocation = 0; // ドアの左端の座標(ドアの向きからX軸orY軸を決定する)
-
-	public int getLeftEdgeLocation() {
-		return _leftEdgeLocation;
-	}
-
-	public void setLeftEdgeLocation(int i) {
-		_leftEdgeLocation = i;
-	}
-
-	private int _rightEdgeLocation = 0; // ドアの右端の座標(ドアの向きからX軸orY軸を決定する)
-
-	public int getRightEdgeLocation() {
-		return _rightEdgeLocation;
-	}
-
-	public void setRightEdgeLocation(int i) {
-		_rightEdgeLocation = i;
-	}
-
-	private int _openStatus = ActionCodes.ACTION_Close;
-
-	public int getOpenStatus() {
-		return _openStatus;
-	}
-
 	private void setOpenStatus(int newStatus) {
 		if (newStatus != ActionCodes.ACTION_Open && newStatus != ActionCodes.ACTION_Close) {
 			throw new IllegalArgumentException();
@@ -320,13 +306,27 @@ public class L1DoorInstance extends L1NpcInstance {
 		_openStatus = newStatus;
 	}
 
-	private int _keeperId = 0;
-
-	public int getKeeperId() {
-		return _keeperId;
-	}
-
-	public void setKeeperId(int i) {
-		_keeperId = i;
+	private void updateStatus() {
+		int newStatus = 0;
+		if ((getMaxHp() * 1 / 6) > getCurrentHp()) {
+			newStatus = ActionCodes.ACTION_DoorAction5;
+		}
+		else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
+			newStatus = ActionCodes.ACTION_DoorAction4;
+		}
+		else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
+			newStatus = ActionCodes.ACTION_DoorAction3;
+		}
+		else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
+			newStatus = ActionCodes.ACTION_DoorAction2;
+		}
+		else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
+			newStatus = ActionCodes.ACTION_DoorAction1;
+		}
+		if (getStatus() == newStatus) {
+			return;
+		}
+		setStatus(newStatus);
+		broadcastPacket(new S_DoActionGFX(getId(), newStatus));
 	}
 }

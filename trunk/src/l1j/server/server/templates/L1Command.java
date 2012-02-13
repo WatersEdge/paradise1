@@ -29,16 +29,16 @@ public class L1Command {
 		_executorClassName = executorClassName;
 	}
 
-	public String getName() {
-		return _name;
+	/** 执行者的CLASS名称 */
+	public String getExecutorClassName() {
+		return _executorClassName;
 	}
 
 	public int getLevel() {
 		return _level;
 	}
 
-	/** 执行者的CLASS名称 */
-	public String getExecutorClassName() {
-		return _executorClassName;
+	public String getName() {
+		return _name;
 	}
 }

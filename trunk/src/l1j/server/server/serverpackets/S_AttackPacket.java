@@ -26,24 +26,13 @@ public class S_AttackPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AttackPacket(L1Character atk, int objid, int[] data) {
-		buildpacket(atk, objid, data);
-	}
-
 	public S_AttackPacket(L1Character atk, int objid, int actid) {
 		int[] data = { actid, 0, 0 };
 		buildpacket(atk, objid, data);
 	}
 
-	private void buildpacket(L1Character atk, int objid, int[] data) { // data = {actid, dmg, effect}
-		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(data[0]); // actid
-		writeD(atk.getId());
-		writeD(objid);
-		writeH(data[1]); // dmg
-		writeC(atk.getHeading());
-		writeD(0x00000000);
-		writeC(data[2]); // effect 0:none 2:爪痕 4:双击 8:镜返射
+	public S_AttackPacket(L1Character atk, int objid, int[] data) {
+		buildpacket(atk, objid, data);
 	}
 
 	@Override
@@ -58,5 +47,16 @@ public class S_AttackPacket extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_ATTACK_PACKET;
+	}
+
+	private void buildpacket(L1Character atk, int objid, int[] data) { // data = {actid, dmg, effect}
+		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
+		writeC(data[0]); // actid
+		writeD(atk.getId());
+		writeD(objid);
+		writeH(data[1]); // dmg
+		writeC(atk.getHeading());
+		writeD(0x00000000);
+		writeC(data[2]); // effect 0:none 2:爪痕 4:双击 8:镜返射
 	}
 }

@@ -82,7 +82,149 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class L1Cooking {
 
-	private L1Cooking() {
+	public static void eatCooking(L1PcInstance pc, int cookingId, int time) {
+		int cookingType = 0;
+		if ((cookingId == COOKING_1_0_N) || (cookingId == COOKING_1_0_S)) { // 漂浮之眼肉排
+			cookingType = 0;
+			pc.addWind(10);
+			pc.addWater(10);
+			pc.addFire(10);
+			pc.addEarth(10);
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		}
+		else if ((cookingId == COOKING_1_1_N) || (cookingId == COOKING_1_1_S)) { // 烤熊肉
+			cookingType = 1;
+			pc.addMaxHp(30);
+			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) { // 组队中
+				pc.getParty().updateMiniHP(pc);
+			}
+		}
+		else if ((cookingId == COOKING_1_2_N) || (cookingId == COOKING_1_2_S)) { // 煎饼
+			cookingType = 2;
+		}
+		else if ((cookingId == COOKING_1_3_N) || (cookingId == COOKING_1_3_S)) { // 烤蚂蚁腿起司
+			cookingType = 3;
+			pc.addAc(-1);
+			pc.sendPackets(new S_OwnCharStatus(pc));
+		}
+		else if ((cookingId == COOKING_1_4_N) || (cookingId == COOKING_1_4_S)) { // 水果沙拉
+			cookingType = 4;
+			pc.addMaxMp(20);
+			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+		}
+		else if ((cookingId == COOKING_1_5_N) || (cookingId == COOKING_1_5_S)) { // 水果糖醋肉
+			cookingType = 5;
+		}
+		else if ((cookingId == COOKING_1_6_N) || (cookingId == COOKING_1_6_S)) { // 烤山猪肉串
+			cookingType = 6;
+			pc.addMr(5);
+			pc.sendPackets(new S_SPMR(pc));
+		}
+		else if ((cookingId == COOKING_1_7_N) || (cookingId == COOKING_1_7_S)) { // 蘑菇汤
+			cookingType = 7;
+		}
+		else if ((cookingId == COOKING_2_0_N) || (cookingId == COOKING_2_0_S)) { // 鱼子酱
+			cookingType = 8;
+		}
+		else if ((cookingId == COOKING_2_1_N) || (cookingId == COOKING_2_1_S)) { // 鳄鱼肉排
+			cookingType = 9;
+			pc.addMaxHp(30);
+			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) { // 组队中
+				pc.getParty().updateMiniHP(pc);
+			}
+			pc.addMaxMp(30);
+			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+		}
+		else if ((cookingId == COOKING_2_2_N) || (cookingId == COOKING_2_2_S)) { // 龙龟蛋饼干
+			cookingType = 10;
+			pc.addAc(-2);
+			pc.sendPackets(new S_OwnCharStatus(pc));
+		}
+		else if ((cookingId == COOKING_2_3_N) || (cookingId == COOKING_2_3_S)) { // 烤奇异鹦鹉
+			cookingType = 11;
+		}
+		else if ((cookingId == COOKING_2_4_N) || (cookingId == COOKING_2_4_S)) { // 毒蝎串烧
+			cookingType = 12;
+		}
+		else if ((cookingId == COOKING_2_5_N) || (cookingId == COOKING_2_5_S)) { // 炖伊莱克顿
+			cookingType = 13;
+			pc.addMr(10);
+			pc.sendPackets(new S_SPMR(pc));
+		}
+		else if ((cookingId == COOKING_2_6_N) || (cookingId == COOKING_2_6_S)) { // 蜘蛛腿串烧
+			cookingType = 14;
+			pc.addSp(1);
+			pc.sendPackets(new S_SPMR(pc));
+		}
+		else if ((cookingId == COOKING_2_7_N) || (cookingId == COOKING_2_7_S)) { // 蟹肉汤
+			cookingType = 15;
+		}
+		else if ((cookingId == COOKING_3_0_N) || (cookingId == COOKING_3_0_S)) { // 烤奎斯坦修的螯
+			cookingType = 16;
+		}
+		else if ((cookingId == COOKING_3_1_N) || (cookingId == COOKING_3_1_S)) { // 烤格利芬肉
+			cookingType = 17;
+			pc.addMaxHp(50);
+			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) { // 组队中
+				pc.getParty().updateMiniHP(pc);
+			}
+			pc.addMaxMp(50);
+			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+		}
+		else if ((cookingId == COOKING_3_2_N) || (cookingId == COOKING_3_2_S)) { // 亚力安的尾巴肉排
+			cookingType = 18;
+		}
+		else if ((cookingId == COOKING_3_3_N) || (cookingId == COOKING_3_3_S)) { // 烤巨王龟肉
+			cookingType = 19;
+			pc.addAc(-3);
+			pc.sendPackets(new S_OwnCharStatus(pc));
+		}
+		else if ((cookingId == COOKING_3_4_N) || (cookingId == COOKING_3_4_S)) { // 幼龙翅膀串烧
+			cookingType = 20;
+			pc.addMr(15);
+			pc.sendPackets(new S_SPMR(pc));
+			pc.addWind(10);
+			pc.addWater(10);
+			pc.addFire(10);
+			pc.addEarth(10);
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		}
+		else if ((cookingId == COOKING_3_5_N) || (cookingId == COOKING_3_5_S)) { // 烤飞龙肉
+			cookingType = 21;
+			pc.addSp(2);
+			pc.sendPackets(new S_SPMR(pc));
+		}
+		else if ((cookingId == COOKING_3_6_N) || (cookingId == COOKING_3_6_S)) { // 炖深海鱼肉
+			cookingType = 22;
+			pc.addMaxHp(30);
+			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) { // 组队中
+				pc.getParty().updateMiniHP(pc);
+			}
+		}
+		else if ((cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) { // 邪恶蜥蜴蛋汤
+			cookingType = 23;
+		}
+		else if (cookingId == COOKING_WONDER_DRUG) { // 象牙塔妙药
+			cookingType = 54;
+			pc.addHpr(10);
+			pc.addMpr(2);
+		}
+		pc.sendPackets(new S_PacketBox(53, cookingType, time));
+		pc.setSkillEffect(cookingId, time * 1000);
+		if (((cookingId >= COOKING_1_0_N) && (cookingId <= COOKING_1_6_N)) || ((cookingId >= COOKING_1_0_S) && (cookingId <= COOKING_1_6_S)) || ((cookingId >= COOKING_2_0_N) && (cookingId <= COOKING_2_6_N)) || ((cookingId >= COOKING_2_0_S) && (cookingId <= COOKING_2_6_S))
+				|| ((cookingId >= COOKING_3_0_N) && (cookingId <= COOKING_3_6_N)) || ((cookingId >= COOKING_3_0_S) && (cookingId <= COOKING_3_6_S))) {
+			pc.setCookingId(cookingId);
+		}
+		else if ((cookingId == COOKING_1_7_N) || (cookingId == COOKING_1_7_S) || (cookingId == COOKING_2_7_N) || (cookingId == COOKING_2_7_S) || (cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) {
+			pc.setDessertId(cookingId);
+		}
+
+		// XXX 饥饿度17%再送信。S_PacketBox包含饥饿度更新的代码？
+		pc.sendPackets(new S_OwnCharStatus(pc));
 	}
 
 	/** 使用料理道具 */
@@ -337,149 +479,7 @@ public class L1Cooking {
 		pc.getInventory().removeItem(item, 1);
 	}
 
-	public static void eatCooking(L1PcInstance pc, int cookingId, int time) {
-		int cookingType = 0;
-		if ((cookingId == COOKING_1_0_N) || (cookingId == COOKING_1_0_S)) { // 漂浮之眼肉排
-			cookingType = 0;
-			pc.addWind(10);
-			pc.addWater(10);
-			pc.addFire(10);
-			pc.addEarth(10);
-			pc.sendPackets(new S_OwnCharAttrDef(pc));
-		}
-		else if ((cookingId == COOKING_1_1_N) || (cookingId == COOKING_1_1_S)) { // 烤熊肉
-			cookingType = 1;
-			pc.addMaxHp(30);
-			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-			if (pc.isInParty()) { // 组队中
-				pc.getParty().updateMiniHP(pc);
-			}
-		}
-		else if ((cookingId == COOKING_1_2_N) || (cookingId == COOKING_1_2_S)) { // 煎饼
-			cookingType = 2;
-		}
-		else if ((cookingId == COOKING_1_3_N) || (cookingId == COOKING_1_3_S)) { // 烤蚂蚁腿起司
-			cookingType = 3;
-			pc.addAc(-1);
-			pc.sendPackets(new S_OwnCharStatus(pc));
-		}
-		else if ((cookingId == COOKING_1_4_N) || (cookingId == COOKING_1_4_S)) { // 水果沙拉
-			cookingType = 4;
-			pc.addMaxMp(20);
-			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
-		}
-		else if ((cookingId == COOKING_1_5_N) || (cookingId == COOKING_1_5_S)) { // 水果糖醋肉
-			cookingType = 5;
-		}
-		else if ((cookingId == COOKING_1_6_N) || (cookingId == COOKING_1_6_S)) { // 烤山猪肉串
-			cookingType = 6;
-			pc.addMr(5);
-			pc.sendPackets(new S_SPMR(pc));
-		}
-		else if ((cookingId == COOKING_1_7_N) || (cookingId == COOKING_1_7_S)) { // 蘑菇汤
-			cookingType = 7;
-		}
-		else if ((cookingId == COOKING_2_0_N) || (cookingId == COOKING_2_0_S)) { // 鱼子酱
-			cookingType = 8;
-		}
-		else if ((cookingId == COOKING_2_1_N) || (cookingId == COOKING_2_1_S)) { // 鳄鱼肉排
-			cookingType = 9;
-			pc.addMaxHp(30);
-			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-			if (pc.isInParty()) { // 组队中
-				pc.getParty().updateMiniHP(pc);
-			}
-			pc.addMaxMp(30);
-			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
-		}
-		else if ((cookingId == COOKING_2_2_N) || (cookingId == COOKING_2_2_S)) { // 龙龟蛋饼干
-			cookingType = 10;
-			pc.addAc(-2);
-			pc.sendPackets(new S_OwnCharStatus(pc));
-		}
-		else if ((cookingId == COOKING_2_3_N) || (cookingId == COOKING_2_3_S)) { // 烤奇异鹦鹉
-			cookingType = 11;
-		}
-		else if ((cookingId == COOKING_2_4_N) || (cookingId == COOKING_2_4_S)) { // 毒蝎串烧
-			cookingType = 12;
-		}
-		else if ((cookingId == COOKING_2_5_N) || (cookingId == COOKING_2_5_S)) { // 炖伊莱克顿
-			cookingType = 13;
-			pc.addMr(10);
-			pc.sendPackets(new S_SPMR(pc));
-		}
-		else if ((cookingId == COOKING_2_6_N) || (cookingId == COOKING_2_6_S)) { // 蜘蛛腿串烧
-			cookingType = 14;
-			pc.addSp(1);
-			pc.sendPackets(new S_SPMR(pc));
-		}
-		else if ((cookingId == COOKING_2_7_N) || (cookingId == COOKING_2_7_S)) { // 蟹肉汤
-			cookingType = 15;
-		}
-		else if ((cookingId == COOKING_3_0_N) || (cookingId == COOKING_3_0_S)) { // 烤奎斯坦修的螯
-			cookingType = 16;
-		}
-		else if ((cookingId == COOKING_3_1_N) || (cookingId == COOKING_3_1_S)) { // 烤格利芬肉
-			cookingType = 17;
-			pc.addMaxHp(50);
-			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-			if (pc.isInParty()) { // 组队中
-				pc.getParty().updateMiniHP(pc);
-			}
-			pc.addMaxMp(50);
-			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
-		}
-		else if ((cookingId == COOKING_3_2_N) || (cookingId == COOKING_3_2_S)) { // 亚力安的尾巴肉排
-			cookingType = 18;
-		}
-		else if ((cookingId == COOKING_3_3_N) || (cookingId == COOKING_3_3_S)) { // 烤巨王龟肉
-			cookingType = 19;
-			pc.addAc(-3);
-			pc.sendPackets(new S_OwnCharStatus(pc));
-		}
-		else if ((cookingId == COOKING_3_4_N) || (cookingId == COOKING_3_4_S)) { // 幼龙翅膀串烧
-			cookingType = 20;
-			pc.addMr(15);
-			pc.sendPackets(new S_SPMR(pc));
-			pc.addWind(10);
-			pc.addWater(10);
-			pc.addFire(10);
-			pc.addEarth(10);
-			pc.sendPackets(new S_OwnCharAttrDef(pc));
-		}
-		else if ((cookingId == COOKING_3_5_N) || (cookingId == COOKING_3_5_S)) { // 烤飞龙肉
-			cookingType = 21;
-			pc.addSp(2);
-			pc.sendPackets(new S_SPMR(pc));
-		}
-		else if ((cookingId == COOKING_3_6_N) || (cookingId == COOKING_3_6_S)) { // 炖深海鱼肉
-			cookingType = 22;
-			pc.addMaxHp(30);
-			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-			if (pc.isInParty()) { // 组队中
-				pc.getParty().updateMiniHP(pc);
-			}
-		}
-		else if ((cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) { // 邪恶蜥蜴蛋汤
-			cookingType = 23;
-		}
-		else if (cookingId == COOKING_WONDER_DRUG) { // 象牙塔妙药
-			cookingType = 54;
-			pc.addHpr(10);
-			pc.addMpr(2);
-		}
-		pc.sendPackets(new S_PacketBox(53, cookingType, time));
-		pc.setSkillEffect(cookingId, time * 1000);
-		if (((cookingId >= COOKING_1_0_N) && (cookingId <= COOKING_1_6_N)) || ((cookingId >= COOKING_1_0_S) && (cookingId <= COOKING_1_6_S)) || ((cookingId >= COOKING_2_0_N) && (cookingId <= COOKING_2_6_N)) || ((cookingId >= COOKING_2_0_S) && (cookingId <= COOKING_2_6_S))
-				|| ((cookingId >= COOKING_3_0_N) && (cookingId <= COOKING_3_6_N)) || ((cookingId >= COOKING_3_0_S) && (cookingId <= COOKING_3_6_S))) {
-			pc.setCookingId(cookingId);
-		}
-		else if ((cookingId == COOKING_1_7_N) || (cookingId == COOKING_1_7_S) || (cookingId == COOKING_2_7_N) || (cookingId == COOKING_2_7_S) || (cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) {
-			pc.setDessertId(cookingId);
-		}
-
-		// XXX 饥饿度17%再送信。S_PacketBox包含饥饿度更新的代码？
-		pc.sendPackets(new S_OwnCharStatus(pc));
+	private L1Cooking() {
 	}
 
 }

@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicFlute extends ItemExecutor {
 
-	private MagicFlute() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicFlute();
+	}
+
+	private MagicFlute() {
 	}
 
 	/**

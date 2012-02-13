@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class MysteriousMagicPotion extends ItemExecutor {
 
-	private MysteriousMagicPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new MysteriousMagicPotion();
+	}
+
+	private MysteriousMagicPotion() {
 	}
 
 	/**

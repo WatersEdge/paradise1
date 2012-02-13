@@ -35,9 +35,6 @@ public class FishingTimeController implements Runnable {
 
 	private static FishingTimeController _instance;
 
-	/** 钓鱼清单 */
-	private final List<L1PcInstance> _fishingList = Lists.newList();
-
 	public static FishingTimeController getInstance() {
 		if (_instance == null) {
 			_instance = new FishingTimeController();
@@ -45,17 +42,8 @@ public class FishingTimeController implements Runnable {
 		return _instance;
 	}
 
-	@Override
-	public void run() {
-		try {
-			while (true) {
-				Thread.sleep(300);
-				fishing();
-			}
-		}
-		catch (Exception e1) {
-		}
-	}
+	/** 钓鱼清单 */
+	private final List<L1PcInstance> _fishingList = Lists.newList();
 
 	/** 增加成员 */
 	public void addMember(L1PcInstance pc) {
@@ -73,20 +61,15 @@ public class FishingTimeController implements Runnable {
 		_fishingList.remove(pc);
 	}
 
-	/** 钓鱼 */
-	private void fishing() {
-		if (_fishingList.size() > 0) {
-			long currentTime = System.currentTimeMillis();
-			for (int i = 0; i < _fishingList.size(); i++) {
-				L1PcInstance pc = _fishingList.get(i);
-				if (pc.isFishing()) { // 钓鱼中
-					long time = pc.getFishingTime();
-					if ((currentTime <= (time + 500)) && (currentTime >= (time - 500)) && !pc.isFishingReady()) {
-						pc.setFishingReady(true);
-						finishFishing(pc);
-					}
-				}
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				Thread.sleep(300);
+				fishing();
 			}
+		}
+		catch (Exception e1) {
 		}
 	}
 
@@ -121,6 +104,46 @@ public class FishingTimeController implements Runnable {
 		}
 	}
 
+	/** 钓鱼 */
+	private void fishing() {
+		if (_fishingList.size() > 0) {
+			long currentTime = System.currentTimeMillis();
+			for (int i = 0; i < _fishingList.size(); i++) {
+				L1PcInstance pc = _fishingList.get(i);
+				if (pc.isFishing()) { // 钓鱼中
+					long time = pc.getFishingTime();
+					if ((currentTime <= (time + 500)) && (currentTime >= (time - 500)) && !pc.isFishingReady()) {
+						pc.setFishingReady(true);
+						finishFishing(pc);
+					}
+				}
+			}
+		}
+	}
+
+	// 重新钓鱼
+	private void restartFishing(L1PcInstance pc) {
+		if (pc.getInventory().consumeItem(47103, 1)) { // 消耗饵，重新钓鱼
+			long fishTime = System.currentTimeMillis() + 10000 + Random.nextInt(5) * 1000;
+			pc.setFishingTime(fishTime);
+			pc.setFishingReady(false);
+		}
+		else {
+			pc.sendPackets(new S_ServerMessage(1137)); // 钓鱼需要有饵。
+			stopFishing(pc);
+		}
+	}
+
+	// 停止钓鱼
+	private void stopFishing(L1PcInstance pc) {
+		pc.setFishingTime(0);
+		pc.setFishingReady(false);
+		pc.setFishing(false);
+		pc.sendPackets(new S_CharVisualUpdate(pc));
+		pc.broadcastPacket(new S_CharVisualUpdate(pc));
+		FishingTimeController.getInstance().removeMember(pc);
+	}
+
 	// 钓鱼成功
 	private void successFishing(L1PcInstance pc, int itemId) {
 		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
@@ -153,28 +176,5 @@ public class FishingTimeController implements Runnable {
 			}
 			restartFishing(pc);
 		}
-	}
-
-	// 重新钓鱼
-	private void restartFishing(L1PcInstance pc) {
-		if (pc.getInventory().consumeItem(47103, 1)) { // 消耗饵，重新钓鱼
-			long fishTime = System.currentTimeMillis() + 10000 + Random.nextInt(5) * 1000;
-			pc.setFishingTime(fishTime);
-			pc.setFishingReady(false);
-		}
-		else {
-			pc.sendPackets(new S_ServerMessage(1137)); // 钓鱼需要有饵。
-			stopFishing(pc);
-		}
-	}
-
-	// 停止钓鱼
-	private void stopFishing(L1PcInstance pc) {
-		pc.setFishingTime(0);
-		pc.setFishingReady(false);
-		pc.setFishing(false);
-		pc.sendPackets(new S_CharVisualUpdate(pc));
-		pc.broadcastPacket(new S_CharVisualUpdate(pc));
-		FishingTimeController.getInstance().removeMember(pc);
 	}
 }

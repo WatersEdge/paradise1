@@ -40,6 +40,20 @@ public class S_SummonPack extends ServerBasePacket {
 		buildPacket(pet, pc, isCheckMaster);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S__1F_SUMMONPACK;
+	}
+
 	private void buildPacket(L1SummonInstance pet, L1PcInstance pc, boolean isCheckMaster) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(pet.getX());
@@ -83,20 +97,6 @@ public class S_SummonPack extends ServerBasePacket {
 		writeC(0);
 		writeC(0xFF);
 		writeC(0xFF);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__1F_SUMMONPACK;
 	}
 
 }

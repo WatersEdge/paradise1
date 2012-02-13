@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class ChickenYakitori extends ItemExecutor {
 
-	private ChickenYakitori() {
-	}
-
 	public static ItemExecutor get() {
 		return new ChickenYakitori();
+	}
+
+	private ChickenYakitori() {
 	}
 
 	/**

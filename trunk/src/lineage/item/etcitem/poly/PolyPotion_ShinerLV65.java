@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyPotion_ShinerLV65 extends ItemExecutor {
 
-	private PolyPotion_ShinerLV65() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyPotion_ShinerLV65();
+	}
+
+	private PolyPotion_ShinerLV65() {
 	}
 
 	/**

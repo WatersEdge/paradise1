@@ -25,8 +25,6 @@ import l1j.server.Config;
  */
 public class TelnetServer {
 
-	private static TelnetServer _instance;
-
 	private class ServerThread extends Thread {
 		ServerSocket _sock;
 
@@ -50,17 +48,19 @@ public class TelnetServer {
 		}
 	}
 
-	private TelnetServer() {
-	}
-
-	public void start() {
-		new ServerThread().start();
-	}
+	private static TelnetServer _instance;
 
 	public static TelnetServer getInstance() {
 		if (_instance == null) {
 			_instance = new TelnetServer();
 		}
 		return _instance;
+	}
+
+	private TelnetServer() {
+	}
+
+	public void start() {
+		new ServerThread().start();
 	}
 }

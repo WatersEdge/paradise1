@@ -34,14 +34,71 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class TrapTable {
 
+	private class SqlTrapStorage implements TrapStorage {
+		private final ResultSet _rs;
+
+		public SqlTrapStorage(ResultSet rs) {
+			_rs = rs;
+		}
+
+		@Override
+		public boolean getBoolean(String name) {
+			try {
+				return _rs.getBoolean(name);
+			}
+			catch (SQLException e) {
+			}
+			return false;
+		}
+
+		@Override
+		public int getInt(String name) {
+			try {
+				return _rs.getInt(name);
+			}
+			catch (SQLException e) {
+
+			}
+			return 0;
+		}
+
+		@Override
+		public String getString(String name) {
+			try {
+				return _rs.getString(name);
+			}
+			catch (SQLException e) {
+			}
+			return "";
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(TrapTable.class.getName());
 
 	private static TrapTable _instance;
+
+	public static TrapTable getInstance() {
+		if (_instance == null) {
+			_instance = new TrapTable();
+		}
+		return _instance;
+	}
+
+	public static void reload() {
+		TrapTable oldInstance = _instance;
+		_instance = new TrapTable();
+
+		oldInstance._traps.clear();
+	}
 
 	private final Map<Integer, L1Trap> _traps = Maps.newMap();
 
 	private TrapTable() {
 		initialize();
+	}
+
+	public L1Trap getTemplate(int id) {
+		return _traps.get(id);
 	}
 
 	private L1Trap createTrapInstance(String name, TrapStorage storage) throws Exception {
@@ -80,63 +137,6 @@ public class TrapTable {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
-		}
-	}
-
-	public static TrapTable getInstance() {
-		if (_instance == null) {
-			_instance = new TrapTable();
-		}
-		return _instance;
-	}
-
-	public static void reload() {
-		TrapTable oldInstance = _instance;
-		_instance = new TrapTable();
-
-		oldInstance._traps.clear();
-	}
-
-	public L1Trap getTemplate(int id) {
-		return _traps.get(id);
-	}
-
-	private class SqlTrapStorage implements TrapStorage {
-		private final ResultSet _rs;
-
-		public SqlTrapStorage(ResultSet rs) {
-			_rs = rs;
-		}
-
-		@Override
-		public String getString(String name) {
-			try {
-				return _rs.getString(name);
-			}
-			catch (SQLException e) {
-			}
-			return "";
-		}
-
-		@Override
-		public int getInt(String name) {
-			try {
-				return _rs.getInt(name);
-			}
-			catch (SQLException e) {
-
-			}
-			return 0;
-		}
-
-		@Override
-		public boolean getBoolean(String name) {
-			try {
-				return _rs.getBoolean(name);
-			}
-			catch (SQLException e) {
-			}
-			return false;
 		}
 	}
 }

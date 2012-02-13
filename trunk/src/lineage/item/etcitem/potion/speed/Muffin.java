@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class Muffin extends ItemExecutor {
 
-	private Muffin() {
-	}
-
 	public static ItemExecutor get() {
 		return new Muffin();
+	}
+
+	private Muffin() {
 	}
 
 	/**

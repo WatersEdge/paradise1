@@ -43,6 +43,19 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 		buildPacket(objectId, house_number);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_AUCTIONBOARDREAD;
+	}
+
 	private void buildPacket(int objectId, String house_number) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -87,18 +100,5 @@ public class S_AuctionBoardRead extends ServerBasePacket {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_AUCTIONBOARDREAD;
 	}
 }

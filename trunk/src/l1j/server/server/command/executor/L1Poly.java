@@ -23,11 +23,11 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Poly implements L1CommandExecutor {
-	private L1Poly() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Poly();
+	}
+
+	private L1Poly() {
 	}
 
 	@Override

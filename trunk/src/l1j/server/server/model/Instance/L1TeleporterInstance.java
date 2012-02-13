@@ -37,7 +37,29 @@ import l1j.server.server.utils.Random;
  */
 public class L1TeleporterInstance extends L1NpcInstance {
 
+	class TeleportDelyTimer implements Runnable {
+
+		public TeleportDelyTimer() {
+		}
+
+		@Override
+		public void run() {
+			try {
+				_isNowDely = true;
+				Thread.sleep(900000); // 15分
+			}
+			catch (Exception e) {
+				_isNowDely = false;
+			}
+			_isNowDely = false;
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	private boolean _isNowDely = false;
+
+	private static Logger _log = Logger.getLogger(l1j.server.server.model.Instance.L1TeleporterInstance.class.getName());
 
 	public L1TeleporterInstance(L1Npc template) {
 		super(template);
@@ -58,6 +80,24 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		attack.calcStaffOfMana();
 		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
+	}
+
+	@Override
+	public void onFinalAction(L1PcInstance player, String action) {
+		int objid = getId();
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		if (action.equalsIgnoreCase("teleportURL")) {
+			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURL());
+			player.sendPackets(new S_NPCTalkReturn(objid, html));
+		}
+		else if (action.equalsIgnoreCase("teleportURLA")) {
+			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURLA());
+			player.sendPackets(new S_NPCTalkReturn(objid, html));
+		}
+		if (action.startsWith("teleport ")) {
+			_log.finest((new StringBuilder()).append("Setting action to : ").append(action).toString());
+			doFinalAction(player, action);
+		}
 	}
 
 	@Override
@@ -252,24 +292,6 @@ public class L1TeleporterInstance extends L1NpcInstance {
 		}
 	}
 
-	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		if (action.equalsIgnoreCase("teleportURL")) {
-			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURL());
-			player.sendPackets(new S_NPCTalkReturn(objid, html));
-		}
-		else if (action.equalsIgnoreCase("teleportURLA")) {
-			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURLA());
-			player.sendPackets(new S_NPCTalkReturn(objid, html));
-		}
-		if (action.startsWith("teleport ")) {
-			_log.finest((new StringBuilder()).append("Setting action to : ").append(action).toString());
-			doFinalAction(player, action);
-		}
-	}
-
 	/** 做最后的动作 */
 	private void doFinalAction(L1PcInstance player, String action) {
 		int objid = getId();
@@ -359,27 +381,5 @@ public class L1TeleporterInstance extends L1NpcInstance {
 			player.sendPackets(new S_NPCTalkReturn(objid, htmlid));
 		}
 	}
-
-	class TeleportDelyTimer implements Runnable {
-
-		public TeleportDelyTimer() {
-		}
-
-		@Override
-		public void run() {
-			try {
-				_isNowDely = true;
-				Thread.sleep(900000); // 15分
-			}
-			catch (Exception e) {
-				_isNowDely = false;
-			}
-			_isNowDely = false;
-		}
-	}
-
-	private boolean _isNowDely = false;
-
-	private static Logger _log = Logger.getLogger(l1j.server.server.model.Instance.L1TeleporterInstance.class.getName());
 
 }

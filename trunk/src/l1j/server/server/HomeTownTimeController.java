@@ -38,9 +38,18 @@ import l1j.server.server.utils.SQLUtil;
  */
 public class HomeTownTimeController {
 
+	private class L1TownFixedProcListener extends L1GameTimeAdapter {
+		@Override
+		public void onDayChanged(L1GameTime time) {
+			fixedProc(time);
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(HomeTownTimeController.class.getName());
 
 	private static HomeTownTimeController _instance;
+
+	private static L1TownFixedProcListener _listener;
 
 	public static HomeTownTimeController getInstance() {
 		if (_instance == null) {
@@ -49,88 +58,60 @@ public class HomeTownTimeController {
 		return _instance;
 	}
 
-	private HomeTownTimeController() {
-		startListener();
+	/**
+	 * 取得报酬
+	 * 
+	 * @return int 报酬
+	 */
+	public static int getPay(int objid) {
+		Connection con = null;
+		PreparedStatement pstm1 = null;
+		PreparedStatement pstm2 = null;
+		ResultSet rs1 = null;
+		int pay = 0;
+
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm1 = con.prepareStatement("SELECT Pay FROM characters WHERE objid = ? FOR UPDATE");
+
+			pstm1.setInt(1, objid);
+			rs1 = pstm1.executeQuery();
+
+			if (rs1.next()) {
+				pay = rs1.getInt("Pay");
+			}
+
+			pstm2 = con.prepareStatement("UPDATE characters SET Pay = 0 WHERE objid = ?");
+			pstm2.setInt(1, objid);
+			pstm2.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs1);
+			SQLUtil.close(pstm1);
+			SQLUtil.close(pstm2);
+			SQLUtil.close(con);
+		}
+
+		return pay;
 	}
 
-	private static L1TownFixedProcListener _listener;
+	private static void clearHomeTownID() {
+		Connection con = null;
+		PreparedStatement pstm = null;
 
-	private void startListener() {
-		if (_listener == null) {
-			_listener = new L1TownFixedProcListener();
-			L1GameTimeClock.getInstance().addListener(_listener);
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE characters SET HomeTownID = 0 WHERE HomeTownID = -1");
+			pstm.execute();
 		}
-	}
-
-	private class L1TownFixedProcListener extends L1GameTimeAdapter {
-		@Override
-		public void onDayChanged(L1GameTime time) {
-			fixedProc(time);
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
 		}
-	}
-
-	private void fixedProc(L1GameTime time) {
-		Calendar cal = time.getCalendar();
-		int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
-
-		if (day == 25) {
-			monthlyProc();
-		}
-		else {
-			dailyProc();
-		}
-	}
-
-	public void dailyProc() {
-		_log.info("城镇系统：开始处理每日事项");
-		TownTable.getInstance().updateTaxRate();
-		TownTable.getInstance().updateSalesMoneyYesterday();
-		TownTable.getInstance().load();
-	}
-
-	public void monthlyProc() {
-		_log.info("城镇系统：开始处理每月事项");
-		L1World.getInstance().setProcessingContributionTotal(true);
-		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
-		for (L1PcInstance pc : players) {
-			try {
-				// 储存所有线上玩家的资讯
-				pc.save();
-			}
-			catch (Exception e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-		}
-
-		for (int townId = 1; townId <= 10; townId++) {
-			String leaderName = totalContribution(townId);
-			if (leaderName != null) {
-				S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
-				for (L1PcInstance pc : players) {
-					if (pc.getHomeTownId() == townId) {
-						pc.setContribution(0);
-						pc.sendPackets(packet);
-					}
-				}
-			}
-		}
-		TownTable.getInstance().load();
-
-		for (L1PcInstance pc : players) {
-			if (pc.getHomeTownId() == -1) {
-				pc.setHomeTownId(0);
-			}
-			pc.setContribution(0);
-			try {
-				// 储存所有线上玩家的资讯
-				pc.save();
-			}
-			catch (Exception e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-		}
-		clearHomeTownID();
-		L1World.getInstance().setProcessingContributionTotal(false);
 	}
 
 	private static String totalContribution(int townId) {
@@ -207,59 +188,78 @@ public class HomeTownTimeController {
 		return leaderName;
 	}
 
-	private static void clearHomeTownID() {
-		Connection con = null;
-		PreparedStatement pstm = null;
+	private HomeTownTimeController() {
+		startListener();
+	}
 
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET HomeTownID = 0 WHERE HomeTownID = -1");
-			pstm.execute();
+	public void dailyProc() {
+		_log.info("城镇系统：开始处理每日事项");
+		TownTable.getInstance().updateTaxRate();
+		TownTable.getInstance().updateSalesMoneyYesterday();
+		TownTable.getInstance().load();
+	}
+
+	public void monthlyProc() {
+		_log.info("城镇系统：开始处理每月事项");
+		L1World.getInstance().setProcessingContributionTotal(true);
+		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
+		for (L1PcInstance pc : players) {
+			try {
+				// 储存所有线上玩家的资讯
+				pc.save();
+			}
+			catch (Exception e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
 		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
+
+		for (int townId = 1; townId <= 10; townId++) {
+			String leaderName = totalContribution(townId);
+			if (leaderName != null) {
+				S_PacketBox packet = new S_PacketBox(S_PacketBox.MSG_TOWN_LEADER, leaderName);
+				for (L1PcInstance pc : players) {
+					if (pc.getHomeTownId() == townId) {
+						pc.setContribution(0);
+						pc.sendPackets(packet);
+					}
+				}
+			}
+		}
+		TownTable.getInstance().load();
+
+		for (L1PcInstance pc : players) {
+			if (pc.getHomeTownId() == -1) {
+				pc.setHomeTownId(0);
+			}
+			pc.setContribution(0);
+			try {
+				// 储存所有线上玩家的资讯
+				pc.save();
+			}
+			catch (Exception e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
+		}
+		clearHomeTownID();
+		L1World.getInstance().setProcessingContributionTotal(false);
+	}
+
+	private void fixedProc(L1GameTime time) {
+		Calendar cal = time.getCalendar();
+		int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
+
+		if (day == 25) {
+			monthlyProc();
+		}
+		else {
+			dailyProc();
 		}
 	}
 
-	/**
-	 * 取得报酬
-	 * 
-	 * @return int 报酬
-	 */
-	public static int getPay(int objid) {
-		Connection con = null;
-		PreparedStatement pstm1 = null;
-		PreparedStatement pstm2 = null;
-		ResultSet rs1 = null;
-		int pay = 0;
-
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con.prepareStatement("SELECT Pay FROM characters WHERE objid = ? FOR UPDATE");
-
-			pstm1.setInt(1, objid);
-			rs1 = pstm1.executeQuery();
-
-			if (rs1.next()) {
-				pay = rs1.getInt("Pay");
-			}
-
-			pstm2 = con.prepareStatement("UPDATE characters SET Pay = 0 WHERE objid = ?");
-			pstm2.setInt(1, objid);
-			pstm2.execute();
+	private void startListener() {
+		if (_listener == null) {
+			_listener = new L1TownFixedProcListener();
+			L1GameTimeClock.getInstance().addListener(_listener);
 		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs1);
-			SQLUtil.close(pstm1);
-			SQLUtil.close(pstm2);
-			SQLUtil.close(con);
-		}
-
-		return pay;
 	}
 }

@@ -105,6 +105,13 @@ public class L1Quest {
 		_owner = owner;
 	}
 
+	/** 增加步骤 */
+	public void add_step(int quest_id, int add) {
+		int step = get_step(quest_id);
+		step += add;
+		set_step(quest_id, step);
+	}
+
 	/** 获得所有者 */
 	public L1PcInstance get_owner() {
 		return _owner;
@@ -148,6 +155,19 @@ public class L1Quest {
 		}
 	}
 
+	/** 是结束 */
+	public boolean isEnd(int quest_id) {
+		if (get_step(quest_id) == QUEST_END) {
+			return true;
+		}
+		return false;
+	}
+
+	/** 设置结束 */
+	public void set_end(int quest_id) {
+		set_step(quest_id, QUEST_END);
+	}
+
 	/** 设置步骤 */
 	public void set_step(int quest_id, int step) {
 
@@ -181,26 +201,6 @@ public class L1Quest {
 
 		}
 		_quest.put(new Integer(quest_id), new Integer(step));
-	}
-
-	/** 增加步骤 */
-	public void add_step(int quest_id, int add) {
-		int step = get_step(quest_id);
-		step += add;
-		set_step(quest_id, step);
-	}
-
-	/** 设置结束 */
-	public void set_end(int quest_id) {
-		set_step(quest_id, QUEST_END);
-	}
-
-	/** 是结束 */
-	public boolean isEnd(int quest_id) {
-		if (get_step(quest_id) == QUEST_END) {
-			return true;
-		}
-		return false;
 	}
 
 }

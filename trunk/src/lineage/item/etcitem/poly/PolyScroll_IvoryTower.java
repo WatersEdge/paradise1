@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyScroll;
  */
 public class PolyScroll_IvoryTower extends ItemExecutor {
 
-	private PolyScroll_IvoryTower() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScroll_IvoryTower();
+	}
+
+	private PolyScroll_IvoryTower() {
 	}
 
 	/**

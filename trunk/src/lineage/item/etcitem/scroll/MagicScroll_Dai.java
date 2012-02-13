@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Dai extends ItemExecutor {
 
-	private MagicScroll_Dai() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Dai();
+	}
+
+	private MagicScroll_Dai() {
 	}
 
 	/**

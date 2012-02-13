@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Contract_Balrog extends ItemExecutor {
 
-	private Contract_Balrog() {
-	}
-
 	public static ItemExecutor get() {
 		return new Contract_Balrog();
+	}
+
+	private Contract_Balrog() {
 	}
 
 	/**

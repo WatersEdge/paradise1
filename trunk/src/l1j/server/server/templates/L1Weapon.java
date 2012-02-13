@@ -24,85 +24,55 @@ public class L1Weapon extends L1Item {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public L1Weapon() {
-	}
-
 	/** 射程范围 */
 	private int _range = 0;
-
-	@Override
-	public int getRange() {
-		return _range;
-	}
-
-	/** 设定射程范围 */
-	public void setRange(int i) {
-		_range = i;
-	}
 
 	/** 命中率修正 */
 	private int _hitModifier = 0;
 
-	@Override
-	public int getHitModifier() {
-		return _hitModifier;
-	}
-
-	/** 设定命中率修正 */
-	public void setHitModifier(int i) {
-		_hitModifier = i;
-	}
-
 	/** 伤害修正 */
 	private int _dmgModifier = 0;
-
-	@Override
-	public int getDmgModifier() {
-		return _dmgModifier;
-	}
-
-	/** 设定伤害修正 */
-	public void setDmgModifier(int i) {
-		_dmgModifier = i;
-	}
 
 	/** DB、双倍伤害发动几率 */
 	private int _doubleDmgChance;
 
-	@Override
-	public int getDoubleDmgChance() {
-		return _doubleDmgChance;
-	}
-
-	/** 设定DB、双倍伤害发动几率 */
-	public void setDoubleDmgChance(int i) {
-		_doubleDmgChance = i;
-	}
-
 	/** 魔法攻击的伤害修正 */
 	private int _magicDmgModifier = 0;
 
-	@Override
-	public int getMagicDmgModifier() {
-		return _magicDmgModifier;
-	}
-
-	/** 设定魔法攻击的伤害修正 */
-	public void setMagicDmgModifier(int i) {
-		_magicDmgModifier = i;
-	}
-
 	/** 有无损伤 */
 	private int _canbedmg = 0;
+
+	public L1Weapon() {
+	}
 
 	@Override
 	public int get_canbedmg() {
 		return _canbedmg;
 	}
 
-	/** 设定有无损伤 */
-	public void set_canbedmg(int i) {
-		_canbedmg = i;
+	@Override
+	public int getDmgModifier() {
+		return _dmgModifier;
+	}
+
+	@Override
+	public int getDoubleDmgChance() {
+		return _doubleDmgChance;
+	}
+
+	@Override
+	public int getHitModifier() {
+		return _hitModifier;
+	}
+
+	@Override
+	public int getMagicDmgModifier() {
+		return _magicDmgModifier;
+	}
+
+	@Override
+	public int getRange() {
+		return _range;
 	}
 
 	@Override
@@ -121,5 +91,35 @@ public class L1Weapon extends L1Item {
 		);
 
 		return bool;
+	}
+
+	/** 设定有无损伤 */
+	public void set_canbedmg(int i) {
+		_canbedmg = i;
+	}
+
+	/** 设定伤害修正 */
+	public void setDmgModifier(int i) {
+		_dmgModifier = i;
+	}
+
+	/** 设定DB、双倍伤害发动几率 */
+	public void setDoubleDmgChance(int i) {
+		_doubleDmgChance = i;
+	}
+
+	/** 设定命中率修正 */
+	public void setHitModifier(int i) {
+		_hitModifier = i;
+	}
+
+	/** 设定魔法攻击的伤害修正 */
+	public void setMagicDmgModifier(int i) {
+		_magicDmgModifier = i;
+	}
+
+	/** 设定射程范围 */
+	public void setRange(int i) {
+		_range = i;
 	}
 }

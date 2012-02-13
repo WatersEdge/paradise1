@@ -33,6 +33,19 @@ public class S_DropItem extends ServerBasePacket {
 		buildPacket(item);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S__OB_DropItem;
+	}
+
 	private void buildPacket(L1ItemInstance item) {
 		// int addbyte = 0;
 		// int addbyte1 = 1;
@@ -100,19 +113,6 @@ public class S_DropItem extends ServerBasePacket {
 		writeD(0);
 		writeC(8);
 		writeC(0);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__OB_DropItem;
 	}
 
 }

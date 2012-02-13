@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Portrait1 extends ItemExecutor {
 
-	private Portrait1() {
-	}
-
 	public static ItemExecutor get() {
 		return new Portrait1();
+	}
+
+	private Portrait1() {
 	}
 
 	/**

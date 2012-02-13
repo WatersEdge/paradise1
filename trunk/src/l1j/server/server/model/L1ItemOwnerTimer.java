@@ -24,15 +24,13 @@ import l1j.server.server.model.Instance.L1ItemInstance;
  */
 public class L1ItemOwnerTimer extends TimerTask {
 
+	private final L1ItemInstance _item;
+
+	private final int _timeMillis;
+
 	public L1ItemOwnerTimer(L1ItemInstance item, int timeMillis) {
 		_item = item;
 		_timeMillis = timeMillis;
-	}
-
-	@Override
-	public void run() {
-		_item.setItemOwnerId(0);
-		cancel();
 	}
 
 	public void begin() {
@@ -40,7 +38,9 @@ public class L1ItemOwnerTimer extends TimerTask {
 		timer.schedule(this, _timeMillis);
 	}
 
-	private final L1ItemInstance _item;
-
-	private final int _timeMillis;
+	@Override
+	public void run() {
+		_item.setItemOwnerId(0);
+		cancel();
+	}
 }

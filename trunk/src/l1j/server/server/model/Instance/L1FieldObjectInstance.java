@@ -37,6 +37,21 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 	}
 
 	@Override
+	public void deleteMe() {
+		_destroyed = true;
+		if (getInventory() != null) {
+			getInventory().clearItems();
+		}
+		L1World.getInstance().removeVisibleObject(this);
+		L1World.getInstance().removeObject(this);
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+			pc.removeKnownObject(this);
+			pc.sendPackets(new S_RemoveObject(this));
+		}
+		removeAllKnownObjects();
+	}
+
+	@Override
 	public void onAction(L1PcInstance pc) {
 		if (getNpcTemplate().get_npcId() == 81171) { // おばけ屋敷のゴールの炎
 			if (L1HauntedHouse.getInstance().getHauntedHouseStatus() == L1HauntedHouse.STATUS_PLAYING) {
@@ -83,20 +98,5 @@ public class L1FieldObjectInstance extends L1NpcInstance {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
-		}
-		L1World.getInstance().removeVisibleObject(this);
-		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			pc.removeKnownObject(this);
-			pc.sendPackets(new S_RemoveObject(this));
-		}
-		removeAllKnownObjects();
 	}
 }

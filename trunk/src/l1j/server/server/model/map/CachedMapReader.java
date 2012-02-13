@@ -41,38 +41,18 @@ public class CachedMapReader extends MapReader {
 	private static final String CACHE_DIR = "./data/mapcache/";
 
 	/**
-	 * 将指定编号的地图转成快取的地图格式
+	 * 取得所有地图与编号的 Mapping
 	 * 
-	 * @param mapId
-	 *            地图编号
-	 * @return L1V1Map
+	 * @return Map
 	 * @throws IOException
 	 */
-	private L1V1Map cacheMap(final int mapId) throws IOException {
-		File file = new File(CACHE_DIR);
-		if (!file.exists()) {
-			file.mkdir();
+	@Override
+	public Map<Integer, L1Map> read() throws IOException {
+		Map<Integer, L1Map> maps = Maps.newMap();
+		for (int id : TextMapReader.listMapIds()) {
+			maps.put(id, read(id));
 		}
-
-		L1V1Map map = (L1V1Map) new TextMapReader().read(mapId);
-
-		DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_DIR + mapId + ".map")));
-
-		out.writeInt(map.getId());
-		out.writeInt(map.getX());
-		out.writeInt(map.getY());
-		out.writeInt(map.getWidth());
-		out.writeInt(map.getHeight());
-
-		for (byte[] line : map.getRawTiles()) {
-			for (byte tile : line) {
-				out.writeByte(tile);
-			}
-		}
-		out.flush();
-		out.close();
-
-		return map;
+		return maps;
 	}
 
 	/**
@@ -115,17 +95,37 @@ public class CachedMapReader extends MapReader {
 	}
 
 	/**
-	 * 取得所有地图与编号的 Mapping
+	 * 将指定编号的地图转成快取的地图格式
 	 * 
-	 * @return Map
+	 * @param mapId
+	 *            地图编号
+	 * @return L1V1Map
 	 * @throws IOException
 	 */
-	@Override
-	public Map<Integer, L1Map> read() throws IOException {
-		Map<Integer, L1Map> maps = Maps.newMap();
-		for (int id : TextMapReader.listMapIds()) {
-			maps.put(id, read(id));
+	private L1V1Map cacheMap(final int mapId) throws IOException {
+		File file = new File(CACHE_DIR);
+		if (!file.exists()) {
+			file.mkdir();
 		}
-		return maps;
+
+		L1V1Map map = (L1V1Map) new TextMapReader().read(mapId);
+
+		DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_DIR + mapId + ".map")));
+
+		out.writeInt(map.getId());
+		out.writeInt(map.getX());
+		out.writeInt(map.getY());
+		out.writeInt(map.getWidth());
+		out.writeInt(map.getHeight());
+
+		for (byte[] line : map.getRawTiles()) {
+			for (byte tile : line) {
+				out.writeByte(tile);
+			}
+		}
+		out.flush();
+		out.close();
+
+		return map;
 	}
 }

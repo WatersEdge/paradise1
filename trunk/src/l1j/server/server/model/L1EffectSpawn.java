@@ -43,11 +43,6 @@ public class L1EffectSpawn {
 
 	private static L1EffectSpawn _instance;
 
-	private Constructor<?> _constructor;
-
-	private L1EffectSpawn() {
-	}
-
 	public static L1EffectSpawn getInstance() {
 		if (_instance == null) {
 			_instance = new L1EffectSpawn();
@@ -55,67 +50,9 @@ public class L1EffectSpawn {
 		return _instance;
 	}
 
-	/**
-	 * 设置生成效果对象
-	 * 
-	 * @param npcId
-	 *            影响NPC的模板ID
-	 * @param time
-	 *            存在时间(ms)
-	 * @param locX
-	 *            设置坐标X
-	 * @param locY
-	 *            设置坐标Y
-	 * @param mapId
-	 *            设置地图的ID
-	 * @return 生成的对象的影响
-	 */
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId) {
-		return spawnEffect(npcId, time, locX, locY, mapId, null, 0);
-	}
+	private Constructor<?> _constructor;
 
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1PcInstance user, int skiiId) {
-		L1Npc template = NpcTable.getInstance().getTemplate(npcId);
-		L1EffectInstance effect = null;
-
-		if (template == null) {
-			return null;
-		}
-
-		String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
-
-		try {
-			_constructor = Class.forName(className).getConstructors()[0];
-			Object obj[] = { template };
-			effect = (L1EffectInstance) _constructor.newInstance(obj);
-
-			effect.setId(IdFactory.getInstance().nextId());
-			effect.setGfxId(template.get_gfxid());
-			effect.setX(locX);
-			effect.setY(locY);
-			effect.setHomeX(locX);
-			effect.setHomeY(locY);
-			effect.setHeading(0);
-			effect.setMap(mapId);
-			effect.setUser(user);
-			effect.setSkillId(skiiId);
-			L1World.getInstance().storeObject(effect);
-			L1World.getInstance().addVisibleObject(effect);
-
-			for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(effect)) {
-				effect.addKnownObject(pc);
-				pc.addKnownObject(effect);
-				pc.sendPackets(new S_NPCPack(effect));
-				pc.broadcastPacket(new S_NPCPack(effect));
-			}
-			L1NpcDeleteTimer timer = new L1NpcDeleteTimer(effect, time);
-			timer.begin();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-
-		return effect;
+	private L1EffectSpawn() {
 	}
 
 	/** 产生火牢 */
@@ -216,6 +153,69 @@ public class L1EffectSpawn {
 				base = effect;
 			}
 		}
+	}
+
+	/**
+	 * 设置生成效果对象
+	 * 
+	 * @param npcId
+	 *            影响NPC的模板ID
+	 * @param time
+	 *            存在时间(ms)
+	 * @param locX
+	 *            设置坐标X
+	 * @param locY
+	 *            设置坐标Y
+	 * @param mapId
+	 *            设置地图的ID
+	 * @return 生成的对象的影响
+	 */
+	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId) {
+		return spawnEffect(npcId, time, locX, locY, mapId, null, 0);
+	}
+
+	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1PcInstance user, int skiiId) {
+		L1Npc template = NpcTable.getInstance().getTemplate(npcId);
+		L1EffectInstance effect = null;
+
+		if (template == null) {
+			return null;
+		}
+
+		String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
+
+		try {
+			_constructor = Class.forName(className).getConstructors()[0];
+			Object obj[] = { template };
+			effect = (L1EffectInstance) _constructor.newInstance(obj);
+
+			effect.setId(IdFactory.getInstance().nextId());
+			effect.setGfxId(template.get_gfxid());
+			effect.setX(locX);
+			effect.setY(locY);
+			effect.setHomeX(locX);
+			effect.setHomeY(locY);
+			effect.setHeading(0);
+			effect.setMap(mapId);
+			effect.setUser(user);
+			effect.setSkillId(skiiId);
+			L1World.getInstance().storeObject(effect);
+			L1World.getInstance().addVisibleObject(effect);
+
+			for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(effect)) {
+				effect.addKnownObject(pc);
+				pc.addKnownObject(effect);
+				pc.sendPackets(new S_NPCPack(effect));
+				pc.broadcastPacket(new S_NPCPack(effect));
+			}
+			L1NpcDeleteTimer timer = new L1NpcDeleteTimer(effect, time);
+			timer.begin();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+
+		return effect;
 	}
 
 }

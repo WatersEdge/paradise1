@@ -29,11 +29,11 @@ import l1j.server.server.utils.L1SpawnUtil;
 public class L1InsertSpawn implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1InsertSpawn.class.getName());
 
-	private L1InsertSpawn() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1InsertSpawn();
+	}
+
+	private L1InsertSpawn() {
 	}
 
 	@Override

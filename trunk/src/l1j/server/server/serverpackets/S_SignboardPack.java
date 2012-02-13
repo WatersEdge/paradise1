@@ -63,6 +63,20 @@ public class S_SignboardPack extends ServerBasePacket {
 		writeH(0xFFFF);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_SIGNBOARD_PACK;
+	}
+
 	private int getDirection(int heading) {
 		int dir = 0;
 		switch (heading) {
@@ -83,20 +97,6 @@ public class S_SignboardPack extends ServerBasePacket {
 			break;
 		}
 		return dir;
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_SIGNBOARD_PACK;
 	}
 
 }

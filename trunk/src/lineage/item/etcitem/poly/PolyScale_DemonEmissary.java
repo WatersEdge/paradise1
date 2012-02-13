@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyScale_DemonEmissary extends ItemExecutor {
 
-	private PolyScale_DemonEmissary() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScale_DemonEmissary();
+	}
+
+	private PolyScale_DemonEmissary() {
 	}
 
 	/**

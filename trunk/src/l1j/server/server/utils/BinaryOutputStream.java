@@ -35,9 +35,31 @@ public class BinaryOutputStream extends OutputStream {
 	public BinaryOutputStream() {
 	}
 
+	public byte[] getBytes() {
+		return _bao.toByteArray();
+	}
+
+	public int getLength() {
+		return _bao.size() + 2;
+	}
+
 	@Override
 	public void write(int b) throws IOException {
 		_bao.write(b);
+	}
+
+	public void writeByte(byte[] text) {
+		try {
+			if (text != null) {
+				_bao.write(text);
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+
+	public void writeC(int value) {
+		_bao.write(value & 0xff);
 	}
 
 	public void writeD(int value) {
@@ -45,23 +67,6 @@ public class BinaryOutputStream extends OutputStream {
 		_bao.write(value >> 8 & 0xff);
 		_bao.write(value >> 16 & 0xff);
 		_bao.write(value >> 24 & 0xff);
-	}
-
-	public void writeH(int value) {
-		_bao.write(value & 0xff);
-		_bao.write(value >> 8 & 0xff);
-	}
-
-	public void writeC(int value) {
-		_bao.write(value & 0xff);
-	}
-
-	public void writeP(int value) {
-		_bao.write(value);
-	}
-
-	public void writeL(long value) {
-		_bao.write((int) (value & 0xff));
 	}
 
 	public void writeF(double org) {
@@ -76,6 +81,19 @@ public class BinaryOutputStream extends OutputStream {
 		_bao.write((int) (value >> 56 & 0xff));
 	}
 
+	public void writeH(int value) {
+		_bao.write(value & 0xff);
+		_bao.write(value >> 8 & 0xff);
+	}
+
+	public void writeL(long value) {
+		_bao.write((int) (value & 0xff));
+	}
+
+	public void writeP(int value) {
+		_bao.write(value);
+	}
+
 	public void writeS(String text) {
 		try {
 			if (text != null) {
@@ -86,23 +104,5 @@ public class BinaryOutputStream extends OutputStream {
 		}
 
 		_bao.write(0);
-	}
-
-	public void writeByte(byte[] text) {
-		try {
-			if (text != null) {
-				_bao.write(text);
-			}
-		}
-		catch (Exception e) {
-		}
-	}
-
-	public int getLength() {
-		return _bao.size() + 2;
-	}
-
-	public byte[] getBytes() {
-		return _bao.toByteArray();
 	}
 }

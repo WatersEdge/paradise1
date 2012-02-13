@@ -25,6 +25,21 @@ import l1j.server.Config;
  */
 public abstract class MapReader {
 	/**
+	 * 依照设定档中的设定来选择读取地图的方法(使用V2MapReader 或 快取地图).
+	 * 
+	 * @return MapReader
+	 */
+	public static MapReader getDefaultReader() {
+		if (Config.LOAD_V2_MAP_FILES) {
+			return new V2MapReader();
+		}
+		if (Config.CACHE_MAP_FILES) {
+			return new CachedMapReader();
+		}
+		return new TextMapReader();
+	}
+
+	/**
 	 * 取得所有地图与编号的 Mapping (abstract 方法).
 	 * 
 	 * @return Map
@@ -41,19 +56,4 @@ public abstract class MapReader {
 	 * @throws IOException
 	 */
 	public abstract L1Map read(int id) throws IOException;
-
-	/**
-	 * 依照设定档中的设定来选择读取地图的方法(使用V2MapReader 或 快取地图).
-	 * 
-	 * @return MapReader
-	 */
-	public static MapReader getDefaultReader() {
-		if (Config.LOAD_V2_MAP_FILES) {
-			return new V2MapReader();
-		}
-		if (Config.CACHE_MAP_FILES) {
-			return new CachedMapReader();
-		}
-		return new TextMapReader();
-	}
 }

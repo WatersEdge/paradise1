@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class RabbitLiver extends ItemExecutor {
 
-	private RabbitLiver() {
-	}
-
 	public static ItemExecutor get() {
 		return new RabbitLiver();
+	}
+
+	private RabbitLiver() {
 	}
 
 	/**

@@ -36,14 +36,14 @@ public class BuddyTable {
 
 	private static BuddyTable _instance;
 
-	private final Map<Integer, L1Buddy> _buddys = Maps.newMap();
-
 	public static BuddyTable getInstance() {
 		if (_instance == null) {
 			_instance = new BuddyTable();
 		}
 		return _instance;
 	}
+
+	private final Map<Integer, L1Buddy> _buddys = Maps.newMap();
 
 	private BuddyTable() {
 
@@ -91,21 +91,6 @@ public class BuddyTable {
 	}
 
 	/**
-	 * 取得好友资料表
-	 * 
-	 * @param charId
-	 * @return 好友
-	 */
-	public L1Buddy getBuddyTable(int charId) {
-		L1Buddy buddy = _buddys.get(charId);
-		if (buddy == null) {
-			buddy = new L1Buddy(charId);
-			_buddys.put(charId, buddy);
-		}
-		return buddy;
-	}
-
-	/**
 	 * 增加好友
 	 * 
 	 * @param charId
@@ -130,6 +115,21 @@ public class BuddyTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
+	}
+
+	/**
+	 * 取得好友资料表
+	 * 
+	 * @param charId
+	 * @return 好友
+	 */
+	public L1Buddy getBuddyTable(int charId) {
+		L1Buddy buddy = _buddys.get(charId);
+		if (buddy == null) {
+			buddy = new L1Buddy(charId);
+			_buddys.put(charId, buddy);
+		}
+		return buddy;
 	}
 
 	/**

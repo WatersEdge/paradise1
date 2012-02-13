@@ -24,11 +24,11 @@ import lineage.item.etcitem.CiteScrollEnchant;
  */
 public class S_Scroll_Armor extends ItemExecutor {
 
-	private S_Scroll_Armor() {
-	}
-
 	public static ItemExecutor get() {
 		return new S_Scroll_Armor();
+	}
+
+	private S_Scroll_Armor() {
 	}
 
 	/**

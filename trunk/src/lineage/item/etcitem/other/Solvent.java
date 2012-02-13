@@ -17,11 +17,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Solvent extends ItemExecutor {
 
-	private Solvent() {
-	}
-
 	public static ItemExecutor get() {
 		return new Solvent();
+	}
+
+	private Solvent() {
 	}
 
 	/**

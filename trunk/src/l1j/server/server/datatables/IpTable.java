@@ -81,35 +81,6 @@ public class IpTable {
 	}
 
 	/**
-	 * 封锁IP
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public boolean isBannedIp(String s) {
-		for (String BanIpAddress : _banip) { // 被封锁的IP
-			// 判断如果使用*结尾
-			if (BanIpAddress.endsWith("*")) {
-				// 取回第一次出现*的index
-				int fStarindex = BanIpAddress.indexOf("*");
-				// 取得0~fStar长度
-				String reip = BanIpAddress.substring(0, fStarindex);
-				// 抓得Banip表单内ip在*号前的子字串 xxx.xxx||xxx.xxx.xxx
-				String newaddress = s.substring(0, fStarindex);
-				if (newaddress.equalsIgnoreCase(reip)) {
-					return true;
-				}
-			}
-			else {
-				if (s.equalsIgnoreCase(BanIpAddress)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * 取得IP表
 	 */
 	public void getIpTable() {
@@ -137,6 +108,35 @@ public class IpTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
+	}
+
+	/**
+	 * 封锁IP
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public boolean isBannedIp(String s) {
+		for (String BanIpAddress : _banip) { // 被封锁的IP
+			// 判断如果使用*结尾
+			if (BanIpAddress.endsWith("*")) {
+				// 取回第一次出现*的index
+				int fStarindex = BanIpAddress.indexOf("*");
+				// 取得0~fStar长度
+				String reip = BanIpAddress.substring(0, fStarindex);
+				// 抓得Banip表单内ip在*号前的子字串 xxx.xxx||xxx.xxx.xxx
+				String newaddress = s.substring(0, fStarindex);
+				if (newaddress.equalsIgnoreCase(reip)) {
+					return true;
+				}
+			}
+			else {
+				if (s.equalsIgnoreCase(BanIpAddress)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

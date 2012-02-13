@@ -39,8 +39,6 @@ public class CastleTable {
 
 	private static CastleTable _instance;
 
-	private final Map<Integer, L1Castle> _castles = Maps.newConcurrentMap();
-
 	public static CastleTable getInstance() {
 		if (_instance == null) {
 			_instance = new CastleTable();
@@ -48,50 +46,18 @@ public class CastleTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1Castle> _castles = Maps.newConcurrentMap();
+
 	private CastleTable() {
 		load();
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ts.getTime());
-		return cal;
-	}
-
-	private void load() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM castle");
-
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
-				castle.setWarTime(timestampToCalendar((Timestamp) rs.getObject(3)));
-				castle.setTaxRate(rs.getInt(4));
-				castle.setPublicMoney(rs.getInt(5));
-
-				_castles.put(castle.getId(), castle);
-			}
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
+	public L1Castle getCastleTable(int id) {
+		return _castles.get(id);
 	}
 
 	public L1Castle[] getCastleTableList() {
 		return _castles.values().toArray(new L1Castle[_castles.size()]);
-	}
-
-	public L1Castle getCastleTable(int id) {
-		return _castles.get(id);
 	}
 
 	/**
@@ -123,6 +89,40 @@ public class CastleTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
+	}
+
+	private void load() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM castle");
+
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
+				castle.setWarTime(timestampToCalendar((Timestamp) rs.getObject(3)));
+				castle.setTaxRate(rs.getInt(4));
+				castle.setPublicMoney(rs.getInt(5));
+
+				_castles.put(castle.getId(), castle);
+			}
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	private Calendar timestampToCalendar(Timestamp ts) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(ts.getTime());
+		return cal;
 	}
 
 }

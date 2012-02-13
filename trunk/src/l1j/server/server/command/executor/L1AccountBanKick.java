@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：踢掉且禁止帐号登入
  */
 public class L1AccountBanKick implements L1CommandExecutor {
-	private L1AccountBanKick() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1AccountBanKick();
+	}
+
+	private L1AccountBanKick() {
 	}
 
 	@Override

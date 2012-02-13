@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpeedPotion_2_Brave;
  */
 public class HonoraryMoney extends ItemExecutor {
 
-	private HonoraryMoney() {
-	}
-
 	public static ItemExecutor get() {
 		return new HonoraryMoney();
+	}
+
+	private HonoraryMoney() {
 	}
 
 	/**

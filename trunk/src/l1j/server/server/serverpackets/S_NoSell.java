@@ -30,14 +30,6 @@ public class S_NoSell extends ServerBasePacket {
 		buildPacket(npc);
 	}
 
-	private void buildPacket(L1NpcInstance npc) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(npc.getId());
-		writeS("nosell");
-		writeC(0x00);
-		writeH(0x00);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -50,5 +42,13 @@ public class S_NoSell extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return _S__25_NoSell;
+	}
+
+	private void buildPacket(L1NpcInstance npc) {
+		writeC(Opcodes.S_OPCODE_SHOWHTML);
+		writeD(npc.getId());
+		writeS("nosell");
+		writeC(0x00);
+		writeH(0x00);
 	}
 }

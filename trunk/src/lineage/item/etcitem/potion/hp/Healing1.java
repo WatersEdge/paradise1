@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Healing1 extends ItemExecutor {
 
-	private Healing1() {
-	}
-
 	public static ItemExecutor get() {
 		return new Healing1();
+	}
+
+	private Healing1() {
 	}
 
 	/**

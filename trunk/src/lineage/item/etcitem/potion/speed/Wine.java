@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class Wine extends ItemExecutor {
 
-	private Wine() {
-	}
-
 	public static ItemExecutor get() {
 		return new Wine();
+	}
+
+	private Wine() {
 	}
 
 	/**

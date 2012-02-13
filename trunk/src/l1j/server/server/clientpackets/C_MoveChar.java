@@ -41,12 +41,6 @@ public class C_MoveChar extends ClientBasePacket {
 
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
-	// 地图编号的研究
-	@SuppressWarnings("unused")
-	private void sendMapTileLog(L1PcInstance pc) {
-		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(pc.getLocation())));
-	}
-
 	// 移动
 	public C_MoveChar(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
@@ -113,5 +107,11 @@ public class C_MoveChar extends ClientBasePacket {
 
 		pc.getMap().setPassable(pc.getLocation(), false);
 		// user.UpdateObject(); // 可视范围内の全オブジェクト更新
+	}
+
+	// 地图编号的研究
+	@SuppressWarnings("unused")
+	private void sendMapTileLog(L1PcInstance pc) {
+		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(pc.getLocation())));
 	}
 }

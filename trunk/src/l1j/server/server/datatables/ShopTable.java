@@ -41,8 +41,6 @@ public class ShopTable {
 
 	private static ShopTable _instance;
 
-	private final Map<Integer, L1Shop> _allShops = Maps.newMap();
-
 	public static ShopTable getInstance() {
 		if (_instance == null) {
 			_instance = new ShopTable();
@@ -50,8 +48,18 @@ public class ShopTable {
 		return _instance;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	private final Map<Integer, L1Shop> _allShops = Maps.newMap();
+
 	private ShopTable() {
 		loadShops();
+	}
+
+	public L1Shop get(int npcId) {
+		return _allShops.get(npcId);
 	}
 
 	private List<Integer> enumNpcIds() {
@@ -117,13 +125,5 @@ public class ShopTable {
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
-	}
-
-	public L1Shop get(int npcId) {
-		return _allShops.get(npcId);
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 }

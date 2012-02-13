@@ -37,6 +37,19 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 		buildPacket(cha, prices, objid);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S__25_TalkReturnAction;
+	}
+
 	private void buildPacket(L1NpcTalkData npc, Object[] prices, int objid) {
 		String htmlid = "";
 		htmlid = npc.getTeleportURL();
@@ -49,18 +62,5 @@ public class S_NPCTalkActionTPUrl extends ServerBasePacket {
 		for (Object price : prices) {
 			writeS(String.valueOf(((Integer) price).intValue()));
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__25_TalkReturnAction;
 	}
 }

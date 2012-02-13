@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class HolyMithrilPowder extends ItemExecutor {
 
-	private HolyMithrilPowder() {
-	}
-
 	public static ItemExecutor get() {
 		return new HolyMithrilPowder();
+	}
+
+	private HolyMithrilPowder() {
 	}
 
 	/**

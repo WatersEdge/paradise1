@@ -25,11 +25,11 @@ import l1j.server.server.serverpackets.S_Weather;
  * GM指令：改变天气
  */
 public class L1ChangeWeather implements L1CommandExecutor {
-	private L1ChangeWeather() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1ChangeWeather();
+	}
+
+	private L1ChangeWeather() {
 	}
 
 	@Override

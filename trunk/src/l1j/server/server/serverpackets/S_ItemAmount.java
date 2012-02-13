@@ -40,6 +40,16 @@ public class S_ItemAmount extends ServerBasePacket {
 		buildPacket(item);
 	}
 
+	@Override
+	public byte[] getContent() {
+		return getBytes();
+	}
+
+	@Override
+	public String getType() {
+		return S_ITEM_AMOUNT;
+	}
+
 	private void buildPacket(L1ItemInstance item) {
 		// writeC(Opcodes.S_OPCODE_ITEMAMOUNT);
 		// writeD(item.getId());
@@ -61,16 +71,6 @@ public class S_ItemAmount extends ServerBasePacket {
 			}
 		}
 		// 3.0 end
-	}
-
-	@Override
-	public byte[] getContent() {
-		return getBytes();
-	}
-
-	@Override
-	public String getType() {
-		return S_ITEM_AMOUNT;
 	}
 
 }

@@ -49,6 +49,19 @@ public class S_War extends ServerBasePacket {
 		buildPacket(type, clan_name1, clan_name2);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_WAR;
+	}
+
 	private void buildPacket(int type, String clan_name1, String clan_name2) {
 		// 1 : _血盟が_血盟に宣戦布告しました。
 		// 2 : _血盟が_血盟に降伏しました。
@@ -62,18 +75,5 @@ public class S_War extends ServerBasePacket {
 		writeC(type);
 		writeS(clan_name1);
 		writeS(clan_name2);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_WAR;
 	}
 }

@@ -42,6 +42,12 @@ public class Base64OutputStream extends OutputStream {
 	}
 
 	@Override
+	public void close() throws IOException {
+		commit();
+		outputStream.close();
+	}
+
+	@Override
 	public void write(int b) throws IOException {
 		int value = (b & 0xFF) << (16 - (bytecounter * 8));
 		buffer = buffer | value;
@@ -49,12 +55,6 @@ public class Base64OutputStream extends OutputStream {
 		if (bytecounter == 3) {
 			commit();
 		}
-	}
-
-	@Override
-	public void close() throws IOException {
-		commit();
-		outputStream.close();
 	}
 
 	protected void commit() throws IOException {

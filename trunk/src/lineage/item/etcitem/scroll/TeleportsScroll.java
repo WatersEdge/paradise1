@@ -22,11 +22,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class TeleportsScroll extends ItemExecutor {
 
-	private TeleportsScroll() {
-	}
-
 	public static ItemExecutor get() {
 		return new TeleportsScroll();
+	}
+
+	private TeleportsScroll() {
 	}
 
 	/**

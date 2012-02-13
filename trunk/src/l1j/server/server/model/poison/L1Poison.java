@@ -62,6 +62,13 @@ public abstract class L1Poison {
 	}
 
 	/**
+	 * 消除中毒效果。<br>
+	 * 
+	 * @see L1Character#curePoison()
+	 */
+	public abstract void cure();
+
+	/**
 	 * 返回此毒效果ID。
 	 * 
 	 * @see S_Poison#S_Poison(int, int)
@@ -69,11 +76,4 @@ public abstract class L1Poison {
 	 * @return 由S_Poison影响使用的ID
 	 */
 	public abstract int getEffectId();
-
-	/**
-	 * 消除中毒效果。<br>
-	 * 
-	 * @see L1Character#curePoison()
-	 */
-	public abstract void cure();
 }

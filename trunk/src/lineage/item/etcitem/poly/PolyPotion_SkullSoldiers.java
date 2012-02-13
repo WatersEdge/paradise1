@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyPotion_SkullSoldiers extends ItemExecutor {
 
-	private PolyPotion_SkullSoldiers() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyPotion_SkullSoldiers();
+	}
+
+	private PolyPotion_SkullSoldiers() {
 	}
 
 	/**

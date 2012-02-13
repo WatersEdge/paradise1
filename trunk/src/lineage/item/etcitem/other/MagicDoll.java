@@ -21,31 +21,8 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicDoll extends ItemExecutor {
 
-	private MagicDoll() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicDoll();
-	}
-
-	/**
-	 * 道具执行
-	 * 
-	 * @param data
-	 *            参数
-	 * @param pc
-	 *            对象
-	 * @param item
-	 *            道具
-	 */
-	@Override
-	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
-
-		// 取得道具ID
-		final int itemId = item.getItemId();
-		final int itemObjid = item.getId();
-
-		MagicDoll.useMagicDoll(pc, itemId, itemObjid);
 	}
 
 	/**
@@ -103,5 +80,28 @@ public class MagicDoll extends ItemExecutor {
 				pc.sendPackets(new S_OwnCharStatus(pc));
 			}
 		}
+	}
+
+	private MagicDoll() {
+	}
+
+	/**
+	 * 道具执行
+	 * 
+	 * @param data
+	 *            参数
+	 * @param pc
+	 *            对象
+	 * @param item
+	 *            道具
+	 */
+	@Override
+	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
+
+		// 取得道具ID
+		final int itemId = item.getItemId();
+		final int itemObjid = item.getId();
+
+		MagicDoll.useMagicDoll(pc, itemId, itemObjid);
 	}
 }

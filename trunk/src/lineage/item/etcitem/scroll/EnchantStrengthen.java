@@ -17,11 +17,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class EnchantStrengthen extends ItemExecutor {
 
-	private EnchantStrengthen() {
-	}
-
 	public static ItemExecutor get() {
 		return new EnchantStrengthen();
+	}
+
+	private EnchantStrengthen() {
 	}
 
 	/**

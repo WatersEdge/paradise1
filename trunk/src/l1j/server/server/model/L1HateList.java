@@ -33,15 +33,15 @@ public class L1HateList {
 
 	private final Map<L1Character, Integer> _hateMap;
 
-	private L1HateList(Map<L1Character, Integer> hateMap) {
-		_hateMap = hateMap;
-	}
-
 	public L1HateList() {
 		/*
 		 * ConcurrentHashMapを利用するより、 全てのメソッドを同期する方がメモリ使用量、速度共に優れていた。 但し、今後このクラスの利用方法が変わった場合、 例えば多くのスレッドから同時に読み出しがかかるようになった場合は、 ConcurrentHashMap使用 可能是更好的。
 		 */
 		_hateMap = Maps.newMap();
+	}
+
+	private L1HateList(Map<L1Character, Integer> hateMap) {
+		_hateMap = hateMap;
 	}
 
 	public synchronized void add(L1Character cha, int hate) {
@@ -56,24 +56,24 @@ public class L1HateList {
 		}
 	}
 
-	public synchronized int get(L1Character cha) {
-		return _hateMap.get(cha);
+	public synchronized void clear() {
+		_hateMap.clear();
 	}
 
 	public synchronized boolean containsKey(L1Character cha) {
 		return _hateMap.containsKey(cha);
 	}
 
-	public synchronized void remove(L1Character cha) {
-		_hateMap.remove(cha);
+	public synchronized L1HateList copy() {
+		return new L1HateList(new HashMap<L1Character, Integer>(_hateMap));
 	}
 
-	public synchronized void clear() {
-		_hateMap.clear();
+	public synchronized Set<Entry<L1Character, Integer>> entrySet() {
+		return _hateMap.entrySet();
 	}
 
-	public synchronized boolean isEmpty() {
-		return _hateMap.isEmpty();
+	public synchronized int get(L1Character cha) {
+		return _hateMap.get(cha);
 	}
 
 	public synchronized L1Character getMaxHateCharacter() {
@@ -87,37 +87,6 @@ public class L1HateList {
 			}
 		}
 		return cha;
-	}
-
-	public synchronized void removeInvalidCharacter(L1NpcInstance npc) {
-		List<L1Character> invalidChars = Lists.newList();
-		for (L1Character cha : _hateMap.keySet()) {
-			if ((cha == null) || cha.isDead() || !npc.knownsObject(cha)) {
-				invalidChars.add(cha);
-			}
-		}
-
-		for (L1Character cha : invalidChars) {
-			_hateMap.remove(cha);
-		}
-	}
-
-	public synchronized int getTotalHate() {
-		int totalHate = 0;
-		for (int hate : _hateMap.values()) {
-			totalHate += hate;
-		}
-		return totalHate;
-	}
-
-	public synchronized int getTotalLawfulHate() {
-		int totalHate = 0;
-		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
-			if (e.getKey() instanceof L1PcInstance) {
-				totalHate += e.getValue();
-			}
-		}
-		return totalHate;
 	}
 
 	public synchronized int getPartyHate(L1Party party) {
@@ -158,19 +127,50 @@ public class L1HateList {
 		return partyHate;
 	}
 
-	public synchronized L1HateList copy() {
-		return new L1HateList(new HashMap<L1Character, Integer>(_hateMap));
+	public synchronized int getTotalHate() {
+		int totalHate = 0;
+		for (int hate : _hateMap.values()) {
+			totalHate += hate;
+		}
+		return totalHate;
 	}
 
-	public synchronized Set<Entry<L1Character, Integer>> entrySet() {
-		return _hateMap.entrySet();
+	public synchronized int getTotalLawfulHate() {
+		int totalHate = 0;
+		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+			if (e.getKey() instanceof L1PcInstance) {
+				totalHate += e.getValue();
+			}
+		}
+		return totalHate;
 	}
 
-	public synchronized ArrayList<L1Character> toTargetArrayList() {
-		return new ArrayList<L1Character>(_hateMap.keySet());
+	public synchronized boolean isEmpty() {
+		return _hateMap.isEmpty();
+	}
+
+	public synchronized void remove(L1Character cha) {
+		_hateMap.remove(cha);
+	}
+
+	public synchronized void removeInvalidCharacter(L1NpcInstance npc) {
+		List<L1Character> invalidChars = Lists.newList();
+		for (L1Character cha : _hateMap.keySet()) {
+			if ((cha == null) || cha.isDead() || !npc.knownsObject(cha)) {
+				invalidChars.add(cha);
+			}
+		}
+
+		for (L1Character cha : invalidChars) {
+			_hateMap.remove(cha);
+		}
 	}
 
 	public synchronized ArrayList<Integer> toHateArrayList() {
 		return new ArrayList<Integer>(_hateMap.values());
+	}
+
+	public synchronized ArrayList<L1Character> toTargetArrayList() {
+		return new ArrayList<L1Character>(_hateMap.keySet());
 	}
 }

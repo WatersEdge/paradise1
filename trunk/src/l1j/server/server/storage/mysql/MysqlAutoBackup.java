@@ -51,6 +51,36 @@ public class MysqlAutoBackup extends TimerTask {
 		return _instance;
 	}
 
+	/**
+	 * 负责检查Gzip.exe是否安装
+	 * 
+	 * @param SystemRoot
+	 */
+	private static void checkGzip(String SystemRoot) {
+		System.out.println("[MySQL]checking gzip.exe is installed or not...");
+		File gzip = new File(SystemRoot + "\\gzip.exe");
+		if (gzip.exists()) {
+			System.out.println("mysql auto backup is running...ok!");
+		}
+		else {
+			System.err.println("[MySQL]Gzip.exe不存在，系统正在处理中...");
+			gzip = new File(".\\docs\\gzip124xN.zip");
+			UnZipUtil.unZip(gzip.getAbsolutePath(), SystemRoot);
+		}
+	}
+
+	/**
+	 * @return database name
+	 */
+	private static String DatabaseName() {
+		StringTokenizer sk = new StringTokenizer(Config.DB_URL, "/");
+		sk.nextToken();
+		sk.nextToken();
+		sk = new StringTokenizer(sk.nextToken(), "?");
+		Database = sk.nextToken();
+		return Database;
+	}
+
 	public MysqlAutoBackup() {
 		L1Message.getInstance();
 		Database = DatabaseName();
@@ -131,35 +161,5 @@ public class MysqlAutoBackup extends TimerTask {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	/**
-	 * 负责检查Gzip.exe是否安装
-	 * 
-	 * @param SystemRoot
-	 */
-	private static void checkGzip(String SystemRoot) {
-		System.out.println("[MySQL]checking gzip.exe is installed or not...");
-		File gzip = new File(SystemRoot + "\\gzip.exe");
-		if (gzip.exists()) {
-			System.out.println("mysql auto backup is running...ok!");
-		}
-		else {
-			System.err.println("[MySQL]Gzip.exe不存在，系统正在处理中...");
-			gzip = new File(".\\docs\\gzip124xN.zip");
-			UnZipUtil.unZip(gzip.getAbsolutePath(), SystemRoot);
-		}
-	}
-
-	/**
-	 * @return database name
-	 */
-	private static String DatabaseName() {
-		StringTokenizer sk = new StringTokenizer(Config.DB_URL, "/");
-		sk.nextToken();
-		sk.nextToken();
-		sk = new StringTokenizer(sk.nextToken(), "?");
-		Database = sk.nextToken();
-		return Database;
 	}
 }

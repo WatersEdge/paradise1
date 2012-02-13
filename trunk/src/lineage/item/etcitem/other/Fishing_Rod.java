@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Fishing_Rod extends ItemExecutor {
 
-	private Fishing_Rod() {
-	}
-
 	public static ItemExecutor get() {
 		return new Fishing_Rod();
+	}
+
+	private Fishing_Rod() {
 	}
 
 	/**

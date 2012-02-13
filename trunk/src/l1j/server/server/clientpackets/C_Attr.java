@@ -71,6 +71,37 @@ public class C_Attr extends ClientBasePacket {
 
 	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
+	// 重命名宠物
+	private static void renamePet(L1PetInstance pet, String name) {
+		if ((pet == null) || (name == null)) {
+			throw new NullPointerException();
+		}
+
+		int petItemObjId = pet.getItemObjId();
+		L1Pet petTemplate = PetTable.getInstance().getTemplate(petItemObjId);
+		if (petTemplate == null) {
+			throw new NullPointerException();
+		}
+
+		L1PcInstance pc = (L1PcInstance) pet.getMaster();
+		if (PetTable.isNameExists(name)) {
+			pc.sendPackets(new S_ServerMessage(327)); // 同样的名称已经存在。
+			return;
+		}
+		L1Npc l1npc = NpcTable.getInstance().getTemplate(pet.getNpcId());
+		if (!(pet.getName().equalsIgnoreCase(l1npc.get_name()))) {
+			pc.sendPackets(new S_ServerMessage(326)); // 一旦你已决定就不能再变更。
+			return;
+		}
+		pet.setName(name);
+		petTemplate.set_name(name);
+		PetTable.getInstance().storePet(petTemplate); // 储存宠物资料到资料库中
+		L1ItemInstance item = pc.getInventory().getItem(pet.getItemObjId());
+		pc.getInventory().updateItem(item);
+		pc.sendPackets(new S_ChangeName(pet.getId(), name));
+		pc.broadcastPacket(new S_ChangeName(pet.getId(), name));
+	}
+
 	@SuppressWarnings("static-access")
 	public C_Attr(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
@@ -539,22 +570,65 @@ public class C_Attr extends ClientBasePacket {
 		}
 	}
 
-	// 复活
-	private void resurrection(L1PcInstance pc, L1PcInstance resusepc, short resHp) {
-		// 由其他角色复活
-		pc.sendPackets(new S_SkillSound(pc.getId(), '\346'));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), '\346'));
-		pc.resurrect(resHp);
-		pc.setCurrentHp(resHp);
-		pc.startHpRegeneration();
-		pc.startMpRegeneration();
-		pc.startHpRegenerationByDoll();
-		pc.startMpRegenerationByDoll();
-		pc.stopPcDeleteTimer();
-		pc.sendPackets(new S_Resurrection(pc, resusepc, 0));
-		pc.broadcastPacket(new S_Resurrection(pc, resusepc, 0));
-		pc.sendPackets(new S_CharVisualUpdate(pc));
-		pc.broadcastPacket(new S_CharVisualUpdate(pc));
+	@Override
+	public String getType() {
+		return C_ATTR;
+	}
+
+	// 呼叫血盟成员
+	private void callClan(L1PcInstance pc) {
+		L1PcInstance callClanPc = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
+		pc.setTempID(0);
+		if (callClanPc == null) {
+			return;
+		}
+		if (!pc.getMap().isEscapable() && !pc.isGm()) {
+			pc.sendPackets(new S_ServerMessage(647)); // 这附近的能量影响到瞬间移动。在此地无法使用瞬间移动。
+			L1Teleport.teleport(pc, pc.getLocation(), pc.getHeading(), false);
+			return;
+		}
+		if (pc.getId() != callClanPc.getCallClanId()) {
+			return;
+		}
+
+		boolean isInWarArea = false;
+		int castleId = L1CastleLocation.getCastleIdByArea(callClanPc);
+		if (castleId != 0) {
+			isInWarArea = true;
+			if (WarTimeController.getInstance().isNowWar(castleId)) {
+				isInWarArea = false; // 战争也可以在时间的旗
+			}
+		}
+		short mapId = callClanPc.getMapId();
+		if (((mapId != 0) && (mapId != 4) && (mapId != 304)) || isInWarArea) {
+			pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
+			return;
+		}
+
+		L1Map map = callClanPc.getMap();
+		int locX = callClanPc.getX();
+		int locY = callClanPc.getY();
+		int heading = callClanPc.getCallClanHeading();
+		locX += HEADING_TABLE_X[heading];
+		locY += HEADING_TABLE_Y[heading];
+		heading = (heading + 4) % 4;
+
+		boolean isExsistCharacter = false;
+		for (L1Object object : L1World.getInstance().getVisibleObjects(callClanPc, 1)) {
+			if (object instanceof L1Character) {
+				L1Character cha = (L1Character) object;
+				if ((cha.getX() == locX) && (cha.getY() == locY) && (cha.getMapId() == mapId)) {
+					isExsistCharacter = true;
+					break;
+				}
+			}
+		}
+
+		if (((locX == 0) && (locY == 0)) || !map.isPassable(locX, locY) || isExsistCharacter) {
+			pc.sendPackets(new S_ServerMessage(627)); // 因你要去的地方有障碍物以致于无法直接传送到该处。
+			return;
+		}
+		L1Teleport.teleport(pc, locX, locY, mapId, heading, true, L1Teleport.CALL_CLAN);
 	}
 
 	// 改变血盟
@@ -624,95 +698,21 @@ public class C_Attr extends ClientBasePacket {
 		}
 	}
 
-	// 重命名宠物
-	private static void renamePet(L1PetInstance pet, String name) {
-		if ((pet == null) || (name == null)) {
-			throw new NullPointerException();
-		}
-
-		int petItemObjId = pet.getItemObjId();
-		L1Pet petTemplate = PetTable.getInstance().getTemplate(petItemObjId);
-		if (petTemplate == null) {
-			throw new NullPointerException();
-		}
-
-		L1PcInstance pc = (L1PcInstance) pet.getMaster();
-		if (PetTable.isNameExists(name)) {
-			pc.sendPackets(new S_ServerMessage(327)); // 同样的名称已经存在。
-			return;
-		}
-		L1Npc l1npc = NpcTable.getInstance().getTemplate(pet.getNpcId());
-		if (!(pet.getName().equalsIgnoreCase(l1npc.get_name()))) {
-			pc.sendPackets(new S_ServerMessage(326)); // 一旦你已决定就不能再变更。
-			return;
-		}
-		pet.setName(name);
-		petTemplate.set_name(name);
-		PetTable.getInstance().storePet(petTemplate); // 储存宠物资料到资料库中
-		L1ItemInstance item = pc.getInventory().getItem(pet.getItemObjId());
-		pc.getInventory().updateItem(item);
-		pc.sendPackets(new S_ChangeName(pet.getId(), name));
-		pc.broadcastPacket(new S_ChangeName(pet.getId(), name));
-	}
-
-	// 呼叫血盟成员
-	private void callClan(L1PcInstance pc) {
-		L1PcInstance callClanPc = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
-		pc.setTempID(0);
-		if (callClanPc == null) {
-			return;
-		}
-		if (!pc.getMap().isEscapable() && !pc.isGm()) {
-			pc.sendPackets(new S_ServerMessage(647)); // 这附近的能量影响到瞬间移动。在此地无法使用瞬间移动。
-			L1Teleport.teleport(pc, pc.getLocation(), pc.getHeading(), false);
-			return;
-		}
-		if (pc.getId() != callClanPc.getCallClanId()) {
-			return;
-		}
-
-		boolean isInWarArea = false;
-		int castleId = L1CastleLocation.getCastleIdByArea(callClanPc);
-		if (castleId != 0) {
-			isInWarArea = true;
-			if (WarTimeController.getInstance().isNowWar(castleId)) {
-				isInWarArea = false; // 战争也可以在时间的旗
-			}
-		}
-		short mapId = callClanPc.getMapId();
-		if (((mapId != 0) && (mapId != 4) && (mapId != 304)) || isInWarArea) {
-			pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
-			return;
-		}
-
-		L1Map map = callClanPc.getMap();
-		int locX = callClanPc.getX();
-		int locY = callClanPc.getY();
-		int heading = callClanPc.getCallClanHeading();
-		locX += HEADING_TABLE_X[heading];
-		locY += HEADING_TABLE_Y[heading];
-		heading = (heading + 4) % 4;
-
-		boolean isExsistCharacter = false;
-		for (L1Object object : L1World.getInstance().getVisibleObjects(callClanPc, 1)) {
-			if (object instanceof L1Character) {
-				L1Character cha = (L1Character) object;
-				if ((cha.getX() == locX) && (cha.getY() == locY) && (cha.getMapId() == mapId)) {
-					isExsistCharacter = true;
-					break;
-				}
-			}
-		}
-
-		if (((locX == 0) && (locY == 0)) || !map.isPassable(locX, locY) || isExsistCharacter) {
-			pc.sendPackets(new S_ServerMessage(627)); // 因你要去的地方有障碍物以致于无法直接传送到该处。
-			return;
-		}
-		L1Teleport.teleport(pc, locX, locY, mapId, heading, true, L1Teleport.CALL_CLAN);
-	}
-
-	@Override
-	public String getType() {
-		return C_ATTR;
+	// 复活
+	private void resurrection(L1PcInstance pc, L1PcInstance resusepc, short resHp) {
+		// 由其他角色复活
+		pc.sendPackets(new S_SkillSound(pc.getId(), '\346'));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), '\346'));
+		pc.resurrect(resHp);
+		pc.setCurrentHp(resHp);
+		pc.startHpRegeneration();
+		pc.startMpRegeneration();
+		pc.startHpRegenerationByDoll();
+		pc.startMpRegenerationByDoll();
+		pc.stopPcDeleteTimer();
+		pc.sendPackets(new S_Resurrection(pc, resusepc, 0));
+		pc.broadcastPacket(new S_Resurrection(pc, resusepc, 0));
+		pc.sendPackets(new S_CharVisualUpdate(pc));
+		pc.broadcastPacket(new S_CharVisualUpdate(pc));
 	}
 }

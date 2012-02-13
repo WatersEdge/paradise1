@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SystemMessage;
 
 public class L1Status implements L1CommandExecutor {
-	private L1Status() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Status();
+	}
+
+	private L1Status() {
 	}
 
 	@Override

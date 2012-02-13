@@ -49,6 +49,14 @@ public class L1TrapInstance extends L1Object {
 
 	private List<L1PcInstance> _knownPlayers = Lists.newConcurrentList();
 
+	public L1TrapInstance(int id, L1Location loc) {
+		setId(id);
+		_trap = L1Trap.newNull();
+		getLocation().set(loc);
+		_span = 0;
+		_nameForView = "trap base";
+	}
+
 	public L1TrapInstance(int id, L1Trap trap, L1Location loc, Point rndPt, int span) {
 		setId(id);
 		_trap = trap;
@@ -61,12 +69,43 @@ public class L1TrapInstance extends L1Object {
 		resetLocation();
 	}
 
-	public L1TrapInstance(int id, L1Location loc) {
-		setId(id);
-		_trap = L1Trap.newNull();
-		getLocation().set(loc);
-		_span = 0;
-		_nameForView = "trap base";
+	public void disableTrap() {
+		_isEnable = false;
+
+		for (L1PcInstance pc : _knownPlayers) {
+			pc.removeKnownObject(this);
+			pc.sendPackets(new S_RemoveObject(this));
+		}
+		_knownPlayers.clear();
+	}
+
+	public void enableTrap() {
+		_isEnable = true;
+	}
+
+	public int getSpan() {
+		return _span;
+	}
+
+	public boolean isEnable() {
+		return _isEnable;
+	}
+
+	public void onDetection(L1PcInstance caster) {
+		_trap.onDetection(caster, this);
+	}
+
+	@Override
+	public void onPerceive(L1PcInstance perceivedFrom) {
+		if (perceivedFrom.hasSkillEffect(GMSTATUS_SHOWTRAPS)) {
+			perceivedFrom.addKnownObject(this);
+			perceivedFrom.sendPackets(new S_Trap(this, _nameForView));
+			_knownPlayers.add(perceivedFrom);
+		}
+	}
+
+	public void onTrod(L1PcInstance trodFrom) {
+		_trap.onTrod(trodFrom, this);
 	}
 
 	public void resetLocation() {
@@ -88,44 +127,5 @@ public class L1TrapInstance extends L1Object {
 			}
 		}
 		// ループ内で位置が確定しない場合、前回と同じ位置になる。
-	}
-
-	public void enableTrap() {
-		_isEnable = true;
-	}
-
-	public void disableTrap() {
-		_isEnable = false;
-
-		for (L1PcInstance pc : _knownPlayers) {
-			pc.removeKnownObject(this);
-			pc.sendPackets(new S_RemoveObject(this));
-		}
-		_knownPlayers.clear();
-	}
-
-	public boolean isEnable() {
-		return _isEnable;
-	}
-
-	public int getSpan() {
-		return _span;
-	}
-
-	public void onTrod(L1PcInstance trodFrom) {
-		_trap.onTrod(trodFrom, this);
-	}
-
-	public void onDetection(L1PcInstance caster) {
-		_trap.onDetection(caster, this);
-	}
-
-	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
-		if (perceivedFrom.hasSkillEffect(GMSTATUS_SHOWTRAPS)) {
-			perceivedFrom.addKnownObject(this);
-			perceivedFrom.sendPackets(new S_Trap(this, _nameForView));
-			_knownPlayers.add(perceivedFrom);
-		}
 	}
 }

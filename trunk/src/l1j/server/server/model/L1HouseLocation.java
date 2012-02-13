@@ -44,7 +44,380 @@ public class L1HouseLocation {
 	// アジトID一覧
 	private static final List<Integer> _houseIds = HouseTable.getHouseIdList();
 
-	private L1HouseLocation() {
+	public static int[] getBasementLoc(int houseId) { // houseIdからアジトの地下室の座標を返す
+		int[] loc = new int[3];
+		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト1~45
+			loc[0] = 32780;
+			loc[1] = 32815;
+			loc[2] = houseId - 257077;
+		}
+		else if ((houseId >= 327681) && (houseId <= 327691)) { // ハイネアジト1~11
+			loc[0] = 32772;
+			loc[1] = 32814;
+			loc[2] = houseId - 322568;
+		}
+		else if ((houseId >= 524289) && (houseId <= 524294)) { // グルーディンアジト1~6
+			// 地下室がないため、アジトの入り口の座標を返す
+			loc = getHouseLoc(houseId);
+		}
+		return loc;
+	}
+
+	public static int[] getHouseLoc(int houseId) { // houseIdからアジトの座標を返す
+		int[] loc = new int[3];
+		if (houseId == 262145) { // ギランアジト1
+			loc[0] = 33374;
+			loc[1] = 32657;
+			loc[2] = 4;
+		}
+		else if (houseId == 262146) { // ギランアジト2
+			loc[0] = 33384;
+			loc[1] = 32655;
+			loc[2] = 4;
+		}
+		else if (houseId == 262147) { // ギランアジト3
+			loc[0] = 33395;
+			loc[1] = 32656;
+			loc[2] = 4;
+		}
+		else if (houseId == 262148) { // ギランアジト4
+			loc[0] = 33428;
+			loc[1] = 32659;
+			loc[2] = 4;
+		}
+		else if (houseId == 262149) { // ギランアジト5
+			loc[0] = 33439;
+			loc[1] = 32666;
+			loc[2] = 4;
+		}
+		else if (houseId == 262150) { // ギランアジト6
+			loc[0] = 33457;
+			loc[1] = 32654;
+			loc[2] = 4;
+		}
+		else if (houseId == 262151) { // ギランアジト7
+			loc[0] = 33477;
+			loc[1] = 32668;
+			loc[2] = 4;
+		}
+		else if (houseId == 262152) { // ギランアジト8
+			loc[0] = 33471;
+			loc[1] = 32679;
+			loc[2] = 4;
+		}
+		else if (houseId == 262153) { // ギランアジト9
+			loc[0] = 33459;
+			loc[1] = 32700;
+			loc[2] = 4;
+		}
+		else if (houseId == 262154) { // ギランアジト10
+			loc[0] = 33424;
+			loc[1] = 32691;
+			loc[2] = 4;
+		}
+		else if (houseId == 262155) { // ギランアジト11
+			loc[0] = 33409;
+			loc[1] = 32675;
+			loc[2] = 4;
+		}
+		else if (houseId == 262156) { // ギランアジト12
+			loc[0] = 33420;
+			loc[1] = 32709;
+			loc[2] = 4;
+		}
+		else if (houseId == 262157) { // ギランアジト13
+			loc[0] = 33375;
+			loc[1] = 32698;
+			loc[2] = 4;
+		}
+		else if (houseId == 262158) { // ギランアジト14
+			loc[0] = 33363;
+			loc[1] = 32684;
+			loc[2] = 4;
+		}
+		else if (houseId == 262159) { // ギランアジト15
+			loc[0] = 33360;
+			loc[1] = 32670;
+			loc[2] = 4;
+		}
+		else if (houseId == 262160) { // ギランアジト16
+			loc[0] = 33341;
+			loc[1] = 32661;
+			loc[2] = 4;
+		}
+		else if (houseId == 262161) { // ギランアジト17
+			loc[0] = 33346;
+			loc[1] = 32675;
+			loc[2] = 4;
+		}
+		else if (houseId == 262162) { // ギランアジト18
+			loc[0] = 33341;
+			loc[1] = 32710;
+			loc[2] = 4;
+		}
+		else if (houseId == 262163) { // ギランアジト19
+			loc[0] = 33355;
+			loc[1] = 32734;
+			loc[2] = 4;
+		}
+		else if (houseId == 262164) { // ギランアジト20
+			loc[0] = 33366;
+			loc[1] = 32714;
+			loc[2] = 4;
+		}
+		else if (houseId == 262165) { // ギランアジト21
+			loc[0] = 33381;
+			loc[1] = 32715;
+			loc[2] = 4;
+		}
+		else if (houseId == 262166) { // ギランアジト22
+			loc[0] = 33404;
+			loc[1] = 32739;
+			loc[2] = 4;
+		}
+		else if (houseId == 262167) { // ギランアジト23
+			loc[0] = 33424;
+			loc[1] = 32718;
+			loc[2] = 4;
+		}
+		else if (houseId == 262168) { // ギランアジト24
+			loc[0] = 33449;
+			loc[1] = 32732;
+			loc[2] = 4;
+		}
+		else if (houseId == 262169) { // ギランアジト25
+			loc[0] = 33405;
+			loc[1] = 32757;
+			loc[2] = 4;
+		}
+		else if (houseId == 262170) { // ギランアジト26
+			loc[0] = 33366;
+			loc[1] = 32761;
+			loc[2] = 4;
+		}
+		else if (houseId == 262171) { // ギランアジト27
+			loc[0] = 33351;
+			loc[1] = 32775;
+			loc[2] = 4;
+		}
+		else if (houseId == 262172) { // ギランアジト28
+			loc[0] = 33358;
+			loc[1] = 32789;
+			loc[2] = 4;
+		}
+		else if (houseId == 262173) { // ギランアジト29
+			loc[0] = 33372;
+			loc[1] = 32792;
+			loc[2] = 4;
+		}
+		else if (houseId == 262174) { // ギランアジト30
+			loc[0] = 33384;
+			loc[1] = 32776;
+			loc[2] = 4;
+		}
+		else if (houseId == 262175) { // ギランアジト31
+			loc[0] = 33403;
+			loc[1] = 32794;
+			loc[2] = 4;
+		}
+		else if (houseId == 262176) { // ギランアジト32
+			loc[0] = 33485;
+			loc[1] = 32794;
+			loc[2] = 4;
+		}
+		else if (houseId == 262177) { // ギランアジト33
+			loc[0] = 33499;
+			loc[1] = 32804;
+			loc[2] = 4;
+		}
+		else if (houseId == 262178) { // ギランアジト34
+			loc[0] = 33382;
+			loc[1] = 32804;
+			loc[2] = 4;
+		}
+		else if (houseId == 262179) { // ギランアジト35
+			loc[0] = 33376;
+			loc[1] = 32828;
+			loc[2] = 4;
+		}
+		else if (houseId == 262180) { // ギランアジト36
+			loc[0] = 33399;
+			loc[1] = 32813;
+			loc[2] = 4;
+		}
+		else if (houseId == 262181) { // ギランアジト37
+			loc[0] = 33397;
+			loc[1] = 32822;
+			loc[2] = 4;
+		}
+		else if (houseId == 262182) { // ギランアジト38
+			loc[0] = 33437;
+			loc[1] = 32844;
+			loc[2] = 4;
+		}
+		else if (houseId == 262183) { // ギランアジト39
+			loc[0] = 33459;
+			loc[1] = 32840;
+			loc[2] = 4;
+		}
+		else if (houseId == 262184) { // ギランアジト40
+			loc[0] = 33391;
+			loc[1] = 32851;
+			loc[2] = 4;
+		}
+		else if (houseId == 262185) { // ギランアジト41
+			loc[0] = 33399;
+			loc[1] = 32860;
+			loc[2] = 4;
+		}
+		else if (houseId == 262186) { // ギランアジト42
+			loc[0] = 33415;
+			loc[1] = 32853;
+			loc[2] = 4;
+		}
+		else if (houseId == 262187) { // ギランアジト43
+			loc[0] = 33375;
+			loc[1] = 32873;
+			loc[2] = 4;
+		}
+		else if (houseId == 262188) { // ギランアジト44
+			loc[0] = 33428;
+			loc[1] = 32871;
+			loc[2] = 4;
+		}
+		else if (houseId == 262189) { // ギランアジト45
+			loc[0] = 33443;
+			loc[1] = 32870;
+			loc[2] = 4;
+		}
+		else if (houseId == 327681) { // ハイネアジト1
+			loc[0] = 33609;
+			loc[1] = 33217;
+			loc[2] = 4;
+		}
+		else if (houseId == 327682) { // ハイネアジト2
+			loc[0] = 33630;
+			loc[1] = 33209;
+			loc[2] = 4;
+		}
+		else if (houseId == 327683) { // ハイネアジト3
+			loc[0] = 33628;
+			loc[1] = 33226;
+			loc[2] = 4;
+		}
+		else if (houseId == 327684) { // ハイネアジト4
+			loc[0] = 33633;
+			loc[1] = 33248;
+			loc[2] = 4;
+		}
+		else if (houseId == 327685) { // ハイネアジト5
+			loc[0] = 33619;
+			loc[1] = 33265;
+			loc[2] = 4;
+		}
+		else if (houseId == 327686) { // ハイネアジト6
+			loc[0] = 33575;
+			loc[1] = 33233;
+			loc[2] = 4;
+		}
+		else if (houseId == 327687) { // ハイネアジト7
+			loc[0] = 33584;
+			loc[1] = 33306;
+			loc[2] = 4;
+		}
+		else if (houseId == 327688) { // ハイネアジト8
+			loc[0] = 33581;
+			loc[1] = 33338;
+			loc[2] = 4;
+		}
+		else if (houseId == 327689) { // ハイネアジト9
+			loc[0] = 33620;
+			loc[1] = 33381;
+			loc[2] = 4;
+		}
+		else if (houseId == 327690) { // ハイネアジト10
+			loc[0] = 33625;
+			loc[1] = 33398;
+			loc[2] = 4;
+		}
+		else if (houseId == 327691) { // ハイネアジト11
+			loc[0] = 33625;
+			loc[1] = 33445;
+			loc[2] = 4;
+		}
+		else if (houseId == 524289) { // グルーディンアジト1
+			loc[0] = 32564;
+			loc[1] = 32675;
+			loc[2] = 4;
+		}
+		else if (houseId == 524290) { // グルーディンアジト2
+			loc[0] = 32549;
+			loc[1] = 32707;
+			loc[2] = 4;
+		}
+		else if (houseId == 524291) { // グルーディンアジト3
+			loc[0] = 32538;
+			loc[1] = 32782;
+			loc[2] = 4;
+		}
+		else if (houseId == 524292) { // グルーディンアジト4
+			loc[0] = 32558;
+			loc[1] = 32786;
+			loc[2] = 4;
+		}
+		else if (houseId == 524293) { // グルーディンアジト5
+			loc[0] = 32536;
+			loc[1] = 32809;
+			loc[2] = 4;
+		}
+		else if (houseId == 524294) { // グルーディンアジト6
+			loc[0] = 32554;
+			loc[1] = 32819;
+			loc[2] = 4;
+		}
+		return loc;
+	}
+
+	public static int[] getHouseTeleportLoc(int houseId, int number) { // houseIdからテレポート先の座標を返す
+		int[] loc = new int[3];
+		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト
+			loc[0] = TELEPORT_LOC_GIRAN[number].getX();
+			loc[1] = TELEPORT_LOC_GIRAN[number].getY();
+			loc[2] = TELEPORT_LOC_MAPID[number];
+		}
+		else if ((houseId >= 327681) && (houseId <= 327691)) { // ハイネアジト
+			loc[0] = TELEPORT_LOC_HEINE[number].getX();
+			loc[1] = TELEPORT_LOC_HEINE[number].getY();
+			loc[2] = TELEPORT_LOC_MAPID[number];
+		}
+		else if ((houseId >= 458753) && (houseId <= 458819)) { // アデンアジト
+			loc[0] = TELEPORT_LOC_ADEN[number].getX();
+			loc[1] = TELEPORT_LOC_ADEN[number].getY();
+			loc[2] = TELEPORT_LOC_MAPID[number];
+		}
+		else if ((houseId >= 524289) && (houseId <= 524294)) { // グルーディンアジト1~6
+			loc[0] = TELEPORT_LOC_GLUDIN[number].getX();
+			loc[1] = TELEPORT_LOC_GLUDIN[number].getY();
+			loc[2] = TELEPORT_LOC_MAPID[number];
+		}
+		return loc;
+	}
+
+	/**
+	 * 指定した座標がアジト内かどうかを返す
+	 * 
+	 * @param cha
+	 * @return
+	 */
+	public static boolean isInHouse(int locx, int locy, short mapid) {
+		boolean result = false;
+		for (Integer houseId : _houseIds) {
+			if (isInHouseLoc(houseId, locx, locy, mapid)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -373,380 +746,7 @@ public class L1HouseLocation {
 		return ret;
 	}
 
-	public static int[] getHouseLoc(int houseId) { // houseIdからアジトの座標を返す
-		int[] loc = new int[3];
-		if (houseId == 262145) { // ギランアジト1
-			loc[0] = 33374;
-			loc[1] = 32657;
-			loc[2] = 4;
-		}
-		else if (houseId == 262146) { // ギランアジト2
-			loc[0] = 33384;
-			loc[1] = 32655;
-			loc[2] = 4;
-		}
-		else if (houseId == 262147) { // ギランアジト3
-			loc[0] = 33395;
-			loc[1] = 32656;
-			loc[2] = 4;
-		}
-		else if (houseId == 262148) { // ギランアジト4
-			loc[0] = 33428;
-			loc[1] = 32659;
-			loc[2] = 4;
-		}
-		else if (houseId == 262149) { // ギランアジト5
-			loc[0] = 33439;
-			loc[1] = 32666;
-			loc[2] = 4;
-		}
-		else if (houseId == 262150) { // ギランアジト6
-			loc[0] = 33457;
-			loc[1] = 32654;
-			loc[2] = 4;
-		}
-		else if (houseId == 262151) { // ギランアジト7
-			loc[0] = 33477;
-			loc[1] = 32668;
-			loc[2] = 4;
-		}
-		else if (houseId == 262152) { // ギランアジト8
-			loc[0] = 33471;
-			loc[1] = 32679;
-			loc[2] = 4;
-		}
-		else if (houseId == 262153) { // ギランアジト9
-			loc[0] = 33459;
-			loc[1] = 32700;
-			loc[2] = 4;
-		}
-		else if (houseId == 262154) { // ギランアジト10
-			loc[0] = 33424;
-			loc[1] = 32691;
-			loc[2] = 4;
-		}
-		else if (houseId == 262155) { // ギランアジト11
-			loc[0] = 33409;
-			loc[1] = 32675;
-			loc[2] = 4;
-		}
-		else if (houseId == 262156) { // ギランアジト12
-			loc[0] = 33420;
-			loc[1] = 32709;
-			loc[2] = 4;
-		}
-		else if (houseId == 262157) { // ギランアジト13
-			loc[0] = 33375;
-			loc[1] = 32698;
-			loc[2] = 4;
-		}
-		else if (houseId == 262158) { // ギランアジト14
-			loc[0] = 33363;
-			loc[1] = 32684;
-			loc[2] = 4;
-		}
-		else if (houseId == 262159) { // ギランアジト15
-			loc[0] = 33360;
-			loc[1] = 32670;
-			loc[2] = 4;
-		}
-		else if (houseId == 262160) { // ギランアジト16
-			loc[0] = 33341;
-			loc[1] = 32661;
-			loc[2] = 4;
-		}
-		else if (houseId == 262161) { // ギランアジト17
-			loc[0] = 33346;
-			loc[1] = 32675;
-			loc[2] = 4;
-		}
-		else if (houseId == 262162) { // ギランアジト18
-			loc[0] = 33341;
-			loc[1] = 32710;
-			loc[2] = 4;
-		}
-		else if (houseId == 262163) { // ギランアジト19
-			loc[0] = 33355;
-			loc[1] = 32734;
-			loc[2] = 4;
-		}
-		else if (houseId == 262164) { // ギランアジト20
-			loc[0] = 33366;
-			loc[1] = 32714;
-			loc[2] = 4;
-		}
-		else if (houseId == 262165) { // ギランアジト21
-			loc[0] = 33381;
-			loc[1] = 32715;
-			loc[2] = 4;
-		}
-		else if (houseId == 262166) { // ギランアジト22
-			loc[0] = 33404;
-			loc[1] = 32739;
-			loc[2] = 4;
-		}
-		else if (houseId == 262167) { // ギランアジト23
-			loc[0] = 33424;
-			loc[1] = 32718;
-			loc[2] = 4;
-		}
-		else if (houseId == 262168) { // ギランアジト24
-			loc[0] = 33449;
-			loc[1] = 32732;
-			loc[2] = 4;
-		}
-		else if (houseId == 262169) { // ギランアジト25
-			loc[0] = 33405;
-			loc[1] = 32757;
-			loc[2] = 4;
-		}
-		else if (houseId == 262170) { // ギランアジト26
-			loc[0] = 33366;
-			loc[1] = 32761;
-			loc[2] = 4;
-		}
-		else if (houseId == 262171) { // ギランアジト27
-			loc[0] = 33351;
-			loc[1] = 32775;
-			loc[2] = 4;
-		}
-		else if (houseId == 262172) { // ギランアジト28
-			loc[0] = 33358;
-			loc[1] = 32789;
-			loc[2] = 4;
-		}
-		else if (houseId == 262173) { // ギランアジト29
-			loc[0] = 33372;
-			loc[1] = 32792;
-			loc[2] = 4;
-		}
-		else if (houseId == 262174) { // ギランアジト30
-			loc[0] = 33384;
-			loc[1] = 32776;
-			loc[2] = 4;
-		}
-		else if (houseId == 262175) { // ギランアジト31
-			loc[0] = 33403;
-			loc[1] = 32794;
-			loc[2] = 4;
-		}
-		else if (houseId == 262176) { // ギランアジト32
-			loc[0] = 33485;
-			loc[1] = 32794;
-			loc[2] = 4;
-		}
-		else if (houseId == 262177) { // ギランアジト33
-			loc[0] = 33499;
-			loc[1] = 32804;
-			loc[2] = 4;
-		}
-		else if (houseId == 262178) { // ギランアジト34
-			loc[0] = 33382;
-			loc[1] = 32804;
-			loc[2] = 4;
-		}
-		else if (houseId == 262179) { // ギランアジト35
-			loc[0] = 33376;
-			loc[1] = 32828;
-			loc[2] = 4;
-		}
-		else if (houseId == 262180) { // ギランアジト36
-			loc[0] = 33399;
-			loc[1] = 32813;
-			loc[2] = 4;
-		}
-		else if (houseId == 262181) { // ギランアジト37
-			loc[0] = 33397;
-			loc[1] = 32822;
-			loc[2] = 4;
-		}
-		else if (houseId == 262182) { // ギランアジト38
-			loc[0] = 33437;
-			loc[1] = 32844;
-			loc[2] = 4;
-		}
-		else if (houseId == 262183) { // ギランアジト39
-			loc[0] = 33459;
-			loc[1] = 32840;
-			loc[2] = 4;
-		}
-		else if (houseId == 262184) { // ギランアジト40
-			loc[0] = 33391;
-			loc[1] = 32851;
-			loc[2] = 4;
-		}
-		else if (houseId == 262185) { // ギランアジト41
-			loc[0] = 33399;
-			loc[1] = 32860;
-			loc[2] = 4;
-		}
-		else if (houseId == 262186) { // ギランアジト42
-			loc[0] = 33415;
-			loc[1] = 32853;
-			loc[2] = 4;
-		}
-		else if (houseId == 262187) { // ギランアジト43
-			loc[0] = 33375;
-			loc[1] = 32873;
-			loc[2] = 4;
-		}
-		else if (houseId == 262188) { // ギランアジト44
-			loc[0] = 33428;
-			loc[1] = 32871;
-			loc[2] = 4;
-		}
-		else if (houseId == 262189) { // ギランアジト45
-			loc[0] = 33443;
-			loc[1] = 32870;
-			loc[2] = 4;
-		}
-		else if (houseId == 327681) { // ハイネアジト1
-			loc[0] = 33609;
-			loc[1] = 33217;
-			loc[2] = 4;
-		}
-		else if (houseId == 327682) { // ハイネアジト2
-			loc[0] = 33630;
-			loc[1] = 33209;
-			loc[2] = 4;
-		}
-		else if (houseId == 327683) { // ハイネアジト3
-			loc[0] = 33628;
-			loc[1] = 33226;
-			loc[2] = 4;
-		}
-		else if (houseId == 327684) { // ハイネアジト4
-			loc[0] = 33633;
-			loc[1] = 33248;
-			loc[2] = 4;
-		}
-		else if (houseId == 327685) { // ハイネアジト5
-			loc[0] = 33619;
-			loc[1] = 33265;
-			loc[2] = 4;
-		}
-		else if (houseId == 327686) { // ハイネアジト6
-			loc[0] = 33575;
-			loc[1] = 33233;
-			loc[2] = 4;
-		}
-		else if (houseId == 327687) { // ハイネアジト7
-			loc[0] = 33584;
-			loc[1] = 33306;
-			loc[2] = 4;
-		}
-		else if (houseId == 327688) { // ハイネアジト8
-			loc[0] = 33581;
-			loc[1] = 33338;
-			loc[2] = 4;
-		}
-		else if (houseId == 327689) { // ハイネアジト9
-			loc[0] = 33620;
-			loc[1] = 33381;
-			loc[2] = 4;
-		}
-		else if (houseId == 327690) { // ハイネアジト10
-			loc[0] = 33625;
-			loc[1] = 33398;
-			loc[2] = 4;
-		}
-		else if (houseId == 327691) { // ハイネアジト11
-			loc[0] = 33625;
-			loc[1] = 33445;
-			loc[2] = 4;
-		}
-		else if (houseId == 524289) { // グルーディンアジト1
-			loc[0] = 32564;
-			loc[1] = 32675;
-			loc[2] = 4;
-		}
-		else if (houseId == 524290) { // グルーディンアジト2
-			loc[0] = 32549;
-			loc[1] = 32707;
-			loc[2] = 4;
-		}
-		else if (houseId == 524291) { // グルーディンアジト3
-			loc[0] = 32538;
-			loc[1] = 32782;
-			loc[2] = 4;
-		}
-		else if (houseId == 524292) { // グルーディンアジト4
-			loc[0] = 32558;
-			loc[1] = 32786;
-			loc[2] = 4;
-		}
-		else if (houseId == 524293) { // グルーディンアジト5
-			loc[0] = 32536;
-			loc[1] = 32809;
-			loc[2] = 4;
-		}
-		else if (houseId == 524294) { // グルーディンアジト6
-			loc[0] = 32554;
-			loc[1] = 32819;
-			loc[2] = 4;
-		}
-		return loc;
-	}
-
-	public static int[] getBasementLoc(int houseId) { // houseIdからアジトの地下室の座標を返す
-		int[] loc = new int[3];
-		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト1~45
-			loc[0] = 32780;
-			loc[1] = 32815;
-			loc[2] = houseId - 257077;
-		}
-		else if ((houseId >= 327681) && (houseId <= 327691)) { // ハイネアジト1~11
-			loc[0] = 32772;
-			loc[1] = 32814;
-			loc[2] = houseId - 322568;
-		}
-		else if ((houseId >= 524289) && (houseId <= 524294)) { // グルーディンアジト1~6
-			// 地下室がないため、アジトの入り口の座標を返す
-			loc = getHouseLoc(houseId);
-		}
-		return loc;
-	}
-
-	/**
-	 * 指定した座標がアジト内かどうかを返す
-	 * 
-	 * @param cha
-	 * @return
-	 */
-	public static boolean isInHouse(int locx, int locy, short mapid) {
-		boolean result = false;
-		for (Integer houseId : _houseIds) {
-			if (isInHouseLoc(houseId, locx, locy, mapid)) {
-				result = true;
-				break;
-			}
-		}
-		return result;
-	}
-
-	public static int[] getHouseTeleportLoc(int houseId, int number) { // houseIdからテレポート先の座標を返す
-		int[] loc = new int[3];
-		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト
-			loc[0] = TELEPORT_LOC_GIRAN[number].getX();
-			loc[1] = TELEPORT_LOC_GIRAN[number].getY();
-			loc[2] = TELEPORT_LOC_MAPID[number];
-		}
-		else if ((houseId >= 327681) && (houseId <= 327691)) { // ハイネアジト
-			loc[0] = TELEPORT_LOC_HEINE[number].getX();
-			loc[1] = TELEPORT_LOC_HEINE[number].getY();
-			loc[2] = TELEPORT_LOC_MAPID[number];
-		}
-		else if ((houseId >= 458753) && (houseId <= 458819)) { // アデンアジト
-			loc[0] = TELEPORT_LOC_ADEN[number].getX();
-			loc[1] = TELEPORT_LOC_ADEN[number].getY();
-			loc[2] = TELEPORT_LOC_MAPID[number];
-		}
-		else if ((houseId >= 524289) && (houseId <= 524294)) { // グルーディンアジト1~6
-			loc[0] = TELEPORT_LOC_GLUDIN[number].getX();
-			loc[1] = TELEPORT_LOC_GLUDIN[number].getY();
-			loc[2] = TELEPORT_LOC_MAPID[number];
-		}
-		return loc;
+	private L1HouseLocation() {
 	}
 
 }

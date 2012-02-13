@@ -46,6 +46,19 @@ public class S_Fishing extends ServerBasePacket {
 		buildPacket(objectId, motionNum, x, y);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_FISHING;
+	}
+
 	private void buildPacket() {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeC(0x37); // ?
@@ -61,18 +74,5 @@ public class S_Fishing extends ServerBasePacket {
 		writeH(y);
 		writeD(0);
 		writeH(0);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_FISHING;
 	}
 }

@@ -22,38 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javolution.util.FastMap;
 
 public class Maps {
-	public static <K, V> Map<K, V> newMap() {
-		return new FastMap<K, V>();
-	}
-
-	public static <K, V> Map<K, V> newMap(Map<K, V> from) {
-		return new FastMap<K, V>(from);
-	}
-
-	public static <K, V> Map<K, V> newWeakMap() {
-		return new WeakHashMap<K, V>();
-	}
-
-	public static <K, V> Map<K, V> newWeakMap(Map<K, V> from) {
-		return new WeakHashMap<K, V>(from);
-	}
-
-	public static <K, V> Map<K, V> newConcurrentMap() {
-		return new ConcurrentHashMap<K, V>();
-	}
-
-	public static <K, V> Map<K, V> newConcurrentMap(Map<K, V> from) {
-		return new ConcurrentHashMap<K, V>(from);
-	}
-
-	public static <K, V> Map<K, V> newSerializableMap() {
-		return new SerializableHashMap<K, V>();
-	}
-
-	public static <K, V> Map<K, V> newSerializableMap(Map<K, V> from) {
-		return new SerializableHashMap<K, V>(from);
-	}
-
 	public static class SerializableHashMap<K extends Object, V extends Object> extends FastMap<K, V> implements Serializable {
 		private static final long serialVersionUID = 1L;
 
@@ -68,5 +36,37 @@ public class Maps {
 
 	public static <K, V> ConcurrentHashMap<K, V> newConcurrentHashMap() {
 		return new ConcurrentHashMap<K, V>();
+	}
+
+	public static <K, V> Map<K, V> newConcurrentMap() {
+		return new ConcurrentHashMap<K, V>();
+	}
+
+	public static <K, V> Map<K, V> newConcurrentMap(Map<K, V> from) {
+		return new ConcurrentHashMap<K, V>(from);
+	}
+
+	public static <K, V> Map<K, V> newMap() {
+		return new FastMap<K, V>();
+	}
+
+	public static <K, V> Map<K, V> newMap(Map<K, V> from) {
+		return new FastMap<K, V>(from);
+	}
+
+	public static <K, V> Map<K, V> newSerializableMap() {
+		return new SerializableHashMap<K, V>();
+	}
+
+	public static <K, V> Map<K, V> newSerializableMap(Map<K, V> from) {
+		return new SerializableHashMap<K, V>(from);
+	}
+
+	public static <K, V> Map<K, V> newWeakMap() {
+		return new WeakHashMap<K, V>();
+	}
+
+	public static <K, V> Map<K, V> newWeakMap(Map<K, V> from) {
+		return new WeakHashMap<K, V>(from);
 	}
 }

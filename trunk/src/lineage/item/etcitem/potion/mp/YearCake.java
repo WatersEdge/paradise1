@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class YearCake extends ItemExecutor {
 
-	private YearCake() {
-	}
-
 	public static ItemExecutor get() {
 		return new YearCake();
+	}
+
+	private YearCake() {
 	}
 
 	/**

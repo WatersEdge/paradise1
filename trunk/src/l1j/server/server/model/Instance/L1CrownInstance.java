@@ -42,6 +42,23 @@ public class L1CrownInstance extends L1NpcInstance {
 	}
 
 	@Override
+	public void deleteMe() {
+		_destroyed = true;
+		if (getInventory() != null) {
+			getInventory().clearItems();
+		}
+		allTargetClear();
+		_master = null;
+		L1World.getInstance().removeVisibleObject(this);
+		L1World.getInstance().removeObject(this);
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+			pc.removeKnownObject(this);
+			pc.sendPackets(new S_RemoveObject(this));
+		}
+		removeAllKnownObjects();
+	}
+
+	@Override
 	public void onAction(L1PcInstance player) {
 		boolean in_war = false;
 		if (player.getClanid() == 0) { // 没有血盟
@@ -169,23 +186,6 @@ public class L1CrownInstance extends L1NpcInstance {
 				door.repairGate();
 			}
 		}
-	}
-
-	@Override
-	public void deleteMe() {
-		_destroyed = true;
-		if (getInventory() != null) {
-			getInventory().clearItems();
-		}
-		allTargetClear();
-		_master = null;
-		L1World.getInstance().removeVisibleObject(this);
-		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-			pc.removeKnownObject(this);
-			pc.sendPackets(new S_RemoveObject(this));
-		}
-		removeAllKnownObjects();
 	}
 
 	private boolean checkRange(L1PcInstance pc) {

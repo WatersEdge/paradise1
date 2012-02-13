@@ -47,9 +47,6 @@ import l1j.server.server.serverpackets.S_SummonPack;
  */
 public class Teleportation {
 
-	private Teleportation() {
-	}
-
 	/**
 	 * 更新移动后的坐标
 	 * 
@@ -212,6 +209,9 @@ public class Teleportation {
 		npc.setMap(map);
 		npc.setHeading(head);
 		L1WorldMap.getInstance().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), false);
+	}
+
+	private Teleportation() {
 	}
 
 }

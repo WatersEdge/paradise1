@@ -38,11 +38,6 @@ public class S_CurseBlind extends ServerBasePacket {
 		buildPacket(type);
 	}
 
-	private void buildPacket(int type) {
-		writeC(Opcodes.S_OPCODE_CURSEBLIND);
-		writeH(type);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -54,5 +49,10 @@ public class S_CurseBlind extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_CurseBlind;
+	}
+
+	private void buildPacket(int type) {
+		writeC(Opcodes.S_OPCODE_CURSEBLIND);
+		writeH(type);
 	}
 }

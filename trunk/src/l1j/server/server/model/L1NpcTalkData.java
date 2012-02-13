@@ -32,6 +32,20 @@ public class L1NpcTalkData {
 	String teleportURLA;
 
 	/**
+	 * @return Returns the caoticAction.
+	 */
+	public String getCaoticAction() {
+		return caoticAction;
+	}
+
+	/**
+	 * @return Returns the iD.
+	 */
+	public int getID() {
+		return ID;
+	}
+
+	/**
 	 * @return Returns the normalAction.
 	 */
 	public String getNormalAction() {
@@ -39,18 +53,24 @@ public class L1NpcTalkData {
 	}
 
 	/**
-	 * @param normalAction
-	 *            The normalAction to set.
+	 * @return Returns the npcID.
 	 */
-	public void setNormalAction(String normalAction) {
-		this.normalAction = normalAction;
+	public int getNpcID() {
+		return NpcID;
 	}
 
 	/**
-	 * @return Returns the caoticAction.
+	 * @return Returns the teleportURL.
 	 */
-	public String getCaoticAction() {
-		return caoticAction;
+	public String getTeleportURL() {
+		return teleportURL;
+	}
+
+	/**
+	 * @return Returns the teleportURLA.
+	 */
+	public String getTeleportURLA() {
+		return teleportURLA;
 	}
 
 	/**
@@ -62,10 +82,27 @@ public class L1NpcTalkData {
 	}
 
 	/**
-	 * @return Returns the teleportURL.
+	 * @param id
+	 *            The iD to set.
 	 */
-	public String getTeleportURL() {
-		return teleportURL;
+	public void setID(int id) {
+		ID = id;
+	}
+
+	/**
+	 * @param normalAction
+	 *            The normalAction to set.
+	 */
+	public void setNormalAction(String normalAction) {
+		this.normalAction = normalAction;
+	}
+
+	/**
+	 * @param npcID
+	 *            The npcID to set.
+	 */
+	public void setNpcID(int npcID) {
+		NpcID = npcID;
 	}
 
 	/**
@@ -77,48 +114,11 @@ public class L1NpcTalkData {
 	}
 
 	/**
-	 * @return Returns the teleportURLA.
-	 */
-	public String getTeleportURLA() {
-		return teleportURLA;
-	}
-
-	/**
 	 * @param teleportURLA
 	 *            The teleportURLA to set.
 	 */
 	public void setTeleportURLA(String teleportURLA) {
 		this.teleportURLA = teleportURLA;
-	}
-
-	/**
-	 * @return Returns the iD.
-	 */
-	public int getID() {
-		return ID;
-	}
-
-	/**
-	 * @param id
-	 *            The iD to set.
-	 */
-	public void setID(int id) {
-		ID = id;
-	}
-
-	/**
-	 * @return Returns the npcID.
-	 */
-	public int getNpcID() {
-		return NpcID;
-	}
-
-	/**
-	 * @param npcID
-	 *            The npcID to set.
-	 */
-	public void setNpcID(int npcID) {
-		NpcID = npcID;
 	}
 
 }

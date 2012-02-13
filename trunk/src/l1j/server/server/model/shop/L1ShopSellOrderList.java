@@ -19,28 +19,6 @@ import java.util.List;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.collections.Lists;
 
-/** 商店收购 */
-class L1ShopSellOrder {
-
-	private final L1AssessedItem _item;
-
-	private final int _count;
-
-	public L1ShopSellOrder(L1AssessedItem item, int count) {
-		_item = item;
-		_count = count;
-	}
-
-	public L1AssessedItem getItem() {
-		return _item;
-	}
-
-	public int getCount() {
-		return _count;
-	}
-
-}
-
 public class L1ShopSellOrderList {
 	private final L1Shop _shop;
 
@@ -65,11 +43,33 @@ public class L1ShopSellOrderList {
 		_list.add(new L1ShopSellOrder(assessedItem, count));
 	}
 
-	L1PcInstance getPc() {
-		return _pc;
-	}
-
 	List<L1ShopSellOrder> getList() {
 		return _list;
 	}
+
+	L1PcInstance getPc() {
+		return _pc;
+	}
+}
+
+/** 商店收购 */
+class L1ShopSellOrder {
+
+	private final L1AssessedItem _item;
+
+	private final int _count;
+
+	public L1ShopSellOrder(L1AssessedItem item, int count) {
+		_item = item;
+		_count = count;
+	}
+
+	public int getCount() {
+		return _count;
+	}
+
+	public L1AssessedItem getItem() {
+		return _item;
+	}
+
 }

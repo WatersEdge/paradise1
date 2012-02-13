@@ -23,12 +23,12 @@ public class L1NpcCount {
 		_count = count;
 	}
 
-	public int getId() {
-		return _id;
-	}
-
 	public int getCount() {
 		return _count;
+	}
+
+	public int getId() {
+		return _id;
 	}
 
 	public boolean isZero() {

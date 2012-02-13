@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class ElfCrystallization extends ItemExecutor {
 
-	private ElfCrystallization() {
-	}
-
 	public static ItemExecutor get() {
 		return new ElfCrystallization();
+	}
+
+	private ElfCrystallization() {
 	}
 
 	/**

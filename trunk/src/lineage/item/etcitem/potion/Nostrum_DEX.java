@@ -18,11 +18,11 @@ public class Nostrum_DEX extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(Nostrum_DEX.class.getName());
 
-	private Nostrum_DEX() {
-	}
-
 	public static ItemExecutor get() {
 		return new Nostrum_DEX();
+	}
+
+	private Nostrum_DEX() {
 	}
 
 	/**

@@ -12,11 +12,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class EvolutionFruit extends ItemExecutor {
 
-	private EvolutionFruit() {
-	}
-
 	public static ItemExecutor get() {
 		return new EvolutionFruit();
+	}
+
+	private EvolutionFruit() {
 	}
 
 	/**

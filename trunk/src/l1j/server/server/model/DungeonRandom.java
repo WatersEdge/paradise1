@@ -38,6 +38,26 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class DungeonRandom {
 
+	/** 新的随机传送点 */
+	private static class NewDungeonRandom {
+		int[] _newX = new int[5];
+
+		int[] _newY = new int[5];
+
+		short[] _newMapId = new short[5];
+
+		int _heading;
+
+		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId, int heading) {
+			for (int i = 0; i < 5; i++) {
+				_newX[i] = newX[i];
+				_newY[i] = newY[i];
+				_newMapId[i] = newMapId[i];
+			}
+			_heading = heading;
+		}
+	}
+
 	private static Logger _log = Logger.getLogger(DungeonRandom.class.getName());
 
 	private static DungeonRandom _instance = null;
@@ -98,26 +118,6 @@ public class DungeonRandom {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
-		}
-	}
-
-	/** 新的随机传送点 */
-	private static class NewDungeonRandom {
-		int[] _newX = new int[5];
-
-		int[] _newY = new int[5];
-
-		short[] _newMapId = new short[5];
-
-		int _heading;
-
-		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId, int heading) {
-			for (int i = 0; i < 5; i++) {
-				_newX[i] = newX[i];
-				_newY[i] = newY[i];
-				_newMapId[i] = newMapId[i];
-			}
-			_heading = heading;
 		}
 	}
 

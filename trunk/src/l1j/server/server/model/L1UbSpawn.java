@@ -44,80 +44,98 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 
 	private String _name;
 
-	// --------------------start getter/setter--------------------
-	public int getId() {
-		return _id;
-	}
-
-	public void setId(int id) {
-		_id = id;
-	}
-
-	public int getUbId() {
-		return _ubId;
-	}
-
-	public void setUbId(int ubId) {
-		_ubId = ubId;
-	}
-
-	public int getPattern() {
-		return _pattern;
-	}
-
-	public void setPattern(int pattern) {
-		_pattern = pattern;
-	}
-
-	public int getGroup() {
-		return _group;
-	}
-
-	public void setGroup(int group) {
-		_group = group;
-	}
-
-	public int getNpcTemplateId() {
-		return _npcTemplateId;
-	}
-
-	public void setNpcTemplateId(int npcTemplateId) {
-		_npcTemplateId = npcTemplateId;
+	@Override
+	public int compareTo(L1UbSpawn rhs) {
+		// XXX - 本当はもっと厳密な順序付けがあるはずだが、必要なさそうなので後回し
+		if (getId() < rhs.getId()) {
+			return -1;
+		}
+		if (getId() > rhs.getId()) {
+			return 1;
+		}
+		return 0;
 	}
 
 	public int getAmount() {
 		return _amount;
 	}
 
-	public void setAmount(int amount) {
-		_amount = amount;
+	public int getGroup() {
+		return _group;
 	}
 
-	public int getSpawnDelay() {
-		return _spawnDelay;
-	}
-
-	public void setSpawnDelay(int spawnDelay) {
-		_spawnDelay = spawnDelay;
-	}
-
-	public int getSealCount() {
-		return _sealCount;
-	}
-
-	public void setSealCount(int i) {
-		_sealCount = i;
+	// --------------------start getter/setter--------------------
+	public int getId() {
+		return _id;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
+	public int getNpcTemplateId() {
+		return _npcTemplateId;
+	}
+
+	public int getPattern() {
+		return _pattern;
+	}
+
+	public int getSealCount() {
+		return _sealCount;
+	}
+
+	public int getSpawnDelay() {
+		return _spawnDelay;
+	}
+
+	public int getUbId() {
+		return _ubId;
+	}
+
+	public void setAmount(int amount) {
+		_amount = amount;
+	}
+
+	public void setGroup(int group) {
+		_group = group;
+	}
+
+	public void setId(int id) {
+		_id = id;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
 
+	public void setNpcTemplateId(int npcTemplateId) {
+		_npcTemplateId = npcTemplateId;
+	}
+
+	public void setPattern(int pattern) {
+		_pattern = pattern;
+	}
+
+	public void setSealCount(int i) {
+		_sealCount = i;
+	}
+
+	public void setSpawnDelay(int spawnDelay) {
+		_spawnDelay = spawnDelay;
+	}
+
 	// --------------------end getter/setter--------------------
+
+	public void setUbId(int ubId) {
+		_ubId = ubId;
+	}
+
+	public void spawnAll() {
+		for (int i = 0; i < getAmount(); i++) {
+			spawnOne();
+		}
+	}
 
 	public void spawnOne() {
 		L1UltimateBattle ub = UBTable.getInstance().getUb(_ubId);
@@ -148,23 +166,5 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		mob.onNpcAI();
 		mob.turnOnOffLight();
 		// mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
-	}
-
-	public void spawnAll() {
-		for (int i = 0; i < getAmount(); i++) {
-			spawnOne();
-		}
-	}
-
-	@Override
-	public int compareTo(L1UbSpawn rhs) {
-		// XXX - 本当はもっと厳密な順序付けがあるはずだが、必要なさそうなので後回し
-		if (getId() < rhs.getId()) {
-			return -1;
-		}
-		if (getId() > rhs.getId()) {
-			return 1;
-		}
-		return 0;
 	}
 }

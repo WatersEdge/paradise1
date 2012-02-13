@@ -28,9 +28,6 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class FaceToFace {
 
-	private FaceToFace() {
-	}
-
 	/**
 	 * 面向物件判断
 	 * 
@@ -129,5 +126,8 @@ public class FaceToFace {
 		}
 		pc.sendPackets(new S_ServerMessage(93)); // \f1你注视的地方没有人。
 		return null;
+	}
+
+	private FaceToFace() {
 	}
 }

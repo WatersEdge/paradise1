@@ -41,6 +41,13 @@ public class WarTimeController implements Runnable {
 
 	private static WarTimeController _instance;
 
+	public static WarTimeController getInstance() {
+		if (_instance == null) {
+			_instance = new WarTimeController();
+		}
+		return _instance;
+	}
+
 	/** 城堡 */
 	private final L1Castle[] _l1castle = new L1Castle[8];
 
@@ -63,22 +70,12 @@ public class WarTimeController implements Runnable {
 		}
 	}
 
-	public static WarTimeController getInstance() {
-		if (_instance == null) {
-			_instance = new WarTimeController();
-		}
-		return _instance;
-	}
-
-	@Override
-	public void run() {
-		try {
-			while (true) {
-				checkWarTime(); // 检查攻城时间
-				Thread.sleep(1000);
+	/** 检查城堡战争 */
+	public void checkCastleWar(L1PcInstance player) {
+		for (int i = 0; i < 8; i++) {
+			if (_is_now_war[i]) {
+				player.sendPackets(new S_PacketBox(S_PacketBox.MSG_WAR_GOING, i + 1)); // %s的攻城战正在进行中。
 			}
-		}
-		catch (Exception e1) {
 		}
 	}
 
@@ -94,12 +91,15 @@ public class WarTimeController implements Runnable {
 		return _is_now_war[castle_id - 1];
 	}
 
-	/** 检查城堡战争 */
-	public void checkCastleWar(L1PcInstance player) {
-		for (int i = 0; i < 8; i++) {
-			if (_is_now_war[i]) {
-				player.sendPackets(new S_PacketBox(S_PacketBox.MSG_WAR_GOING, i + 1)); // %s的攻城战正在进行中。
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				checkWarTime(); // 检查攻城时间
+				Thread.sleep(1000);
 			}
+		}
+		catch (Exception e1) {
 		}
 	}
 

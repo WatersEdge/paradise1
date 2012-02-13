@@ -38,17 +38,6 @@ public class S_Buddy extends ServerBasePacket {
 		buildPacket(objId, buddy);
 	}
 
-	private void buildPacket(int objId, L1Buddy buddy) {
-		writeC(Opcodes.S_OPCODE_SHOWHTML);
-		writeD(objId);
-		writeS(_HTMLID);
-		writeH(0x02);
-		writeH(0x02);
-
-		writeS(buddy.getBuddyListString());
-		writeS(buddy.getOnlineBuddyListString());
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -60,5 +49,16 @@ public class S_Buddy extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return _S_Buddy;
+	}
+
+	private void buildPacket(int objId, L1Buddy buddy) {
+		writeC(Opcodes.S_OPCODE_SHOWHTML);
+		writeD(objId);
+		writeS(_HTMLID);
+		writeH(0x02);
+		writeH(0x02);
+
+		writeS(buddy.getBuddyListString());
+		writeS(buddy.getOnlineBuddyListString());
 	}
 }

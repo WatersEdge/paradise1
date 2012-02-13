@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Hitlist_FuelLiu extends ItemExecutor {
 
-	private Hitlist_FuelLiu() {
-	}
-
 	public static ItemExecutor get() {
 		return new Hitlist_FuelLiu();
+	}
+
+	private Hitlist_FuelLiu() {
 	}
 
 	/**

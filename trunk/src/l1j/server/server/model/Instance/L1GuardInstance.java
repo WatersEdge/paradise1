@@ -34,37 +34,42 @@ import l1j.server.server.types.Point;
  */
 public class L1GuardInstance extends L1NpcInstance {
 
-	private static final long serialVersionUID = 1L;
+	class Death implements Runnable {
+		L1Character _lastAttacker;
 
-	// 寻找目标
-	@Override
-	public void searchTarget() {
-		// 目标搜索
-		L1PcInstance targetPlayer = null;
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
-				continue;
-			}
-			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) // 检查隐身状态
-			{
-				if (pc.isWanted()) { // PKで手配中か
-					targetPlayer = pc;
-					break;
-				}
-			}
+		public Death(L1Character lastAttacker) {
+			_lastAttacker = lastAttacker;
 		}
-		if (targetPlayer != null) {
-			_hateList.add(targetPlayer, 0);
-			_target = targetPlayer;
+
+		@Override
+		public void run() {
+			setDeathProcessing(true);
+			setCurrentHpDirect(0);
+			setDead(true);
+			setStatus(ActionCodes.ACTION_Die);
+
+			getMap().setPassable(getLocation(), true);
+
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
+
+			startChat(CHAT_TIMING_DEAD);
+
+			setDeathProcessing(false);
+
+			allTargetClear();
+
+			startDeleteTimer();
 		}
 	}
 
-	/** 设置目标 */
-	public void setTarget(L1PcInstance targetPlayer) {
-		if (targetPlayer != null) {
-			_hateList.add(targetPlayer, 0);
-			_target = targetPlayer;
-		}
+	private static final long serialVersionUID = 1L;
+
+	public L1GuardInstance(L1Npc template) {
+		super(template);
+	}
+
+	public void doFinalAction() {
+
 	}
 
 	// 如果没有目标处理
@@ -87,19 +92,6 @@ public class L1GuardInstance extends L1NpcInstance {
 			}
 		}
 		return false;
-	}
-
-	public L1GuardInstance(L1Npc template) {
-		super(template);
-	}
-
-	@Override
-	public void onNpcAI() {
-		if (isAiRunning()) {
-			return;
-		}
-		setActived(false);
-		startAI();
 	}
 
 	@Override
@@ -127,6 +119,19 @@ public class L1GuardInstance extends L1NpcInstance {
 				attack.action();
 			}
 		}
+	}
+
+	public void onFinalAction() {
+
+	}
+
+	@Override
+	public void onNpcAI() {
+		if (isAiRunning()) {
+			return;
+		}
+		setActived(false);
+		startAI();
 	}
 
 	@Override
@@ -390,22 +395,6 @@ public class L1GuardInstance extends L1NpcInstance {
 		}
 	}
 
-	public void onFinalAction() {
-
-	}
-
-	public void doFinalAction() {
-
-	}
-
-	@Override
-	public void setLink(L1Character cha) {
-		if ((cha != null) && _hateList.isEmpty()) {
-			_hateList.add(cha, 0);
-			checkTarget();
-		}
-	}
-
 	@Override
 	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
@@ -448,6 +437,29 @@ public class L1GuardInstance extends L1NpcInstance {
 		}
 	}
 
+	// 寻找目标
+	@Override
+	public void searchTarget() {
+		// 目标搜索
+		L1PcInstance targetPlayer = null;
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
+				continue;
+			}
+			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) // 检查隐身状态
+			{
+				if (pc.isWanted()) { // PKで手配中か
+					targetPlayer = pc;
+					break;
+				}
+			}
+		}
+		if (targetPlayer != null) {
+			_hateList.add(targetPlayer, 0);
+			_target = targetPlayer;
+		}
+	}
+
 	@Override
 	public void setCurrentHp(int i) {
 		int currentHp = i;
@@ -461,31 +473,19 @@ public class L1GuardInstance extends L1NpcInstance {
 		}
 	}
 
-	class Death implements Runnable {
-		L1Character _lastAttacker;
-
-		public Death(L1Character lastAttacker) {
-			_lastAttacker = lastAttacker;
+	@Override
+	public void setLink(L1Character cha) {
+		if ((cha != null) && _hateList.isEmpty()) {
+			_hateList.add(cha, 0);
+			checkTarget();
 		}
+	}
 
-		@Override
-		public void run() {
-			setDeathProcessing(true);
-			setCurrentHpDirect(0);
-			setDead(true);
-			setStatus(ActionCodes.ACTION_Die);
-
-			getMap().setPassable(getLocation(), true);
-
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
-
-			startChat(CHAT_TIMING_DEAD);
-
-			setDeathProcessing(false);
-
-			allTargetClear();
-
-			startDeleteTimer();
+	/** 设置目标 */
+	public void setTarget(L1PcInstance targetPlayer) {
+		if (targetPlayer != null) {
+			_hateList.add(targetPlayer, 0);
+			_target = targetPlayer;
 		}
 	}
 

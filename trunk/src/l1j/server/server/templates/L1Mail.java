@@ -18,87 +18,87 @@ package l1j.server.server.templates;
  * 邮件
  */
 public class L1Mail {
+	private int _id;
+
+	private int _type;
+
+	private String _senderName;
+
+	private String _receiverName;
+
+	private String _date = null; // yy/mm/dd
+
+	private int _readStatus = 0;
+
+	private byte[] _subject = null;
+
+	private byte[] _content = null;
+
 	public L1Mail() {
 	}
 
-	private int _id;
+	public byte[] getContent() {
+		return _content;
+	}
+
+	public String getDate() {
+		return _date;
+	}
 
 	public int getId() {
 		return _id;
 	}
 
-	public void setId(int i) {
-		_id = i;
+	public int getReadStatus() {
+		return _readStatus;
 	}
-
-	private int _type;
-
-	public int getType() {
-		return _type;
-	}
-
-	public void setType(int i) {
-		_type = i;
-	}
-
-	private String _senderName;
-
-	public String getSenderName() {
-		return _senderName;
-	}
-
-	public void setSenderName(String s) {
-		_senderName = s;
-	}
-
-	private String _receiverName;
 
 	public String getReceiverName() {
 		return _receiverName;
 	}
 
-	public void setReceiverName(String s) {
-		_receiverName = s;
+	public String getSenderName() {
+		return _senderName;
 	}
 
-	private String _date = null; // yy/mm/dd
+	public byte[] getSubject() {
+		return _subject;
+	}
 
-	public String getDate() {
-		return _date;
+	public int getType() {
+		return _type;
+	}
+
+	public void setContent(byte[] arg) {
+		_content = arg;
 	}
 
 	public void setDate(String s) {
 		_date = s;
 	}
 
-	private int _readStatus = 0;
-
-	public int getReadStatus() {
-		return _readStatus;
+	public void setId(int i) {
+		_id = i;
 	}
 
 	public void setReadStatus(int i) {
 		_readStatus = i;
 	}
 
-	private byte[] _subject = null;
+	public void setReceiverName(String s) {
+		_receiverName = s;
+	}
 
-	public byte[] getSubject() {
-		return _subject;
+	public void setSenderName(String s) {
+		_senderName = s;
 	}
 
 	public void setSubject(byte[] arg) {
 		_subject = arg;
 	}
 
-	private byte[] _content = null;
-
-	public byte[] getContent() {
-		return _content;
-	}
-
-	public void setContent(byte[] arg) {
-		_content = arg;
+	public void setType(int i) {
+		_type = i;
 	}
 
 }

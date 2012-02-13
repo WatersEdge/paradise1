@@ -24,6 +24,10 @@ public class L1ShopItem {
 
 	private static final long serialVersionUID = 1L;
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	private final int _itemId;
 
 	private L1Item _item;
@@ -39,20 +43,20 @@ public class L1ShopItem {
 		_packCount = packCount;
 	}
 
-	public int getItemId() {
-		return _itemId;
-	}
-
 	public L1Item getItem() {
 		return _item;
 	}
 
-	public int getPrice() {
-		return _price;
+	public int getItemId() {
+		return _itemId;
 	}
 
 	public int getPackCount() {
 		return _packCount;
+	}
+
+	public int getPrice() {
+		return _price;
 	}
 
 	// 食人妖精賽跑用
@@ -63,9 +67,5 @@ public class L1ShopItem {
 		_item.setName(temp);
 		_item.setUnidentifiedNameId(temp);
 		_item.setIdentifiedNameId(temp);
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 }

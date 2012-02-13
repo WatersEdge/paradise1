@@ -30,66 +30,6 @@ import l1j.server.server.utils.SQLUtil;
 public class L1BoardTopic {
 	private static Logger _log = Logger.getLogger(L1BoardTopic.class.getName());
 
-	private final int _id;
-	private final String _name;
-	private final String _date;
-	private final String _title;
-	private final String _content;
-
-	public int getId() {
-		return _id;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getDate() {
-		return _date;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getContent() {
-		return _content;
-	}
-
-	/**
-	 * 取得今日時間
-	 * 
-	 * @return 今日日期 yy/MM/dd
-	 */
-	private String today() {
-		// 年
-		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0" + TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
-		// 月
-		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0" + TimeInform.getMonth() : TimeInform.getMonth();
-		// 日
-		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0" + TimeInform.getDay() : TimeInform.getDay();
-		StringBuilder sb = new StringBuilder();
-		// 輸出 yy/MM/dd
-		sb.append(year).append("/").append(month).append("/").append(day);
-		return sb.toString();
-	}
-
-	private L1BoardTopic(int id, String name, String title, String content) {
-		_id = id;
-		_name = name;
-		_date = today();
-		_title = title;
-		_content = content;
-	}
-
-	private L1BoardTopic(ResultSet rs) throws SQLException {
-		_id = rs.getInt("id");
-		_name = rs.getString("name");
-		_date = rs.getString("date");
-		_title = rs.getString("title");
-		_content = rs.getString("content");
-	}
-
 	public synchronized static L1BoardTopic create(String name, String title, String content) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
@@ -123,25 +63,6 @@ public class L1BoardTopic {
 		}
 		return null;
 	}
-
-	public void delete() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM board WHERE id=?");
-			pstm.setInt(1, getId());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
 	public static L1BoardTopic findById(int id) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -162,26 +83,9 @@ public class L1BoardTopic {
 		}
 		return null;
 	}
-
-	private static PreparedStatement makeIndexStatement(Connection con, int id, int limit) throws SQLException {
-		PreparedStatement result = null;
-		int offset = 1;
-		if (id == 0) {
-			result = con.prepareStatement("SELECT * FROM board ORDER BY id DESC LIMIT ?");
-		}
-		else {
-			result = con.prepareStatement("SELECT * FROM board WHERE id < ? ORDER BY id DESC LIMIT ?");
-			result.setInt(1, id);
-			offset++;
-		}
-		result.setInt(offset, limit);
-		return result;
-	}
-
 	public static List<L1BoardTopic> index(int limit) {
 		return index(0, limit);
 	}
-
 	public static List<L1BoardTopic> index(int id, int limit) {
 		List<L1BoardTopic> result = new ArrayList<L1BoardTopic>();
 		Connection con = null;
@@ -202,5 +106,101 @@ public class L1BoardTopic {
 			SQLUtil.close(rs, pstm, con);
 		}
 		return null;
+	}
+	private static PreparedStatement makeIndexStatement(Connection con, int id, int limit) throws SQLException {
+		PreparedStatement result = null;
+		int offset = 1;
+		if (id == 0) {
+			result = con.prepareStatement("SELECT * FROM board ORDER BY id DESC LIMIT ?");
+		}
+		else {
+			result = con.prepareStatement("SELECT * FROM board WHERE id < ? ORDER BY id DESC LIMIT ?");
+			result.setInt(1, id);
+			offset++;
+		}
+		result.setInt(offset, limit);
+		return result;
+	}
+
+	private final int _id;
+
+	private final String _name;
+
+	private final String _date;
+
+	private final String _title;
+
+	private final String _content;
+
+	private L1BoardTopic(int id, String name, String title, String content) {
+		_id = id;
+		_name = name;
+		_date = today();
+		_title = title;
+		_content = content;
+	}
+
+	private L1BoardTopic(ResultSet rs) throws SQLException {
+		_id = rs.getInt("id");
+		_name = rs.getString("name");
+		_date = rs.getString("date");
+		_title = rs.getString("title");
+		_content = rs.getString("content");
+	}
+
+	public void delete() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM board WHERE id=?");
+			pstm.setInt(1, getId());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	public String getContent() {
+		return _content;
+	}
+
+	public String getDate() {
+		return _date;
+	}
+
+	public int getId() {
+		return _id;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	/**
+	 * 取得今日時間
+	 * 
+	 * @return 今日日期 yy/MM/dd
+	 */
+	private String today() {
+		// 年
+		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0" + TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
+		// 月
+		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0" + TimeInform.getMonth() : TimeInform.getMonth();
+		// 日
+		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0" + TimeInform.getDay() : TimeInform.getDay();
+		StringBuilder sb = new StringBuilder();
+		// 輸出 yy/MM/dd
+		sb.append(year).append("/").append(month).append("/").append(day);
+		return sb.toString();
 	}
 }

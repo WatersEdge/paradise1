@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class IvoryTowerPotion extends ItemExecutor {
 
-	private IvoryTowerPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new IvoryTowerPotion();
+	}
+
+	private IvoryTowerPotion() {
 	}
 
 	/**

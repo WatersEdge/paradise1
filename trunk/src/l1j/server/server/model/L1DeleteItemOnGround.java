@@ -32,13 +32,6 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class L1DeleteItemOnGround {
 
-	private DeleteTimer _deleteTimer;
-
-	private static final Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
-
-	public L1DeleteItemOnGround() {
-	}
-
 	private class DeleteTimer implements Runnable {
 		public DeleteTimer() {
 		}
@@ -67,6 +60,13 @@ public class L1DeleteItemOnGround {
 				L1World.getInstance().broadcastPacketToAll(new S_ServerMessage(166, L1Message.onGroundItem, L1Message.deleted + "。"));
 			}
 		}
+	}
+
+	private DeleteTimer _deleteTimer;
+
+	private static final Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
+
+	public L1DeleteItemOnGround() {
 	}
 
 	public void initialize() {

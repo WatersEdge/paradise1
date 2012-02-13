@@ -36,6 +36,15 @@ public class S_PetMenuPacket extends ServerBasePacket {
 		buildpacket(npc, exppercet);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
 	private void buildpacket(L1NpcInstance npc, int exppercet) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 
@@ -132,14 +141,5 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			// writeS(Integer.toString(0));
 			// writeS(Integer.toString(790));
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
 	}
 }

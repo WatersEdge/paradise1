@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Call_Ball_Nuclear extends ItemExecutor {
 
-	private Call_Ball_Nuclear() {
-	}
-
 	public static ItemExecutor get() {
 		return new Call_Ball_Nuclear();
+	}
+
+	private Call_Ball_Nuclear() {
 	}
 
 	/**

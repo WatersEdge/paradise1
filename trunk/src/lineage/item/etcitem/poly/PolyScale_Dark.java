@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePolyOther;
  */
 public class PolyScale_Dark extends ItemExecutor {
 
-	private PolyScale_Dark() {
-	}
-
 	public static ItemExecutor get() {
 		return new PolyScale_Dark();
+	}
+
+	private PolyScale_Dark() {
 	}
 
 	/**

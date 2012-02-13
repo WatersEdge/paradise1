@@ -40,12 +40,6 @@ public class S_CastleMaster extends ServerBasePacket {
 		buildPacket(type, objecId);
 	}
 
-	private void buildPacket(int type, int objecId) {
-		writeC(Opcodes.S_OPCODE_CASTLEMASTER);
-		writeC(type);
-		writeD(objecId);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -57,6 +51,12 @@ public class S_CastleMaster extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return _S__08_CASTLEMASTER;
+	}
+
+	private void buildPacket(int type, int objecId) {
+		writeC(Opcodes.S_OPCODE_CASTLEMASTER);
+		writeC(type);
+		writeD(objecId);
 	}
 
 }

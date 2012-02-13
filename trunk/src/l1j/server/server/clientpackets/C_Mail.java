@@ -129,6 +129,11 @@ public class C_Mail extends ClientBasePacket {
 		}
 	}
 
+	@Override
+	public String getType() {
+		return C_MAIL;
+	}
+
 	private int getMailSizeByReceiver(String receiverName, int type) {
 		List<L1Mail> mails = Lists.newList();
 		MailTable.getInstance();
@@ -140,10 +145,5 @@ public class C_Mail extends ClientBasePacket {
 			}
 		}
 		return mails.size();
-	}
-
-	@Override
-	public String getType() {
-		return C_MAIL;
 	}
 }

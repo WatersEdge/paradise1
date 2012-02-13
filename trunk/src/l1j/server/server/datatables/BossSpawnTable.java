@@ -32,9 +32,6 @@ public class BossSpawnTable {
 
 	private static Logger _log = Logger.getLogger(BossSpawnTable.class.getName());
 
-	private BossSpawnTable() {
-	}
-
 	public static void fillSpawnTable() {
 
 		int spawnCount = 0;
@@ -100,5 +97,8 @@ public class BossSpawnTable {
 			SQLUtil.close(con);
 		}
 		_log.log(Level.FINE, "BOSS怪物总数 " + spawnCount + " 只");
+	}
+
+	private BossSpawnTable() {
 	}
 }

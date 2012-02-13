@@ -24,11 +24,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：全体聊天
  */
 public class L1Chat implements L1CommandExecutor {
-	private L1Chat() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Chat();
+	}
+
+	private L1Chat() {
 	}
 
 	@Override

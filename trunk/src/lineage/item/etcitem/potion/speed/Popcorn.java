@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class Popcorn extends ItemExecutor {
 
-	private Popcorn() {
-	}
-
 	public static ItemExecutor get() {
 		return new Popcorn();
+	}
+
+	private Popcorn() {
 	}
 
 	/**

@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class IvoryTowerHealing extends ItemExecutor {
 
-	private IvoryTowerHealing() {
-	}
-
 	public static ItemExecutor get() {
 		return new IvoryTowerHealing();
+	}
+
+	private IvoryTowerHealing() {
 	}
 
 	/**

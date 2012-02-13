@@ -38,6 +38,19 @@ public class S_NewCharPacket extends ServerBasePacket {
 		buildPacket(pc);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return _S__25_NEWCHARPACK;
+	}
+
 	private void buildPacket(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_NEWCHARPACK);
 		writeS(pc.getName());
@@ -59,19 +72,6 @@ public class S_NewCharPacket extends ServerBasePacket {
 		/* 生日待后续的实做 */
 		// writeD(Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(pc.getBirthday())));
 		writeD(pc.getSimpleBirthday());
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return _S__25_NEWCHARPACK;
 	}
 
 }

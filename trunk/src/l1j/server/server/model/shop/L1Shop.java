@@ -68,53 +68,6 @@ public class L1Shop {
 		_purchasingItems = purchasingItems;
 	}
 
-	/** 获得NPC ID */
-	public int getNpcId() {
-		return _npcId;
-	}
-
-	/** 获得销售项目 */
-	public List<L1ShopItem> getSellingItems() {
-		return _sellingItems;
-	}
-
-	/**
-	 * 返回商店内指定的道具能否购买。
-	 * 
-	 * @param item
-	 * @return 该道具可以购买true
-	 */
-	private boolean isPurchaseableItem(L1ItemInstance item) {
-		if (item == null) {
-			return false;
-		}
-		if (item.isEquipped()) { // 装备中不可
-			return false;
-		}
-		if (item.getEnchantLevel() != 0) { // 強化(or弱化)不可
-			return false;
-		}
-		if (item.getBless() >= 128) { // 封印装备不可
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * 获得购买道具
-	 * 
-	 * @param itemId
-	 */
-	private L1ShopItem getPurchasingItem(int itemId) {
-		for (L1ShopItem shopItem : _purchasingItems) {
-			if (shopItem.getItemId() == itemId) {
-				return shopItem;
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * 评估道具
 	 * 
@@ -126,15 +79,6 @@ public class L1Shop {
 			return null;
 		}
 		return new L1AssessedItem(item.getId(), getAssessedPrice(shopItem));
-	}
-
-	/**
-	 * 获得评估价格
-	 * 
-	 * @param item
-	 */
-	private int getAssessedPrice(L1ShopItem item) {
-		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item.getPackCount());
 	}
 
 	/**
@@ -156,6 +100,63 @@ public class L1Shop {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 购买L1ShopSellOrderList所列的项目。
+	 * 
+	 * @param orderList
+	 *            取得购买列出的项目和价格L1ShopSellOrderList
+	 */
+	public void buyItems(L1ShopSellOrderList orderList) {
+		L1PcInventory inv = orderList.getPc().getInventory();
+		int totalPrice = 0;
+		for (L1ShopSellOrder order : orderList.getList()) {
+			int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
+			totalPrice += order.getItem().getAssessedPrice() * count;
+		}
+
+		totalPrice = IntRange.ensure(totalPrice, 0, 2000000000);
+		if (0 < totalPrice) {
+			inv.storeItem(L1ItemId.ADENA, totalPrice);
+		}
+	}
+
+	/** 获得NPC ID */
+	public int getNpcId() {
+		return _npcId;
+	}
+
+	/** 获得销售项目 */
+	public List<L1ShopItem> getSellingItems() {
+		return _sellingItems;
+	}
+
+	/** 个人商店购买清单顺序 */
+	public L1ShopBuyOrderList newBuyOrderList() {
+		return new L1ShopBuyOrderList(this);
+	}
+
+	/** 个人商店贩卖清单顺序 */
+	public L1ShopSellOrderList newSellOrderList(L1PcInstance pc) {
+		return new L1ShopSellOrderList(this, pc);
+	}
+
+	/**
+	 * 为角色、列出商店出售的道具L1ShopBuyOrderList。
+	 * 
+	 * @param pc
+	 *            出售给玩家
+	 * @param orderList
+	 *            列出商店出售的道具L1ShopBuyOrderList
+	 */
+	public void sellItems(L1PcInstance pc, L1ShopBuyOrderList orderList) {
+		if (!ensureSell(pc, orderList)) {
+			return;
+		}
+
+		sellItems(pc.getInventory(), orderList);
+		payTax(orderList);
 	}
 
 	/**
@@ -203,6 +204,52 @@ public class L1Shop {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 			return false;
 		}
+		return true;
+	}
+
+	/**
+	 * 获得评估价格
+	 * 
+	 * @param item
+	 */
+	private int getAssessedPrice(L1ShopItem item) {
+		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item.getPackCount());
+	}
+
+	/**
+	 * 获得购买道具
+	 * 
+	 * @param itemId
+	 */
+	private L1ShopItem getPurchasingItem(int itemId) {
+		for (L1ShopItem shopItem : _purchasingItems) {
+			if (shopItem.getItemId() == itemId) {
+				return shopItem;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 返回商店内指定的道具能否购买。
+	 * 
+	 * @param item
+	 * @return 该道具可以购买true
+	 */
+	private boolean isPurchaseableItem(L1ItemInstance item) {
+		if (item == null) {
+			return false;
+		}
+		if (item.isEquipped()) { // 装备中不可
+			return false;
+		}
+		if (item.getEnchantLevel() != 0) { // 強化(or弱化)不可
+			return false;
+		}
+		if (item.getBless() >= 128) { // 封印装备不可
+			return false;
+		}
+
 		return true;
 	}
 
@@ -278,6 +325,14 @@ public class L1Shop {
 		}
 	}
 
+	// XXX 納税処理はこのクラスの責務では無い気がするが、とりあえず
+	/** 纳税处理 */
+	private void payTax(L1ShopBuyOrderList orderList) {
+		payCastleTax(orderList);
+		payTownTax(orderList);
+		payDiadTax(orderList);
+	}
+
 	/**
 	 * 城镇纳税处理
 	 * 
@@ -293,14 +348,6 @@ public class L1Shop {
 				TownTable.getInstance().addSalesMoney(town_id, price);
 			}
 		}
-	}
-
-	// XXX 納税処理はこのクラスの責務では無い気がするが、とりあえず
-	/** 纳税处理 */
-	private void payTax(L1ShopBuyOrderList orderList) {
-		payCastleTax(orderList);
-		payTownTax(orderList);
-		payDiadTax(orderList);
 	}
 
 	/**
@@ -366,52 +413,5 @@ public class L1Shop {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 为角色、列出商店出售的道具L1ShopBuyOrderList。
-	 * 
-	 * @param pc
-	 *            出售给玩家
-	 * @param orderList
-	 *            列出商店出售的道具L1ShopBuyOrderList
-	 */
-	public void sellItems(L1PcInstance pc, L1ShopBuyOrderList orderList) {
-		if (!ensureSell(pc, orderList)) {
-			return;
-		}
-
-		sellItems(pc.getInventory(), orderList);
-		payTax(orderList);
-	}
-
-	/**
-	 * 购买L1ShopSellOrderList所列的项目。
-	 * 
-	 * @param orderList
-	 *            取得购买列出的项目和价格L1ShopSellOrderList
-	 */
-	public void buyItems(L1ShopSellOrderList orderList) {
-		L1PcInventory inv = orderList.getPc().getInventory();
-		int totalPrice = 0;
-		for (L1ShopSellOrder order : orderList.getList()) {
-			int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
-			totalPrice += order.getItem().getAssessedPrice() * count;
-		}
-
-		totalPrice = IntRange.ensure(totalPrice, 0, 2000000000);
-		if (0 < totalPrice) {
-			inv.storeItem(L1ItemId.ADENA, totalPrice);
-		}
-	}
-
-	/** 个人商店购买清单顺序 */
-	public L1ShopBuyOrderList newBuyOrderList() {
-		return new L1ShopBuyOrderList(this);
-	}
-
-	/** 个人商店贩卖清单顺序 */
-	public L1ShopSellOrderList newSellOrderList(L1PcInstance pc) {
-		return new L1ShopSellOrderList(this, pc);
 	}
 }

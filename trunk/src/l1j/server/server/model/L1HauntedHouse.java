@@ -31,6 +31,43 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class L1HauntedHouse {
 
+	public class L1HauntedHouseReadyTimer extends TimerTask {
+
+		public L1HauntedHouseReadyTimer() {
+		}
+
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, 90000); // 约90秒？
+		}
+
+		@Override
+		public void run() {
+			startHauntedHouse();
+			L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
+			hhTimer.begin();
+		}
+
+	}
+
+	public class L1HauntedHouseTimer extends TimerTask {
+
+		public L1HauntedHouseTimer() {
+		}
+
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, 300000); // 5分
+		}
+
+		@Override
+		public void run() {
+			endHauntedHouse();
+			cancel();
+		}
+
+	}
+
 	public static final int STATUS_NONE = 0;
 
 	public static final int STATUS_READY = 1;
@@ -54,10 +91,100 @@ public class L1HauntedHouse {
 		return _instance;
 	}
 
+	public void addMember(L1PcInstance pc) {
+		if (!_members.contains(pc)) {
+			_members.add(pc);
+		}
+		if ((getMembersCount() == 1) && (getHauntedHouseStatus() == STATUS_NONE)) {
+			readyHauntedHouse();
+		}
+	}
+
+	public void clearMembers() {
+		_members.clear();
+	}
+
+	public void endHauntedHouse() {
+		setHauntedHouseStatus(STATUS_NONE);
+		setWinnersCount(0);
+		setGoalCount(0);
+		for (L1PcInstance pc : getMembersArray()) {
+			if (pc.getMapId() == 5140) {
+				L1SkillUse l1skilluse = new L1SkillUse();
+				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
+				L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
+			}
+		}
+		clearMembers();
+		for (L1Object object : L1World.getInstance().getObject()) {
+			if (object instanceof L1DoorInstance) {
+				L1DoorInstance door = (L1DoorInstance) object;
+				if (door.getMapId() == 5140) {
+					door.close();
+				}
+			}
+		}
+	}
+
+	public int getGoalCount() {
+		return _goalCount;
+	}
+
+	public int getHauntedHouseStatus() {
+		return _hauntedHouseStatus;
+	}
+
+	public L1PcInstance[] getMembersArray() {
+		return _members.toArray(new L1PcInstance[_members.size()]);
+	}
+
+	public int getMembersCount() {
+		return _members.size();
+	}
+
+	public int getWinnersCount() {
+		return _winnersCount;
+	}
+
+	public boolean isMember(L1PcInstance pc) {
+		return _members.contains(pc);
+	}
+
+	public void removeMember(L1PcInstance pc) {
+		_members.remove(pc);
+	}
+
+	public void removeRetiredMembers() {
+		L1PcInstance[] temp = getMembersArray();
+		for (L1PcInstance element : temp) {
+			if (element.getMapId() != 5140) {
+				removeMember(element);
+			}
+		}
+	}
+
+	public void sendMessage(int type, String msg) {
+		for (L1PcInstance pc : getMembersArray()) {
+			pc.sendPackets(new S_ServerMessage(type, msg));
+		}
+	}
+
+	public void setGoalCount(int i) {
+		_goalCount = i;
+	}
+
 	private void readyHauntedHouse() {
 		setHauntedHouseStatus(STATUS_READY);
 		L1HauntedHouseReadyTimer hhrTimer = new L1HauntedHouseReadyTimer();
 		hhrTimer.begin();
+	}
+
+	private void setHauntedHouseStatus(int i) {
+		_hauntedHouseStatus = i;
+	}
+
+	private void setWinnersCount(int i) {
+		_winnersCount = i;
 	}
 
 	private void startHauntedHouse() {
@@ -86,133 +213,6 @@ public class L1HauntedHouse {
 				}
 			}
 		}
-	}
-
-	public void endHauntedHouse() {
-		setHauntedHouseStatus(STATUS_NONE);
-		setWinnersCount(0);
-		setGoalCount(0);
-		for (L1PcInstance pc : getMembersArray()) {
-			if (pc.getMapId() == 5140) {
-				L1SkillUse l1skilluse = new L1SkillUse();
-				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
-				L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
-			}
-		}
-		clearMembers();
-		for (L1Object object : L1World.getInstance().getObject()) {
-			if (object instanceof L1DoorInstance) {
-				L1DoorInstance door = (L1DoorInstance) object;
-				if (door.getMapId() == 5140) {
-					door.close();
-				}
-			}
-		}
-	}
-
-	public void removeRetiredMembers() {
-		L1PcInstance[] temp = getMembersArray();
-		for (L1PcInstance element : temp) {
-			if (element.getMapId() != 5140) {
-				removeMember(element);
-			}
-		}
-	}
-
-	public void sendMessage(int type, String msg) {
-		for (L1PcInstance pc : getMembersArray()) {
-			pc.sendPackets(new S_ServerMessage(type, msg));
-		}
-	}
-
-	public void addMember(L1PcInstance pc) {
-		if (!_members.contains(pc)) {
-			_members.add(pc);
-		}
-		if ((getMembersCount() == 1) && (getHauntedHouseStatus() == STATUS_NONE)) {
-			readyHauntedHouse();
-		}
-	}
-
-	public void removeMember(L1PcInstance pc) {
-		_members.remove(pc);
-	}
-
-	public void clearMembers() {
-		_members.clear();
-	}
-
-	public boolean isMember(L1PcInstance pc) {
-		return _members.contains(pc);
-	}
-
-	public L1PcInstance[] getMembersArray() {
-		return _members.toArray(new L1PcInstance[_members.size()]);
-	}
-
-	public int getMembersCount() {
-		return _members.size();
-	}
-
-	private void setHauntedHouseStatus(int i) {
-		_hauntedHouseStatus = i;
-	}
-
-	public int getHauntedHouseStatus() {
-		return _hauntedHouseStatus;
-	}
-
-	private void setWinnersCount(int i) {
-		_winnersCount = i;
-	}
-
-	public int getWinnersCount() {
-		return _winnersCount;
-	}
-
-	public void setGoalCount(int i) {
-		_goalCount = i;
-	}
-
-	public int getGoalCount() {
-		return _goalCount;
-	}
-
-	public class L1HauntedHouseReadyTimer extends TimerTask {
-
-		public L1HauntedHouseReadyTimer() {
-		}
-
-		@Override
-		public void run() {
-			startHauntedHouse();
-			L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
-			hhTimer.begin();
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, 90000); // 约90秒？
-		}
-
-	}
-
-	public class L1HauntedHouseTimer extends TimerTask {
-
-		public L1HauntedHouseTimer() {
-		}
-
-		@Override
-		public void run() {
-			endHauntedHouse();
-			cancel();
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, 300000); // 5分
-		}
-
 	}
 
 }

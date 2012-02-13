@@ -21,11 +21,9 @@ public class L1EtcItem extends L1Item {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1EtcItem() {
-	}
-
 	/** 可堆叠 */
 	private boolean _stackable;
+
 	/** X坐标 */
 	private int _locx;
 	/** Y坐标 */
@@ -42,70 +40,7 @@ public class L1EtcItem extends L1Item {
 	private int _maxChargeCount;
 	/** 是可以封印 */
 	private boolean _isCanSeal;
-
-	/** 设定可堆叠 */
-	public void set_stackable(boolean stackable) {
-		_stackable = stackable;
-	}
-
-	@Override
-	public boolean isStackable() {
-		return _stackable;
-	}
-
-	/** 设定X坐标 */
-	public void set_locx(int locx) {
-		_locx = locx;
-	}
-
-	@Override
-	public int get_locx() {
-		return _locx;
-	}
-
-	/** 设定Y坐标 */
-	public void set_locy(int locy) {
-		_locy = locy;
-	}
-
-	@Override
-	public int get_locy() {
-		return _locy;
-	}
-
-	/** 设定地图ID */
-	public void set_mapid(short mapid) {
-		_mapid = mapid;
-	}
-
-	@Override
-	public short get_mapid() {
-		return _mapid;
-	}
-
-	/** 设定延迟ID */
-	public void set_delayid(int delay_id) {
-		_delay_id = delay_id;
-	}
-
-	@Override
-	public int get_delayid() {
-		return _delay_id;
-	}
-
-	/** 设定延迟时间 */
-	public void set_delaytime(int delay_time) {
-		_delay_time = delay_time;
-	}
-
-	@Override
-	public int get_delaytime() {
-		return _delay_time;
-	}
-
-	/** 设定延迟效果 */
-	public void set_delayEffect(int delay_effect) {
-		_delay_effect = delay_effect;
+	public L1EtcItem() {
 	}
 
 	/** 取得延迟效果 */
@@ -113,9 +48,29 @@ public class L1EtcItem extends L1Item {
 		return _delay_effect;
 	}
 
-	/** 设定最高使用次数 */
-	public void setMaxChargeCount(int i) {
-		_maxChargeCount = i;
+	@Override
+	public int get_delayid() {
+		return _delay_id;
+	}
+
+	@Override
+	public int get_delaytime() {
+		return _delay_time;
+	}
+
+	@Override
+	public int get_locx() {
+		return _locx;
+	}
+
+	@Override
+	public int get_locy() {
+		return _locy;
+	}
+
+	@Override
+	public short get_mapid() {
+		return _mapid;
 	}
 
 	@Override
@@ -123,14 +78,59 @@ public class L1EtcItem extends L1Item {
 		return _maxChargeCount;
 	}
 
+	@Override
+	public boolean isCanSeal() {
+		return _isCanSeal;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return _stackable;
+	}
+
+	/** 设定延迟效果 */
+	public void set_delayEffect(int delay_effect) {
+		_delay_effect = delay_effect;
+	}
+
+	/** 设定延迟ID */
+	public void set_delayid(int delay_id) {
+		_delay_id = delay_id;
+	}
+
+	/** 设定延迟时间 */
+	public void set_delaytime(int delay_time) {
+		_delay_time = delay_time;
+	}
+
+	/** 设定X坐标 */
+	public void set_locx(int locx) {
+		_locx = locx;
+	}
+
+	/** 设定Y坐标 */
+	public void set_locy(int locy) {
+		_locy = locy;
+	}
+
+	/** 设定地图ID */
+	public void set_mapid(short mapid) {
+		_mapid = mapid;
+	}
+
+	/** 设定可堆叠 */
+	public void set_stackable(boolean stackable) {
+		_stackable = stackable;
+	}
+
 	/** 设定可以封印 */
 	public void setCanSeal(boolean flag) {
 		_isCanSeal = flag;
 	}
 
-	@Override
-	public boolean isCanSeal() {
-		return _isCanSeal;
+	/** 设定最高使用次数 */
+	public void setMaxChargeCount(int i) {
+		_maxChargeCount = i;
 	}
 
 }

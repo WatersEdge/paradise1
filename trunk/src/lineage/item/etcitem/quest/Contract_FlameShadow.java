@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Contract_FlameShadow extends ItemExecutor {
 
-	private Contract_FlameShadow() {
-	}
-
 	public static ItemExecutor get() {
 		return new Contract_FlameShadow();
+	}
+
+	private Contract_FlameShadow() {
 	}
 
 	/**

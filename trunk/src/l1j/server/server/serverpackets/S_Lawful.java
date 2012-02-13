@@ -35,13 +35,6 @@ public class S_Lawful extends ServerBasePacket {
 		buildPacket(objid, lawful);
 	}
 
-	private void buildPacket(int objid, int lawful) {
-		writeC(Opcodes.S_OPCODE_LAWFUL);
-		writeD(objid);
-		writeH(lawful);
-		writeD(0);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -53,6 +46,13 @@ public class S_Lawful extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_LAWFUL;
+	}
+
+	private void buildPacket(int objid, int lawful) {
+		writeC(Opcodes.S_OPCODE_LAWFUL);
+		writeD(objid);
+		writeH(lawful);
+		writeD(0);
 	}
 
 }

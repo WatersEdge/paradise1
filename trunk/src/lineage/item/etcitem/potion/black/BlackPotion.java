@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_Blind;
  */
 public class BlackPotion extends ItemExecutor {
 
-	private BlackPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new BlackPotion();
+	}
+
+	private BlackPotion() {
 	}
 
 	/**

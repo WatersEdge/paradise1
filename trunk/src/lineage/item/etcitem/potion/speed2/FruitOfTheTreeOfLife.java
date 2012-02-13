@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpeedPotion_2_RiBrave;
  */
 public class FruitOfTheTreeOfLife extends ItemExecutor {
 
-	private FruitOfTheTreeOfLife() {
-	}
-
 	public static ItemExecutor get() {
 		return new FruitOfTheTreeOfLife();
+	}
+
+	private FruitOfTheTreeOfLife() {
 	}
 
 	/**

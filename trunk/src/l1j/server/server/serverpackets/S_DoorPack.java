@@ -33,6 +33,20 @@ public class S_DoorPack extends ServerBasePacket {
 		buildPacket(door);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_DOOR_PACK;
+	}
+
 	private void buildPacket(L1DoorInstance door) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(door.getX());
@@ -77,20 +91,6 @@ public class S_DoorPack extends ServerBasePacket {
 		writeC(0);
 		writeC(0xFF);
 		writeC(0xFF);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_DOOR_PACK;
 	}
 
 }

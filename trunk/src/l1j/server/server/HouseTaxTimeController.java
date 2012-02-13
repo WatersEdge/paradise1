@@ -40,6 +40,15 @@ public class HouseTaxTimeController implements Runnable {
 		return _instance;
 	}
 
+	/**
+	 * 取得现实时间
+	 */
+	public Calendar getRealTime() {
+		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		Calendar cal = Calendar.getInstance(tz);
+		return cal;
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -50,15 +59,6 @@ public class HouseTaxTimeController implements Runnable {
 		}
 		catch (Exception e1) {
 		}
-	}
-
-	/**
-	 * 取得现实时间
-	 */
-	public Calendar getRealTime() {
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(tz);
-		return cal;
 	}
 
 	// 检查税期限

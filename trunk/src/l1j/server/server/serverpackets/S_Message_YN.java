@@ -57,6 +57,19 @@ public class S_Message_YN extends ServerBasePacket {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return "[S] S_Message_YN";
+	}
+
 	private void buildPacket(int type, String msg1, String msg2, String msg3, int check) {
 		writeC(Opcodes.S_OPCODE_YES_NO);
 		writeH(0x0000); // 3.51未知封包
@@ -74,18 +87,5 @@ public class S_Message_YN extends ServerBasePacket {
 			writeS(msg2);
 			writeS(msg3);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return "[S] S_Message_YN";
 	}
 }

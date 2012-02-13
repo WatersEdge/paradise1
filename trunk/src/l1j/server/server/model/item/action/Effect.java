@@ -73,157 +73,6 @@ import l1j.server.server.serverpackets.S_SkillSound;
 public class Effect {
 
 	/**
-	 * 道具使用效果
-	 * 
-	 * @param pc
-	 *            使用者
-	 * @param item
-	 *            道具
-	 */
-	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
-		boolean isMagicStone = false;
-		boolean deteleItem = true;
-
-		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
-			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
-			return;
-		}
-
-		int itemId = item.getItem().getItemId();
-		int skillId = 0;
-		int time = 0;
-		int gfxid = 0;
-		switch (itemId) {
-			case L1ItemId.POTION_OF_EXP_150: // 150%神力药水
-			case L1ItemId.POTION_OF_EXP_175: // 175%神力药水
-			case L1ItemId.POTION_OF_EXP_200: // 200%神力药水
-			case L1ItemId.POTION_OF_EXP_225: // 225%神力药水
-			case L1ItemId.POTION_OF_EXP_250: // 250%神力药水
-				skillId = itemId - 42999;
-				time = 900;
-				gfxid = itemId - 39699;
-				pc.deleteRepeatedSkills(skillId); // 与战斗药水等相冲
-				pc.sendPackets(new S_ServerMessage(1292)); // 狩猎的经验值将会增加。
-				break;
-			case L1ItemId.BLESS_OF_MAZU: // 妈祖祝福平安符
-				skillId = EFFECT_BLESS_OF_MAZU;
-				time = 2400;
-				gfxid = 7321;
-				pc.deleteRepeatedSkills(skillId); // 与妖精属性魔法相冲！
-				break;
-			case L1ItemId.POTION_OF_BATTLE: // 战斗药水
-				skillId = EFFECT_POTION_OF_BATTLE;
-				time = 3600;
-				gfxid = 7013;
-				pc.deleteRepeatedSkills(skillId); // 与神力药水等相冲
-				break;
-			case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 体力增强卷轴
-			case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增强卷轴
-			case L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE: // 强化战斗卷轴
-				skillId = itemId - 42999;
-				time = 3600;
-				gfxid = itemId - 40014;
-				pc.deleteRepeatedSkills(skillId);
-				break;
-
-			default:
-				if (itemId >= 47064 && itemId <= 47072) { // 附魔石(近战)
-					skillId = itemId - 43051;
-					gfxid = itemId - 38125;
-					time = 600;
-					isMagicStone = true;
-					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
-					skillId = itemId - 43052;
-					gfxid = itemId - 38126;
-					time = 600;
-					isMagicStone = true;
-					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
-					skillId = itemId - 43053;
-					gfxid = itemId - 38127;
-					time = 600;
-					isMagicStone = true;
-					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
-				}
-				else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
-					skillId = itemId - 43054;
-					gfxid = itemId - 38128;
-					time = 600;
-					isMagicStone = true;
-					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
-				}
-				else {
-					pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
-					return;
-				}
-				break;
-		}
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
-
-		if (isMagicStone) {
-			magicStoneEffect(pc, skillId, time);
-
-		}
-		else {
-			useEffect(pc, skillId, time);
-			if (deteleItem) { // 删除道具
-				pc.getInventory().removeItem(item, 1);
-			}
-		}
-	}
-
-	/**
-	 * 使用效果
-	 * 
-	 * @param pc
-	 *            使用者
-	 * @param skillId
-	 *            技能ID
-	 * @param time
-	 *            时间
-	 */
-	public static void useEffect(L1PcInstance pc, int skillId, int time) {
-		if (!pc.hasSkillEffect(skillId)) {
-			switch (skillId) {
-				case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
-					pc.addHitup(3); // 攻击成功 +3
-					pc.addDmgup(3); // 额外攻击点数 +3
-					pc.addMpr(2);
-					break;
-				case EFFECT_ENCHANTING_BATTLE: // 强化战斗卷轴
-					pc.addHitup(3); // 攻击成功 +3
-					pc.addDmgup(3); // 额外攻击点数 +3
-					pc.addBowHitup(3); // 远距离命中率 +3
-					pc.addBowDmgup(3); // 远距离攻击力 +3
-					pc.addSp(3); // 魔攻 +3
-					pc.sendPackets(new S_SPMR(pc));
-					break;
-				case EFFECT_STRENGTHENING_HP: // 体力增强卷轴
-					pc.addMaxHp(50);
-					pc.addHpr(4);
-					pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-					if (pc.isInParty()) { // 组队中
-						pc.getParty().updateMiniHP(pc);
-					}
-					break;
-				case EFFECT_STRENGTHENING_MP: // 魔力增强卷轴
-					pc.addMaxMp(40);
-					pc.addMpr(4);
-					pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
-					break;
-
-				default:
-					break;
-			}
-		}
-		pc.setSkillEffect(skillId, time * 1000);
-	}
-
-	/**
 	 * 附魔石效果
 	 * 
 	 * @param pc
@@ -454,6 +303,157 @@ public class Effect {
 		}
 		pc.setMagicStoneLevel(type);
 		pc.setSkillEffect(skillId, time * 1000);
+	}
+
+	/**
+	 * 使用效果
+	 * 
+	 * @param pc
+	 *            使用者
+	 * @param skillId
+	 *            技能ID
+	 * @param time
+	 *            时间
+	 */
+	public static void useEffect(L1PcInstance pc, int skillId, int time) {
+		if (!pc.hasSkillEffect(skillId)) {
+			switch (skillId) {
+				case EFFECT_BLESS_OF_MAZU: // 妈祖的祝福
+					pc.addHitup(3); // 攻击成功 +3
+					pc.addDmgup(3); // 额外攻击点数 +3
+					pc.addMpr(2);
+					break;
+				case EFFECT_ENCHANTING_BATTLE: // 强化战斗卷轴
+					pc.addHitup(3); // 攻击成功 +3
+					pc.addDmgup(3); // 额外攻击点数 +3
+					pc.addBowHitup(3); // 远距离命中率 +3
+					pc.addBowDmgup(3); // 远距离攻击力 +3
+					pc.addSp(3); // 魔攻 +3
+					pc.sendPackets(new S_SPMR(pc));
+					break;
+				case EFFECT_STRENGTHENING_HP: // 体力增强卷轴
+					pc.addMaxHp(50);
+					pc.addHpr(4);
+					pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+					if (pc.isInParty()) { // 组队中
+						pc.getParty().updateMiniHP(pc);
+					}
+					break;
+				case EFFECT_STRENGTHENING_MP: // 魔力增强卷轴
+					pc.addMaxMp(40);
+					pc.addMpr(4);
+					pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+					break;
+
+				default:
+					break;
+			}
+		}
+		pc.setSkillEffect(skillId, time * 1000);
+	}
+
+	/**
+	 * 道具使用效果
+	 * 
+	 * @param pc
+	 *            使用者
+	 * @param item
+	 *            道具
+	 */
+	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
+		boolean isMagicStone = false;
+		boolean deteleItem = true;
+
+		if (pc.hasSkillEffect(DECAY_POTION)) { // 药水霜化术状态
+			pc.sendPackets(new S_ServerMessage(698)); // 喉咙灼热，无法喝东西。
+			return;
+		}
+
+		int itemId = item.getItem().getItemId();
+		int skillId = 0;
+		int time = 0;
+		int gfxid = 0;
+		switch (itemId) {
+			case L1ItemId.POTION_OF_EXP_150: // 150%神力药水
+			case L1ItemId.POTION_OF_EXP_175: // 175%神力药水
+			case L1ItemId.POTION_OF_EXP_200: // 200%神力药水
+			case L1ItemId.POTION_OF_EXP_225: // 225%神力药水
+			case L1ItemId.POTION_OF_EXP_250: // 250%神力药水
+				skillId = itemId - 42999;
+				time = 900;
+				gfxid = itemId - 39699;
+				pc.deleteRepeatedSkills(skillId); // 与战斗药水等相冲
+				pc.sendPackets(new S_ServerMessage(1292)); // 狩猎的经验值将会增加。
+				break;
+			case L1ItemId.BLESS_OF_MAZU: // 妈祖祝福平安符
+				skillId = EFFECT_BLESS_OF_MAZU;
+				time = 2400;
+				gfxid = 7321;
+				pc.deleteRepeatedSkills(skillId); // 与妖精属性魔法相冲！
+				break;
+			case L1ItemId.POTION_OF_BATTLE: // 战斗药水
+				skillId = EFFECT_POTION_OF_BATTLE;
+				time = 3600;
+				gfxid = 7013;
+				pc.deleteRepeatedSkills(skillId); // 与神力药水等相冲
+				break;
+			case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 体力增强卷轴
+			case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增强卷轴
+			case L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE: // 强化战斗卷轴
+				skillId = itemId - 42999;
+				time = 3600;
+				gfxid = itemId - 40014;
+				pc.deleteRepeatedSkills(skillId);
+				break;
+
+			default:
+				if (itemId >= 47064 && itemId <= 47072) { // 附魔石(近战)
+					skillId = itemId - 43051;
+					gfxid = itemId - 38125;
+					time = 600;
+					isMagicStone = true;
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
+				}
+				else if (itemId >= 47074 && itemId <= 47082) { // 附魔石(远攻)
+					skillId = itemId - 43052;
+					gfxid = itemId - 38126;
+					time = 600;
+					isMagicStone = true;
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
+				}
+				else if (itemId >= 47084 && itemId <= 47092) { // 附魔石(恢复)
+					skillId = itemId - 43053;
+					gfxid = itemId - 38127;
+					time = 600;
+					isMagicStone = true;
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
+				}
+				else if (itemId >= 47094 && itemId <= 47102) { // 附魔石(防御)
+					skillId = itemId - 43054;
+					gfxid = itemId - 38128;
+					time = 600;
+					isMagicStone = true;
+					pc.deleteRepeatedSkills(skillId); // 附魔石不可共存
+				}
+				else {
+					pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
+					return;
+				}
+				break;
+		}
+		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
+
+		if (isMagicStone) {
+			magicStoneEffect(pc, skillId, time);
+
+		}
+		else {
+			useEffect(pc, skillId, time);
+			if (deteleItem) { // 删除道具
+				pc.getInventory().removeItem(item, 1);
+			}
+		}
 	}
 
 }

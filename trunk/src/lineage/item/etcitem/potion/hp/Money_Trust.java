@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Money_Trust extends ItemExecutor {
 
-	private Money_Trust() {
-	}
-
 	public static ItemExecutor get() {
 		return new Money_Trust();
+	}
+
+	private Money_Trust() {
 	}
 
 	/**

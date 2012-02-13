@@ -40,6 +40,19 @@ public class S_OwnCharPack extends ServerBasePacket {
 		buildPacket(pc);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_OWN_CHAR_PACK;
+	}
+
 	private void buildPacket(L1PcInstance pc) {
 		int status = STATUS_PC;
 
@@ -106,19 +119,6 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeC(0); // ？
 		writeC(0xFF);
 		writeC(0xFF);
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_OWN_CHAR_PACK;
 	}
 
 }

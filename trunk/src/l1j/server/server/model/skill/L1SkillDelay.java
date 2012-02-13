@@ -25,9 +25,6 @@ import l1j.server.server.model.L1Character;
  */
 public class L1SkillDelay {
 
-	private L1SkillDelay() {
-	}
-
 	/** 技能延迟计时器 */
 	static class SkillDelayTimer implements Runnable {
 		private L1Character _cha;
@@ -50,6 +47,9 @@ public class L1SkillDelay {
 	public static void onSkillUse(L1Character cha, int time) {
 		cha.setSkillDelay(true);
 		GeneralThreadPool.getInstance().schedule(new SkillDelayTimer(cha, time), time);
+	}
+
+	private L1SkillDelay() {
 	}
 
 }

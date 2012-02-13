@@ -51,6 +51,10 @@ public class C_CommonClick {
 		}
 	}
 
+	public String getType() {
+		return C_COMMON_CLICK;
+	}
+
 	/** 删除角色 */
 	private void deleteCharacter(ClientThread client) {
 		Connection conn = null;
@@ -205,9 +209,5 @@ public class C_CommonClick {
 			SQLUtil.close(pstm);
 			SQLUtil.close(conn);
 		}
-	}
-
-	public String getType() {
-		return C_COMMON_CLICK;
 	}
 }

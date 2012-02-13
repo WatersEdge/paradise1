@@ -20,11 +20,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Normal extends ItemExecutor {
 
-	private MagicScroll_Normal() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Normal();
+	}
+
+	private MagicScroll_Normal() {
 	}
 
 	/**

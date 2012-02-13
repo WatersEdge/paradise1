@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class BlackMagicPowder extends ItemExecutor {
 
-	private BlackMagicPowder() {
-	}
-
 	public static ItemExecutor get() {
 		return new BlackMagicPowder();
+	}
+
+	private BlackMagicPowder() {
 	}
 
 	/**

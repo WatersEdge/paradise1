@@ -32,59 +32,6 @@ public class InnKeyTable {
 
 	private static Logger _log = Logger.getLogger(InnKeyTable.class.getName());
 
-	private InnKeyTable() {
-	}
-
-	/**
-	 * 储存钥匙
-	 * 
-	 * @param item
-	 */
-	public static void StoreKey(L1ItemInstance item) {
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO inn_key SET item_obj_id=?, key_id=?, npc_id=?, hall=?, due_time=?");
-
-			pstm.setInt(1, item.getId());
-			pstm.setInt(2, item.getKeyId());
-			pstm.setInt(3, item.getInnNpcId());
-			pstm.setBoolean(4, item.checkRoomOrHall());
-			pstm.setTimestamp(5, item.getDueTime());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 删除钥匙
-	 * 
-	 * @param item
-	 */
-	public static void DeleteKey(L1ItemInstance item) {
-		java.sql.Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM inn_key WHERE item_obj_id=?");
-			pstm.setInt(1, item.getId());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-
-		}
-	}
-
 	/**
 	 * 检查钥匙
 	 * 
@@ -120,6 +67,59 @@ public class InnKeyTable {
 			SQLUtil.close(con);
 		}
 		return false;
+	}
+
+	/**
+	 * 删除钥匙
+	 * 
+	 * @param item
+	 */
+	public static void DeleteKey(L1ItemInstance item) {
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM inn_key WHERE item_obj_id=?");
+			pstm.setInt(1, item.getId());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+
+		}
+	}
+
+	/**
+	 * 储存钥匙
+	 * 
+	 * @param item
+	 */
+	public static void StoreKey(L1ItemInstance item) {
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO inn_key SET item_obj_id=?, key_id=?, npc_id=?, hall=?, due_time=?");
+
+			pstm.setInt(1, item.getId());
+			pstm.setInt(2, item.getKeyId());
+			pstm.setInt(3, item.getInnNpcId());
+			pstm.setBoolean(4, item.checkRoomOrHall());
+			pstm.setTimestamp(5, item.getDueTime());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	private InnKeyTable() {
 	}
 
 }

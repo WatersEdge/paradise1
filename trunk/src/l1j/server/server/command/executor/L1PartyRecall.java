@@ -26,11 +26,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 public class L1PartyRecall implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1PartyRecall.class.getName());
 
-	private L1PartyRecall() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1PartyRecall();
+	}
+
+	private L1PartyRecall() {
 	}
 
 	@Override

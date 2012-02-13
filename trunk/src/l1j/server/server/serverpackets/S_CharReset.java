@@ -26,25 +26,6 @@ public class S_CharReset extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	/**
-	 * 重置升级能力更新 [Server] opcode = 43 0000: 2b /02/ 01 2d/ 0f 00/ 04 00/ 0a 00 /0c 0c 0c 0c 12 09 +..-............
-	 */
-	public S_CharReset(L1PcInstance pc, int lv, int hp, int mp, int ac, int str, int intel, int wis, int dex, int con, int cha) {
-		writeC(Opcodes.S_OPCODE_CHARRESET);
-		writeC(0x02);
-		writeC(lv);
-		writeC(pc.getTempMaxLevel()); // max lv
-		writeH(hp);
-		writeH(mp);
-		writeH(ac);
-		writeC(str);
-		writeC(intel);
-		writeC(wis);
-		writeC(dex);
-		writeC(con);
-		writeC(cha);
-	}
-
 	public S_CharReset(int point) {
 		writeC(Opcodes.S_OPCODE_CHARRESET);
 		writeC(0x03);
@@ -98,6 +79,25 @@ public class S_CharReset extends ServerBasePacket {
 		// writeC(0x09);
 		// writeC(0x01);
 		// writeC(0x07);
+	}
+
+	/**
+	 * 重置升级能力更新 [Server] opcode = 43 0000: 2b /02/ 01 2d/ 0f 00/ 04 00/ 0a 00 /0c 0c 0c 0c 12 09 +..-............
+	 */
+	public S_CharReset(L1PcInstance pc, int lv, int hp, int mp, int ac, int str, int intel, int wis, int dex, int con, int cha) {
+		writeC(Opcodes.S_OPCODE_CHARRESET);
+		writeC(0x02);
+		writeC(lv);
+		writeC(pc.getTempMaxLevel()); // max lv
+		writeH(hp);
+		writeH(mp);
+		writeH(ac);
+		writeC(str);
+		writeC(intel);
+		writeC(wis);
+		writeC(dex);
+		writeC(con);
+		writeC(cha);
 	}
 
 	@Override

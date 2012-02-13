@@ -33,11 +33,6 @@ public class L1WarSpawn {
 
 	private static L1WarSpawn _instance;
 
-	private Constructor<?> _constructor;
-
-	public L1WarSpawn() {
-	}
-
 	public static L1WarSpawn getInstance() {
 		if (_instance == null) {
 			_instance = new L1WarSpawn();
@@ -45,28 +40,9 @@ public class L1WarSpawn {
 		return _instance;
 	}
 
-	public void SpawnTower(int castleId) {
-		int npcId = 81111;
-		if (castleId == L1CastleLocation.ADEN_CASTLE_ID) {
-			npcId = 81189;
-		}
-		L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId); // 塔守护者
-		int[] loc = new int[3];
-		loc = L1CastleLocation.getTowerLoc(castleId);
-		SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
-		if (castleId == L1CastleLocation.ADEN_CASTLE_ID) {
-			spawnSubTower();
-		}
-	}
+	private Constructor<?> _constructor;
 
-	private void spawnSubTower() {
-		L1Npc l1npc;
-		int[] loc = new int[3];
-		for (int i = 1; i <= 4; i++) {
-			l1npc = NpcTable.getInstance().getTemplate(81189 + i); // 守护者之塔
-			loc = L1CastleLocation.getSubTowerLoc(i);
-			SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
-		}
+	public L1WarSpawn() {
 	}
 
 	public void SpawnCrown(int castleId) {
@@ -99,6 +75,30 @@ public class L1WarSpawn {
 		}
 		for (x = locx1, y = locy2; y >= locy1; y -= 8) {
 			SpawnWarObject(l1npc, x, y, mapid);
+		}
+	}
+
+	public void SpawnTower(int castleId) {
+		int npcId = 81111;
+		if (castleId == L1CastleLocation.ADEN_CASTLE_ID) {
+			npcId = 81189;
+		}
+		L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId); // 塔守护者
+		int[] loc = new int[3];
+		loc = L1CastleLocation.getTowerLoc(castleId);
+		SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
+		if (castleId == L1CastleLocation.ADEN_CASTLE_ID) {
+			spawnSubTower();
+		}
+	}
+
+	private void spawnSubTower() {
+		L1Npc l1npc;
+		int[] loc = new int[3];
+		for (int i = 1; i <= 4; i++) {
+			l1npc = NpcTable.getInstance().getTemplate(81189 + i); // 守护者之塔
+			loc = L1CastleLocation.getSubTowerLoc(i);
+			SpawnWarObject(l1npc, loc[0], loc[1], (short) (loc[2]));
 		}
 	}
 

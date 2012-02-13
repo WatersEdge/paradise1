@@ -30,23 +30,6 @@ public class L1ExcludingList {
 	}
 
 	/**
-	 * 从封锁名单删除指定的角色名称
-	 * 
-	 * @param name
-	 *            角色的名称
-	 * @return 实际的删除、客户端的封锁列表的角色。如果没有名称在列表中指定的，则返回null。
-	 */
-	public String remove(String name) {
-		for (String each : _nameList) {
-			if (each.equalsIgnoreCase(name)) {
-				_nameList.remove(each);
-				return each;
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * 返回封锁角色的指定名称场合true
 	 */
 	public boolean contains(String name) {
@@ -63,5 +46,22 @@ public class L1ExcludingList {
 	 */
 	public boolean isFull() {
 		return (_nameList.size() >= 16) ? true : false;
+	}
+
+	/**
+	 * 从封锁名单删除指定的角色名称
+	 * 
+	 * @param name
+	 *            角色的名称
+	 * @return 实际的删除、客户端的封锁列表的角色。如果没有名称在列表中指定的，则返回null。
+	 */
+	public String remove(String name) {
+		for (String each : _nameList) {
+			if (each.equalsIgnoreCase(name)) {
+				_nameList.remove(each);
+				return each;
+			}
+		}
+		return null;
 	}
 }

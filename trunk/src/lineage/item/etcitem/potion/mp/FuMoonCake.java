@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class FuMoonCake extends ItemExecutor {
 
-	private FuMoonCake() {
-	}
-
 	public static ItemExecutor get() {
 		return new FuMoonCake();
+	}
+
+	private FuMoonCake() {
 	}
 
 	/**

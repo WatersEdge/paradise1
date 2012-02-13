@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpellBook_DarkElf;
  */
 public class DarkElfSpellBook extends ItemExecutor {
 
-	private DarkElfSpellBook() {
-	}
-
 	public static ItemExecutor get() {
 		return new DarkElfSpellBook();
+	}
+
+	private DarkElfSpellBook() {
 	}
 
 	/**

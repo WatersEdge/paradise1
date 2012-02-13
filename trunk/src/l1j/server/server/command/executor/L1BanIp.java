@@ -25,11 +25,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * GM指令：禁止登入
  */
 public class L1BanIp implements L1CommandExecutor {
-	private L1BanIp() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1BanIp();
+	}
+
+	private L1BanIp() {
 	}
 
 	@Override

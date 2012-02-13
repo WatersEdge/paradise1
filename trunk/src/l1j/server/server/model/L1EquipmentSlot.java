@@ -66,142 +66,126 @@ public class L1EquipmentSlot {
 		_currentArmorSet = Lists.newList();
 	}
 
-	private void setWeapon(L1ItemInstance weapon) {
-		_owner.setWeapon(weapon);
-		_owner.setCurrentWeapon(weapon.getItem().getType1());
-		weapon.startEquipmentTimer(_owner);
-		_weapon = weapon;
+	public List<L1ItemInstance> getArmors() {
+		return _armors;
 	}
 
 	public L1ItemInstance getWeapon() {
 		return _weapon;
 	}
 
-	private void setArmor(L1ItemInstance armor) {
-		L1Item item = armor.getItem();
-		int itemId = armor.getItem().getItemId();
-		// 饰品不加防判断
-		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8 && armor.getItem().getType() <= 12) {
-			_owner.addAc(item.get_ac() - armor.getAcByMagic());
+	public void remove(L1ItemInstance equipment) {
+		L1Item item = equipment.getItem();
+		if (item.getType2() == 0) {
+			return;
 		}
-		else {
-			_owner.addAc(item.get_ac() - armor.getEnchantLevel() - armor.getAcByMagic());
+
+		if (item.get_addhp() != 0) {
+			_owner.addMaxHp(-item.get_addhp());
 		}
-		_owner.addDamageReductionByArmor(item.getDamageReduction());
-		_owner.addWeightReduction(item.getWeightReduction());
-		_owner.addHitModifierByArmor(item.getHitModifierByArmor());
-		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor());
-		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor());
-		_owner.addBowDmgModifierByArmor(item.getBowDmgModifierByArmor());
-		_owner.addRegistStun(item.get_regist_stun());
-		_owner.addRegistStone(item.get_regist_stone());
-		_owner.addRegistSleep(item.get_regist_sleep());
-		_owner.add_regist_freeze(item.get_regist_freeze());
-		_owner.addRegistSustain(item.get_regist_sustain());
-		_owner.addRegistBlind(item.get_regist_blind());
-		// 饰品强化 Scroll of Enchant Accessory
-		_owner.addEarth(item.get_defense_earth() + armor.getEarthMr());
-		_owner.addWind(item.get_defense_wind() + armor.getWindMr());
-		_owner.addWater(item.get_defense_water() + armor.getWaterMr());
-		_owner.addFire(item.get_defense_fire() + armor.getFireMr());
+		if (item.get_addmp() != 0) {
+			_owner.addMaxMp(-item.get_addmp());
+		}
+		if (equipment.getaddHp() != 0) {
+			_owner.addMaxHp(-equipment.getaddHp());
+		}
+		if (equipment.getaddMp() != 0) {
+			_owner.addMaxMp(-equipment.getaddMp());
+		}
+		_owner.addStr((byte) -item.get_addstr());
+		_owner.addCon((byte) -item.get_addcon());
+		_owner.addDex((byte) -item.get_adddex());
+		_owner.addInt((byte) -item.get_addint());
+		_owner.addWis((byte) -item.get_addwis());
+		if (item.get_addwis() != 0) {
+			_owner.resetBaseMr();
+		}
+		_owner.addCha((byte) -item.get_addcha());
 
-		_armors.add(armor);
-
-		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {
-			if (armorSet.isPartOfSet(itemId) && armorSet.isValid(_owner)) {
-				if ((armor.getItem().getType2() == 2) && (armor.getItem().getType() == 9)) { // ring
-					if (!armorSet.isEquippedRingOfArmorSet(_owner)) {
-						armorSet.giveEffect(_owner);
-						_currentArmorSet.add(armorSet);
-					}
-				}
-				else {
-					armorSet.giveEffect(_owner);
-					_currentArmorSet.add(armorSet);
-				}
+		int addMr = 0;
+		addMr -= equipment.getMr();
+		if ((item.getItemId() == 20236) && _owner.isElf()) {
+			addMr -= 5;
+		}
+		if (addMr != 0) {
+			_owner.addMr(addMr);
+			_owner.sendPackets(new S_SPMR(_owner));
+		}
+		if (item.get_addsp() != 0 || equipment.getaddSp() != 0) {
+			_owner.addSp(-(item.get_addsp() + equipment.getaddSp()));
+			_owner.sendPackets(new S_SPMR(_owner));
+		}
+		if (item.isHasteItem()) {
+			_owner.addHasteItemEquipped(-1);
+			if (_owner.getHasteItemEquipped() == 0) {
+				_owner.setMoveSpeed(0);
+				_owner.sendPackets(new S_SkillHaste(_owner.getId(), 0, 0));
+				_owner.broadcastPacket(new S_SkillHaste(_owner.getId(), 0, 0));
 			}
 		}
+		_owner.getEquipSlot().removeMagicHelm(_owner.getId(), equipment);
 
-		// 隐身斗篷
-		if ((itemId == 20077) || (itemId == 20062) || (itemId == 120077)) {
-			if (!_owner.hasSkillEffect(INVISIBILITY)) {
-				_owner.killSkillEffectTimer(BLIND_HIDING);
-				_owner.setSkillEffect(INVISIBILITY, 0);
-				_owner.sendPackets(new S_Invis(_owner.getId(), 1));
-				_owner.broadcastPacketForFindInvis(new S_RemoveObject(_owner), false);
-				// _owner.broadcastPacket(new S_RemoveObject(_owner));
-			}
+		if (item.getType2() == 1) {
+			removeWeapon(equipment);
 		}
-		if (itemId == 20288) { // ROTC 传送控制戒指
-			_owner.sendPackets(new S_Ability(1, true));
-		}
-		if (itemId == 20383) { // 军马头盔
-			if (armor.getChargeCount() != 0) {
-				armor.setChargeCount(armor.getChargeCount() - 1);
-				_owner.getInventory().updateItem(armor, L1PcInventory.COL_CHARGE_COUNT);
-			}
-		}
-		armor.startEquipmentTimer(_owner);
-	}
-
-	public List<L1ItemInstance> getArmors() {
-		return _armors;
-	}
-
-	private void removeWeapon(L1ItemInstance weapon) {
-		_owner.setWeapon(null);
-		_owner.setCurrentWeapon(0);
-		weapon.stopEquipmentTimer(_owner);
-		_weapon = null;
-		if (_owner.hasSkillEffect(COUNTER_BARRIER)) {
-			_owner.removeSkillEffect(COUNTER_BARRIER);
+		else if (item.getType2() == 2) {
+			removeArmor(equipment);
 		}
 	}
 
-	private void removeArmor(L1ItemInstance armor) {
-		L1Item item = armor.getItem();
-		int itemId = armor.getItem().getItemId();
-		// 饰品不加防判断
-		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8 && armor.getItem().getType() <= 12) {
-			_owner.addAc(-(item.get_ac() - armor.getAcByMagic()));
-		}
-		else {
-			_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor.getAcByMagic()));
-		}
-		_owner.addDamageReductionByArmor(-item.getDamageReduction());
-		_owner.addWeightReduction(-item.getWeightReduction());
-		_owner.addHitModifierByArmor(-item.getHitModifierByArmor());
-		_owner.addDmgModifierByArmor(-item.getDmgModifierByArmor());
-		_owner.addBowHitModifierByArmor(-item.getBowHitModifierByArmor());
-		_owner.addBowDmgModifierByArmor(-item.getBowDmgModifierByArmor());
-		_owner.addRegistStun(-item.get_regist_stun());
-		_owner.addRegistStone(-item.get_regist_stone());
-		_owner.addRegistSleep(-item.get_regist_sleep());
-		_owner.add_regist_freeze(-item.get_regist_freeze());
-		_owner.addRegistSustain(-item.get_regist_sustain());
-		_owner.addRegistBlind(-item.get_regist_blind());
-		// 饰品强化 Scroll of Enchant Accessory
-		_owner.addEarth(-item.get_defense_earth() - armor.getEarthMr());
-		_owner.addWind(-item.get_defense_wind() - armor.getWindMr());
-		_owner.addWater(-item.get_defense_water() - armor.getWaterMr());
-		_owner.addFire(-item.get_defense_fire() - armor.getFireMr());
-
-		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {
-			if (armorSet.isPartOfSet(itemId) && _currentArmorSet.contains(armorSet) && !armorSet.isValid(_owner)) {
-				armorSet.cancelEffect(_owner);
-				_currentArmorSet.remove(armorSet);
+	public void removeMagicHelm(int objectId, L1ItemInstance item) {
+		switch (item.getItemId()) {
+		case 20013: // 敏捷魔法头盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, PHYSICAL_ENCHANT_DEX)) {
+				_owner.removeSkillMastery(PHYSICAL_ENCHANT_DEX);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
+			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
+				_owner.removeSkillMastery(HASTE);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			break;
+		case 20014: // 治愈魔法头盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, HEAL)) {
+				_owner.removeSkillMastery(HEAL);
+				_owner.sendPackets(new S_DelSkill(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			if (!SkillsTable.getInstance().spellCheck(objectId, EXTRA_HEAL)) {
+				_owner.removeSkillMastery(EXTRA_HEAL);
+				_owner.sendPackets(new S_DelSkill(0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			break;
+		case 20015: // 力量魔法头盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, ENCHANT_WEAPON)) {
+				_owner.removeSkillMastery(ENCHANT_WEAPON);
+				_owner.sendPackets(new S_DelSkill(0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			if (!SkillsTable.getInstance().spellCheck(objectId, DETECTION)) {
+				_owner.removeSkillMastery(DETECTION);
+				_owner.sendPackets(new S_DelSkill(0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			if (!SkillsTable.getInstance().spellCheck(objectId, PHYSICAL_ENCHANT_STR)) {
+				_owner.removeSkillMastery(PHYSICAL_ENCHANT_STR);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			break;
+		case 20008: // 小型风之头盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
+				_owner.removeSkillMastery(HASTE);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			break;
+		case 20023: // 风之头盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
+				_owner.removeSkillMastery(HASTE);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			if (!SkillsTable.getInstance().spellCheck(objectId, GREATER_HASTE)) {
+				_owner.removeSkillMastery(GREATER_HASTE);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
+			break;
 		}
-
-		if ((itemId == 20077) || (itemId == 20062) || (itemId == 120077)) {
-			_owner.delInvis(); // 解除隐形状态
-		}
-		if (itemId == 20288) { // ROTC
-			_owner.sendPackets(new S_Ability(1, false));
-		}
-		armor.stopEquipmentTimer(_owner);
-
-		_armors.remove(armor);
 	}
 
 	public void set(L1ItemInstance equipment) {
@@ -273,65 +257,6 @@ public class L1EquipmentSlot {
 		}
 	}
 
-	public void remove(L1ItemInstance equipment) {
-		L1Item item = equipment.getItem();
-		if (item.getType2() == 0) {
-			return;
-		}
-
-		if (item.get_addhp() != 0) {
-			_owner.addMaxHp(-item.get_addhp());
-		}
-		if (item.get_addmp() != 0) {
-			_owner.addMaxMp(-item.get_addmp());
-		}
-		if (equipment.getaddHp() != 0) {
-			_owner.addMaxHp(-equipment.getaddHp());
-		}
-		if (equipment.getaddMp() != 0) {
-			_owner.addMaxMp(-equipment.getaddMp());
-		}
-		_owner.addStr((byte) -item.get_addstr());
-		_owner.addCon((byte) -item.get_addcon());
-		_owner.addDex((byte) -item.get_adddex());
-		_owner.addInt((byte) -item.get_addint());
-		_owner.addWis((byte) -item.get_addwis());
-		if (item.get_addwis() != 0) {
-			_owner.resetBaseMr();
-		}
-		_owner.addCha((byte) -item.get_addcha());
-
-		int addMr = 0;
-		addMr -= equipment.getMr();
-		if ((item.getItemId() == 20236) && _owner.isElf()) {
-			addMr -= 5;
-		}
-		if (addMr != 0) {
-			_owner.addMr(addMr);
-			_owner.sendPackets(new S_SPMR(_owner));
-		}
-		if (item.get_addsp() != 0 || equipment.getaddSp() != 0) {
-			_owner.addSp(-(item.get_addsp() + equipment.getaddSp()));
-			_owner.sendPackets(new S_SPMR(_owner));
-		}
-		if (item.isHasteItem()) {
-			_owner.addHasteItemEquipped(-1);
-			if (_owner.getHasteItemEquipped() == 0) {
-				_owner.setMoveSpeed(0);
-				_owner.sendPackets(new S_SkillHaste(_owner.getId(), 0, 0));
-				_owner.broadcastPacket(new S_SkillHaste(_owner.getId(), 0, 0));
-			}
-		}
-		_owner.getEquipSlot().removeMagicHelm(_owner.getId(), equipment);
-
-		if (item.getType2() == 1) {
-			removeWeapon(equipment);
-		}
-		else if (item.getType2() == 2) {
-			removeArmor(equipment);
-		}
-	}
-
 	public void setMagicHelm(L1ItemInstance item) {
 		switch (item.getItemId()) {
 		case 20013:
@@ -362,59 +287,134 @@ public class L1EquipmentSlot {
 		}
 	}
 
-	public void removeMagicHelm(int objectId, L1ItemInstance item) {
-		switch (item.getItemId()) {
-		case 20013: // 敏捷魔法头盔
-			if (!SkillsTable.getInstance().spellCheck(objectId, PHYSICAL_ENCHANT_DEX)) {
-				_owner.removeSkillMastery(PHYSICAL_ENCHANT_DEX);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
-				_owner.removeSkillMastery(HASTE);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			break;
-		case 20014: // 治愈魔法头盔
-			if (!SkillsTable.getInstance().spellCheck(objectId, HEAL)) {
-				_owner.removeSkillMastery(HEAL);
-				_owner.sendPackets(new S_DelSkill(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			if (!SkillsTable.getInstance().spellCheck(objectId, EXTRA_HEAL)) {
-				_owner.removeSkillMastery(EXTRA_HEAL);
-				_owner.sendPackets(new S_DelSkill(0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			break;
-		case 20015: // 力量魔法头盔
-			if (!SkillsTable.getInstance().spellCheck(objectId, ENCHANT_WEAPON)) {
-				_owner.removeSkillMastery(ENCHANT_WEAPON);
-				_owner.sendPackets(new S_DelSkill(0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			if (!SkillsTable.getInstance().spellCheck(objectId, DETECTION)) {
-				_owner.removeSkillMastery(DETECTION);
-				_owner.sendPackets(new S_DelSkill(0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			if (!SkillsTable.getInstance().spellCheck(objectId, PHYSICAL_ENCHANT_STR)) {
-				_owner.removeSkillMastery(PHYSICAL_ENCHANT_STR);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			break;
-		case 20008: // 小型风之头盔
-			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
-				_owner.removeSkillMastery(HASTE);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			break;
-		case 20023: // 风之头盔
-			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
-				_owner.removeSkillMastery(HASTE);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			if (!SkillsTable.getInstance().spellCheck(objectId, GREATER_HASTE)) {
-				_owner.removeSkillMastery(GREATER_HASTE);
-				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			}
-			break;
+	private void removeArmor(L1ItemInstance armor) {
+		L1Item item = armor.getItem();
+		int itemId = armor.getItem().getItemId();
+		// 饰品不加防判断
+		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8 && armor.getItem().getType() <= 12) {
+			_owner.addAc(-(item.get_ac() - armor.getAcByMagic()));
 		}
+		else {
+			_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor.getAcByMagic()));
+		}
+		_owner.addDamageReductionByArmor(-item.getDamageReduction());
+		_owner.addWeightReduction(-item.getWeightReduction());
+		_owner.addHitModifierByArmor(-item.getHitModifierByArmor());
+		_owner.addDmgModifierByArmor(-item.getDmgModifierByArmor());
+		_owner.addBowHitModifierByArmor(-item.getBowHitModifierByArmor());
+		_owner.addBowDmgModifierByArmor(-item.getBowDmgModifierByArmor());
+		_owner.addRegistStun(-item.get_regist_stun());
+		_owner.addRegistStone(-item.get_regist_stone());
+		_owner.addRegistSleep(-item.get_regist_sleep());
+		_owner.add_regist_freeze(-item.get_regist_freeze());
+		_owner.addRegistSustain(-item.get_regist_sustain());
+		_owner.addRegistBlind(-item.get_regist_blind());
+		// 饰品强化 Scroll of Enchant Accessory
+		_owner.addEarth(-item.get_defense_earth() - armor.getEarthMr());
+		_owner.addWind(-item.get_defense_wind() - armor.getWindMr());
+		_owner.addWater(-item.get_defense_water() - armor.getWaterMr());
+		_owner.addFire(-item.get_defense_fire() - armor.getFireMr());
+
+		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {
+			if (armorSet.isPartOfSet(itemId) && _currentArmorSet.contains(armorSet) && !armorSet.isValid(_owner)) {
+				armorSet.cancelEffect(_owner);
+				_currentArmorSet.remove(armorSet);
+			}
+		}
+
+		if ((itemId == 20077) || (itemId == 20062) || (itemId == 120077)) {
+			_owner.delInvis(); // 解除隐形状态
+		}
+		if (itemId == 20288) { // ROTC
+			_owner.sendPackets(new S_Ability(1, false));
+		}
+		armor.stopEquipmentTimer(_owner);
+
+		_armors.remove(armor);
+	}
+
+	private void removeWeapon(L1ItemInstance weapon) {
+		_owner.setWeapon(null);
+		_owner.setCurrentWeapon(0);
+		weapon.stopEquipmentTimer(_owner);
+		_weapon = null;
+		if (_owner.hasSkillEffect(COUNTER_BARRIER)) {
+			_owner.removeSkillEffect(COUNTER_BARRIER);
+		}
+	}
+
+	private void setArmor(L1ItemInstance armor) {
+		L1Item item = armor.getItem();
+		int itemId = armor.getItem().getItemId();
+		// 饰品不加防判断
+		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8 && armor.getItem().getType() <= 12) {
+			_owner.addAc(item.get_ac() - armor.getAcByMagic());
+		}
+		else {
+			_owner.addAc(item.get_ac() - armor.getEnchantLevel() - armor.getAcByMagic());
+		}
+		_owner.addDamageReductionByArmor(item.getDamageReduction());
+		_owner.addWeightReduction(item.getWeightReduction());
+		_owner.addHitModifierByArmor(item.getHitModifierByArmor());
+		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor());
+		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor());
+		_owner.addBowDmgModifierByArmor(item.getBowDmgModifierByArmor());
+		_owner.addRegistStun(item.get_regist_stun());
+		_owner.addRegistStone(item.get_regist_stone());
+		_owner.addRegistSleep(item.get_regist_sleep());
+		_owner.add_regist_freeze(item.get_regist_freeze());
+		_owner.addRegistSustain(item.get_regist_sustain());
+		_owner.addRegistBlind(item.get_regist_blind());
+		// 饰品强化 Scroll of Enchant Accessory
+		_owner.addEarth(item.get_defense_earth() + armor.getEarthMr());
+		_owner.addWind(item.get_defense_wind() + armor.getWindMr());
+		_owner.addWater(item.get_defense_water() + armor.getWaterMr());
+		_owner.addFire(item.get_defense_fire() + armor.getFireMr());
+
+		_armors.add(armor);
+
+		for (L1ArmorSet armorSet : L1ArmorSet.getAllSet()) {
+			if (armorSet.isPartOfSet(itemId) && armorSet.isValid(_owner)) {
+				if ((armor.getItem().getType2() == 2) && (armor.getItem().getType() == 9)) { // ring
+					if (!armorSet.isEquippedRingOfArmorSet(_owner)) {
+						armorSet.giveEffect(_owner);
+						_currentArmorSet.add(armorSet);
+					}
+				}
+				else {
+					armorSet.giveEffect(_owner);
+					_currentArmorSet.add(armorSet);
+				}
+			}
+		}
+
+		// 隐身斗篷
+		if ((itemId == 20077) || (itemId == 20062) || (itemId == 120077)) {
+			if (!_owner.hasSkillEffect(INVISIBILITY)) {
+				_owner.killSkillEffectTimer(BLIND_HIDING);
+				_owner.setSkillEffect(INVISIBILITY, 0);
+				_owner.sendPackets(new S_Invis(_owner.getId(), 1));
+				_owner.broadcastPacketForFindInvis(new S_RemoveObject(_owner), false);
+				// _owner.broadcastPacket(new S_RemoveObject(_owner));
+			}
+		}
+		if (itemId == 20288) { // ROTC 传送控制戒指
+			_owner.sendPackets(new S_Ability(1, true));
+		}
+		if (itemId == 20383) { // 军马头盔
+			if (armor.getChargeCount() != 0) {
+				armor.setChargeCount(armor.getChargeCount() - 1);
+				_owner.getInventory().updateItem(armor, L1PcInventory.COL_CHARGE_COUNT);
+			}
+		}
+		armor.startEquipmentTimer(_owner);
+	}
+
+	private void setWeapon(L1ItemInstance weapon) {
+		_owner.setWeapon(weapon);
+		_owner.setCurrentWeapon(weapon.getItem().getType1());
+		weapon.startEquipmentTimer(_owner);
+		_weapon = weapon;
 	}
 
 }

@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class WormwoodRiceCake extends ItemExecutor {
 
-	private WormwoodRiceCake() {
-	}
-
 	public static ItemExecutor get() {
 		return new WormwoodRiceCake();
+	}
+
+	private WormwoodRiceCake() {
 	}
 
 	/**

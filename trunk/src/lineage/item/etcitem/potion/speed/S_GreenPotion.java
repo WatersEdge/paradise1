@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class S_GreenPotion extends ItemExecutor {
 
-	private S_GreenPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new S_GreenPotion();
+	}
+
+	private S_GreenPotion() {
 	}
 
 	/**

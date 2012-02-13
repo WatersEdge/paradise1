@@ -32,35 +32,13 @@ public class L1MobGroupInfo {
 	/** 领导者 */
 	private L1NpcInstance _leader;
 
-	public L1MobGroupInfo() {
-	}
-
-	/** 设定领导者 */
-	public void setLeader(L1NpcInstance npc) {
-		_leader = npc;
-	}
-
-	/** 取得领导者 */
-	public L1NpcInstance getLeader() {
-		return _leader;
-	}
-
-	/** 领导者 */
-	public boolean isLeader(L1NpcInstance npc) {
-		return npc.getId() == _leader.getId();
-	}
-
 	/** 产生 */
 	private L1Spawn _spawn;
 
-	/** 设定产生 */
-	public void setSpawn(L1Spawn spawn) {
-		_spawn = spawn;
-	}
+	/** 删除群组 */
+	private boolean _isRemoveGroup;
 
-	/** 取得产生 */
-	public L1Spawn getSpawn() {
-		return _spawn;
+	public L1MobGroupInfo() {
 	}
 
 	/** 增加成员 */
@@ -83,6 +61,31 @@ public class L1MobGroupInfo {
 		}
 		npc.setMobGroupInfo(this);
 		npc.setMobGroupId(_leader.getId());
+	}
+
+	/** 取得领导者 */
+	public L1NpcInstance getLeader() {
+		return _leader;
+	}
+
+	/** NUM各成员 */
+	public int getNumOfMembers() {
+		return _membersList.size();
+	}
+
+	/** 取得产生 */
+	public L1Spawn getSpawn() {
+		return _spawn;
+	}
+
+	/** 领导者 */
+	public boolean isLeader(L1NpcInstance npc) {
+		return npc.getId() == _leader.getId();
+	}
+
+	/** 删除群组 */
+	public boolean isRemoveGroup() {
+		return _isRemoveGroup;
 	}
 
 	/** 删除成员 */
@@ -115,22 +118,19 @@ public class L1MobGroupInfo {
 		return _membersList.size();
 	}
 
-	/** NUM各成员 */
-	public int getNumOfMembers() {
-		return _membersList.size();
-	}
-
-	/** 删除群组 */
-	private boolean _isRemoveGroup;
-
-	/** 删除群组 */
-	public boolean isRemoveGroup() {
-		return _isRemoveGroup;
+	/** 设定领导者 */
+	public void setLeader(L1NpcInstance npc) {
+		_leader = npc;
 	}
 
 	/** 设定删除群组 */
 	public void setRemoveGroup(boolean flag) {
 		_isRemoveGroup = flag;
+	}
+
+	/** 设定产生 */
+	public void setSpawn(L1Spawn spawn) {
+		_spawn = spawn;
 	}
 
 }

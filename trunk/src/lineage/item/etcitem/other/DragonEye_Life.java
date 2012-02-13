@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class DragonEye_Life extends ItemExecutor {
 
-	private DragonEye_Life() {
-	}
-
 	public static ItemExecutor get() {
 		return new DragonEye_Life();
+	}
+
+	private DragonEye_Life() {
 	}
 
 	/**

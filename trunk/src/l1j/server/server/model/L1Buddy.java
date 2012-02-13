@@ -32,16 +32,47 @@ public class L1Buddy {
 		_charId = charId;
 	}
 
-	public int getCharId() {
-		return _charId;
-	}
-
 	public boolean add(int objId, String name) {
 		if (_buddys.containsKey(objId)) {
 			return false;
 		}
 		_buddys.put(objId, name);
 		return true;
+	}
+
+	public boolean containsId(int objId) {
+		return _buddys.containsKey(objId);
+	}
+
+	public boolean containsName(String name) {
+		for (String buddyName : _buddys.values()) {
+			if (name.equalsIgnoreCase(buddyName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public String getBuddyListString() {
+		String result = new String("");
+		for (String name : _buddys.values()) {
+			result += name + " ";
+		}
+		return result;
+	}
+
+	public int getCharId() {
+		return _charId;
+	}
+
+	public String getOnlineBuddyListString() {
+		String result = new String("");
+		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+			if (_buddys.containsKey(pc.getId())) {
+				result += pc.getName() + " ";
+			}
+		}
+		return result;
 	}
 
 	public boolean remove(int objId) {
@@ -62,37 +93,6 @@ public class L1Buddy {
 		}
 		_buddys.remove(id);
 		return true;
-	}
-
-	public String getOnlineBuddyListString() {
-		String result = new String("");
-		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (_buddys.containsKey(pc.getId())) {
-				result += pc.getName() + " ";
-			}
-		}
-		return result;
-	}
-
-	public String getBuddyListString() {
-		String result = new String("");
-		for (String name : _buddys.values()) {
-			result += name + " ";
-		}
-		return result;
-	}
-
-	public boolean containsId(int objId) {
-		return _buddys.containsKey(objId);
-	}
-
-	public boolean containsName(String name) {
-		for (String buddyName : _buddys.values()) {
-			if (name.equalsIgnoreCase(buddyName)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public int size() {

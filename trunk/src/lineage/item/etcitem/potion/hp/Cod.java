@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class Cod extends ItemExecutor {
 
-	private Cod() {
-	}
-
 	public static ItemExecutor get() {
 		return new Cod();
+	}
+
+	private Cod() {
 	}
 
 	/**

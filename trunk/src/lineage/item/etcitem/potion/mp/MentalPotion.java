@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class MentalPotion extends ItemExecutor {
 
-	private MentalPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new MentalPotion();
+	}
+
+	private MentalPotion() {
 	}
 
 	/**

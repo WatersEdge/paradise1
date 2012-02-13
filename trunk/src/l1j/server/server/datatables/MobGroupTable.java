@@ -39,8 +39,6 @@ public class MobGroupTable {
 
 	private static MobGroupTable _instance;
 
-	private final Map<Integer, L1MobGroup> _mobGroupIndex = Maps.newMap();
-
 	public static MobGroupTable getInstance() {
 		if (_instance == null) {
 			_instance = new MobGroupTable();
@@ -48,8 +46,14 @@ public class MobGroupTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1MobGroup> _mobGroupIndex = Maps.newMap();
+
 	private MobGroupTable() {
 		loadMobGroup();
+	}
+
+	public L1MobGroup getTemplate(int mobGroupId) {
+		return _mobGroupIndex.get(mobGroupId);
 	}
 
 	private void loadMobGroup() {
@@ -82,10 +86,6 @@ public class MobGroupTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	public L1MobGroup getTemplate(int mobGroupId) {
-		return _mobGroupIndex.get(mobGroupId);
 	}
 
 }

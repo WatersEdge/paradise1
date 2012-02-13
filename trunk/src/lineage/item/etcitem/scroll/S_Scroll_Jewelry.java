@@ -13,11 +13,11 @@ import lineage.item.etcitem.CiteScrollEnchant;
  */
 public class S_Scroll_Jewelry extends ItemExecutor {
 
-	private S_Scroll_Jewelry() {
-	}
-
 	public static ItemExecutor get() {
 		return new S_Scroll_Jewelry();
+	}
+
+	private S_Scroll_Jewelry() {
 	}
 
 	/**

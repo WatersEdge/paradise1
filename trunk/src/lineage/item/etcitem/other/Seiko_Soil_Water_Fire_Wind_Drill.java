@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Seiko_Soil_Water_Fire_Wind_Drill extends ItemExecutor {
 
-	private Seiko_Soil_Water_Fire_Wind_Drill() {
-	}
-
 	public static ItemExecutor get() {
 		return new Seiko_Soil_Water_Fire_Wind_Drill();
+	}
+
+	private Seiko_Soil_Water_Fire_Wind_Drill() {
 	}
 
 	/**

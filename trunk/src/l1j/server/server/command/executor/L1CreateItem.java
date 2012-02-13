@@ -32,11 +32,11 @@ import l1j.server.server.templates.L1Item;
 public class L1CreateItem implements L1CommandExecutor {
 	private static Logger _log = Logger.getLogger(L1CreateItem.class.getName());
 
-	private L1CreateItem() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1CreateItem();
+	}
+
+	private L1CreateItem() {
 	}
 
 	@Override

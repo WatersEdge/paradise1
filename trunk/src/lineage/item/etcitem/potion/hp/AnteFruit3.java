@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class AnteFruit3 extends ItemExecutor {
 
-	private AnteFruit3() {
-	}
-
 	public static ItemExecutor get() {
 		return new AnteFruit3();
+	}
+
+	private AnteFruit3() {
 	}
 
 	/**

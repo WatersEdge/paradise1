@@ -35,6 +35,40 @@ public class S_Mail extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/**
+	 * // 无法传送信件 [Server] opcode = 48 0000: 30 20 00 45 54 fa 00 b5
+	 */
+	public S_Mail(int type) { // 通知收信者
+		writeC(Opcodes.S_OPCODE_MAIL);
+		writeC(type);
+	}
+
+	/**
+	 * //读取一般信件 [Server] opcode = 48 0000: [30] [10] [29 00 00 00] [32 00] 00 00 a4 cb 00 03 08 00 0.)...2.........
+	 * 
+	 * //信件存到保管箱 [Server] opcode = 48 0000: [30] [40] [2b 00 00 00] [01] 95
+	 * 
+	 */
+	public S_Mail(int mailId, int type) {
+		// 刪除信件
+		// 0x30: 刪除一般 0x31:刪除血盟 0x32:?保存到保管箱 0x40:刪除保管箱
+		if ((type == 0x30) || (type == 0x31) || (type == 0x32) || (type == 0x40)) {
+			writeC(Opcodes.S_OPCODE_MAIL);
+			writeC(type);
+			writeD(mailId);
+			writeC(1);
+			return;
+		}
+		MailTable.getInstance();
+		L1Mail mail = MailTable.getMail(mailId);
+		if (mail != null) {
+			writeC(Opcodes.S_OPCODE_MAIL);
+			writeC(type);
+			writeD(mail.getId());
+			writeByte(mail.getContent());
+		}
+	}
+
+	/**
 	 * 
 	 * //一般信件的标题 [Server] opcode = 48 3封 0000: [30][00 03][00][27 00 00 00][00][09][01][12][32 32 33 33 0...'.......2233 0010: 32 31 00] [31 00]00 [00] [28 00 00 00] [01] 09 01 12 32 21.1...(.......2 0020: 32 33 33 32 31 00 31 00 00 00 2a 00 00 00 00 09 23321.1...*..... 0030: 01
 	 * 13 32 32 33 33 32 31 00 31 00 00 00 93 0a 00 ..223321.1......
@@ -72,40 +106,6 @@ public class S_Mail extends ServerBasePacket {
 			}
 			writeS(mail.getSenderName());
 			writeByte(mail.getSubject());
-		}
-	}
-
-	/**
-	 * // 无法传送信件 [Server] opcode = 48 0000: 30 20 00 45 54 fa 00 b5
-	 */
-	public S_Mail(int type) { // 通知收信者
-		writeC(Opcodes.S_OPCODE_MAIL);
-		writeC(type);
-	}
-
-	/**
-	 * //读取一般信件 [Server] opcode = 48 0000: [30] [10] [29 00 00 00] [32 00] 00 00 a4 cb 00 03 08 00 0.)...2.........
-	 * 
-	 * //信件存到保管箱 [Server] opcode = 48 0000: [30] [40] [2b 00 00 00] [01] 95
-	 * 
-	 */
-	public S_Mail(int mailId, int type) {
-		// 刪除信件
-		// 0x30: 刪除一般 0x31:刪除血盟 0x32:?保存到保管箱 0x40:刪除保管箱
-		if ((type == 0x30) || (type == 0x31) || (type == 0x32) || (type == 0x40)) {
-			writeC(Opcodes.S_OPCODE_MAIL);
-			writeC(type);
-			writeD(mailId);
-			writeC(1);
-			return;
-		}
-		MailTable.getInstance();
-		L1Mail mail = MailTable.getMail(mailId);
-		if (mail != null) {
-			writeC(Opcodes.S_OPCODE_MAIL);
-			writeC(type);
-			writeD(mail.getId());
-			writeByte(mail.getContent());
 		}
 	}
 

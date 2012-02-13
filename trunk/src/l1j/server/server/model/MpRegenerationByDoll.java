@@ -35,6 +35,16 @@ public class MpRegenerationByDoll extends TimerTask {
 		_pc = pc;
 	}
 
+	public void regenMp() {
+		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMpByDoll(_pc);
+		if (newMp < 0) {
+			newMp = 0;
+		}
+		_pc.sendPackets(new S_SkillSound(_pc.getId(), 6321));
+		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 6321));
+		_pc.setCurrentMp(newMp);
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -46,16 +56,6 @@ public class MpRegenerationByDoll extends TimerTask {
 		catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
-	}
-
-	public void regenMp() {
-		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMpByDoll(_pc);
-		if (newMp < 0) {
-			newMp = 0;
-		}
-		_pc.sendPackets(new S_SkillSound(_pc.getId(), 6321));
-		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 6321));
-		_pc.setCurrentMp(newMp);
 	}
 
 }

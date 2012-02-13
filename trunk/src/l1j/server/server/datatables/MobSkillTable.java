@@ -38,8 +38,6 @@ public class MobSkillTable {
 
 	private static MobSkillTable _instance;
 
-	private final Map<Integer, L1MobSkill> _mobskills;
-
 	public static MobSkillTable getInstance() {
 		if (_instance == null) {
 			_instance = new MobSkillTable();
@@ -47,15 +45,21 @@ public class MobSkillTable {
 		return _instance;
 	}
 
-	/** 初始化 */
-	public boolean isInitialized() {
-		return _initialized;
-	}
+	private final Map<Integer, L1MobSkill> _mobskills;
 
 	private MobSkillTable() {
 		_mobskills = Maps.newMap();
 		loadMobSkillData();
 		_initialized = true;
+	}
+
+	public L1MobSkill getTemplate(int id) {
+		return _mobskills.get(id);
+	}
+
+	/** 初始化 */
+	public boolean isInitialized() {
+		return _initialized;
 	}
 
 	private void loadMobSkillData() {
@@ -130,9 +134,5 @@ public class MobSkillTable {
 			SQLUtil.close(pstm2);
 			SQLUtil.close(con);
 		}
-	}
-
-	public L1MobSkill getTemplate(int id) {
-		return _mobskills.get(id);
 	}
 }

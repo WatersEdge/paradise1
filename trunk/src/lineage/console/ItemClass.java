@@ -136,16 +136,16 @@ public class ItemClass {
 	}
 
 	/**
-	 * 武器的执行
+	 * 防具的执行
 	 * 
 	 * @param equipped
 	 *            装备 (使用)
 	 * @param pc
 	 *            对象
 	 * @param item
-	 *            武器
+	 *            防具
 	 */
-	public void item_weapon(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
+	public void item_armor(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 空角色
 		if (pc == null) {
@@ -173,16 +173,16 @@ public class ItemClass {
 	}
 
 	/**
-	 * 防具的执行
+	 * 武器的执行
 	 * 
 	 * @param equipped
 	 *            装备 (使用)
 	 * @param pc
 	 *            对象
 	 * @param item
-	 *            防具
+	 *            武器
 	 */
-	public void item_armor(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
+	public void item_weapon(final boolean equipped, final L1PcInstance pc, final L1ItemInstance item) {
 
 		// 空角色
 		if (pc == null) {

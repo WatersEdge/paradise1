@@ -111,6 +111,20 @@ public class S_ServerMessage extends ServerBasePacket {
 		buildPacket(type, msg1, msg2, msg3, msg4, msg5, 5);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = _bao.toByteArray();
+		}
+
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_SERVER_MESSAGE;
+	}
+
 	private void buildPacket(int type, String msg1, String msg2, String msg3, String msg4, String msg5, int check) {
 
 		writeC(Opcodes.S_OPCODE_SERVERMSG);
@@ -149,19 +163,5 @@ public class S_ServerMessage extends ServerBasePacket {
 			writeS(msg4);
 			writeS(msg5);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_SERVER_MESSAGE;
 	}
 }

@@ -48,78 +48,11 @@ import l1j.server.server.utils.Random;
  */
 public class L1GuardianInstance extends L1NpcInstance {
 
-	private static final long serialVersionUID = 1L;
-
-	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
-
-	private final L1GuardianInstance _npc = this;
-	/** NPC道具重置时间 */
-	private final int GDROPITEM_TIME = Config.GDROPITEM_TIME;
-
-	/**
-	 * @param template
-	 */
-	public L1GuardianInstance(L1Npc template) {
-		super(template);
-		if (!isDropitems()) {
-			doGDropItem(0);
+	public class RestMonitor extends TimerTask {
+		@Override
+		public void run() {
+			setRest(false);
 		}
-	}
-
-	@Override
-	public void searchTarget() {
-		// 目标搜索
-		L1PcInstance targetPlayer = null;
-
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
-				continue;
-			}
-			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) { // 检查隐身
-				if (!pc.isElf()) { // 不是精灵
-					targetPlayer = pc;
-					wideBroadcastPacket(new S_NpcChatPacket(this, "$804", 2)); // 人类，如果你重视你的生命现在就快离开这神圣的地方。
-					break;
-				}
-				else if (pc.isElf() && pc.isWantedForElf()) {
-					targetPlayer = pc;
-					wideBroadcastPacket(new S_NpcChatPacket(this, "$815", 1)); // 若杀害同族，必须以自己的生命赎罪。
-					break;
-				}
-			}
-		}
-		if (targetPlayer != null) {
-			_hateList.add(targetPlayer, 0);
-			_target = targetPlayer;
-		}
-	}
-
-	// 设置链接
-	@Override
-	public void setLink(L1Character cha) {
-		if ((cha != null) && _hateList.isEmpty()) { // ターゲットがいない場合のみ追加
-			_hateList.add(cha, 0);
-			checkTarget();
-		}
-	}
-
-	@Override
-	public void onNpcAI() {
-		if (isAiRunning()) {
-			return;
-		}
-		setActived(false);
-		startAI();
-	}
-
-	@Override
-	public void onAction(L1PcInstance pc) {
-		onAction(pc, 0);
-	}
-
-	public void doGDropItem(int timer) {
-		GDropItemTask task = new GDropItemTask();
-		GeneralThreadPool.getInstance().schedule(task, timer * 60000);
 	}
 
 	private class GDropItemTask implements Runnable {
@@ -156,6 +89,95 @@ public class L1GuardianInstance extends L1NpcInstance {
 				_log.log(Level.SEVERE, "资料载入错误", e);
 			}
 		}
+	}
+
+	class Death implements Runnable {
+		L1Character lastAttacker = _lastattacker;
+
+		@Override
+		public void run() {
+			setDeathProcessing(true);
+			setCurrentHpDirect(0);
+			setDead(true);
+			setStatus(ActionCodes.ACTION_Die);
+			int targetobjid = getId();
+			getMap().setPassable(getLocation(), true);
+			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
+
+			L1PcInstance player = null;
+			if (lastAttacker instanceof L1PcInstance) {
+				player = (L1PcInstance) lastAttacker;
+			}
+			else if (lastAttacker instanceof L1PetInstance) {
+				player = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
+			}
+			else if (lastAttacker instanceof L1SummonInstance) {
+				player = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
+			}
+			if (player != null) {
+				List<L1Character> targetList = _hateList.toTargetArrayList();
+				List<Integer> hateList = _hateList.toHateArrayList();
+				long exp = getExp();
+				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
+
+				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
+				List<Integer> dropHateList = _dropHateList.toHateArrayList();
+				try {
+					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
+				}
+				catch (Exception e) {
+					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				}
+				// カルマは止めを刺したプレイヤーに設定。ペットorサモンで倒した場合も入る。
+				player.addKarma((int) (getKarma() * Config.RATE_KARMA));
+			}
+			setDeathProcessing(false);
+
+			setKarma(0);
+			setExp(0);
+			allTargetClear();
+
+			startDeleteTimer();
+		}
+	}
+	private static final long serialVersionUID = 1L;
+
+	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
+
+	private final L1GuardianInstance _npc = this;
+
+	/** NPC道具重置时间 */
+	private final int GDROPITEM_TIME = Config.GDROPITEM_TIME;
+
+	private L1Character _lastattacker;
+
+	private static final long REST_MILLISEC = 10000;
+
+	private static final Timer _restTimer = new Timer(true);
+
+	private RestMonitor _monitor;
+
+	/**
+	 * @param template
+	 */
+	public L1GuardianInstance(L1Npc template) {
+		super(template);
+		if (!isDropitems()) {
+			doGDropItem(0);
+		}
+	}
+
+	public void doFinalAction(L1PcInstance player) {
+	}
+
+	public void doGDropItem(int timer) {
+		GDropItemTask task = new GDropItemTask();
+		GeneralThreadPool.getInstance().schedule(task, timer * 60000);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
 	}
 
 	@Override
@@ -309,6 +331,19 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
+	public void onFinalAction(L1PcInstance player, String action) {
+	}
+
+	@Override
+	public void onNpcAI() {
+		if (isAiRunning()) {
+			return;
+		}
+		setActived(false);
+		startAI();
+	}
+
+	@Override
 	public void onTalkAction(L1PcInstance player) {
 		int objid = getId();
 		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
@@ -414,6 +449,34 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
+	public void searchTarget() {
+		// 目标搜索
+		L1PcInstance targetPlayer = null;
+
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
+				continue;
+			}
+			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) { // 检查隐身
+				if (!pc.isElf()) { // 不是精灵
+					targetPlayer = pc;
+					wideBroadcastPacket(new S_NpcChatPacket(this, "$804", 2)); // 人类，如果你重视你的生命现在就快离开这神圣的地方。
+					break;
+				}
+				else if (pc.isElf() && pc.isWantedForElf()) {
+					targetPlayer = pc;
+					wideBroadcastPacket(new S_NpcChatPacket(this, "$815", 1)); // 若杀害同族，必须以自己的生命赎罪。
+					break;
+				}
+			}
+		}
+		if (targetPlayer != null) {
+			_hateList.add(targetPlayer, 0);
+			_target = targetPlayer;
+		}
+	}
+
+	@Override
 	public void setCurrentHp(int i) {
 		int currentHp = i;
 		if (currentHp >= getMaxHp()) {
@@ -439,75 +502,12 @@ public class L1GuardianInstance extends L1NpcInstance {
 		}
 	}
 
-	private L1Character _lastattacker;
-
-	class Death implements Runnable {
-		L1Character lastAttacker = _lastattacker;
-
-		@Override
-		public void run() {
-			setDeathProcessing(true);
-			setCurrentHpDirect(0);
-			setDead(true);
-			setStatus(ActionCodes.ACTION_Die);
-			int targetobjid = getId();
-			getMap().setPassable(getLocation(), true);
-			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
-
-			L1PcInstance player = null;
-			if (lastAttacker instanceof L1PcInstance) {
-				player = (L1PcInstance) lastAttacker;
-			}
-			else if (lastAttacker instanceof L1PetInstance) {
-				player = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
-			}
-			else if (lastAttacker instanceof L1SummonInstance) {
-				player = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
-			}
-			if (player != null) {
-				List<L1Character> targetList = _hateList.toTargetArrayList();
-				List<Integer> hateList = _hateList.toHateArrayList();
-				long exp = getExp();
-				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
-
-				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
-				List<Integer> dropHateList = _dropHateList.toHateArrayList();
-				try {
-					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
-				}
-				catch (Exception e) {
-					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				}
-				// カルマは止めを刺したプレイヤーに設定。ペットorサモンで倒した場合も入る。
-				player.addKarma((int) (getKarma() * Config.RATE_KARMA));
-			}
-			setDeathProcessing(false);
-
-			setKarma(0);
-			setExp(0);
-			allTargetClear();
-
-			startDeleteTimer();
-		}
-	}
-
+	// 设置链接
 	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
-	}
-
-	public void doFinalAction(L1PcInstance player) {
-	}
-
-	private static final long REST_MILLISEC = 10000;
-
-	private static final Timer _restTimer = new Timer(true);
-
-	private RestMonitor _monitor;
-
-	public class RestMonitor extends TimerTask {
-		@Override
-		public void run() {
-			setRest(false);
+	public void setLink(L1Character cha) {
+		if ((cha != null) && _hateList.isEmpty()) { // ターゲットがいない場合のみ追加
+			_hateList.add(cha, 0);
+			checkTarget();
 		}
 	}
 }

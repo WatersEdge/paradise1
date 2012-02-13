@@ -29,10 +29,79 @@ import l1j.server.server.templates.L1Npc;
  */
 public class L1QuestInstance extends L1NpcInstance {
 
+	public class RestMonitor extends TimerTask {
+		@Override
+		public void run() {
+			setRest(false);
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
+
+	private static final long REST_MILLISEC = 10000;
+
+	private static final Timer _restTimer = new Timer(true);
+
+	private RestMonitor _monitor;
 
 	public L1QuestInstance(L1Npc template) {
 		super(template);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
+		L1Attack attack = new L1Attack(pc, this, skillId);
+		if (attack.calcHit()) {
+			attack.calcDamage();
+			attack.calcStaffOfMana();
+			attack.addPcPoisonAttack(pc, this);
+			attack.addChaserAttack();
+		}
+		attack.action();
+		attack.commit();
+	}
+
+	@Override
+	public void onFinalAction(L1PcInstance pc, String action) {
+		if (action.equalsIgnoreCase("start")) {
+			int npcId = getNpcTemplate().get_npcId();
+			if (((npcId == 71092) || (npcId == 71093)) && pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+			else if ((npcId == 71062) && (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+			else if ((npcId == 71075) && (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+			else if ((npcId == 70957) || (npcId == 81209)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+			else if ((npcId == 81350) && (pc.getQuest().get_step(4) == 3)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+
+		}
 	}
 
 	@Override
@@ -52,24 +121,6 @@ public class L1QuestInstance extends L1NpcInstance {
 			setActived(false);
 			startAI();
 		}
-	}
-
-	@Override
-	public void onAction(L1PcInstance pc) {
-		onAction(pc, 0);
-	}
-
-	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
-		if (attack.calcHit()) {
-			attack.calcDamage();
-			attack.calcStaffOfMana();
-			attack.addPcPoisonAttack(pc, this);
-			attack.addChaserAttack();
-		}
-		attack.action();
-		attack.commit();
 	}
 
 	@Override
@@ -162,57 +213,6 @@ public class L1QuestInstance extends L1NpcInstance {
 			setRest(true);
 			_monitor = new RestMonitor();
 			_restTimer.schedule(_monitor, REST_MILLISEC);
-		}
-	}
-
-	@Override
-	public void onFinalAction(L1PcInstance pc, String action) {
-		if (action.equalsIgnoreCase("start")) {
-			int npcId = getNpcTemplate().get_npcId();
-			if (((npcId == 71092) || (npcId == 71093)) && pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-			else if ((npcId == 71062) && (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-			else if ((npcId == 71075) && (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-			else if ((npcId == 70957) || (npcId == 81209)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-			else if ((npcId == 81350) && (pc.getQuest().get_step(4) == 3)) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
-				new L1FollowerInstance(l1npc, this, pc);
-				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			}
-
-		}
-	}
-
-	private static final long REST_MILLISEC = 10000;
-
-	private static final Timer _restTimer = new Timer(true);
-
-	private RestMonitor _monitor;
-
-	public class RestMonitor extends TimerTask {
-		@Override
-		public void run() {
-			setRest(false);
 		}
 	}
 

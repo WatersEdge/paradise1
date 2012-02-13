@@ -34,6 +34,16 @@ public class Random {
 		}
 	}
 
+	/** 随机布林值 */
+	public static boolean nextBoolean() {
+		return (nextInt(2) == 1);
+	}
+
+	/** 随机位元 */
+	public static byte nextByte() {
+		return (byte) nextInt(256);
+	}
+
 	/** 取得整数 */
 	public static int nextInt(int n) {
 		_idx = _idx & _max;
@@ -44,16 +54,6 @@ public class Random {
 	public static int nextInt(int n, int offset) {
 		_idx = _idx & _max;
 		return offset + (int) (_value[_idx++] * n);
-	}
-
-	/** 随机布林值 */
-	public static boolean nextBoolean() {
-		return (nextInt(2) == 1);
-	}
-
-	/** 随机位元 */
-	public static byte nextByte() {
-		return (byte) nextInt(256);
 	}
 
 	/** 随机长整数 */

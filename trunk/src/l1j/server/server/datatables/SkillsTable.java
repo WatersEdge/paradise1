@@ -38,10 +38,6 @@ public class SkillsTable {
 
 	private static SkillsTable _instance;
 
-	private final Map<Integer, L1Skills> _skills = Maps.newMap();
-
-	private final boolean _initialized;
-
 	public static SkillsTable getInstance() {
 		if (_instance == null) {
 			_instance = new SkillsTable();
@@ -49,26 +45,125 @@ public class SkillsTable {
 		return _instance;
 	}
 
+	private final Map<Integer, L1Skills> _skills = Maps.newMap();
+
+	private final boolean _initialized;
+
 	private SkillsTable() {
 		_initialized = true;
 		RestoreSkills();
 	}
 
-	private void RestoreSkills() {
+	public L1Skills getTemplate(int i) {
+		return _skills.get(new Integer(i));
+	}
+
+	public boolean isInitialized() {
+		return _initialized;
+	}
+
+	/**
+	 * 检查技能
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 */
+	public boolean spellCheck(int playerobjid, int skillid) {
+		boolean ret = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM skills");
-			rs = pstm.executeQuery();
-			FillSkillsTable(rs);
 
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm.setInt(1, playerobjid);
+			pstm.setInt(2, skillid);
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				ret = true;
+			}
+			else {
+				ret = false;
+			}
 		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, "创建skills表时出现错误", e);
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
 		} finally {
 			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return ret;
+	}
+
+	/**
+	 * 技能丢失
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 */
+	public void spellLost(int playerobjid, int skillid) {
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
+		if (pc != null) {
+			pc.removeSkillMastery(skillid);
+		}
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm.setInt(1, playerobjid);
+			pstm.setInt(2, skillid);
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	/**
+	 * 学会的技能
+	 * 
+	 * @param playerobjid
+	 * @param skillid
+	 * @param skillname
+	 * @param active
+	 * @param time
+	 */
+	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
+		if (spellCheck(playerobjid, skillid)) {
+			return;
+		}
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
+		if (pc != null) {
+			pc.setSkillMastery(skillid);
+		}
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, activetimeleft=?");
+			pstm.setInt(1, playerobjid);
+			pstm.setInt(2, skillid);
+			pstm.setString(3, skillname);
+			pstm.setInt(4, active);
+			pstm.setInt(5, time);
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -116,119 +211,24 @@ public class SkillsTable {
 		_log.config("技能 " + _skills.size() + "件");
 	}
 
-	/**
-	 * 学会的技能
-	 * 
-	 * @param playerobjid
-	 * @param skillid
-	 * @param skillname
-	 * @param active
-	 * @param time
-	 */
-	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
-		if (spellCheck(playerobjid, skillid)) {
-			return;
-		}
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
-		if (pc != null) {
-			pc.setSkillMastery(skillid);
-		}
-
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, activetimeleft=?");
-			pstm.setInt(1, playerobjid);
-			pstm.setInt(2, skillid);
-			pstm.setString(3, skillname);
-			pstm.setInt(4, active);
-			pstm.setInt(5, time);
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 技能丢失
-	 * 
-	 * @param playerobjid
-	 * @param skillid
-	 */
-	public void spellLost(int playerobjid, int skillid) {
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
-		if (pc != null) {
-			pc.removeSkillMastery(skillid);
-		}
-
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
-			pstm.setInt(1, playerobjid);
-			pstm.setInt(2, skillid);
-			pstm.execute();
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 检查技能
-	 * 
-	 * @param playerobjid
-	 * @param skillid
-	 */
-	public boolean spellCheck(int playerobjid, int skillid) {
-		boolean ret = false;
+	private void RestoreSkills() {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
-			pstm.setInt(1, playerobjid);
-			pstm.setInt(2, skillid);
+			pstm = con.prepareStatement("SELECT * FROM skills");
 			rs = pstm.executeQuery();
-			if (rs.next()) {
-				ret = true;
-			}
-			else {
-				ret = false;
-			}
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			FillSkillsTable(rs);
 
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, "创建skills表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-		return ret;
-	}
-
-	public boolean isInitialized() {
-		return _initialized;
-	}
-
-	public L1Skills getTemplate(int i) {
-		return _skills.get(new Integer(i));
 	}
 
 }

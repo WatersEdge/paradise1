@@ -19,11 +19,11 @@ public class BackRawPotion extends ItemExecutor {
 
 	private static Logger _log = Logger.getLogger(BackRawPotion.class.getName());
 
-	private BackRawPotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new BackRawPotion();
+	}
+
+	private BackRawPotion() {
 	}
 
 	/**

@@ -50,6 +50,54 @@ public class FurnitureSpawnTable {
 		FillFurnitureSpawnTable();
 	}
 
+	/**
+	 * 删除家具
+	 * 
+	 * @param furniture
+	 */
+	public void deleteFurniture(L1FurnitureInstance furniture) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM spawnlist_furniture WHERE item_obj_id=?");
+			pstm.setInt(1, furniture.getItemObjId());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	/**
+	 * 插入家具
+	 * 
+	 * @param furniture
+	 */
+	public void insertFurniture(L1FurnitureInstance furniture) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO spawnlist_furniture SET item_obj_id=?, npcid=?, locx=?, locy=?, mapid=?");
+			pstm.setInt(1, furniture.getItemObjId());
+			pstm.setInt(2, furniture.getNpcTemplate().get_npcId());
+			pstm.setInt(3, furniture.getX());
+			pstm.setInt(4, furniture.getY());
+			pstm.setInt(5, furniture.getMapId());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
 	private void FillFurnitureSpawnTable() {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -108,54 +156,6 @@ public class FurnitureSpawnTable {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 插入家具
-	 * 
-	 * @param furniture
-	 */
-	public void insertFurniture(L1FurnitureInstance furniture) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist_furniture SET item_obj_id=?, npcid=?, locx=?, locy=?, mapid=?");
-			pstm.setInt(1, furniture.getItemObjId());
-			pstm.setInt(2, furniture.getNpcTemplate().get_npcId());
-			pstm.setInt(3, furniture.getX());
-			pstm.setInt(4, furniture.getY());
-			pstm.setInt(5, furniture.getMapId());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	/**
-	 * 删除家具
-	 * 
-	 * @param furniture
-	 */
-	public void deleteFurniture(L1FurnitureInstance furniture) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM spawnlist_furniture WHERE item_obj_id=?");
-			pstm.setInt(1, furniture.getItemObjId());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

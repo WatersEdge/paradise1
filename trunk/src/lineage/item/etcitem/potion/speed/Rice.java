@@ -13,11 +13,11 @@ import lineage.item.etcitem.UseSpeedPotion_1;
  */
 public class Rice extends ItemExecutor {
 
-	private Rice() {
-	}
-
 	public static ItemExecutor get() {
 		return new Rice();
+	}
+
+	private Rice() {
 	}
 
 	/**

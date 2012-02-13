@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddHp;
  */
 public class LibraryJieFood extends ItemExecutor {
 
-	private LibraryJieFood() {
-	}
-
 	public static ItemExecutor get() {
 		return new LibraryJieFood();
+	}
+
+	private LibraryJieFood() {
 	}
 
 	/**

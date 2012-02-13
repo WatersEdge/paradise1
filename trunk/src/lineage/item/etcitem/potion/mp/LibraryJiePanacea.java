@@ -13,11 +13,11 @@ import lineage.item.etcitem.UsePotion_AddMp;
  */
 public class LibraryJiePanacea extends ItemExecutor {
 
-	private LibraryJiePanacea() {
-	}
-
 	public static ItemExecutor get() {
 		return new LibraryJiePanacea();
+	}
+
+	private LibraryJiePanacea() {
 	}
 
 	/**

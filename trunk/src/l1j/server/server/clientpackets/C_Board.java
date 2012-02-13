@@ -30,10 +30,6 @@ public class C_Board extends ClientBasePacket {
 
 	private static final String C_BOARD = "[C] C_Board";
 
-	private boolean isBoardInstance(L1Object obj) {
-		return ((obj instanceof L1BoardInstance) || (obj instanceof L1AuctionBoardInstance));
-	}
-
 	public C_Board(byte abyte0[], ClientThread client) {
 		super(abyte0);
 		int objectId = readD();
@@ -47,6 +43,10 @@ public class C_Board extends ClientBasePacket {
 	@Override
 	public String getType() {
 		return C_BOARD;
+	}
+
+	private boolean isBoardInstance(L1Object obj) {
+		return ((obj instanceof L1BoardInstance) || (obj instanceof L1AuctionBoardInstance));
 	}
 
 }

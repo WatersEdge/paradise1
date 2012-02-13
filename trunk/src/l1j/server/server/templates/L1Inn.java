@@ -34,52 +34,52 @@ public class L1Inn {
 	/** 到期时间 */
 	private Timestamp _dueTime;
 
-	public int getKeyId() {
-		return _keyId;
-	}
-
-	public void setKeyId(int i) {
-		_keyId = i;
+	public Timestamp getDueTime() {
+		return _dueTime;
 	}
 
 	public int getInnNpcId() {
 		return _npcId;
 	}
 
-	public void setInnNpcId(int i) {
-		_npcId = i;
-	}
-
-	public int getRoomNumber() {
-		return _roomNumber;
-	}
-
-	public void setRoomNumber(int i) {
-		_roomNumber = i;
+	public int getKeyId() {
+		return _keyId;
 	}
 
 	public int getLodgerId() {
 		return _lodgerId;
 	}
 
-	public void setLodgerId(int i) {
-		_lodgerId = i;
+	public int getRoomNumber() {
+		return _roomNumber;
 	}
 
 	public boolean isHall() {
 		return _hall;
 	}
 
+	public void setDueTime(Timestamp i) {
+		_dueTime = i;
+	}
+
 	public void setHall(boolean hall) {
 		_hall = hall;
 	}
 
-	public Timestamp getDueTime() {
-		return _dueTime;
+	public void setInnNpcId(int i) {
+		_npcId = i;
 	}
 
-	public void setDueTime(Timestamp i) {
-		_dueTime = i;
+	public void setKeyId(int i) {
+		_keyId = i;
+	}
+
+	public void setLodgerId(int i) {
+		_lodgerId = i;
+	}
+
+	public void setRoomNumber(int i) {
+		_roomNumber = i;
 	}
 
 }

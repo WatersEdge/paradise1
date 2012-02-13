@@ -14,11 +14,11 @@ import lineage.item.etcitem.UseSpeedPotion_2_Brave;
  */
 public class WelfareBravePotion extends ItemExecutor {
 
-	private WelfareBravePotion() {
-	}
-
 	public static ItemExecutor get() {
 		return new WelfareBravePotion();
+	}
+
+	private WelfareBravePotion() {
 	}
 
 	/**

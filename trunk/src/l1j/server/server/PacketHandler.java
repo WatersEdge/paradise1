@@ -203,6 +203,8 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class PacketHandler {
 
+	private final ClientThread _client;
+
 	public PacketHandler(ClientThread clientthread) {
 		_client = clientthread;
 	}
@@ -588,6 +590,4 @@ public class PacketHandler {
 		// _log.warning((new StringBuilder()).append("オペコード
 		// ").append(i).toString());
 	}
-
-	private final ClientThread _client;
 }

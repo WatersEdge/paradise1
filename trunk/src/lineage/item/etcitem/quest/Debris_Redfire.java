@@ -16,11 +16,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Debris_Redfire extends ItemExecutor {
 
-	private Debris_Redfire() {
-	}
-
 	public static ItemExecutor get() {
 		return new Debris_Redfire();
+	}
+
+	private Debris_Redfire() {
 	}
 
 	/**

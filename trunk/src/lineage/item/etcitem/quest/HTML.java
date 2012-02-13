@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class HTML extends ItemExecutor {
 
-	private HTML() {
-	}
-
 	public static ItemExecutor get() {
 		return new HTML();
+	}
+
+	private HTML() {
 	}
 
 	/**

@@ -48,6 +48,121 @@ import l1j.server.server.utils.collections.Lists;
  */
 public class L1UltimateBattle {
 
+	class UbThread implements Runnable {
+		/**
+		 * 线程过程。
+		 */
+		@Override
+		public void run() {
+			try {
+				setActive(true);
+				countDown();
+				setNowUb(true);
+				for (int round = 1; round <= 4; round++) {
+					sendRoundMessage(round);
+
+					L1UbPattern pattern = UBSpawnTable.getInstance().getPattern(_ubId, _pattern);
+
+					List<L1UbSpawn> spawnList = pattern.getSpawnList(round);
+
+					for (L1UbSpawn spawn : spawnList) {
+						if (getMembersCount() > 0) {
+							spawn.spawnAll();
+						}
+
+						Thread.sleep(spawn.getSpawnDelay() * 1000);
+						// removeRetiredMembers();
+					}
+
+					if (getMembersCount() > 0) {
+						spawnSupplies(round);
+					}
+
+					waitForNextRound(round);
+				}
+
+				for (L1PcInstance pc : getMembersArray()) // 竞技场内的PC出来
+				{
+					int rndx = Random.nextInt(4);
+					int rndy = Random.nextInt(4);
+					int locx = 33503 + rndx;
+					int locy = 32764 + rndy;
+					short mapid = 4;
+					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
+					removeMember(pc);
+				}
+				clearColosseum();
+				setActive(false);
+				setNowUb(false);
+			}
+			catch (Exception e) {
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
+		}
+
+		/**
+		 * 竞技场开始倒计时。
+		 * 
+		 * @throws InterruptedException
+		 */
+		private void countDown() throws InterruptedException {
+			// XXX - 此ID错误
+			final int MSGID_COUNT = 637;
+			final int MSGID_START = 632;
+
+			for (int loop = 0; loop < BEFORE_MINUTE * 60 - 10; loop++) { // 开始前等待10秒
+				Thread.sleep(1000);
+				// removeRetiredMembers();
+			}
+			removeRetiredMembers();
+
+			sendMessage(MSGID_COUNT, "10"); // 10秒前
+
+			Thread.sleep(5000);
+			sendMessage(MSGID_COUNT, "5"); // 5秒前
+
+			Thread.sleep(1000);
+			sendMessage(MSGID_COUNT, "4"); // 4秒前
+
+			Thread.sleep(1000);
+			sendMessage(MSGID_COUNT, "3"); // 3秒前
+
+			Thread.sleep(1000);
+			sendMessage(MSGID_COUNT, "2"); // 2秒前
+
+			Thread.sleep(1000);
+			sendMessage(MSGID_COUNT, "1"); // 1秒前
+
+			Thread.sleep(1000);
+			sendMessage(MSGID_START, "无限大战开始"); // 开始
+			removeRetiredMembers();
+		}
+
+		/**
+		 * 全部的怪物出现后、待机 等待下一轮开始。
+		 * 
+		 * @param curRound
+		 *            本轮
+		 * @throws InterruptedException
+		 */
+		private void waitForNextRound(int curRound) throws InterruptedException {
+			final int WAIT_TIME_TABLE[] = { 6, 6, 2, 18 };
+
+			int wait = WAIT_TIME_TABLE[curRound - 1];
+			for (int i = 0; i < wait; i++) {
+				Thread.sleep(10000);
+				// removeRetiredMembers();
+			}
+			removeRetiredMembers();
+		}
+	}
+
+	private static Calendar getRealTime() {
+		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		Calendar cal = Calendar.getInstance(_tz);
+		return cal;
+	}
+
 	private int _locX;
 
 	private int _locY;
@@ -110,145 +225,13 @@ public class L1UltimateBattle {
 
 	private static final Logger _log = Logger.getLogger(L1UltimateBattle.class.getName());
 
+	private static String intToTimeFormat(int n) {
+		return n / 100 + ":" + n % 100 / 10 + "" + n % 10;
+	}
+
 	private final List<L1PcInstance> _members = Lists.newList();
 
-	/**
-	 * 全面开始时发送消息。
-	 * 
-	 * @param curRound
-	 *            回合开始
-	 */
-	private void sendRoundMessage(int curRound) {
-		// XXX - 此ID错误
-		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
-
-		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
-	}
-
-	/**
-	 * 药水等补给项目出现。
-	 * 
-	 * @param curRound
-	 *            本轮
-	 */
-	private void spawnSupplies(int curRound) {
-		if (curRound == 1) {
-			spawnGroundItem(L1ItemId.ADENA, 1000, 60);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 3, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 5, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 3, 20);
-			spawnGroundItem(40317, 1, 5); // 磨刀石
-			spawnGroundItem(40079, 1, 20); // 传送回家的卷轴
-		}
-		else if (curRound == 2) {
-			spawnGroundItem(L1ItemId.ADENA, 5000, 50);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 5, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 10, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 5, 20);
-			spawnGroundItem(40317, 1, 7); // 磨刀石
-			spawnGroundItem(40093, 1, 10); // 空的魔法卷轴(Lv4)
-			spawnGroundItem(40079, 1, 5); // 传送回家的卷轴
-		}
-		else if (curRound == 3) {
-			spawnGroundItem(L1ItemId.ADENA, 10000, 30);
-			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 7, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 20, 20);
-			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 10, 20);
-			spawnGroundItem(40317, 1, 10); // 磨刀石
-			spawnGroundItem(40094, 1, 10); // 空的魔法卷轴(Lv5)
-		}
-	}
-
-	/**
-	 * 从成员列表删除退出人员。
-	 */
-	private void removeRetiredMembers() {
-		L1PcInstance[] temp = getMembersArray();
-		for (L1PcInstance element : temp) {
-			if (element.getMapId() != _mapId) {
-				removeMember(element);
-			}
-		}
-	}
-
-	/**
-	 * UB参加人员发送信息(S_ServerMessage)。
-	 * 
-	 * @param type
-	 *            消息类型
-	 * @param msg
-	 *            发送消息
-	 */
-	private void sendMessage(int type, String msg) {
-		for (L1PcInstance pc : getMembersArray()) {
-			pc.sendPackets(new S_ServerMessage(type, msg));
-		}
-	}
-
-	/**
-	 * 在竞技场出现的道具。
-	 * 
-	 * @param itemId
-	 *            出现道具的编号ID
-	 * @param stackCount
-	 *            道具的堆叠数量
-	 * @param count
-	 *            出现数量
-	 */
-	private void spawnGroundItem(int itemId, int stackCount, int count) {
-		L1Item temp = ItemTable.getInstance().getTemplate(itemId);
-		if (temp == null) {
-			return;
-		}
-
-		for (int i = 0; i < count; i++) {
-			L1Location loc = _location.randomLocation((getLocX2() - getLocX1()) / 2, false);
-			if (temp.isStackable()) {
-				L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
-				item.setEnchantLevel(0);
-				item.setCount(stackCount);
-				L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
-				if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
-					ground.storeItem(item);
-				}
-			}
-			else {
-				L1ItemInstance item = null;
-				for (int createCount = 0; createCount < stackCount; createCount++) {
-					item = ItemTable.getInstance().createItem(itemId);
-					item.setEnchantLevel(0);
-					L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
-					if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
-						ground.storeItem(item);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * 删除竞技场内所有的怪物与道具。
-	 */
-	private void clearColosseum() {
-		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId).values()) {
-			if (obj instanceof L1MonsterInstance) // 删除怪物
-			{
-				L1MonsterInstance mob = (L1MonsterInstance) obj;
-				if (!mob.isDead()) {
-					mob.setDead(true);
-					mob.setStatus(ActionCodes.ACTION_Die);
-					mob.setCurrentHpDirect(0);
-					mob.deleteMe();
-
-				}
-			}
-			else if (obj instanceof L1Inventory) // 删除道具
-			{
-				L1Inventory inventory = (L1Inventory) obj;
-				inventory.clearItems();
-			}
-		}
-	}
+	private String[] _ubInfo;
 
 	/**
 	 * 构造。
@@ -256,127 +239,8 @@ public class L1UltimateBattle {
 	public L1UltimateBattle() {
 	}
 
-	class UbThread implements Runnable {
-		/**
-		 * 竞技场开始倒计时。
-		 * 
-		 * @throws InterruptedException
-		 */
-		private void countDown() throws InterruptedException {
-			// XXX - 此ID错误
-			final int MSGID_COUNT = 637;
-			final int MSGID_START = 632;
-
-			for (int loop = 0; loop < BEFORE_MINUTE * 60 - 10; loop++) { // 开始前等待10秒
-				Thread.sleep(1000);
-				// removeRetiredMembers();
-			}
-			removeRetiredMembers();
-
-			sendMessage(MSGID_COUNT, "10"); // 10秒前
-
-			Thread.sleep(5000);
-			sendMessage(MSGID_COUNT, "5"); // 5秒前
-
-			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "4"); // 4秒前
-
-			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "3"); // 3秒前
-
-			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "2"); // 2秒前
-
-			Thread.sleep(1000);
-			sendMessage(MSGID_COUNT, "1"); // 1秒前
-
-			Thread.sleep(1000);
-			sendMessage(MSGID_START, "无限大战开始"); // 开始
-			removeRetiredMembers();
-		}
-
-		/**
-		 * 全部的怪物出现后、待机 等待下一轮开始。
-		 * 
-		 * @param curRound
-		 *            本轮
-		 * @throws InterruptedException
-		 */
-		private void waitForNextRound(int curRound) throws InterruptedException {
-			final int WAIT_TIME_TABLE[] = { 6, 6, 2, 18 };
-
-			int wait = WAIT_TIME_TABLE[curRound - 1];
-			for (int i = 0; i < wait; i++) {
-				Thread.sleep(10000);
-				// removeRetiredMembers();
-			}
-			removeRetiredMembers();
-		}
-
-		/**
-		 * 线程过程。
-		 */
-		@Override
-		public void run() {
-			try {
-				setActive(true);
-				countDown();
-				setNowUb(true);
-				for (int round = 1; round <= 4; round++) {
-					sendRoundMessage(round);
-
-					L1UbPattern pattern = UBSpawnTable.getInstance().getPattern(_ubId, _pattern);
-
-					List<L1UbSpawn> spawnList = pattern.getSpawnList(round);
-
-					for (L1UbSpawn spawn : spawnList) {
-						if (getMembersCount() > 0) {
-							spawn.spawnAll();
-						}
-
-						Thread.sleep(spawn.getSpawnDelay() * 1000);
-						// removeRetiredMembers();
-					}
-
-					if (getMembersCount() > 0) {
-						spawnSupplies(round);
-					}
-
-					waitForNextRound(round);
-				}
-
-				for (L1PcInstance pc : getMembersArray()) // 竞技场内的PC出来
-				{
-					int rndx = Random.nextInt(4);
-					int rndy = Random.nextInt(4);
-					int locx = 33503 + rndx;
-					int locy = 32764 + rndy;
-					short mapid = 4;
-					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
-					removeMember(pc);
-				}
-				clearColosseum();
-				setActive(false);
-				setNowUb(false);
-			}
-			catch (Exception e) {
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			}
-		}
-	}
-
-	/**
-	 * 开始无限大战。
-	 * 
-	 * @param ubId
-	 *            开始无限大战的ID
-	 */
-	public void start() {
-		int patternsMax = UBSpawnTable.getInstance().getMaxPattern(_ubId);
-		_pattern = Random.nextInt(patternsMax) + 1; // 确定出现模式
-
-		UbThread ub = new UbThread();
-		GeneralThreadPool.getInstance().execute(ub);
+	public void addManager(int npcId) {
+		_managers.add(npcId);
 	}
 
 	/**
@@ -391,267 +255,8 @@ public class L1UltimateBattle {
 		}
 	}
 
-	/**
-	 * 删除参加的角色名单。
-	 * 
-	 * @param pc
-	 *            删除角色
-	 */
-	public void removeMember(L1PcInstance pc) {
-		_members.remove(pc);
-	}
-
-	/**
-	 * 清除参加人员名单。
-	 */
-	public void clearMembers() {
-		_members.clear();
-	}
-
-	/**
-	 * 玩家、返回是否参加。
-	 * 
-	 * @param pc
-	 *            检查玩家
-	 * @return 如果参加true、否则false。
-	 */
-	public boolean isMember(L1PcInstance pc) {
-		return _members.contains(pc);
-	}
-
-	/**
-	 * 返回参加的角色是否组队。
-	 * 
-	 * @return 参加者的组队
-	 */
-	public L1PcInstance[] getMembersArray() {
-		return _members.toArray(new L1PcInstance[_members.size()]);
-	}
-
-	/**
-	 * 返回参与成员数量。
-	 * 
-	 * @return 参加人数
-	 */
-	public int getMembersCount() {
-		return _members.size();
-	}
-
-	/**
-	 * 设置UB。
-	 * 
-	 * @param i
-	 *            true/false
-	 */
-	private void setNowUb(boolean i) {
-		_isNowUb = i;
-	}
-
-	/**
-	 * 返回是否在UB中。
-	 * 
-	 * @return UB中true、否则false。
-	 */
-	public boolean isNowUb() {
-		return _isNowUb;
-	}
-
-	public int getUbId() {
-		return _ubId;
-	}
-
-	public void setUbId(int id) {
-		_ubId = id;
-	}
-
-	public short getMapId() {
-		return _mapId;
-	}
-
-	public void setMapId(short mapId) {
-		_mapId = mapId;
-	}
-
-	public int getMinLevel() {
-		return _minLevel;
-	}
-
-	public void setMinLevel(int level) {
-		_minLevel = level;
-	}
-
-	public int getMaxLevel() {
-		return _maxLevel;
-	}
-
-	public void setMaxLevel(int level) {
-		_maxLevel = level;
-	}
-
-	public int getMaxPlayer() {
-		return _maxPlayer;
-	}
-
-	public void setMaxPlayer(int count) {
-		_maxPlayer = count;
-	}
-
-	public void setEnterRoyal(boolean enterRoyal) {
-		_enterRoyal = enterRoyal;
-	}
-
-	public void setEnterKnight(boolean enterKnight) {
-		_enterKnight = enterKnight;
-	}
-
-	public void setEnterMage(boolean enterMage) {
-		_enterMage = enterMage;
-	}
-
-	public void setEnterElf(boolean enterElf) {
-		_enterElf = enterElf;
-	}
-
-	public void setEnterDarkelf(boolean enterDarkelf) {
-		_enterDarkelf = enterDarkelf;
-	}
-
-	public void setEnterDragonKnight(boolean enterDragonKnight) {
-		_enterDragonKnight = enterDragonKnight;
-	}
-
-	public void setEnterIllusionist(boolean enterIllusionist) {
-		_enterIllusionist = enterIllusionist;
-	}
-
-	public void setEnterMale(boolean enterMale) {
-		_enterMale = enterMale;
-	}
-
-	public void setEnterFemale(boolean enterFemale) {
-		_enterFemale = enterFemale;
-	}
-
-	public boolean canUsePot() {
-		return _usePot;
-	}
-
-	public void setUsePot(boolean usePot) {
-		_usePot = usePot;
-	}
-
-	public int getHpr() {
-		return _hpr;
-	}
-
-	public void setHpr(int hpr) {
-		_hpr = hpr;
-	}
-
-	public int getMpr() {
-		return _mpr;
-	}
-
-	public void setMpr(int mpr) {
-		_mpr = mpr;
-	}
-
-	public int getLocX1() {
-		return _locX1;
-	}
-
-	public void setLocX1(int locX1) {
-		_locX1 = locX1;
-	}
-
-	public int getLocY1() {
-		return _locY1;
-	}
-
-	public void setLocY1(int locY1) {
-		_locY1 = locY1;
-	}
-
-	public int getLocX2() {
-		return _locX2;
-	}
-
-	public void setLocX2(int locX2) {
-		_locX2 = locX2;
-	}
-
-	public int getLocY2() {
-		return _locY2;
-	}
-
-	public void setLocY2(int locY2) {
-		_locY2 = locY2;
-	}
-
-	// setされたlocx1～locy2から中心点を求める。
-	public void resetLoc() {
-		_locX = (_locX2 + _locX1) / 2;
-		_locY = (_locY2 + _locY1) / 2;
-		_location = new L1Location(_locX, _locY, _mapId);
-	}
-
-	public L1Location getLocation() {
-		return _location;
-	}
-
-	public void addManager(int npcId) {
-		_managers.add(npcId);
-	}
-
-	public boolean containsManager(int npcId) {
-		return _managers.contains(npcId);
-	}
-
 	public void addUbTime(int time) {
 		_ubTimes.add(time);
-	}
-
-	public String getNextUbTime() {
-		return intToTimeFormat(nextUbTime());
-	}
-
-	private int nextUbTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
-		int nowTime = Integer.valueOf(sdf.format(getRealTime().getTime()));
-		SortedSet<Integer> tailSet = _ubTimes.tailSet(nowTime);
-		if (tailSet.isEmpty()) {
-			tailSet = _ubTimes;
-		}
-		return tailSet.first();
-	}
-
-	private static String intToTimeFormat(int n) {
-		return n / 100 + ":" + n % 100 / 10 + "" + n % 10;
-	}
-
-	private static Calendar getRealTime() {
-		TimeZone _tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(_tz);
-		return cal;
-	}
-
-	public boolean checkUbTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
-		Calendar realTime = getRealTime();
-		realTime.add(Calendar.MINUTE, BEFORE_MINUTE);
-		int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
-		return _ubTimes.contains(nowTime);
-	}
-
-	private void setActive(boolean f) {
-		_active = f;
-	}
-
-	/**
-	 * @return UB入場可能～競技終了true,否则false。
-	 */
-	public boolean isActive() {
-		return _active;
 	}
 
 	/**
@@ -676,7 +281,125 @@ public class L1UltimateBattle {
 		return true;
 	}
 
-	private String[] _ubInfo;
+	public boolean canUsePot() {
+		return _usePot;
+	}
+
+	public boolean checkUbTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
+		Calendar realTime = getRealTime();
+		realTime.add(Calendar.MINUTE, BEFORE_MINUTE);
+		int nowTime = Integer.valueOf(sdf.format(realTime.getTime()));
+		return _ubTimes.contains(nowTime);
+	}
+
+	/**
+	 * 清除参加人员名单。
+	 */
+	public void clearMembers() {
+		_members.clear();
+	}
+
+	public boolean containsManager(int npcId) {
+		return _managers.contains(npcId);
+	}
+
+	public int getHpr() {
+		return _hpr;
+	}
+
+	public L1Location getLocation() {
+		return _location;
+	}
+
+	public int getLocX1() {
+		return _locX1;
+	}
+
+	public int getLocX2() {
+		return _locX2;
+	}
+
+	public int getLocY1() {
+		return _locY1;
+	}
+
+	public int getLocY2() {
+		return _locY2;
+	}
+
+	public short getMapId() {
+		return _mapId;
+	}
+
+	public int getMaxLevel() {
+		return _maxLevel;
+	}
+
+	public int getMaxPlayer() {
+		return _maxPlayer;
+	}
+
+	/**
+	 * 返回参加的角色是否组队。
+	 * 
+	 * @return 参加者的组队
+	 */
+	public L1PcInstance[] getMembersArray() {
+		return _members.toArray(new L1PcInstance[_members.size()]);
+	}
+
+	/**
+	 * 返回参与成员数量。
+	 * 
+	 * @return 参加人数
+	 */
+	public int getMembersCount() {
+		return _members.size();
+	}
+
+	public int getMinLevel() {
+		return _minLevel;
+	}
+
+	public int getMpr() {
+		return _mpr;
+	}
+
+	public String getNextUbTime() {
+		return intToTimeFormat(nextUbTime());
+	}
+
+	public int getUbId() {
+		return _ubId;
+	}
+
+	/**
+	 * @return UB入場可能～競技終了true,否则false。
+	 */
+	public boolean isActive() {
+		return _active;
+	}
+
+	/**
+	 * 玩家、返回是否参加。
+	 * 
+	 * @param pc
+	 *            检查玩家
+	 * @return 如果参加true、否则false。
+	 */
+	public boolean isMember(L1PcInstance pc) {
+		return _members.contains(pc);
+	}
+
+	/**
+	 * 返回是否在UB中。
+	 * 
+	 * @return UB中true、否则false。
+	 */
+	public boolean isNowUb() {
+		return _isNowUb;
+	}
 
 	public String[] makeUbInfoStrings() {
 		if (_ubInfo != null) {
@@ -727,5 +450,282 @@ public class L1UltimateBattle {
 		String summon2 = _location.getMap().isRecallPets() ? "可能" : "不可能";
 		_ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
 		return _ubInfo;
+	}
+
+	/**
+	 * 删除参加的角色名单。
+	 * 
+	 * @param pc
+	 *            删除角色
+	 */
+	public void removeMember(L1PcInstance pc) {
+		_members.remove(pc);
+	}
+
+	// setされたlocx1～locy2から中心点を求める。
+	public void resetLoc() {
+		_locX = (_locX2 + _locX1) / 2;
+		_locY = (_locY2 + _locY1) / 2;
+		_location = new L1Location(_locX, _locY, _mapId);
+	}
+
+	public void setEnterDarkelf(boolean enterDarkelf) {
+		_enterDarkelf = enterDarkelf;
+	}
+
+	public void setEnterDragonKnight(boolean enterDragonKnight) {
+		_enterDragonKnight = enterDragonKnight;
+	}
+
+	public void setEnterElf(boolean enterElf) {
+		_enterElf = enterElf;
+	}
+
+	public void setEnterFemale(boolean enterFemale) {
+		_enterFemale = enterFemale;
+	}
+
+	public void setEnterIllusionist(boolean enterIllusionist) {
+		_enterIllusionist = enterIllusionist;
+	}
+
+	public void setEnterKnight(boolean enterKnight) {
+		_enterKnight = enterKnight;
+	}
+
+	public void setEnterMage(boolean enterMage) {
+		_enterMage = enterMage;
+	}
+
+	public void setEnterMale(boolean enterMale) {
+		_enterMale = enterMale;
+	}
+
+	public void setEnterRoyal(boolean enterRoyal) {
+		_enterRoyal = enterRoyal;
+	}
+
+	public void setHpr(int hpr) {
+		_hpr = hpr;
+	}
+
+	public void setLocX1(int locX1) {
+		_locX1 = locX1;
+	}
+
+	public void setLocX2(int locX2) {
+		_locX2 = locX2;
+	}
+
+	public void setLocY1(int locY1) {
+		_locY1 = locY1;
+	}
+
+	public void setLocY2(int locY2) {
+		_locY2 = locY2;
+	}
+
+	public void setMapId(short mapId) {
+		_mapId = mapId;
+	}
+
+	public void setMaxLevel(int level) {
+		_maxLevel = level;
+	}
+
+	public void setMaxPlayer(int count) {
+		_maxPlayer = count;
+	}
+
+	public void setMinLevel(int level) {
+		_minLevel = level;
+	}
+
+	public void setMpr(int mpr) {
+		_mpr = mpr;
+	}
+
+	public void setUbId(int id) {
+		_ubId = id;
+	}
+
+	public void setUsePot(boolean usePot) {
+		_usePot = usePot;
+	}
+
+	/**
+	 * 开始无限大战。
+	 * 
+	 * @param ubId
+	 *            开始无限大战的ID
+	 */
+	public void start() {
+		int patternsMax = UBSpawnTable.getInstance().getMaxPattern(_ubId);
+		_pattern = Random.nextInt(patternsMax) + 1; // 确定出现模式
+
+		UbThread ub = new UbThread();
+		GeneralThreadPool.getInstance().execute(ub);
+	}
+
+	/**
+	 * 删除竞技场内所有的怪物与道具。
+	 */
+	private void clearColosseum() {
+		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId).values()) {
+			if (obj instanceof L1MonsterInstance) // 删除怪物
+			{
+				L1MonsterInstance mob = (L1MonsterInstance) obj;
+				if (!mob.isDead()) {
+					mob.setDead(true);
+					mob.setStatus(ActionCodes.ACTION_Die);
+					mob.setCurrentHpDirect(0);
+					mob.deleteMe();
+
+				}
+			}
+			else if (obj instanceof L1Inventory) // 删除道具
+			{
+				L1Inventory inventory = (L1Inventory) obj;
+				inventory.clearItems();
+			}
+		}
+	}
+
+	private int nextUbTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
+		int nowTime = Integer.valueOf(sdf.format(getRealTime().getTime()));
+		SortedSet<Integer> tailSet = _ubTimes.tailSet(nowTime);
+		if (tailSet.isEmpty()) {
+			tailSet = _ubTimes;
+		}
+		return tailSet.first();
+	}
+
+	/**
+	 * 从成员列表删除退出人员。
+	 */
+	private void removeRetiredMembers() {
+		L1PcInstance[] temp = getMembersArray();
+		for (L1PcInstance element : temp) {
+			if (element.getMapId() != _mapId) {
+				removeMember(element);
+			}
+		}
+	}
+
+	/**
+	 * UB参加人员发送信息(S_ServerMessage)。
+	 * 
+	 * @param type
+	 *            消息类型
+	 * @param msg
+	 *            发送消息
+	 */
+	private void sendMessage(int type, String msg) {
+		for (L1PcInstance pc : getMembersArray()) {
+			pc.sendPackets(new S_ServerMessage(type, msg));
+		}
+	}
+
+	/**
+	 * 全面开始时发送消息。
+	 * 
+	 * @param curRound
+	 *            回合开始
+	 */
+	private void sendRoundMessage(int curRound) {
+		// XXX - 此ID错误
+		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
+
+		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
+	}
+
+	private void setActive(boolean f) {
+		_active = f;
+	}
+
+	/**
+	 * 设置UB。
+	 * 
+	 * @param i
+	 *            true/false
+	 */
+	private void setNowUb(boolean i) {
+		_isNowUb = i;
+	}
+
+	/**
+	 * 在竞技场出现的道具。
+	 * 
+	 * @param itemId
+	 *            出现道具的编号ID
+	 * @param stackCount
+	 *            道具的堆叠数量
+	 * @param count
+	 *            出现数量
+	 */
+	private void spawnGroundItem(int itemId, int stackCount, int count) {
+		L1Item temp = ItemTable.getInstance().getTemplate(itemId);
+		if (temp == null) {
+			return;
+		}
+
+		for (int i = 0; i < count; i++) {
+			L1Location loc = _location.randomLocation((getLocX2() - getLocX1()) / 2, false);
+			if (temp.isStackable()) {
+				L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
+				item.setEnchantLevel(0);
+				item.setCount(stackCount);
+				L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
+				if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
+					ground.storeItem(item);
+				}
+			}
+			else {
+				L1ItemInstance item = null;
+				for (int createCount = 0; createCount < stackCount; createCount++) {
+					item = ItemTable.getInstance().createItem(itemId);
+					item.setEnchantLevel(0);
+					L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
+					if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
+						ground.storeItem(item);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 药水等补给项目出现。
+	 * 
+	 * @param curRound
+	 *            本轮
+	 */
+	private void spawnSupplies(int curRound) {
+		if (curRound == 1) {
+			spawnGroundItem(L1ItemId.ADENA, 1000, 60);
+			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 3, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 5, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 3, 20);
+			spawnGroundItem(40317, 1, 5); // 磨刀石
+			spawnGroundItem(40079, 1, 20); // 传送回家的卷轴
+		}
+		else if (curRound == 2) {
+			spawnGroundItem(L1ItemId.ADENA, 5000, 50);
+			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 5, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 10, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 5, 20);
+			spawnGroundItem(40317, 1, 7); // 磨刀石
+			spawnGroundItem(40093, 1, 10); // 空的魔法卷轴(Lv4)
+			spawnGroundItem(40079, 1, 5); // 传送回家的卷轴
+		}
+		else if (curRound == 3) {
+			spawnGroundItem(L1ItemId.ADENA, 10000, 30);
+			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 7, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 20, 20);
+			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 10, 20);
+			spawnGroundItem(40317, 1, 10); // 磨刀石
+			spawnGroundItem(40094, 1, 10); // 空的魔法卷轴(Lv5)
+		}
 	}
 }

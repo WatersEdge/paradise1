@@ -43,6 +43,87 @@ public class L1DwarfForClanInventory extends L1Inventory {
 		_clan = clan;
 	}
 
+	/** DBの删除血盟仓库内的所有道具(血盟解散时使用) */
+	public synchronized void deleteAllItems() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM clan_warehouse WHERE clan_name = ?");
+			pstm.setString(1, _clan.getClanName());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	// ＤＢのclan_warehouseから削除
+	@Override
+	public synchronized void deleteItem(L1ItemInstance item) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("DELETE FROM clan_warehouse WHERE id = ?");
+			pstm.setInt(1, item.getId());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		_items.remove(_items.indexOf(item));
+	}
+
+	// ＤＢのclan_warehouseへ登録
+	@Override
+	public synchronized void insertItem(L1ItemInstance item) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con
+					.prepareStatement("INSERT INTO clan_warehouse SET id = ?, clan_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id= ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
+			pstm.setInt(1, item.getId());
+			pstm.setString(2, _clan.getClanName());
+			pstm.setInt(3, item.getItemId());
+			pstm.setString(4, item.getName());
+			pstm.setInt(5, item.getCount());
+			pstm.setInt(6, item.getEnchantLevel());
+			pstm.setInt(7, item.isIdentified() ? 1 : 0);
+			pstm.setInt(8, item.get_durability());
+			pstm.setInt(9, item.getChargeCount());
+			pstm.setInt(10, item.getRemainingTime());
+			pstm.setTimestamp(11, item.getLastUsed());
+			pstm.setInt(12, item.getBless());
+			pstm.setInt(13, item.getAttrEnchantKind());
+			pstm.setInt(14, item.getAttrEnchantLevel());
+			pstm.setInt(15, item.getFireMr());
+			pstm.setInt(16, item.getWaterMr());
+			pstm.setInt(17, item.getEarthMr());
+			pstm.setInt(18, item.getWindMr());
+			pstm.setInt(19, item.getaddSp());
+			pstm.setInt(20, item.getaddHp());
+			pstm.setInt(21, item.getaddMp());
+			pstm.setInt(22, item.getHpr());
+			pstm.setInt(23, item.getMpr());
+			pstm.setInt(24, item.getM_Def());
+			pstm.execute();
+		}
+		catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
 	// ＤＢのcharacter_itemsの读取
 	@Override
 	public synchronized void loadItems() {
@@ -102,49 +183,6 @@ public class L1DwarfForClanInventory extends L1Inventory {
 		}
 	}
 
-	// ＤＢのclan_warehouseへ登録
-	@Override
-	public synchronized void insertItem(L1ItemInstance item) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO clan_warehouse SET id = ?, clan_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id= ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
-			pstm.setInt(1, item.getId());
-			pstm.setString(2, _clan.getClanName());
-			pstm.setInt(3, item.getItemId());
-			pstm.setString(4, item.getName());
-			pstm.setInt(5, item.getCount());
-			pstm.setInt(6, item.getEnchantLevel());
-			pstm.setInt(7, item.isIdentified() ? 1 : 0);
-			pstm.setInt(8, item.get_durability());
-			pstm.setInt(9, item.getChargeCount());
-			pstm.setInt(10, item.getRemainingTime());
-			pstm.setTimestamp(11, item.getLastUsed());
-			pstm.setInt(12, item.getBless());
-			pstm.setInt(13, item.getAttrEnchantKind());
-			pstm.setInt(14, item.getAttrEnchantLevel());
-			pstm.setInt(15, item.getFireMr());
-			pstm.setInt(16, item.getWaterMr());
-			pstm.setInt(17, item.getEarthMr());
-			pstm.setInt(18, item.getWindMr());
-			pstm.setInt(19, item.getaddSp());
-			pstm.setInt(20, item.getaddHp());
-			pstm.setInt(21, item.getaddMp());
-			pstm.setInt(22, item.getHpr());
-			pstm.setInt(23, item.getMpr());
-			pstm.setInt(24, item.getM_Def());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
 	// ＤＢのclan_warehouseを更新
 	@Override
 	public synchronized void updateItem(L1ItemInstance item) {
@@ -157,44 +195,6 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setInt(2, item.getId());
 			pstm.execute();
 
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	// ＤＢのclan_warehouseから削除
-	@Override
-	public synchronized void deleteItem(L1ItemInstance item) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM clan_warehouse WHERE id = ?");
-			pstm.setInt(1, item.getId());
-			pstm.execute();
-		}
-		catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-		_items.remove(_items.indexOf(item));
-	}
-
-	/** DBの删除血盟仓库内的所有道具(血盟解散时使用) */
-	public synchronized void deleteAllItems() {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM clan_warehouse WHERE clan_name = ?");
-			pstm.setString(1, _clan.getClanName());
-			pstm.execute();
 		}
 		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

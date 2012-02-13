@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class MagicScroll_Zel extends ItemExecutor {
 
-	private MagicScroll_Zel() {
-	}
-
 	public static ItemExecutor get() {
 		return new MagicScroll_Zel();
+	}
+
+	private MagicScroll_Zel() {
 	}
 
 	/**

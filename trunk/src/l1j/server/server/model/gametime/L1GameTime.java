@@ -28,24 +28,9 @@ public class L1GameTime {
 
 	/** 2003年7月3日 12:00(UTC)1月1日00:00 */
 	private static final long BASE_TIME_IN_MILLIS_REAL = 1057233600000L;
-	/** 时间 */
-	private final int _time;
-	/** 日期 */
-	private final Calendar _calendar;
-
-	/** 构造日期 */
-	private Calendar makeCalendar(int time) {
-		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-		cal.setTimeInMillis(0);
-		cal.add(Calendar.SECOND, time);
-		return cal;
+	public static L1GameTime fromSystemCurrentTime() {
+		return L1GameTime.valueOf(System.currentTimeMillis());
 	}
-
-	private L1GameTime(int time) {
-		_time = time;
-		_calendar = makeCalendar(time);
-	}
-
 	public static L1GameTime valueOf(long timeMillis) {
 		long t1 = timeMillis - BASE_TIME_IN_MILLIS_REAL;
 		if (t1 < 0) {
@@ -56,35 +41,37 @@ public class L1GameTime {
 		return new L1GameTime(t2 - t3);
 	}
 
-	/** 伺服器重启 */
-	public L1GameTime() {
-		this((int) System.currentTimeMillis());
-	}
-
-	public static L1GameTime fromSystemCurrentTime() {
-		return L1GameTime.valueOf(System.currentTimeMillis());
-	}
-
 	public static L1GameTime valueOfGameTime(Time time) {
 		long t = time.getTime() + TimeZone.getDefault().getRawOffset();
 		return new L1GameTime((int) (t / 1000L));
 	}
 
-	public Time toTime() {
-		int t = _time % (24 * 3600); // 日付情報分を切り捨て
-		return new Time(t * 1000L - TimeZone.getDefault().getRawOffset());
+	/** 时间 */
+	private final int _time;
+
+	/** 日期 */
+	private final Calendar _calendar;
+
+	/** 伺服器重启 */
+	public L1GameTime() {
+		this((int) System.currentTimeMillis());
+	}
+
+	private L1GameTime(int time) {
+		_time = time;
+		_calendar = makeCalendar(time);
 	}
 
 	public int get(int field) {
 		return _calendar.get(field);
 	}
 
-	public int getSeconds() {
-		return _time;
-	}
-
 	public Calendar getCalendar() {
 		return (Calendar) _calendar.clone();
+	}
+
+	public int getSeconds() {
+		return _time;
 	}
 
 	public boolean isNight() {
@@ -97,5 +84,18 @@ public class L1GameTime {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
 		f.setTimeZone(_calendar.getTimeZone());
 		return f.format(_calendar.getTime()) + "(" + getSeconds() + ")";
+	}
+
+	public Time toTime() {
+		int t = _time % (24 * 3600); // 日付情報分を切り捨て
+		return new Time(t * 1000L - TimeZone.getDefault().getRawOffset());
+	}
+
+	/** 构造日期 */
+	private Calendar makeCalendar(int time) {
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.setTimeInMillis(0);
+		cal.add(Calendar.SECOND, time);
+		return cal;
 	}
 }

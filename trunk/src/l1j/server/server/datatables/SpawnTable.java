@@ -41,10 +41,6 @@ public class SpawnTable {
 
 	private static SpawnTable _instance;
 
-	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
-
-	private int _highestId;
-
 	public static SpawnTable getInstance() {
 		if (_instance == null) {
 			_instance = new SpawnTable();
@@ -52,12 +48,74 @@ public class SpawnTable {
 		return _instance;
 	}
 
+	public static void storeSpawn(L1PcInstance pc, L1Npc npc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			int count = 1;
+			int randomXY = 12;
+			int minRespawnDelay = 60;
+			int maxRespawnDelay = 120;
+			String note = npc.get_name();
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
+			pstm.setString(1, note);
+			pstm.setInt(2, count);
+			pstm.setInt(3, npc.get_npcId());
+			pstm.setInt(4, 0);
+			pstm.setInt(5, pc.getX());
+			pstm.setInt(6, pc.getY());
+			pstm.setInt(7, randomXY);
+			pstm.setInt(8, randomXY);
+			pstm.setInt(9, pc.getHeading());
+			pstm.setInt(10, minRespawnDelay);
+			pstm.setInt(11, maxRespawnDelay);
+			pstm.setInt(12, pc.getMapId());
+			pstm.execute();
+
+		}
+		catch (Exception e) {
+			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
+
+	private static int calcCount(L1Npc npc, int count, double rate) {
+		if (rate == 0) {
+			return 0;
+		}
+		if ((rate == 1) || npc.isAmountFixed()) {
+			return count;
+		}
+		else {
+			return NumberUtil.randomRound((count * rate));
+		}
+
+	}
+
+	private final Map<Integer, L1Spawn> _spawntable = Maps.newMap();
+
+	private int _highestId;
+
 	private SpawnTable() {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╠》正在产生 Mob...");
 		fillSpawnTable();
 		_log.config("怪物配置清单  " + _spawntable.size() + "件");
 		System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
+	}
+
+	public void addNewSpawn(L1Spawn spawn) {
+		_highestId++;
+		spawn.setId(_highestId);
+		_spawntable.put(new Integer(spawn.getId()), spawn);
+	}
+
+	public L1Spawn getTemplate(int Id) {
+		return _spawntable.get(new Integer(Id));
 	}
 
 	private void fillSpawnTable() {
@@ -153,63 +211,5 @@ public class SpawnTable {
 			SQLUtil.close(con);
 		}
 		_log.fine("普通怪物一共  " + spawnCount + " 只");
-	}
-
-	public L1Spawn getTemplate(int Id) {
-		return _spawntable.get(new Integer(Id));
-	}
-
-	public void addNewSpawn(L1Spawn spawn) {
-		_highestId++;
-		spawn.setId(_highestId);
-		_spawntable.put(new Integer(spawn.getId()), spawn);
-	}
-
-	public static void storeSpawn(L1PcInstance pc, L1Npc npc) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			int count = 1;
-			int randomXY = 12;
-			int minRespawnDelay = 60;
-			int maxRespawnDelay = 120;
-			String note = npc.get_name();
-
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
-			pstm.setString(1, note);
-			pstm.setInt(2, count);
-			pstm.setInt(3, npc.get_npcId());
-			pstm.setInt(4, 0);
-			pstm.setInt(5, pc.getX());
-			pstm.setInt(6, pc.getY());
-			pstm.setInt(7, randomXY);
-			pstm.setInt(8, randomXY);
-			pstm.setInt(9, pc.getHeading());
-			pstm.setInt(10, minRespawnDelay);
-			pstm.setInt(11, maxRespawnDelay);
-			pstm.setInt(12, pc.getMapId());
-			pstm.execute();
-
-		}
-		catch (Exception e) {
-			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
-
-	private static int calcCount(L1Npc npc, int count, double rate) {
-		if (rate == 0) {
-			return 0;
-		}
-		if ((rate == 1) || npc.isAmountFixed()) {
-			return count;
-		}
-		else {
-			return NumberUtil.randomRound((count * rate));
-		}
-
 	}
 }

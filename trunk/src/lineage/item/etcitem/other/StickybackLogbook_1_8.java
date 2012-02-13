@@ -20,11 +20,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class StickybackLogbook_1_8 extends ItemExecutor {
 
-	private StickybackLogbook_1_8() {
-	}
-
 	public static ItemExecutor get() {
 		return new StickybackLogbook_1_8();
+	}
+
+	private StickybackLogbook_1_8() {
 	}
 
 	/**

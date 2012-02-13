@@ -34,7 +34,28 @@ import l1j.server.server.serverpackets.S_SPMR;
  */
 public class L1Awake {
 
-	private L1Awake() {
+	/** 觉醒变身 */
+	public static void doPoly(L1PcInstance pc) {
+		int polyId = 6894;
+		if (pc.hasSkillEffect(SHAPE_CHANGE)) {
+			pc.killSkillEffectTimer(SHAPE_CHANGE);
+		}
+		L1ItemInstance weapon = pc.getWeapon();
+		boolean weaponTakeoff = (weapon != null && !L1PolyMorph.isEquipableWeapon(polyId, weapon.getItem().getType()));
+		if (weaponTakeoff) { // 解除武器时
+			pc.setCurrentWeapon(0);
+		}
+		pc.setTempCharGfx(polyId);
+		pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
+		if (pc.isGmInvis()) { // GM隐身
+		}
+		else if (pc.isInvisble()) { // 一般隐身
+			pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()), true);
+		}
+		else {
+			pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
+		}
+		pc.getInventory().takeoffEquip(polyId); // 是否将装备的武器强制解除。
 	}
 
 	/** 开始觉醒 */
@@ -116,30 +137,6 @@ public class L1Awake {
 		pc.stopMpReductionByAwake();
 	}
 
-	/** 觉醒变身 */
-	public static void doPoly(L1PcInstance pc) {
-		int polyId = 6894;
-		if (pc.hasSkillEffect(SHAPE_CHANGE)) {
-			pc.killSkillEffectTimer(SHAPE_CHANGE);
-		}
-		L1ItemInstance weapon = pc.getWeapon();
-		boolean weaponTakeoff = (weapon != null && !L1PolyMorph.isEquipableWeapon(polyId, weapon.getItem().getType()));
-		if (weaponTakeoff) { // 解除武器时
-			pc.setCurrentWeapon(0);
-		}
-		pc.setTempCharGfx(polyId);
-		pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
-		if (pc.isGmInvis()) { // GM隐身
-		}
-		else if (pc.isInvisble()) { // 一般隐身
-			pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()), true);
-		}
-		else {
-			pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
-		}
-		pc.getInventory().takeoffEquip(polyId); // 是否将装备的武器强制解除。
-	}
-
 	/** 觉醒解除变身 */
 	public static void undoPoly(L1PcInstance pc) {
 		int classId = pc.getClassId();
@@ -148,6 +145,9 @@ public class L1Awake {
 			pc.sendPackets(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
 			pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
 		}
+	}
+
+	private L1Awake() {
 	}
 
 }

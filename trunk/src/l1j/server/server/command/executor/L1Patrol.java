@@ -18,11 +18,11 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_PacketBox;
 
 public class L1Patrol implements L1CommandExecutor {
-	private L1Patrol() {
-	}
-
 	public static L1CommandExecutor getInstance() {
 		return new L1Patrol();
+	}
+
+	private L1Patrol() {
 	}
 
 	@Override

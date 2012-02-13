@@ -30,14 +30,6 @@ public class S_Door extends ServerBasePacket {
 		buildPacket(x, y, direction, isPassable);
 	}
 
-	private void buildPacket(int x, int y, int direction, boolean isPassable) {
-		writeC(Opcodes.S_OPCODE_ATTRIBUTE);
-		writeH(x);
-		writeH(y);
-		writeC(direction); // ドアの方向 0: ／ 1: ＼
-		writeC(isPassable ? PASS : NOT_PASS);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -49,5 +41,13 @@ public class S_Door extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_DOOR;
+	}
+
+	private void buildPacket(int x, int y, int direction, boolean isPassable) {
+		writeC(Opcodes.S_OPCODE_ATTRIBUTE);
+		writeH(x);
+		writeH(y);
+		writeC(direction); // ドアの方向 0: ／ 1: ＼
+		writeC(isPassable ? PASS : NOT_PASS);
 	}
 }

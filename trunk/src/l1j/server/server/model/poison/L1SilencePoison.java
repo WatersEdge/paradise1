@@ -22,8 +22,6 @@ import l1j.server.server.model.L1Character;
  */
 public class L1SilencePoison extends L1Poison {
 
-	private final L1Character _target;
-
 	public static boolean doInfection(L1Character cha) {
 		if (!L1Poison.isValidTarget(cha)) {
 			return false;
@@ -33,22 +31,12 @@ public class L1SilencePoison extends L1Poison {
 		return true;
 	}
 
+	private final L1Character _target;
+
 	private L1SilencePoison(L1Character cha) {
 		_target = cha;
 
 		doInfection();
-	}
-
-	private void doInfection() {
-		_target.setPoisonEffect(1);
-		sendMessageIfPlayer(_target, 310);
-
-		_target.setSkillEffect(STATUS_POISON_SILENCE, 0);
-	}
-
-	@Override
-	public int getEffectId() {
-		return 1;
 	}
 
 	@Override
@@ -58,5 +46,17 @@ public class L1SilencePoison extends L1Poison {
 
 		_target.killSkillEffectTimer(STATUS_POISON_SILENCE);
 		_target.setPoison(null);
+	}
+
+	@Override
+	public int getEffectId() {
+		return 1;
+	}
+
+	private void doInfection() {
+		_target.setPoisonEffect(1);
+		sendMessageIfPlayer(_target, 310);
+
+		_target.setSkillEffect(STATUS_POISON_SILENCE, 0);
 	}
 }

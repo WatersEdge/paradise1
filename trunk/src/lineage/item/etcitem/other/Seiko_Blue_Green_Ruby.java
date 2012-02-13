@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class Seiko_Blue_Green_Ruby extends ItemExecutor {
 
-	private Seiko_Blue_Green_Ruby() {
-	}
-
 	public static ItemExecutor get() {
 		return new Seiko_Blue_Green_Ruby();
+	}
+
+	private Seiko_Blue_Green_Ruby() {
 	}
 
 	/**

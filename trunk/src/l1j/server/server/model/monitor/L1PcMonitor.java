@@ -42,6 +42,14 @@ public abstract class L1PcMonitor implements Runnable {
 		_id = oId;
 	}
 
+	/**
+	 * 处理运行时的任务
+	 * 
+	 * @param pc
+	 *            被监控的PC
+	 */
+	public abstract void execTask(L1PcInstance pc);
+
 	@Override
 	public final void run() {
 		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(_id);
@@ -50,12 +58,4 @@ public abstract class L1PcMonitor implements Runnable {
 		}
 		execTask(pc);
 	}
-
-	/**
-	 * 处理运行时的任务
-	 * 
-	 * @param pc
-	 *            被监控的PC
-	 */
-	public abstract void execTask(L1PcInstance pc);
 }

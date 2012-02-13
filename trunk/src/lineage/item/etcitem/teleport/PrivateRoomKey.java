@@ -13,11 +13,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class PrivateRoomKey extends ItemExecutor {
 
-	private PrivateRoomKey() {
-	}
-
 	public static ItemExecutor get() {
 		return new PrivateRoomKey();
+	}
+
+	private PrivateRoomKey() {
 	}
 
 	/**

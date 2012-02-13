@@ -26,6 +26,8 @@ public class S_Invis extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	private static final String S_INVIS = "[S] S_Invis";
+
 	/**
 	 * 物件隐形或现形
 	 * 
@@ -35,12 +37,6 @@ public class S_Invis extends ServerBasePacket {
 	 */
 	public S_Invis(int objid, int type) {
 		buildPacket(objid, type);
-	}
-
-	private void buildPacket(int objid, int type) {
-		writeC(Opcodes.S_OPCODE_INVIS);
-		writeD(objid);
-		writeC(type);
 	}
 
 	@Override
@@ -56,5 +52,9 @@ public class S_Invis extends ServerBasePacket {
 		return S_INVIS;
 	}
 
-	private static final String S_INVIS = "[S] S_Invis";
+	private void buildPacket(int objid, int type) {
+		writeC(Opcodes.S_OPCODE_INVIS);
+		writeD(objid);
+		writeC(type);
+	}
 }

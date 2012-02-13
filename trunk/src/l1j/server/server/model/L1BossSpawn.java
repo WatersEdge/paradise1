@@ -28,8 +28,6 @@ import l1j.server.server.utils.Random;
  */
 public class L1BossSpawn extends L1Spawn {
 
-	private static Logger _log = Logger.getLogger(L1BossSpawn.class.getName());
-
 	private class SpawnTask implements Runnable {
 		private int _spawnNumber;
 		private int _objectId;
@@ -44,6 +42,18 @@ public class L1BossSpawn extends L1Spawn {
 			doSpawn(_spawnNumber, _objectId);
 		}
 	}
+
+	private static Logger _log = Logger.getLogger(L1BossSpawn.class.getName());
+
+	private int _spawnCount;
+
+	private String _cycleType;
+
+	private int _percentage;
+
+	private L1BossCycle _cycle;
+
+	private Calendar _activeSpawnTime;
 
 	public L1BossSpawn(L1Npc mobTemplate) {
 		super(mobTemplate);
@@ -80,28 +90,6 @@ public class L1BossSpawn extends L1Spawn {
 		spawnBoss(spawnTime, objectId);
 	}
 
-	private int _spawnCount;
-
-	private synchronized int subAndGetCount() {
-		return --_spawnCount;
-	}
-
-	private String _cycleType;
-
-	public void setCycleType(String type) {
-		_cycleType = type;
-	}
-
-	private int _percentage;
-
-	public void setPercentage(int percentage) {
-		_percentage = percentage;
-	}
-
-	private L1BossCycle _cycle;
-
-	private Calendar _activeSpawnTime;
-
 	@Override
 	public void init() {
 		if (_percentage <= 0) {
@@ -122,6 +110,32 @@ public class L1BossSpawn extends L1Spawn {
 			spawnTime = calcNextSpawnTime(now);
 		}
 		spawnBoss(spawnTime, 0);
+	}
+
+	public void setCycleType(String type) {
+		_cycleType = type;
+	}
+
+	public void setPercentage(int percentage) {
+		_percentage = percentage;
+	}
+
+	/**
+	 * 表示现在活动的BOSS 对应周期出现时间表。
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[MOB]npcid:" + getNpcId());
+		builder.append(" name:" + getName());
+		builder.append("[Type]" + _cycle.getName());
+		builder.append("[现在周期]");
+		builder.append(_cycle.getSpawnStartTime(_activeSpawnTime).getTime());
+		builder.append(" - ");
+		builder.append(_cycle.getSpawnEndTime(_activeSpawnTime).getTime());
+		builder.append("[出现时间]");
+		builder.append(_activeSpawnTime.getTime());
+		return builder.toString();
 	}
 
 	// 计算出确率计算下一次的出现时间
@@ -147,21 +161,7 @@ public class L1BossSpawn extends L1Spawn {
 		_log.log(Level.FINE, toString());
 	}
 
-	/**
-	 * 表示现在活动的BOSS 对应周期出现时间表。
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("[MOB]npcid:" + getNpcId());
-		builder.append(" name:" + getName());
-		builder.append("[Type]" + _cycle.getName());
-		builder.append("[现在周期]");
-		builder.append(_cycle.getSpawnStartTime(_activeSpawnTime).getTime());
-		builder.append(" - ");
-		builder.append(_cycle.getSpawnEndTime(_activeSpawnTime).getTime());
-		builder.append("[出现时间]");
-		builder.append(_activeSpawnTime.getTime());
-		return builder.toString();
+	private synchronized int subAndGetCount() {
+		return --_spawnCount;
 	}
 }

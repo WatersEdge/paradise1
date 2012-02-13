@@ -47,6 +47,19 @@ public class S_ApplyAuction extends ServerBasePacket {
 		buildPacket(objectId, houseNumber);
 	}
 
+	@Override
+	public byte[] getContent() {
+		if (_byte == null) {
+			_byte = getBytes();
+		}
+		return _byte;
+	}
+
+	@Override
+	public String getType() {
+		return S_APPLYAUCTION;
+	}
+
 	private void buildPacket(int objectId, String houseNumber) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -84,18 +97,5 @@ public class S_ApplyAuction extends ServerBasePacket {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
-	}
-
-	@Override
-	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = getBytes();
-		}
-		return _byte;
-	}
-
-	@Override
-	public String getType() {
-		return S_APPLYAUCTION;
 	}
 }

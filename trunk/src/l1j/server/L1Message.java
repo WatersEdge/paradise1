@@ -26,8 +26,46 @@ public class L1Message {
 
 	private static L1Message _instance;
 
+	public static L1Message getInstance() {
+		if (_instance == null) {
+			_instance = new L1Message();
+		}
+		return _instance;
+	}
+
 	ResourceBundle resource;
 
+	/**
+	 * static 变数
+	 */
+	public static String memoryUse;
+
+	public static String onGroundItem;
+
+	public static String secondsDelete;
+	public static String deleted;
+	public static String ver;
+	public static String settingslist;
+	public static String exp;
+	public static String x;
+	public static String level;
+	public static String justice;
+	public static String karma;
+	public static String dropitems;
+	public static String dropadena;
+	public static String enchantweapon;
+	public static String enchantarmor;
+	public static String chatlevel;
+	public static String nonpvpNo;
+	public static String nonpvpYes;
+	public static String memory;
+	public static String maxplayer;
+	public static String player;
+	public static String waitingforuser;
+	public static String from;
+	public static String attempt;
+	public static String setporton;
+	public static String initialfinished;
 	private L1Message() {
 		try {
 			resource = ResourceBundle.getBundle(messages.class.getName());
@@ -37,14 +75,6 @@ public class L1Message {
 			mre.printStackTrace();
 		}
 	}
-
-	public static L1Message getInstance() {
-		if (_instance == null) {
-			_instance = new L1Message();
-		}
-		return _instance;
-	}
-
 	/**
 	 * 简短化变数名词
 	 */
@@ -76,34 +106,4 @@ public class L1Message {
 		setporton = resource.getString("l1j.server.server.GameServer.setporton");
 		initialfinished = resource.getString("l1j.server.server.GameServer.initialfinished");
 	}
-
-	/**
-	 * static 变数
-	 */
-	public static String memoryUse;
-	public static String onGroundItem;
-	public static String secondsDelete;
-	public static String deleted;
-	public static String ver;
-	public static String settingslist;
-	public static String exp;
-	public static String x;
-	public static String level;
-	public static String justice;
-	public static String karma;
-	public static String dropitems;
-	public static String dropadena;
-	public static String enchantweapon;
-	public static String enchantarmor;
-	public static String chatlevel;
-	public static String nonpvpNo;
-	public static String nonpvpYes;
-	public static String memory;
-	public static String maxplayer;
-	public static String player;
-	public static String waitingforuser;
-	public static String from;
-	public static String attempt;
-	public static String setporton;
-	public static String initialfinished;
 }

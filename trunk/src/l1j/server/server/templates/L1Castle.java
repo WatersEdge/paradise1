@@ -17,44 +17,28 @@ package l1j.server.server.templates;
 import java.util.Calendar;
 
 public class L1Castle {
+	private int _id;
+
+	private String _name;
+
+	private Calendar _warTime;
+
+	private int _taxRate;
+
+	private int _publicMoney;
+
 	public L1Castle(int id, String name) {
 		_id = id;
 		_name = name;
 	}
 
-	private int _id;
-
 	public int getId() {
 		return _id;
 	}
 
-	private String _name;
-
 	public String getName() {
 		return _name;
 	}
-
-	private Calendar _warTime;
-
-	public Calendar getWarTime() {
-		return _warTime;
-	}
-
-	public void setWarTime(Calendar i) {
-		_warTime = i;
-	}
-
-	private int _taxRate;
-
-	public int getTaxRate() {
-		return _taxRate;
-	}
-
-	public void setTaxRate(int i) {
-		_taxRate = i;
-	}
-
-	private int _publicMoney;
 
 	public int getPublicMoney() {
 		if (_publicMoney < 0)
@@ -63,8 +47,24 @@ public class L1Castle {
 			return _publicMoney;
 	}
 
+	public int getTaxRate() {
+		return _taxRate;
+	}
+
+	public Calendar getWarTime() {
+		return _warTime;
+	}
+
 	public void setPublicMoney(int i) {
 		_publicMoney = i;
+	}
+
+	public void setTaxRate(int i) {
+		_taxRate = i;
+	}
+
+	public void setWarTime(Calendar i) {
+		_warTime = i;
 	}
 
 }

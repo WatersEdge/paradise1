@@ -14,11 +14,11 @@ import lineage.console.executor.ItemExecutor;
  */
 public class SXYK_Soulstones extends ItemExecutor {
 
-	private SXYK_Soulstones() {
-	}
-
 	public static ItemExecutor get() {
 		return new SXYK_Soulstones();
+	}
+
+	private SXYK_Soulstones() {
 	}
 
 	/**

@@ -26,9 +26,18 @@ import l1j.server.server.serverpackets.S_DoActionGFX;
  */
 public class L1NpcDeleteTimer extends TimerTask {
 
+	private final L1NpcInstance _npc;
+
+	private final int _timeMillis;
+
 	public L1NpcDeleteTimer(L1NpcInstance npc, int timeMillis) {
 		_npc = npc;
 		_timeMillis = timeMillis;
+	}
+
+	public void begin() {
+		Timer timer = new Timer();
+		timer.schedule(this, _timeMillis);
 	}
 
 	@Override
@@ -50,13 +59,4 @@ public class L1NpcDeleteTimer extends TimerTask {
 			cancel();
 		}
 	}
-
-	public void begin() {
-		Timer timer = new Timer();
-		timer.schedule(this, _timeMillis);
-	}
-
-	private final L1NpcInstance _npc;
-
-	private final int _timeMillis;
 }

@@ -52,9 +52,6 @@ import l1j.server.server.templates.L1Pet;
  */
 public class CalcExp {
 
-	private CalcExp() {
-	}
-
 	/**
 	 * 序列版本UID
 	 */
@@ -69,15 +66,6 @@ public class CalcExp {
 	 * 最高经验值
 	 */
 	public static final long MAX_EXP = ExpTable.getExpByLevel(101) - 1;
-
-	/**
-	 * 取得序列版本UID
-	 * 
-	 * @return
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	/**
 	 * 计算取得的经验值
@@ -398,6 +386,15 @@ public class CalcExp {
 	}
 
 	/**
+	 * 取得序列版本UID
+	 * 
+	 * @return
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	/**
 	 * 增加经验值
 	 * 
 	 * @param pc
@@ -544,5 +541,8 @@ public class CalcExp {
 			PetTable.getInstance().storePet(petTemplate); // 保存资料
 			pc.sendPackets(new S_ServerMessage(320, pet.getName())); // \f1%0升级了。
 		}
+	}
+
+	private CalcExp() {
 	}
 }

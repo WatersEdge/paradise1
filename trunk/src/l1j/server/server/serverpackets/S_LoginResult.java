@@ -43,14 +43,6 @@ public class S_LoginResult extends ServerBasePacket {
 		buildPacket(reason);
 	}
 
-	private void buildPacket(int reason) {
-		writeC(Opcodes.S_OPCODE_LOGINRESULT);
-		writeC(reason);
-		writeD(0x00000000);
-		writeD(0x00000000);
-		writeD(0x00000000);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -62,5 +54,13 @@ public class S_LoginResult extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_LOGIN_RESULT;
+	}
+
+	private void buildPacket(int reason) {
+		writeC(Opcodes.S_OPCODE_LOGINRESULT);
+		writeC(reason);
+		writeD(0x00000000);
+		writeD(0x00000000);
+		writeD(0x00000000);
 	}
 }

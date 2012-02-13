@@ -38,36 +38,6 @@ public class V2MapReader extends MapReader {
 	private static final String MAP_DIR = "./v2maps/";
 
 	/**
-	 * 传回所有地图的编号
-	 * 
-	 * @return ArraryList
-	 */
-	private List<Integer> listMapIds() {
-		List<Integer> ids = Lists.newList();
-
-		File mapDir = new File(MAP_DIR);
-		for (String name : mapDir.list()) {
-			File mapFile = new File(mapDir, name);
-			if (!mapFile.exists()) {
-				continue;
-			}
-			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("md")) {
-				continue;
-			}
-			int id = 0;
-			try {
-				String idStr = FileUtil.getNameWithoutExtension(mapFile);
-				id = Integer.parseInt(idStr);
-			}
-			catch (NumberFormatException e) {
-				continue;
-			}
-			ids.add(id);
-		}
-		return ids;
-	}
-
-	/**
 	 * 取得所有地图与编号的 Mapping
 	 * 
 	 * @return Map
@@ -119,5 +89,35 @@ public class V2MapReader extends MapReader {
 				.isUseResurrection(mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable.getInstance().isTakePets(mapId), MapsTable.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId),
 				MapsTable.getInstance().isUsableSkill(mapId));
 		return map;
+	}
+
+	/**
+	 * 传回所有地图的编号
+	 * 
+	 * @return ArraryList
+	 */
+	private List<Integer> listMapIds() {
+		List<Integer> ids = Lists.newList();
+
+		File mapDir = new File(MAP_DIR);
+		for (String name : mapDir.list()) {
+			File mapFile = new File(mapDir, name);
+			if (!mapFile.exists()) {
+				continue;
+			}
+			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("md")) {
+				continue;
+			}
+			int id = 0;
+			try {
+				String idStr = FileUtil.getNameWithoutExtension(mapFile);
+				id = Integer.parseInt(idStr);
+			}
+			catch (NumberFormatException e) {
+				continue;
+			}
+			ids.add(id);
+		}
+		return ids;
 	}
 }

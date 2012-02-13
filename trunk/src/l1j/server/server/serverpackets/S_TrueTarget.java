@@ -42,13 +42,6 @@ public class S_TrueTarget extends ServerBasePacket {
 		buildPacket(targetId, objectId, message);
 	}
 
-	private void buildPacket(int targetId, int objectId, String message) {
-		writeC(Opcodes.S_OPCODE_TRUETARGET);
-		writeD(targetId);
-		writeD(objectId);
-		writeS(message);
-	}
-
 	@Override
 	public byte[] getContent() {
 		if (_byte == null) {
@@ -60,5 +53,12 @@ public class S_TrueTarget extends ServerBasePacket {
 	@Override
 	public String getType() {
 		return S_TRUETARGET;
+	}
+
+	private void buildPacket(int targetId, int objectId, String message) {
+		writeC(Opcodes.S_OPCODE_TRUETARGET);
+		writeD(targetId);
+		writeD(objectId);
+		writeS(message);
 	}
 }
