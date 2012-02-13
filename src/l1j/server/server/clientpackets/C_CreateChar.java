@@ -86,7 +86,7 @@ public class C_CreateChar extends ClientBasePacket {
 
 	private static final short[] MAPID_LIST = new short[] { 2005, 2005, 2005, 2005, 2005, 2005, 2005 };
 
-	private static void initNewChar(ClientThread client, L1PcInstance pc) throws IOException, Exception {
+	private static void initNewChar(final ClientThread client, final L1PcInstance pc) throws IOException, Exception {
 
 		pc.setId(IdFactory.getInstance().nextId());
 		pc.setBirthday();
@@ -102,8 +102,8 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.setHeading(0);
 		pc.setLawful(0);
 
-		int initHp = CalcInitHpMp.calcInitHp(pc);
-		int initMp = CalcInitHpMp.calcInitMp(pc);
+		final int initHp = CalcInitHpMp.calcInitHp(pc);
+		final int initMp = CalcInitHpMp.calcInitMp(pc);
 		pc.addBaseMaxHp((short) initHp);
 		pc.setCurrentHp((short) initHp);
 		pc.addBaseMaxMp((short) initMp);
@@ -142,16 +142,16 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.setKarma(0);
 		if (pc.isWizard()) { // WIZ
 			pc.sendPackets(new S_AddSkill(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-			int object_id = pc.getId();
-			L1Skills l1skills = SkillsTable.getInstance().getTemplate(4); // EB
-			String skill_name = l1skills.getName();
-			int skill_id = l1skills.getSkillId();
+			final int object_id = pc.getId();
+			final L1Skills l1skills = SkillsTable.getInstance().getTemplate(4); // EB
+			final String skill_name = l1skills.getName();
+			final int skill_id = l1skills.getSkillId();
 			SkillsTable.getInstance().spellMastery(object_id, skill_id, skill_name, 0, 0); // 储存魔法资料到资料库中
 		}
 		Beginner.getInstance().GiveItem(pc);
 		pc.setAccountName(client.getAccountName());
 		CharacterTable.getInstance().storeNewCharacter(pc);
-		S_NewCharPacket s_newcharpacket = new S_NewCharPacket(pc);
+		final S_NewCharPacket s_newcharpacket = new S_NewCharPacket(pc);
 		client.sendPacket(s_newcharpacket);
 		CharacterTable.getInstance();
 		CharacterTable.saveCharStatus(pc);
@@ -159,9 +159,9 @@ public class C_CreateChar extends ClientBasePacket {
 	}
 
 	/** 字母数字 */
-	private static boolean isAlphaNumeric(String s) {
+	private static boolean isAlphaNumeric(final String s) {
 		boolean flag = true;
-		char ac[] = s.toCharArray();
+		final char ac[] = s.toCharArray();
 		int i = 0;
 		do {
 			if (i >= ac.length) {
@@ -177,7 +177,7 @@ public class C_CreateChar extends ClientBasePacket {
 	}
 
 	/** 无效的名字 */
-	private static boolean isInvalidName(String name) {
+	private static boolean isInvalidName(final String name) {
 		int numOfNameBytes = 0;
 
 		// TODO:Check the badNameList is working well ?
@@ -188,7 +188,7 @@ public class C_CreateChar extends ClientBasePacket {
 		try {
 			numOfNameBytes = name.getBytes(CLIENT_LANGUAGE_CODE).length;
 		}
-		catch (UnsupportedEncodingException e) {
+		catch (final UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			return false;
 		}
@@ -209,39 +209,39 @@ public class C_CreateChar extends ClientBasePacket {
 		return true;
 	}
 
-	public C_CreateChar(byte[] abyte0, ClientThread client) throws Exception {
+	public C_CreateChar(final byte[] abyte0, final ClientThread client) throws Exception {
 		super(abyte0);
-		L1PcInstance pc = new L1PcInstance();
+		final L1PcInstance pc = new L1PcInstance();
 		String name = readS();
 
-		Account account = Account.load(client.getAccountName());
-		int characterSlot = account.getCharacterSlot();
-		int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
+		final Account account = Account.load(client.getAccountName());
+		final int characterSlot = account.getCharacterSlot();
+		final int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
 
 		name = name.replaceAll("\\s", "");
 		name = name.replaceAll("　", "");
 		if (name.length() == 0) {
-			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
+			final S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
 			client.sendPacket(s_charcreatestatus);
 			return;
 		}
 
 		if (isInvalidName(name)) {
-			S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
+			final S_CharCreateStatus s_charcreatestatus = new S_CharCreateStatus(S_CharCreateStatus.REASON_INVALID_NAME);
 			client.sendPacket(s_charcreatestatus);
 			return;
 		}
 
 		if (CharacterTable.doesCharNameExist(name)) {
 			_log.fine("角色名称: " + pc.getName() + " 已经存在。创建失败。");
-			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_ALREADY_EXSISTS);
+			final S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_ALREADY_EXSISTS);
 			client.sendPacket(s_charcreatestatus1);
 			return;
 		}
 
 		if (client.getAccount().countCharacters() >= maxAmount) {
 			_log.fine("账号: " + client.getAccountName() + " 超过角色上限数目: " + maxAmount + "。");
-			S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
+			final S_CharCreateStatus s_charcreatestatus1 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
 			client.sendPacket(s_charcreatestatus1);
 			return;
 		}
@@ -257,13 +257,13 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.addBaseInt((byte) readC());
 
 		boolean isStatusError = false;
-		int originalStr = ORIGINAL_STR[pc.getType()];
-		int originalDex = ORIGINAL_DEX[pc.getType()];
-		int originalCon = ORIGINAL_CON[pc.getType()];
-		int originalWis = ORIGINAL_WIS[pc.getType()];
-		int originalCha = ORIGINAL_CHA[pc.getType()];
-		int originalInt = ORIGINAL_INT[pc.getType()];
-		int originalAmount = ORIGINAL_AMOUNT[pc.getType()];
+		final int originalStr = ORIGINAL_STR[pc.getType()];
+		final int originalDex = ORIGINAL_DEX[pc.getType()];
+		final int originalCon = ORIGINAL_CON[pc.getType()];
+		final int originalWis = ORIGINAL_WIS[pc.getType()];
+		final int originalCha = ORIGINAL_CHA[pc.getType()];
+		final int originalInt = ORIGINAL_INT[pc.getType()];
+		final int originalAmount = ORIGINAL_AMOUNT[pc.getType()];
 
 		if (((pc.getBaseStr() < originalStr) || (pc.getBaseDex() < originalDex) || (pc.getBaseCon() < originalCon) || (pc.getBaseWis() < originalWis) || (pc.getBaseCha() < originalCha) || (pc.getBaseInt() < originalInt))
 				|| ((pc.getBaseStr() > originalStr + originalAmount) || (pc.getBaseDex() > originalDex + originalAmount) || (pc.getBaseCon() > originalCon + originalAmount) || (pc.getBaseWis() > originalWis + originalAmount) || (pc.getBaseCha() > originalCha + originalAmount) || (pc
@@ -271,17 +271,17 @@ public class C_CreateChar extends ClientBasePacket {
 			isStatusError = true;
 		}
 
-		int statusAmount = pc.getDex() + pc.getCha() + pc.getCon() + pc.getInt() + pc.getStr() + pc.getWis();
+		final int statusAmount = pc.getDex() + pc.getCha() + pc.getCon() + pc.getInt() + pc.getStr() + pc.getWis();
 
 		if ((statusAmount != 75) || isStatusError) {
 			_log.finest("角色有错误的能力值");
-			S_CharCreateStatus s_charcreatestatus3 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
+			final S_CharCreateStatus s_charcreatestatus3 = new S_CharCreateStatus(S_CharCreateStatus.REASON_WRONG_AMOUNT);
 			client.sendPacket(s_charcreatestatus3);
 			return;
 		}
 
 		_log.fine("角色名称: " + pc.getName() + " classId: " + pc.getClassId());
-		S_CharCreateStatus s_charcreatestatus2 = new S_CharCreateStatus(S_CharCreateStatus.REASON_OK);
+		final S_CharCreateStatus s_charcreatestatus2 = new S_CharCreateStatus(S_CharCreateStatus.REASON_OK);
 		client.sendPacket(s_charcreatestatus2);
 		initNewChar(client, pc);
 	}

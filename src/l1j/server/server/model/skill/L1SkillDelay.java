@@ -27,9 +27,9 @@ public class L1SkillDelay {
 
 	/** 技能延迟计时器 */
 	static class SkillDelayTimer implements Runnable {
-		private L1Character _cha;
+		private final L1Character _cha;
 
-		public SkillDelayTimer(L1Character cha, int time) {
+		public SkillDelayTimer(final L1Character cha, final int time) {
 			_cha = cha;
 		}
 
@@ -44,7 +44,7 @@ public class L1SkillDelay {
 	}
 
 	/** 技能的使用 */
-	public static void onSkillUse(L1Character cha, int time) {
+	public static void onSkillUse(final L1Character cha, final int time) {
 		cha.setSkillDelay(true);
 		GeneralThreadPool.getInstance().schedule(new SkillDelayTimer(cha, time), time);
 	}

@@ -32,7 +32,7 @@ public class S_MoveNpcPacket extends ServerBasePacket {
 	 * @param y
 	 * @param heading
 	 */
-	public S_MoveNpcPacket(L1MonsterInstance npc, int x, int y, int heading) {
+	public S_MoveNpcPacket(final L1MonsterInstance npc, final int x, final int y, final int heading) {
 		// npc.set_moving(true);
 
 		writeC(Opcodes.S_OPCODE_MOVEOBJECT);

@@ -33,14 +33,14 @@ public class L1CommandHelp implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
-		List<L1Command> list = L1Commands.availableCommandList(pc.getAccessLevel());
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
+		final List<L1Command> list = L1Commands.availableCommandList(pc.getAccessLevel());
 		pc.sendPackets(new S_SystemMessage(join(list, ", ")));
 	}
 
-	private String join(List<L1Command> list, String with) {
-		StringBuilder result = new StringBuilder();
-		for (L1Command cmd : list) {
+	private String join(final List<L1Command> list, final String with) {
+		final StringBuilder result = new StringBuilder();
+		for (final L1Command cmd : list) {
 			if (result.length() > 0) {
 				result.append(with);
 			}

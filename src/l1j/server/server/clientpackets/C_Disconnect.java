@@ -29,16 +29,17 @@ public class C_Disconnect extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_Disconnect.class.getName());
 
-	public C_Disconnect(byte[] decrypt, ClientThread client) {
+	public C_Disconnect(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
 		client.CharReStart(true);
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc != null) {
 
 			_log.fine("断开: " + pc.getName());
 
-			if (client.getAccount() != null)
+			if (client.getAccount() != null) {
 				Account.online(client.getAccount(), false);
+			}
 
 			ClientThread.quitGame(pc);
 

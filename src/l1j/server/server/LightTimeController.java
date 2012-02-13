@@ -44,20 +44,20 @@ public class LightTimeController implements Runnable {
 				Thread.sleep(60000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 		}
 	}
 
 	// 检查照明时间
 	private void checkLightTime() {
-		int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
-		int nowTime = serverTime % 86400;
+		final int serverTime = L1GameTimeClock.getInstance().currentTime().getSeconds();
+		final int nowTime = serverTime % 86400;
 		if ((nowTime >= ((5 * 3600) + 3300)) && (nowTime < ((17 * 3600) + 3300))) { // 5:55~17:55
 			if (isSpawn) {
 				isSpawn = false;
-				for (L1Object object : L1World.getInstance().getObject()) {
+				for (final L1Object object : L1World.getInstance().getObject()) {
 					if (object instanceof L1FieldObjectInstance) {
-						L1FieldObjectInstance npc = (L1FieldObjectInstance) object;
+						final L1FieldObjectInstance npc = (L1FieldObjectInstance) object;
 						if (((npc.getNpcTemplate().get_npcId() == 81177 // 火窟(小)
 								)
 								|| (npc.getNpcTemplate().get_npcId() == 81178 // 火窟(中)

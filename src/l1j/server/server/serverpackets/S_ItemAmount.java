@@ -32,7 +32,7 @@ public class S_ItemAmount extends ServerBasePacket {
 	 * 
 	 * @param item
 	 */
-	public S_ItemAmount(L1ItemInstance item) {
+	public S_ItemAmount(final L1ItemInstance item) {
 		if (item == null) {
 			return;
 		}
@@ -50,7 +50,7 @@ public class S_ItemAmount extends ServerBasePacket {
 		return S_ITEM_AMOUNT;
 	}
 
-	private void buildPacket(L1ItemInstance item) {
+	private void buildPacket(final L1ItemInstance item) {
 		// writeC(Opcodes.S_OPCODE_ITEMAMOUNT);
 		// writeD(item.getId());
 		// writeD(item.getCount());
@@ -64,9 +64,9 @@ public class S_ItemAmount extends ServerBasePacket {
 			writeC(0);
 		}
 		else {
-			byte[] status = item.getStatusBytes();
+			final byte[] status = item.getStatusBytes();
 			writeC(status.length);
-			for (byte b : status) {
+			for (final byte b : status) {
 				writeC(b);
 			}
 		}

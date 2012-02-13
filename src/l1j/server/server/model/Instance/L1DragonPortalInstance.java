@@ -34,22 +34,22 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 	/**
 	 * @param template
 	 */
-	public L1DragonPortalInstance(L1Npc template) {
+	public L1DragonPortalInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance player) {
-		int npcid = getNpcTemplate().get_npcId();
-		int portalNumber = getPortalNumber(); // 龙门编号
+	public void onTalkAction(final L1PcInstance player) {
+		final int npcid = getNpcTemplate().get_npcId();
+		final int portalNumber = getPortalNumber(); // 龙门编号
 		int X = 32599;
 		int Y = 32742;
 		short mapId = 1005;
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(npcid);
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(npcid);
 		String htmlid = null;
-		String[] htmldata = null;
-		if ((npcid >= 81273 && npcid <= 81276)) { // 龙之门扉
+		final String[] htmldata = null;
+		if (((npcid >= 81273) && (npcid <= 81276))) { // 龙之门扉
 			if (portalNumber == -1) {
 				return;
 			}
@@ -61,13 +61,13 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 				player.sendPackets(new S_ServerMessage(1537)); // 攻略已经开始，目前无法入场。
 			}
 			else {
-				if (portalNumber >= 0 && portalNumber <= 5) { // 安塔瑞斯副本
+				if ((portalNumber >= 0) && (portalNumber <= 5)) { // 安塔瑞斯副本
 					if (player.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS)) {
 						player.sendPackets(new S_ServerMessage(1626)); // 龙之血痕已穿透全身，在血痕的气味消失之前，无法再进入龙之门扉。
 						return;
 					}
 				}
-				else if (portalNumber >= 6 && portalNumber <= 11) { // 法利昂副本
+				else if ((portalNumber >= 6) && (portalNumber <= 11)) { // 法利昂副本
 					if (player.hasSkillEffect(EFFECT_BLOODSTAIN_OF_FAFURION)) {
 						player.sendPackets(new S_ServerMessage(1626)); // 龙之血痕已穿透全身，在血痕的气味消失之前，无法再进入龙之门扉。
 						return;
@@ -100,8 +100,8 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 			L1Teleport.teleport(player, 32677, 32746, player.getMapId(), 6, true);
 		}
 		else if (npcid == 81277) { // 隐匿的巨龙谷入口
-			int playerLv = player.getLevel();// 角色等级
-			if (playerLv >= 30 && playerLv <= 51) {
+			final int playerLv = player.getLevel();// 角色等级
+			if ((playerLv >= 30) && (playerLv <= 51)) {
 				htmlid = "dsecret1";
 			}
 			else if (playerLv >= 52) {

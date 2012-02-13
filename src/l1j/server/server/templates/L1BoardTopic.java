@@ -30,7 +30,7 @@ import l1j.server.server.utils.SQLUtil;
 public class L1BoardTopic {
 	private static Logger _log = Logger.getLogger(L1BoardTopic.class.getName());
 
-	public synchronized static L1BoardTopic create(String name, String title, String content) {
+	public synchronized static L1BoardTopic create(final String name, final String title, final String content) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		ResultSet rs = null;
@@ -40,8 +40,8 @@ public class L1BoardTopic {
 			pstm1 = con.prepareStatement("SELECT max(id) + 1 as newid FROM board");
 			rs = pstm1.executeQuery();
 			rs.next();
-			int id = rs.getInt("newid");
-			L1BoardTopic topic = new L1BoardTopic(id, name, title, content);
+			final int id = rs.getInt("newid");
+			final L1BoardTopic topic = new L1BoardTopic(id, name, title, content);
 
 			pstm2 = con.prepareStatement("INSERT INTO board SET id=?, name=?, date=?, title=?, content=?");
 			pstm2.setInt(1, topic.getId());
@@ -53,7 +53,7 @@ public class L1BoardTopic {
 
 			return topic;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -63,7 +63,8 @@ public class L1BoardTopic {
 		}
 		return null;
 	}
-	public static L1BoardTopic findById(int id) {
+
+	public static L1BoardTopic findById(final int id) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -76,18 +77,20 @@ public class L1BoardTopic {
 				return new L1BoardTopic(rs);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
 		return null;
 	}
-	public static List<L1BoardTopic> index(int limit) {
+
+	public static List<L1BoardTopic> index(final int limit) {
 		return index(0, limit);
 	}
-	public static List<L1BoardTopic> index(int id, int limit) {
-		List<L1BoardTopic> result = new ArrayList<L1BoardTopic>();
+
+	public static List<L1BoardTopic> index(final int id, final int limit) {
+		final List<L1BoardTopic> result = new ArrayList<L1BoardTopic>();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -100,14 +103,15 @@ public class L1BoardTopic {
 			}
 			return result;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
 		}
 		return null;
 	}
-	private static PreparedStatement makeIndexStatement(Connection con, int id, int limit) throws SQLException {
+
+	private static PreparedStatement makeIndexStatement(final Connection con, final int id, final int limit) throws SQLException {
 		PreparedStatement result = null;
 		int offset = 1;
 		if (id == 0) {
@@ -132,7 +136,7 @@ public class L1BoardTopic {
 
 	private final String _content;
 
-	private L1BoardTopic(int id, String name, String title, String content) {
+	private L1BoardTopic(final int id, final String name, final String title, final String content) {
 		_id = id;
 		_name = name;
 		_date = today();
@@ -140,7 +144,7 @@ public class L1BoardTopic {
 		_content = content;
 	}
 
-	private L1BoardTopic(ResultSet rs) throws SQLException {
+	private L1BoardTopic(final ResultSet rs) throws SQLException {
 		_id = rs.getInt("id");
 		_name = rs.getString("name");
 		_date = rs.getString("date");
@@ -158,7 +162,7 @@ public class L1BoardTopic {
 			pstm.setInt(1, getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -193,12 +197,12 @@ public class L1BoardTopic {
 	 */
 	private String today() {
 		// 年
-		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0" + TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
+		final String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0" + TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
 		// 月
-		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0" + TimeInform.getMonth() : TimeInform.getMonth();
+		final String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0" + TimeInform.getMonth() : TimeInform.getMonth();
 		// 日
-		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0" + TimeInform.getDay() : TimeInform.getDay();
-		StringBuilder sb = new StringBuilder();
+		final String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0" + TimeInform.getDay() : TimeInform.getDay();
+		final StringBuilder sb = new StringBuilder();
 		// 輸出 yy/MM/dd
 		sb.append(year).append("/").append(month).append("/").append(day);
 		return sb.toString();

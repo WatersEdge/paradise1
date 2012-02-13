@@ -30,7 +30,7 @@ public class S_ItemStatus extends ServerBasePacket {
 	/**
 	 * 更新道具的名称、状态、特性、数量
 	 */
-	public S_ItemStatus(L1ItemInstance item) {
+	public S_ItemStatus(final L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ITEMSTATUS);
 		writeD(item.getId());
 		writeS(item.getViewName());
@@ -40,9 +40,9 @@ public class S_ItemStatus extends ServerBasePacket {
 			writeC(0);
 		}
 		else {
-			byte[] status = item.getStatusBytes();
+			final byte[] status = item.getStatusBytes();
 			writeC(status.length);
-			for (byte b : status) {
+			for (final byte b : status) {
 				writeC(b);
 			}
 		}

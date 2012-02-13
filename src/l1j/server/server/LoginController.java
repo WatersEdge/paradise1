@@ -57,7 +57,7 @@ public class LoginController {
 	}
 
 	/** 登陆 */
-	public synchronized void login(ClientThread client, Account account) throws GameServerFullException, AccountAlreadyLoginException {
+	public synchronized void login(final ClientThread client, final Account account) throws GameServerFullException, AccountAlreadyLoginException {
 		if (!account.isValid()) {
 			// 密码验证未指定或不验证账户。
 			// 此代码只存在的错误检测。
@@ -75,7 +75,7 @@ public class LoginController {
 	}
 
 	/** 登出 */
-	public synchronized boolean logout(ClientThread client) {
+	public synchronized boolean logout(final ClientThread client) {
 		if (client.getAccountName() == null) {
 			return false;
 		}
@@ -83,7 +83,7 @@ public class LoginController {
 	}
 
 	/** 设置最大允许在线玩家 */
-	public void setMaxAllowedOnlinePlayers(int maxAllowedOnlinePlayers) {
+	public void setMaxAllowedOnlinePlayers(final int maxAllowedOnlinePlayers) {
 		_maxAllowedOnlinePlayers = maxAllowedOnlinePlayers;
 	}
 
@@ -103,7 +103,7 @@ public class LoginController {
 				try {
 					Thread.sleep(1000);
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 				}
 				client.kick();
 			}

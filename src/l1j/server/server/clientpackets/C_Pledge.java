@@ -31,12 +31,12 @@ public class C_Pledge extends ClientBasePacket {
 
 	private static final String C_PLEDGE = "[C] C_Pledge";
 
-	public C_Pledge(byte abyte0[], ClientThread clientthread) {
+	public C_Pledge(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 
 		if (pc.getClanid() > 0) {
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (pc.isCrown() && (pc.getId() == clan.getLeaderId())) {
 				pc.sendPackets(new S_Pledge("pledgeM", pc.getId(), clan.getClanName(), clan.getOnlineMembersFPWithRank(), clan.getAllMembersFPWithRank()));
 			}

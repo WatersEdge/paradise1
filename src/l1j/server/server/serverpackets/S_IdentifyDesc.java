@@ -27,7 +27,7 @@ public class S_IdentifyDesc extends ServerBasePacket {
 	/**
 	 * 物品资讯讯息 (使用String-h.tbl)
 	 */
-	public S_IdentifyDesc(L1ItemInstance item) {
+	public S_IdentifyDesc(final L1ItemInstance item) {
 		buildPacket(item);
 	}
 
@@ -39,11 +39,11 @@ public class S_IdentifyDesc extends ServerBasePacket {
 		return _byte;
 	}
 
-	private void buildPacket(L1ItemInstance item) {
+	private void buildPacket(final L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_IDENTIFYDESC);
 		writeH(item.getItem().getItemDescId());
 
-		StringBuilder name = new StringBuilder();
+		final StringBuilder name = new StringBuilder();
 
 		if (item.getItem().getBless() == 0) {
 			name.append("$227 "); // 祝福
@@ -55,7 +55,7 @@ public class S_IdentifyDesc extends ServerBasePacket {
 		name.append(item.getItem().getIdentifiedNameId());
 
 		// 旅馆钥匙
-		if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) {
+		if ((item.getItem().getItemId() == 40312) && (item.getKeyId() != 0)) {
 			name.append(item.getInnKeyName());
 		}
 

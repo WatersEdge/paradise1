@@ -102,59 +102,59 @@ public class L1NpcChat {
 		return _isWorldChat;
 	}
 
-	public void setChatId1(String s) {
+	public void setChatId1(final String s) {
 		_chatId1 = s;
 	}
 
-	public void setChatId2(String s) {
+	public void setChatId2(final String s) {
 		_chatId2 = s;
 	}
 
-	public void setChatId3(String s) {
+	public void setChatId3(final String s) {
 		_chatId3 = s;
 	}
 
-	public void setChatId4(String s) {
+	public void setChatId4(final String s) {
 		_chatId4 = s;
 	}
 
-	public void setChatId5(String s) {
+	public void setChatId5(final String s) {
 		_chatId5 = s;
 	}
 
-	public void setChatInterval(int i) {
+	public void setChatInterval(final int i) {
 		_chatInterval = i;
 	}
 
-	public void setChatTiming(int i) {
+	public void setChatTiming(final int i) {
 		_chatTiming = i;
 	}
 
-	public void setGameTime(int i) {
+	public void setGameTime(final int i) {
 		_gameTime = i;
 	}
 
-	public void setNpcId(int i) {
+	public void setNpcId(final int i) {
 		_npcId = i;
 	}
 
-	public void setRepeat(boolean flag) {
+	public void setRepeat(final boolean flag) {
 		_isRepeat = flag;
 	}
 
-	public void setRepeatInterval(int i) {
+	public void setRepeatInterval(final int i) {
 		_repeatInterval = i;
 	}
 
-	public void setShout(boolean flag) {
+	public void setShout(final boolean flag) {
 		_isShout = flag;
 	}
 
-	public void setStartDelayTime(int i) {
+	public void setStartDelayTime(final int i) {
 		_startDelayTime = i;
 	}
 
-	public void setWorldChat(boolean flag) {
+	public void setWorldChat(final boolean flag) {
 		_isWorldChat = flag;
 	}
 

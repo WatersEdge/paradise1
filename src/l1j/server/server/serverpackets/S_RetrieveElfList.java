@@ -31,16 +31,16 @@ public class S_RetrieveElfList extends ServerBasePacket {
 	 * @param objid
 	 * @param pc
 	 */
-	public S_RetrieveElfList(int objid, L1PcInstance pc) {
+	public S_RetrieveElfList(final int objid, final L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
-			int size = pc.getDwarfForElfInventory().getSize();
+			final int size = pc.getDwarfForElfInventory().getSize();
 			if (size > 0) {
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
 				writeC(9); // 精灵仓库
-				for (Object itemObject : pc.getDwarfForElfInventory().getItems()) {
-					L1ItemInstance item = (L1ItemInstance) itemObject;
+				for (final Object itemObject : pc.getDwarfForElfInventory().getItems()) {
+					final L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0);
 					writeH(item.get_gfxid());

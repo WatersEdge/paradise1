@@ -44,8 +44,8 @@ public class HouseTaxTimeController implements Runnable {
 	 * 取得现实时间
 	 */
 	public Calendar getRealTime() {
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(tz);
+		final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final Calendar cal = Calendar.getInstance(tz);
 		return cal;
 	}
 
@@ -57,13 +57,13 @@ public class HouseTaxTimeController implements Runnable {
 				Thread.sleep(600000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 		}
 	}
 
 	// 检查税期限
 	private void checkTaxDeadline() {
-		for (L1House house : HouseTable.getInstance().getHouseTableList()) {
+		for (final L1House house : HouseTable.getInstance().getHouseTableList()) {
 			if (!house.isOnSale()) { // 不检查再拍卖的血盟小屋
 				if (house.getTaxDeadline().before(getRealTime())) {
 					sellHouse(house);
@@ -73,17 +73,17 @@ public class HouseTaxTimeController implements Runnable {
 	}
 
 	// 拍卖盟屋
-	private void sellHouse(L1House house) {
-		AuctionBoardTable boardTable = new AuctionBoardTable();
-		L1AuctionBoard board = new L1AuctionBoard();
+	private void sellHouse(final L1House house) {
+		final AuctionBoardTable boardTable = new AuctionBoardTable();
+		final L1AuctionBoard board = new L1AuctionBoard();
 		if (board != null) {
 			// 在拍卖板张贴新公告
-			int houseId = house.getHouseId();
+			final int houseId = house.getHouseId();
 			board.setHouseId(houseId);
 			board.setHouseName(house.getHouseName());
 			board.setHouseArea(house.getHouseArea());
-			TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-			Calendar cal = Calendar.getInstance(tz);
+			final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+			final Calendar cal = Calendar.getInstance(tz);
 			cal.add(Calendar.DATE, 5); // 5天以后
 			cal.set(Calendar.MINUTE, 0); //
 			cal.set(Calendar.SECOND, 0);
@@ -101,7 +101,7 @@ public class HouseTaxTimeController implements Runnable {
 			house.setTaxDeadline(cal);
 			HouseTable.getInstance().updateHouse(house); // 储存到资料库中
 			// 取消之前的拥有者
-			for (L1Clan clan : L1World.getInstance().getAllClans()) {
+			for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 				if (clan.getHouseId() == houseId) {
 					clan.setHouseId(0);
 					ClanTable.getInstance().updateClan(clan);

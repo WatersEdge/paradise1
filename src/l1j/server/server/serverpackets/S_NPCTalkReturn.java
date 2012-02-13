@@ -33,7 +33,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param objid
 	 * @param html
 	 */
-	public S_NPCTalkReturn(int objid, L1NpcHtml html) {
+	public S_NPCTalkReturn(final int objid, final L1NpcHtml html) {
 		buildPacket(objid, html.getName(), html.getArgs());
 	}
 
@@ -43,7 +43,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param objid
 	 * @param htmlid
 	 */
-	public S_NPCTalkReturn(int objid, String htmlid) {
+	public S_NPCTalkReturn(final int objid, final String htmlid) {
 		buildPacket(objid, htmlid, null);
 	}
 
@@ -54,7 +54,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param htmlid
 	 * @param data
 	 */
-	public S_NPCTalkReturn(int objid, String htmlid, String[] data) {
+	public S_NPCTalkReturn(final int objid, final String htmlid, final String[] data) {
 		buildPacket(objid, htmlid, data);
 	}
 
@@ -65,7 +65,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param objid
 	 * @param action
 	 */
-	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action) {
+	public S_NPCTalkReturn(final L1NpcTalkData npc, final int objid, final int action) {
 		this(npc, objid, action, null);
 	}
 
@@ -77,7 +77,7 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 	 * @param action
 	 * @param data
 	 */
-	public S_NPCTalkReturn(L1NpcTalkData npc, int objid, int action, String[] data) {
+	public S_NPCTalkReturn(final L1NpcTalkData npc, final int objid, final int action, final String[] data) {
 
 		String htmlid = "";
 
@@ -107,15 +107,15 @@ public class S_NPCTalkReturn extends ServerBasePacket {
 		return _S__25_TalkReturn;
 	}
 
-	private void buildPacket(int objid, String htmlid, String[] data) {
+	private void buildPacket(final int objid, final String htmlid, final String[] data) {
 
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS(htmlid);
-		if (data != null && 1 <= data.length) {
+		if ((data != null) && (1 <= data.length)) {
 			writeH(0x01); // 如果有人知道请修复未知字节
 			writeH(data.length); // 数的参数
-			for (String datum : data) {
+			for (final String datum : data) {
 				writeS(datum);
 			}
 		}

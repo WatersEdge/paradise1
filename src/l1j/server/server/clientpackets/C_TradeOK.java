@@ -30,11 +30,11 @@ public class C_TradeOK extends ClientBasePacket {
 
 	private static final String C_TRADE_CANCEL = "[C] C_TradeOK";
 
-	public C_TradeOK(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_TradeOK(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
-		L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance().findObject(player.getTradeID());
+		final L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance().findObject(player.getTradeID());
 		if (trading_partner != null) {
 			player.setTradeOk(true);
 
@@ -43,14 +43,14 @@ public class C_TradeOK extends ClientBasePacket {
 				// 检查身上的空间是否还有 (180 - 16)
 				if ((player.getInventory().getSize() < (180 - 16)) && (trading_partner.getInventory().getSize() < (180 - 16))) // お互いのアイテムを相手に渡す
 				{
-					L1Trade trade = new L1Trade();
+					final L1Trade trade = new L1Trade();
 					trade.TradeOK(player);
 				}
 				else // 返回对方的道具
 				{
 					player.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
 					trading_partner.sendPackets(new S_ServerMessage(263)); // \f1一个角色最多可携带180个道具。
-					L1Trade trade = new L1Trade();
+					final L1Trade trade = new L1Trade();
 					trade.TradeCancel(player);
 				}
 			}

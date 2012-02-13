@@ -28,9 +28,9 @@ public class L1UbPattern {
 
 	private boolean _isFrozen = false;
 
-	private Map<Integer, List<L1UbSpawn>> _groups = Maps.newMap();
+	private final Map<Integer, List<L1UbSpawn>> _groups = Maps.newMap();
 
-	public void addSpawn(int groupNumber, L1UbSpawn spawn) {
+	public void addSpawn(final int groupNumber, final L1UbSpawn spawn) {
 		if (_isFrozen) {
 			return;
 		}
@@ -50,14 +50,14 @@ public class L1UbPattern {
 		}
 
 		// 按ID排序，产生一个组包含列表
-		for (List<L1UbSpawn> spawnList : _groups.values()) {
+		for (final List<L1UbSpawn> spawnList : _groups.values()) {
 			Collections.sort(spawnList);
 		}
 
 		_isFrozen = true;
 	}
 
-	public List<L1UbSpawn> getSpawnList(int groupNumber) {
+	public List<L1UbSpawn> getSpawnList(final int groupNumber) {
 		if (!_isFrozen) {
 			return null;
 		}

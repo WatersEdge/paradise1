@@ -30,7 +30,7 @@ public class S_ItemName extends ServerBasePacket {
 	/**
 	 * 更新道具名称。装备强化状态变动时发送。
 	 */
-	public S_ItemName(L1ItemInstance item) {
+	public S_ItemName(final L1ItemInstance item) {
 		if (item == null) {
 			return;
 		}

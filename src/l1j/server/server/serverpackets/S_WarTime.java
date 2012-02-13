@@ -34,17 +34,17 @@ public class S_WarTime extends ServerBasePacket {
 	 * 
 	 * @param cal
 	 */
-	public S_WarTime(Calendar cal) {
+	public S_WarTime(final Calendar cal) {
 		// 1997/01/01 17:00を基点としている
-		Calendar base_cal = Calendar.getInstance();
+		final Calendar base_cal = Calendar.getInstance();
 		base_cal.set(1997, 0, 1, 17, 0);
-		long base_millis = base_cal.getTimeInMillis();
-		long millis = cal.getTimeInMillis();
+		final long base_millis = base_cal.getTimeInMillis();
+		final long millis = cal.getTimeInMillis();
 		long diff = millis - base_millis;
 		diff -= 1200 * 60 * 1000; // 誤差修正
 		diff = diff / 60000; // 分以下切捨て
 		// timeは1加算すると3:02（182分）進む
-		int time = (int) (diff / 182);
+		final int time = (int) (diff / 182);
 
 		// writeDの直前のwriteCで時間の調節ができる
 		// 0.7倍した時間だけ縮まるが

@@ -26,7 +26,7 @@ public class S_Door extends ServerBasePacket {
 	private static final int PASS = 0;
 	private static final int NOT_PASS = 1;
 
-	public S_Door(int x, int y, int direction, boolean isPassable) {
+	public S_Door(final int x, final int y, final int direction, final boolean isPassable) {
 		buildPacket(x, y, direction, isPassable);
 	}
 
@@ -43,7 +43,7 @@ public class S_Door extends ServerBasePacket {
 		return S_DOOR;
 	}
 
-	private void buildPacket(int x, int y, int direction, boolean isPassable) {
+	private void buildPacket(final int x, final int y, final int direction, final boolean isPassable) {
 		writeC(Opcodes.S_OPCODE_ATTRIBUTE);
 		writeH(x);
 		writeH(y);

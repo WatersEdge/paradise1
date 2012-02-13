@@ -79,43 +79,43 @@ public class L1Pet {
 		return _objid;
 	}
 
-	public void set_exp(int i) {
+	public void set_exp(final int i) {
 		_exp = i;
 	}
 
-	public void set_food(int i) {
+	public void set_food(final int i) {
 		_food = i;
 	}
 
-	public void set_hp(int i) {
+	public void set_hp(final int i) {
 		_hp = i;
 	}
 
-	public void set_itemobjid(int i) {
+	public void set_itemobjid(final int i) {
 		_itemobjid = i;
 	}
 
-	public void set_lawful(int i) {
+	public void set_lawful(final int i) {
 		_lawful = i;
 	}
 
-	public void set_level(int i) {
+	public void set_level(final int i) {
 		_level = i;
 	}
 
-	public void set_mp(int i) {
+	public void set_mp(final int i) {
 		_mp = i;
 	}
 
-	public void set_name(String s) {
+	public void set_name(final String s) {
 		_name = s;
 	}
 
-	public void set_npcid(int i) {
+	public void set_npcid(final int i) {
 		_npcid = i;
 	}
 
-	public void set_objid(int i) {
+	public void set_objid(final int i) {
 		_objid = i;
 	}
 }

@@ -31,11 +31,11 @@ public class C_AddBookmark extends ClientBasePacket {
 
 	private static final String C_ADD_BOOKMARK = "[C] C_AddBookmark";
 
-	public C_AddBookmark(byte[] decrypt, ClientThread client) {
+	public C_AddBookmark(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		String s = readS();
+		final String s = readS();
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}

@@ -31,17 +31,17 @@ public class C_ChatParty extends ClientBasePacket {
 
 	private static final String C_CHAT_PARTY = "[C] C_ChatParty";
 
-	public C_ChatParty(byte abyte0[], ClientThread clientthread) {
+	public C_ChatParty(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
 
-		int type = readC();
+		final int type = readC();
 		if (type == 0) { // /chatbanish 的命令
-			String name = readS();
+			final String name = readS();
 
 			if (!pc.isInChatParty()) {
 				pc.sendPackets(new S_ServerMessage(425)); // 没有加入聊天组队
@@ -51,7 +51,7 @@ public class C_ChatParty extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(427)); // 只有队长可以踢人
 				return;
 			}
-			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
+			final L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
 				pc.sendPackets(new S_ServerMessage(109)); // 没有叫%0的人。
 				return;
@@ -60,7 +60,7 @@ public class C_ChatParty extends ClientBasePacket {
 				return;
 			}
 
-			for (L1PcInstance member : pc.getChatParty().getMembers()) {
+			for (final L1PcInstance member : pc.getChatParty().getMembers()) {
 				if (member.getName().toLowerCase().equals(name.toLowerCase())) {
 					pc.getChatParty().kickMember(member);
 					return;
@@ -74,7 +74,7 @@ public class C_ChatParty extends ClientBasePacket {
 			}
 		}
 		else if (type == 2) { // /chatparty 的命令
-			L1ChatParty chatParty = pc.getChatParty();
+			final L1ChatParty chatParty = pc.getChatParty();
 			if (pc.isInChatParty()) {
 				pc.sendPackets(new S_Party("party", pc.getId(), chatParty.getLeader().getName(), chatParty.getMembersNameList()));
 			}

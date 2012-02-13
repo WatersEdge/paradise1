@@ -48,7 +48,7 @@ public final class ResolventTable {
 		loadMapsFromDatabase();
 	}
 
-	public int getCrystalCount(int itemId) {
+	public int getCrystalCount(final int itemId) {
 		int crystalCount = 0;
 		if (_resolvent.containsKey(itemId)) {
 			crystalCount = _resolvent.get(itemId);
@@ -65,15 +65,15 @@ public final class ResolventTable {
 			pstm = con.prepareStatement("SELECT * FROM resolvent");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
-				int itemId = rs.getInt("item_id");
-				int crystalCount = rs.getInt("crystal_count");
+				final int itemId = rs.getInt("item_id");
+				final int crystalCount = rs.getInt("crystal_count");
 
 				_resolvent.put(new Integer(itemId), crystalCount);
 			}
 
 			_log.config("resolvent " + _resolvent.size());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

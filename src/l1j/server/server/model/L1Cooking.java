@@ -82,7 +82,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class L1Cooking {
 
-	public static void eatCooking(L1PcInstance pc, int cookingId, int time) {
+	public static void eatCooking(final L1PcInstance pc, final int cookingId, final int time) {
 		int cookingType = 0;
 		if ((cookingId == COOKING_1_0_N) || (cookingId == COOKING_1_0_S)) { // 漂浮之眼肉排
 			cookingType = 0;
@@ -228,8 +228,8 @@ public class L1Cooking {
 	}
 
 	/** 使用料理道具 */
-	public static void useCookingItem(L1PcInstance pc, L1ItemInstance item) {
-		int itemId = item.getItem().getItemId();
+	public static void useCookingItem(final L1PcInstance pc, final L1ItemInstance item) {
+		final int itemId = item.getItem().getItemId();
 		if ((itemId == 41284) || (itemId == 41292) || (itemId == 49056) || (itemId == 49064) || (itemId == 49251) || (itemId == 49259)) { // 增加经验值的料理
 			if (pc.get_food() != 225) {
 				pc.sendPackets(new S_ServerMessage(74, item.getNumberedName(1))); // \f1%0%o 无法使用。
@@ -239,7 +239,7 @@ public class L1Cooking {
 
 		// 料理 LV1、特别的料理 LV1、料理 LV2、特别的料理 LV2、料理 LV3、特别的料理 LV3 - 不可重复
 		if (((itemId >= 41277) && (itemId <= 41283)) || ((itemId >= 41285) && (itemId <= 41291)) || ((itemId >= 49049) && (itemId <= 49055)) || ((itemId >= 49057) && (itemId <= 49063)) || ((itemId >= 49244) && (itemId <= 49250)) || ((itemId >= 49252) && (itemId <= 49258))) {
-			int cookingId = pc.getCookingId();
+			final int cookingId = pc.getCookingId();
 			if (cookingId != 0) {
 				pc.removeSkillEffect(cookingId);
 			}
@@ -247,14 +247,14 @@ public class L1Cooking {
 
 		// 蘑菇汤、特别的蘑菇汤、蟹肉汤、特别的蟹肉汤、邪恶蜥蜴蛋汤、特别的邪恶蜥蜴蛋汤 - 不可重复
 		if ((itemId == 41284) || (itemId == 41292) || (itemId == 49056) || (itemId == 49064) || (itemId == 49251) || (itemId == 49259)) {
-			int dessertId = pc.getDessertId();
+			final int dessertId = pc.getDessertId();
 			if (dessertId != 0) {
 				pc.removeSkillEffect(dessertId);
 			}
 		}
 
 		int cookingId;
-		int time = 900;
+		final int time = 900;
 		if ((itemId == 41277) || (itemId == 41285)) { // 漂浮之眼肉排
 			if (itemId == 41277) {
 				cookingId = COOKING_1_0_N;

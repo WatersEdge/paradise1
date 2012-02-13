@@ -46,29 +46,29 @@ public class C_Result extends ClientBasePacket {
 
 	private static final String C_RESULT = "[C] C_Result";
 
-	public C_Result(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Result(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		int npcObjectId = readD();
-		int resultType = readC();
-		int size = readH();
+		final int npcObjectId = readD();
+		final int resultType = readC();
+		final int size = readH();
 
-		L1PcInstance pc = clientthread.getActiveChar();
-		int level = pc.getLevel();
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final int level = pc.getLevel();
 
 		int npcId = 0;
 		String npcImpl = "";
 		boolean isPrivateShop = false;
 		boolean tradable = true;
-		L1Object findObject = L1World.getInstance().findObject(npcObjectId);
+		final L1Object findObject = L1World.getInstance().findObject(npcObjectId);
 		if (findObject != null) {
-			int diffLocX = Math.abs(pc.getX() - findObject.getX());
-			int diffLocY = Math.abs(pc.getY() - findObject.getY());
+			final int diffLocX = Math.abs(pc.getX() - findObject.getX());
+			final int diffLocY = Math.abs(pc.getY() - findObject.getY());
 			// 3格以上的距离视为无效要求
 			if ((diffLocX > 3) || (diffLocY > 3)) {
 				return;
 			}
 			if (findObject instanceof L1NpcInstance) {
-				L1NpcInstance targetNpc = (L1NpcInstance) findObject;
+				final L1NpcInstance targetNpc = (L1NpcInstance) findObject;
 				npcId = targetNpc.getNpcTemplate().get_npcId();
 				npcImpl = targetNpc.getNpcTemplate().getImpl();
 			}
@@ -78,16 +78,16 @@ public class C_Result extends ClientBasePacket {
 		}
 
 		if ((resultType == 0) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 买道具
-			L1Shop shop = ShopTable.getInstance().get(npcId);
-			L1ShopBuyOrderList orderList = shop.newBuyOrderList();
+			final L1Shop shop = ShopTable.getInstance().get(npcId);
+			final L1ShopBuyOrderList orderList = shop.newBuyOrderList();
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
 			shop.sellItems(pc, orderList);
 		}
 		else if ((resultType == 1) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 卖道具
-			L1Shop shop = ShopTable.getInstance().get(npcId);
-			L1ShopSellOrderList orderList = shop.newSellOrderList(pc);
+			final L1Shop shop = ShopTable.getInstance().get(npcId);
+			final L1ShopSellOrderList orderList = shop.newSellOrderList(pc);
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
@@ -99,15 +99,15 @@ public class C_Result extends ClientBasePacket {
 				tradable = true;
 				objectId = readD();
 				count = readD();
-				L1Object object = pc.getInventory().getItem(objectId);
-				L1ItemInstance item = (L1ItemInstance) object;
+				final L1Object object = pc.getInventory().getItem(objectId);
+				final L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
 					tradable = false;
 					pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 				}
-				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+				for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 					if (petNpc instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petNpc;
+						final L1PetInstance pet = (L1PetInstance) petNpc;
 						if (item.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
@@ -115,7 +115,7 @@ public class C_Result extends ClientBasePacket {
 						}
 					}
 				}
-				for (L1DollInstance doll : pc.getDollList().values()) {
+				for (final L1DollInstance doll : pc.getDollList().values()) {
 					if (item.getId() == doll.getItemObjId()) {
 						tradable = false;
 						pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
@@ -165,9 +165,9 @@ public class C_Result extends ClientBasePacket {
 					tradable = true;
 					objectId = readD();
 					count = readD();
-					L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
-					L1Object object = pc.getInventory().getItem(objectId);
-					L1ItemInstance item = (L1ItemInstance) object;
+					final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+					final L1Object object = pc.getInventory().getItem(objectId);
+					final L1ItemInstance item = (L1ItemInstance) object;
 					if (clan != null) {
 						if (!item.getItem().isTradable()) {
 							tradable = false;
@@ -177,9 +177,9 @@ public class C_Result extends ClientBasePacket {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 						}
-						for (L1NpcInstance petNpc : pc.getPetList().values()) {
+						for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 							if (petNpc instanceof L1PetInstance) {
-								L1PetInstance pet = (L1PetInstance) petNpc;
+								final L1PetInstance pet = (L1PetInstance) petNpc;
 								if (item.getId() == pet.getItemObjId()) {
 									tradable = false;
 									// \f1%0%d是不可转移的…
@@ -188,7 +188,7 @@ public class C_Result extends ClientBasePacket {
 								}
 							}
 						}
-						for (L1DollInstance doll : pc.getDollList().values()) {
+						for (final L1DollInstance doll : pc.getDollList().values()) {
 							if (item.getId() == doll.getItemObjId()) {
 								tradable = false;
 								pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
@@ -218,7 +218,7 @@ public class C_Result extends ClientBasePacket {
 			int objectId, count;
 			L1ItemInstance item;
 
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				for (int i = 0; i < size; i++) {
 					objectId = readD();
@@ -242,7 +242,7 @@ public class C_Result extends ClientBasePacket {
 			}
 		}
 		else if ((resultType == 5) && (size == 0) && npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン仓库から取り出し中にCancel、または、ESCキー
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				clan.setWarehouseUsingChar(0); // クラン仓库のロックを解除
 			}
@@ -253,15 +253,15 @@ public class C_Result extends ClientBasePacket {
 				tradable = true;
 				objectId = readD();
 				count = readD();
-				L1Object object = pc.getInventory().getItem(objectId);
-				L1ItemInstance item = (L1ItemInstance) object;
+				final L1Object object = pc.getInventory().getItem(objectId);
+				final L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
 					tradable = false;
 					pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 				}
-				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+				for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 					if (petNpc instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petNpc;
+						final L1PetInstance pet = (L1PetInstance) petNpc;
 						if (item.getId() == pet.getItemObjId()) {
 							tradable = false;
 							// \f1%0%d是不可转移的…
@@ -270,7 +270,7 @@ public class C_Result extends ClientBasePacket {
 						}
 					}
 				}
-				for (L1DollInstance doll : pc.getDollList().values()) {
+				for (final L1DollInstance doll : pc.getDollList().values()) {
 					if (item.getId() == doll.getItemObjId()) {
 						tradable = false;
 						pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
@@ -319,7 +319,7 @@ public class C_Result extends ClientBasePacket {
 			if (!(findObject instanceof L1PcInstance)) {
 				return;
 			}
-			L1PcInstance targetPc = (L1PcInstance) findObject;
+			final L1PcInstance targetPc = (L1PcInstance) findObject;
 
 			int order;
 			int count;
@@ -331,7 +331,7 @@ public class C_Result extends ClientBasePacket {
 			int sellTotalCount;
 			int sellCount;
 			L1ItemInstance item;
-			boolean[] isRemoveFromList = new boolean[8];
+			final boolean[] isRemoveFromList = new boolean[8];
 
 			if (targetPc.isTradingInPrivateShop()) {
 				return;
@@ -374,14 +374,14 @@ public class C_Result extends ClientBasePacket {
 						}
 						price = count * sellPrice;
 						if (pc.getInventory().checkItem(L1ItemId.ADENA, price)) {
-							L1ItemInstance adena = pc.getInventory().findItemId(L1ItemId.ADENA);
+							final L1ItemInstance adena = pc.getInventory().findItemId(L1ItemId.ADENA);
 							if ((targetPc != null) && (adena != null)) {
 								if (targetPc.getInventory().tradeItem(item, count, pc.getInventory()) == null) {
 									targetPc.setTradingInPrivateShop(false);
 									return;
 								}
 								pc.getInventory().tradeItem(adena, price, targetPc.getInventory());
-								String message = item.getItem().getName() + " (" + String.valueOf(count) + ")";
+								final String message = item.getItem().getName() + " (" + String.valueOf(count) + ")";
 								targetPc.sendPackets(new S_ServerMessage(877, // 将 %1%o 卖给 %0。
 										pc.getName(), message));
 								pssl.setSellCount(count + sellCount);
@@ -420,7 +420,7 @@ public class C_Result extends ClientBasePacket {
 			int buyPrice;
 			int buyTotalCount;
 			int buyCount;
-			boolean[] isRemoveFromList = new boolean[8];
+			final boolean[] isRemoveFromList = new boolean[8];
 
 			L1PcInstance targetPc = null;
 			if (findObject instanceof L1PcInstance) {
@@ -465,7 +465,7 @@ public class C_Result extends ClientBasePacket {
 						}
 					}
 					if (targetPc.getInventory().checkItem(L1ItemId.ADENA, count * buyPrice)) {
-						L1ItemInstance adena = targetPc.getInventory().findItemId(L1ItemId.ADENA);
+						final L1ItemInstance adena = targetPc.getInventory().findItemId(L1ItemId.ADENA);
 						if (adena != null) {
 							targetPc.getInventory().tradeItem(adena, count * buyPrice, pc.getInventory());
 							pc.getInventory().tradeItem(item, count, targetPc.getInventory());
@@ -508,8 +508,9 @@ public class C_Result extends ClientBasePacket {
 				if (itemCount == 0) {
 					continue;
 				}
-				for (L1NpcInstance petNpc : pc.getPetList().values())
+				for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 					petCost += petNpc.getPetcost();
+				}
 
 				int charisma = pc.getCha();
 				if (pc.isCrown()) { // 王族
@@ -534,8 +535,8 @@ public class C_Result extends ClientBasePacket {
 				if (!pc.getInventory().consumeItem(L1ItemId.ADENA, 115)) {
 					chackAdena = false;
 				}
-				L1Pet l1pet = PetTable.getInstance().getTemplate(itemObjectId);
-				if (l1pet != null && chackAdena) {
+				final L1Pet l1pet = PetTable.getInstance().getTemplate(itemObjectId);
+				if ((l1pet != null) && chackAdena) {
 					npcId = l1pet.get_npcid();
 					charisma -= petCost;
 					if ((npcId == 45313 // 老虎
@@ -554,8 +555,8 @@ public class C_Result extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(489)); // 你无法一次控制那么多宠物。
 						return;
 					}
-					L1Npc npcTemp = NpcTable.getInstance().getTemplate(npcId);
-					L1PetInstance pet = new L1PetInstance(npcTemp, pc, l1pet);
+					final L1Npc npcTemp = NpcTable.getInstance().getTemplate(npcId);
+					final L1PetInstance pet = new L1PetInstance(npcTemp, pc, l1pet);
 					pet.setPetcost(divisor);
 				}
 			}

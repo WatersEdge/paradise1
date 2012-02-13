@@ -41,13 +41,13 @@ public abstract class ClientBasePacket {
 	 * 
 	 * @param abyte0
 	 */
-	public ClientBasePacket(byte abyte0[]) {
+	public ClientBasePacket(final byte abyte0[]) {
 		_log.finest("type=" + getType() + ", len=" + abyte0.length);
 		_decrypt = abyte0;
 		_off = 1;
 	}
 
-	public ClientBasePacket(ByteBuffer bytebuffer, ClientThread clientthread) {
+	public ClientBasePacket(final ByteBuffer bytebuffer, final ClientThread clientthread) {
 	}
 
 	/**
@@ -63,12 +63,12 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public byte[] readByte() {
-		byte[] result = new byte[_decrypt.length - _off];
+		final byte[] result = new byte[_decrypt.length - _off];
 		try {
 			System.arraycopy(_decrypt, _off, result, 0, _decrypt.length - _off);
 			_off = _decrypt.length;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
 		return result;
@@ -80,7 +80,7 @@ public abstract class ClientBasePacket {
 	 * @return
 	 */
 	public int readC() {
-		int i = _decrypt[_off++] & 0xff;
+		final int i = _decrypt[_off++] & 0xff;
 		return i;
 	}
 
@@ -149,7 +149,7 @@ public abstract class ClientBasePacket {
 			s = s.substring(0, s.indexOf('\0'));
 			_off += s.getBytes(CLIENT_LANGUAGE_CODE).length + 1;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "OpCode=" + (_decrypt[0] & 0xff), e);
 		}
 		return s;

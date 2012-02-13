@@ -32,21 +32,21 @@ public class C_CreateClan extends ClientBasePacket {
 
 	private static final String C_CREATE_CLAN = "[C] C_CreateClan";
 
-	public C_CreateClan(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_CreateClan(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		String s = readS();
+		final String s = readS();
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isCrown()) { // 是王族
 			if (pc.getClanid() == 0) {
-				for (L1Clan clan : L1World.getInstance().getAllClans()) { // 检查是否有同名的血盟
+				for (final L1Clan clan : L1World.getInstance().getAllClans()) { // 检查是否有同名的血盟
 					if (clan.getClanName().toLowerCase().equals(s.toLowerCase())) {
 						pc.sendPackets(new S_ServerMessage(99)); // \f1那个血盟名称已经存在。
 						return;
 					}
 				}
 				if (pc.getInventory().checkItem(L1ItemId.ADENA, 30000)) { // 身上有金币3万
-					L1Clan clan = ClanTable.getInstance().createClan(pc, s); // 建立血盟
+					final L1Clan clan = ClanTable.getInstance().createClan(pc, s); // 建立血盟
 					if (clan != null) {
 						pc.sendPackets(new S_ServerMessage(84, s)); // 创立\f1%0 血盟。
 						pc.getInventory().consumeItem(L1ItemId.ADENA, 30000);

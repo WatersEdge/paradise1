@@ -55,8 +55,8 @@ public class AuctionTimeController implements Runnable {
 	 * 取得现实时间
 	 */
 	public Calendar getRealTime() {
-		TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-		Calendar cal = Calendar.getInstance(tz);
+		final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+		final Calendar cal = Calendar.getInstance(tz);
 		return cal;
 	}
 
@@ -68,7 +68,7 @@ public class AuctionTimeController implements Runnable {
 				Thread.sleep(60000);
 			}
 		}
-		catch (Exception e1) {
+		catch (final Exception e1) {
 		}
 	}
 
@@ -76,8 +76,8 @@ public class AuctionTimeController implements Runnable {
 	 * 检查拍卖截止时间
 	 */
 	private void checkAuctionDeadline() {
-		AuctionBoardTable boardTable = new AuctionBoardTable();
-		for (L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
+		final AuctionBoardTable boardTable = new AuctionBoardTable();
+		for (final L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
 			if (board.getDeadline().before(getRealTime())) {
 				endAuction(board);
 			}
@@ -91,8 +91,8 @@ public class AuctionTimeController implements Runnable {
 	 *            血盟小屋的编号
 	 * @return
 	 */
-	private void deleteHouseInfo(int houseId) {
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+	private void deleteHouseInfo(final int houseId) {
+		for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 			if (clan.getHouseId() == houseId) {
 				clan.setHouseId(0);
 				ClanTable.getInstance().updateClan(clan);
@@ -107,11 +107,11 @@ public class AuctionTimeController implements Runnable {
 	 *            血盟小屋的编号
 	 * @return
 	 */
-	private void deleteNote(int houseId) {
+	private void deleteNote(final int houseId) {
 		// 将血盟小屋的状态设定为不拍卖
-		L1House house = HouseTable.getInstance().getHouseTable(houseId);
+		final L1House house = HouseTable.getInstance().getHouseTable(houseId);
 		house.setOnSale(false);
-		Calendar cal = getRealTime();
+		final Calendar cal = getRealTime();
 		cal.add(Calendar.DATE, Config.HOUSE_TAX_INTERVAL);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -119,7 +119,7 @@ public class AuctionTimeController implements Runnable {
 		HouseTable.getInstance().updateHouse(house);
 
 		// 取消拍卖告示
-		AuctionBoardTable boardTable = new AuctionBoardTable();
+		final AuctionBoardTable boardTable = new AuctionBoardTable();
 		boardTable.deleteAuctionBoard(houseId);
 	}
 
@@ -129,34 +129,34 @@ public class AuctionTimeController implements Runnable {
 	 * @param board
 	 *            布告栏
 	 */
-	private void endAuction(L1AuctionBoard board) {
-		int houseId = board.getHouseId();
-		int price = board.getPrice();
-		int oldOwnerId = board.getOldOwnerId();
-		String bidder = board.getBidder();
-		int bidderId = board.getBidderId();
+	private void endAuction(final L1AuctionBoard board) {
+		final int houseId = board.getHouseId();
+		final int price = board.getPrice();
+		final int oldOwnerId = board.getOldOwnerId();
+		final String bidder = board.getBidder();
+		final int bidderId = board.getBidderId();
 
-		if (oldOwnerId != 0 && bidderId != 0) { // 在前主人与得标者都存在的情况下
-			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
-			int payPrice = (int) (price * 0.9);
+		if ((oldOwnerId != 0) && (bidderId != 0)) { // 在前主人与得标者都存在的情况下
+			final L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
+			final int payPrice = (int) (price * 0.9);
 			if (oldOwnerPc != null) { // 如果有前主人
 				oldOwnerPc.getInventory().storeItem(L1ItemId.ADENA, payPrice);
 				// 以 %1金币卖出您所拥有的房子。因此给您扣掉%n手续费 10%%的金额金币 %0。%n谢谢。%n%n
 				oldOwnerPc.sendPackets(new S_ServerMessage(527, String.valueOf(payPrice)));
 			}
 			else { // 没有前主人
-				L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
+				final L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 				item.setCount(payPrice);
 				try {
-					CharactersItemStorage storage = CharactersItemStorage.create();
+					final CharactersItemStorage storage = CharactersItemStorage.create();
 					storage.storeItem(oldOwnerId, item);
 				}
-				catch (Exception e) {
+				catch (final Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 			}
 
-			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
+			final L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
 			if (bidderPc != null) { // 如果有得标者
 				// 恭喜。%n你在拍卖会上以 %0金币成交。%n现在去您的血盟小屋后，可利用多样的设备。%n谢谢。%n%n
 				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
@@ -165,8 +165,8 @@ public class AuctionTimeController implements Runnable {
 			setHouseInfo(houseId, bidderId);
 			deleteNote(houseId);
 		}
-		else if (oldOwnerId == 0 && bidderId != 0) { // 在先前的拥有者没有中标
-			L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
+		else if ((oldOwnerId == 0) && (bidderId != 0)) { // 在先前的拥有者没有中标
+			final L1PcInstance bidderPc = (L1PcInstance) L1World.getInstance().findObject(bidderId);
 			if (bidderPc != null) { // 有中标者
 				// 恭喜。%n你在拍卖会上以 %0金币成交。%n现在去您的血盟小屋后，可利用多样的设备。%n谢谢。%n%n
 				bidderPc.sendPackets(new S_ServerMessage(524, String.valueOf(price), bidder));
@@ -175,22 +175,22 @@ public class AuctionTimeController implements Runnable {
 			setHouseInfo(houseId, bidderId);
 			deleteNote(houseId);
 		}
-		else if (oldOwnerId != 0 && bidderId == 0) { // 以前没有人成功竞投无
-			L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
+		else if ((oldOwnerId != 0) && (bidderId == 0)) { // 以前没有人成功竞投无
+			final L1PcInstance oldOwnerPc = (L1PcInstance) L1World.getInstance().findObject(oldOwnerId);
 			if (oldOwnerPc != null) { // 以前的所有者
 				// 在拍卖期间并没有出现提出适当价格的人，所以拍卖取消。%n因此所有权还在您那里。%n谢谢。%n%n
 				oldOwnerPc.sendPackets(new S_ServerMessage(528));
 			}
 			deleteNote(houseId);
 		}
-		else if (oldOwnerId == 0 && bidderId == 0) { // 在先前的拥有者没有中标
+		else if ((oldOwnerId == 0) && (bidderId == 0)) { // 在先前的拥有者没有中标
 			// 设定五天之后再次竞标
-			Calendar cal = getRealTime();
+			final Calendar cal = getRealTime();
 			cal.add(Calendar.DATE, 5); // 5天后
 			cal.set(Calendar.MINUTE, 0);
 			cal.set(Calendar.SECOND, 0);
 			board.setDeadline(cal);
-			AuctionBoardTable boardTable = new AuctionBoardTable();
+			final AuctionBoardTable boardTable = new AuctionBoardTable();
 			boardTable.updateAuctionBoard(board);
 		}
 	}
@@ -204,8 +204,8 @@ public class AuctionTimeController implements Runnable {
 	 *            得标者的编号
 	 * @return
 	 */
-	private void setHouseInfo(int houseId, int bidderId) {
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+	private void setHouseInfo(final int houseId, final int bidderId) {
+		for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 			if (clan.getLeaderId() == bidderId) {
 				clan.setHouseId(houseId);
 				ClanTable.getInstance().updateClan(clan);

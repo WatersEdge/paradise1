@@ -54,8 +54,8 @@ public class GetBackRestartTable {
 			pstm = con.prepareStatement("SELECT * FROM getback_restart");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1GetBackRestart gbr = new L1GetBackRestart();
-				int area = rs.getInt("area"); // 范围
+				final L1GetBackRestart gbr = new L1GetBackRestart();
+				final int area = rs.getInt("area"); // 范围
 				gbr.setArea(area);
 				gbr.setLocX(rs.getInt("locx"));
 				gbr.setLocY(rs.getInt("locy"));
@@ -64,7 +64,7 @@ public class GetBackRestartTable {
 				_getbackrestart.put(new Integer(area), gbr);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

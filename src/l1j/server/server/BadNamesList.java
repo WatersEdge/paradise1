@@ -49,7 +49,7 @@ public class BadNamesList {
 		LineNumberReader lnr = null;
 
 		try {
-			File mobDataFile = new File("data/badnames.txt");
+			final File mobDataFile = new File("data/badnames.txt");
 			lnr = new LineNumberReader(new BufferedReader(new FileReader(mobDataFile)));
 
 			String line = null;
@@ -57,7 +57,7 @@ public class BadNamesList {
 				if ((line.trim().length() == 0) || line.startsWith("#")) { // 跳过注解
 					continue;
 				}
-				StringTokenizer st = new StringTokenizer(line, ";");
+				final StringTokenizer st = new StringTokenizer(line, ";");
 
 				while (st.hasMoreTokens()) {
 					_nameList.add(st.nextToken());
@@ -66,10 +66,10 @@ public class BadNamesList {
 
 			_log.config("加载 " + _nameList.size() + " bad names");
 		}
-		catch (FileNotFoundException e) {
+		catch (final FileNotFoundException e) {
 			_log.warning("badnames.txt 数据文件夹丢失.");
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.warning("error while loading bad names list : " + e);
 		} finally {
 			StreamUtil.close(lnr);
@@ -80,8 +80,8 @@ public class BadNamesList {
 		return _nameList.toArray(new String[_nameList.size()]);
 	}
 
-	public boolean isBadName(String name) {
-		for (String badName : _nameList) {
+	public boolean isBadName(final String name) {
+		for (final String badName : _nameList) {
 			if (name.toLowerCase().contains(badName.toLowerCase())) {
 				return true;
 			}

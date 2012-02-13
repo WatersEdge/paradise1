@@ -57,7 +57,7 @@ public class S_Fight extends ServerBasePacket {
 	 * @param type
 	 * @param flag
 	 */
-	public S_Fight(int type, int flag) {
+	public S_Fight(final int type, final int flag) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x72);
 		writeD(type);

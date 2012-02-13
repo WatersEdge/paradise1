@@ -31,7 +31,7 @@ public class S_HireSoldier extends ServerBasePacket {
 
 	// 表示HTML打开后发送的数据包npcdeloy-j.html
 	// 按OK按钮飞C_127
-	public S_HireSoldier(L1PcInstance pc) {
+	public S_HireSoldier(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_HIRESOLDIER);
 		writeH(0); // ? 包含客户端返回的数据包
 		writeH(0); // ? 包含客户端返回的数据包

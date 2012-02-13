@@ -37,37 +37,37 @@ public class TrapTable {
 	private class SqlTrapStorage implements TrapStorage {
 		private final ResultSet _rs;
 
-		public SqlTrapStorage(ResultSet rs) {
+		public SqlTrapStorage(final ResultSet rs) {
 			_rs = rs;
 		}
 
 		@Override
-		public boolean getBoolean(String name) {
+		public boolean getBoolean(final String name) {
 			try {
 				return _rs.getBoolean(name);
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 			}
 			return false;
 		}
 
 		@Override
-		public int getInt(String name) {
+		public int getInt(final String name) {
 			try {
 				return _rs.getInt(name);
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 
 			}
 			return 0;
 		}
 
 		@Override
-		public String getString(String name) {
+		public String getString(final String name) {
 			try {
 				return _rs.getString(name);
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 			}
 			return "";
 		}
@@ -85,7 +85,7 @@ public class TrapTable {
 	}
 
 	public static void reload() {
-		TrapTable oldInstance = _instance;
+		final TrapTable oldInstance = _instance;
 		_instance = new TrapTable();
 
 		oldInstance._traps.clear();
@@ -97,14 +97,14 @@ public class TrapTable {
 		initialize();
 	}
 
-	public L1Trap getTemplate(int id) {
+	public L1Trap getTemplate(final int id) {
 		return _traps.get(id);
 	}
 
-	private L1Trap createTrapInstance(String name, TrapStorage storage) throws Exception {
+	private L1Trap createTrapInstance(final String name, final TrapStorage storage) throws Exception {
 		final String packageName = "l1j.server.server.model.trap.";
 
-		Constructor<?> con = Class.forName(packageName + name).getConstructor(new Class[] { TrapStorage.class });
+		final Constructor<?> con = Class.forName(packageName + name).getConstructor(new Class[] { TrapStorage.class });
 		return (L1Trap) con.newInstance(storage);
 	}
 
@@ -121,17 +121,17 @@ public class TrapTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				String typeName = rs.getString("type");
+				final String typeName = rs.getString("type");
 
-				L1Trap trap = createTrapInstance(typeName, new SqlTrapStorage(rs));
+				final L1Trap trap = createTrapInstance(typeName, new SqlTrapStorage(rs));
 
 				_traps.put(trap.getId(), trap);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

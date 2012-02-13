@@ -28,7 +28,7 @@ public class L1Invisible implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			pc.setGmInvis(true);
 			pc.sendPackets(new S_Invis(pc.getId(), 1));
@@ -36,7 +36,7 @@ public class L1Invisible implements L1CommandExecutor {
 			pc.sendPackets(new S_SystemMessage("现在是隐身状态。"));
 
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 指令错误"));
 		}
 	}

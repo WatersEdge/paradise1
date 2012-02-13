@@ -44,7 +44,7 @@ public class L1HouseLocation {
 	// アジトID一覧
 	private static final List<Integer> _houseIds = HouseTable.getHouseIdList();
 
-	public static int[] getBasementLoc(int houseId) { // houseIdからアジトの地下室の座標を返す
+	public static int[] getBasementLoc(final int houseId) { // houseIdからアジトの地下室の座標を返す
 		int[] loc = new int[3];
 		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト1~45
 			loc[0] = 32780;
@@ -63,8 +63,8 @@ public class L1HouseLocation {
 		return loc;
 	}
 
-	public static int[] getHouseLoc(int houseId) { // houseIdからアジトの座標を返す
-		int[] loc = new int[3];
+	public static int[] getHouseLoc(final int houseId) { // houseIdからアジトの座標を返す
+		final int[] loc = new int[3];
 		if (houseId == 262145) { // ギランアジト1
 			loc[0] = 33374;
 			loc[1] = 32657;
@@ -378,8 +378,8 @@ public class L1HouseLocation {
 		return loc;
 	}
 
-	public static int[] getHouseTeleportLoc(int houseId, int number) { // houseIdからテレポート先の座標を返す
-		int[] loc = new int[3];
+	public static int[] getHouseTeleportLoc(final int houseId, final int number) { // houseIdからテレポート先の座標を返す
+		final int[] loc = new int[3];
 		if ((houseId >= 262145) && (houseId <= 262189)) { // ギランアジト
 			loc[0] = TELEPORT_LOC_GIRAN[number].getX();
 			loc[1] = TELEPORT_LOC_GIRAN[number].getY();
@@ -409,9 +409,9 @@ public class L1HouseLocation {
 	 * @param cha
 	 * @return
 	 */
-	public static boolean isInHouse(int locx, int locy, short mapid) {
+	public static boolean isInHouse(final int locx, final int locy, final short mapid) {
 		boolean result = false;
-		for (Integer houseId : _houseIds) {
+		for (final Integer houseId : _houseIds) {
 			if (isInHouseLoc(houseId, locx, locy, mapid)) {
 				result = true;
 				break;
@@ -427,7 +427,7 @@ public class L1HouseLocation {
 	 * @param cha
 	 * @return
 	 */
-	public static boolean isInHouseLoc(int houseId, int locx, int locy, short mapid) {
+	public static boolean isInHouseLoc(final int houseId, final int locx, final int locy, final short mapid) {
 		boolean ret = false;
 		if (houseId == 262145) { // ギランアジト1
 			if (((locx >= 33368) && (locx <= 33375) && (locy >= 32651) && (locy <= 32654) && (mapid == 4)) || ((locx >= 33373) && (locx <= 33375) && (locy >= 32655) && (locy <= 32657) && (mapid == 4)) || (mapid == 5068)) {

@@ -27,7 +27,7 @@ public class L1FurnitureInstance extends L1NpcInstance {
 
 	private int _itemObjId;
 
-	public L1FurnitureInstance(L1Npc template) {
+	public L1FurnitureInstance(final L1Npc template) {
 		super(template);
 	}
 
@@ -39,7 +39,7 @@ public class L1FurnitureInstance extends L1NpcInstance {
 		}
 		L1World.getInstance().removeVisibleObject(this);
 		L1World.getInstance().removeObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.removeKnownObject(this);
 			pc.sendPackets(new S_RemoveObject(this));
 		}
@@ -51,10 +51,10 @@ public class L1FurnitureInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
+	public void onAction(final L1PcInstance player) {
 	}
 
-	public void setItemObjId(int i) {
+	public void setItemObjId(final int i) {
 		_itemObjId = i;
 	}
 

@@ -46,7 +46,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * 
 	 * @param type
 	 */
-	public S_ServerMessage(int type) {
+	public S_ServerMessage(final int type) {
 		buildPacket(type, null, null, null, null, null, 0);
 	}
 
@@ -56,7 +56,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param type
 	 * @param msg1
 	 */
-	public S_ServerMessage(int type, String msg1) {
+	public S_ServerMessage(final int type, final String msg1) {
 		buildPacket(type, msg1, null, null, null, null, 1);
 	}
 
@@ -67,7 +67,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg1
 	 * @param msg2
 	 */
-	public S_ServerMessage(int type, String msg1, String msg2) {
+	public S_ServerMessage(final int type, final String msg1, final String msg2) {
 		buildPacket(type, msg1, msg2, null, null, null, 2);
 	}
 
@@ -79,7 +79,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg2
 	 * @param msg3
 	 */
-	public S_ServerMessage(int type, String msg1, String msg2, String msg3) {
+	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3) {
 		buildPacket(type, msg1, msg2, msg3, null, null, 3);
 	}
 
@@ -92,7 +92,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg3
 	 * @param msg4
 	 */
-	public S_ServerMessage(int type, String msg1, String msg2, String msg3, String msg4) {
+	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3, final String msg4) {
 		buildPacket(type, msg1, msg2, msg3, msg4, null, 4);
 	}
 
@@ -106,7 +106,7 @@ public class S_ServerMessage extends ServerBasePacket {
 	 * @param msg4
 	 * @param msg5
 	 */
-	public S_ServerMessage(int type, String msg1, String msg2, String msg3, String msg4, String msg5) {
+	public S_ServerMessage(final int type, final String msg1, final String msg2, final String msg3, final String msg4, final String msg5) {
 
 		buildPacket(type, msg1, msg2, msg3, msg4, msg5, 5);
 	}
@@ -125,7 +125,7 @@ public class S_ServerMessage extends ServerBasePacket {
 		return S_SERVER_MESSAGE;
 	}
 
-	private void buildPacket(int type, String msg1, String msg2, String msg3, String msg4, String msg5, int check) {
+	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final String msg4, final String msg5, final int check) {
 
 		writeC(Opcodes.S_OPCODE_SERVERMSG);
 		writeH(type);

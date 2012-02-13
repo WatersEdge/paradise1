@@ -41,7 +41,7 @@ public class L1WorldMap {
 	private Map<Integer, L1Map> _maps;
 
 	private L1WorldMap() {
-		PerformanceTimer timer = new PerformanceTimer();
+		final PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╔》正在读取 Map...");
 
 		try {
@@ -50,11 +50,11 @@ public class L1WorldMap {
 				throw new RuntimeException("地图档案读取失败...");
 			}
 		}
-		catch (FileNotFoundException e) {
+		catch (final FileNotFoundException e) {
 			System.out.println("提示: 地图档案缺失，请检查330_maps.zip是否尚未解压缩。");
 			System.exit(0);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			// 没有回报
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			System.exit(0);
@@ -70,7 +70,7 @@ public class L1WorldMap {
 	 *            地图ID
 	 * @return 地图信息、L1Map对象。
 	 */
-	public L1Map getMap(short mapId) {
+	public L1Map getMap(final short mapId) {
 		L1Map map = _maps.get((int) mapId);
 		if (map == null) { // 没有地图信息
 			map = L1Map.newNull(); // 返回一个没有任何信息的Map。

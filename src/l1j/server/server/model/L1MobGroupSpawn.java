@@ -52,9 +52,9 @@ public class L1MobGroupSpawn {
 	private L1MobGroupSpawn() {
 	}
 
-	public void doSpawn(L1NpcInstance leader, int groupId, boolean isRespawnScreen, boolean isInitSpawn) {
+	public void doSpawn(final L1NpcInstance leader, final int groupId, final boolean isRespawnScreen, final boolean isInitSpawn) {
 
-		L1MobGroup mobGroup = MobGroupTable.getInstance().getTemplate(groupId);
+		final L1MobGroup mobGroup = MobGroupTable.getInstance().getTemplate(groupId);
 		if (mobGroup == null) {
 			return;
 		}
@@ -63,12 +63,12 @@ public class L1MobGroupSpawn {
 		_isRespawnScreen = isRespawnScreen;
 		_isInitSpawn = isInitSpawn;
 
-		L1MobGroupInfo mobGroupInfo = new L1MobGroupInfo();
+		final L1MobGroupInfo mobGroupInfo = new L1MobGroupInfo();
 
 		mobGroupInfo.setRemoveGroup(mobGroup.isRemoveGroupIfLeaderDie());
 		mobGroupInfo.addMember(leader);
 
-		for (L1NpcCount minion : mobGroup.getMinions()) {
+		for (final L1NpcCount minion : mobGroup.getMinions()) {
 			if (minion.isZero()) {
 				continue;
 			}
@@ -81,7 +81,7 @@ public class L1MobGroupSpawn {
 		}
 	}
 
-	private boolean canSpawn(L1NpcInstance mob) {
+	private boolean canSpawn(final L1NpcInstance mob) {
 		if (mob.getMap().isInMap(mob.getLocation()) && mob.getMap().isPassable(mob.getLocation())) {
 			if (_isRespawnScreen) {
 				return true;
@@ -93,7 +93,7 @@ public class L1MobGroupSpawn {
 		return false;
 	}
 
-	private L1NpcInstance spawn(L1NpcInstance leader, int npcId) {
+	private L1NpcInstance spawn(final L1NpcInstance leader, final int npcId) {
 		L1NpcInstance mob = null;
 		try {
 			mob = NpcTable.getInstance().newNpcInstance(npcId);
@@ -133,14 +133,14 @@ public class L1MobGroupSpawn {
 			L1World.getInstance().addVisibleObject(mob);
 
 			if (mob instanceof L1MonsterInstance) {
-				if (!_isInitSpawn && mob.getHiddenStatus() == 0) {
+				if (!_isInitSpawn && (mob.getHiddenStatus() == 0)) {
 					mob.onNpcAI(); // 开始怪物AI
 				}
 			}
 			mob.turnOnOffLight();
 			mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return mob;

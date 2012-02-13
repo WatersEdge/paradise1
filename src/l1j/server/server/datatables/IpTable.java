@@ -60,7 +60,7 @@ public class IpTable {
 	 * 
 	 * @param ip
 	 */
-	public void banIp(String ip) {
+	public void banIp(final String ip) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 
@@ -72,7 +72,7 @@ public class IpTable {
 			pstm.execute();
 			_banip.add(ip);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -101,7 +101,7 @@ public class IpTable {
 			isInitialized = true;
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -116,16 +116,16 @@ public class IpTable {
 	 * @param s
 	 * @return
 	 */
-	public boolean isBannedIp(String s) {
-		for (String BanIpAddress : _banip) { // 被封锁的IP
+	public boolean isBannedIp(final String s) {
+		for (final String BanIpAddress : _banip) { // 被封锁的IP
 			// 判断如果使用*结尾
 			if (BanIpAddress.endsWith("*")) {
 				// 取回第一次出现*的index
-				int fStarindex = BanIpAddress.indexOf("*");
+				final int fStarindex = BanIpAddress.indexOf("*");
 				// 取得0~fStar长度
-				String reip = BanIpAddress.substring(0, fStarindex);
+				final String reip = BanIpAddress.substring(0, fStarindex);
 				// 抓得Banip表单内ip在*号前的子字串 xxx.xxx||xxx.xxx.xxx
-				String newaddress = s.substring(0, fStarindex);
+				final String newaddress = s.substring(0, fStarindex);
 				if (newaddress.equalsIgnoreCase(reip)) {
 					return true;
 				}
@@ -145,7 +145,7 @@ public class IpTable {
 	 * @param ip
 	 * @return
 	 */
-	public boolean liftBanIp(String ip) {
+	public boolean liftBanIp(final String ip) {
 		boolean ret = false;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -158,7 +158,7 @@ public class IpTable {
 			pstm.execute();
 			ret = _banip.remove(ip);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

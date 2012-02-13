@@ -30,19 +30,20 @@ public class NpcFireDamage {
 		public void run() {
 			for (int findObjecCounts = 0; findObjecCounts < 8; findObjecCounts++) {
 				try {
-					for (L1Object objects : L1World.getInstance().getVisibleObjects(user, 15)) { // 玩家视线范围15格
+					for (final L1Object objects : L1World.getInstance().getVisibleObjects(user, 15)) { // 玩家视线范围15格
 
 						// 对PC
 						if (objects instanceof L1PcInstance) {
-							L1PcInstance pc = (L1PcInstance) objects;
+							final L1PcInstance pc = (L1PcInstance) objects;
 							if (pc.getLocation().equals(fire.getLocation())) {
 
 								// 火牢伤害无效的状态
 								if (pc.isDead() || pc.hasSkillEffect(ICE_LANCE) // 冰矛围篱
 										|| pc.hasSkillEffect(ABSOLUTE_BARRIER) // 绝对屏障
 										|| pc.hasSkillEffect(FREEZING_BLIZZARD) // 冰雪飓风
-										|| pc.hasSkillEffect(EARTH_BIND)) // 大地屏障
+										|| pc.hasSkillEffect(EARTH_BIND)) {
 									continue;
+								}
 
 								pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage)); // 发送伤害动作
 								pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
@@ -56,16 +57,17 @@ public class NpcFireDamage {
 
 							// 对宠物或召唤怪
 							if ((objects instanceof L1PetInstance) || (objects instanceof L1SummonInstance)) {
-								L1NpcInstance npc = (L1NpcInstance) objects;
+								final L1NpcInstance npc = (L1NpcInstance) objects;
 								if (npc.getLocation().equals(fire.getLocation())) {
 
 									// 火牢伤害无效的状态
-									if (npc.isDead() || npc.getHiddenStatus() != 0 // 隐藏状态
-											|| npc.hasSkillEffect(ICE_LANCE) // 冰矛围篱
+									if (npc.isDead() || (npc.getHiddenStatus() != 0 // 隐藏状态
+											) || npc.hasSkillEffect(ICE_LANCE) // 冰矛围篱
 											|| npc.hasSkillEffect(ABSOLUTE_BARRIER) // 绝对屏障
 											|| npc.hasSkillEffect(FREEZING_BLIZZARD)// 冰雪飓风
-											|| npc.hasSkillEffect(EARTH_BIND)) // 大地屏障
+											|| npc.hasSkillEffect(EARTH_BIND)) {
 										continue;
+									}
 
 									npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Damage));
 									npc.receiveDamage(user, 25); // 伤害
@@ -76,7 +78,7 @@ public class NpcFireDamage {
 					}
 					Thread.sleep(12 * 100); // 即时伤害 by a8889888 (暂停1200毫秒)
 				}
-				catch (Exception ex) {
+				catch (final Exception ex) {
 					// 不抛出任何异常
 				}
 			}
@@ -95,13 +97,13 @@ public class NpcFireDamage {
 	 * @param cha
 	 * @param firewall
 	 */
-	public NpcFireDamage(L1Character cha, L1NpcInstance firewall) {
+	public NpcFireDamage(final L1Character cha, final L1NpcInstance firewall) {
 		user = cha;
 		fire = (L1EffectInstance) firewall;
 	}
 
 	public void onDamageAction() {
-		Damage damage_run = new Damage();
+		final Damage damage_run = new Damage();
 		GeneralThreadPool.getInstance().execute(damage_run);
 	}
 

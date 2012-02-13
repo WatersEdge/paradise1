@@ -52,7 +52,7 @@ public class L1DollInstance extends L1NpcInstance {
 
 	private boolean _isDelete = false;
 
-	public L1DollInstance(L1Npc template, L1PcInstance master, int itemId, int itemObjId) {
+	public L1DollInstance(final L1Npc template, final L1PcInstance master, final int itemId, final int itemObjId) {
 
 		super(template);
 		setId(IdFactory.getInstance().nextId());
@@ -72,7 +72,7 @@ public class L1DollInstance extends L1NpcInstance {
 
 		L1World.getInstance().storeObject(this);
 		L1World.getInstance().addVisibleObject(this);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			onPerceive(pc);
 		}
 		master.addDoll(this);
@@ -92,8 +92,8 @@ public class L1DollInstance extends L1NpcInstance {
 
 	public void deleteDoll() {
 		broadcastPacket(new S_SkillSound(getId(), 5936));
-		if (_master != null && _isDelete) {
-			L1PcInstance pc = (L1PcInstance) _master;
+		if ((_master != null) && _isDelete) {
+			final L1PcInstance pc = (L1PcInstance) _master;
 			pc.sendPackets(new S_SkillIconGFX(56, 0));
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
@@ -123,7 +123,7 @@ public class L1DollInstance extends L1NpcInstance {
 	public boolean noTarget() {
 		if ((_master != null) && !_master.isDead() && (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-				int dir = moveDirection(_master.getX(), _master.getY());
+				final int dir = moveDirection(_master.getX(), _master.getY());
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 			}
@@ -141,7 +141,7 @@ public class L1DollInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onGetItem(L1ItemInstance item) {
+	public void onGetItem(final L1ItemInstance item) {
 	}
 
 	@Override
@@ -149,21 +149,21 @@ public class L1DollInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 		// 判断旅馆内是否使用相同钥匙
-		if (perceivedFrom.getMapId() >= 16384 && perceivedFrom.getMapId() <= 25088 // 旅馆内判断
-				&& perceivedFrom.getInnKeyId() != _master.getInnKeyId()) {
+		if ((perceivedFrom.getMapId() >= 16384) && (perceivedFrom.getMapId() <= 25088 // 旅馆内判断
+				) && (perceivedFrom.getInnKeyId() != _master.getInnKeyId())) {
 			return;
 		}
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_DollPack(this));
 	}
 
-	public void setItemId(int i) {
+	public void setItemId(final int i) {
 		_itemId = i;
 	}
 
-	public void setItemObjId(int i) {
+	public void setItemObjId(final int i) {
 		_itemObjId = i;
 	}
 
@@ -172,8 +172,9 @@ public class L1DollInstance extends L1NpcInstance {
 		run = Random.nextInt(100) + 1;
 		if (run <= 10) {
 			int actionCode = ActionCodes.ACTION_Aggress; // 67
-			if (run <= 5)
+			if (run <= 5) {
 				actionCode = ActionCodes.ACTION_Think; // 66
+			}
 
 			broadcastPacket(new S_DoActionGFX(getId(), actionCode));
 			setSleepTime(calcSleepTime(SprTable.getInstance().getSprSpeed(getTempCharGfx(), actionCode), MOVE_SPEED)); //

@@ -30,10 +30,10 @@ public class L1Level implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
-			int level = Integer.parseInt(tok.nextToken());
+			final StringTokenizer tok = new StringTokenizer(arg);
+			final int level = Integer.parseInt(tok.nextToken());
 			if (level == pc.getLevel()) {
 				return;
 			}
@@ -43,7 +43,7 @@ public class L1Level implements L1CommandExecutor {
 			}
 			pc.setExp(ExpTable.getExpByLevel(level));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 : " + cmdName + " lv "));
 		}
 	}

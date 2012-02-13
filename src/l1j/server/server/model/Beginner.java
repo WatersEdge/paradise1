@@ -49,7 +49,7 @@ public class Beginner {
 	}
 
 	/** 给予道具 */
-	public int GiveItem(L1PcInstance pc) {
+	public int GiveItem(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm1 = null;
 		ResultSet rs = null;
@@ -103,14 +103,14 @@ public class Beginner {
 					pstm2.setInt(13, 1);
 					pstm2.execute();
 				}
-				catch (SQLException e2) {
+				catch (final SQLException e2) {
 					_log.log(Level.SEVERE, e2.getLocalizedMessage(), e2);
 				} finally {
 					SQLUtil.close(pstm2);
 				}
 			}
 		}
-		catch (SQLException e1) {
+		catch (final SQLException e1) {
 			_log.log(Level.SEVERE, e1.getLocalizedMessage(), e1);
 		} finally {
 			SQLUtil.close(rs);

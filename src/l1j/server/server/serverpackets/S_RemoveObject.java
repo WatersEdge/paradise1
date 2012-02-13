@@ -29,7 +29,7 @@ public class S_RemoveObject extends ServerBasePacket {
 	 * 
 	 * @param obj
 	 */
-	public S_RemoveObject(L1Object obj) {
+	public S_RemoveObject(final L1Object obj) {
 		writeC(Opcodes.S_OPCODE_REMOVE_OBJECT);
 		writeD(obj.getId());
 	}

@@ -32,11 +32,11 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 
 	private static final String C_DELETE_INVENTORY_ITEM = "[C] C_DeleteInventoryItem";
 
-	public C_DeleteInventoryItem(byte[] decrypt, ClientThread client) {
+	public C_DeleteInventoryItem(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		int itemObjectId = readD();
-		L1PcInstance pc = client.getActiveChar();
-		L1ItemInstance item = pc.getInventory().getItem(itemObjectId);
+		final int itemObjectId = readD();
+		final L1PcInstance pc = client.getActiveChar();
+		final L1ItemInstance item = pc.getInventory().getItem(itemObjectId);
 
 		// 没有要删除的道具
 		if (item == null) {
@@ -49,9 +49,9 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 		}
 
 		// 使用中的宠物项链 - 无法删除
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
 					return;
@@ -59,7 +59,7 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 			}
 		}
 		// 使用中的魔法娃娃 - 无法删除
-		for (L1DollInstance doll : pc.getDollList().values()) {
+		for (final L1DollInstance doll : pc.getDollList().values()) {
 			if (doll.getItemObjId() == item.getId()) {
 				pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
 				return;

@@ -49,7 +49,7 @@ public class L1MobSkill implements Cloneable {
 	/**
 	 * 技能类型 0→不采取行动、1→物理攻击、2→魔法攻击、3→サモン
 	 */
-	private int type[];
+	private final int type[];
 
 	/**
 	 * 技能范围设定
@@ -64,7 +64,7 @@ public class L1MobSkill implements Cloneable {
 	/**
 	 * 技能发动条件：随机发动概率（0%～100%）
 	 */
-	private int triRnd[];
+	private final int triRnd[];
 
 	/**
 	 * 技能发动条件：HP%以下发动
@@ -144,7 +144,7 @@ public class L1MobSkill implements Cloneable {
 	 */
 	int polyId[];
 
-	public L1MobSkill(int sSize) {
+	public L1MobSkill(final int sSize) {
 		skillSize = sSize;
 
 		type = new int[skillSize];
@@ -174,7 +174,7 @@ public class L1MobSkill implements Cloneable {
 		try {
 			return (L1MobSkill) (super.clone());
 		}
-		catch (CloneNotSupportedException e) {
+		catch (final CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
 	}
@@ -185,48 +185,48 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/**  */
-	public int getActid(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getActid(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return actid[idx];
 	}
 
 	/** 获得范围攻击的高度 */
-	public int getAreaHeight(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getAreaHeight(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return areaHeight[idx];
 	}
 
 	/** 获得范围攻击的宽度 */
-	public int getAreaWidth(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getAreaWidth(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return areaWidth[idx];
 	}
 
 	/** 获得技能发动时、改变目标 */
-	public int getChangeTarget(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getChangeTarget(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return changeTarget[idx];
 	}
 
 	/**  */
-	public int getGfxid(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getGfxid(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return gfxid[idx];
 	}
 
 	/** 获得伤害倍率 */
-	public int getLeverage(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getLeverage(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return leverage[idx];
@@ -238,40 +238,40 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/** 获得魔力消耗判断 */
-	public int getMpConsume(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getMpConsume(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return mpConsume[idx];
 	}
 
 	/**  */
-	public int getPolyId(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getPolyId(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return polyId[idx];
 	}
 
 	/** 获得范围攻击的距离 */
-	public int getRange(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getRange(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return range[idx];
 	}
 
 	/** 获得技能范围设定 */
-	public int getSkillArea(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getSkillArea(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return skillArea[idx];
 	}
 
 	/** 获得技能ID */
-	public int getSkillId(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getSkillId(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return skillId[idx];
@@ -283,32 +283,32 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/**  */
-	public int getSummon(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getSummon(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return summon[idx];
 	}
 
 	/**  */
-	public int getSummonMax(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getSummonMax(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return summonMax[idx];
 	}
 
 	/**  */
-	public int getSummonMin(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getSummonMin(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return summonMin[idx];
 	}
 
 	/** 获得同族のHP%以下发动 */
-	public int getTriggerCompanionHp(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getTriggerCompanionHp(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return triCompanionHp[idx];
@@ -317,220 +317,220 @@ public class L1MobSkill implements Cloneable {
 	/**
 	 * 技能发动条件：技能的发动次数triCount以下发动
 	 */
-	public int getTriggerCount(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getTriggerCount(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return triCount[idx];
 	}
 
 	/** 获得HP%以下发动 */
-	public int getTriggerHp(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getTriggerHp(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return triHp[idx];
 	}
 
 	/** 获得随机发动概率（0%～100%） */
-	public int getTriggerRandom(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getTriggerRandom(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return triRnd[idx];
 	}
 
 	/** 获得技能触发范围 */
-	public int getTriggerRange(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getTriggerRange(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return triRange[idx];
 	}
 
 	/** 获得技能类型 */
-	public int getType(int idx) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public int getType(final int idx) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return 0;
 		}
 		return type[idx];
 	}
 
 	/** distance指定idx技能的发动条件 */
-	public boolean isTriggerDistance(int idx, int distance) {
-		int triggerRange = getTriggerRange(idx);
+	public boolean isTriggerDistance(final int idx, final int distance) {
+		final int triggerRange = getTriggerRange(idx);
 
-		if ((triggerRange < 0 && distance <= Math.abs(triggerRange)) || (triggerRange > 0 && distance >= triggerRange)) {
+		if (((triggerRange < 0) && (distance <= Math.abs(triggerRange))) || ((triggerRange > 0) && (distance >= triggerRange))) {
 			return true;
 		}
 		return false;
 	}
 
 	/** 设置MobID */
-	public void set_mobid(int i) {
+	public void set_mobid(final int i) {
 		mobid = i;
 	}
 
 	/**  */
-	public void setActid(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setActid(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		actid[idx] = i;
 	}
 
 	/** 设置范围攻击的高度 */
-	public void setAreaHeight(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setAreaHeight(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		areaHeight[idx] = i;
 	}
 
 	/** 设置范围攻击的宽度 */
-	public void setAreaWidth(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setAreaWidth(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		areaWidth[idx] = i;
 	}
 
 	/** 设置技能发动时、改变目标 */
-	public void setChangeTarget(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setChangeTarget(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		changeTarget[idx] = i;
 	}
 
 	/**  */
-	public void setGfxid(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setGfxid(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		gfxid[idx] = i;
 	}
 
 	/** 设置伤害倍率 */
-	public void setLeverage(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setLeverage(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		leverage[idx] = i;
 	}
 
 	/** 设置Mob名称 */
-	public void setMobName(String s) {
+	public void setMobName(final String s) {
 		mobName = s;
 	}
 
 	/** 设置魔力消耗判断 */
-	public void setMpConsume(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setMpConsume(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		mpConsume[idx] = i;
 	}
 
 	/** 设置强制变身ID */
-	public void setPolyId(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setPolyId(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		polyId[idx] = i;
 	}
 
 	/** 设置获得范围攻击的距离 */
-	public void setRange(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setRange(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		range[idx] = i;
 	}
 
 	/** 设置技能范围设定 */
-	public void setSkillArea(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setSkillArea(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		skillArea[idx] = i;
 	}
 
 	/** 设置技能ID */
-	public void setSkillId(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setSkillId(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		skillId[idx] = i;
 	}
 
 	/**  */
-	public void setSummon(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setSummon(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		summon[idx] = i;
 	}
 
 	/**  */
-	public void setSummonMax(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setSummonMax(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		summonMax[idx] = i;
 	}
 
 	/**  */
-	public void setSummonMin(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setSummonMin(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		summonMin[idx] = i;
 	}
 
 	/** 设置同族のHP%以下发动 */
-	public void setTriggerCompanionHp(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setTriggerCompanionHp(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		triCompanionHp[idx] = i;
 	}
 
 	/** 设置技能触发次数 */
-	public void setTriggerCount(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setTriggerCount(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		triCount[idx] = i;
 	}
 
 	/** 设置HP%以下发动 */
-	public void setTriggerHp(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setTriggerHp(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		triHp[idx] = i;
 	}
 
 	/** 设置随机发动概率（0%～100%） */
-	public void setTriggerRandom(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setTriggerRandom(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		triRnd[idx] = i;
 	}
 
 	/** 设置技能触发范围 */
-	public void setTriggerRange(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setTriggerRange(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		triRange[idx] = i;
 	}
 
 	/** 设置技能类型 */
-	public void setType(int idx, int i) {
-		if (idx < 0 || idx >= getSkillSize()) {
+	public void setType(final int idx, final int i) {
+		if ((idx < 0) || (idx >= getSkillSize())) {
 			return;
 		}
 		type[idx] = i;

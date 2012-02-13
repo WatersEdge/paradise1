@@ -28,24 +28,27 @@ public class S_SkillList extends ServerBasePacket {
 	/*
 	 * [Length:40] S -> C 0000 4C 20 FF FF 37 00 00 00 00 00 00 00 00 00 00 00 L ..7........... 0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ................ 0020 00 00 00 2E EF 67 33 87 .....g3.
 	 */
-	public S_SkillList(boolean Insert, L1Skills... skills) {
-		if (Insert)
+	public S_SkillList(final boolean Insert, final L1Skills... skills) {
+		if (Insert) {
 			writeC(S_OPCODE_ADDSKILL);
-		else
+		}
+		else {
 			writeC(S_OPCODE_DELSKILL);
+		}
 
-		int[] SkillList = new int[0x20];
+		final int[] SkillList = new int[0x20];
 
 		writeC(SkillList.length);
 
-		for (L1Skills skill : skills) {
-			int level = skill.getSkillLevel() - 1;
+		for (final L1Skills skill : skills) {
+			final int level = skill.getSkillLevel() - 1;
 
 			SkillList[level] |= skill.getId();
 		}
 
-		for (int i : SkillList)
+		for (final int i : SkillList) {
 			writeC(i);
+		}
 
 		writeC(0x00); // 区分用的数值
 	}

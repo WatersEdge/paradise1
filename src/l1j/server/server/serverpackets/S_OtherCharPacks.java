@@ -36,11 +36,11 @@ public class S_OtherCharPacks extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_OtherCharPacks(L1PcInstance pc) {
+	public S_OtherCharPacks(final L1PcInstance pc) {
 		buildPacket(pc, false);
 	}
 
-	public S_OtherCharPacks(L1PcInstance pc, boolean isFindInvis) {
+	public S_OtherCharPacks(final L1PcInstance pc, final boolean isFindInvis) {
 		buildPacket(pc, isFindInvis);
 	}
 
@@ -57,7 +57,7 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		return S_OTHER_CHAR_PACKS;
 	}
 
-	private void buildPacket(L1PcInstance pc, boolean isFindInvis) {
+	private void buildPacket(final L1PcInstance pc, final boolean isFindInvis) {
 		int status = STATUS_PC;
 
 		if (pc.getPoison() != null) { // 毒状态

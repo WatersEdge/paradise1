@@ -39,7 +39,7 @@ public class MysteriousShell extends ItemExecutor {
 		// 象牙塔村南冰镜湖魔法阵
 		if (pc.isElf() && ((pc.getX() >= 33971) && (pc.getX() <= 33975)) && ((pc.getY() >= 32324) && (pc.getY() <= 32328)) && (pc.getMapId() == 4) && !pc.getInventory().checkItem(40548)) { // 古代亡灵之袋
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {

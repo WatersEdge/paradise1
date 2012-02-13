@@ -42,7 +42,7 @@ public class S_Fishing extends ServerBasePacket {
 	 * @param x
 	 * @param y
 	 */
-	public S_Fishing(int objectId, int motionNum, int x, int y) {
+	public S_Fishing(final int objectId, final int motionNum, final int x, final int y) {
 		buildPacket(objectId, motionNum, x, y);
 	}
 
@@ -66,7 +66,7 @@ public class S_Fishing extends ServerBasePacket {
 		writeH(0x8AC3); // ?
 	}
 
-	private void buildPacket(int objectId, int motionNum, int x, int y) {
+	private void buildPacket(final int objectId, final int motionNum, final int x, final int y) {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeD(objectId);
 		writeC(motionNum);

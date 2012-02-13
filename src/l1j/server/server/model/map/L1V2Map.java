@@ -29,25 +29,25 @@ public class L1V2Map extends L1Map {
 	private final int _width;
 	private final int _height;
 	private final byte _map[];
-	private boolean _isUnderwater;
-	private boolean _isMarkable;
-	private boolean _isTeleportable;
-	private boolean _isEscapable;
-	private boolean _isUseResurrection;
-	private boolean _isUsePainwand;
-	private boolean _isEnabledDeathPenalty;
-	private boolean _isTakePets;
-	private boolean _isRecallPets;
-	private boolean _isUsableItem;
-	private boolean _isUsableSkill;
+	private final boolean _isUnderwater;
+	private final boolean _isMarkable;
+	private final boolean _isTeleportable;
+	private final boolean _isEscapable;
+	private final boolean _isUseResurrection;
+	private final boolean _isUsePainwand;
+	private final boolean _isEnabledDeathPenalty;
+	private final boolean _isTakePets;
+	private final boolean _isRecallPets;
+	private final boolean _isUsableItem;
+	private final boolean _isUsableSkill;
 
 	/**
 	 * Mobなどの通行不可能になるオブジェクトがタイル上に存在するかを示すビットフラグ
 	 */
 	private static final byte BITFLAG_IS_IMPASSABLE = (byte) 128; // 1000 0000
 
-	public L1V2Map(int id, byte map[], int xLoc, int yLoc, int width, int height, boolean underwater, boolean markable, boolean teleportable, boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
-			boolean usableItem, boolean usableSkill) {
+	public L1V2Map(final int id, final byte map[], final int xLoc, final int yLoc, final int width, final int height, final boolean underwater, final boolean markable, final boolean teleportable, final boolean escapable, final boolean useResurrection, final boolean usePainwand,
+			final boolean enabledDeathPenalty, final boolean takePets, final boolean recallPets, final boolean usableItem, final boolean usableSkill) {
 		_id = id;
 		_map = map;
 		_xLoc = xLoc;
@@ -79,14 +79,14 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public int getOriginalTile(int x, int y) {
-		int lo = _map[offset(x, y)];
-		int hi = _map[offset(x, y) + 1];
+	public int getOriginalTile(final int x, final int y) {
+		final int lo = _map[offset(x, y)];
+		final int hi = _map[offset(x, y) + 1];
 		return (lo | ((hi << 8) & 0xFF00));
 	}
 
 	@Override
-	public int getTile(int x, int y) {
+	public int getTile(final int x, final int y) {
 		return _map[offset(x, y)];
 	}
 
@@ -106,12 +106,12 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isArrowPassable(int x, int y) {
+	public boolean isArrowPassable(final int x, final int y) {
 		return (accessOriginalTile(x, y) != 1);
 	}
 
 	@Override
-	public boolean isArrowPassable(int x, int y, int heading) {
+	public boolean isArrowPassable(final int x, final int y, final int heading) {
 		int tile;
 		// 移動予定の座標
 		int newX;
@@ -169,22 +169,22 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isArrowPassable(Point pt) {
+	public boolean isArrowPassable(final Point pt) {
 		return isArrowPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
-	public boolean isArrowPassable(Point pt, int heading) {
+	public boolean isArrowPassable(final Point pt, final int heading) {
 		return isArrowPassable(pt.getX(), pt.getY(), heading);
 	}
 
 	@Override
-	public boolean isCombatZone(int x, int y) {
+	public boolean isCombatZone(final int x, final int y) {
 		return (accessOriginalTile(x, y) == 8);
 	}
 
 	@Override
-	public boolean isCombatZone(Point pt) {
+	public boolean isCombatZone(final Point pt) {
 		return isCombatZone(pt.getX(), pt.getY());
 	}
 
@@ -199,33 +199,33 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isExistDoor(int x, int y) {
-		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+	public boolean isExistDoor(final int x, final int y) {
+		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
 				continue;
 			}
 			if (door.isDead()) {
 				continue;
 			}
-			int leftEdgeLocation = door.getLeftEdgeLocation();
-			int rightEdgeLocation = door.getRightEdgeLocation();
-			int size = rightEdgeLocation - leftEdgeLocation;
+			final int leftEdgeLocation = door.getLeftEdgeLocation();
+			final int rightEdgeLocation = door.getRightEdgeLocation();
+			final int size = rightEdgeLocation - leftEdgeLocation;
 			if (size == 0) { // 1マス分の幅のドア
-				if (x == door.getX() && y == door.getY()) {
+				if ((x == door.getX()) && (y == door.getY())) {
 					return true;
 				}
 			}
 			else { // 2マス分以上の幅があるドア
 				if (door.getDirection() == 0) { // ／向き
 					for (int doorX = leftEdgeLocation; doorX <= rightEdgeLocation; doorX++) {
-						if (x == doorX && y == door.getY()) {
+						if ((x == doorX) && (y == door.getY())) {
 							return true;
 						}
 					}
 				}
 				else { // ＼向き
 					for (int doorY = leftEdgeLocation; doorY <= rightEdgeLocation; doorY++) {
-						if (x == door.getX() && y == doorY) {
+						if ((x == door.getX()) && (y == doorY)) {
 							return true;
 						}
 					}
@@ -236,17 +236,17 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isFishingZone(int x, int y) {
+	public boolean isFishingZone(final int x, final int y) {
 		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
 	}
 
 	@Override
-	public boolean isInMap(int x, int y) {
-		return (_xLoc <= x && x < _xLoc + _width && _yLoc <= y && y < _yLoc + _height);
+	public boolean isInMap(final int x, final int y) {
+		return ((_xLoc <= x) && (x < _xLoc + _width) && (_yLoc <= y) && (y < _yLoc + _height));
 	}
 
 	@Override
-	public boolean isInMap(Point pt) {
+	public boolean isInMap(final Point pt) {
 		return isInMap(pt.getX(), pt.getY());
 	}
 
@@ -256,19 +256,19 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isNormalZone(int x, int y) {
+	public boolean isNormalZone(final int x, final int y) {
 		return (!isCombatZone(x, y) && !isSafetyZone(x, y));
 	}
 
 	@Override
-	public boolean isNormalZone(Point pt) {
+	public boolean isNormalZone(final Point pt) {
 		return isNormalZone(pt.getX(), pt.getY());
 	}
 
 	@Override
-	public boolean isPassable(int x, int y) {
-		int tile = accessOriginalTile(x, y);
-		if (tile == 1 || tile == 9 || tile == 65 || tile == 69 || tile == 73) {
+	public boolean isPassable(final int x, final int y) {
+		final int tile = accessOriginalTile(x, y);
+		if ((tile == 1) || (tile == 9) || (tile == 65) || (tile == 69) || (tile == 73)) {
 			return false;
 		}
 		if (0 != (_map[offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
@@ -278,7 +278,7 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isPassable(int x, int y, int heading) {
+	public boolean isPassable(final int x, final int y, final int heading) {
 		int tile;
 		if (heading == 0) {
 			tile = accessOriginalTile(x, y - 1);
@@ -308,7 +308,7 @@ public class L1V2Map extends L1Map {
 			return false;
 		}
 
-		if (tile == 1 || tile == 9 || tile == 65 || tile == 69 || tile == 73) {
+		if ((tile == 1) || (tile == 9) || (tile == 65) || (tile == 69) || (tile == 73)) {
 			return false;
 		}
 		if (0 != (_map[offset(x, y)] & BITFLAG_IS_IMPASSABLE)) {
@@ -318,12 +318,12 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isPassable(Point pt) {
+	public boolean isPassable(final Point pt) {
 		return isPassable(pt.getX(), pt.getY());
 	}
 
 	@Override
-	public boolean isPassable(Point pt, int heading) {
+	public boolean isPassable(final Point pt, final int heading) {
 		return isPassable(pt.getX(), pt.getY(), heading);
 	}
 
@@ -333,12 +333,12 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public boolean isSafetyZone(int x, int y) {
+	public boolean isSafetyZone(final int x, final int y) {
 		return accessOriginalTile(x, y) == 4;
 	}
 
 	@Override
-	public boolean isSafetyZone(Point pt) {
+	public boolean isSafetyZone(final Point pt) {
 		return isSafetyZone(pt.getX(), pt.getY());
 	}
 
@@ -378,7 +378,7 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public void setPassable(int x, int y, boolean isPassable) {
+	public void setPassable(final int x, final int y, final boolean isPassable) {
 		if (isPassable) {
 			_map[offset(x, y)] &= (~BITFLAG_IS_IMPASSABLE);
 		}
@@ -388,22 +388,22 @@ public class L1V2Map extends L1Map {
 	}
 
 	@Override
-	public void setPassable(Point pt, boolean isPassable) {
+	public void setPassable(final Point pt, final boolean isPassable) {
 		setPassable(pt.getX(), pt.getY(), isPassable);
 	}
 
 	@Override
-	public String toString(Point pt) {
-		int tile = getOriginalTile(pt.getX(), pt.getY());
+	public String toString(final Point pt) {
+		final int tile = getOriginalTile(pt.getX(), pt.getY());
 
 		return (tile & 0xFF) + " " + ((tile >> 8) & 0xFF);
 	}
 
-	private int accessOriginalTile(int x, int y) {
+	private int accessOriginalTile(final int x, final int y) {
 		return _map[offset(x, y)] & (~BITFLAG_IS_IMPASSABLE);
 	}
 
-	private int offset(int x, int y) {
+	private int offset(final int x, final int y) {
 		return ((y - _yLoc) * _width * 2) + ((x - _xLoc) * 2);
 	}
 }

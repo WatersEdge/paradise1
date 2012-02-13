@@ -31,7 +31,7 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param type
 	 * @param msg1
 	 */
-	public S_BlueMessage(int type, String msg1) {
+	public S_BlueMessage(final int type, final String msg1) {
 		buildPacket(type, msg1, null, null, 1);
 	}
 
@@ -42,7 +42,7 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param msg1
 	 * @param msg2
 	 */
-	public S_BlueMessage(int type, String msg1, String msg2) {
+	public S_BlueMessage(final int type, final String msg1, final String msg2) {
 		buildPacket(type, msg1, msg2, null, 2);
 	}
 
@@ -54,7 +54,7 @@ public class S_BlueMessage extends ServerBasePacket {
 	 * @param msg2
 	 * @param msg3
 	 */
-	public S_BlueMessage(int type, String msg1, String msg2, String msg3) {
+	public S_BlueMessage(final int type, final String msg1, final String msg2, final String msg3) {
 		buildPacket(type, msg1, msg2, msg3, 3);
 	}
 
@@ -71,7 +71,7 @@ public class S_BlueMessage extends ServerBasePacket {
 		return _S__18_BLUEMESSAGE;
 	}
 
-	private void buildPacket(int type, String msg1, String msg2, String msg3, int check) {
+	private void buildPacket(final int type, final String msg1, final String msg2, final String msg3, final int check) {
 		writeC(Opcodes.S_OPCODE_BLUEMESSAGE);
 		writeH(type);
 		if (check == 1) {

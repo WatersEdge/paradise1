@@ -58,7 +58,7 @@ public class PetCollar extends ItemExecutor {
 		}
 
 		int petCost = 0;
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
 				if (((L1PetInstance) petNpc).getItemObjId() == itemObjectId) { // 既に引き出しているペット
 					return false;

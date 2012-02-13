@@ -312,155 +312,155 @@ public class L1Skills {
 	}
 
 	/** 设定技能动作ID */
-	public void setActionId(int i) {
+	public void setActionId(final int i) {
 		_actionId = i;
 	}
 
 	/** 设定技能范围 */
-	public void setArea(int i) {
+	public void setArea(final int i) {
 		_area = i;
 	}
 
 	/** 设定技能属性 */
-	public void setAttr(int i) {
+	public void setAttr(final int i) {
 		_attr = i;
 	}
 
 	/** 设定BUFF持续时间 (单位:秒) */
-	public void setBuffDuration(int i) {
+	public void setBuffDuration(final int i) {
 		_buffDuration = i;
 	}
 
 	/** 设定技能图像Gfx */
-	public void setCastGfx(int i) {
+	public void setCastGfx(final int i) {
 		_castGfx = i;
 	}
 
 	/** 设定技能图像Gfx2 */
-	public void setCastGfx2(int i) {
+	public void setCastGfx2(final int i) {
 		_castGfx2 = i;
 	}
 
 	/** 设定伤害骰子 */
-	public void setDamageDice(int i) {
+	public void setDamageDice(final int i) {
 		_damageDice = i;
 	}
 
 	/** 设定伤害骰子数量 */
-	public void setDamageDiceCount(int i) {
+	public void setDamageDiceCount(final int i) {
 		_damageDiceCount = i;
 	}
 
 	/** 设定伤害值 */
-	public void setDamageValue(int i) {
+	public void setDamageValue(final int i) {
 		_damageValue = i;
 	}
 
 	/** 设定消耗HP */
-	public void setHpConsume(int i) {
+	public void setHpConsume(final int i) {
 		_hpConsume = i;
 	}
 
-	public void setId(int i) {
+	public void setId(final int i) {
 		_id = i;
 	}
 
 	/** 设定消耗道具数量 */
-	public void setItemConsumeCount(int i) {
+	public void setItemConsumeCount(final int i) {
 		_itmeConsumeCount = i;
 	}
 
 	/** 设定消耗道具ID */
-	public void setItemConsumeId(int i) {
+	public void setItemConsumeId(final int i) {
 		_itmeConsumeId = i;
 	}
 
 	/** 设定技能正义值 */
-	public void setLawful(int i) {
+	public void setLawful(final int i) {
 		_lawful = i;
 	}
 
 	/** 设定消耗MP */
-	public void setMpConsume(int i) {
+	public void setMpConsume(final int i) {
 		_mpConsume = i;
 	}
 
 	/** 设定技能名称 */
-	public void setName(String s) {
+	public void setName(final String s) {
 		_name = s;
 	}
 
 	/** 设定技能名称ID */
-	public void setNameId(String s) {
+	public void setNameId(final String s) {
 		_nameId = s;
 	}
 
 	/** 设定概率骰子 */
-	public void setProbabilityDice(int i) {
+	public void setProbabilityDice(final int i) {
 		_probabilityDice = i;
 	}
 
 	/** 设定概率值 */
-	public void setProbabilityValue(int i) {
+	public void setProbabilityValue(final int i) {
 		_probabilityValue = i;
 	}
 
 	/** 设定远程技能 */
-	public void setRanged(int i) {
+	public void setRanged(final int i) {
 		_ranged = i;
 	}
 
 	/** 设定技能重用延迟 (单位:毫秒) */
-	public void setReuseDelay(int i) {
+	public void setReuseDelay(final int i) {
 		_reuseDelay = i;
 	}
 
 	/** 设定技能ID */
-	public void setSkillId(int i) {
+	public void setSkillId(final int i) {
 		_skillId = i;
 	}
 
 	/** 设定技能等级 */
-	public void setSkillLevel(int i) {
+	public void setSkillLevel(final int i) {
 		_skillLevel = i;
 	}
 
 	/** 设定技能编号 */
-	public void setSkillNumber(int i) {
+	public void setSkillNumber(final int i) {
 		_skillNumber = i;
 	}
 
 	/** 设定缺少系统消息表 */
-	public void setSysmsgIdFail(int i) {
+	public void setSysmsgIdFail(final int i) {
 		_sysmsgIdFail = i;
 	}
 
 	/** 设定开始系统消息表ID */
-	public void setSysmsgIdHappen(int i) {
+	public void setSysmsgIdHappen(final int i) {
 		_sysmsgIdHappen = i;
 	}
 
 	/** 设定停止系统消息表ID */
-	public void setSysmsgIdStop(int i) {
+	public void setSysmsgIdStop(final int i) {
 		_sysmsgIdStop = i;
 	}
 
 	/** 设定目标 */
-	public void setTarget(String s) {
+	public void setTarget(final String s) {
 		_target = s;
 	}
 
 	/** 设定对象 0:自身 1:PC 2:NPC 4:血盟 8:组队 16:宠物 32:地点 */
-	public void setTargetTo(int i) {
+	public void setTargetTo(final int i) {
 		_targetTo = i;
 	}
 
-	public void setThrough(boolean flag) {
+	public void setThrough(final boolean flag) {
 		_isThrough = flag;
 	}
 
 	/** 设定技能效果类型 */
-	public void setType(int i) {
+	public void setType(final int i) {
 		_type = i;
 	}
 

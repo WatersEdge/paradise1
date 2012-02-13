@@ -51,7 +51,7 @@ public class ArrogantTower_Amulet extends ItemExecutor {
 			case 40289: // 傲慢之塔传送符(11F),傲慢之塔传送符(51F)
 			case 40293:
 				// 傲慢之塔1层上方魔法阵
-				if (x >= 32816 && x <= 32821 && y >= 32778 && y <= 32783 && map == 101) {
+				if ((x >= 32816) && (x <= 32821) && (y >= 32778) && (y <= 32783) && (map == 101)) {
 					isTeleport = true;
 				}
 				break;
@@ -59,7 +59,7 @@ public class ArrogantTower_Amulet extends ItemExecutor {
 			case 40290: // 傲慢之塔传送符(21F),傲慢之塔传送符(61F)
 			case 40294:
 				// 傲慢之塔1层右方魔法阵
-				if (x >= 32815 && x <= 32820 && y >= 32815 && y <= 32820 && map == 101) {
+				if ((x >= 32815) && (x <= 32820) && (y >= 32815) && (y <= 32820) && (map == 101)) {
 					isTeleport = true;
 				}
 				break;
@@ -67,7 +67,7 @@ public class ArrogantTower_Amulet extends ItemExecutor {
 			case 40291: // 傲慢之塔传送符(31F),傲慢之塔传送符(71F)
 			case 40295:
 				// 傲慢之塔1层左方魔法阵
-				if (x >= 32779 && x <= 32784 && y >= 32778 && y <= 32783 && map == 101) {
+				if ((x >= 32779) && (x <= 32784) && (y >= 32778) && (y <= 32783) && (map == 101)) {
 					isTeleport = true;
 				}
 				break;
@@ -75,14 +75,14 @@ public class ArrogantTower_Amulet extends ItemExecutor {
 			case 40292: // 傲慢之塔传送符(41F),傲慢之塔传送符(81F)
 			case 40296:
 				// 傲慢之塔1层下方魔法阵
-				if (x >= 32779 && x <= 32784 && y >= 32815 && y <= 32820 && map == 101) {
+				if ((x >= 32779) && (x <= 32784) && (y >= 32815) && (y <= 32820) && (map == 101)) {
 					isTeleport = true;
 				}
 				break;
 
 			case 40297: // 傲慢之塔传送符(91F)
 				// 傲慢之塔90层右方魔法阵
-				if (x >= 32706 && x <= 32710 && y >= 32909 && y <= 32913 && map == 190) {
+				if ((x >= 32706) && (x <= 32710) && (y >= 32909) && (y <= 32913) && (map == 190)) {
 					isTeleport = true;
 				}
 				break;

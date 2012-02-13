@@ -30,7 +30,7 @@ public class L1Object implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private L1Location _loc = new L1Location();
+	private final L1Location _loc = new L1Location();
 
 	private int _id = 0;
 
@@ -46,8 +46,8 @@ public class L1Object implements Serializable {
 	/**
 	 * 取得与另一个对象间的直线距离。
 	 */
-	public double getLineDistance(L1Object obj) {
-		return this.getLocation().getLineDistance(obj.getLocation());
+	public double getLineDistance(final L1Object obj) {
+		return getLocation().getLineDistance(obj.getLocation());
 	}
 
 	/**
@@ -79,15 +79,15 @@ public class L1Object implements Serializable {
 	/**
 	 * 取得与另一个对象间的X轴+Y轴的距离。
 	 */
-	public int getTileDistance(L1Object obj) {
-		return this.getLocation().getTileDistance(obj.getLocation());
+	public int getTileDistance(final L1Object obj) {
+		return getLocation().getTileDistance(obj.getLocation());
 	}
 
 	/**
 	 * 取得与另一个对象间的距离X轴或Y轴较大的那一个。
 	 */
-	public int getTileLineDistance(L1Object obj) {
-		return this.getLocation().getTileLineDistance(obj.getLocation());
+	public int getTileLineDistance(final L1Object obj) {
+		return getLocation().getTileLineDistance(obj.getLocation());
 	}
 
 	/**
@@ -114,10 +114,10 @@ public class L1Object implements Serializable {
 	 * @param actionFrom
 	 *            要采取行动的玩家目标
 	 */
-	public void onAction(L1PcInstance actionFrom) {
+	public void onAction(final L1PcInstance actionFrom) {
 	}
 
-	public void onAction(L1PcInstance attacker, int skillId) {
+	public void onAction(final L1PcInstance attacker, final int skillId) {
 
 	}
 
@@ -127,7 +127,7 @@ public class L1Object implements Serializable {
 	 * @param perceivedFrom
 	 *            进入荧幕范围的玩家
 	 */
-	public void onPerceive(L1PcInstance perceivedFrom) {
+	public void onPerceive(final L1PcInstance perceivedFrom) {
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class L1Object implements Serializable {
 	 * @param talkFrom
 	 *            交谈的玩家
 	 */
-	public void onTalkAction(L1PcInstance talkFrom) {
+	public void onTalkAction(final L1PcInstance talkFrom) {
 	}
 
 	/**
@@ -145,14 +145,14 @@ public class L1Object implements Serializable {
 	 * @param id
 	 *            唯一的ID
 	 */
-	public void setId(int id) {
+	public void setId(final int id) {
 		_id = id;
 	}
 
 	/**
 	 * 设置对象存在在地图上的L1Location
 	 */
-	public void setLocation(int x, int y, int mapid) {
+	public void setLocation(final int x, final int y, final int mapid) {
 		_loc.setX(x);
 		_loc.setY(y);
 		_loc.setMap(mapid);
@@ -161,7 +161,7 @@ public class L1Object implements Serializable {
 	/**
 	 * 设置对象存在在地图上的L1Location
 	 */
-	public void setLocation(L1Location loc) {
+	public void setLocation(final L1Location loc) {
 		_loc.setX(loc.getX());
 		_loc.setY(loc.getY());
 		_loc.setMap(loc.getMapId());
@@ -173,7 +173,7 @@ public class L1Object implements Serializable {
 	 * @param map
 	 *            设定地图
 	 */
-	public void setMap(L1Map map) {
+	public void setMap(final L1Map map) {
 		if (map == null) {
 			throw new NullPointerException();
 		}
@@ -186,7 +186,7 @@ public class L1Object implements Serializable {
 	 * @param mapId
 	 *            地图ID
 	 */
-	public void setMap(short mapId) {
+	public void setMap(final short mapId) {
 		_loc.setMap(L1WorldMap.getInstance().getMap(mapId));
 	}
 
@@ -196,7 +196,7 @@ public class L1Object implements Serializable {
 	 * @param x
 	 *            座标X轴值
 	 */
-	public void setX(int x) {
+	public void setX(final int x) {
 		_loc.setX(x);
 	}
 
@@ -206,7 +206,7 @@ public class L1Object implements Serializable {
 	 * @param y
 	 *            座标Y轴值
 	 */
-	public void setY(int y) {
+	public void setY(final int y) {
 		_loc.setY(y);
 	}
 }

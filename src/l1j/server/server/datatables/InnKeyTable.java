@@ -38,7 +38,7 @@ public class InnKeyTable {
 	 * @param item
 	 * @return
 	 */
-	public static boolean checkey(L1ItemInstance item) {
+	public static boolean checkey(final L1ItemInstance item) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -49,7 +49,7 @@ public class InnKeyTable {
 			pstm.setInt(1, item.getId());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int itemObj = rs.getInt("item_obj_id");
+				final int itemObj = rs.getInt("item_obj_id");
 				if (item.getId() == itemObj) {
 					item.setKeyId(rs.getInt("key_id"));
 					item.setInnNpcId(rs.getInt("npc_id"));
@@ -59,7 +59,7 @@ public class InnKeyTable {
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -74,7 +74,7 @@ public class InnKeyTable {
 	 * 
 	 * @param item
 	 */
-	public static void DeleteKey(L1ItemInstance item) {
+	public static void DeleteKey(final L1ItemInstance item) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -83,7 +83,7 @@ public class InnKeyTable {
 			pstm.setInt(1, item.getId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -97,7 +97,7 @@ public class InnKeyTable {
 	 * 
 	 * @param item
 	 */
-	public static void StoreKey(L1ItemInstance item) {
+	public static void StoreKey(final L1ItemInstance item) {
 		java.sql.Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -111,7 +111,7 @@ public class InnKeyTable {
 			pstm.setTimestamp(5, item.getDueTime());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

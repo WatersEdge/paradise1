@@ -58,27 +58,27 @@ public class L1Inn {
 		return _hall;
 	}
 
-	public void setDueTime(Timestamp i) {
+	public void setDueTime(final Timestamp i) {
 		_dueTime = i;
 	}
 
-	public void setHall(boolean hall) {
+	public void setHall(final boolean hall) {
 		_hall = hall;
 	}
 
-	public void setInnNpcId(int i) {
+	public void setInnNpcId(final int i) {
 		_npcId = i;
 	}
 
-	public void setKeyId(int i) {
+	public void setKeyId(final int i) {
 		_keyId = i;
 	}
 
-	public void setLodgerId(int i) {
+	public void setLodgerId(final int i) {
 		_lodgerId = i;
 	}
 
-	public void setRoomNumber(int i) {
+	public void setRoomNumber(final int i) {
 		_roomNumber = i;
 	}
 

@@ -36,7 +36,7 @@ public class S_NPCPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_NPCPack(L1NpcInstance npc) {
+	public S_NPCPack(final L1NpcInstance npc) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(npc.getX());
 		writeH(npc.getY());
@@ -60,7 +60,7 @@ public class S_NPCPack extends ServerBasePacket {
 			writeS(npc.getNameId());
 		}
 		if (npc instanceof L1FieldObjectInstance) { // SICの壁字、看板など
-			L1NpcTalkData talkdata = NPCTalkDataTable.getInstance().getTemplate(npc.getNpcTemplate().get_npcId());
+			final L1NpcTalkData talkdata = NPCTalkDataTable.getInstance().getTemplate(npc.getNpcTemplate().get_npcId());
 			if (talkdata != null) {
 				writeS(talkdata.getNormalAction()); // タイトルがHTML名として解釈される
 			}
@@ -83,7 +83,7 @@ public class S_NPCPack extends ServerBasePacket {
 		}
 		if (npc.getNpcTemplate().is_doppel()) {
 			// 變形怪需強制攻擊判斷
-			if (npc.getGfxId() != 31 && npc.getNpcTemplate().get_npcId() != 81069) {
+			if ((npc.getGfxId() != 31) && (npc.getNpcTemplate().get_npcId() != 81069)) {
 				status |= STATUS_PC;
 			}
 		}
@@ -95,7 +95,8 @@ public class S_NPCPack extends ServerBasePacket {
 		writeD(0); // 0以外にするとC_27が飛ぶ
 		writeS(null);
 		writeS(null); // マスター名？
-		if (npc.getTempCharGfx() == 1024 || npc.getTempCharGfx() == 2363 || npc.getTempCharGfx() == 6697 || npc.getTempCharGfx() == 8180 || npc.getTempCharGfx() == 1204 || npc.getTempCharGfx() == 2353 || npc.getTempCharGfx() == 3631 || npc.getTempCharGfx() == 2544) { // 飛行系怪物
+		if ((npc.getTempCharGfx() == 1024) || (npc.getTempCharGfx() == 2363) || (npc.getTempCharGfx() == 6697) || (npc.getTempCharGfx() == 8180) || (npc.getTempCharGfx() == 1204) || (npc.getTempCharGfx() == 2353) || (npc.getTempCharGfx() == 3631)
+				|| (npc.getTempCharGfx() == 2544)) { // 飛行系怪物
 			writeC(npc.getHiddenStatus() == HIDDEN_STATUS_FLY ? 2 : 1); // 判斷是否飛天中
 		}
 		else {

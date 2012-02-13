@@ -34,8 +34,8 @@ public class S_SkillBuy extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_SkillBuy(int o, L1PcInstance pc) {
-		int count = Scount(pc);
+	public S_SkillBuy(final int o, final L1PcInstance pc) {
+		final int count = Scount(pc);
 		int inCount = 0;
 		for (int k = 0; k < count; k++) {
 			if (!pc.isSkillMastery((k + 1))) {
@@ -53,7 +53,7 @@ public class S_SkillBuy extends ServerBasePacket {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -71,59 +71,59 @@ public class S_SkillBuy extends ServerBasePacket {
 		return _S_SKILL_BUY;
 	}
 
-	public int Scount(L1PcInstance pc) {
+	public int Scount(final L1PcInstance pc) {
 		int RC = 0;
 		switch (pc.getType()) {
-		case 0: // 君主
-			if (pc.getLevel() > 20 || pc.isGm()) {
-				RC = 16;
-			}
-			else if (pc.getLevel() > 10) {
-				RC = 8;
-			}
-			break;
+			case 0: // 君主
+				if ((pc.getLevel() > 20) || pc.isGm()) {
+					RC = 16;
+				}
+				else if (pc.getLevel() > 10) {
+					RC = 8;
+				}
+				break;
 
-		case 1: // 骑士
-			if (pc.getLevel() >= 50 || pc.isGm()) {
-				RC = 8;
-			}
-			break;
+			case 1: // 骑士
+				if ((pc.getLevel() >= 50) || pc.isGm()) {
+					RC = 8;
+				}
+				break;
 
-		case 2: // 精灵
-			if (pc.getLevel() >= 24 || pc.isGm()) {
-				RC = 23;
-			}
-			else if (pc.getLevel() >= 16) {
-				RC = 16;
-			}
-			else if (pc.getLevel() >= 8) {
-				RC = 8;
-			}
-			break;
+			case 2: // 精灵
+				if ((pc.getLevel() >= 24) || pc.isGm()) {
+					RC = 23;
+				}
+				else if (pc.getLevel() >= 16) {
+					RC = 16;
+				}
+				else if (pc.getLevel() >= 8) {
+					RC = 8;
+				}
+				break;
 
-		case 3: // 法师
-			if (pc.getLevel() >= 12 || pc.isGm()) {
-				RC = 23;
-			}
-			else if (pc.getLevel() >= 8) {
-				RC = 16;
-			}
-			else if (pc.getLevel() >= 4) {
-				RC = 8;
-			}
-			break;
+			case 3: // 法师
+				if ((pc.getLevel() >= 12) || pc.isGm()) {
+					RC = 23;
+				}
+				else if (pc.getLevel() >= 8) {
+					RC = 16;
+				}
+				else if (pc.getLevel() >= 4) {
+					RC = 8;
+				}
+				break;
 
-		case 4: // 黑暗精灵
-			if (pc.getLevel() >= 24 || pc.isGm()) {
-				RC = 16;
-			}
-			else if (pc.getLevel() >= 12) {
-				RC = 8;
-			}
-			break;
+			case 4: // 黑暗精灵
+				if ((pc.getLevel() >= 24) || pc.isGm()) {
+					RC = 16;
+				}
+				else if (pc.getLevel() >= 12) {
+					RC = 8;
+				}
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 		return RC;
 	}

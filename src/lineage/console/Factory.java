@@ -1,6 +1,5 @@
 package lineage.console;
 
-
 /**
  * 类工厂
  * 

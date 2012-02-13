@@ -77,49 +77,50 @@ public class L1Weapon extends L1Item {
 
 	@Override
 	public boolean isTwohandedWeapon() {
-		int weapon_type = getType();
+		final int weapon_type = getType();
 
-		boolean bool = (weapon_type == 3 // 巨剑
-				|| weapon_type == 4 // 弓
-				|| weapon_type == 5 // 长矛
-				|| weapon_type == 11 // 钢爪
-				|| weapon_type == 12 // 双刀
-				|| weapon_type == 15 // 双手斧
-				|| weapon_type == 16 // 双手魔杖
-				|| weapon_type == 18 // 锁链剑
-		|| weapon_type == 19 // 不明
-		);
+		final boolean bool = ((weapon_type == 3 // 巨剑
+				)
+				|| (weapon_type == 4 // 弓
+				) || (weapon_type == 5 // 长矛
+				) || (weapon_type == 11 // 钢爪
+				) || (weapon_type == 12 // 双刀
+				) || (weapon_type == 15 // 双手斧
+				) || (weapon_type == 16 // 双手魔杖
+				) || (weapon_type == 18 // 锁链剑
+				) || (weapon_type == 19 // 不明
+		));
 
 		return bool;
 	}
 
 	/** 设定有无损伤 */
-	public void set_canbedmg(int i) {
+	public void set_canbedmg(final int i) {
 		_canbedmg = i;
 	}
 
 	/** 设定伤害修正 */
-	public void setDmgModifier(int i) {
+	public void setDmgModifier(final int i) {
 		_dmgModifier = i;
 	}
 
 	/** 设定DB、双倍伤害发动几率 */
-	public void setDoubleDmgChance(int i) {
+	public void setDoubleDmgChance(final int i) {
 		_doubleDmgChance = i;
 	}
 
 	/** 设定命中率修正 */
-	public void setHitModifier(int i) {
+	public void setHitModifier(final int i) {
 		_hitModifier = i;
 	}
 
 	/** 设定魔法攻击的伤害修正 */
-	public void setMagicDmgModifier(int i) {
+	public void setMagicDmgModifier(final int i) {
 		_magicDmgModifier = i;
 	}
 
 	/** 设定射程范围 */
-	public void setRange(int i) {
+	public void setRange(final int i) {
 		_range = i;
 	}
 }

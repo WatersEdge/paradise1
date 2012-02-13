@@ -45,10 +45,10 @@ public class AnnouncementsCycle {
 			scanfile();
 			// 启用修改时间显示 - 〈yyyy.MM.dd〉
 			if (AnnounceTimeDisplay) {
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
+				final SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
 				ShowAnnouncementsCycle("〈" + formatter.format(new Date(lastmodify)) + "〉");
 			}
-			Iterator<String> iterator = list.listIterator();
+			final Iterator<String> iterator = list.listIterator();
 			if (iterator.hasNext()) {
 				round %= list.size();
 				ShowAnnouncementsCycle(list.get(round));
@@ -94,7 +94,7 @@ public class AnnouncementsCycle {
 	}
 
 	private void cycle() {
-		AnnouncementsCycleTask task = new AnnouncementsCycleTask();
+		final AnnouncementsCycleTask task = new AnnouncementsCycleTask();
 		GeneralThreadPool.getInstance().scheduleAtFixedRate(task, 100000, 60000 * Config.Announcements_Cycle_Time); // 10分钟公告一次
 	}
 
@@ -105,8 +105,9 @@ public class AnnouncementsCycle {
 	 *             产生档案错误
 	 */
 	private void fileEnsure() throws IOException {
-		if (!dir.exists())
+		if (!dir.exists()) {
 			dir.createNewFile();
+		}
 	}
 
 	/**
@@ -115,12 +116,13 @@ public class AnnouncementsCycle {
 	private void scanfile() {
 		try {
 			fileEnsure(); // 先确保档案存在
-			if (dir.lastModified() > lastmodify || firstboot) { // 如果有修改过
+			if ((dir.lastModified() > lastmodify) || firstboot) { // 如果有修改过
 				list.clear(); // 清空容器
 				buf = new BufferedReader(new InputStreamReader(new FileInputStream(dir)));
 				while ((line = buf.readLine()) != null) {
-					if (line.startsWith("#") || line.isEmpty()) // 略过注解
+					if (line.startsWith("#") || line.isEmpty()) {
 						continue;
+					}
 					sb.delete(0, sb.length()); // 清空 buffer [未来扩充用]
 					list.add(line);
 				}
@@ -130,14 +132,14 @@ public class AnnouncementsCycle {
 				// 档案没修改过，不做任何事。
 			}
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				buf.close();
 				firstboot = false;
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -146,9 +148,10 @@ public class AnnouncementsCycle {
 	/**
 	 * 把字串广播到伺服器上
 	 */
-	private void ShowAnnouncementsCycle(String announcement) {
-		Collection<L1PcInstance> AllPlayer = L1World.getInstance().getAllPlayers();
-		for (L1PcInstance pc : AllPlayer)
+	private void ShowAnnouncementsCycle(final String announcement) {
+		final Collection<L1PcInstance> AllPlayer = L1World.getInstance().getAllPlayers();
+		for (final L1PcInstance pc : AllPlayer) {
 			pc.sendPackets(new S_SystemMessage(announcement));
+		}
 	}
 }

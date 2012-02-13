@@ -66,15 +66,17 @@ public class L1Message {
 	public static String attempt;
 	public static String setporton;
 	public static String initialfinished;
+
 	private L1Message() {
 		try {
 			resource = ResourceBundle.getBundle(messages.class.getName());
 			initLocaleMessage();
 		}
-		catch (MissingResourceException mre) {
+		catch (final MissingResourceException mre) {
 			mre.printStackTrace();
 		}
 	}
+
 	/**
 	 * 简短化变数名词
 	 */

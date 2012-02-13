@@ -37,21 +37,21 @@ public class C_Exclude extends ClientBasePacket {
 	/**
 	 * C_1 输入 /exclude 指令的时候
 	 */
-	public C_Exclude(byte[] decrypt, ClientThread client) {
+	public C_Exclude(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		String name = readS();
+		final String name = readS();
 		if (name.isEmpty()) {
 			return;
 		}
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		try {
-			L1ExcludingList exList = pc.getExcludingList();
+			final L1ExcludingList exList = pc.getExcludingList();
 			if (exList.isFull()) {
 				pc.sendPackets(new S_ServerMessage(472)); // 被拒绝的玩家太多。
 				return;
 			}
 			if (exList.contains(name)) {
-				String temp = exList.remove(name);
+				final String temp = exList.remove(name);
 				pc.sendPackets(new S_PacketBox(S_PacketBox.REM_EXCLUDE, temp));
 			}
 			else {
@@ -59,7 +59,7 @@ public class C_Exclude extends ClientBasePacket {
 				pc.sendPackets(new S_PacketBox(S_PacketBox.ADD_EXCLUDE, name));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

@@ -102,13 +102,13 @@ public class L1World {
 		}
 	}
 
-	public void addVisibleObject(L1Object object) {
+	public void addVisibleObject(final L1Object object) {
 		if (object.getMapId() <= MAX_MAP_ID) {
 			_visibleObjects[object.getMapId()].put(object.getId(), object);
 		}
 	}
 
-	public void addWar(L1War war) {
+	public void addWar(final L1War war) {
 		if (!_allWars.contains(war)) {
 			_allWars.add(war);
 		}
@@ -120,9 +120,9 @@ public class L1World {
 	 * @param packet
 	 *            ServerBasePacket对象，表示要发送的数据包。
 	 */
-	public void broadcastPacketToAll(ServerBasePacket packet) {
+	public void broadcastPacketToAll(final ServerBasePacket packet) {
 		_log.finest("玩家通知 : " + getAllPlayers().size());
-		for (L1PcInstance pc : getAllPlayers()) {
+		for (final L1PcInstance pc : getAllPlayers()) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -133,7 +133,7 @@ public class L1World {
 	 * @param message
 	 *            发送信息
 	 */
-	public void broadcastServerMessage(String message) {
+	public void broadcastServerMessage(final String message) {
 		broadcastPacketToAll(new S_SystemMessage(message));
 	}
 
@@ -145,27 +145,27 @@ public class L1World {
 		_instance = new L1World();
 	}
 
-	public L1Object findObject(int oID) {
+	public L1Object findObject(final int oID) {
 		return _allObjects.get(oID);
 	}
 
 	public Collection<L1Clan> getAllClans() {
-		Collection<L1Clan> vs = _allClanValues;
+		final Collection<L1Clan> vs = _allClanValues;
 		return (vs != null) ? vs : (_allClanValues = Collections.unmodifiableCollection(_allClans.values()));
 	}
 
 	public Collection<L1PetInstance> getAllPets() {
-		Collection<L1PetInstance> vs = _allPetValues;
+		final Collection<L1PetInstance> vs = _allPetValues;
 		return (vs != null) ? vs : (_allPetValues = Collections.unmodifiableCollection(_allPets.values()));
 	}
 
 	public Collection<L1PcInstance> getAllPlayers() {
-		Collection<L1PcInstance> vs = _allPlayerValues;
+		final Collection<L1PcInstance> vs = _allPlayerValues;
 		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
 	}
 
 	public Collection<L1SummonInstance> getAllSummons() {
-		Collection<L1SummonInstance> vs = _allSummonValues;
+		final Collection<L1SummonInstance> vs = _allSummonValues;
 		return (vs != null) ? vs : (_allSummonValues = Collections.unmodifiableCollection(_allSummons.values()));
 	}
 
@@ -173,14 +173,14 @@ public class L1World {
 		return _allObjects;
 	}
 
-	public L1Clan getClan(String clan_name) {
+	public L1Clan getClan(final String clan_name) {
 		return _allClans.get(clan_name);
 	}
 
-	public L1GroundInventory getInventory(int x, int y, short map) {
-		int inventoryKey = ((x - 30000) * 10000 + (y - 30000)) * -1; // xyのマイナス値をインベントリキーとして使用
+	public L1GroundInventory getInventory(final int x, final int y, final short map) {
+		final int inventoryKey = ((x - 30000) * 10000 + (y - 30000)) * -1; // xyのマイナス値をインベントリキーとして使用
 
-		Object object = _visibleObjects[map].get(inventoryKey);
+		final Object object = _visibleObjects[map].get(inventoryKey);
 		if (object == null) {
 			return new L1GroundInventory(inventoryKey, x, y, map);
 		}
@@ -189,12 +189,12 @@ public class L1World {
 		}
 	}
 
-	public L1GroundInventory getInventory(L1Location loc) {
+	public L1GroundInventory getInventory(final L1Location loc) {
 		return getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
 	}
 
 	public Collection<L1Object> getObject() {
-		Collection<L1Object> vs = _allValues;
+		final Collection<L1Object> vs = _allValues;
 		return (vs != null) ? vs : (_allValues = Collections.unmodifiableCollection(_allObjects.values()));
 	}
 
@@ -205,11 +205,11 @@ public class L1World {
 	 *            - 玩家名称(大写小写字符将被忽略)
 	 * @return 指定的名称L1PcInstance。如果没有合适的玩家返回null。
 	 */
-	public L1PcInstance getPlayer(String name) {
+	public L1PcInstance getPlayer(final String name) {
 		if (_allPlayers.containsKey(name)) {
 			return _allPlayers.get(name);
 		}
-		for (L1PcInstance each : getAllPlayers()) {
+		for (final L1PcInstance each : getAllPlayers()) {
 			if (each.getName().equalsIgnoreCase(name)) {
 				return each;
 			}
@@ -223,26 +223,26 @@ public class L1World {
 	 * @param object
 	 * @return
 	 */
-	public List<L1PcInstance> getRecognizePlayer(L1Object object) {
+	public List<L1PcInstance> getRecognizePlayer(final L1Object object) {
 		return getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
 	}
 
-	public Object getRegion(Object object) {
+	public Object getRegion(final Object object) {
 		return null;
 	}
 
-	public List<L1Object> getVisibleBoxObjects(L1Object object, int heading, int width, int height) {
-		int x = object.getX();
-		int y = object.getY();
-		int map = object.getMapId();
-		L1Location location = object.getLocation();
-		List<L1Object> result = Lists.newList();
-		int headingRotate[] = { 6, 7, 0, 1, 2, 3, 4, 5 };
-		double cosSita = Math.cos(headingRotate[heading] * Math.PI / 4);
-		double sinSita = Math.sin(headingRotate[heading] * Math.PI / 4);
+	public List<L1Object> getVisibleBoxObjects(final L1Object object, final int heading, final int width, final int height) {
+		final int x = object.getX();
+		final int y = object.getY();
+		final int map = object.getMapId();
+		final L1Location location = object.getLocation();
+		final List<L1Object> result = Lists.newList();
+		final int headingRotate[] = { 6, 7, 0, 1, 2, 3, 4, 5 };
+		final double cosSita = Math.cos(headingRotate[heading] * Math.PI / 4);
+		final double sinSita = Math.sin(headingRotate[heading] * Math.PI / 4);
 
 		if (map <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[map].values()) {
+			for (final L1Object element : _visibleObjects[map].values()) {
 				if (element.equals(object)) {
 					continue;
 				}
@@ -256,24 +256,24 @@ public class L1World {
 					continue;
 				}
 
-				int distance = location.getTileLineDistance(element.getLocation());
+				final int distance = location.getTileLineDistance(element.getLocation());
 				// 高度的直线距离、幅どちらよりも大きい場合、計算するまでもなく範囲外
 				if ((distance > height) && (distance > width)) {
 					continue;
 				}
 
 				// objectの位置を原点とするための座標補正
-				int x1 = element.getX() - x;
-				int y1 = element.getY() - y;
+				final int x1 = element.getX() - x;
+				final int y1 = element.getY() - y;
 
 				// Z軸回転させ角度を0度にする。
-				int rotX = (int) Math.round(x1 * cosSita + y1 * sinSita);
-				int rotY = (int) Math.round(-x1 * sinSita + y1 * cosSita);
+				final int rotX = (int) Math.round(x1 * cosSita + y1 * sinSita);
+				final int rotY = (int) Math.round(-x1 * sinSita + y1 * cosSita);
 
-				int xmin = 0;
-				int xmax = height;
-				int ymin = -width;
-				int ymax = width;
+				final int xmin = 0;
+				final int xmax = height;
+				final int ymin = -width;
+				final int ymax = width;
 
 				// 奥行きが射程とかみ合わないので直線距離で判定するように変更。
 				// if (rotX > xmin && rotX <= xmax && rotY >= ymin && rotY <=
@@ -287,19 +287,19 @@ public class L1World {
 		return result;
 	}
 
-	public List<L1Object> getVisibleLineObjects(L1Object src, L1Object target) {
-		Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
+	public List<L1Object> getVisibleLineObjects(final L1Object src, final L1Object target) {
+		final Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
 
-		int map = target.getMapId();
-		List<L1Object> result = Lists.newList();
+		final int map = target.getMapId();
+		final List<L1Object> result = Lists.newList();
 
 		if (map <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[map].values()) {
+			for (final L1Object element : _visibleObjects[map].values()) {
 				if (element.equals(src)) {
 					continue;
 				}
 
-				int key = (element.getX() << 16) + element.getY();
+				final int key = (element.getX() << 16) + element.getY();
 				if (lineMap.containsKey(key)) {
 					result.add(element);
 				}
@@ -313,20 +313,20 @@ public class L1World {
 		return _visibleObjects;
 	}
 
-	public final Map<Integer, L1Object> getVisibleObjects(int mapId) {
+	public final Map<Integer, L1Object> getVisibleObjects(final int mapId) {
 		return _visibleObjects[mapId];
 	}
 
-	public List<L1Object> getVisibleObjects(L1Object object) {
+	public List<L1Object> getVisibleObjects(final L1Object object) {
 		return getVisibleObjects(object, -1);
 	}
 
-	public List<L1Object> getVisibleObjects(L1Object object, int radius) {
-		L1Map map = object.getMap();
-		Point pt = object.getLocation();
-		List<L1Object> result = Lists.newList();
+	public List<L1Object> getVisibleObjects(final L1Object object, final int radius) {
+		final L1Map map = object.getMap();
+		final Point pt = object.getLocation();
+		final List<L1Object> result = Lists.newList();
 		if (map.getId() <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[map.getId()].values()) {
+			for (final L1Object element : _visibleObjects[map.getId()].values()) {
 				if (element.equals(object)) {
 					continue;
 				}
@@ -355,16 +355,16 @@ public class L1World {
 		return result;
 	}
 
-	public List<L1PcInstance> getVisiblePlayer(L1Object object) {
+	public List<L1PcInstance> getVisiblePlayer(final L1Object object) {
 		return getVisiblePlayer(object, -1);
 	}
 
-	public List<L1PcInstance> getVisiblePlayer(L1Object object, int radius) {
-		int map = object.getMapId();
-		Point pt = object.getLocation();
-		List<L1PcInstance> result = Lists.newList();
+	public List<L1PcInstance> getVisiblePlayer(final L1Object object, final int radius) {
+		final int map = object.getMapId();
+		final Point pt = object.getLocation();
+		final List<L1PcInstance> result = Lists.newList();
 
-		for (L1PcInstance element : _allPlayers.values()) {
+		for (final L1PcInstance element : _allPlayers.values()) {
 			if (element.equals(object)) {
 				continue;
 			}
@@ -392,13 +392,13 @@ public class L1World {
 		return result;
 	}
 
-	public List<L1PcInstance> getVisiblePlayerExceptTargetSight(L1Object object, L1Object target) {
-		int map = object.getMapId();
-		Point objectPt = object.getLocation();
-		Point targetPt = target.getLocation();
-		List<L1PcInstance> result = Lists.newList();
+	public List<L1PcInstance> getVisiblePlayerExceptTargetSight(final L1Object object, final L1Object target) {
+		final int map = object.getMapId();
+		final Point objectPt = object.getLocation();
+		final Point targetPt = target.getLocation();
+		final List<L1PcInstance> result = Lists.newList();
 
-		for (L1PcInstance element : _allPlayers.values()) {
+		for (final L1PcInstance element : _allPlayers.values()) {
 			if (element.equals(object)) {
 				continue;
 			}
@@ -425,12 +425,12 @@ public class L1World {
 		return result;
 	}
 
-	public List<L1Object> getVisiblePoint(L1Location loc, int radius) {
-		List<L1Object> result = Lists.newList();
-		int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
+	public List<L1Object> getVisiblePoint(final L1Location loc, final int radius) {
+		final List<L1Object> result = Lists.newList();
+		final int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
 
 		if (mapId <= MAX_MAP_ID) {
-			for (L1Object element : _visibleObjects[mapId].values()) {
+			for (final L1Object element : _visibleObjects[mapId].values()) {
 				if (mapId != element.getMapId()) {
 					continue;
 				}
@@ -445,7 +445,7 @@ public class L1World {
 	}
 
 	public List<L1War> getWarList() {
-		List<L1War> vs = _allWarList;
+		final List<L1War> vs = _allWarList;
 		return (vs != null) ? vs : (_allWarList = Collections.unmodifiableList(_allWars));
 	}
 
@@ -461,7 +461,7 @@ public class L1World {
 		return _worldChatEnabled;
 	}
 
-	public void moveVisibleObject(L1Object object, int newMap) // set_Mapで新しいMapにするまえに呼ぶこと
+	public void moveVisibleObject(final L1Object object, final int newMap) // set_Mapで新しいMapにするまえに呼ぶこと
 	{
 		if (object.getMapId() != newMap) {
 			if (object.getMapId() <= MAX_MAP_ID) {
@@ -473,14 +473,14 @@ public class L1World {
 		}
 	}
 
-	public void removeClan(L1Clan clan) {
-		L1Clan temp = getClan(clan.getClanName());
+	public void removeClan(final L1Clan clan) {
+		final L1Clan temp = getClan(clan.getClanName());
 		if (temp != null) {
 			_allClans.remove(clan.getClanName());
 		}
 	}
 
-	public void removeObject(L1Object object) {
+	public void removeObject(final L1Object object) {
 		if (object == null) {
 			throw new NullPointerException();
 		}
@@ -497,38 +497,38 @@ public class L1World {
 		}
 	}
 
-	public void removeVisibleObject(L1Object object) {
+	public void removeVisibleObject(final L1Object object) {
 		if (object.getMapId() <= MAX_MAP_ID) {
 			_visibleObjects[object.getMapId()].remove(object.getId());
 		}
 	}
 
-	public void removeWar(L1War war) {
+	public void removeWar(final L1War war) {
 		if (_allWars.contains(war)) {
 			_allWars.remove(war);
 		}
 	}
 
-	public void set_worldChatElabled(boolean flag) {
+	public void set_worldChatElabled(final boolean flag) {
 		_worldChatEnabled = flag;
 	}
 
-	public void setProcessingContributionTotal(boolean flag) {
+	public void setProcessingContributionTotal(final boolean flag) {
 		_processingContributionTotal = flag;
 	}
 
-	public void setWeather(int weather) {
+	public void setWeather(final int weather) {
 		_weather = weather;
 	}
 
-	public void storeClan(L1Clan clan) {
-		L1Clan temp = getClan(clan.getClanName());
+	public void storeClan(final L1Clan clan) {
+		final L1Clan temp = getClan(clan.getClanName());
 		if (temp == null) {
 			_allClans.put(clan.getClanName(), clan);
 		}
 	}
 
-	public void storeObject(L1Object object) {
+	public void storeObject(final L1Object object) {
 		if (object == null) {
 			throw new NullPointerException();
 		}
@@ -545,8 +545,8 @@ public class L1World {
 		}
 	}
 
-	private Map<Integer, Integer> createLineMap(Point src, Point target) {
-		Map<Integer, Integer> lineMap = Maps.newConcurrentMap();
+	private Map<Integer, Integer> createLineMap(final Point src, final Point target) {
+		final Map<Integer, Integer> lineMap = Maps.newConcurrentMap();
 
 		/*
 		 * http://www2.starcat.ne.jp/~fussy/algo/algo1-1.htmより
@@ -556,14 +556,14 @@ public class L1World {
 		int y;
 		int key;
 		int i;
-		int x0 = src.getX();
-		int y0 = src.getY();
-		int x1 = target.getX();
-		int y1 = target.getY();
-		int sx = (x1 > x0) ? 1 : -1;
-		int dx = (x1 > x0) ? x1 - x0 : x0 - x1;
-		int sy = (y1 > y0) ? 1 : -1;
-		int dy = (y1 > y0) ? y1 - y0 : y0 - y1;
+		final int x0 = src.getX();
+		final int y0 = src.getY();
+		final int x1 = target.getX();
+		final int y1 = target.getY();
+		final int sx = (x1 > x0) ? 1 : -1;
+		final int dx = (x1 > x0) ? x1 - x0 : x0 - x1;
+		final int sy = (y1 > y0) ? 1 : -1;
+		final int dy = (y1 > y0) ? y1 - y0 : y0 - y1;
 
 		x = x0;
 		y = y0;

@@ -40,7 +40,7 @@ public class RemoveCurse extends ItemExecutor {
 
 		final int itemId = item.getItemId();
 
-		for (L1ItemInstance eachItem : pc.getInventory().getItems()) {
+		for (final L1ItemInstance eachItem : pc.getInventory().getItems()) {
 			if ((eachItem.getItem().getBless() != 2) && (eachItem.getItem().getBless() != 130)) {
 				continue;
 			}
@@ -49,8 +49,8 @@ public class RemoveCurse extends ItemExecutor {
 			if (!eachItem.isEquipped() && ((itemId == 40119) || (itemId == 40097))) {
 				continue;
 			}
-			int id_normal = eachItem.getItemId() - 200000;
-			L1Item template = ItemTable.getInstance().getTemplate(id_normal);
+			final int id_normal = eachItem.getItemId() - 200000;
+			final L1Item template = ItemTable.getInstance().getTemplate(id_normal);
 			if (template == null) {
 				continue;
 			}

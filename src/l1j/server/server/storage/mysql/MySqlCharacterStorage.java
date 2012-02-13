@@ -35,7 +35,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 	/** 创建角色 */
 	@Override
-	public void createCharacter(L1PcInstance pc) {
+	public void createCharacter(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -102,7 +102,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 			_log.finest("stored char data: " + pc.getName());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -112,7 +112,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 	/** 删除角色 */
 	@Override
-	public void deleteCharacter(String accountName, String charName) throws Exception {
+	public void deleteCharacter(final String accountName, final String charName) throws Exception {
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -157,7 +157,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.execute();
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			throw e;
 		} finally {
 			SQLUtil.close(rs);
@@ -168,7 +168,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 	}
 
 	@Override
-	public L1PcInstance loadCharacter(String charName) {
+	public L1PcInstance loadCharacter(final String charName) {
 		L1PcInstance pc = null;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -209,9 +209,9 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pc.addBaseCha(rs.getShort("Cha"));
 			pc.addBaseInt(rs.getShort("Intel"));
 			pc.addBaseWis(rs.getShort("Wis"));
-			int status = rs.getInt("Status");
+			final int status = rs.getInt("Status");
 			pc.setCurrentWeapon(status);
-			int classId = rs.getInt("Class");
+			final int classId = rs.getInt("Class");
 			pc.setClassId(classId);
 			pc.setTempCharGfx(classId);
 			pc.setGfxId(classId);
@@ -289,7 +289,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 			_log.finest("restored char data: ");
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			return null;
 		} finally {
@@ -302,7 +302,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 
 	/** 储存角色 */
 	@Override
-	public void storeCharacter(L1PcInstance pc) {
+	public void storeCharacter(final L1PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -363,7 +363,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pstm.execute();
 			_log.finest("储存的角色数据: " + pc.getName());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

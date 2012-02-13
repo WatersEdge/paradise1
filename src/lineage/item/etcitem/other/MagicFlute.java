@@ -36,9 +36,9 @@ public class MagicFlute extends ItemExecutor {
 
 		pc.sendPackets(new S_Sound(165));
 		pc.broadcastPacket(new S_Sound(165));
-		for (L1Object visible : pc.getKnownObjects()) {
+		for (final L1Object visible : pc.getKnownObjects()) {
 			if (visible instanceof L1GuardianInstance) {
-				L1GuardianInstance guardian = (L1GuardianInstance) visible;
+				final L1GuardianInstance guardian = (L1GuardianInstance) visible;
 				if (guardian.getNpcTemplate().get_npcId() == 70850) { // 潘
 					if (pc.createNewItem(pc, 88, 1)) {
 						pc.getInventory().removeItem(item, 1);

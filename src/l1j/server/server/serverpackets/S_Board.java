@@ -35,7 +35,7 @@ public class S_Board extends ServerBasePacket {
 	 * 
 	 * @param boardObjId
 	 */
-	public S_Board(int boardObjId) {
+	public S_Board(final int boardObjId) {
 		buildPacket(boardObjId, 0);
 	}
 
@@ -45,7 +45,7 @@ public class S_Board extends ServerBasePacket {
 	 * @param boardObjId
 	 * @param number
 	 */
-	public S_Board(int boardObjId, int number) {
+	public S_Board(final int boardObjId, final int number) {
 		buildPacket(boardObjId, number);
 	}
 
@@ -62,8 +62,8 @@ public class S_Board extends ServerBasePacket {
 		return S_BOARD;
 	}
 
-	private void buildPacket(int boardObjId, int number) {
-		List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
+	private void buildPacket(final int boardObjId, final int number) {
+		final List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
 		writeC(Opcodes.S_OPCODE_BOARD);
 		writeC(0); // DragonKeybbs = 1
 		writeD(boardObjId);
@@ -78,7 +78,7 @@ public class S_Board extends ServerBasePacket {
 			writeC(0);
 			writeH(300);
 		}
-		for (L1BoardTopic topic : topics) {
+		for (final L1BoardTopic topic : topics) {
 			writeD(topic.getId());
 			writeS(topic.getName());
 			writeS(topic.getDate());

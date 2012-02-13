@@ -33,7 +33,7 @@ public class L1PinkName {
 		private L1PcInstance _attacker = null;
 
 		/** 粉名计时器 */
-		public PinkNameTimer(L1PcInstance attacker) {
+		public PinkNameTimer(final L1PcInstance attacker) {
 			_attacker = attacker;
 		}
 
@@ -43,7 +43,7 @@ public class L1PinkName {
 				try {
 					Thread.sleep(1000);
 				}
-				catch (Exception exception) {
+				catch (final Exception exception) {
 					break;
 				}
 				// 死亡、或 对手杀死红名 结束
@@ -62,7 +62,7 @@ public class L1PinkName {
 		}
 
 		/** 结束粉名 */
-		private void stopPinkName(L1PcInstance attacker) {
+		private void stopPinkName(final L1PcInstance attacker) {
 			attacker.sendPackets(new S_PinkName(attacker.getId(), 0));
 			attacker.broadcastPacket(new S_PinkName(attacker.getId(), 0));
 			attacker.setPinkName(false);
@@ -70,7 +70,7 @@ public class L1PinkName {
 	}
 
 	/** 采取行动 */
-	public static void onAction(L1PcInstance pc, L1Character cha) {
+	public static void onAction(final L1PcInstance pc, final L1Character cha) {
 		if ((pc == null) || (cha == null)) {
 			return;
 		}
@@ -78,7 +78,7 @@ public class L1PinkName {
 		if (!(cha instanceof L1PcInstance)) {
 			return;
 		}
-		L1PcInstance attacker = (L1PcInstance) cha;
+		final L1PcInstance attacker = (L1PcInstance) cha;
 		if (pc.getId() == attacker.getId()) {
 			return;
 		}
@@ -87,7 +87,7 @@ public class L1PinkName {
 		}
 
 		boolean isNowWar = false;
-		int castleId = L1CastleLocation.getCastleIdByArea(pc);
+		final int castleId = L1CastleLocation.getCastleIdByArea(pc);
 		if (castleId != 0) { // 在旗内
 			isNowWar = WarTimeController.getInstance().isNowWar(castleId);
 		}
@@ -102,7 +102,7 @@ public class L1PinkName {
 				if (!attacker.isGmInvis()) {
 					attacker.broadcastPacket(new S_PinkName(attacker.getId(), 180));
 				}
-				PinkNameTimer pink = new PinkNameTimer(attacker);
+				final PinkNameTimer pink = new PinkNameTimer(attacker);
 				GeneralThreadPool.getInstance().execute(pink);
 			}
 		}

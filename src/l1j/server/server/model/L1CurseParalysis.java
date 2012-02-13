@@ -35,13 +35,13 @@ public class L1CurseParalysis extends L1Paralysis {
 			try {
 				Thread.sleep(_delay); // 麻痹毒瘫痪前的等待时间。
 			}
-			catch (InterruptedException e) {
+			catch (final InterruptedException e) {
 				_target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
 				return;
 			}
 
 			if (_target instanceof L1PcInstance) {
-				L1PcInstance player = (L1PcInstance) _target;
+				final L1PcInstance player = (L1PcInstance) _target;
 				if (!player.isDead()) {
 					player.sendPackets(new S_Paralysis(1, true)); // 麻痹状态
 				}
@@ -63,12 +63,12 @@ public class L1CurseParalysis extends L1Paralysis {
 			try {
 				Thread.sleep(_time);
 			}
-			catch (InterruptedException e) {
+			catch (final InterruptedException e) {
 			}
 
 			_target.killSkillEffectTimer(STATUS_CURSE_PARALYZED);
 			if (_target instanceof L1PcInstance) {
-				L1PcInstance player = (L1PcInstance) _target;
+				final L1PcInstance player = (L1PcInstance) _target;
 				if (!player.isDead()) {
 					player.sendPackets(new S_Paralysis(1, false)); // 解除麻痹状态
 				}
@@ -78,7 +78,7 @@ public class L1CurseParalysis extends L1Paralysis {
 		}
 	}
 
-	public static boolean curse(L1Character cha, int delay, int time) {
+	public static boolean curse(final L1Character cha, final int delay, final int time) {
 		if (!((cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance))) {
 			return false;
 		}
@@ -98,7 +98,7 @@ public class L1CurseParalysis extends L1Paralysis {
 
 	private Thread _timer;
 
-	private L1CurseParalysis(L1Character cha, int delay, int time) {
+	private L1CurseParalysis(final L1Character cha, final int delay, final int time) {
 		_target = cha;
 		_delay = delay;
 		_time = time;
@@ -123,7 +123,7 @@ public class L1CurseParalysis extends L1Paralysis {
 
 	private void curse() {
 		if (_target instanceof L1PcInstance) {
-			L1PcInstance player = (L1PcInstance) _target;
+			final L1PcInstance player = (L1PcInstance) _target;
 			player.sendPackets(new S_ServerMessage(212)); // \f1你的身体渐渐麻痹。
 		}
 

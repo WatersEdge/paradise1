@@ -21,7 +21,7 @@ import l1j.server.server.Opcodes;
 
 public class S_SkillIconShield extends ServerBasePacket {
 
-	public S_SkillIconShield(int type, int time) {
+	public S_SkillIconShield(final int type, final int time) {
 		writeC(Opcodes.S_OPCODE_SKILLICONSHIELD);
 		writeH(time);
 		writeC(type);

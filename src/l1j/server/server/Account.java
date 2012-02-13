@@ -48,12 +48,12 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET banned=1, online=0, OnlineStatus=0 WHERE login=?";
+			final String sqlstr = "UPDATE accounts SET banned=1, online=0, OnlineStatus=0 WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -79,7 +79,7 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 
-			Account account = new Account();
+			final Account account = new Account();
 			account._name = name;
 			account._password = encodePassword(rawPassword);
 			account._ip = ip;
@@ -88,7 +88,7 @@ public class Account {
 			account._lastActive = new Timestamp(System.currentTimeMillis());
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online=?,banned=?,character_slot=?,OnlineStatus=?";
+			final String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online=?,banned=?,character_slot=?,OnlineStatus=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
@@ -105,13 +105,13 @@ public class Account {
 
 			return account;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (NoSuchAlgorithmException e) {
+		catch (final NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
-		catch (UnsupportedEncodingException e) {
+		catch (final UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -128,11 +128,11 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET online=0, OnlineStatus=0 WHERE online=1 OR OnlineStatus=1";
+			final String sqlstr = "UPDATE accounts SET online=0, OnlineStatus=0 WHERE online=1 OR OnlineStatus=1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -155,7 +155,7 @@ public class Account {
 		Account account = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "SELECT * FROM accounts WHERE login=? LIMIT 1";
+			final String sqlstr = "SELECT * FROM accounts WHERE login=? LIMIT 1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();
@@ -177,7 +177,7 @@ public class Account {
 
 			_log.fine("账户已存在");
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -195,19 +195,19 @@ public class Account {
 	 * @param i
 	 *            isOnline?
 	 */
-	public synchronized static void online(Account account, boolean i) {
+	public synchronized static void online(final Account account, final boolean i) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET online=? WHERE login=?";
+			final String sqlstr = "UPDATE accounts SET online=? WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setInt(1, i ? 1 : 0);
 			pstm.setString(2, account.getName());
 			pstm.execute();
 			account.setOnline(i);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -221,19 +221,19 @@ public class Account {
 	 * @param i
 	 *            isOnline?
 	 */
-	public synchronized static void OnlineStatus(Account account, boolean i) {
+	public synchronized static void OnlineStatus(final Account account, final boolean i) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET OnlineStatus=? WHERE login=?";
+			final String sqlstr = "UPDATE accounts SET OnlineStatus=? WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setInt(1, i ? 1 : 0);
 			pstm.setString(2, account.getName());
 			pstm.execute();
 			account.setOnlineStatus(i);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -252,7 +252,7 @@ public class Account {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET character_slot=? WHERE login=?";
+			final String sqlstr = "UPDATE accounts SET character_slot=? WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setInt(1, account.getCharacterSlot());
 			pstm.setString(2, account.getName());
@@ -260,7 +260,7 @@ public class Account {
 			account._characterSlot = account.getCharacterSlot();
 			_log.fine("更新资料库中角色数目 " + account.getName());
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -277,11 +277,11 @@ public class Account {
 	public static void updateLastActive(final Account account, final String ip) {
 		Connection con = null;
 		PreparedStatement pstm = null;
-		Timestamp ts = new Timestamp(System.currentTimeMillis());
+		final Timestamp ts = new Timestamp(System.currentTimeMillis());
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET lastactive=?, ip=? ,online=1 WHERE login = ?";
+			final String sqlstr = "UPDATE accounts SET lastactive=?, ip=? ,online=1 WHERE login = ?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setTimestamp(1, ts);
 			pstm.setString(2, ip);
@@ -290,7 +290,7 @@ public class Account {
 			account._lastActive = ts;
 			_log.fine("更新最后一次登入时的日期与时间 " + account.getName());
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -364,7 +364,7 @@ public class Account {
 	 * @param newPassword
 	 *            新的密码
 	 */
-	public void changeWarePassword(int newPassword) {
+	public void changeWarePassword(final int newPassword) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -377,7 +377,7 @@ public class Account {
 
 			_WarePassword = newPassword;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -396,7 +396,7 @@ public class Account {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "SELECT count(*) as cnt FROM characters WHERE account_name=?";
+			final String sqlstr = "SELECT count(*) as cnt FROM characters WHERE account_name=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, _name);
 			rs = pstm.executeQuery();
@@ -404,7 +404,7 @@ public class Account {
 				result = rs.getInt("cnt");
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -526,7 +526,7 @@ public class Account {
 	 * @param i
 	 *            欲设定的数目
 	 */
-	public void setCharacterSlot(int i) {
+	public void setCharacterSlot(final int i) {
 		_characterSlot = i;
 	}
 
@@ -535,7 +535,7 @@ public class Account {
 	 * 
 	 * @param i
 	 */
-	public synchronized void setOnline(boolean i) {
+	public synchronized void setOnline(final boolean i) {
 		_online = i;
 	}
 
@@ -544,7 +544,7 @@ public class Account {
 	 * 
 	 * @param i
 	 */
-	public synchronized void setOnlineStatus(boolean i) {
+	public synchronized void setOnlineStatus(final boolean i) {
 		_onlineStatus = i;
 	}
 
@@ -567,7 +567,7 @@ public class Account {
 			}
 			return _isValid;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return false;

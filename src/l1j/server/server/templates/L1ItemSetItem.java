@@ -22,7 +22,7 @@ public class L1ItemSetItem {
 	private final int amount;
 	private final int enchant;
 
-	public L1ItemSetItem(int id, int amount, int enchant) {
+	public L1ItemSetItem(final int id, final int amount, final int enchant) {
 		super();
 		this.id = id;
 		this.amount = amount;

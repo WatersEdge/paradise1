@@ -80,15 +80,15 @@ public class CalcExp {
 	 * @param exp
 	 *            经验值
 	 */
-	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, long exp) {
+	public static void calcExp(final L1PcInstance l1pcinstance, final int targetid, final List<L1Character> acquisitorList, final List<Integer> hateList, final long exp) {
 
 		int i = 0;
 		double party_level = 0;
 		double dist = 0;
 		long member_exp = 0;
 		int member_lawful = 0;
-		L1Object l1object = L1World.getInstance().findObject(targetid);
-		L1NpcInstance npc = (L1NpcInstance) l1object;
+		final L1Object l1object = L1World.getInstance().findObject(targetid);
+		final L1NpcInstance npc = (L1NpcInstance) l1object;
 
 		// 取得累积的 hate
 		L1Character acquisitor;
@@ -129,7 +129,7 @@ public class CalcExp {
 			/*
 			 * if (!L1World.getInstance().isProcessingContributionTotal() && (l1pcinstance.getHomeTownId() > 0)) { int contribution = npc.getLevel() / 10; l1pcinstance.addContribution(contribution); }
 			 */// 取消由打怪获得村庄贡献度，改由制作村庄福利品获得贡献度 for 3.3C
-			int lawful = npc.getLawful();
+			final int lawful = npc.getLawful();
 
 			if (l1pcinstance.isInParty()) { // 组队中
 				// 计算组队的 hate
@@ -142,7 +142,7 @@ public class CalcExp {
 
 					// PC
 					if (acquisitor instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) acquisitor;
+						final L1PcInstance pc = (L1PcInstance) acquisitor;
 						if (pc == l1pcinstance) {
 							partyHateExp += hate;
 							partyHateLawful += hate;
@@ -164,8 +164,8 @@ public class CalcExp {
 
 					// 宠物
 					else if (acquisitor instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) acquisitor;
-						L1PcInstance master = (L1PcInstance) pet.getMaster();
+						final L1PetInstance pet = (L1PetInstance) acquisitor;
+						final L1PcInstance master = (L1PcInstance) pet.getMaster();
 						if (master == l1pcinstance) {
 							partyHateExp += hate;
 						}
@@ -182,8 +182,8 @@ public class CalcExp {
 
 					// 召唤物
 					else if (acquisitor instanceof L1SummonInstance) {
-						L1SummonInstance summon = (L1SummonInstance) acquisitor;
-						L1PcInstance master = (L1PcInstance) summon.getMaster();
+						final L1SummonInstance summon = (L1SummonInstance) acquisitor;
+						final L1PcInstance master = (L1PcInstance) summon.getMaster();
 						if (master == l1pcinstance) {
 							partyHateExp += hate;
 						}
@@ -205,15 +205,15 @@ public class CalcExp {
 
 				// 预奖励
 				double pri_bonus = 0;
-				L1PcInstance leader = l1pcinstance.getParty().getLeader();
+				final L1PcInstance leader = l1pcinstance.getParty().getLeader();
 				if (leader.isCrown() && (l1pcinstance.knownsObject(leader) || l1pcinstance.equals(leader))) {
 					pri_bonus = 0.059;
 				}
 
 				// PT经验值の计算
-				L1PcInstance[] ptMembers = l1pcinstance.getParty().getMembers();
+				final L1PcInstance[] ptMembers = l1pcinstance.getParty().getMembers();
 				double pt_bonus = 0;
-				for (L1PcInstance each : ptMembers) {
+				for (final L1PcInstance each : ptMembers) {
 					if (l1pcinstance.knownsObject(each) || l1pcinstance.equals(each)) {
 						party_level += each.getLevel() * each.getLevel();
 					}
@@ -236,21 +236,21 @@ public class CalcExp {
 					acquisitor = acquisitorList.get(i);
 					hate = hateList.get(i);
 					if (acquisitor instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) acquisitor;
+						final L1PcInstance pc = (L1PcInstance) acquisitor;
 						if (pc == l1pcinstance) {
 							ownHateExp += hate;
 						}
 					}
 					else if (acquisitor instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) acquisitor;
-						L1PcInstance master = (L1PcInstance) pet.getMaster();
+						final L1PetInstance pet = (L1PetInstance) acquisitor;
+						final L1PcInstance master = (L1PcInstance) pet.getMaster();
 						if (master == l1pcinstance) {
 							ownHateExp += hate;
 						}
 					}
 					else if (acquisitor instanceof L1SummonInstance) {
-						L1SummonInstance summon = (L1SummonInstance) acquisitor;
-						L1PcInstance master = (L1PcInstance) summon.getMaster();
+						final L1SummonInstance summon = (L1SummonInstance) acquisitor;
+						final L1PcInstance master = (L1PcInstance) summon.getMaster();
 						if (master == l1pcinstance) {
 							ownHateExp += hate;
 						}
@@ -262,7 +262,7 @@ public class CalcExp {
 						acquisitor = acquisitorList.get(i);
 						hate = hateList.get(i);
 						if (acquisitor instanceof L1PcInstance) {
-							L1PcInstance pc = (L1PcInstance) acquisitor;
+							final L1PcInstance pc = (L1PcInstance) acquisitor;
 							if (pc == l1pcinstance) {
 								if (ownHateExp > 0) {
 									acquire_exp = (member_exp * hate / ownHateExp);
@@ -271,8 +271,8 @@ public class CalcExp {
 							}
 						}
 						else if (acquisitor instanceof L1PetInstance) {
-							L1PetInstance pet = (L1PetInstance) acquisitor;
-							L1PcInstance master = (L1PcInstance) pet.getMaster();
+							final L1PetInstance pet = (L1PetInstance) acquisitor;
+							final L1PcInstance master = (L1PcInstance) pet.getMaster();
 							if (master == l1pcinstance) {
 								if (ownHateExp > 0) {
 									acquire_exp = (member_exp * hate / ownHateExp);
@@ -290,7 +290,7 @@ public class CalcExp {
 				}
 
 				// 计算队员的召唤物宠物的 Hate 总和
-				for (L1PcInstance ptMember : ptMembers) {
+				for (final L1PcInstance ptMember : ptMembers) {
 					if (l1pcinstance.knownsObject(ptMember)) {
 						if (party_level > 0) {
 							dist = ((ptMember.getLevel() * ptMember.getLevel()) / party_level);
@@ -303,21 +303,21 @@ public class CalcExp {
 							acquisitor = acquisitorList.get(i);
 							hate = hateList.get(i);
 							if (acquisitor instanceof L1PcInstance) {
-								L1PcInstance pc = (L1PcInstance) acquisitor;
+								final L1PcInstance pc = (L1PcInstance) acquisitor;
 								if (pc == ptMember) {
 									ownHateExp += hate;
 								}
 							}
 							else if (acquisitor instanceof L1PetInstance) {
-								L1PetInstance pet = (L1PetInstance) acquisitor;
-								L1PcInstance master = (L1PcInstance) pet.getMaster();
+								final L1PetInstance pet = (L1PetInstance) acquisitor;
+								final L1PcInstance master = (L1PcInstance) pet.getMaster();
 								if (master == ptMember) {
 									ownHateExp += hate;
 								}
 							}
 							else if (acquisitor instanceof L1SummonInstance) {
-								L1SummonInstance summon = (L1SummonInstance) acquisitor;
-								L1PcInstance master = (L1PcInstance) summon.getMaster();
+								final L1SummonInstance summon = (L1SummonInstance) acquisitor;
+								final L1PcInstance master = (L1PcInstance) summon.getMaster();
 								if (master == ptMember) {
 									ownHateExp += hate;
 								}
@@ -329,7 +329,7 @@ public class CalcExp {
 								acquisitor = acquisitorList.get(i);
 								hate = hateList.get(i);
 								if (acquisitor instanceof L1PcInstance) {
-									L1PcInstance pc = (L1PcInstance) acquisitor;
+									final L1PcInstance pc = (L1PcInstance) acquisitor;
 									if (pc == ptMember) {
 										if (ownHateExp > 0) {
 											acquire_exp = (member_exp * hate / ownHateExp);
@@ -338,8 +338,8 @@ public class CalcExp {
 									}
 								}
 								else if (acquisitor instanceof L1PetInstance) {
-									L1PetInstance pet = (L1PetInstance) acquisitor;
-									L1PcInstance master = (L1PcInstance) pet.getMaster();
+									final L1PetInstance pet = (L1PetInstance) acquisitor;
+									final L1PcInstance master = (L1PcInstance) pet.getMaster();
 									if (master == ptMember) {
 										if (ownHateExp > 0) {
 											acquire_exp = (member_exp * hate / ownHateExp);
@@ -371,11 +371,11 @@ public class CalcExp {
 					}
 
 					if (acquisitor instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) acquisitor;
+						final L1PcInstance pc = (L1PcInstance) acquisitor;
 						AddExp(pc, acquire_exp, acquire_lawful);
 					}
 					else if (acquisitor instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) acquisitor;
+						final L1PetInstance pet = (L1PetInstance) acquisitor;
 						AddExpPet(pet, acquire_exp);
 					}
 					else if (acquisitor instanceof L1SummonInstance) {
@@ -404,11 +404,11 @@ public class CalcExp {
 	 * @param lawful
 	 *            正义值
 	 */
-	private static void AddExp(L1PcInstance pc, long exp, int lawful) {
+	private static void AddExp(final L1PcInstance pc, final long exp, final int lawful) {
 
-		int add_lawful = (int) (lawful * Config.RATE_LA) * -1; // 计算可取得的正义值
+		final int add_lawful = (int) (lawful * Config.RATE_LA) * -1; // 计算可取得的正义值
 		pc.addLawful(add_lawful); // 为PC增加正义值
-		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel()); // 目前等级可获得的经验值
+		final double exppenalty = ExpTable.getPenaltyRate(pc.getLevel()); // 目前等级可获得的经验值
 		double foodBonus = 1.0; // 魔法料理经验加成
 		double expBonus = 1.0; // 战斗药水经验加成
 		double tattoo = 1.0; // 辅助装备经验加成
@@ -471,7 +471,7 @@ public class CalcExp {
 			tattoo = 1.75;
 		}
 
-		long add_exp = (long) (exp // 基本经验值
+		final long add_exp = (long) (exp // 基本经验值
 				* exppenalty // 目前等级可获得的经验值
 				* Config.RATE_XP // 经验值倍率
 				* foodBonus // 魔法料理经验加成
@@ -489,16 +489,16 @@ public class CalcExp {
 	 * @param exp
 	 *            经验值
 	 */
-	private static void AddExpPet(L1PetInstance pet, long exp) {
+	private static void AddExpPet(final L1PetInstance pet, final long exp) {
 
 		// 宠物主人
-		L1PcInstance pc = (L1PcInstance) pet.getMaster();
+		final L1PcInstance pc = (L1PcInstance) pet.getMaster();
 
 		// 宠物道具
-		int petItemObjId = pet.getItemObjId();
+		final int petItemObjId = pet.getItemObjId();
 
 		// 宠物等级
-		int levelBefore = pet.getLevel();
+		final int levelBefore = pet.getLevel();
 
 		// 宠物经验值
 		long totalExp = (long) (exp * Config.RATE_XP + pet.getExp());
@@ -515,12 +515,12 @@ public class CalcExp {
 		// 设定宠物等级
 		pet.setLevel(ExpTable.getLevelByExp(totalExp));
 
-		int expPercentage = ExpTable.getExpPercentage(pet.getLevel(), totalExp);
+		final int expPercentage = ExpTable.getExpPercentage(pet.getLevel(), totalExp);
 
-		int gap = pet.getLevel() - levelBefore;
+		final int gap = pet.getLevel() - levelBefore;
 		for (int i = 1; i <= gap; i++) {
-			IntRange hpUpRange = pet.getPetType().getHpUpRange();
-			IntRange mpUpRange = pet.getPetType().getMpUpRange();
+			final IntRange hpUpRange = pet.getPetType().getHpUpRange();
+			final IntRange mpUpRange = pet.getPetType().getMpUpRange();
 			pet.addMaxHp(hpUpRange.randomValue());
 			pet.addMaxMp(mpUpRange.randomValue());
 		}
@@ -529,7 +529,7 @@ public class CalcExp {
 		pc.sendPackets(new S_PetPack(pet, pc));
 
 		if (gap != 0) { // 将宠物等级等变化保存至资料库
-			L1Pet petTemplate = PetTable.getInstance().getTemplate(petItemObjId);
+			final L1Pet petTemplate = PetTable.getInstance().getTemplate(petItemObjId);
 			if (petTemplate == null) { // PetTable无
 				_log.warning("L1Pet == null");
 				return;

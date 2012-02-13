@@ -36,7 +36,7 @@ public class Point {
 	 * @param x
 	 * @param y
 	 */
-	public Point(int x, int y) {
+	public Point(final int x, final int y) {
 		_x = x;
 		_y = y;
 	}
@@ -46,7 +46,7 @@ public class Point {
 	 * 
 	 * @param pt
 	 */
-	public Point(Point pt) {
+	public Point(final Point pt) {
 		_x = pt._x;
 		_y = pt._y;
 	}
@@ -57,17 +57,17 @@ public class Point {
 	 * @param heading
 	 *            面向(0~7)
 	 */
-	public void backward(int heading) {
+	public void backward(final int heading) {
 		_x -= HEADING_TABLE_X[heading];
 		_y -= HEADING_TABLE_Y[heading];
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (!(obj instanceof Point)) {
 			return false;
 		}
-		Point pt = (Point) obj;
+		final Point pt = (Point) obj;
 		return (getX() == pt.getX()) && (getY() == pt.getY());
 	}
 
@@ -77,7 +77,7 @@ public class Point {
 	 * @param heading
 	 *            面向(0~7)
 	 */
-	public void forward(int heading) {
+	public void forward(final int heading) {
 		_x += HEADING_TABLE_X[heading];
 		_y += HEADING_TABLE_Y[heading];
 	}
@@ -89,9 +89,9 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 直线距离值
 	 */
-	public double getLineDistance(Point pt) {
-		long diffX = pt.getX() - getX();
-		long diffY = pt.getY() - getY();
+	public double getLineDistance(final Point pt) {
+		final long diffX = pt.getX() - getX();
+		final long diffY = pt.getY() - getY();
 		return Math.sqrt((diffX * diffX) + (diffY * diffY));
 	}
 
@@ -102,7 +102,7 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 直线距离值。
 	 */
-	public int getTileDistance(Point pt) {
+	public int getTileDistance(final Point pt) {
 		return Math.abs(pt.getX() - getX()) + Math.abs(pt.getY() - getY());
 	}
 
@@ -113,7 +113,7 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 直线距离值。
 	 */
-	public int getTileLineDistance(Point pt) {
+	public int getTileLineDistance(final Point pt) {
 		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
 	}
 
@@ -147,8 +147,8 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return 指定された座標が画面内に見える場合はtrue。そうでない場合はfalse。
 	 */
-	public boolean isInScreen(Point pt) {
-		int dist = getTileDistance(pt);
+	public boolean isInScreen(final Point pt) {
+		final int dist = getTileDistance(pt);
 
 		if (dist > 19) { // 当tile距离 > 19 的时候，判定为不在画面内(false)
 			return false;
@@ -162,7 +162,7 @@ public class Point {
 			// Point pointZero = new Point(this.getX() - 18, this.getY() - 18);
 			// int dist2 = pointZero.getTileDistance(pt);
 			// 显示区的坐标系统 (18, 18)
-			int dist2 = Math.abs(pt.getX() - (getX() - 18)) + Math.abs(pt.getY() - (getY() - 18));
+			final int dist2 = Math.abs(pt.getX() - (getX() - 18)) + Math.abs(pt.getY() - (getY() - 18));
 			if ((19 <= dist2) && (dist2 <= 52)) {
 				return true;
 			}
@@ -177,7 +177,7 @@ public class Point {
 	 *            坐标保存的Point对象
 	 * @return true是 false否。
 	 */
-	public boolean isSamePoint(Point pt) {
+	public boolean isSamePoint(final Point pt) {
 		return ((pt.getX() == getX()) && (pt.getY() == getY()));
 	}
 
@@ -189,7 +189,7 @@ public class Point {
 	 * @param y
 	 *            坐标点Y
 	 */
-	public void set(int x, int y) {
+	public void set(final int x, final int y) {
 		_x = x;
 		_y = y;
 	}
@@ -200,7 +200,7 @@ public class Point {
 	 * @param pt
 	 *            坐标点
 	 */
-	public void set(Point pt) {
+	public void set(final Point pt) {
 		_x = pt._x;
 		_y = pt._y;
 	}
@@ -210,7 +210,7 @@ public class Point {
 	 * 
 	 * @param x
 	 */
-	public void setX(int x) {
+	public void setX(final int x) {
 		_x = x;
 	}
 
@@ -219,7 +219,7 @@ public class Point {
 	 * 
 	 * @param y
 	 */
-	public void setY(int y) {
+	public void setY(final int y) {
 		_y = y;
 	}
 

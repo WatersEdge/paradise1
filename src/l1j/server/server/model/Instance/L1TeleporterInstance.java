@@ -48,7 +48,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				_isNowDely = true;
 				Thread.sleep(900000); // 15分
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_isNowDely = false;
 			}
 			_isNowDely = false;
@@ -61,18 +61,18 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	private static Logger _log = Logger.getLogger(l1j.server.server.model.Instance.L1TeleporterInstance.class.getName());
 
-	public L1TeleporterInstance(L1Npc template) {
+	public L1TeleporterInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		attack.calcHit();
 		attack.action();
 		attack.addChaserAttack();
@@ -83,15 +83,15 @@ public class L1TeleporterInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+	public void onFinalAction(final L1PcInstance player, final String action) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		if (action.equalsIgnoreCase("teleportURL")) {
-			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURL());
+			final L1NpcHtml html = new L1NpcHtml(talking.getTeleportURL());
 			player.sendPackets(new S_NPCTalkReturn(objid, html));
 		}
 		else if (action.equalsIgnoreCase("teleportURLA")) {
-			L1NpcHtml html = new L1NpcHtml(talking.getTeleportURLA());
+			final L1NpcHtml html = new L1NpcHtml(talking.getTeleportURLA());
 			player.sendPackets(new S_NPCTalkReturn(objid, html));
 		}
 		if (action.startsWith("teleport ")) {
@@ -101,17 +101,17 @@ public class L1TeleporterInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance player) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		int npcid = getNpcTemplate().get_npcId();
-		L1Quest quest = player.getQuest();
+	public void onTalkAction(final L1PcInstance player) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final int npcid = getNpcTemplate().get_npcId();
+		final L1Quest quest = player.getQuest();
 		String htmlid = null;
 
 		if (talking != null) {
 			if (npcid == 50014) { // 迪隆(法师30级任务)
 				if (player.isWizard()) { // 魔法师
-					if (quest.get_step(L1Quest.QUEST_LEVEL30) == 1 && !player.getInventory().checkItem(40579)) { // 不死族的骨头
+					if ((quest.get_step(L1Quest.QUEST_LEVEL30) == 1) && !player.getInventory().checkItem(40579)) { // 不死族的骨头
 						htmlid = "dilong1";
 					}
 					else {
@@ -247,15 +247,15 @@ public class L1TeleporterInstance extends L1NpcInstance {
 			else if (npcid == 71095) { // 堕落的灵魂
 				if (player.isDarkelf()) { // 黑暗妖精
 					if (player.getLevel() >= 50) {
-						int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+						final int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
 						if (lv50_step == L1Quest.QUEST_END) {
 							htmlid = "csoulq3";
 						}
 						else if (lv50_step >= 3) {
 							boolean find = false;
-							for (Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
+							for (final Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
 								if (objs instanceof L1PcInstance) {
-									L1PcInstance _pc = (L1PcInstance) objs;
+									final L1PcInstance _pc = (L1PcInstance) objs;
 									if (_pc != null) {
 										find = true;
 										htmlid = "csoulqn"; // 你的邪念还不够！
@@ -293,10 +293,10 @@ public class L1TeleporterInstance extends L1NpcInstance {
 	}
 
 	/** 做最后的动作 */
-	private void doFinalAction(L1PcInstance player, String action) {
-		int objid = getId();
+	private void doFinalAction(final L1PcInstance player, final String action) {
+		final int objid = getId();
 
-		int npcid = getNpcTemplate().get_npcId();
+		final int npcid = getNpcTemplate().get_npcId();
 		String htmlid = null;
 		boolean isTeleport = true;
 
@@ -322,8 +322,8 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				// (君主Lv30任务)
 				if (action.equalsIgnoreCase("teleport mutant-dungen")) {
 					// 3マス以内のPc
-					for (L1PcInstance otherPc : L1World.getInstance().getVisiblePlayer(player, 3)) {
-						if (otherPc.getClanid() == player.getClanid() && otherPc.getId() != player.getId()) {
+					for (final L1PcInstance otherPc : L1World.getInstance().getVisiblePlayer(player, 3)) {
+						if ((otherPc.getClanid() == player.getClanid()) && (otherPc.getId() != player.getId())) {
 							L1Teleport.teleport(otherPc, 32740, 32800, (short) 217, 5, true);
 						}
 					}
@@ -338,43 +338,43 @@ public class L1TeleporterInstance extends L1NpcInstance {
 					L1PcInstance elf = null;
 					L1PcInstance wiz = null;
 					// 3マス以内のPc
-					for (L1PcInstance otherPc : L1World.getInstance().getVisiblePlayer(player, 3)) {
-						L1Quest quest = otherPc.getQuest();
+					for (final L1PcInstance otherPc : L1World.getInstance().getVisiblePlayer(player, 3)) {
+						final L1Quest quest = otherPc.getQuest();
 						if (otherPc.isKnight() // 骑士
-								&& quest.get_step(L1Quest.QUEST_LEVEL50) == 1) { // ディガルディン同意济み
+								&& (quest.get_step(L1Quest.QUEST_LEVEL50) == 1)) { // ディガルディン同意济み
 							if (kni == null) {
 								kni = otherPc;
 							}
 						}
 						else if (otherPc.isElf() // 精灵
-								&& quest.get_step(L1Quest.QUEST_LEVEL50) == 1) { // ディガルディン同意济み
+								&& (quest.get_step(L1Quest.QUEST_LEVEL50) == 1)) { // ディガルディン同意济み
 							if (elf == null) {
 								elf = otherPc;
 							}
 						}
 						else if (otherPc.isWizard() // 法师
-								&& quest.get_step(L1Quest.QUEST_LEVEL50) == 1) { // ディガルディン同意济み
+								&& (quest.get_step(L1Quest.QUEST_LEVEL50) == 1)) { // ディガルディン同意济み
 							if (wiz == null) {
 								wiz = otherPc;
 							}
 						}
 					}
-					if (kni != null && elf != null && wiz != null) { // 全クラス揃っている
+					if ((kni != null) && (elf != null) && (wiz != null)) { // 全クラス揃っている
 						L1Teleport.teleport(player, 32723, 32850, (short) 2000, 2, true);
 						L1Teleport.teleport(kni, 32750, 32851, (short) 2000, 6, true);
 						L1Teleport.teleport(elf, 32878, 32980, (short) 2000, 6, true);
 						L1Teleport.teleport(wiz, 32876, 33003, (short) 2000, 0, true);
-						TeleportDelyTimer timer = new TeleportDelyTimer();
+						final TeleportDelyTimer timer = new TeleportDelyTimer();
 						GeneralThreadPool.getInstance().execute(timer);
 					}
 				}
 				else if (action.equalsIgnoreCase("teleport barlog")) { // 古代人（Lv50任务古代人空间2F）
 					L1Teleport.teleport(player, 32755, 32844, (short) 2002, 5, true);
-					TeleportDelyTimer timer = new TeleportDelyTimer();
+					final TeleportDelyTimer timer = new TeleportDelyTimer();
 					GeneralThreadPool.getInstance().execute(timer);
 				}
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 			}
 		}
 		if (htmlid != null) { // 表示するhtmlがある场合

@@ -26,7 +26,8 @@ public class SystemUtil {
 	 * @return Linux or Windows
 	 */
 	public static String gerOs() {
-		String Os = "", OsName = System.getProperty("os.name");
+		String Os = "";
+		final String OsName = System.getProperty("os.name");
 		if (OsName.toLowerCase().indexOf("windows") >= 0) {
 			Os = "Windows";
 		}
@@ -42,12 +43,15 @@ public class SystemUtil {
 	 * @return x86 or x64
 	 */
 	public static String getOsArchitecture() {
-		String x64_System = "C:\\Windows\\SysWOW64", result;
-		File dir = new File(x64_System);
-		if (dir.exists())
+		final String x64_System = "C:\\Windows\\SysWOW64";
+		String result;
+		final File dir = new File(x64_System);
+		if (dir.exists()) {
 			result = "x64";
-		else
+		}
+		else {
 			result = "x86";
+		}
 		return result;
 	}
 

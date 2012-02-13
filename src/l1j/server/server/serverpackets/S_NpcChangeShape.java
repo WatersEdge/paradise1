@@ -27,7 +27,7 @@ public class S_NpcChangeShape extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/** 使用于怪物变身 */
-	public S_NpcChangeShape(int objId, int polyId, int lawful, int status) {
+	public S_NpcChangeShape(final int objId, final int polyId, final int lawful, final int status) {
 		writeC(Opcodes.S_OPCODE_SPOLY);
 		writeD(objId);
 		writeD(0); // ???

@@ -55,11 +55,11 @@ public class PetTypeTable {
 		loadTypes();
 	}
 
-	public L1PetType get(int baseNpcId) {
+	public L1PetType get(final int baseNpcId) {
 		return _types.get(baseNpcId);
 	}
 
-	public boolean isNameDefault(String name) {
+	public boolean isNameDefault(final String name) {
 		return _defaultNames.contains(name.toLowerCase());
 	}
 
@@ -74,28 +74,28 @@ public class PetTypeTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				int baseNpcId = rs.getInt("BaseNpcId");
-				String name = rs.getString("Name");
-				int itemIdForTaming = rs.getInt("ItemIdForTaming");
-				int hpUpMin = rs.getInt("HpUpMin");
-				int hpUpMax = rs.getInt("HpUpMax");
-				int mpUpMin = rs.getInt("MpUpMin");
-				int mpUpMax = rs.getInt("MpUpMax");
-				int evolvItemId = rs.getInt("EvolvItemId");
-				int npcIdForEvolving = rs.getInt("NpcIdForEvolving");
-				int msgIds[] = new int[5];
+				final int baseNpcId = rs.getInt("BaseNpcId");
+				final String name = rs.getString("Name");
+				final int itemIdForTaming = rs.getInt("ItemIdForTaming");
+				final int hpUpMin = rs.getInt("HpUpMin");
+				final int hpUpMax = rs.getInt("HpUpMax");
+				final int mpUpMin = rs.getInt("MpUpMin");
+				final int mpUpMax = rs.getInt("MpUpMax");
+				final int evolvItemId = rs.getInt("EvolvItemId");
+				final int npcIdForEvolving = rs.getInt("NpcIdForEvolving");
+				final int msgIds[] = new int[5];
 				for (int i = 0; i < 5; i++) {
 					msgIds[i] = rs.getInt("MessageId" + (i + 1));
 				}
-				int defyMsgId = rs.getInt("DefyMessageId");
-				boolean canUseEquipment = rs.getBoolean("canUseEquipment");
-				IntRange hpUpRange = new IntRange(hpUpMin, hpUpMax);
-				IntRange mpUpRange = new IntRange(mpUpMin, mpUpMax);
+				final int defyMsgId = rs.getInt("DefyMessageId");
+				final boolean canUseEquipment = rs.getBoolean("canUseEquipment");
+				final IntRange hpUpRange = new IntRange(hpUpMin, hpUpMax);
+				final IntRange mpUpRange = new IntRange(mpUpMin, mpUpMax);
 				_types.put(baseNpcId, new L1PetType(baseNpcId, name, itemIdForTaming, hpUpRange, mpUpRange, evolvItemId, npcIdForEvolving, msgIds, defyMsgId, canUseEquipment));
 				_defaultNames.add(name.toLowerCase());
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

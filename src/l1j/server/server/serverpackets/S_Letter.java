@@ -28,7 +28,7 @@ public class S_Letter extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_Letter(L1ItemInstance item) {
+	public S_Letter(final L1ItemInstance item) {
 		buildPacket(item);
 	}
 
@@ -45,7 +45,7 @@ public class S_Letter extends ServerBasePacket {
 		return S_LETTER;
 	}
 
-	private void buildPacket(L1ItemInstance item) {
+	private void buildPacket(final L1ItemInstance item) {
 		/*
 		 * Connection con = null; PreparedStatement pstm = null; ResultSet rs = null; try { con = L1DatabaseFactory.getInstance().getConnection(); pstm = con .prepareStatement("SELECT * FROM letter WHERE item_object_id=?"); pstm.setInt(1, item.getId()); rs = pstm.executeQuery();
 		 * while (rs.next()) { writeC(Opcodes.S_OPCODE_LETTER); writeD(item.getId()); if (item.get_gfxid() == 465) { // 開く前 writeH(466); // 開いた後 } else if (item.get_gfxid() == 606) { writeH(605); } else if (item.get_gfxid() == 616) { writeH(615); } else {

@@ -41,17 +41,17 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public class C_UseSkill extends ClientBasePacket {
 
-	public C_UseSkill(byte abyte0[], ClientThread client) throws Exception {
+	public C_UseSkill(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		int row = readC();
-		int column = readC();
-		int skillId = (row * 8) + column + 1;
+		final int row = readC();
+		final int column = readC();
+		final int skillId = (row * 8) + column + 1;
 		String charName = null;
 		String message = null;
 		int targetId = 0;
 		int targetX = 0;
 		int targetY = 0;
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
 		// 传送中或死亡
 		if (pc.isTeleport() || pc.isDead()) {
@@ -107,7 +107,7 @@ public class C_UseSkill extends ClientBasePacket {
 					targetY = readH();
 				}
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				// _log.log(Level.SEVERE, "", e);
 			}
 		}
@@ -126,7 +126,7 @@ public class C_UseSkill extends ClientBasePacket {
 					return;
 				}
 
-				L1PcInstance target = L1World.getInstance().getPlayer(charName);
+				final L1PcInstance target = L1World.getInstance().getPlayer(charName);
 
 				if (target == null) {
 					// メッセージが正确であるか未调查
@@ -140,18 +140,18 @@ public class C_UseSkill extends ClientBasePacket {
 				targetId = target.getId();
 				if (skillId == CALL_CLAN) { // 呼唤盟友
 					// 移动せずに连续して同じクラン员にコールクランした场合、向きは前回の向きになる
-					int callClanId = pc.getCallClanId();
+					final int callClanId = pc.getCallClanId();
 					if ((callClanId == 0) || (callClanId != targetId)) {
 						pc.setCallClanId(targetId);
 						pc.setCallClanHeading(pc.getHeading());
 					}
 				}
 			}
-			L1SkillUse l1skilluse = new L1SkillUse();
+			final L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(pc, skillId, targetId, targetX, targetY, message, 0, L1SkillUse.TYPE_NORMAL);
 
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}

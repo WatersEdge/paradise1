@@ -23,7 +23,7 @@ import l1j.server.server.model.Instance.L1NpcInstance;
  */
 public class S_PetCtrlMenu extends ServerBasePacket {
 
-	public S_PetCtrlMenu(L1Character cha, L1NpcInstance npc, boolean open) {
+	public S_PetCtrlMenu(final L1Character cha, final L1NpcInstance npc, final boolean open) {
 		// int index = open ? 1 : cha.getPetList().size() - 1;
 		writeC(Opcodes.S_OPCODE_PETCTRL);
 		writeC(0x0c);

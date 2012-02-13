@@ -157,7 +157,7 @@ public class L1Npc extends L1Object implements Cloneable {
 		try {
 			return (L1Npc) (super.clone());
 		}
-		catch (CloneNotSupportedException e) {
+		catch (final CloneNotSupportedException e) {
 			throw (new InternalError(e.getMessage()));
 		}
 	}
@@ -419,255 +419,255 @@ public class L1Npc extends L1Object implements Cloneable {
 		return _tameable;
 	}
 
-	public void set_ac(int i) {
+	public void set_ac(final int i) {
 		_ac = i;
 	}
 
-	public void set_agro(boolean flag) {
+	public void set_agro(final boolean flag) {
 		_agro = flag;
 	}
 
-	public void set_agrocoi(boolean flag) {
+	public void set_agrocoi(final boolean flag) {
 		_agrocoi = flag;
 	}
 
-	public void set_agrofamily(int i) {
+	public void set_agrofamily(final int i) {
 		_agrofamily = i;
 	}
 
-	public void set_agrogfxid1(int i) {
+	public void set_agrogfxid1(final int i) {
 		_agrogfxid1 = i;
 	}
 
-	public void set_agrogfxid2(int i) {
+	public void set_agrogfxid2(final int i) {
 		_agrogfxid2 = i;
 	}
 
-	public void set_agrososc(boolean flag) {
+	public void set_agrososc(final boolean flag) {
 		_agrososc = flag;
 	}
 
-	public void set_atkspeed(int i) {
+	public void set_atkspeed(final int i) {
 		_atkspeed = i;
 	}
 
-	public void set_bravespeed(boolean flag) {
+	public void set_bravespeed(final boolean flag) {
 		_bravespeed = flag;
 	}
 
-	public void set_con(byte i) {
+	public void set_con(final byte i) {
 		_con = i;
 	}
 
-	public void set_damagereduction(int i) {
+	public void set_damagereduction(final int i) {
 		_damagereduction = i;
 	}
 
-	public void set_dex(byte i) {
+	public void set_dex(final byte i) {
 		_dex = i;
 	}
 
-	public void set_digestitem(int i) {
+	public void set_digestitem(final int i) {
 		_digestitem = i;
 	}
 
-	public void set_doppel(boolean flag) {
+	public void set_doppel(final boolean flag) {
 		_doppel = flag;
 	}
 
-	public void set_exp(int i) {
+	public void set_exp(final int i) {
 		_exp = i;
 	}
 
-	public void set_family(int i) {
+	public void set_family(final int i) {
 		_family = i;
 	}
 
-	public void set_gfxid(int i) {
+	public void set_gfxid(final int i) {
 		_gfxid = i;
 	}
 
-	public void set_hard(boolean flag) {
+	public void set_hard(final boolean flag) {
 		_hard = flag;
 	}
 
-	public void set_hp(int i) {
+	public void set_hp(final int i) {
 		_hp = i;
 	}
 
-	public void set_hpr(int i) {
+	public void set_hpr(final int i) {
 		_hpr = i;
 	}
 
-	public void set_hprinterval(int i) {
+	public void set_hprinterval(final int i) {
 		_hprinterval = i;
 	}
 
-	public void set_int(byte i) {
+	public void set_int(final byte i) {
 		_int = i;
 	}
 
-	public void set_IsErase(boolean i) {
+	public void set_IsErase(final boolean i) {
 		_erase = i;
 	}
 
-	public void set_IsTU(boolean i) {
+	public void set_IsTU(final boolean i) {
 		_tu = i;
 	}
 
-	public void set_lawful(int i) {
+	public void set_lawful(final int i) {
 		_lawful = i;
 	}
 
-	public void set_level(int i) {
+	public void set_level(final int i) {
 		_level = i;
 	}
 
-	public void set_mp(int i) {
+	public void set_mp(final int i) {
 		_mp = i;
 	}
 
-	public void set_mpr(int i) {
+	public void set_mpr(final int i) {
 		_mpr = i;
 	}
 
-	public void set_mprinterval(int i) {
+	public void set_mprinterval(final int i) {
 		_mprinterval = i;
 	}
 
-	public void set_mr(int i) {
+	public void set_mr(final int i) {
 		_mr = i;
 	}
 
-	public void set_name(String s) {
+	public void set_name(final String s) {
 		_name = s;
 	}
 
-	public void set_nameid(String s) {
+	public void set_nameid(final String s) {
 		_nameid = s;
 	}
 
-	public void set_npcId(int i) {
+	public void set_npcId(final int i) {
 		_npcid = i;
 	}
 
-	public void set_paralysisatk(int i) {
+	public void set_paralysisatk(final int i) {
 		_paralysisatk = i;
 	}
 
-	public void set_passispeed(int i) {
+	public void set_passispeed(final int i) {
 		_passispeed = i;
 	}
 
-	public void set_picupitem(boolean flag) {
+	public void set_picupitem(final boolean flag) {
 		_picupitem = flag;
 	}
 
-	public void set_poisonatk(int i) {
+	public void set_poisonatk(final int i) {
 		_poisonatk = i;
 	}
 
-	public void set_randomac(int i) {
+	public void set_randomac(final int i) {
 		_randomac = i;
 	}
 
-	public void set_randomexp(int i) {
+	public void set_randomexp(final int i) {
 		_randomexp = i;
 	}
 
-	public void set_randomhp(int i) {
+	public void set_randomhp(final int i) {
 		_randomhp = i;
 	}
 
-	public void set_randomlawful(int i) {
+	public void set_randomlawful(final int i) {
 		_randomlawful = i;
 	}
 
-	public void set_randomlevel(int i) {
+	public void set_randomlevel(final int i) {
 		_randomlevel = i;
 	}
 
-	public void set_randommp(int i) {
+	public void set_randommp(final int i) {
 		_randommp = i;
 	}
 
-	public void set_ranged(int i) {
+	public void set_ranged(final int i) {
 		_ranged = i;
 	}
 
-	public void set_size(String s) {
+	public void set_size(final String s) {
 		_size = s;
 	}
 
-	public void set_str(byte i) {
+	public void set_str(final byte i) {
 		_str = i;
 	}
 
-	public void set_teleport(boolean flag) {
+	public void set_teleport(final boolean flag) {
 		_teleport = flag;
 	}
 
-	public void set_undead(int i) {
+	public void set_undead(final int i) {
 		_undead = i;
 	}
 
-	public void set_weakAttr(int i) {
+	public void set_weakAttr(final int i) {
 		_weakAttr = i;
 	}
 
-	public void set_wis(byte i) {
+	public void set_wis(final byte i) {
 		_wis = i;
 	}
 
-	public void setAltAtkSpeed(int altAtkSpeed) {
+	public void setAltAtkSpeed(final int altAtkSpeed) {
 		_altAtkSpeed = altAtkSpeed;
 	}
 
-	public void setAmountFixed(boolean fixed) {
+	public void setAmountFixed(final boolean fixed) {
 		_amountFixed = fixed;
 	}
 
-	public void setAtkMagicSpeed(int atkMagicSpeed) {
+	public void setAtkMagicSpeed(final int atkMagicSpeed) {
 		_atkMagicSpeed = atkMagicSpeed;
 	}
 
-	public void setBowActId(int i) {
+	public void setBowActId(final int i) {
 		bowActId = i;
 	}
 
-	public void setCantResurrect(boolean isCantResurrect) {
+	public void setCantResurrect(final boolean isCantResurrect) {
 		_isCantResurrect = isCantResurrect;
 	}
 
-	public void setChangeHead(boolean changeHead) {
+	public void setChangeHead(final boolean changeHead) {
 		_changeHead = changeHead;
 	}
 
-	public void setImpl(String s) {
+	public void setImpl(final String s) {
 		_impl = s;
 	}
 
-	public void setKarma(int i) {
+	public void setKarma(final int i) {
 		_karma = i;
 	}
 
-	public void setLightSize(int lightSize) {
+	public void setLightSize(final int lightSize) {
 		_lightSize = lightSize;
 	}
 
-	public void setSubMagicSpeed(int subMagicSpeed) {
+	public void setSubMagicSpeed(final int subMagicSpeed) {
 		_subMagicSpeed = subMagicSpeed;
 	}
 
-	public void setTamable(boolean flag) {
+	public void setTamable(final boolean flag) {
 		_tameable = flag;
 	}
 
-	public void setTransformGfxId(int i) {
+	public void setTransformGfxId(final int i) {
 		_transformGfxId = i;
 	}
 
-	public void setTransformId(int transformId) {
+	public void setTransformId(final int transformId) {
 		_transformId = transformId;
 	}
 }

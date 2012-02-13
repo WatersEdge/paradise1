@@ -33,28 +33,28 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 	 * @param objid
 	 * @param pc
 	 */
-	public S_RetrievePledgeList(int objid, L1PcInstance pc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+	public S_RetrievePledgeList(final int objid, final L1PcInstance pc) {
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan == null) {
 			return;
 		}
 
-		if (clan.getWarehouseUsingChar() != 0 && clan.getWarehouseUsingChar() != pc.getId()) // 本血盟其他人在使用
+		if ((clan.getWarehouseUsingChar() != 0) && (clan.getWarehouseUsingChar() != pc.getId())) // 本血盟其他人在使用
 		{
 			pc.sendPackets(new S_ServerMessage(209)); // \f1血盟成员在使用仓库。请稍后再使用。
 			return;
 		}
 
 		if (pc.getInventory().getSize() < 180) {
-			int size = clan.getDwarfForClanInventory().getSize();
+			final int size = clan.getDwarfForClanInventory().getSize();
 			if (size > 0) {
 				clan.setWarehouseUsingChar(pc.getId()); // 锁定血盟仓库
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
 				writeC(5); // 血盟仓库
-				for (Object itemObject : clan.getDwarfForClanInventory().getItems()) {
-					L1ItemInstance item = (L1ItemInstance) itemObject;
+				for (final Object itemObject : clan.getDwarfForClanInventory().getItems()) {
+					final L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0);
 					writeH(item.get_gfxid());

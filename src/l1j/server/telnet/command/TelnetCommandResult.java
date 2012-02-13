@@ -42,7 +42,7 @@ public class TelnetCommandResult {
 		_codeMessages.put(CMD_INTERNAL_ERROR, "Internal Error");
 	}
 
-	public TelnetCommandResult(int code, String result) {
+	public TelnetCommandResult(final int code, final String result) {
 		_code = code;
 		_result = result;
 		_codeMessage = _codeMessages.get(code);

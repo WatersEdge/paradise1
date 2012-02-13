@@ -35,20 +35,20 @@ public class C_BoardWrite extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_BoardWrite.class.getName());
 
-	public C_BoardWrite(byte decrypt[], ClientThread client) {
+	public C_BoardWrite(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		int id = readD();
-		String title = readS();
-		String content = readS();
+		final int id = readD();
+		final String title = readS();
+		final String content = readS();
 
-		L1Object tg = L1World.getInstance().findObject(id);
+		final L1Object tg = L1World.getInstance().findObject(id);
 
 		if (tg == null) {
 			_log.warning("不正确的 NPCID : " + id);
 			return;
 		}
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		L1BoardTopic.create(pc.getName(), title, content);
 		pc.getInventory().consumeItem(L1ItemId.ADENA, 300);
 	}

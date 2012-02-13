@@ -33,7 +33,7 @@ public class S_DoActionGFX extends ServerBasePacket {
 	 * @param objectId
 	 * @param actionId
 	 */
-	public S_DoActionGFX(int objectId, int actionId) {
+	public S_DoActionGFX(final int objectId, final int actionId) {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeD(objectId);
 		writeC(actionId);

@@ -22,7 +22,7 @@ public class DataError {
 	 * @param string
 	 * @param e
 	 */
-	public static void isError(final Log log, String string, Exception e) {
+	public static void isError(final Log log, final String string, final Exception e) {
 		if (_debug) {
 			log.error(string, e);
 		}

@@ -33,7 +33,7 @@ public class S_SelectTarget extends ServerBasePacket {
 	 * 
 	 * @param ObjectId
 	 */
-	public S_SelectTarget(int ObjectId) {
+	public S_SelectTarget(final int ObjectId) {
 		writeC(Opcodes.S_OPCODE_SELECTTARGET);
 		writeD(ObjectId);
 		writeC(0x00); // TYPE 未知用途

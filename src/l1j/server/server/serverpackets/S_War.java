@@ -45,7 +45,7 @@ public class S_War extends ServerBasePacket {
 	 * @param clan_name2
 	 *            目标血盟名称
 	 */
-	public S_War(int type, String clan_name1, String clan_name2) {
+	public S_War(final int type, final String clan_name1, final String clan_name2) {
 		buildPacket(type, clan_name1, clan_name2);
 	}
 
@@ -62,7 +62,7 @@ public class S_War extends ServerBasePacket {
 		return S_WAR;
 	}
 
-	private void buildPacket(int type, String clan_name1, String clan_name2) {
+	private void buildPacket(final int type, final String clan_name1, final String clan_name2) {
 		// 1 : _血盟が_血盟に宣戦布告しました。
 		// 2 : _血盟が_血盟に降伏しました。
 		// 3 : _血盟と_血盟との戦争が終結しました。

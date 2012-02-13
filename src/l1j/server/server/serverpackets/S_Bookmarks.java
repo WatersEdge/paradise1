@@ -31,7 +31,7 @@ public class S_Bookmarks extends ServerBasePacket {
 	 * @param map
 	 * @param id
 	 */
-	public S_Bookmarks(String name, int map, int id) {
+	public S_Bookmarks(final String name, final int map, final int id) {
 		buildPacket(name, map, id);
 	}
 
@@ -49,7 +49,7 @@ public class S_Bookmarks extends ServerBasePacket {
 		return _S__1F_S_Bookmarks;
 	}
 
-	private void buildPacket(String name, int map, int id) {
+	private void buildPacket(final String name, final int map, final int id) {
 		writeC(Opcodes.S_OPCODE_BOOKMARKS);
 		writeS(name);
 		writeH(map);

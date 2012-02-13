@@ -33,7 +33,7 @@ public class S_SystemMessage extends ServerBasePacket {
 	 * @param msg
 	 *            - 要显示的文字信息
 	 */
-	public S_SystemMessage(String msg) {
+	public S_SystemMessage(final String msg) {
 		_msg = msg;
 		writeC(Opcodes.S_OPCODE_SYSMSG);
 		writeC(0x09);
@@ -48,7 +48,7 @@ public class S_SystemMessage extends ServerBasePacket {
 	 * @param nameid
 	 *            - 文字列にnameid($xxx)が含まれている場合trueにする。
 	 */
-	public S_SystemMessage(String msg, boolean nameid) {
+	public S_SystemMessage(final String msg, final boolean nameid) {
 		_msg = msg;
 		writeC(Opcodes.S_OPCODE_NPCSHOUT);
 		writeC(2);

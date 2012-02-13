@@ -31,18 +31,18 @@ public class C_TaxRate extends ClientBasePacket {
 
 	private static final String C_TAX_RATE = "[C] C_TaxRate";
 
-	public C_TaxRate(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_TaxRate(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		int i = readD();
-		int j = readC();
+		final int i = readD();
+		final int j = readC();
 
-		L1PcInstance player = clientthread.getActiveChar();
+		final L1PcInstance player = clientthread.getActiveChar();
 		if (i == player.getId()) {
-			L1Clan clan = L1World.getInstance().getClan(player.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(player.getClanname());
 			if (clan != null) {
-				int castle_id = clan.getCastleId();
+				final int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 有城堡
-					L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+					final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
 					if ((j >= 10) && (j <= 50)) {
 						l1castle.setTaxRate(j);
 						CastleTable.getInstance().updateCastle(l1castle);

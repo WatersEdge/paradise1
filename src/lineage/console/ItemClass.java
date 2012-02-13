@@ -53,17 +53,17 @@ public class ItemClass {
 		try {
 			final StringBuilder stringBuilder = new StringBuilder();
 			switch (mode) {
-			case 0: // 道具
-				stringBuilder.append("lineage.item.etcitem.");
-				break;
+				case 0: // 道具
+					stringBuilder.append("lineage.item.etcitem.");
+					break;
 
-			case 1: // 武器
-				stringBuilder.append("lineage.item.weapon.");
-				break;
+				case 1: // 武器
+					stringBuilder.append("lineage.item.weapon.");
+					break;
 
-			case 2: // 防具
-				stringBuilder.append("lineage.item.armor.");
-				break;
+				case 2: // 防具
+					stringBuilder.append("lineage.item.armor.");
+					break;
 			}
 			stringBuilder.append(className);
 
@@ -74,7 +74,7 @@ public class ItemClass {
 
 		}
 		catch (final ClassNotFoundException e) {
-			String error = "道具Class档案 (" + className + ") 错误 (ItemId:" + itemid + ")";
+			final String error = "道具Class档案 (" + className + ") 错误 (ItemId:" + itemid + ")";
 			_log.error(error);
 			DataError.isError(_log, error, e);
 
@@ -161,7 +161,7 @@ public class ItemClass {
 			// 取得Class执行位置
 			final ItemExecutor exe = _classList.get(new Integer(item.getItemId()));
 			if (exe != null) {
-				int[] data = new int[1];
+				final int[] data = new int[1];
 				data[0] = equipped ? 1 : 0;
 				exe.execute(data, pc, item);
 			}
@@ -198,7 +198,7 @@ public class ItemClass {
 			// 取得Class执行位置
 			final ItemExecutor exe = _classList.get(new Integer(item.getItemId()));
 			if (exe != null) {
-				int[] data = new int[1];
+				final int[] data = new int[1];
 				data[0] = equipped ? 1 : 0;
 				exe.execute(data, pc, item);
 			}

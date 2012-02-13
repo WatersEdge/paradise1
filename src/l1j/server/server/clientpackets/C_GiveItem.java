@@ -48,30 +48,30 @@ public class C_GiveItem extends ClientBasePacket {
 			"L1Teleporter", // 传送师
 			"L1Guard" }; // 警卫
 
-	public C_GiveItem(byte decrypt[], ClientThread client) {
+	public C_GiveItem(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
-		int targetId = readD();
+		final int targetId = readD();
 		readH();
 		readH();
-		int itemId = readD();
-		int count = readD();
+		final int itemId = readD();
+		final int count = readD();
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
 
-		L1Object object = L1World.getInstance().findObject(targetId);
+		final L1Object object = L1World.getInstance().findObject(targetId);
 		if ((object == null) || !(object instanceof L1NpcInstance)) {
 			return;
 		}
-		L1NpcInstance target = (L1NpcInstance) object;
+		final L1NpcInstance target = (L1NpcInstance) object;
 		if (!isNpcItemReceivable(target.getNpcTemplate())) {
 			return;
 		}
-		L1Inventory targetInv = target.getInventory();
+		final L1Inventory targetInv = target.getInventory();
 
-		L1Inventory inv = pc.getInventory();
+		final L1Inventory inv = pc.getInventory();
 		L1ItemInstance item = inv.getItem(itemId);
 		if (item == null) {
 			return;
@@ -92,9 +92,9 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 		// 使用中的宠物项链 - 无法给予
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
 					return;
@@ -102,7 +102,7 @@ public class C_GiveItem extends ClientBasePacket {
 			}
 		}
 		// 使用中的魔法娃娃 - 无法给予
-		for (L1DollInstance doll : pc.getDollList().values()) {
+		for (final L1DollInstance doll : pc.getDollList().values()) {
 			if (doll.getItemObjId() == item.getId()) {
 				pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
 				return;
@@ -117,7 +117,7 @@ public class C_GiveItem extends ClientBasePacket {
 		target.turnOnOffLight();
 		pc.turnOnOffLight();
 
-		L1PetType petType = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
+		final L1PetType petType = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
 		if ((petType == null) || target.isDead()) {
 			return;
 		}
@@ -150,13 +150,13 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	/** 吃食物 */
-	private void eatFood(L1PcInstance pc, L1NpcInstance target, L1ItemInstance item, int count) {
+	private void eatFood(final L1PcInstance pc, final L1NpcInstance target, final L1ItemInstance item, final int count) {
 
 		if (!(target instanceof L1PetInstance)) {
 			return;
 		}
-		L1PetInstance pet = (L1PetInstance) target;
-		L1Pet _l1pet = PetTable.getInstance().getTemplate(item.getId());
+		final L1PetInstance pet = (L1PetInstance) target;
+		final L1Pet _l1pet = PetTable.getInstance().getTemplate(item.getId());
 		int food = 0;
 		int foodCount = 0;
 		boolean isFull = false;
@@ -195,17 +195,17 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	/** 进化宠物 */
-	private void evolvePet(L1PcInstance pc, L1NpcInstance target, int itemId) {
+	private void evolvePet(final L1PcInstance pc, final L1NpcInstance target, final int itemId) {
 		if (!(target instanceof L1PetInstance)) {
 			return;
 		}
-		L1PcInventory inv = pc.getInventory();
-		L1PetInstance pet = (L1PetInstance) target;
-		L1ItemInstance petamu = inv.getItem(pet.getItemObjId());
+		final L1PcInventory inv = pc.getInventory();
+		final L1PetInstance pet = (L1PetInstance) target;
+		final L1ItemInstance petamu = inv.getItem(pet.getItemObjId());
 		if (((pet.getLevel() >= 30) || (itemId == 41310)) && // Lv30以上或是使用胜利果实
 				(pc == pet.getMaster()) && // 自己的宠物
 				(petamu != null)) {
-			L1ItemInstance highpetamu = inv.storeItem(40316, 1);
+			final L1ItemInstance highpetamu = inv.storeItem(40316, 1);
 			if (highpetamu != null) {
 				pet.evolvePet( // 宠物进化
 				highpetamu.getId());
@@ -215,8 +215,8 @@ public class C_GiveItem extends ClientBasePacket {
 		}
 	}
 
-	private boolean isNpcItemReceivable(L1Npc npc) {
-		for (String impl : receivableImpls) {
+	private boolean isNpcItemReceivable(final L1Npc npc) {
+		for (final String impl : receivableImpls) {
 			if (npc.getImpl().equals(impl)) {
 				return true;
 			}
@@ -225,9 +225,9 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	/** 驯服宠物几率 */
-	private boolean isTamePet(L1NpcInstance npc) {
+	private boolean isTamePet(final L1NpcInstance npc) {
 		boolean isSuccess = false;
-		int npcId = npc.getNpcTemplate().get_npcId();
+		final int npcId = npc.getNpcTemplate().get_npcId();
 
 		// 老虎
 		if (npcId == 45313) {
@@ -254,13 +254,13 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	/** 驯服宠物 */
-	private void tamePet(L1PcInstance pc, L1NpcInstance target) {
+	private void tamePet(final L1PcInstance pc, final L1NpcInstance target) {
 		if ((target instanceof L1PetInstance) || (target instanceof L1SummonInstance)) {
 			return;
 		}
 
 		int petcost = 0;
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			petcost += petNpc.getPetcost();
 		}
 		int charisma = pc.getCha();
@@ -284,10 +284,10 @@ public class C_GiveItem extends ClientBasePacket {
 		}
 		charisma -= petcost;
 
-		L1PcInventory inv = pc.getInventory();
+		final L1PcInventory inv = pc.getInventory();
 		if ((charisma >= 6) && (inv.getSize() < 180)) {
 			if (isTamePet(target)) {
-				L1ItemInstance petamu = inv.storeItem(40314, 1); // 漂浮之眼的肉
+				final L1ItemInstance petamu = inv.storeItem(40314, 1); // 漂浮之眼的肉
 				if (petamu != null) {
 					new L1PetInstance(target, pc, petamu.getId());
 					pc.sendPackets(new S_ItemName(petamu));
@@ -300,12 +300,12 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	/** 使用宠物武器防具 */
-	private void usePetWeaponArmor(L1NpcInstance target, L1ItemInstance item) {
+	private void usePetWeaponArmor(final L1NpcInstance target, final L1ItemInstance item) {
 		if (!(target instanceof L1PetInstance)) {
 			return;
 		}
-		L1PetInstance pet = (L1PetInstance) target;
-		L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+		final L1PetInstance pet = (L1PetInstance) target;
+		final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
 		if (petItem.getUseType() == 1) { // 牙齿
 			pet.usePetWeapon(pet, item);
 		}

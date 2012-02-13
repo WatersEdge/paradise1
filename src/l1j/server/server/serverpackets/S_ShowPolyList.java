@@ -26,7 +26,7 @@ public class S_ShowPolyList extends ServerBasePacket {
 	 * 
 	 * @param objid
 	 */
-	public S_ShowPolyList(int objid) {
+	public S_ShowPolyList(final int objid) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS("monlist");

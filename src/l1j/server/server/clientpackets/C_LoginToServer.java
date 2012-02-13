@@ -193,7 +193,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		// 如果设定档中设定自动回村的话
 		final GetBackRestartTable gbrTable = GetBackRestartTable.getInstance();
 		final L1GetBackRestart[] gbrList = gbrTable.getGetBackRestartTableList();
-		for (L1GetBackRestart gbr : gbrList) {
+		for (final L1GetBackRestart gbr : gbrList) {
 			if (pc.getMapId() == gbr.getArea()) {
 				pc.setX(gbr.getLocX());
 				pc.setY(gbr.getLocY());
@@ -308,14 +308,14 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.getClanname().toLowerCase().equals(clan.getClanName().toLowerCase())) {
 					// 取得在线血盟成员
 					final L1PcInstance[] clanMembers = clan.getOnlineClanMember();
-					for (L1PcInstance clanMember : clanMembers) {
+					for (final L1PcInstance clanMember : clanMembers) {
 						if (clanMember.getId() != pc.getId()) {
 							clanMember.sendPackets(new S_ServerMessage(843, pc.getName())); // 血盟成员%0%s刚进入游戏。
 						}
 					}
 
 					// 取得所有的盟战
-					for (L1War war : L1World.getInstance().getWarList()) {
+					for (final L1War war : L1World.getInstance().getWarList()) {
 						// 取得战争中的血盟名称
 						final boolean ret = war.CheckClanInWar(pc.getClanname());
 						// 盟战中
@@ -406,7 +406,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -502,7 +502,7 @@ public class C_LoginToServer extends ClientBasePacket {
 							L1Cooking.eatCooking(pc, skillid, remaining_time);
 						}
 						// 生命之树果实、商城道具
-						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END) || skillid == COOKING_WONDER_DRUG) {
+						else if ((skillid == STATUS_RIBRAVE) || ((skillid >= EFFECT_BEGIN) && (skillid <= EFFECT_END)) || (skillid == COOKING_WONDER_DRUG)) {
 							;
 						}
 						else {
@@ -513,7 +513,7 @@ public class C_LoginToServer extends ClientBasePacket {
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -531,11 +531,11 @@ public class C_LoginToServer extends ClientBasePacket {
 
 	// 读取角色的召唤物
 	private void serchSummon(final L1PcInstance pc) {
-		for (L1SummonInstance summon : L1World.getInstance().getAllSummons()) {
+		for (final L1SummonInstance summon : L1World.getInstance().getAllSummons()) {
 			if (summon.getMaster().getId() == pc.getId()) {
 				summon.setMaster(pc);
 				pc.addPet(summon);
-				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
+				for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
 				}
 			}
@@ -707,7 +707,7 @@ public class C_LoginToServer extends ClientBasePacket {
 				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15, lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24, lv25, lv26, lv27, lv28));
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

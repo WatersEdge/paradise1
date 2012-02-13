@@ -43,7 +43,7 @@ public class L1Chaser extends TimerTask {
 	private final L1PcInstance _pc;
 	private final L1Character _cha;
 
-	public L1Chaser(L1PcInstance pc, L1Character cha, int attr, int gfxid) {
+	public L1Chaser(final L1PcInstance pc, final L1Character cha, final int attr, final int gfxid) {
 		_cha = cha;
 		_pc = pc;
 		_attr = attr;
@@ -52,7 +52,7 @@ public class L1Chaser extends TimerTask {
 
 	public void attack() {
 		double damage = getDamage(_pc, _cha);
-		if (_cha.getCurrentHp() - (int) damage <= 0 && _cha.getCurrentHp() != 1) {
+		if ((_cha.getCurrentHp() - (int) damage <= 0) && (_cha.getCurrentHp() != 1)) {
 			damage = _cha.getCurrentHp() - 1;
 		}
 		else if (_cha.getCurrentHp() == 1) {
@@ -62,16 +62,16 @@ public class L1Chaser extends TimerTask {
 		if (_pc.getWeapon() == null) { // 修正空手会出错的问题
 			damage = 0;
 		}
-		else if (_pc.getWeapon().getItem().getItemId() == 265 || _pc.getWeapon().getItem().getItemId() == 266 || _pc.getWeapon().getItem().getItemId() == 267 || _pc.getWeapon().getItem().getItemId() == 268) {
+		else if ((_pc.getWeapon().getItem().getItemId() == 265) || (_pc.getWeapon().getItem().getItemId() == 266) || (_pc.getWeapon().getItem().getItemId() == 267) || (_pc.getWeapon().getItem().getItemId() == 268)) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
 		}
-		else if (_pc.getWeapon().getItem().getItemId() == 276 || _pc.getWeapon().getItem().getItemId() == 277) {
+		else if ((_pc.getWeapon().getItem().getItemId() == 276) || (_pc.getWeapon().getItem().getItemId() == 277)) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
 		}
-		else if (_pc.getWeapon().getItem().getItemId() == 304 || _pc.getWeapon().getItem().getItemId() == 307 || _pc.getWeapon().getItem().getItemId() == 308) {
+		else if ((_pc.getWeapon().getItem().getItemId() == 304) || (_pc.getWeapon().getItem().getItemId() == 307) || (_pc.getWeapon().getItem().getItemId() == 308)) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8150);
 		}
-		else if (_pc.getWeapon().getItem().getItemId() == 305 || _pc.getWeapon().getItem().getItemId() == 306 || _pc.getWeapon().getItem().getItemId() == 309) {
+		else if ((_pc.getWeapon().getItem().getItemId() == 305) || (_pc.getWeapon().getItem().getItemId() == 306) || (_pc.getWeapon().getItem().getItemId() == 309)) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8152);
 		}
 		else { // 更换为其他武器 附加特效伤害归零
@@ -80,13 +80,13 @@ public class L1Chaser extends TimerTask {
 		_pc.sendPackets(packet);
 		_pc.broadcastPacket(packet);
 		if (_cha instanceof L1PcInstance) {
-			L1PcInstance pc = (L1PcInstance) _cha;
+			final L1PcInstance pc = (L1PcInstance) _cha;
 			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 			pc.receiveDamage(_pc, damage, false);
 		}
 		else if (_cha instanceof L1NpcInstance) {
-			L1NpcInstance npc = (L1NpcInstance) _cha;
+			final L1NpcInstance npc = (L1NpcInstance) _cha;
 			npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Damage));
 			npc.receiveDamage(_pc, (int) damage);
 		}
@@ -98,11 +98,11 @@ public class L1Chaser extends TimerTask {
 		_future = GeneralThreadPool.getInstance().scheduleAtFixedRate(this, 0, 1000);
 	}
 
-	public double getDamage(L1PcInstance pc, L1Character cha) {
+	public double getDamage(final L1PcInstance pc, final L1Character cha) {
 		double dmg = 0;
-		int spByItem = pc.getSp() - pc.getTrueSp();
-		int intel = pc.getInt();
-		int charaIntelligence = pc.getInt() + spByItem - 12;
+		final int spByItem = pc.getSp() - pc.getTrueSp();
+		final int intel = pc.getInt();
+		final int charaIntelligence = pc.getInt() + spByItem - 12;
 		double coefficientA = 1.0 + 3.0 / 32.0 * charaIntelligence;
 		if (coefficientA < 1) {
 			coefficientA = 1.0;
@@ -135,7 +135,7 @@ public class L1Chaser extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			if (_cha == null || _cha.isDead()) {
+			if ((_cha == null) || _cha.isDead()) {
 				stop();
 				return;
 			}
@@ -146,7 +146,7 @@ public class L1Chaser extends TimerTask {
 				return;
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

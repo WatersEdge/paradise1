@@ -28,7 +28,7 @@ public class Dice {
 	 * @param faces
 	 *            基础值
 	 */
-	public Dice(int faces) {
+	public Dice(final int faces) {
 		_faces = faces;
 	}
 
@@ -57,7 +57,7 @@ public class Dice {
 	 *            计算次数
 	 * @return 多次随机值总和
 	 */
-	public int roll(int count) {
+	public int roll(final int count) {
 		int n = 0;
 		for (int i = 0; i < count; i++) {
 			n += roll();

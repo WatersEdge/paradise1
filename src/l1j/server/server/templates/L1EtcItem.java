@@ -40,6 +40,7 @@ public class L1EtcItem extends L1Item {
 	private int _maxChargeCount;
 	/** 是可以封印 */
 	private boolean _isCanSeal;
+
 	public L1EtcItem() {
 	}
 
@@ -89,47 +90,47 @@ public class L1EtcItem extends L1Item {
 	}
 
 	/** 设定延迟效果 */
-	public void set_delayEffect(int delay_effect) {
+	public void set_delayEffect(final int delay_effect) {
 		_delay_effect = delay_effect;
 	}
 
 	/** 设定延迟ID */
-	public void set_delayid(int delay_id) {
+	public void set_delayid(final int delay_id) {
 		_delay_id = delay_id;
 	}
 
 	/** 设定延迟时间 */
-	public void set_delaytime(int delay_time) {
+	public void set_delaytime(final int delay_time) {
 		_delay_time = delay_time;
 	}
 
 	/** 设定X坐标 */
-	public void set_locx(int locx) {
+	public void set_locx(final int locx) {
 		_locx = locx;
 	}
 
 	/** 设定Y坐标 */
-	public void set_locy(int locy) {
+	public void set_locy(final int locy) {
 		_locy = locy;
 	}
 
 	/** 设定地图ID */
-	public void set_mapid(short mapid) {
+	public void set_mapid(final short mapid) {
 		_mapid = mapid;
 	}
 
 	/** 设定可堆叠 */
-	public void set_stackable(boolean stackable) {
+	public void set_stackable(final boolean stackable) {
 		_stackable = stackable;
 	}
 
 	/** 设定可以封印 */
-	public void setCanSeal(boolean flag) {
+	public void setCanSeal(final boolean flag) {
 		_isCanSeal = flag;
 	}
 
 	/** 设定最高使用次数 */
-	public void setMaxChargeCount(int i) {
+	public void setMaxChargeCount(final int i) {
 		_maxChargeCount = i;
 	}
 

@@ -27,7 +27,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public class S_OwnCharStatus2 extends ServerBasePacket {
 
 	/** 更新六項能力值以及負重 */
-	public S_OwnCharStatus2(L1PcInstance pc) {
+	public S_OwnCharStatus2(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_OWNCHARSTATUS2);
 		writeC(pc.getStr());
 		writeC(pc.getInt());

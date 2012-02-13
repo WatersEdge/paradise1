@@ -32,15 +32,15 @@ public class C_PickUpItem extends ClientBasePacket {
 
 	private static final String C_PICK_UP_ITEM = "[C] C_PickUpItem";
 
-	public C_PickUpItem(byte decrypt[], ClientThread client) throws Exception {
+	public C_PickUpItem(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		int x = readH();
-		int y = readH();
-		int objectId = readD();
-		int pickupCount = readD();
+		final int x = readH();
+		final int y = readH();
+		final int objectId = readD();
+		final int pickupCount = readD();
 
-		L1PcInstance pc = client.getActiveChar();
-		if (pc.isDead() || pc.isGhost() || objectId == pc.getId()) {
+		final L1PcInstance pc = client.getActiveChar();
+		if (pc.isDead() || pc.isGhost() || (objectId == pc.getId())) {
 			return;
 		}
 
@@ -51,11 +51,11 @@ public class C_PickUpItem extends ClientBasePacket {
 			return;
 		}
 
-		L1Inventory groundInventory = L1World.getInstance().getInventory(x, y, pc.getMapId());
-		L1Object object = groundInventory.getItem(objectId);
+		final L1Inventory groundInventory = L1World.getInstance().getInventory(x, y, pc.getMapId());
+		final L1Object object = groundInventory.getItem(objectId);
 
 		if ((object != null) && !pc.isDead()) {
-			L1ItemInstance item = (L1ItemInstance) object;
+			final L1ItemInstance item = (L1ItemInstance) object;
 			if ((item.getItemOwnerId() != 0) && (pc.getId() != item.getItemOwnerId())) {
 				pc.sendPackets(new S_ServerMessage(623)); // 道具取得失败。
 				return;
@@ -65,7 +65,7 @@ public class C_PickUpItem extends ClientBasePacket {
 			}
 
 			if (item.getItem().getItemId() == L1ItemId.ADENA) {
-				L1ItemInstance inventoryItem = pc.getInventory().findItemId(L1ItemId.ADENA);
+				final L1ItemInstance inventoryItem = pc.getInventory().findItemId(L1ItemId.ADENA);
 				int inventoryItemCount = 0;
 				if (inventoryItem != null) {
 					inventoryItemCount = inventoryItem.getCount();
@@ -85,7 +85,7 @@ public class C_PickUpItem extends ClientBasePacket {
 					groundInventory.tradeItem(item, pickupCount, pc.getInventory());
 					pc.turnOnOffLight();
 
-					S_AttackPacket s_attackPacket = new S_AttackPacket(pc, objectId, ActionCodes.ACTION_Pickup);
+					final S_AttackPacket s_attackPacket = new S_AttackPacket(pc, objectId, ActionCodes.ACTION_Pickup);
 					pc.sendPackets(s_attackPacket);
 					if (!pc.isGmInvis()) {
 						pc.broadcastPacket(s_attackPacket);

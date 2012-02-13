@@ -31,7 +31,7 @@ public class L1PoisonTrap extends L1Trap {
 	private final int _time;
 	private final int _damage;
 
-	public L1PoisonTrap(TrapStorage storage) {
+	public L1PoisonTrap(final TrapStorage storage) {
 		super(storage);
 
 		_type = storage.getString("poisonType");
@@ -41,7 +41,7 @@ public class L1PoisonTrap extends L1Trap {
 	}
 
 	@Override
-	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
+	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
 		sendEffect(trapObj);
 
 		if (_type.equals("d")) {

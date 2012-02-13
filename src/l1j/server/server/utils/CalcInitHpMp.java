@@ -28,7 +28,7 @@ public class CalcInitHpMp {
 	 * @return hp
 	 * 
 	 */
-	public static int calcInitHp(L1PcInstance pc) {
+	public static int calcInitHp(final L1PcInstance pc) {
 		int hp = 1;
 		if (pc.isCrown()) {
 			hp = 14;
@@ -61,137 +61,137 @@ public class CalcInitHpMp {
 	 * @return mp
 	 * 
 	 */
-	public static int calcInitMp(L1PcInstance pc) {
+	public static int calcInitMp(final L1PcInstance pc) {
 		int mp = 1;
 		if (pc.isCrown()) {
 			switch (pc.getWis()) {
-			case 11:
-				mp = 2;
-				break;
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 3;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 4;
-				break;
-			default:
-				mp = 2;
-				break;
+				case 11:
+					mp = 2;
+					break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 3;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 4;
+					break;
+				default:
+					mp = 2;
+					break;
 			}
 		}
 		else if (pc.isKnight()) {
 			switch (pc.getWis()) {
-			case 9:
-			case 10:
-			case 11:
-				mp = 1;
-				break;
-			case 12:
-			case 13:
-				mp = 2;
-				break;
-			default:
-				mp = 1;
-				break;
+				case 9:
+				case 10:
+				case 11:
+					mp = 1;
+					break;
+				case 12:
+				case 13:
+					mp = 2;
+					break;
+				default:
+					mp = 1;
+					break;
 			}
 		}
 		else if (pc.isElf()) {
 			switch (pc.getWis()) {
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 4;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 6;
-				break;
-			default:
-				mp = 4;
-				break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 4;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 6;
+					break;
+				default:
+					mp = 4;
+					break;
 			}
 		}
 		else if (pc.isWizard()) {
 			switch (pc.getWis()) {
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 6;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 8;
-				break;
-			default:
-				mp = 6;
-				break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 6;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 8;
+					break;
+				default:
+					mp = 6;
+					break;
 			}
 		}
 		else if (pc.isDarkelf()) {
 			switch (pc.getWis()) {
-			case 10:
-			case 11:
-				mp = 3;
-				break;
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 4;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 6;
-				break;
-			default:
-				mp = 3;
-				break;
+				case 10:
+				case 11:
+					mp = 3;
+					break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 4;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 6;
+					break;
+				default:
+					mp = 3;
+					break;
 			}
 		}
 		else if (pc.isDragonKnight()) {
 			switch (pc.getWis()) {
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 4;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 6;
-				break;
-			default:
-				mp = 4;
-				break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 4;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 6;
+					break;
+				default:
+					mp = 4;
+					break;
 			}
 		}
 		else if (pc.isIllusionist()) {
 			switch (pc.getWis()) {
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-				mp = 4;
-				break;
-			case 16:
-			case 17:
-			case 18:
-				mp = 6;
-				break;
-			default:
-				mp = 4;
-				break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+					mp = 4;
+					break;
+				case 16:
+				case 17:
+				case 18:
+					mp = 6;
+					break;
+				default:
+					mp = 4;
+					break;
 			}
 		}
 		return mp;

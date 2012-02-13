@@ -30,7 +30,7 @@ public class S_Exp extends ServerBasePacket {
 	 * @param pc
 	 *            - PC
 	 */
-	public S_Exp(L1PcInstance pc) {
+	public S_Exp(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_EXP);
 		writeC(pc.getLevel());
 		writeExp(pc.getExp());

@@ -34,7 +34,7 @@ public class S_DollPack extends ServerBasePacket {
 	 * 
 	 * @param door
 	 */
-	public S_DollPack(L1DollInstance doll) {
+	public S_DollPack(final L1DollInstance doll) {
 		/*
 		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting = 4;
 		 */

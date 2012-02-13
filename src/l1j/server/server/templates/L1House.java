@@ -68,35 +68,35 @@ public class L1House {
 		return _isPurchaseBasement;
 	}
 
-	public void setHouseArea(int i) {
+	public void setHouseArea(final int i) {
 		_houseArea = i;
 	}
 
-	public void setHouseId(int i) {
+	public void setHouseId(final int i) {
 		_houseId = i;
 	}
 
-	public void setHouseName(String s) {
+	public void setHouseName(final String s) {
 		_houseName = s;
 	}
 
-	public void setKeeperId(int i) {
+	public void setKeeperId(final int i) {
 		_keeperId = i;
 	}
 
-	public void setLocation(String s) {
+	public void setLocation(final String s) {
 		_location = s;
 	}
 
-	public void setOnSale(boolean flag) {
+	public void setOnSale(final boolean flag) {
 		_isOnSale = flag;
 	}
 
-	public void setPurchaseBasement(boolean flag) {
+	public void setPurchaseBasement(final boolean flag) {
 		_isPurchaseBasement = flag;
 	}
 
-	public void setTaxDeadline(Calendar i) {
+	public void setTaxDeadline(final Calendar i) {
 		_taxDeadline = i;
 	}
 

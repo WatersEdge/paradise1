@@ -49,9 +49,9 @@ public class L1SpawnUtil {
 	 * @param timeMillisToDelete
 	 *            存在时间(秒) 小于等于0不限制
 	 */
-	public static void spawn(L1PcInstance pc, int npcId, int randomRange, int timeMillisToDelete) {
+	public static void spawn(final L1PcInstance pc, final int npcId, final int randomRange, final int timeMillisToDelete) {
 		try {
-			L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(npcId);
+			final L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(npcId);
 			npc.setId(IdFactory.getInstance().nextId());
 			npc.setMap(pc.getMapId());
 			if (randomRange == 0) {
@@ -107,12 +107,12 @@ public class L1SpawnUtil {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getTempCharGfx() == 7548 || npc.getTempCharGfx() == 7550 || npc.getTempCharGfx() == 7552 || npc.getTempCharGfx() == 7554 || npc.getTempCharGfx() == 7585 || npc.getTempCharGfx() == 7591) {
+			if ((npc.getTempCharGfx() == 7548) || (npc.getTempCharGfx() == 7550) || (npc.getTempCharGfx() == 7552) || (npc.getTempCharGfx() == 7554) || (npc.getTempCharGfx() == 7585) || (npc.getTempCharGfx() == 7591)) {
 				npc.broadcastPacket(new S_NPCPack(npc));
 				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk));
 			}
-			else if (npc.getTempCharGfx() == 7539 || npc.getTempCharGfx() == 7557 || npc.getTempCharGfx() == 7558 || npc.getTempCharGfx() == 7864 || npc.getTempCharGfx() == 7869 || npc.getTempCharGfx() == 7870) {
-				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
+			else if ((npc.getTempCharGfx() == 7539) || (npc.getTempCharGfx() == 7557) || (npc.getTempCharGfx() == 7558) || (npc.getTempCharGfx() == 7864) || (npc.getTempCharGfx() == 7869) || (npc.getTempCharGfx() == 7870)) {
+				for (final L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
 					if (npc.getTempCharGfx() == 7539) {
 						_pc.sendPackets(new S_ServerMessage(1570));
 					}
@@ -120,7 +120,7 @@ public class L1SpawnUtil {
 						_pc.sendPackets(new S_ServerMessage(1657));
 					}
 					npc.onPerceive(_pc);
-					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
+					final S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
 					_pc.sendPackets(gfx);
 				}
 				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
@@ -136,11 +136,11 @@ public class L1SpawnUtil {
 			npc.turnOnOffLight();
 			npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // 开始喊话
 			if (0 < timeMillisToDelete) {
-				L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc, timeMillisToDelete);
+				final L1NpcDeleteTimer timer = new L1NpcDeleteTimer(npc, timeMillisToDelete);
 				timer.begin();
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

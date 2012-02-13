@@ -35,9 +35,9 @@ public class C_Restart extends ClientBasePacket {
 
 	private static final String C_RESTART = "[C] C_Restart";
 
-	public C_Restart(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Restart(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 
 		pc.stopPcDeleteTimer();
 

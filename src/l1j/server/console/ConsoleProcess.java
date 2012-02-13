@@ -39,16 +39,17 @@ public class ConsoleProcess extends Thread {
 
 	public ConsoleProcess() {
 		onStarup = Config.CmdActive;
-		if (!onStarup)
+		if (!onStarup) {
 			return;
+		}
 		System.out.println("→提示: 互动指令听取中..." + "\n" + ">");
 	}
 
 	@Override
 	public void run() {
 		while (onStarup && stillrun) {
-			String action = UserInput.nextLine();
-			String word[] = action.split(" ");
+			final String action = UserInput.nextLine();
+			final String word[] = action.split(" ");
 			if (word.length == 1) {
 				execute(word[0]);
 			}
@@ -65,7 +66,7 @@ public class ConsoleProcess extends Thread {
 	 * @param cmd
 	 *            指令名称
 	 */
-	private void execute(String cmd) {
+	private void execute(final String cmd) {
 		if (cmd == null) {
 			System.out.println("错误, 请输入CMD指令.");
 			return;
@@ -87,8 +88,8 @@ public class ConsoleProcess extends Thread {
 	 * @param line
 	 *            指令引数
 	 */
-	private void execute(String cmd, String line) {
-		if (cmd == null || line == null) {
+	private void execute(final String cmd, final String line) {
+		if ((cmd == null) || (line == null)) {
 			System.out.println("错误, 请输入CMD指令或ARGS.");
 			return;
 		}
@@ -97,11 +98,13 @@ public class ConsoleProcess extends Thread {
 			System.out.println("[系统管理员]" + line);
 		}
 		else if (cmd.equalsIgnoreCase("shutdown")) {
-			int sec = Integer.parseInt(line);
-			if (sec > 0)
+			final int sec = Integer.parseInt(line);
+			if (sec > 0) {
 				GameServer.getInstance().shutdownWithCountdown(sec);
-			if (sec <= 0)
+			}
+			if (sec <= 0) {
 				GameServer.getInstance().shutdown();
+			}
 		}
 		else {
 			System.out.println("错误, 没有指令.");

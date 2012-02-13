@@ -30,19 +30,19 @@ public class L1RequestInstance extends L1NpcInstance {
 
 	private static Logger _log = Logger.getLogger(L1RequestInstance.class.getName());
 
-	public L1RequestInstance(L1Npc template) {
+	public L1RequestInstance(final L1Npc template) {
 		super(template);
 	}
 
-	public void doFinalAction(L1PcInstance player) {
+	public void doFinalAction(final L1PcInstance player) {
 
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
-		int objid = getId();
+	public void onAction(final L1PcInstance player) {
+		final int objid = getId();
 
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 
 		if (talking != null) {
 			if (player.getLawful() < -1000) { // プレイヤーがカオティック
@@ -58,7 +58,7 @@ public class L1RequestInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance player, String action) {
+	public void onFinalAction(final L1PcInstance player, final String action) {
 
 	}
 }

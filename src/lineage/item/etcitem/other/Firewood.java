@@ -37,7 +37,7 @@ public class Firewood extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		for (L1Object object : L1World.getInstance().getVisibleObjects(pc, 3)) {
+		for (final L1Object object : L1World.getInstance().getVisibleObjects(pc, 3)) {
 			if (object instanceof L1EffectInstance) {
 				if (((L1NpcInstance) object).getNpcTemplate().get_npcId() == 81170) { // 料理用火堆
 					// 附近已经有柴火了。

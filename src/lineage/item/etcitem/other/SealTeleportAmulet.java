@@ -34,7 +34,7 @@ public class SealTeleportAmulet extends ItemExecutor {
 
 		pc.getInventory().removeItem(item, 1);
 		final int itemId = item.getItemId();
-		L1ItemInstance item1 = pc.getInventory().storeItem(itemId + 9, 1);
+		final L1ItemInstance item1 = pc.getInventory().storeItem(itemId + 9, 1);
 		if (item != null) {
 			pc.sendPackets(new S_ServerMessage(403, item1.getLogName())); // 获得%0%o 。
 		}

@@ -56,13 +56,13 @@ public class PetItemTable {
 		loadPetItem();
 	}
 
-	public L1PetItem getTemplate(int itemId) {
+	public L1PetItem getTemplate(final int itemId) {
 		return _petItemIdIndex.get(itemId);
 	}
 
-	private void fillPetItemTable(ResultSet rs) throws SQLException {
+	private void fillPetItemTable(final ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			L1PetItem petItem = new L1PetItem();
+			final L1PetItem petItem = new L1PetItem();
 			petItem.setItemId(rs.getInt("item_id"));
 			petItem.setUseType((_useTypes.get(rs.getString("use_type"))).intValue());
 			petItem.setHitModifier(rs.getInt("hitmodifier"));
@@ -92,7 +92,7 @@ public class PetItemTable {
 			rs = pstm.executeQuery();
 			fillPetItemTable(rs);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建etcitem_petitem表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

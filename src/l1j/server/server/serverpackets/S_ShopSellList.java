@@ -39,30 +39,30 @@ public class S_ShopSellList extends ServerBasePacket {
 	/**
 	 * 表示商店道具清单。角色按下购买按钮时发送。
 	 */
-	public S_ShopSellList(int objId, L1PcInstance pc) {
+	public S_ShopSellList(final int objId, final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SHOWSHOPBUYLIST);
 		writeD(objId);
 
-		L1Object npcObj = L1World.getInstance().findObject(objId);
+		final L1Object npcObj = L1World.getInstance().findObject(objId);
 		if (!(npcObj instanceof L1NpcInstance)) {
 			writeH(0);
 			return;
 		}
-		int npcId = ((L1NpcInstance) npcObj).getNpcTemplate().get_npcId();
+		final int npcId = ((L1NpcInstance) npcObj).getNpcTemplate().get_npcId();
 
-		L1TaxCalculator calc = new L1TaxCalculator(npcId);
-		L1Shop shop = ShopTable.getInstance().get(npcId);
-		List<L1ShopItem> shopItems = shop.getSellingItems();
+		final L1TaxCalculator calc = new L1TaxCalculator(npcId);
+		final L1Shop shop = ShopTable.getInstance().get(npcId);
+		final List<L1ShopItem> shopItems = shop.getSellingItems();
 
 		writeH(shopItems.size());
 
 		// L1ItemInstanceのgetStatusBytesを利用するため
-		L1ItemInstance dummy = new L1ItemInstance();
+		final L1ItemInstance dummy = new L1ItemInstance();
 
 		for (int i = 0; i < shopItems.size(); i++) {
-			L1ShopItem shopItem = shopItems.get(i);
-			L1Item item = shopItem.getItem();
-			int price = calc.layTax((int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE));
+			final L1ShopItem shopItem = shopItems.get(i);
+			final L1Item item = shopItem.getItem();
+			final int price = calc.layTax((int) (shopItem.getPrice() * Config.RATE_SHOP_SELLING_PRICE));
 			writeD(i); // 排序
 			writeH(shopItem.getItem().getGfxId()); // 圆形
 			writeD(price); // 售价
@@ -73,7 +73,7 @@ public class S_ShopSellList extends ServerBasePacket {
 			else {
 				if (item.getItemId() == 40309) {// 食人妖精RaceTicket
 					String[] temp = item.getName().split(" ");
-					String buf = temp[temp.length - 1];
+					final String buf = temp[temp.length - 1];
 					temp = buf.split("-");
 					writeS(buf + " $" + (1212 + Integer.parseInt(temp[temp.length - 1])));
 				}
@@ -82,15 +82,15 @@ public class S_ShopSellList extends ServerBasePacket {
 				}
 			}
 
-			L1Item template = ItemTable.getInstance().getTemplate(item.getItemId());
+			final L1Item template = ItemTable.getInstance().getTemplate(item.getItemId());
 			if (template == null) {
 				writeC(0);
 			}
 			else {
 				dummy.setItem(template);
-				byte[] status = dummy.getStatusBytes();
+				final byte[] status = dummy.getStatusBytes();
 				writeC(status.length);
-				for (byte b : status) {
+				for (final byte b : status) {
 					writeC(b);
 				}
 			}

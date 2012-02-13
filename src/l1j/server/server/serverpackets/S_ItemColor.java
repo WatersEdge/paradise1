@@ -27,7 +27,7 @@ public class S_ItemColor extends ServerBasePacket {
 	/**
 	 * 改变道具颜色。祝福・诅咒状态变化时发送。
 	 */
-	public S_ItemColor(L1ItemInstance item) {
+	public S_ItemColor(final L1ItemInstance item) {
 		if (item == null) {
 			return;
 		}
@@ -44,7 +44,7 @@ public class S_ItemColor extends ServerBasePacket {
 		return S_ITEM_COLOR;
 	}
 
-	private void buildPacket(L1ItemInstance item) {
+	private void buildPacket(final L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ITEMCOLOR);
 		writeD(item.getId());
 		// 0:祝福 1:一般 2:诅咒 3:未鉴定

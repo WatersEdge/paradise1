@@ -27,14 +27,14 @@ public class L1MapArea extends Rectangle {
 	private L1Map _map = L1Map.newNull();
 
 	/** 地图区域 */
-	public L1MapArea(int left, int top, int right, int bottom, int mapId) {
+	public L1MapArea(final int left, final int top, final int right, final int bottom, final int mapId) {
 		super(left, top, right, bottom);
 
 		_map = L1WorldMap.getInstance().getMap((short) mapId);
 	}
 
 	/** 包含 */
-	public boolean contains(L1Location loc) {
+	public boolean contains(final L1Location loc) {
 		return (_map.getId() == loc.getMap().getId()) && super.contains(loc);
 	}
 
@@ -49,7 +49,7 @@ public class L1MapArea extends Rectangle {
 	}
 
 	/** 设定地图 */
-	public void setMap(L1Map map) {
+	public void setMap(final L1Map map) {
 		_map = map;
 	}
 }

@@ -19,18 +19,18 @@ package l1j.server.server.model.gametime;
  */
 public class L1GameTimeAdapter implements L1GameTimeListener {
 	@Override
-	public void onDayChanged(L1GameTime time) { // 日
+	public void onDayChanged(final L1GameTime time) { // 日
 	}
 
 	@Override
-	public void onHourChanged(L1GameTime time) { // 时
+	public void onHourChanged(final L1GameTime time) { // 时
 	}
 
 	@Override
-	public void onMinuteChanged(L1GameTime time) { // 分
+	public void onMinuteChanged(final L1GameTime time) { // 分
 	}
 
 	@Override
-	public void onMonthChanged(L1GameTime time) { // 月
+	public void onMonthChanged(final L1GameTime time) { // 月
 	}
 }

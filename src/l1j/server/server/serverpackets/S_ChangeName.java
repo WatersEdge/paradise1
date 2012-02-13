@@ -34,7 +34,7 @@ public class S_ChangeName extends ServerBasePacket {
 	 * @param objectId
 	 * @param name
 	 */
-	public S_ChangeName(int objectId, String name) {
+	public S_ChangeName(final int objectId, final String name) {
 		writeC(Opcodes.S_OPCODE_CHANGENAME);
 		writeD(objectId);
 		writeS(name);

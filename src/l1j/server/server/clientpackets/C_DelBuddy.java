@@ -28,10 +28,10 @@ public class C_DelBuddy extends ClientBasePacket {
 
 	private static final String C_DEL_BUDDY = "[C] C_DelBuddy";
 
-	public C_DelBuddy(byte abyte0[], ClientThread clientthread) {
+	public C_DelBuddy(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
-		String charName = readS();
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final String charName = readS();
 		BuddyTable.getInstance().removeBuddy(pc.getId(), charName);
 	}
 

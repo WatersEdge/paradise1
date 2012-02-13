@@ -36,7 +36,7 @@ public class L1ShopItem {
 
 	private final int _packCount;
 
-	public L1ShopItem(int itemId, int price, int packCount) {
+	public L1ShopItem(final int itemId, final int price, final int packCount) {
 		_itemId = itemId;
 		_item = ItemTable.getInstance().getTemplate(itemId);
 		_price = price;
@@ -60,10 +60,10 @@ public class L1ShopItem {
 	}
 
 	// 食人妖精賽跑用
-	public void setName(int num) {
-		int trueNum = L1BugBearRace.getInstance().getRunner(num).getNpcId() - 91350 + 1;
+	public void setName(final int num) {
+		final int trueNum = L1BugBearRace.getInstance().getRunner(num).getNpcId() - 91350 + 1;
 		_item = (L1Item) _item.clone();
-		String temp = "" + _item.getIdentifiedNameId() + " " + L1BugBearRace.getInstance().getRound() + "-" + trueNum;
+		final String temp = "" + _item.getIdentifiedNameId() + " " + L1BugBearRace.getInstance().getRound() + "-" + trueNum;
 		_item.setName(temp);
 		_item.setUnidentifiedNameId(temp);
 		_item.setIdentifiedNameId(temp);

@@ -56,7 +56,7 @@ public class MysqlAutoBackup extends TimerTask {
 	 * 
 	 * @param SystemRoot
 	 */
-	private static void checkGzip(String SystemRoot) {
+	private static void checkGzip(final String SystemRoot) {
 		System.out.println("[MySQL]checking gzip.exe is installed or not...");
 		File gzip = new File(SystemRoot + "\\gzip.exe");
 		if (gzip.exists()) {
@@ -84,15 +84,16 @@ public class MysqlAutoBackup extends TimerTask {
 	public MysqlAutoBackup() {
 		L1Message.getInstance();
 		Database = DatabaseName();
-		if (!dir.isDirectory())
+		if (!dir.isDirectory()) {
 			dir.mkdir();
+		}
 
 		// 压缩是否开启
 		GzipCmd = GzipUse ? " | gzip" : "";
 		FilenameEx = GzipUse ? ".sql.gz" : ".sql";
 
 		// 检查gzip.exe是否安装 for Windows
-		if (GzipUse && os == "Windows" && !done) {
+		if (GzipUse && (os == "Windows") && !done) {
 			if (osArch == "x86") {
 				checkGzip("C:\\Windows\\System32");
 			}
@@ -112,24 +113,24 @@ public class MysqlAutoBackup extends TimerTask {
 				 * mysqldump --user=[Username] --password=[password]
 				 * [databasename] > [backupfile.sql]
 				 */
-				StringBuilder exeText = new StringBuilder("mysqldump --user=");
+				final StringBuilder exeText = new StringBuilder("mysqldump --user=");
 				exeText.append(Username + " --password=");
 				exeText.append(Passwords + " ");
 				exeText.append(Database + " --opt --skip-extended-insert --skip-quick");
 				exeText.append(GzipCmd + " > ");
 				exeText.append(dir.getAbsolutePath() + new SimpleDateFormat("\\yyyy-MM-dd-kkmm").format(new Date()) + FilenameEx);
 				try {
-					Runtime rt = Runtime.getRuntime();
+					final Runtime rt = Runtime.getRuntime();
 					rt.exec("cmd /c " + exeText.toString());
 				} finally {
 					System.out.println("(MYSQL is backed over.)" + "\n" + L1Message.waitingforuser); // 等待玩家连线
 				}
 			}
-			catch (IOException ioe) {
+			catch (final IOException ioe) {
 				ioe.printStackTrace();
 
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -140,24 +141,24 @@ public class MysqlAutoBackup extends TimerTask {
 				 * mysqldump --user=[Username] --password=[password]
 				 * [databasename] > [backupfile.sql]
 				 */
-				StringBuilder exeText = new StringBuilder("mysqldump --user=");
+				final StringBuilder exeText = new StringBuilder("mysqldump --user=");
 				exeText.append(Username + " --password=");
 				exeText.append(Passwords + " ");
 				exeText.append(Database + " --opt --skip-extended-insert --skip-quick");
 				exeText.append(GzipCmd + " > ");
 				exeText.append(dir.getAbsolutePath() + new SimpleDateFormat("\\yyyy-MM-dd-kkmm").format(new Date()) + FilenameEx);
 				try {
-					Runtime rt = Runtime.getRuntime();
+					final Runtime rt = Runtime.getRuntime();
 					rt.exec(exeText.toString());
 				} finally {
 					System.out.println("(MYSQL is backed over.)" + "\n" + L1Message.waitingforuser); // 等待玩家连线
 				}
 			}
-			catch (IOException ioe) {
+			catch (final IOException ioe) {
 				ioe.printStackTrace();
 
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				e.printStackTrace();
 			}
 		}

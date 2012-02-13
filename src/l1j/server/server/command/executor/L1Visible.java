@@ -28,14 +28,14 @@ public class L1Visible implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			pc.setGmInvis(false);
 			pc.sendPackets(new S_Invis(pc.getId(), 0));
 			pc.broadcastPacket(new S_OtherCharPacks(pc));
 			pc.sendPackets(new S_SystemMessage("隐形状态解除。"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 玩家名称"));
 		}
 	}

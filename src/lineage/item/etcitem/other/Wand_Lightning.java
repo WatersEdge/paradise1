@@ -79,7 +79,7 @@ public class Wand_Lightning extends ItemExecutor {
 				return 0;
 			}
 
-			int newHp = pc.getCurrentHp() - dmg;
+			final int newHp = pc.getCurrentHp() - dmg;
 			if (newHp > 0) {
 				pc.setCurrentHp(newHp);
 			}

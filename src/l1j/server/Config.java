@@ -517,6 +517,7 @@ public final class Config {
 
 	/** 每一次攻击吸收的 MP 上限(玛那、钢铁玛那） */
 	public static final int MANA_DRAIN_LIMIT_PER_SOM_ATTACK = 9;
+
 	/**
 	 * 读取设定档中的设定
 	 */
@@ -524,8 +525,8 @@ public final class Config {
 		_log.info("正在读取游戏伺服器设定...");
 		// server.properties
 		try {
-			Properties serverSettings = new Properties();
-			InputStream is = new FileInputStream(new File(SERVER_CONFIG_FILE));
+			final Properties serverSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(SERVER_CONFIG_FILE));
 			serverSettings.load(is);
 			is.close();
 
@@ -569,7 +570,7 @@ public final class Config {
 			Announcements_Cycle_Time = Integer.parseInt(serverSettings.getProperty("AnnouncementsCycleTime", "10"));
 			Announcements_Cycle_Modify_Time = Boolean.parseBoolean(serverSettings.getProperty("AnnounceTimeDisplay", "True"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + SERVER_CONFIG_FILE + " File.");
 		}
@@ -577,8 +578,8 @@ public final class Config {
 		_log.info("读取游戏倍率设定...");
 		// rates.properties
 		try {
-			Properties rateSettings = new Properties();
-			InputStream is = new FileInputStream(new File(RATES_CONFIG_FILE));
+			final Properties rateSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(RATES_CONFIG_FILE));
 			rateSettings.load(is);
 			is.close();
 
@@ -605,7 +606,7 @@ public final class Config {
 			MAGIC_STONE_TYPE = Integer.parseInt(rateSettings.getProperty("MagicStoneAttr", "50"));
 			MAGIC_STONE_LEVEL = Integer.parseInt(rateSettings.getProperty("MagicStoneLevel", "50"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + RATES_CONFIG_FILE + " File.");
 		}
@@ -613,8 +614,8 @@ public final class Config {
 		_log.info("读取游戏进阶设定...");
 		// altsettings.properties
 		try {
-			Properties altSettings = new Properties();
-			InputStream is = new FileInputStream(new File(ALT_SETTINGS_FILE));
+			final Properties altSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(ALT_SETTINGS_FILE));
 			altSettings.load(is);
 			is.close();
 
@@ -689,7 +690,7 @@ public final class Config {
 			NPC_DELETION_TIME = Integer.parseInt(altSettings.getProperty("NpcDeletionTime", "10"));
 			DEFAULT_CHARACTER_SLOT = Integer.parseInt(altSettings.getProperty("DefaultCharacterSlot", "6"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + ALT_SETTINGS_FILE + " File.");
 		}
@@ -697,8 +698,8 @@ public final class Config {
 		_log.info("读取游戏角色设定...");
 		// charsettings.properties
 		try {
-			Properties charSettings = new Properties();
-			InputStream is = new FileInputStream(new File(CHAR_SETTINGS_CONFIG_FILE));
+			final Properties charSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(CHAR_SETTINGS_CONFIG_FILE));
 			charSettings.load(is);
 			is.close();
 
@@ -778,16 +779,16 @@ public final class Config {
 			LV109_EXP = Integer.parseInt(charSettings.getProperty("Lv109Exp", "16777216"));
 			LV110_EXP = Integer.parseInt(charSettings.getProperty("Lv110Exp", "16777216"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + CHAR_SETTINGS_CONFIG_FILE + " File.");
 		}
 
 		_log.info("读取游戏战斗特化设定...");
 		// fights.properties
-		Properties fightSettings = new Properties();
+		final Properties fightSettings = new Properties();
 		try {
-			InputStream is = new FileInputStream(new File(FIGHT_SETTINGS_CONFIG_FILE));
+			final InputStream is = new FileInputStream(new File(FIGHT_SETTINGS_CONFIG_FILE));
 			fightSettings.load(is);
 			is.close();
 
@@ -796,7 +797,7 @@ public final class Config {
 			NOVICE_MAX_LEVEL = Integer.parseInt(fightSettings.getProperty("NoviceMaxLevel", "20"));
 			NOVICE_PROTECTION_LEVEL_RANGE = Integer.parseInt(fightSettings.getProperty("ProtectionLevelRange", "10"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + FIGHT_SETTINGS_CONFIG_FILE);
 		}
@@ -804,8 +805,8 @@ public final class Config {
 		_log.info("读取游戏记录设定...");
 		// record.properties
 		try {
-			Properties recordSettings = new Properties();
-			InputStream is = new FileInputStream(new File(RECORD_SETTINGS_CONFIG_FILE));
+			final Properties recordSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(RECORD_SETTINGS_CONFIG_FILE));
 			recordSettings.load(is);
 			is.close();
 
@@ -825,7 +826,7 @@ public final class Config {
 			MysqlAutoBackup = Integer.parseInt(recordSettings.getProperty("MysqlAutoBackup", "false"));
 			CompressGzip = Boolean.parseBoolean(recordSettings.getProperty("CompressGzip", "false"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + RECORD_SETTINGS_CONFIG_FILE);
 		}
@@ -833,8 +834,8 @@ public final class Config {
 		_log.info("读取游戏其他设定...");
 		// othersettings.properties
 		try {
-			Properties otherSettings = new Properties();
-			InputStream is = new FileInputStream(new File(OTHER_SETTINGS_CONFIG_FILE));
+			final Properties otherSettings = new Properties();
+			final InputStream is = new FileInputStream(new File(OTHER_SETTINGS_CONFIG_FILE));
 			otherSettings.load(is);
 			is.close();
 
@@ -848,7 +849,7 @@ public final class Config {
 			BONUS_STATS2 = Integer.parseInt(otherSettings.getProperty("BONUS_STATS2", "5"));
 			BONUS_STATS3 = Integer.parseInt(otherSettings.getProperty("BONUS_STATS3", "35"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("无法读取设定档: " + OTHER_SETTINGS_CONFIG_FILE);
 		}
@@ -862,7 +863,7 @@ public final class Config {
 	 * @param pName
 	 * @param pValue
 	 */
-	public static boolean setParameterValue(String pName, String pValue) {
+	public static boolean setParameterValue(final String pName, final String pValue) {
 		// server.properties
 		if (pName.equalsIgnoreCase("GameserverHostname")) {
 			GAME_SERVER_HOST_NAME = pValue;

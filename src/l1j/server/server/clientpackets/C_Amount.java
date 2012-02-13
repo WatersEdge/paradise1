@@ -53,15 +53,15 @@ public class C_Amount extends ClientBasePacket {
 
 	private static final String C_AMOUNT = "[C] C_Amount";
 
-	public C_Amount(byte[] decrypt, ClientThread client) throws Exception {
+	public C_Amount(final byte[] decrypt, final ClientThread client) throws Exception {
 		super(decrypt);
-		int objectId = readD();
-		int amount = readD();
+		final int objectId = readD();
+		final int amount = readD();
 		readC();
-		String s = readS();
+		final String s = readS();
 
-		L1PcInstance pc = client.getActiveChar();
-		L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(objectId);
+		final L1PcInstance pc = client.getActiveChar();
+		final L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(objectId);
 		if (npc == null) {
 			return;
 		}
@@ -69,28 +69,28 @@ public class C_Amount extends ClientBasePacket {
 		String s1 = "";
 		String s2 = "";
 		try {
-			StringTokenizer stringtokenizer = new StringTokenizer(s);
+			final StringTokenizer stringtokenizer = new StringTokenizer(s);
 			s1 = stringtokenizer.nextToken();
 			s2 = stringtokenizer.nextToken();
 		}
-		catch (NoSuchElementException e) {
+		catch (final NoSuchElementException e) {
 			s1 = "";
 			s2 = "";
 		}
 		if (s1.equalsIgnoreCase("agapply")) { // 如果你在拍卖竞标
-			String pcName = pc.getName();
-			AuctionBoardTable boardTable = new AuctionBoardTable();
-			for (L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
+			final String pcName = pc.getName();
+			final AuctionBoardTable boardTable = new AuctionBoardTable();
+			for (final L1AuctionBoard board : boardTable.getAuctionBoardTableList()) {
 				if (pcName.equalsIgnoreCase(board.getBidder())) {
 					pc.sendPackets(new S_ServerMessage(523)); // 已经参与其他血盟小屋拍卖。
 					return;
 				}
 			}
-			int houseId = Integer.valueOf(s2);
-			L1AuctionBoard board = boardTable.getAuctionBoardTable(houseId);
+			final int houseId = Integer.valueOf(s2);
+			final L1AuctionBoard board = boardTable.getAuctionBoardTable(houseId);
 			if (board != null) {
-				int nowPrice = board.getPrice();
-				int nowBidderId = board.getBidderId();
+				final int nowPrice = board.getPrice();
+				final int nowBidderId = board.getBidderId();
 				if (pc.getInventory().consumeItem(L1ItemId.ADENA, amount)) {
 					// 更新拍卖公告
 					board.setPrice(amount);
@@ -99,16 +99,16 @@ public class C_Amount extends ClientBasePacket {
 					boardTable.updateAuctionBoard(board);
 					if (nowBidderId != 0) {
 						// 将金币退还给投标者
-						L1PcInstance bidPc = (L1PcInstance) L1World.getInstance().findObject(nowBidderId);
+						final L1PcInstance bidPc = (L1PcInstance) L1World.getInstance().findObject(nowBidderId);
 						if (bidPc != null) { // 玩家在线上
 							bidPc.getInventory().storeItem(L1ItemId.ADENA, nowPrice);
 							// 有人提出比您高的金额，因此无法给你购买权。%n因为您参与拍卖没有得标，所以还给你 %0金币。%n谢谢。%n%n
 							bidPc.sendPackets(new S_ServerMessage(525, String.valueOf(nowPrice)));
 						}
 						else { // 玩家离线中
-							L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
+							final L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 							item.setCount(nowPrice);
-							CharactersItemStorage storage = CharactersItemStorage.create();
+							final CharactersItemStorage storage = CharactersItemStorage.create();
 							storage.storeItem(nowBidderId, item);
 						}
 					}
@@ -119,17 +119,17 @@ public class C_Amount extends ClientBasePacket {
 			}
 		}
 		else if (s1.equalsIgnoreCase("agsell")) { // 出售盟屋
-			int houseId = Integer.valueOf(s2);
-			AuctionBoardTable boardTable = new AuctionBoardTable();
-			L1AuctionBoard board = new L1AuctionBoard();
+			final int houseId = Integer.valueOf(s2);
+			final AuctionBoardTable boardTable = new AuctionBoardTable();
+			final L1AuctionBoard board = new L1AuctionBoard();
 			if (board != null) {
 				// 新增拍卖公告到拍卖板
 				board.setHouseId(houseId);
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				final L1House house = HouseTable.getInstance().getHouseTable(houseId);
 				board.setHouseName(house.getHouseName());
 				board.setHouseArea(house.getHouseArea());
-				TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-				Calendar cal = Calendar.getInstance(tz);
+				final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+				final Calendar cal = Calendar.getInstance(tz);
 				cal.add(Calendar.DATE, 5); // 5天后
 				cal.set(Calendar.MINUTE, 0);
 				cal.set(Calendar.SECOND, 0);
@@ -149,15 +149,15 @@ public class C_Amount extends ClientBasePacket {
 		}
 		else {
 			// 旅馆NPC
-			int npcId = npc.getNpcId();
-			if (npcId == 70070 || npcId == 70019 || npcId == 70075 || npcId == 70012 || npcId == 70031 || npcId == 70084 || npcId == 70065 || npcId == 70054 || npcId == 70096) {
+			final int npcId = npc.getNpcId();
+			if ((npcId == 70070) || (npcId == 70019) || (npcId == 70075) || (npcId == 70012) || (npcId == 70031) || (npcId == 70084) || (npcId == 70065) || (npcId == 70054) || (npcId == 70096)) {
 
 				if (pc.getInventory().checkItem(L1ItemId.ADENA, (300 * amount))) { // 所需金币 = 钥匙价格(300) * 钥匙数量(amount)
-					L1Inn inn = InnTable.getInstance().getTemplate(npcId, pc.getInnRoomNumber());
+					final L1Inn inn = InnTable.getInstance().getTemplate(npcId, pc.getInnRoomNumber());
 					if (inn != null) {
-						Timestamp dueTime = inn.getDueTime();
+						final Timestamp dueTime = inn.getDueTime();
 						if (dueTime != null) { // 再次判断房间租用时间
-							Calendar cal = Calendar.getInstance();
+							final Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用时间未到
 								// 此房间被抢走了...
 								pc.sendPackets(new S_NPCTalkReturn(npcId, ""));
@@ -165,9 +165,9 @@ public class C_Amount extends ClientBasePacket {
 							}
 						}
 						// 租用时间 4小时
-						Timestamp ts = new Timestamp(System.currentTimeMillis() + (60 * 60 * 4 * 1000));
+						final Timestamp ts = new Timestamp(System.currentTimeMillis() + (60 * 60 * 4 * 1000));
 						// 登入旅馆資料
-						L1ItemInstance item = ItemTable.getInstance().createItem(40312); // 旅馆钥匙
+						final L1ItemInstance item = ItemTable.getInstance().createItem(40312); // 旅馆钥匙
 						if (item != null) {
 							item.setKeyId(item.getId()); // 钥匙编号
 							item.setInnNpcId(npcId); // 旅馆NPC
@@ -207,20 +207,20 @@ public class C_Amount extends ClientBasePacket {
 								itemName = (itemName + " (" + amount + ")");
 							}
 							pc.sendPackets(new S_ServerMessage(143, npc.getName(), itemName)); // \f1%0%s 给你 %1%o 。
-							String[] msg = { npc.getName() };
+							final String[] msg = { npc.getName() };
 							pc.sendPackets(new S_NPCTalkReturn(npcId, "inn4", msg)); // 要一起使用房间的话，请把钥匙给其他人，往旁边的楼梯上去即可。
 						}
 					}
 				}
 				else {
-					String[] msg = { npc.getName() };
+					final String[] msg = { npc.getName() };
 					pc.sendPackets(new S_NPCTalkReturn(npcId, "inn3", msg)); // 对不起，你手中的金币不够哦！
 				}
 			}
 			else {
-				L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
+				final L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
 				if (action != null) {
-					L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);
+					final L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);
 					if (result != null) {
 						pc.sendPackets(new S_NPCTalkReturn(npcId, result));
 					}

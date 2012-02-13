@@ -29,7 +29,7 @@ public class S_Deposit extends ServerBasePacket {
 	 * 
 	 * @param objecId
 	 */
-	public S_Deposit(int objecId) {
+	public S_Deposit(final int objecId) {
 		writeC(Opcodes.S_OPCODE_DEPOSIT);
 		writeD(objecId);
 	}

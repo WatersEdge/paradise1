@@ -34,14 +34,14 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 public class C_TradeAddItem extends ClientBasePacket {
 	private static final String C_TRADE_ADD_ITEM = "[C] C_TradeAddItem";
 
-	public C_TradeAddItem(byte abyte0[], ClientThread client) throws Exception {
+	public C_TradeAddItem(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
 
-		int itemid = readD();
-		int itemcount = readD();
-		L1PcInstance pc = client.getActiveChar();
-		L1Trade trade = new L1Trade();
-		L1ItemInstance item = pc.getInventory().getItem(itemid);
+		final int itemid = readD();
+		final int itemcount = readD();
+		final L1PcInstance pc = client.getActiveChar();
+		final L1Trade trade = new L1Trade();
+		final L1ItemInstance item = pc.getInventory().getItem(itemid);
 		if (!item.getItem().isTradable()) {
 			pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可转移的…
 			return;
@@ -51,9 +51,9 @@ public class C_TradeAddItem extends ClientBasePacket {
 			return;
 		}
 		// 使用中的宠物项链 - 无法交易
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
 					return;
@@ -61,14 +61,14 @@ public class C_TradeAddItem extends ClientBasePacket {
 			}
 		}
 		// 使用中的魔法娃娃 - 无法交易
-		for (L1DollInstance doll : pc.getDollList().values()) {
+		for (final L1DollInstance doll : pc.getDollList().values()) {
 			if (doll.getItemObjId() == item.getId()) {
 				pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
 				return;
 			}
 		}
 
-		L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance().findObject(pc.getTradeID());
+		final L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance().findObject(pc.getTradeID());
 		if (tradingPartner == null) {
 			return;
 		}

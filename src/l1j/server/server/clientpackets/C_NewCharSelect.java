@@ -29,13 +29,13 @@ public class C_NewCharSelect extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_NewCharSelect.class.getName());
 
-	public C_NewCharSelect(byte[] decrypt, ClientThread client) {
+	public C_NewCharSelect(final byte[] decrypt, final ClientThread client) {
 
 		super(decrypt);
 		client.sendPacket(new S_PacketBox(S_PacketBox.LOGOUT)); // 2.70C->3.0で追加
 		client.CharReStart(true);
 		if (client.getActiveChar() != null) {
-			L1PcInstance pc = client.getActiveChar();
+			final L1PcInstance pc = client.getActiveChar();
 			_log.fine("断开: " + pc.getName());
 			ClientThread.quitGame(pc);
 

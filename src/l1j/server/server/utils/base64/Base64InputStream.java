@@ -22,7 +22,7 @@ import java.io.InputStream;
  */
 public class Base64InputStream extends InputStream {
 
-	private InputStream inputStream;
+	private final InputStream inputStream;
 
 	private int[] buffer;
 
@@ -30,7 +30,7 @@ public class Base64InputStream extends InputStream {
 
 	private boolean eof = false; // 结束旗标
 
-	public Base64InputStream(InputStream inputStream) {
+	public Base64InputStream(final InputStream inputStream) {
 		this.inputStream = inputStream;
 	}
 
@@ -41,7 +41,7 @@ public class Base64InputStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		if (buffer == null || bufferCounter == buffer.length) {
+		if ((buffer == null) || (bufferCounter == buffer.length)) {
 			if (eof) {
 				return -1;
 			}
@@ -56,10 +56,10 @@ public class Base64InputStream extends InputStream {
 	}
 
 	private void acquire() throws IOException {
-		char[] four = new char[4];
+		final char[] four = new char[4];
 		int i = 0;
 		do {
-			int b = inputStream.read();
+			final int b = inputStream.read();
 			if (b == -1) {
 				if (i != 0) {
 					throw new IOException("Bad base64 stream");
@@ -70,11 +70,11 @@ public class Base64InputStream extends InputStream {
 					return;
 				}
 			}
-			char c = (char) b;
-			if (Base64.Shared.chars.indexOf(c) != -1 || c == Base64.Shared.pad) {
+			final char c = (char) b;
+			if ((Base64.Shared.chars.indexOf(c) != -1) || (c == Base64.Shared.pad)) {
 				four[i++] = c;
 			}
-			else if (c != '\r' && c != '\n') {
+			else if ((c != '\r') && (c != '\n')) {
 				throw new IOException("Bad base64 stream");
 			}
 		} while (i < 4);

@@ -28,18 +28,19 @@ public abstract class L1Trap {
 	public static L1Trap newNull() {
 		return new L1NullTrap();
 	}
+
 	protected final int _id;
 	protected final int _gfxId;
 
 	protected final boolean _isDetectionable;
 
-	public L1Trap(int id, int gfxId, boolean detectionable) {
+	public L1Trap(final int id, final int gfxId, final boolean detectionable) {
 		_id = id;
 		_gfxId = gfxId;
 		_isDetectionable = detectionable;
 	}
 
-	public L1Trap(TrapStorage storage) {
+	public L1Trap(final TrapStorage storage) {
 		_id = storage.getInt("id");
 		_gfxId = storage.getInt("gfxId");
 		_isDetectionable = storage.getBoolean("isDetectionable");
@@ -53,7 +54,7 @@ public abstract class L1Trap {
 		return _id;
 	}
 
-	public void onDetection(L1PcInstance caster, L1Object trapObj) {
+	public void onDetection(final L1PcInstance caster, final L1Object trapObj) {
 		if (_isDetectionable) {
 			sendEffect(trapObj);
 		}
@@ -61,13 +62,13 @@ public abstract class L1Trap {
 
 	public abstract void onTrod(L1PcInstance trodFrom, L1Object trapObj);
 
-	protected void sendEffect(L1Object trapObj) {
+	protected void sendEffect(final L1Object trapObj) {
 		if (getGfxId() == 0) {
 			return;
 		}
-		S_EffectLocation effect = new S_EffectLocation(trapObj.getLocation(), getGfxId());
+		final S_EffectLocation effect = new S_EffectLocation(trapObj.getLocation(), getGfxId());
 
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(trapObj)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(trapObj)) {
 			pc.sendPackets(effect);
 		}
 	}
@@ -79,6 +80,6 @@ class L1NullTrap extends L1Trap {
 	}
 
 	@Override
-	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
+	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
 	}
 }

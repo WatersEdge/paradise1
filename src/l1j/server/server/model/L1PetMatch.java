@@ -35,7 +35,7 @@ import l1j.server.server.templates.L1Pet;
 public class L1PetMatch {
 
 	public class L1PetMatchReadyTimer extends TimerTask {
-		private Logger _log = Logger.getLogger(L1PetMatchReadyTimer.class.getName());
+		private final Logger _log = Logger.getLogger(L1PetMatchReadyTimer.class.getName());
 
 		private final int _petMatchNo;
 
@@ -43,14 +43,14 @@ public class L1PetMatch {
 
 		private final L1PetInstance _pet;
 
-		public L1PetMatchReadyTimer(int petMatchNo, L1PcInstance pc, L1PetInstance pet) {
+		public L1PetMatchReadyTimer(final int petMatchNo, final L1PcInstance pc, final L1PetInstance pet) {
 			_petMatchNo = petMatchNo;
 			_pc = pc;
 			_pet = pet;
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 3000);
 		}
 
@@ -74,7 +74,7 @@ public class L1PetMatch {
 					return;
 				}
 			}
-			catch (Throwable e) {
+			catch (final Throwable e) {
 				_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 			}
 		}
@@ -82,7 +82,7 @@ public class L1PetMatch {
 	}
 
 	public class L1PetMatchTimer extends TimerTask {
-		private Logger _log = Logger.getLogger(L1PetMatchTimer.class.getName());
+		private final Logger _log = Logger.getLogger(L1PetMatchTimer.class.getName());
 
 		private final L1PetInstance _pet1;
 
@@ -92,14 +92,14 @@ public class L1PetMatch {
 
 		private int _counter = 0;
 
-		public L1PetMatchTimer(L1PetInstance pet1, L1PetInstance pet2, int petMatchNo) {
+		public L1PetMatchTimer(final L1PetInstance pet1, final L1PetInstance pet2, final int petMatchNo) {
 			_pet1 = pet1;
 			_pet2 = pet2;
 			_petMatchNo = petMatchNo;
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 0);
 		}
 
@@ -137,7 +137,7 @@ public class L1PetMatch {
 					}
 				}
 			}
-			catch (Throwable e) {
+			catch (final Throwable e) {
 				_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 			}
 		}
@@ -156,13 +156,13 @@ public class L1PetMatch {
 
 	private static final short[] PET_MATCH_MAPID = { 5125, 5131, 5132, 5133, 5134 };
 
-	private String[] _pc1Name = new String[MAX_PET_MATCH];
+	private final String[] _pc1Name = new String[MAX_PET_MATCH];
 
-	private String[] _pc2Name = new String[MAX_PET_MATCH];
+	private final String[] _pc2Name = new String[MAX_PET_MATCH];
 
-	private L1PetInstance[] _pet1 = new L1PetInstance[MAX_PET_MATCH];
+	private final L1PetInstance[] _pet1 = new L1PetInstance[MAX_PET_MATCH];
 
-	private L1PetInstance[] _pet2 = new L1PetInstance[MAX_PET_MATCH];
+	private final L1PetInstance[] _pet2 = new L1PetInstance[MAX_PET_MATCH];
 
 	private static L1PetMatch _instance;
 
@@ -173,9 +173,9 @@ public class L1PetMatch {
 		return _instance;
 	}
 
-	public void endPetMatch(int petMatchNo, int winNo) {
-		L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
-		L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
+	public void endPetMatch(final int petMatchNo, final int winNo) {
+		final L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
+		final L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
 		if (winNo == 1) {
 			giveMedal(pc1, petMatchNo, true);
 			giveMedal(pc2, petMatchNo, false);
@@ -191,22 +191,22 @@ public class L1PetMatch {
 		qiutPetMatch(petMatchNo);
 	}
 
-	public synchronized boolean enterPetMatch(L1PcInstance pc, int amuletId) {
-		int petMatchNo = decidePetMatchNo();
+	public synchronized boolean enterPetMatch(final L1PcInstance pc, final int amuletId) {
+		final int petMatchNo = decidePetMatchNo();
 		if (petMatchNo == -1) {
 			return false;
 		}
 
-		L1PetInstance pet = withdrawPet(pc, amuletId);
+		final L1PetInstance pet = withdrawPet(pc, amuletId);
 		L1Teleport.teleport(pc, 32799, 32868, PET_MATCH_MAPID[petMatchNo], 0, true);
 
-		L1PetMatchReadyTimer timer = new L1PetMatchReadyTimer(petMatchNo, pc, pet);
+		final L1PetMatchReadyTimer timer = new L1PetMatchReadyTimer(petMatchNo, pc, pet);
 		timer.begin();
 		return true;
 	}
 
-	public int setPetMatchPc(int petMatchNo, L1PcInstance pc, L1PetInstance pet) {
-		int status = getPetMatchStatus(petMatchNo);
+	public int setPetMatchPc(final int petMatchNo, final L1PcInstance pc, final L1PetInstance pet) {
+		final int status = getPetMatchStatus(petMatchNo);
 		if (status == STATUS_NONE) {
 			_pc1Name[petMatchNo] = pc.getName();
 			_pet1[petMatchNo] = pet;
@@ -225,28 +225,28 @@ public class L1PetMatch {
 		return STATUS_NONE;
 	}
 
-	public void startPetMatch(int petMatchNo) {
+	public void startPetMatch(final int petMatchNo) {
 		_pet1[petMatchNo].setCurrentPetStatus(1);
 		_pet1[petMatchNo].setTarget(_pet2[petMatchNo]);
 
 		_pet2[petMatchNo].setCurrentPetStatus(1);
 		_pet2[petMatchNo].setTarget(_pet1[petMatchNo]);
 
-		L1PetMatchTimer timer = new L1PetMatchTimer(_pet1[petMatchNo], _pet2[petMatchNo], petMatchNo);
+		final L1PetMatchTimer timer = new L1PetMatchTimer(_pet1[petMatchNo], _pet2[petMatchNo], petMatchNo);
 		timer.begin();
 	}
 
 	private int decidePetMatchNo() {
 		// 相手が待機中の試合を探す
 		for (int i = 0; i < MAX_PET_MATCH; i++) {
-			int status = getPetMatchStatus(i);
+			final int status = getPetMatchStatus(i);
 			if ((status == STATUS_READY1) || (status == STATUS_READY2)) {
 				return i;
 			}
 		}
 		// 待機中の試合がなければ空いている試合を探す
 		for (int i = 0; i < MAX_PET_MATCH; i++) {
-			int status = getPetMatchStatus(i);
+			final int status = getPetMatchStatus(i);
 			if (status == STATUS_NONE) {
 				return i;
 			}
@@ -254,7 +254,7 @@ public class L1PetMatch {
 		return -1;
 	}
 
-	private synchronized int getPetMatchStatus(int petMatchNo) {
+	private synchronized int getPetMatchStatus(final int petMatchNo) {
 		L1PcInstance pc1 = null;
 		if (_pc1Name[petMatchNo] != null) {
 			pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
@@ -307,7 +307,7 @@ public class L1PetMatch {
 		return STATUS_NONE;
 	}
 
-	private void giveMedal(L1PcInstance pc, int petMatchNo, boolean isWin) {
+	private void giveMedal(final L1PcInstance pc, final int petMatchNo, final boolean isWin) {
 		if (pc == null) {
 			return;
 		}
@@ -316,8 +316,8 @@ public class L1PetMatch {
 		}
 		if (isWin) {
 			pc.sendPackets(new S_ServerMessage(1166, pc.getName())); // %0%s 从宠物战获得胜利。
-			L1ItemInstance item = ItemTable.getInstance().createItem(41309);
-			int count = 3;
+			final L1ItemInstance item = ItemTable.getInstance().createItem(41309);
+			final int count = 3;
 			if (item != null) {
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
 					item.setCount(count);
@@ -327,8 +327,8 @@ public class L1PetMatch {
 			}
 		}
 		else {
-			L1ItemInstance item = ItemTable.getInstance().createItem(41309);
-			int count = 1;
+			final L1ItemInstance item = ItemTable.getInstance().createItem(41309);
+			final int count = 1;
 			if (item != null) {
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
 					item.setCount(count);
@@ -339,12 +339,12 @@ public class L1PetMatch {
 		}
 	}
 
-	private void qiutPetMatch(int petMatchNo) {
-		L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
+	private void qiutPetMatch(final int petMatchNo) {
+		final L1PcInstance pc1 = L1World.getInstance().getPlayer(_pc1Name[petMatchNo]);
 		if ((pc1 != null) && (pc1.getMapId() == PET_MATCH_MAPID[petMatchNo])) {
-			for (Object object : pc1.getPetList().values().toArray()) {
+			for (final Object object : pc1.getPetList().values().toArray()) {
 				if (object instanceof L1PetInstance) {
-					L1PetInstance pet = (L1PetInstance) object;
+					final L1PetInstance pet = (L1PetInstance) object;
 					pet.dropItem();
 					pc1.getPetList().remove(pet.getId());
 					pet.deleteMe();
@@ -355,11 +355,11 @@ public class L1PetMatch {
 		_pc1Name[petMatchNo] = null;
 		_pet1[petMatchNo] = null;
 
-		L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
+		final L1PcInstance pc2 = L1World.getInstance().getPlayer(_pc2Name[petMatchNo]);
 		if ((pc2 != null) && (pc2.getMapId() == PET_MATCH_MAPID[petMatchNo])) {
-			for (Object object : pc2.getPetList().values().toArray()) {
+			for (final Object object : pc2.getPetList().values().toArray()) {
 				if (object instanceof L1PetInstance) {
-					L1PetInstance pet = (L1PetInstance) object;
+					final L1PetInstance pet = (L1PetInstance) object;
 					pet.dropItem();
 					pc2.getPetList().remove(pet.getId());
 					pet.deleteMe();
@@ -371,13 +371,13 @@ public class L1PetMatch {
 		_pet2[petMatchNo] = null;
 	}
 
-	private L1PetInstance withdrawPet(L1PcInstance pc, int amuletId) {
-		L1Pet l1pet = PetTable.getInstance().getTemplate(amuletId);
+	private L1PetInstance withdrawPet(final L1PcInstance pc, final int amuletId) {
+		final L1Pet l1pet = PetTable.getInstance().getTemplate(amuletId);
 		if (l1pet == null) {
 			return null;
 		}
-		L1Npc npcTemp = NpcTable.getInstance().getTemplate(l1pet.get_npcid());
-		L1PetInstance pet = new L1PetInstance(npcTemp, pc, l1pet);
+		final L1Npc npcTemp = NpcTable.getInstance().getTemplate(l1pet.get_npcid());
+		final L1PetInstance pet = new L1PetInstance(npcTemp, pc, l1pet);
 		pet.setPetcost(6);
 		return pet;
 	}

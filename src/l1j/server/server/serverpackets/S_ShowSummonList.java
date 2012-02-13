@@ -26,7 +26,7 @@ public class S_ShowSummonList extends ServerBasePacket {
 	 * 
 	 * @param objid
 	 */
-	public S_ShowSummonList(int objid) {
+	public S_ShowSummonList(final int objid) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(objid);
 		writeS("summonlist");

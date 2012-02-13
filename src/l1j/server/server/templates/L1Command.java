@@ -23,7 +23,7 @@ public class L1Command {
 	private final int _level;
 	private final String _executorClassName;
 
-	public L1Command(String name, int level, String executorClassName) {
+	public L1Command(final String name, final int level, final String executorClassName) {
 		_name = name;
 		_level = level;
 		_executorClassName = executorClassName;

@@ -21,19 +21,19 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * @category 初始能力加成, 用于查看创角色时初始能力的增幅
  */
 public class S_InitialAbilityGrowth extends ServerBasePacket {
-	public S_InitialAbilityGrowth(L1PcInstance pc) {
+	public S_InitialAbilityGrowth(final L1PcInstance pc) {
 
-		int Str = pc.getOriginalStr();// 力量
-		int Dex = pc.getOriginalDex();// 敏捷
-		int Con = pc.getOriginalCon();// 体质
-		int Wis = pc.getOriginalWis();// 精神
-		int Cha = pc.getOriginalCha();// 魅力
-		int Int = pc.getOriginalInt();// 智力
-		int[] growth = new int[6];
+		final int Str = pc.getOriginalStr();// 力量
+		final int Dex = pc.getOriginalDex();// 敏捷
+		final int Con = pc.getOriginalCon();// 体质
+		final int Wis = pc.getOriginalWis();// 精神
+		final int Cha = pc.getOriginalCha();// 魅力
+		final int Int = pc.getOriginalInt();// 智力
+		final int[] growth = new int[6];
 
 		// 王族
 		if (pc.isCrown()) {
-			int Initial[] = { 13, 10, 10, 11, 13, 10 };
+			final int Initial[] = { 13, 10, 10, 11, 13, 10 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -43,7 +43,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 法师
 		if (pc.isWizard()) {
-			int[] Initial = { 8, 7, 12, 12, 8, 12 };
+			final int[] Initial = { 8, 7, 12, 12, 8, 12 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -53,7 +53,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 骑士
 		if (pc.isKnight()) {
-			int[] Initial = { 16, 12, 14, 9, 12, 8 };
+			final int[] Initial = { 16, 12, 14, 9, 12, 8 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -63,7 +63,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 妖精
 		if (pc.isElf()) {
-			int[] Initial = { 11, 12, 12, 12, 9, 12 };
+			final int[] Initial = { 11, 12, 12, 12, 9, 12 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -73,7 +73,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 黑妖
 		if (pc.isDarkelf()) {
-			int[] Initial = { 12, 15, 8, 10, 9, 11 };
+			final int[] Initial = { 12, 15, 8, 10, 9, 11 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -83,7 +83,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 龙骑士
 		if (pc.isDragonKnight()) {
-			int[] Initial = { 13, 11, 14, 12, 8, 11 };
+			final int[] Initial = { 13, 11, 14, 12, 8, 11 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -93,7 +93,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		}
 		// 幻术师
 		if (pc.isIllusionist()) {
-			int[] Initial = { 11, 10, 12, 12, 8, 12 };
+			final int[] Initial = { 11, 10, 12, 12, 8, 12 };
 			growth[0] = Str - Initial[0];
 			growth[1] = Dex - Initial[1];
 			growth[2] = Con - Initial[2];
@@ -127,10 +127,10 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 	 * @param Int
 	 *            智力
 	 */
-	private void buildPacket(L1PcInstance pc, int Str, int Dex, int Con, int Wis, int Cha, int Int) {
-		int write1 = (Int * 16) + Str;
-		int write2 = (Dex * 16) + Wis;
-		int write3 = (Cha * 16) + Con;
+	private void buildPacket(final L1PcInstance pc, final int Str, final int Dex, final int Con, final int Wis, final int Cha, final int Int) {
+		final int write1 = (Int * 16) + Str;
+		final int write2 = (Dex * 16) + Wis;
+		final int write3 = (Cha * 16) + Con;
 		writeC(Opcodes.S_OPCODE_CHARRESET);
 		writeC(0x04);
 		writeC(write1);// 智力&力量

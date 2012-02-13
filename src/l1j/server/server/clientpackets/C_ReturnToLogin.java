@@ -30,9 +30,9 @@ public class C_ReturnToLogin extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_ReturnToLogin.class.getName());
 
-	public C_ReturnToLogin(byte decrypt[], ClientThread client) throws Exception {
+	public C_ReturnToLogin(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
-		String account = client.getAccountName();
+		final String account = client.getAccountName();
 
 		// 修正 (经常卡在帐号密码或是提示帐号在使用中)
 		if (client.getAccount() != null) {

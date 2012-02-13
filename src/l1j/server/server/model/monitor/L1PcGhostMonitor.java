@@ -22,16 +22,16 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class L1PcGhostMonitor extends L1PcMonitor {
 
-	public L1PcGhostMonitor(int oId) {
+	public L1PcGhostMonitor(final int oId) {
 		super(oId);
 	}
 
 	@Override
-	public void execTask(L1PcInstance pc) {
+	public void execTask(final L1PcInstance pc) {
 		// endGhostの実行時間が影響ないように
-		Runnable r = new L1PcMonitor(pc.getId()) {
+		final Runnable r = new L1PcMonitor(pc.getId()) {
 			@Override
-			public void execTask(L1PcInstance pc) {
+			public void execTask(final L1PcInstance pc) {
 				pc.endGhost();
 			}
 		};

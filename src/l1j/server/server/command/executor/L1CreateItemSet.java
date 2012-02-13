@@ -37,19 +37,19 @@ public class L1CreateItemSet implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			String name = new StringTokenizer(arg).nextToken();
-			List<L1ItemSetItem> list = GMCommandsConfig.ITEM_SETS.get(name);
+			final String name = new StringTokenizer(arg).nextToken();
+			final List<L1ItemSetItem> list = GMCommandsConfig.ITEM_SETS.get(name);
 			if (list == null) {
 				pc.sendPackets(new S_SystemMessage(name + " 是未定义的套装。"));
 				return;
 			}
-			for (L1ItemSetItem item : list) {
-				L1Item temp = ItemTable.getInstance().getTemplate(item.getId());
+			for (final L1ItemSetItem item : list) {
+				final L1Item temp = ItemTable.getInstance().getTemplate(item.getId());
 				if (!temp.isStackable() && (0 != item.getEnchant())) {
 					for (int i = 0; i < item.getAmount(); i++) {
-						L1ItemInstance inst = ItemTable.getInstance().createItem(item.getId());
+						final L1ItemInstance inst = ItemTable.getInstance().createItem(item.getId());
 						inst.setEnchantLevel(item.getEnchant());
 						pc.getInventory().storeItem(inst);
 					}
@@ -59,7 +59,7 @@ public class L1CreateItemSet implements L1CommandExecutor {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 .itemset 套装名称。"));
 		}
 	}

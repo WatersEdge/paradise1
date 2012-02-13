@@ -53,7 +53,7 @@ public class ElementalStoneGenerator implements Runnable {
 		return _instance;
 	}
 
-	private ArrayList<L1GroundInventory> _itemList = new ArrayList<L1GroundInventory>(MAX_COUNT);
+	private final ArrayList<L1GroundInventory> _itemList = new ArrayList<L1GroundInventory>(MAX_COUNT);
 
 	private static ElementalStoneGenerator _instance = null;
 
@@ -65,12 +65,12 @@ public class ElementalStoneGenerator implements Runnable {
 	@Override
 	public void run() {
 		try {
-			L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
+			final L1Map map = L1WorldMap.getInstance().getMap((short) ELVEN_FOREST_MAPID);
 			while (true) {
 				removeItemsPickedUp();
 
 				while (_itemList.size() < MAX_COUNT) { // 减少的情况
-					L1Location loc = new L1Location(nextPoint(), map);
+					final L1Location loc = new L1Location(nextPoint(), map);
 
 					if (!canPut(loc)) {
 						// XXX 设置范围内全てにPCが居た场合无限循环…
@@ -84,7 +84,7 @@ public class ElementalStoneGenerator implements Runnable {
 				Thread.sleep(SLEEP_TIME * 1000); // maxまで设置终了后一定时间は再设置しない
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
@@ -92,7 +92,7 @@ public class ElementalStoneGenerator implements Runnable {
 	/**
 	 * 返回在指定地点放置精灵石。
 	 */
-	private boolean canPut(L1Location loc) {
+	private boolean canPut(final L1Location loc) {
 		_dummy.setMap(loc.getMap());
 		_dummy.setX(loc.getX());
 		_dummy.setY(loc.getY());
@@ -108,8 +108,8 @@ public class ElementalStoneGenerator implements Runnable {
 	 * 设置下一个放置点。
 	 */
 	private Point nextPoint() {
-		int newX = Random.nextInt(LAST_X - FIRST_X) + FIRST_X;
-		int newY = Random.nextInt(LAST_Y - FIRST_Y) + FIRST_Y;
+		final int newX = Random.nextInt(LAST_X - FIRST_X) + FIRST_X;
+		final int newY = Random.nextInt(LAST_Y - FIRST_Y) + FIRST_Y;
 
 		return new Point(newX, newY);
 	}
@@ -117,10 +117,10 @@ public class ElementalStoneGenerator implements Runnable {
 	/**
 	 * 把石头放入指定地点。
 	 */
-	private void putElementalStone(L1Location loc) {
-		L1GroundInventory gInventory = L1World.getInstance().getInventory(loc);
+	private void putElementalStone(final L1Location loc) {
+		final L1GroundInventory gInventory = L1World.getInstance().getInventory(loc);
 
-		L1ItemInstance item = ItemTable.getInstance().createItem(ELEMENTAL_STONE_ID);
+		final L1ItemInstance item = ItemTable.getInstance().createItem(ELEMENTAL_STONE_ID);
 		item.setEnchantLevel(0);
 		item.setCount(1);
 		gInventory.storeItem(item);
@@ -132,7 +132,7 @@ public class ElementalStoneGenerator implements Runnable {
 	 */
 	private void removeItemsPickedUp() {
 		for (int i = 0; i < _itemList.size(); i++) {
-			L1GroundInventory gInventory = _itemList.get(i);
+			final L1GroundInventory gInventory = _itemList.get(i);
 			if (!gInventory.checkItem(ELEMENTAL_STONE_ID)) {
 				_itemList.remove(i);
 				i--;

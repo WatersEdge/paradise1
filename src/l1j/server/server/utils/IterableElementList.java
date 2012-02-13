@@ -23,10 +23,10 @@ import org.w3c.dom.NodeList;
 
 public class IterableElementList implements Iterable<Element> {
 	private class MyIterator implements Iterator<Element> {
-		private Iterator<Node> _itr;
+		private final Iterator<Node> _itr;
 		private Element _next = null;
 
-		public MyIterator(Iterator<Node> itr) {
+		public MyIterator(final Iterator<Node> itr) {
 			_itr = itr;
 			updateNextElement();
 		}
@@ -41,7 +41,7 @@ public class IterableElementList implements Iterable<Element> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			Element result = _next;
+			final Element result = _next;
 			updateNextElement();
 			return result;
 		}
@@ -53,7 +53,7 @@ public class IterableElementList implements Iterable<Element> {
 
 		private void updateNextElement() {
 			while (_itr.hasNext()) {
-				Node node = _itr.next();
+				final Node node = _itr.next();
 				if (node instanceof Element) {
 					_next = (Element) node;
 					return;
@@ -65,7 +65,7 @@ public class IterableElementList implements Iterable<Element> {
 
 	IterableNodeList _list;
 
-	public IterableElementList(NodeList list) {
+	public IterableElementList(final NodeList list) {
 		_list = new IterableNodeList(list);
 	}
 

@@ -22,7 +22,7 @@ public class S_NpcChatPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_NpcChatPacket(L1NpcInstance npc, String chat, int type) {
+	public S_NpcChatPacket(final L1NpcInstance npc, final String chat, final int type) {
 		buildPacket(npc, chat, type);
 	}
 
@@ -39,33 +39,33 @@ public class S_NpcChatPacket extends ServerBasePacket {
 		return S_NPC_CHAT_PACKET;
 	}
 
-	private void buildPacket(L1NpcInstance npc, String chat, int type) {
+	private void buildPacket(final L1NpcInstance npc, final String chat, final int type) {
 		switch (type) {
-		case 0: // normal chat
-			writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
-												// desc-?.tbl
-			writeC(type); // Color
-			writeD(npc.getId());
-			writeS(npc.getName() + ": " + chat);
-			break;
+			case 0: // normal chat
+				writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
+													// desc-?.tbl
+				writeC(type); // Color
+				writeD(npc.getId());
+				writeS(npc.getName() + ": " + chat);
+				break;
 
-		case 2: // shout
-			writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
-												// desc-?.tbl
-			writeC(type); // Color
-			writeD(npc.getId());
-			writeS("<" + npc.getName() + "> " + chat);
-			break;
+			case 2: // shout
+				writeC(Opcodes.S_OPCODE_NPCSHOUT); // Key is 16 , can use
+													// desc-?.tbl
+				writeC(type); // Color
+				writeD(npc.getId());
+				writeS("<" + npc.getName() + "> " + chat);
+				break;
 
-		case 3: // world chat
-			writeC(Opcodes.S_OPCODE_NPCSHOUT);
-			writeC(type); // XXX 白色になる
-			writeD(npc.getId());
-			writeS("[" + npc.getName() + "] " + chat);
-			break;
+			case 3: // world chat
+				writeC(Opcodes.S_OPCODE_NPCSHOUT);
+				writeC(type); // XXX 白色になる
+				writeD(npc.getId());
+				writeS("[" + npc.getName() + "] " + chat);
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 }

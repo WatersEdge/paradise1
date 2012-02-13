@@ -37,7 +37,7 @@ public class TimePeriod {
 	 * @param timeEnd
 	 *            结束时间
 	 */
-	public TimePeriod(Time timeStart, Time timeEnd) {
+	public TimePeriod(final Time timeStart, final Time timeEnd) {
 		if (timeStart.equals(timeEnd)) {
 			throw new IllegalArgumentException("开始时间不能等于结束时间");
 		}
@@ -47,7 +47,7 @@ public class TimePeriod {
 	}
 
 	/**  */
-	public boolean includes(L1GameTime time) {
+	public boolean includes(final L1GameTime time) {
 		/*
 		 * 分かりづらいロジック・・・ timeStart after timeEndのとき(例:18:00~06:00) timeEnd~timeStart(06:00~18:00)の範囲内でなければ、 timeStart~timeEnd(18:00~06:00)の範囲内と見なせる
 		 */
@@ -55,8 +55,8 @@ public class TimePeriod {
 	}
 
 	/**  */
-	private boolean includes(L1GameTime time, Time timeStart, Time timeEnd) {
-		Time when = time.toTime();
+	private boolean includes(final L1GameTime time, final Time timeStart, final Time timeEnd) {
+		final Time when = time.toTime();
 		return (timeStart.compareTo(when) <= 0) && (0 < timeEnd.compareTo(when));
 	}
 }

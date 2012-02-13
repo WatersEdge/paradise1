@@ -34,21 +34,21 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	/**
 	 * @param template
 	 */
-	public L1HousekeeperInstance(L1Npc template) {
+	public L1HousekeeperInstance(final L1Npc template) {
 		super(template);
 	}
 
-	public void doFinalAction(L1PcInstance pc) {
+	public void doFinalAction(final L1PcInstance pc) {
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc) {
+	public void onAction(final L1PcInstance pc) {
 		onAction(pc, 0);
 	}
 
 	@Override
-	public void onAction(L1PcInstance pc, int skillId) {
-		L1Attack attack = new L1Attack(pc, this, skillId);
+	public void onAction(final L1PcInstance pc, final int skillId) {
+		final L1Attack attack = new L1Attack(pc, this, skillId);
 		attack.calcHit();
 		attack.action();
 		attack.addChaserAttack();
@@ -59,25 +59,25 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onFinalAction(L1PcInstance pc, String action) {
+	public void onFinalAction(final L1PcInstance pc, final String action) {
 	}
 
 	@Override
-	public void onTalkAction(L1PcInstance pc) {
-		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
-		int npcid = getNpcTemplate().get_npcId();
+	public void onTalkAction(final L1PcInstance pc) {
+		final int objid = getId();
+		final L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		final int npcid = getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
 		boolean isOwner = false;
 
 		if (talking != null) {
 			// 确定交谈的PC是否血盟的所有者
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int houseId = clan.getHouseId();
+				final int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					final L1House house = HouseTable.getInstance().getHouseTable(houseId);
 					if (npcid == house.getKeeperId()) {
 						isOwner = true;
 					}
@@ -88,7 +88,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (!isOwner) {
 				// Housekeeperが属するアジトを取得する
 				L1House targetHouse = null;
-				for (L1House house : HouseTable.getInstance().getHouseTableList()) {
+				for (final L1House house : HouseTable.getInstance().getHouseTableList()) {
 					if (npcid == house.getKeeperId()) {
 						targetHouse = house;
 						break;
@@ -99,7 +99,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 				boolean isOccupy = false;
 				String clanName = null;
 				String leaderName = null;
-				for (L1Clan targetClan : L1World.getInstance().getAllClans()) {
+				for (final L1Clan targetClan : L1World.getInstance().getAllClans()) {
 					if (targetHouse.getHouseId() == targetClan.getHouseId()) {
 						isOccupy = true;
 						clanName = targetClan.getClanName();

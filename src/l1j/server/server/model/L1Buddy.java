@@ -28,11 +28,11 @@ public class L1Buddy {
 
 	private final LinkedHashMap<Integer, String> _buddys = new LinkedHashMap<Integer, String>();
 
-	public L1Buddy(int charId) {
+	public L1Buddy(final int charId) {
 		_charId = charId;
 	}
 
-	public boolean add(int objId, String name) {
+	public boolean add(final int objId, final String name) {
 		if (_buddys.containsKey(objId)) {
 			return false;
 		}
@@ -40,12 +40,12 @@ public class L1Buddy {
 		return true;
 	}
 
-	public boolean containsId(int objId) {
+	public boolean containsId(final int objId) {
 		return _buddys.containsKey(objId);
 	}
 
-	public boolean containsName(String name) {
-		for (String buddyName : _buddys.values()) {
+	public boolean containsName(final String name) {
+		for (final String buddyName : _buddys.values()) {
 			if (name.equalsIgnoreCase(buddyName)) {
 				return true;
 			}
@@ -55,7 +55,7 @@ public class L1Buddy {
 
 	public String getBuddyListString() {
 		String result = new String("");
-		for (String name : _buddys.values()) {
+		for (final String name : _buddys.values()) {
 			result += name + " ";
 		}
 		return result;
@@ -67,7 +67,7 @@ public class L1Buddy {
 
 	public String getOnlineBuddyListString() {
 		String result = new String("");
-		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+		for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 			if (_buddys.containsKey(pc.getId())) {
 				result += pc.getName() + " ";
 			}
@@ -75,14 +75,14 @@ public class L1Buddy {
 		return result;
 	}
 
-	public boolean remove(int objId) {
-		String result = _buddys.remove(objId);
+	public boolean remove(final int objId) {
+		final String result = _buddys.remove(objId);
 		return (result != null ? true : false);
 	}
 
-	public boolean remove(String name) {
+	public boolean remove(final String name) {
 		int id = 0;
-		for (Map.Entry<Integer, String> buddy : _buddys.entrySet()) {
+		for (final Map.Entry<Integer, String> buddy : _buddys.entrySet()) {
 			if (name.equalsIgnoreCase(buddy.getValue())) {
 				id = buddy.getKey();
 				break;

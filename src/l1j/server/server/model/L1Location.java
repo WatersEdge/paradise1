@@ -37,7 +37,7 @@ public class L1Location extends Point {
 	 *            汇报随机
 	 * @return 新Location
 	 */
-	public static L1Location randomLocation(L1Location baseLocation, int min, int max, boolean isRandomTeleport) {
+	public static L1Location randomLocation(final L1Location baseLocation, int min, final int max, final boolean isRandomTeleport) {
 		if (min > max) {
 			throw new IllegalArgumentException("min > max参数是无效的");
 		}
@@ -48,13 +48,13 @@ public class L1Location extends Point {
 			min = 0;
 		}
 
-		L1Location newLocation = new L1Location();
+		final L1Location newLocation = new L1Location();
 		int newX = 0;
 		int newY = 0;
-		int locX = baseLocation.getX();
-		int locY = baseLocation.getY();
-		short mapId = (short) baseLocation.getMapId();
-		L1Map map = baseLocation.getMap();
+		final int locX = baseLocation.getX();
+		final int locY = baseLocation.getY();
+		final short mapId = (short) baseLocation.getMapId();
+		final L1Map map = baseLocation.getMap();
 
 		newLocation.setMap(map);
 
@@ -64,10 +64,10 @@ public class L1Location extends Point {
 		int locY2 = locY + max;
 
 		// map范围
-		int mapX1 = map.getX();
-		int mapX2 = mapX1 + map.getWidth();
-		int mapY1 = map.getY();
-		int mapY2 = mapY1 + map.getHeight();
+		final int mapX1 = map.getX();
+		final int mapX2 = mapX1 + map.getWidth();
+		final int mapY1 = map.getY();
+		final int mapY2 = mapY1 + map.getHeight();
 
 		// 最大でもマップの範囲内までに補正
 		if (locX1 < mapX1) {
@@ -83,14 +83,14 @@ public class L1Location extends Point {
 			locY2 = mapY2;
 		}
 
-		int diffX = locX2 - locX1; // x方向
-		int diffY = locY2 - locY1; // y方向
+		final int diffX = locX2 - locX1; // x方向
+		final int diffY = locY2 - locY1; // y方向
 
 		int trial = 0;
 		// 試行回数を範囲最小値によってあげる為の計算
-		int amax = (int) Math.pow(1 + (max * 2), 2);
-		int amin = (min == 0) ? 0 : (int) Math.pow(1 + ((min - 1) * 2), 2);
-		int trialLimit = 40 * amax / (amax - amin);
+		final int amax = (int) Math.pow(1 + (max * 2), 2);
+		final int amin = (min == 0) ? 0 : (int) Math.pow(1 + ((min - 1) * 2), 2);
+		final int trialLimit = 40 * amax / (amax - amin);
 
 		while (true) {
 			if (trial >= trialLimit) {
@@ -132,36 +132,36 @@ public class L1Location extends Point {
 		super();
 	}
 
-	public L1Location(int x, int y, int mapId) {
+	public L1Location(final int x, final int y, final int mapId) {
 		super(x, y);
 		setMap(mapId);
 	}
 
-	public L1Location(int x, int y, L1Map map) {
+	public L1Location(final int x, final int y, final L1Map map) {
 		super(x, y);
 		_map = map;
 	}
 
-	public L1Location(L1Location loc) {
+	public L1Location(final L1Location loc) {
 		this(loc._x, loc._y, loc._map);
 	}
 
-	public L1Location(Point pt, int mapId) {
+	public L1Location(final Point pt, final int mapId) {
 		super(pt);
 		setMap(mapId);
 	}
 
-	public L1Location(Point pt, L1Map map) {
+	public L1Location(final Point pt, final L1Map map) {
 		super(pt);
 		_map = map;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (!(obj instanceof L1Location)) {
 			return false;
 		}
-		L1Location loc = (L1Location) obj;
+		final L1Location loc = (L1Location) obj;
 		return (getMap() == loc.getMap()) && (getX() == loc.getX()) && (getY() == loc.getY());
 	}
 
@@ -187,7 +187,7 @@ public class L1Location extends Point {
 	 *            汇报随机
 	 * @return 新Location
 	 */
-	public L1Location randomLocation(int max, boolean isRandomTeleport) {
+	public L1Location randomLocation(final int max, final boolean isRandomTeleport) {
 		return randomLocation(0, max, isRandomTeleport);
 	}
 
@@ -202,41 +202,41 @@ public class L1Location extends Point {
 	 *            汇报随机
 	 * @return 新Location
 	 */
-	public L1Location randomLocation(int min, int max, boolean isRandomTeleport) {
+	public L1Location randomLocation(final int min, final int max, final boolean isRandomTeleport) {
 		return L1Location.randomLocation(this, min, max, isRandomTeleport);
 	}
 
-	public void set(int x, int y, int mapId) {
+	public void set(final int x, final int y, final int mapId) {
 		set(x, y);
 		setMap(mapId);
 	}
 
-	public void set(int x, int y, L1Map map) {
+	public void set(final int x, final int y, final L1Map map) {
 		set(x, y);
 		_map = map;
 	}
 
-	public void set(L1Location loc) {
+	public void set(final L1Location loc) {
 		_map = loc._map;
 		_x = loc._x;
 		_y = loc._y;
 	}
 
-	public void set(Point pt, int mapId) {
+	public void set(final Point pt, final int mapId) {
 		set(pt);
 		setMap(mapId);
 	}
 
-	public void set(Point pt, L1Map map) {
+	public void set(final Point pt, final L1Map map) {
 		set(pt);
 		_map = map;
 	}
 
-	public void setMap(int mapId) {
+	public void setMap(final int mapId) {
 		_map = L1WorldMap.getInstance().getMap((short) mapId);
 	}
 
-	public void setMap(L1Map map) {
+	public void setMap(final L1Map map) {
 		_map = map;
 	}
 

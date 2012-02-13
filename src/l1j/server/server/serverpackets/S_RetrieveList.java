@@ -24,16 +24,16 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * 物品名单 (个人仓库)
  */
 public class S_RetrieveList extends ServerBasePacket {
-	public S_RetrieveList(int objid, L1PcInstance pc) {
+	public S_RetrieveList(final int objid, final L1PcInstance pc) {
 		if (pc.getInventory().getSize() < 180) {
-			int size = pc.getDwarfInventory().getSize();
+			final int size = pc.getDwarfInventory().getSize();
 			if (size > 0) {
 				writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
 				writeD(objid);
 				writeH(size);
 				writeC(3); // 个人仓库
-				for (Object itemObject : pc.getDwarfInventory().getItems()) {
-					L1ItemInstance item = (L1ItemInstance) itemObject;
+				for (final Object itemObject : pc.getDwarfInventory().getItems()) {
+					final L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
 					writeC(0); // 道具:0 武器:1 防具:2...
 					writeH(item.get_gfxid());

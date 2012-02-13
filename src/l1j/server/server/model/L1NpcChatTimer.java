@@ -34,7 +34,7 @@ public class L1NpcChatTimer extends TimerTask {
 
 	private final L1NpcChat _npcChat;
 
-	public L1NpcChatTimer(L1NpcInstance npc, L1NpcChat npcChat) {
+	public L1NpcChatTimer(final L1NpcInstance npc, final L1NpcChat npcChat) {
 		_npc = npc;
 		_npcChat = npcChat;
 	}
@@ -42,23 +42,23 @@ public class L1NpcChatTimer extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			if (_npc == null || _npcChat == null) {
+			if ((_npc == null) || (_npcChat == null)) {
 				return;
 			}
 
-			if (_npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE || _npc._destroyed) {
+			if ((_npc.getHiddenStatus() != L1NpcInstance.HIDDEN_STATUS_NONE) || _npc._destroyed) {
 				return;
 			}
 
-			int chatTiming = _npcChat.getChatTiming();
-			int chatInterval = _npcChat.getChatInterval();
-			boolean isShout = _npcChat.isShout();
-			boolean isWorldChat = _npcChat.isWorldChat();
-			String chatId1 = _npcChat.getChatId1();
-			String chatId2 = _npcChat.getChatId2();
-			String chatId3 = _npcChat.getChatId3();
-			String chatId4 = _npcChat.getChatId4();
-			String chatId5 = _npcChat.getChatId5();
+			final int chatTiming = _npcChat.getChatTiming();
+			final int chatInterval = _npcChat.getChatInterval();
+			final boolean isShout = _npcChat.isShout();
+			final boolean isWorldChat = _npcChat.isWorldChat();
+			final String chatId1 = _npcChat.getChatId1();
+			final String chatId2 = _npcChat.getChatId2();
+			final String chatId3 = _npcChat.getChatId3();
+			final String chatId4 = _npcChat.getChatId4();
+			final String chatId5 = _npcChat.getChatId5();
 
 			if (!chatId1.equals("")) {
 				chat(_npc, chatTiming, chatId1, isShout, isWorldChat);
@@ -84,19 +84,19 @@ public class L1NpcChatTimer extends TimerTask {
 				chat(_npc, chatTiming, chatId5, isShout, isWorldChat);
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	private void chat(L1NpcInstance npc, int chatTiming, String chatId, boolean isShout, boolean isWorldChat) {
-		if (chatTiming == L1NpcInstance.CHAT_TIMING_APPEARANCE && npc.isDead()) {
+	private void chat(final L1NpcInstance npc, final int chatTiming, final String chatId, final boolean isShout, final boolean isWorldChat) {
+		if ((chatTiming == L1NpcInstance.CHAT_TIMING_APPEARANCE) && npc.isDead()) {
 			return;
 		}
-		if (chatTiming == L1NpcInstance.CHAT_TIMING_DEAD && !npc.isDead()) {
+		if ((chatTiming == L1NpcInstance.CHAT_TIMING_DEAD) && !npc.isDead()) {
 			return;
 		}
-		if (chatTiming == L1NpcInstance.CHAT_TIMING_HIDE && npc.isDead()) {
+		if ((chatTiming == L1NpcInstance.CHAT_TIMING_HIDE) && npc.isDead()) {
 			return;
 		}
 
@@ -109,7 +109,7 @@ public class L1NpcChatTimer extends TimerTask {
 
 		if (isWorldChat) {
 			// XXX npcはsendPacketsできないので、ワールド内のPCからsendPacketsさせる
-			for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+			for (final L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
 				if (pc != null) {
 					pc.sendPackets(new S_NpcChatPacket(npc, chatId, 3));
 				}

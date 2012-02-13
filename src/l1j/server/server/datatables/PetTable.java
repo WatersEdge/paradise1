@@ -56,8 +56,8 @@ public class PetTable {
 	 *            检查您的宠物的名字。大文字小文字の差異は無視される。
 	 * @return 如果名称已经存在true
 	 */
-	public static boolean isNameExists(String nameCaseInsensitive) {
-		String nameLower = nameCaseInsensitive.toLowerCase();
+	public static boolean isNameExists(final String nameCaseInsensitive) {
+		final String nameLower = nameCaseInsensitive.toLowerCase();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -76,7 +76,7 @@ public class PetTable {
 				return false;
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -95,18 +95,18 @@ public class PetTable {
 	/**
 	 * 经过 C_NPCAction 获得 pet
 	 */
-	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv, long lvExp) {
-		L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
-		L1Pet l1pet = new L1Pet();
+	public void buyNewPet(final int petNpcId, final int objid, final int itemobjid, final int upLv, final long lvExp) {
+		final L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
+		final L1Pet l1pet = new L1Pet();
 		l1pet.set_itemobjid(itemobjid);
 		l1pet.set_objid(objid);
 		l1pet.set_npcid(petNpcId);
 		l1pet.set_name(petType.getName());
 		l1pet.set_level(upLv);
-		int hpUpMin = petType.getHpUpRange().getLow();
-		int hpUpMax = petType.getHpUpRange().getHigh();
-		int mpUpMin = petType.getMpUpRange().getLow();
-		int mpUpMax = petType.getMpUpRange().getHigh();
+		final int hpUpMin = petType.getHpUpRange().getLow();
+		final int hpUpMax = petType.getHpUpRange().getHigh();
+		final int mpUpMin = petType.getMpUpRange().getLow();
+		final int mpUpMax = petType.getMpUpRange().getHigh();
 		short randomhp = (short) ((hpUpMin + hpUpMax) / 2);
 		short randommp = (short) ((mpUpMin + mpUpMax) / 2);
 		for (int i = 1; i < upLv; i++) {
@@ -137,7 +137,7 @@ public class PetTable {
 			pstm.setInt(10, l1pet.get_food());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -147,7 +147,7 @@ public class PetTable {
 		}
 	}
 
-	public void deletePet(int itemobjid) {
+	public void deletePet(final int itemobjid) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -156,7 +156,7 @@ public class PetTable {
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -170,13 +170,13 @@ public class PetTable {
 		return _pets.values().toArray(new L1Pet[_pets.size()]);
 	}
 
-	public L1Pet getTemplate(int itemobjid) {
+	public L1Pet getTemplate(final int itemobjid) {
 		return _pets.get(new Integer(itemobjid));
 	}
 
-	public void storeNewPet(L1NpcInstance pet, int objid, int itemobjid) {
+	public void storeNewPet(final L1NpcInstance pet, final int objid, final int itemobjid) {
 		// XXX 呼ばれる前と処理の重複
-		L1Pet l1pet = new L1Pet();
+		final L1Pet l1pet = new L1Pet();
 		l1pet.set_itemobjid(itemobjid);
 		l1pet.set_objid(objid);
 		l1pet.set_npcid(pet.getNpcTemplate().get_npcId());
@@ -206,7 +206,7 @@ public class PetTable {
 			pstm.setInt(10, l1pet.get_food());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -216,7 +216,7 @@ public class PetTable {
 		}
 	}
 
-	public void storePet(L1Pet pet) {
+	public void storePet(final L1Pet pet) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -234,7 +234,7 @@ public class PetTable {
 			pstm.setInt(10, pet.get_itemobjid());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -243,7 +243,7 @@ public class PetTable {
 	}
 
 	/** 更新宠物饱食度 */
-	public void storePetFood(L1Pet pet) {
+	public void storePetFood(final L1Pet pet) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -253,7 +253,7 @@ public class PetTable {
 			pstm.setInt(2, pet.get_itemobjid());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -271,8 +271,8 @@ public class PetTable {
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1Pet pet = new L1Pet();
-				int itemobjid = rs.getInt(1);
+				final L1Pet pet = new L1Pet();
+				final int itemobjid = rs.getInt(1);
 				pet.set_itemobjid(itemobjid);
 				pet.set_objid(rs.getInt(2));
 				pet.set_npcid(rs.getInt(3));
@@ -287,7 +287,7 @@ public class PetTable {
 				_pets.put(new Integer(itemobjid), pet);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

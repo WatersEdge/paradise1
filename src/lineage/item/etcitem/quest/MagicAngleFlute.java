@@ -40,7 +40,7 @@ public class MagicAngleFlute extends ItemExecutor {
 		// 再生的圣所 1层-3层 - (王族)
 		if (pc.isCrown() && (pc.getMapId() == 2000) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {
@@ -62,7 +62,7 @@ public class MagicAngleFlute extends ItemExecutor {
 		// 再生的圣所 1层-3层 - (骑士)
 		else if (pc.isKnight() && (pc.getMapId() == 2001) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {
@@ -84,7 +84,7 @@ public class MagicAngleFlute extends ItemExecutor {
 		// 再生的圣所 1层-3层 - (妖精)
 		else if (pc.isElf() && (pc.getMapId() == 2002) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {
@@ -106,7 +106,7 @@ public class MagicAngleFlute extends ItemExecutor {
 		// 再生的圣所 1层-3层 - (法师)
 		else if (pc.isWizard() && (pc.getMapId() == 2003) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
 			boolean found = false;
-			for (L1Object obj : L1World.getInstance().getObject()) {
+			for (final L1Object obj : L1World.getInstance().getObject()) {
 				if (obj instanceof L1MonsterInstance) {
 					final L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob != null) {

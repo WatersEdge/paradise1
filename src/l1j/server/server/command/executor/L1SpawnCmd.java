@@ -36,10 +36,10 @@ public class L1SpawnCmd implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer tok = new StringTokenizer(arg);
-			String nameId = tok.nextToken();
+			final StringTokenizer tok = new StringTokenizer(arg);
+			final String nameId = tok.nextToken();
 			int count = 1;
 			if (tok.hasMoreTokens()) {
 				count = Integer.parseInt(tok.nextToken());
@@ -48,9 +48,9 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			if (tok.hasMoreTokens()) {
 				randomrange = Integer.parseInt(tok.nextToken(), 10);
 			}
-			int npcid = parseNpcId(nameId);
+			final int npcid = parseNpcId(nameId);
 
-			L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
+			final L1Npc npc = NpcTable.getInstance().getTemplate(npcid);
 			if (npc == null) {
 				pc.sendPackets(new S_SystemMessage("找不到符合条件的NPC。"));
 				return;
@@ -58,34 +58,34 @@ public class L1SpawnCmd implements L1CommandExecutor {
 			for (int i = 0; i < count; i++) {
 				L1SpawnUtil.spawn(pc, npcid, randomrange, 0);
 			}
-			String msg = String.format("%s(%d) (%d) 召唤了。 (范围:%d)", npc.get_name(), npcid, count, randomrange);
+			final String msg = String.format("%s(%d) (%d) 召唤了。 (范围:%d)", npc.get_name(), npcid, count, randomrange);
 			pc.sendPackets(new S_SystemMessage(msg));
 		}
-		catch (NoSuchElementException e) {
+		catch (final NoSuchElementException e) {
 			sendErrorMessage(pc, cmdName);
 		}
-		catch (NumberFormatException e) {
+		catch (final NumberFormatException e) {
 			sendErrorMessage(pc, cmdName);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(cmdName + " 内部错误。"));
 		}
 	}
 
-	private int parseNpcId(String nameId) {
+	private int parseNpcId(final String nameId) {
 		int npcid = 0;
 		try {
 			npcid = Integer.parseInt(nameId);
 		}
-		catch (NumberFormatException e) {
+		catch (final NumberFormatException e) {
 			npcid = NpcTable.getInstance().findNpcIdByNameWithoutSpace(nameId);
 		}
 		return npcid;
 	}
 
-	private void sendErrorMessage(L1PcInstance pc, String cmdName) {
-		String errorMsg = "请输入: " + cmdName + " npcid|name [数量] [范围] 。";
+	private void sendErrorMessage(final L1PcInstance pc, final String cmdName) {
+		final String errorMsg = "请输入: " + cmdName + " npcid|name [数量] [范围] 。";
 		pc.sendPackets(new S_SystemMessage(errorMsg));
 	}
 }

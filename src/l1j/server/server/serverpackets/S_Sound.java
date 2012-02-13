@@ -34,7 +34,7 @@ public class S_Sound extends ServerBasePacket {
 	 * @param sound
 	 *            音效编号
 	 */
-	public S_Sound(int sound) {
+	public S_Sound(final int sound) {
 		buildPacket(sound);
 	}
 
@@ -51,7 +51,7 @@ public class S_Sound extends ServerBasePacket {
 		return S_SOUND;
 	}
 
-	private void buildPacket(int sound) {
+	private void buildPacket(final int sound) {
 		writeC(Opcodes.S_OPCODE_SOUND);
 		writeC(0); // repeat
 		writeH(sound);

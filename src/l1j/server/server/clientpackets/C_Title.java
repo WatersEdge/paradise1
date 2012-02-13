@@ -36,18 +36,18 @@ public class C_Title extends ClientBasePacket {
 	private static final String C_TITLE = "[C] C_Title";
 	private static Logger _log = Logger.getLogger(C_Title.class.getName());
 
-	public C_Title(byte abyte0[], ClientThread clientthread) {
+	public C_Title(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
-		L1PcInstance pc = clientthread.getActiveChar();
-		String charName = readS();
-		String title = readS();
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final String charName = readS();
+		final String title = readS();
 
 		if (charName.isEmpty() || title.isEmpty()) {
 			// \f1请以如下的格式输入。: "/title \f0角色名称 角色封号\f1"
 			pc.sendPackets(new S_ServerMessage(196));
 			return;
 		}
-		L1PcInstance target = L1World.getInstance().getPlayer(charName);
+		final L1PcInstance target = L1World.getInstance().getPlayer(charName);
 		if (target == null) {
 			return;
 		}
@@ -78,9 +78,9 @@ public class C_Title extends ClientBasePacket {
 					return;
 				}
 				changeTitle(target, title);
-				L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+				final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 				if (clan != null) {
-					for (L1PcInstance clanPc : clan.getOnlineClanMember()) {
+					for (final L1PcInstance clanPc : clan.getOnlineClanMember()) {
 						// \f1%0%s 赋予%1 '%2'的封号。
 						clanPc.sendPackets(new S_ServerMessage(203, pc.getName(), charName, title));
 					}
@@ -89,7 +89,7 @@ public class C_Title extends ClientBasePacket {
 		}
 		else {
 			if (pc.getId() == target.getId()) { // 自身
-				if (pc.getClanid() != 0 && !Config.CHANGE_TITLE_BY_ONESELF) {
+				if ((pc.getClanid() != 0) && !Config.CHANGE_TITLE_BY_ONESELF) {
 					// \f1王子或公主才可给血盟员封号。
 					pc.sendPackets(new S_ServerMessage(198));
 					return;
@@ -118,25 +118,25 @@ public class C_Title extends ClientBasePacket {
 		return C_TITLE;
 	}
 
-	private void changeTitle(L1PcInstance pc, String title) {
-		int objectId = pc.getId();
+	private void changeTitle(final L1PcInstance pc, final String title) {
+		final int objectId = pc.getId();
 		pc.setTitle(title);
 		pc.sendPackets(new S_CharTitle(objectId, title));
 		pc.broadcastPacket(new S_CharTitle(objectId, title));
 		try {
 			pc.save(); // 储存玩家的资料到资料库中
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
 
-	private boolean isClanLeader(L1PcInstance pc) {
+	private boolean isClanLeader(final L1PcInstance pc) {
 		boolean isClanLeader = false;
 		if (pc.getClanid() != 0) { // 有血盟
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				if (pc.isCrown() && pc.getId() == clan.getLeaderId()) { // 君主、かつ、血盟主
+				if (pc.isCrown() && (pc.getId() == clan.getLeaderId())) { // 君主、かつ、血盟主
 					isClanLeader = true;
 				}
 			}

@@ -44,7 +44,7 @@ public class S_AuctionBoard extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AuctionBoard(L1NpcInstance board) {
+	public S_AuctionBoard(final L1NpcInstance board) {
 		buildPacket(board);
 	}
 
@@ -61,8 +61,8 @@ public class S_AuctionBoard extends ServerBasePacket {
 		return S_AUCTIONBOARD;
 	}
 
-	private void buildPacket(L1NpcInstance board) {
-		List<Integer> houseList = Lists.newList();
+	private void buildPacket(final L1NpcInstance board) {
+		final List<Integer> houseList = Lists.newList();
 		int houseId = 0;
 		int count = 0;
 		int[] id = null;
@@ -122,14 +122,14 @@ public class S_AuctionBoard extends ServerBasePacket {
 					id[i] = rs.getInt(1);
 					name[i] = rs.getString(2);
 					area[i] = rs.getInt(3);
-					Calendar cal = timestampToCalendar((Timestamp) rs.getObject(4));
+					final Calendar cal = timestampToCalendar((Timestamp) rs.getObject(4));
 					month[i] = cal.get(Calendar.MONTH) + 1;
 					day[i] = cal.get(Calendar.DATE);
 					price[i] = rs.getInt(5);
 				}
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -150,8 +150,8 @@ public class S_AuctionBoard extends ServerBasePacket {
 		}
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
+	private Calendar timestampToCalendar(final Timestamp ts) {
+		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
 	}

@@ -53,18 +53,19 @@ public class HpRegeneration extends TimerTask {
 	 *            PC
 	 * @return true 如果PC在治愈能量风暴范围内
 	 */
-	private static boolean isPlayerInLifeStream(L1PcInstance pc) {
-		for (L1Object object : pc.getKnownObjects()) {
-			if (object instanceof L1EffectInstance == false) {
+	private static boolean isPlayerInLifeStream(final L1PcInstance pc) {
+		for (final L1Object object : pc.getKnownObjects()) {
+			if ((object instanceof L1EffectInstance) == false) {
 				continue;
 			}
-			L1EffectInstance effect = (L1EffectInstance) object;
-			if (effect.getNpcId() == 81169 && effect.getLocation().getTileLineDistance(pc.getLocation()) < 4) {
+			final L1EffectInstance effect = (L1EffectInstance) object;
+			if ((effect.getNpcId() == 81169) && (effect.getLocation().getTileLineDistance(pc.getLocation()) < 4)) {
 				return true;
 			}
 		}
 		return false;
 	}
+
 	private final L1PcInstance _pc;
 	/** 再生的最大值 */
 	private int _regenMax = 0;
@@ -74,7 +75,7 @@ public class HpRegeneration extends TimerTask {
 	/** 当前点 */
 	private int _curPoint = 4;
 
-	public HpRegeneration(L1PcInstance pc) {
+	public HpRegeneration(final L1PcInstance pc) {
 		_pc = pc;
 
 		updateLevel();
@@ -88,7 +89,7 @@ public class HpRegeneration extends TimerTask {
 		int maxBonus = 1;
 
 		// CON奖励
-		if (11 < _pc.getLevel() && 14 <= _pc.getCon()) {
+		if ((11 < _pc.getLevel()) && (14 <= _pc.getCon())) {
 			maxBonus = _pc.getCon() - 12;
 			if (25 < _pc.getCon()) {
 				maxBonus = 14;
@@ -105,12 +106,12 @@ public class HpRegeneration extends TimerTask {
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
 			bonus += 5;
 		}
-		if (_pc.getMapId() == 16384 || _pc.getMapId() == 16896 || _pc.getMapId() == 17408 || _pc.getMapId() == 17920 || _pc.getMapId() == 18432 || _pc.getMapId() == 18944 || _pc.getMapId() == 19968 || _pc.getMapId() == 19456 || _pc.getMapId() == 20480 || _pc.getMapId() == 20992
-				|| _pc.getMapId() == 21504 || _pc.getMapId() == 22016 || _pc.getMapId() == 22528 || _pc.getMapId() == 23040 || _pc.getMapId() == 23552 || _pc.getMapId() == 24064 || _pc.getMapId() == 24576 || _pc.getMapId() == 25088) { // 宿屋
+		if ((_pc.getMapId() == 16384) || (_pc.getMapId() == 16896) || (_pc.getMapId() == 17408) || (_pc.getMapId() == 17920) || (_pc.getMapId() == 18432) || (_pc.getMapId() == 18944) || (_pc.getMapId() == 19968) || (_pc.getMapId() == 19456) || (_pc.getMapId() == 20480)
+				|| (_pc.getMapId() == 20992) || (_pc.getMapId() == 21504) || (_pc.getMapId() == 22016) || (_pc.getMapId() == 22528) || (_pc.getMapId() == 23040) || (_pc.getMapId() == 23552) || (_pc.getMapId() == 24064) || (_pc.getMapId() == 24576) || (_pc.getMapId() == 25088)) { // 宿屋
 			bonus += 5;
 		}
 		// 妖精森林大树下
-		if ((_pc.getLocation().isInScreen(new Point(33055, 32336)) && _pc.getMapId() == 4 && _pc.isElf())) {
+		if ((_pc.getLocation().isInScreen(new Point(33055, 32336)) && (_pc.getMapId() == 4) && _pc.isElf())) {
 			bonus += 5;
 		}
 		if (_pc.hasSkillEffect(COOKING_1_5_N) || _pc.hasSkillEffect(COOKING_1_5_S)) {
@@ -131,7 +132,7 @@ public class HpRegeneration extends TimerTask {
 		}
 
 		// 检查饥饿与负重
-		if (_pc.get_food() < 3 || isOverWeight(_pc) || _pc.hasSkillEffect(BERSERKERS)) { // 狂暴术
+		if ((_pc.get_food() < 3) || isOverWeight(_pc) || _pc.hasSkillEffect(BERSERKERS)) { // 狂暴术
 			bonus = 0;
 			// 由于装备ＨＰＲ增加饱食度、负重减轻、 减少饱食度、重量に関係なく効果が残る
 			if (equipHpr > 0) {
@@ -171,7 +172,7 @@ public class HpRegeneration extends TimerTask {
 			}
 		}
 		// 魔族神殿的HP减少处理
-		if (_pc.getMapId() == 410 && !inLifeStream) {
+		if ((_pc.getMapId() == 410) && !inLifeStream) {
 			newHp -= 10;
 			if (newHp < 1) {
 				if (_pc.isGm()) {
@@ -215,7 +216,7 @@ public class HpRegeneration extends TimerTask {
 
 			// 免登出可点完奖励点
 			if (!(_pc.isGm() || _pc.isMonitor())) { // 不是GM或管理员
-				if (_pc.getLevel() >= 51 && _pc.getLevel() - 50 > _pc.getBonusStats()) {
+				if ((_pc.getLevel() >= 51) && (_pc.getLevel() - 50 > _pc.getBonusStats())) {
 					if ((_pc.getBaseStr() + _pc.getBaseDex() + _pc.getBaseCon() + _pc.getBaseInt() + _pc.getBaseWis() + _pc.getBaseCha()) < (Config.BONUS_STATS1 * 6)) {
 						_pc.sendPackets(new S_bonusstats(_pc.getId(), 1));
 					}
@@ -232,12 +233,12 @@ public class HpRegeneration extends TimerTask {
 				}
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	public void setState(int state) {
+	public void setState(final int state) {
 		if (_curPoint < state) {
 			return;
 		}
@@ -250,7 +251,7 @@ public class HpRegeneration extends TimerTask {
 		final int lvlTable[] = new int[] { 30, 25, 20, 16, 14, 12, 11, 10, 9, 3, 2 };
 
 		int regenLvl = Math.min(10, _pc.getLevel());
-		if (30 <= _pc.getLevel() && _pc.isKnight()) {
+		if ((30 <= _pc.getLevel()) && _pc.isKnight()) {
 			regenLvl = 11;
 		}
 
@@ -260,13 +261,13 @@ public class HpRegeneration extends TimerTask {
 	}
 
 	/** 50级任务 */
-	private boolean isLv50Quest(L1PcInstance pc) {
-		int mapId = pc.getMapId();
-		return (mapId == 2000 || mapId == 2001) ? true : false;
+	private boolean isLv50Quest(final L1PcInstance pc) {
+		final int mapId = pc.getMapId();
+		return ((mapId == 2000) || (mapId == 2001)) ? true : false;
 	}
 
 	/** 超重仍可恢复血魔 */
-	private boolean isOverWeight(L1PcInstance pc) {
+	private boolean isOverWeight(final L1PcInstance pc) {
 		// 体能激发状态、能量激发状态
 		// 装备巨蚁女皇的金翅膀、不被视为超重。
 		if (pc.hasSkillEffect(EXOTIC_VITALIZE) || pc.hasSkillEffect(ADDITIONAL_FIRE)) {
@@ -280,7 +281,7 @@ public class HpRegeneration extends TimerTask {
 	}
 
 	/** 水中的负面状态无效 */
-	private boolean isUnderwater(L1PcInstance pc) {
+	private boolean isUnderwater(final L1PcInstance pc) {
 		// 启动水下装备时、 伊娃祝福状态、修好的装备 则认为水中的负面状态无效。
 		if (pc.getInventory().checkEquipped(20207)) { // 深水长靴
 			return false;

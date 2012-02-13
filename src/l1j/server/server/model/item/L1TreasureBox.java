@@ -75,7 +75,7 @@ public class L1TreasureBox {
 
 		@SuppressWarnings("unused")
 		@XmlAttribute(name = "Chance")
-		private void setChance(double chance) {
+		private void setChance(final double chance) {
 			_chance = (int) (chance * 10000);
 		}
 	}
@@ -109,34 +109,34 @@ public class L1TreasureBox {
 	 *            - TreasureBox的ID。普通道具的ItemId。
 	 * @return 指定されたIDのTreasureBox。見つからなかった場合はnull。
 	 */
-	public static L1TreasureBox get(int id) {
+	public static L1TreasureBox get(final int id) {
 		return _dataMap.get(id);
 	}
 
 	public static void load() {
-		PerformanceTimer timer = new PerformanceTimer();
+		final PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╚》正在读取 TreasureBox...");
 		try {
-			JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
+			final JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
 
-			Unmarshaller um = context.createUnmarshaller();
+			final Unmarshaller um = context.createUnmarshaller();
 
-			File file = new File(PATH);
-			TreasureBoxList list = (TreasureBoxList) um.unmarshal(file);
+			final File file = new File(PATH);
+			final TreasureBoxList list = (TreasureBoxList) um.unmarshal(file);
 
-			for (L1TreasureBox each : list) {
+			for (final L1TreasureBox each : list) {
 				each.init();
 				_dataMap.put(each.getBoxId(), each);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, PATH + "的载入失败。", e);
 			System.exit(0);
 		}
 		System.out.println("完成!\t耗时: " + timer.get() + "\t毫秒");
 	}
 
-	private static void storeItem(L1PcInstance pc, L1ItemInstance item) {
+	private static void storeItem(final L1PcInstance pc, final L1ItemInstance item) {
 		L1Inventory inventory;
 
 		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
@@ -169,12 +169,12 @@ public class L1TreasureBox {
 	 *            - TreasureBoxを開けるPC
 	 * @return 開封した結果何らかのアイテムが出てきた場合はtrueを返す。 持ちきれず地面に落ちた場合もtrueになる。
 	 */
-	public boolean open(L1PcInstance pc) {
+	public boolean open(final L1PcInstance pc) {
 		L1ItemInstance item = null;
 
 		if (getType().equals(TYPE.SPECIFIC)) {
 			// 出るアイテムが決まっているもの
-			for (Item each : getItems()) {
+			for (final Item each : getItems()) {
 				item = ItemTable.getInstance().createItem(each.getItemId());
 				item.setEnchantLevel(each.getEnchant()); // Enchant Feature for treasure_box
 				if (item != null) {
@@ -188,9 +188,9 @@ public class L1TreasureBox {
 			// 出るアイテムがランダムに決まるもの
 			int chance = 0;
 
-			int r = Random.nextInt(getTotalChance());
+			final int r = Random.nextInt(getTotalChance());
 
-			for (Item each : getItems()) {
+			for (final Item each : getItems()) {
 				chance += each.getChance();
 
 				if (r < chance) {
@@ -209,7 +209,7 @@ public class L1TreasureBox {
 			return false;
 		}
 		else {
-			int itemId = getBoxId();
+			final int itemId = getBoxId();
 
 			// 灵魂水晶、黑暗安特的水果、魔族的卷轴
 			if ((itemId == 40576 // 灵魂水晶
@@ -224,7 +224,7 @@ public class L1TreasureBox {
 
 			// 多魯嘉之袋
 			if ((itemId == 46000)) {
-				L1ItemInstance box = pc.getInventory().findItemId(itemId);
+				final L1ItemInstance box = pc.getInventory().findItemId(itemId);
 				box.setChargeCount(box.getChargeCount() - 1);
 				pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
 				if (box.getChargeCount() < 1) {
@@ -254,7 +254,7 @@ public class L1TreasureBox {
 	}
 
 	private void init() {
-		for (Item each : getItems()) {
+		for (final Item each : getItems()) {
 			_totalChance += each.getChance();
 			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
 				getItems().remove(each);

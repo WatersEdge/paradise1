@@ -23,26 +23,27 @@ package l1j.server.server.utils;
  * </p>
  */
 public class IntRange {
-	public static int ensure(int n, int low, int high) {
+	public static int ensure(final int n, final int low, final int high) {
 		int r = n;
 		r = (low <= r) ? r : low;
 		r = (r <= high) ? r : high;
 		return r;
 	}
-	public static boolean includes(int i, int low, int high) {
+
+	public static boolean includes(final int i, final int low, final int high) {
 		return (low <= i) && (i <= high);
 	}
 
-	private int _low;
+	private final int _low;
 
-	private int _high;
+	private final int _high;
 
-	public IntRange(int low, int high) {
+	public IntRange(final int low, final int high) {
 		_low = low;
 		_high = high;
 	}
 
-	public IntRange(IntRange range) {
+	public IntRange(final IntRange range) {
 		this(range._low, range._high);
 	}
 
@@ -53,7 +54,7 @@ public class IntRange {
 	 *            数値
 	 * @return 丸められた値
 	 */
-	public int ensure(int i) {
+	public int ensure(final int i) {
 		int r = i;
 		r = (_low <= r) ? r : _low;
 		r = (r <= _high) ? r : _high;
@@ -61,12 +62,12 @@ public class IntRange {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (!(obj instanceof IntRange)) {
 			return false;
 		}
-		IntRange range = (IntRange) obj;
-		return (this._low == range._low) && (this._high == range._high);
+		final IntRange range = (IntRange) obj;
+		return (_low == range._low) && (_high == range._high);
 	}
 
 	/** 获得高的 */
@@ -91,7 +92,7 @@ public class IntRange {
 	 *            数値
 	 * @return 範囲内であればtrue
 	 */
-	public boolean includes(int i) {
+	public boolean includes(final int i) {
 		return (_low <= i) && (i <= _high);
 	}
 

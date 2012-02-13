@@ -37,18 +37,18 @@ public class C_AuthLogin extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_AuthLogin.class.getName());
 
-	public C_AuthLogin(byte[] decrypt, ClientThread client) {
+	public C_AuthLogin(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		String accountName = readS().toLowerCase();
-		String password = readS();
+		final String accountName = readS().toLowerCase();
+		final String password = readS();
 
-		String ip = client.getIp();
-		String host = client.getHostname();
+		final String ip = client.getIp();
+		final String host = client.getHostname();
 
 		_log.finest("请求登陆的账户 : " + accountName);
 
 		if (!Config.ALLOW_2PC) {
-			for (ClientThread tempClient : LoginController.getInstance().getAllAccounts()) {
+			for (final ClientThread tempClient : LoginController.getInstance().getAllAccounts()) {
 				if (ip.equalsIgnoreCase(tempClient.getIp())) {
 					_log.info("拒绝 2P 登入。账号=" + accountName + " IP=" + host);
 					client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
@@ -66,7 +66,7 @@ public class C_AuthLogin extends ClientBasePacket {
 				_log.warning("用户账号丢失 " + accountName);
 			}
 		}
-		if (account == null || !account.validatePassword(password)) {
+		if ((account == null) || !account.validatePassword(password)) {
 			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
@@ -88,12 +88,12 @@ public class C_AuthLogin extends ClientBasePacket {
 			client.sendPacket(new S_CommonNews());
 			Account.online(account, true);
 		}
-		catch (GameServerFullException e) {
+		catch (final GameServerFullException e) {
 			client.kick();
 			_log.info("线上人数已经饱和，切断 (" + client.getHostname() + ") 的连线。");
 			return;
 		}
-		catch (AccountAlreadyLoginException e) {
+		catch (final AccountAlreadyLoginException e) {
 			client.kick();
 			_log.info("同个帐号已经登入，切断 (" + client.getHostname() + ") 的连线。");
 			return;

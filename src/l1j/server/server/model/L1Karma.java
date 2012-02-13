@@ -31,7 +31,7 @@ public class L1Karma {
 	private int _karma = 0;
 
 	/** 增加友好度 */
-	public void add(int i) {
+	public void add(final int i) {
 		set(_karma + i);
 	}
 
@@ -51,7 +51,7 @@ public class L1Karma {
 			karma *= -1;
 		}
 
-		for (int point : KARMA_POINT) {
+		for (final int point : KARMA_POINT) {
 			if (karma >= point) {
 				karmaLevel++;
 				if (karmaLevel >= 8) {
@@ -86,7 +86,7 @@ public class L1Karma {
 	}
 
 	/** 设定友好度 */
-	public void set(int i) {
+	public void set(final int i) {
 		_karma = KARMA_RANGE.ensure(i);
 	}
 }

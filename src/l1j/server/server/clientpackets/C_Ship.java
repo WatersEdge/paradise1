@@ -29,15 +29,15 @@ public class C_Ship extends ClientBasePacket {
 
 	private static final String C_SHIP = "[C] C_Ship";
 
-	public C_Ship(byte abyte0[], ClientThread client) {
+	public C_Ship(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
 
-		int shipMapId = readH();
-		int locX = readH();
-		int locY = readH();
+		final int shipMapId = readH();
+		final int locX = readH();
+		final int locY = readH();
 
-		L1PcInstance pc = client.getActiveChar();
-		int mapId = pc.getMapId();
+		final L1PcInstance pc = client.getActiveChar();
+		final int mapId = pc.getMapId();
 
 		if (mapId == 5) { // Talking Island Ship to Aden Mainland
 			pc.getInventory().consumeItem(40299, 1);

@@ -30,14 +30,14 @@ public class C_Fight extends ClientBasePacket {
 
 	private static final String C_FIGHT = "[C] C_Fight";
 
-	public C_Fight(byte abyte0[], ClientThread client) throws Exception {
+	public C_Fight(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
-		L1PcInstance target = FaceToFace.faceToFace(pc);
+		final L1PcInstance target = FaceToFace.faceToFace(pc);
 		if (target != null) {
 			if (!target.isParalyzed()) {
 				if (pc.getFightId() != 0) {

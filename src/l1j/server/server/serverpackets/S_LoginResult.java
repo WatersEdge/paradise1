@@ -39,7 +39,7 @@ public class S_LoginResult extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_LoginResult(int reason) {
+	public S_LoginResult(final int reason) {
 		buildPacket(reason);
 	}
 
@@ -56,7 +56,7 @@ public class S_LoginResult extends ServerBasePacket {
 		return S_LOGIN_RESULT;
 	}
 
-	private void buildPacket(int reason) {
+	private void buildPacket(final int reason) {
 		writeC(Opcodes.S_OPCODE_LOGINRESULT);
 		writeC(reason);
 		writeD(0x00000000);

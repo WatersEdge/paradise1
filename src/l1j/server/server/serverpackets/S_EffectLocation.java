@@ -35,7 +35,7 @@ public class S_EffectLocation extends ServerBasePacket {
 	 * @param gfxId
 	 *            - 动画ID
 	 */
-	public S_EffectLocation(int x, int y, int gfxId) {
+	public S_EffectLocation(final int x, final int y, final int gfxId) {
 		writeC(Opcodes.S_OPCODE_EFFECTLOCATION);
 		writeH(x);
 		writeH(y);
@@ -51,7 +51,7 @@ public class S_EffectLocation extends ServerBasePacket {
 	 * @param gfxId
 	 *            - 动画ID
 	 */
-	public S_EffectLocation(L1Location loc, int gfxId) {
+	public S_EffectLocation(final L1Location loc, final int gfxId) {
 		this(loc.getX(), loc.getY(), gfxId);
 	}
 
@@ -63,7 +63,7 @@ public class S_EffectLocation extends ServerBasePacket {
 	 * @param gfxId
 	 *            - 动画ID
 	 */
-	public S_EffectLocation(Point pt, int gfxId) {
+	public S_EffectLocation(final Point pt, final int gfxId) {
 		this(pt.getX(), pt.getY(), gfxId);
 	}
 

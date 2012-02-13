@@ -26,7 +26,7 @@ public class S_NoSell extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_NoSell(L1NpcInstance npc) {
+	public S_NoSell(final L1NpcInstance npc) {
 		buildPacket(npc);
 	}
 
@@ -44,7 +44,7 @@ public class S_NoSell extends ServerBasePacket {
 		return _S__25_NoSell;
 	}
 
-	private void buildPacket(L1NpcInstance npc) {
+	private void buildPacket(final L1NpcInstance npc) {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(npc.getId());
 		writeS("nosell");

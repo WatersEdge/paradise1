@@ -28,7 +28,7 @@ public class L1HpBar implements L1CommandExecutor {
 		return new L1HpBar();
 	}
 
-	public static boolean isHpBarTarget(L1Object obj) {
+	public static boolean isHpBarTarget(final L1Object obj) {
 		if (obj instanceof L1MonsterInstance) {
 			return true;
 		}
@@ -48,14 +48,14 @@ public class L1HpBar implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		if (arg.equalsIgnoreCase("on")) {
 			pc.setSkillEffect(GMSTATUS_HPBAR, 0);
 		}
 		else if (arg.equalsIgnoreCase("off")) {
 			pc.removeSkillEffect(GMSTATUS_HPBAR);
 
-			for (L1Object obj : pc.getKnownObjects()) {
+			for (final L1Object obj : pc.getKnownObjects()) {
 				if (isHpBarTarget(obj)) {
 					pc.sendPackets(new S_HPMeter(obj.getId(), 0xFF));
 				}

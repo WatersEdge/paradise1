@@ -33,25 +33,25 @@ public class C_SelectTarget extends ClientBasePacket {
 
 	private static final String C_SELECT_TARGET = "[C] C_SelectTarget";
 
-	public C_SelectTarget(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_SelectTarget(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int petId = readD();
+		final int petId = readD();
 		readC();
-		int targetId = readD();
+		final int targetId = readD();
 
-		L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
-		L1Character target = (L1Character) L1World.getInstance().findObject(targetId);
+		final L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
+		final L1Character target = (L1Character) L1World.getInstance().findObject(targetId);
 
 		if ((pet != null) && (target != null)) {
 			// 目标为玩家
 			if (target instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) target;
+				final L1PcInstance pc = (L1PcInstance) target;
 				// 目标在安区、攻击者在安区、NOPVP
 				if ((pc.getZoneType() == 1) || (pet.getZoneType() == 1) || (pc.checkNonPvP(pc, pet))) {
 					// 宠物主人
 					if (pet.getMaster() instanceof L1PcInstance) {
-						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						final L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
 						petMaster.sendPackets(new S_ServerMessage(328)); // 请选择正确的对象。
 					}
 					return;
@@ -59,12 +59,12 @@ public class C_SelectTarget extends ClientBasePacket {
 			}
 			// 目标为宠物
 			else if (target instanceof L1PetInstance) {
-				L1PetInstance targetPet = (L1PetInstance) target;
+				final L1PetInstance targetPet = (L1PetInstance) target;
 				// 目标在安区、攻击者在安区
 				if ((targetPet.getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					// 宠物主人
 					if (pet.getMaster() instanceof L1PcInstance) {
-						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						final L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
 						petMaster.sendPackets(new S_ServerMessage(328)); // 请选择正确的对象。
 					}
 					return;
@@ -72,12 +72,12 @@ public class C_SelectTarget extends ClientBasePacket {
 			}
 			// 目标为召唤怪
 			else if (target instanceof L1SummonInstance) {
-				L1SummonInstance targetSummon = (L1SummonInstance) target;
+				final L1SummonInstance targetSummon = (L1SummonInstance) target;
 				// 目标在安区、攻击者在安区
 				if ((targetSummon.getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					// 宠物主人
 					if (pet.getMaster() instanceof L1PcInstance) {
-						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						final L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
 						petMaster.sendPackets(new S_ServerMessage(328)); // 请选择正确的对象。
 					}
 					return;
@@ -85,11 +85,11 @@ public class C_SelectTarget extends ClientBasePacket {
 			}
 			// 目标为怪物
 			else if (target instanceof L1MonsterInstance) {
-				L1MonsterInstance mob = (L1MonsterInstance) target;
+				final L1MonsterInstance mob = (L1MonsterInstance) target;
 				// 特定状态下才可攻击
 				if (pet.getMaster().isAttackMiss(pet.getMaster(), mob.getNpcId())) {
 					if (pet.getMaster() instanceof L1PcInstance) {
-						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						final L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
 						petMaster.sendPackets(new S_ServerMessage(328)); // 请选择正确的对象。
 					}
 					return;

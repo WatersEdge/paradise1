@@ -58,7 +58,7 @@ public class L1Shop {
 	 * @param purchasingItems
 	 *            购买项目
 	 */
-	public L1Shop(int npcId, List<L1ShopItem> sellingItems, List<L1ShopItem> purchasingItems) {
+	public L1Shop(final int npcId, final List<L1ShopItem> sellingItems, final List<L1ShopItem> purchasingItems) {
 		if ((sellingItems == null) || (purchasingItems == null)) {
 			throw new NullPointerException();
 		}
@@ -73,8 +73,8 @@ public class L1Shop {
 	 * 
 	 * @param item
 	 */
-	public L1AssessedItem assessItem(L1ItemInstance item) {
-		L1ShopItem shopItem = getPurchasingItem(item.getItemId());
+	public L1AssessedItem assessItem(final L1ItemInstance item) {
+		final L1ShopItem shopItem = getPurchasingItem(item.getItemId());
 		if (shopItem == null) {
 			return null;
 		}
@@ -88,10 +88,10 @@ public class L1Shop {
 	 *            检查对象的库存
 	 * @return 检查可购买道具的清单
 	 */
-	public List<L1AssessedItem> assessItems(L1PcInventory inv) {
-		List<L1AssessedItem> result = Lists.newList();
-		for (L1ShopItem item : _purchasingItems) {
-			for (L1ItemInstance targetItem : inv.findItemsId(item.getItemId())) {
+	public List<L1AssessedItem> assessItems(final L1PcInventory inv) {
+		final List<L1AssessedItem> result = Lists.newList();
+		for (final L1ShopItem item : _purchasingItems) {
+			for (final L1ItemInstance targetItem : inv.findItemsId(item.getItemId())) {
 				if (!isPurchaseableItem(targetItem)) {
 					continue;
 				}
@@ -108,11 +108,11 @@ public class L1Shop {
 	 * @param orderList
 	 *            取得购买列出的项目和价格L1ShopSellOrderList
 	 */
-	public void buyItems(L1ShopSellOrderList orderList) {
-		L1PcInventory inv = orderList.getPc().getInventory();
+	public void buyItems(final L1ShopSellOrderList orderList) {
+		final L1PcInventory inv = orderList.getPc().getInventory();
 		int totalPrice = 0;
-		for (L1ShopSellOrder order : orderList.getList()) {
-			int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
+		for (final L1ShopSellOrder order : orderList.getList()) {
+			final int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
 			totalPrice += order.getItem().getAssessedPrice() * count;
 		}
 
@@ -138,7 +138,7 @@ public class L1Shop {
 	}
 
 	/** 个人商店贩卖清单顺序 */
-	public L1ShopSellOrderList newSellOrderList(L1PcInstance pc) {
+	public L1ShopSellOrderList newSellOrderList(final L1PcInstance pc) {
 		return new L1ShopSellOrderList(this, pc);
 	}
 
@@ -150,7 +150,7 @@ public class L1Shop {
 	 * @param orderList
 	 *            列出商店出售的道具L1ShopBuyOrderList
 	 */
-	public void sellItems(L1PcInstance pc, L1ShopBuyOrderList orderList) {
+	public void sellItems(final L1PcInstance pc, final L1ShopBuyOrderList orderList) {
 		if (!ensureSell(pc, orderList)) {
 			return;
 		}
@@ -164,8 +164,8 @@ public class L1Shop {
 	 * 
 	 * @return 如果你不能以任何理由出售项目、false
 	 */
-	private boolean ensureSell(L1PcInstance pc, L1ShopBuyOrderList orderList) {
-		int price = orderList.getTotalPriceTaxIncluded();
+	private boolean ensureSell(final L1PcInstance pc, final L1ShopBuyOrderList orderList) {
+		final int price = orderList.getTotalPriceTaxIncluded();
 
 		// 溢出检查
 		if (!IntRange.includes(price, 0, 2000000000)) {
@@ -181,7 +181,7 @@ public class L1Shop {
 		}
 
 		// 检查负重
-		int currentWeight = pc.getInventory().getWeight() * 1000;
+		final int currentWeight = pc.getInventory().getWeight() * 1000;
 		if (currentWeight + orderList.getTotalWeight() > pc.getMaxWeight() * 1000) {
 			pc.sendPackets(new S_ServerMessage(82)); // 此物品太重了，所以你无法携带。
 			return false;
@@ -189,8 +189,8 @@ public class L1Shop {
 
 		// 检查道具总数
 		int totalCount = pc.getInventory().getSize();
-		for (L1ShopBuyOrder order : orderList.getList()) {
-			L1Item temp = order.getItem().getItem();
+		for (final L1ShopBuyOrder order : orderList.getList()) {
+			final L1Item temp = order.getItem().getItem();
 			if (temp.isStackable()) {
 				if (!pc.getInventory().checkItem(temp.getItemId())) {
 					totalCount += 1;
@@ -212,7 +212,7 @@ public class L1Shop {
 	 * 
 	 * @param item
 	 */
-	private int getAssessedPrice(L1ShopItem item) {
+	private int getAssessedPrice(final L1ShopItem item) {
 		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item.getPackCount());
 	}
 
@@ -221,8 +221,8 @@ public class L1Shop {
 	 * 
 	 * @param itemId
 	 */
-	private L1ShopItem getPurchasingItem(int itemId) {
-		for (L1ShopItem shopItem : _purchasingItems) {
+	private L1ShopItem getPurchasingItem(final int itemId) {
+		for (final L1ShopItem shopItem : _purchasingItems) {
 			if (shopItem.getItemId() == itemId) {
 				return shopItem;
 			}
@@ -236,7 +236,7 @@ public class L1Shop {
 	 * @param item
 	 * @return 该道具可以购买true
 	 */
-	private boolean isPurchaseableItem(L1ItemInstance item) {
+	private boolean isPurchaseableItem(final L1ItemInstance item) {
 		if (item == null) {
 			return false;
 		}
@@ -258,12 +258,12 @@ public class L1Shop {
 	 * 
 	 * @param orderList
 	 */
-	private void payCastleTax(L1ShopBuyOrderList orderList) {
-		L1TaxCalculator calc = orderList.getTaxCalculator();
+	private void payCastleTax(final L1ShopBuyOrderList orderList) {
+		final L1TaxCalculator calc = orderList.getTaxCalculator();
 
-		int price = orderList.getTotalPrice();
+		final int price = orderList.getTotalPrice();
 
-		int castleId = L1CastleLocation.getCastleIdByNpcid(_npcId);
+		final int castleId = L1CastleLocation.getCastleIdByNpcid(_npcId);
 		int castleTax = calc.calcCastleTaxPrice(price);
 		int nationalTax = calc.calcNationalTaxPrice(price);
 		// アデン城・ディアド城の場合は国税なし
@@ -273,7 +273,7 @@ public class L1Shop {
 		}
 
 		if ((castleId != 0) && (castleTax > 0)) {
-			L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
+			final L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
 
 			synchronized (castle) {
 				int money = castle.getPublicMoney();
@@ -285,7 +285,7 @@ public class L1Shop {
 			}
 
 			if (nationalTax > 0) {
-				L1Castle aden = CastleTable.getInstance().getCastleTable(L1CastleLocation.ADEN_CASTLE_ID);
+				final L1Castle aden = CastleTable.getInstance().getCastleTable(L1CastleLocation.ADEN_CASTLE_ID);
 				synchronized (aden) {
 					int money = aden.getPublicMoney();
 					if (2000000000 > money) {
@@ -303,18 +303,18 @@ public class L1Shop {
 	 * 
 	 * @param orderList
 	 */
-	private void payDiadTax(L1ShopBuyOrderList orderList) {
-		L1TaxCalculator calc = orderList.getTaxCalculator();
+	private void payDiadTax(final L1ShopBuyOrderList orderList) {
+		final L1TaxCalculator calc = orderList.getTaxCalculator();
 
-		int price = orderList.getTotalPrice();
+		final int price = orderList.getTotalPrice();
 
 		// ディアド税
-		int diadTax = calc.calcDiadTaxPrice(price);
+		final int diadTax = calc.calcDiadTaxPrice(price);
 		if (diadTax <= 0) {
 			return;
 		}
 
-		L1Castle castle = CastleTable.getInstance().getCastleTable(L1CastleLocation.DIAD_CASTLE_ID);
+		final L1Castle castle = CastleTable.getInstance().getCastleTable(L1CastleLocation.DIAD_CASTLE_ID);
 		synchronized (castle) {
 			int money = castle.getPublicMoney();
 			if (2000000000 > money) {
@@ -327,7 +327,7 @@ public class L1Shop {
 
 	// XXX 納税処理はこのクラスの責務では無い気がするが、とりあえず
 	/** 纳税处理 */
-	private void payTax(L1ShopBuyOrderList orderList) {
+	private void payTax(final L1ShopBuyOrderList orderList) {
 		payCastleTax(orderList);
 		payTownTax(orderList);
 		payDiadTax(orderList);
@@ -338,12 +338,12 @@ public class L1Shop {
 	 * 
 	 * @param orderList
 	 */
-	private void payTownTax(L1ShopBuyOrderList orderList) {
-		int price = orderList.getTotalPrice();
+	private void payTownTax(final L1ShopBuyOrderList orderList) {
+		final int price = orderList.getTotalPrice();
 
 		// 收入的城镇
 		if (!L1World.getInstance().isProcessingContributionTotal()) {
-			int town_id = L1TownLocation.getTownIdByNpcid(_npcId);
+			final int town_id = L1TownLocation.getTownIdByNpcid(_npcId);
 			if ((town_id >= 1) && (town_id <= 10)) {
 				TownTable.getInstance().addSalesMoney(town_id, price);
 			}
@@ -356,18 +356,18 @@ public class L1Shop {
 	 * @param inv
 	 * @param orderList
 	 */
-	private void sellItems(L1PcInventory inv, L1ShopBuyOrderList orderList) {
+	private void sellItems(final L1PcInventory inv, final L1ShopBuyOrderList orderList) {
 		if (!inv.consumeItem(L1ItemId.ADENA, orderList.getTotalPriceTaxIncluded())) {
 			throw new IllegalStateException("因不足对购买所需的货币而不能消费。");
 		}
-		for (L1ShopBuyOrder order : orderList.getList()) {
-			int itemId = order.getItem().getItemId();
-			int amount = order.getCount();
-			L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
+		for (final L1ShopBuyOrder order : orderList.getList()) {
+			final int itemId = order.getItem().getItemId();
+			final int amount = order.getCount();
+			final L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 			if (item.getItemId() == 40309) { // Race Tickets(食人妖精竞赛票)
 				item.setItem(order.getItem().getItem());
 				L1BugBearRace.getInstance().setAllBet(L1BugBearRace.getInstance().getAllBet() + (amount * order.getItem().getPrice()));
-				String[] runNum = item.getItem().getIdentifiedNameId().split("-");
+				final String[] runNum = item.getItem().getIdentifiedNameId().split("-");
 				int trueNum = 0;
 				for (int i = 0; i < 5; i++) {
 					if (L1BugBearRace.getInstance().getRunner(i).getNpcId() - 91350 == (Integer.parseInt(runNum[runNum.length - 1]) - 1)) {
@@ -382,7 +382,7 @@ public class L1Shop {
 			inv.storeItem(item);
 			if ((_npcId == 70068) || (_npcId == 70020)) { // 福朗克、罗克(贩卖道具随机加成)
 				item.setIdentified(true);
-				int chance = Random.nextInt(100) + 1; // 几率
+				final int chance = Random.nextInt(100) + 1; // 几率
 				if (chance <= 15) {
 					item.setEnchantLevel(-2); // -2装备
 					inv.updateItem(item, L1PcInventory.COL_ENCHANTLVL);

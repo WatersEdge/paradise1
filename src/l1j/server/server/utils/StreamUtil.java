@@ -31,14 +31,14 @@ public class StreamUtil {
 	 * 
 	 * @param closeables
 	 */
-	public static void close(Closeable... closeables) {
-		for (Closeable c : closeables) {
+	public static void close(final Closeable... closeables) {
+		for (final Closeable c : closeables) {
 			try {
 				if (c != null) {
 					c.close();
 				}
 			}
-			catch (IOException e) {
+			catch (final IOException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}

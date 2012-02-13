@@ -57,15 +57,15 @@ public class Announcements {
 	/**
 	 * 全体公告
 	 */
-	public void announceToAll(String msg) {
+	public void announceToAll(final String msg) {
 		L1World.getInstance().broadcastServerMessage(msg);
 	}
 
 	/**
 	 * 显示公告
 	 */
-	public void showAnnouncements(L1PcInstance showTo) {
-		for (String msg : _announcements) {
+	public void showAnnouncements(final L1PcInstance showTo) {
+		for (final String msg : _announcements) {
 			showTo.sendPackets(new S_SystemMessage(msg));
 		}
 	}
@@ -75,7 +75,7 @@ public class Announcements {
 	 */
 	private void loadAnnouncements() {
 		_announcements.clear();
-		File file = new File("data/announcements.txt");
+		final File file = new File("data/announcements.txt");
 		if (file.exists()) {
 			readFromDisk(file);
 		}
@@ -87,16 +87,16 @@ public class Announcements {
 	/**
 	 * 从磁盘中读取
 	 */
-	private void readFromDisk(File file) {
+	private void readFromDisk(final File file) {
 		LineNumberReader lnr = null;
 		try {
 			int i = 0;
 			String line = null;
 			lnr = new LineNumberReader(new FileReader(file));
 			while ((line = lnr.readLine()) != null) {
-				StringTokenizer st = new StringTokenizer(line, "\n\r");
+				final StringTokenizer st = new StringTokenizer(line, "\n\r");
 				if (st.hasMoreTokens()) {
-					String announcement = st.nextToken();
+					final String announcement = st.nextToken();
 					_announcements.add(announcement);
 
 					i++;
@@ -105,10 +105,10 @@ public class Announcements {
 
 			_log.config("读取了  " + i + " 件公告");
 		}
-		catch (FileNotFoundException e) {
+		catch (final FileNotFoundException e) {
 			// 如果档案不存在
 		}
-		catch (IOException e) {
+		catch (final IOException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			StreamUtil.close(lnr);

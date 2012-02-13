@@ -31,17 +31,17 @@ public class L1LevelPresent implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			int minlvl = Integer.parseInt(st.nextToken(), 10);
-			int maxlvl = Integer.parseInt(st.nextToken(), 10);
-			int itemid = Integer.parseInt(st.nextToken(), 10);
-			int enchant = Integer.parseInt(st.nextToken(), 10);
-			int count = Integer.parseInt(st.nextToken(), 10);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final int minlvl = Integer.parseInt(st.nextToken(), 10);
+			final int maxlvl = Integer.parseInt(st.nextToken(), 10);
+			final int itemid = Integer.parseInt(st.nextToken(), 10);
+			final int enchant = Integer.parseInt(st.nextToken(), 10);
+			final int count = Integer.parseInt(st.nextToken(), 10);
 
-			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
+			final L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp == null) {
 				pc.sendPackets(new S_SystemMessage("不存在的道具编号。"));
 				return;
@@ -50,7 +50,7 @@ public class L1LevelPresent implements L1CommandExecutor {
 			L1DwarfInventory.present(minlvl, maxlvl, itemid, enchant, count);
 			pc.sendPackets(new S_SystemMessage(temp.getName() + "数量" + count + "个发送出去了。(Lv" + minlvl + "～" + maxlvl + ")"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 .lvpresent minlvl maxlvl 道具编号  强化等级 数量。"));
 		}
 	}

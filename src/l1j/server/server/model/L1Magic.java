@@ -131,7 +131,7 @@ public class L1Magic {
 	private static final int[] INVINCIBLE = { ABSOLUTE_BARRIER, ICE_LANCE, FREEZING_BLIZZARD, FREEZING_BREATH, EARTH_BIND, ICE_LANCE_COCKATRICE, ICE_LANCE_BASILISK };
 
 	/**  */
-	public L1Magic(L1Character attacker, L1Character target) {
+	public L1Magic(final L1Character attacker, final L1Character target) {
 		_target = target;
 
 		if (attacker instanceof L1PcInstance) {
@@ -161,10 +161,10 @@ public class L1Magic {
 	}
 
 	/** ●●●● 治愈魔法回复量（对亡灵无伤害）算出 ●●●● */
-	public int calcHealing(int skillId) {
-		L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
-		int dice = l1skills.getDamageDice();
-		int value = l1skills.getDamageValue();
+	public int calcHealing(final int skillId) {
+		final L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
+		final int dice = l1skills.getDamageDice();
+		final int value = l1skills.getDamageValue();
 		int magicDamage = 0;
 
 		int magicBonus = getMagicBonus();
@@ -172,7 +172,7 @@ public class L1Magic {
 			magicBonus = 10;
 		}
 
-		int diceCount = value + magicBonus;
+		final int diceCount = value + magicBonus;
 		for (int i = 0; i < diceCount; i++) {
 			magicDamage += (Random.nextInt(dice) + 1);
 		}
@@ -190,11 +190,11 @@ public class L1Magic {
 	}
 
 	/** ■■■■■■■■■■■■■■ 魔法伤害算出 ■■■■■■■■■■■■■■ */
-	public int calcMagicDamage(int skillId) {
+	public int calcMagicDamage(final int skillId) {
 		int damage = 0;
 
 		// 检查无敌状态
-		for (int skillid : INVINCIBLE) {
+		for (final int skillid : INVINCIBLE) {
 			if (_target.hasSkillEffect(skillid)) {
 				return damage;
 			}
@@ -217,8 +217,8 @@ public class L1Magic {
 	/** ●●●● ＮＰＣ 的火牢魔法伤害算出 ●●●● */
 	public int calcNpcFireWallDamage() {
 		int dmg = 0;
-		double attrDeffence = calcAttrResistance(L1Skills.ATTR_FIRE);
-		L1Skills l1skills = SkillsTable.getInstance().getTemplate(FIRE_WALL);
+		final double attrDeffence = calcAttrResistance(L1Skills.ATTR_FIRE);
+		final L1Skills l1skills = SkillsTable.getInstance().getTemplate(FIRE_WALL);
 		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
 
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
@@ -250,8 +250,8 @@ public class L1Magic {
 	/** ●●●● ＰＣ 的火牢魔法伤害算出 ●●●● */
 	public int calcPcFireWallDamage() {
 		int dmg = 0;
-		double attrDeffence = calcAttrResistance(L1Skills.ATTR_FIRE);
-		L1Skills l1skills = SkillsTable.getInstance().getTemplate(FIRE_WALL);
+		final double attrDeffence = calcAttrResistance(L1Skills.ATTR_FIRE);
+		final L1Skills l1skills = SkillsTable.getInstance().getTemplate(FIRE_WALL);
 		dmg = (int) ((1.0 - attrDeffence) * l1skills.getDamageValue());
 
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
@@ -289,7 +289,7 @@ public class L1Magic {
 	// 攻击方：LV + ((MagicBonus * 3) * 魔法固有系数)
 	// 防御方：((LV / 2) + (MR * 3)) / 2
 	// 攻击成功率：攻击方 - 防御方
-	public boolean calcProbabilityMagic(int skillId) {
+	public boolean calcProbabilityMagic(final int skillId) {
 		int probability = 0;
 		boolean isSuccess = false;
 
@@ -356,7 +356,7 @@ public class L1Magic {
 
 		probability = calcProbability(skillId);
 
-		int rnd = Random.nextInt(100) + 1;
+		final int rnd = Random.nextInt(100) + 1;
 		if (probability > 90) {
 			probability = 90; // 最高90%的成功率。
 		}
@@ -382,7 +382,7 @@ public class L1Magic {
 		}
 
 		String msg0 = "";
-		String msg1 = " 施放魔法 ";
+		final String msg1 = " 施放魔法 ";
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
@@ -422,7 +422,7 @@ public class L1Magic {
 
 	/** ■■■■■■■■■■■■■■■ 计算结果反映 ■■■■■■■■■■■■■■■ */
 
-	public void commit(int damage, int drainMana) {
+	public void commit(final int damage, final int drainMana) {
 		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			commitPc(damage, drainMana);
 		}
@@ -444,7 +444,7 @@ public class L1Magic {
 		}
 
 		String msg0 = "";
-		String msg1 = " 造成 ";
+		final String msg1 = " 造成 ";
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
@@ -478,7 +478,7 @@ public class L1Magic {
 	}
 
 	/**  */
-	public void setLeverage(int i) {
+	public void setLeverage(final int i) {
 		_leverage = i;
 	}
 
@@ -487,7 +487,7 @@ public class L1Magic {
 	 * <br>
 	 * attr:0.无属性魔法,1.地魔法,2.火魔法,4.水魔法,8.风魔法,16.光魔法
 	 */
-	private double calcAttrResistance(int attr) {
+	private double calcAttrResistance(final int attr) {
 		int resist = 0;
 		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			if (attr == L1Skills.ATTR_EARTH) {
@@ -514,17 +514,17 @@ public class L1Magic {
 			resistFloor *= -1;
 		}
 
-		double attrDeffence = resistFloor / 32.0;
+		final double attrDeffence = resistFloor / 32.0;
 
 		return attrDeffence;
 	}
 
 	/** ●●●● damage_dice、damage_dice_count、damage_value、SP魔法伤害计算 ●●●● */
-	private int calcMagicDiceDamage(int skillId) {
-		L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
-		int dice = l1skills.getDamageDice();
-		int diceCount = l1skills.getDamageDiceCount();
-		int value = l1skills.getDamageValue();
+	private int calcMagicDiceDamage(final int skillId) {
+		final L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
+		final int dice = l1skills.getDamageDice();
+		final int diceCount = l1skills.getDamageDiceCount();
+		final int value = l1skills.getDamageValue();
 		int magicDamage = 0;
 		int charaIntelligence = 0;
 
@@ -535,7 +535,7 @@ public class L1Magic {
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			int weaponAddDmg = 0; // 武器追加伤害
-			L1ItemInstance weapon = _pc.getWeapon();
+			final L1ItemInstance weapon = _pc.getWeapon();
 			if (weapon != null) {
 				weaponAddDmg = weapon.getItem().getMagicDmgModifier();
 			}
@@ -543,18 +543,18 @@ public class L1Magic {
 		}
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
-			int spByItem = _pc.getSp() - _pc.getTrueSp(); // 于道具的SP变动
+			final int spByItem = _pc.getSp() - _pc.getTrueSp(); // 于道具的SP变动
 			charaIntelligence = _pc.getInt() + spByItem - 12;
 		}
 		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
-			int spByItem = _npc.getSp() - _npc.getTrueSp(); // 于道具的SP变动
+			final int spByItem = _npc.getSp() - _npc.getTrueSp(); // 于道具的SP变动
 			charaIntelligence = _npc.getInt() + spByItem - 12;
 		}
 		if (charaIntelligence < 1) {
 			charaIntelligence = 1;
 		}
 
-		double attrDeffence = calcAttrResistance(l1skills.getAttr());
+		final double attrDeffence = calcAttrResistance(l1skills.getAttr());
 
 		double coefficient = (1.0 - attrDeffence + charaIntelligence * 3.0 / 32.0);
 		if (coefficient < 0) {
@@ -563,8 +563,8 @@ public class L1Magic {
 
 		magicDamage *= coefficient;
 
-		double criticalCoefficient = 1.5; // 魔法クリティカル
-		int rnd = Random.nextInt(100) + 1;
+		final double criticalCoefficient = 1.5; // 魔法クリティカル
+		final int rnd = Random.nextInt(100) + 1;
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			if (l1skills.getSkillLevel() <= 6) {
 				if (rnd <= (10 + _pc.getOriginalMagicCritical())) {
@@ -588,7 +588,7 @@ public class L1Magic {
 	/** ●●●● ＭＲ伤害减免 ●●●● */
 	private int calcMrDefense(int dmg) {
 
-		int mr = getTargetMr();
+		final int mr = getTargetMr();
 		double mrFloor = 0;
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
@@ -608,7 +608,7 @@ public class L1Magic {
 			dmg *= mrCoefficient;
 		}
 		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
-			int rnd = Random.nextInt(100) + 1;
+			final int rnd = Random.nextInt(100) + 1;
 			if (mr >= rnd) {
 				dmg /= 2;
 			}
@@ -618,7 +618,7 @@ public class L1Magic {
 	}
 
 	/** ●●●● 角色・ＮＰＣ对 ＮＰＣ 的伤害算出 ●●●● */
-	private int calcNpcMagicDamage(int skillId) {
+	private int calcNpcMagicDamage(final int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
 			if (_calcType == PC_NPC) {
@@ -665,7 +665,7 @@ public class L1Magic {
 
 		if (_calcType == PC_NPC) { // プレイヤーからペット、サモンに攻击
 			boolean isNowWar = false;
-			int castleId = L1CastleLocation.getCastleIdByArea(_targetNpc);
+			final int castleId = L1CastleLocation.getCastleIdByArea(_targetNpc);
 			if (castleId > 0) {
 				isNowWar = WarTimeController.getInstance().isNowWar(castleId);
 			}
@@ -674,7 +674,7 @@ public class L1Magic {
 					dmg /= 8;
 				}
 				if (_targetNpc instanceof L1SummonInstance) {
-					L1SummonInstance summon = (L1SummonInstance) _targetNpc;
+					final L1SummonInstance summon = (L1SummonInstance) _targetNpc;
 					if (summon.isExsistMaster()) {
 						dmg /= 8;
 					}
@@ -726,7 +726,7 @@ public class L1Magic {
 	}
 
 	/** ●●●● 角色・ＮＰＣ 从角色的魔法伤害算出 ●●●● */
-	private int calcPcMagicDamage(int skillId) {
+	private int calcPcMagicDamage(final int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
 			if (_calcType == PC_PC) {
@@ -789,7 +789,7 @@ public class L1Magic {
 
 		if (_calcType == NPC_PC) { // ペット、サモンからプレイヤーに攻击
 			boolean isNowWar = false;
-			int castleId = L1CastleLocation.getCastleIdByArea(_targetPc);
+			final int castleId = L1CastleLocation.getCastleIdByArea(_targetPc);
 			if (castleId > 0) {
 				isNowWar = WarTimeController.getInstance().isNowWar(castleId);
 			}
@@ -798,7 +798,7 @@ public class L1Magic {
 					dmg /= 8;
 				}
 				if (_npc instanceof L1SummonInstance) {
-					L1SummonInstance summon = (L1SummonInstance) _npc;
+					final L1SummonInstance summon = (L1SummonInstance) _npc;
 					if (summon.isExsistMaster()) {
 						dmg /= 8;
 					}
@@ -864,7 +864,7 @@ public class L1Magic {
 				}
 			}
 			else if (_calcType == NPC_PC) {
-				int npcId = _npc.getNpcTemplate().get_npcId();
+				final int npcId = _npc.getNpcTemplate().get_npcId();
 				if ((npcId == 45681) || (npcId == 45682) || (npcId == 45683) || (npcId == 45684)) {
 				}
 				else if (!_npc.getNpcTemplate().get_IsErase()) {
@@ -890,8 +890,8 @@ public class L1Magic {
 	}
 
 	/** 检查概率 */
-	private int calcProbability(int skillId) {
-		L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
+	private int calcProbability(final int skillId) {
+		final L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
 		int attackLevel = 0;
 		int defenseLevel = 0;
 		int probability = 0;
@@ -910,7 +910,7 @@ public class L1Magic {
 			defenseLevel = _targetNpc.getLevel();
 			if (skillId == RETURN_TO_NATURE) {
 				if (_targetNpc instanceof L1SummonInstance) {
-					L1SummonInstance summon = (L1SummonInstance) _targetNpc;
+					final L1SummonInstance summon = (L1SummonInstance) _targetNpc;
 					defenseLevel = summon.getMaster().getLevel();
 				}
 			}
@@ -944,8 +944,8 @@ public class L1Magic {
 			}
 		}
 		else if ((skillId == GUARD_BRAKE) || (skillId == RESIST_FEAR) || (skillId == HORROR_OF_DEATH)) {
-			int dice = l1skills.getProbabilityDice();
-			int value = l1skills.getProbabilityValue();
+			final int dice = l1skills.getProbabilityDice();
+			final int value = l1skills.getProbabilityValue();
 			int diceCount = 0;
 			diceCount = getMagicBonus() + getMagicLevel();
 
@@ -972,7 +972,7 @@ public class L1Magic {
 			}
 		}
 		else {
-			int dice = l1skills.getProbabilityDice();
+			final int dice = l1skills.getProbabilityDice();
 			int diceCount = 0;
 			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				if (_pc.isWizard()) {
@@ -1044,7 +1044,7 @@ public class L1Magic {
 			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistFreeze();
 				// 检查无敌状态
-				for (int skillid : INVINCIBLE) {
+				for (final int skillid : INVINCIBLE) {
 					if (_targetPc.hasSkillEffect(skillid)) {
 						probability = 0;
 						break;
@@ -1062,7 +1062,7 @@ public class L1Magic {
 	}
 
 	/** 检查区域 */
-	private boolean checkZone(int skillId) {
+	private boolean checkZone(final int skillId) {
 		if ((_pc != null) && (_targetPc != null)) {
 
 			// 安全区域无效果的魔法
@@ -1078,11 +1078,11 @@ public class L1Magic {
 	}
 
 	/** ●●●● ＮＰＣ计算结果反映 ●●●● */
-	private void commitNpc(int damage, int drainMana) {
+	private void commitNpc(final int damage, final int drainMana) {
 		if (_calcType == PC_NPC) {
 			if (drainMana > 0) {
-				int drainValue = _targetNpc.drainMana(drainMana);
-				int newMp = _pc.getCurrentMp() + drainValue;
+				final int drainValue = _targetNpc.drainMana(drainMana);
+				final int newMp = _pc.getCurrentMp() + drainValue;
 				_pc.setCurrentMp(newMp);
 			}
 			_targetNpc.ReceiveManaDamage(_pc, drainMana);
@@ -1094,13 +1094,13 @@ public class L1Magic {
 	}
 
 	/** ●●●● 玩家计算结果反映 ●●●● */
-	private void commitPc(int damage, int drainMana) {
+	private void commitPc(final int damage, int drainMana) {
 		if (_calcType == PC_PC) {
 			if ((drainMana > 0) && (_targetPc.getCurrentMp() > 0)) {
 				if (drainMana > _targetPc.getCurrentMp()) {
 					drainMana = _targetPc.getCurrentMp();
 				}
-				int newMp = _pc.getCurrentMp() + drainMana;
+				final int newMp = _pc.getCurrentMp() + drainMana;
 				_pc.setCurrentMp(newMp);
 			}
 			_targetPc.receiveManaDamage(_pc, drainMana);

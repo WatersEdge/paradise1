@@ -37,22 +37,22 @@ public class C_Rank extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_Rank.class.getName());
 
-	public C_Rank(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Rank(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int data = readC(); // ?
+		final int data = readC(); // ?
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 
 		if (data == 1) {
-			int rank = readC();
-			String name = readS();
-			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
+			final int rank = readC();
+			final String name = readS();
+			final L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (pc == null) {
 				return;
 			}
 
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan == null) {
 				return;
 			}
@@ -81,7 +81,7 @@ public class C_Rank extends ClientBasePacket {
 						targetPc.save(); // 储存玩家的资料到资料库中
 						targetPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_RANK_CHANGED, rank)); // 你的阶级变更为%s
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}
@@ -91,13 +91,13 @@ public class C_Rank extends ClientBasePacket {
 				}
 			}
 			else { // 不在线
-				L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
+				final L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
 				if ((restorePc != null) && (restorePc.getClanid() == pc.getClanid())) { // 同じ血盟
 					try {
 						restorePc.setClanRank(rank);
 						restorePc.save(); // 储存玩家的资料到资料库中
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}

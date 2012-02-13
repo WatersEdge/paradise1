@@ -30,7 +30,7 @@ public class S_CharTitle extends ServerBasePacket {
 	 * @param objid
 	 * @param title
 	 */
-	public S_CharTitle(int objid, String title) {
+	public S_CharTitle(final int objid, final String title) {
 		writeC(Opcodes.S_OPCODE_CHARTITLE);
 		writeD(objid);
 		writeS(title);

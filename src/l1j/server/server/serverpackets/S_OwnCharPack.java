@@ -36,7 +36,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_OwnCharPack(L1PcInstance pc) {
+	public S_OwnCharPack(final L1PcInstance pc) {
 		buildPacket(pc);
 	}
 
@@ -53,7 +53,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 		return S_OWN_CHAR_PACK;
 	}
 
-	private void buildPacket(L1PcInstance pc) {
+	private void buildPacket(final L1PcInstance pc) {
 		int status = STATUS_PC;
 
 		// グール毒みたいな緑の毒

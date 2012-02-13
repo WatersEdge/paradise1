@@ -29,12 +29,12 @@ public class L1Describe implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringBuilder msg = new StringBuilder();
+			final StringBuilder msg = new StringBuilder();
 			pc.sendPackets(new S_SystemMessage("-- describe: " + pc.getName() + " --"));
-			int hpr = pc.getHpr() + pc.getInventory().hpRegenPerTick();
-			int mpr = pc.getMpr() + pc.getInventory().mpRegenPerTick();
+			final int hpr = pc.getHpr() + pc.getInventory().hpRegenPerTick();
+			final int mpr = pc.getMpr() + pc.getInventory().mpRegenPerTick();
 			msg.append("Dmg: +" + pc.getDmgup() + " / ");
 			msg.append("Hit: +" + pc.getHitup() + " / ");
 			msg.append("MR: " + pc.getMr() + " / ");
@@ -44,7 +44,7 @@ public class L1Describe implements L1CommandExecutor {
 			msg.append("Item: " + pc.getInventory().getSize() + " / ");
 			pc.sendPackets(new S_SystemMessage(msg.toString()));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 指令错误"));
 		}
 	}

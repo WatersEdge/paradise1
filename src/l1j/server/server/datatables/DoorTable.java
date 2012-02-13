@@ -67,11 +67,11 @@ public class DoorTable {
 	 * @param keeper
 	 * @param isOpening
 	 */
-	public L1DoorInstance createDoor(int doorId, L1DoorGfx gfx, L1Location loc, int hp, int keeper, boolean isOpening) {
+	public L1DoorInstance createDoor(final int doorId, final L1DoorGfx gfx, final L1Location loc, final int hp, final int keeper, final boolean isOpening) {
 		if (_doors.containsKey(loc)) {
 			return null;
 		}
-		L1DoorInstance door = new L1DoorInstance(doorId, gfx, loc, hp, keeper, isOpening);
+		final L1DoorInstance door = new L1DoorInstance(doorId, gfx, loc, hp, keeper, isOpening);
 
 		door.setId(IdFactory.getInstance().nextId());
 
@@ -88,8 +88,8 @@ public class DoorTable {
 	 * 
 	 * @param loc
 	 */
-	public void deleteDoorByLocation(L1Location loc) {
-		L1DoorInstance door = _doors.remove(loc);
+	public void deleteDoorByLocation(final L1Location loc) {
+		final L1DoorInstance door = _doors.remove(loc);
 		if (door != null) {
 			removeDirections(door);
 			door.deleteMe();
@@ -101,8 +101,8 @@ public class DoorTable {
 	 * 
 	 * @param doorId
 	 */
-	public L1DoorInstance findByDoorId(int doorId) {
-		for (L1DoorInstance door : _doors.values()) {
+	public L1DoorInstance findByDoorId(final int doorId) {
+		for (final L1DoorInstance door : _doors.values()) {
 			if (door.getDoorId() == doorId) {
 				return door;
 			}
@@ -115,9 +115,9 @@ public class DoorTable {
 	 * 
 	 * @param loc
 	 */
-	public int getDoorDirection(L1Location loc) {
-		L1DoorInstance door = _doorDirections.get(loc);
-		if (door == null || door.getOpenStatus() == ActionCodes.ACTION_Open) {
+	public int getDoorDirection(final L1Location loc) {
+		final L1DoorInstance door = _doorDirections.get(loc);
+		if ((door == null) || (door.getOpenStatus() == ActionCodes.ACTION_Open)) {
 			return -1;
 		}
 		return door.getDirection();
@@ -136,8 +136,8 @@ public class DoorTable {
 	 * 加载门
 	 */
 	private void loadDoors() {
-		for (L1DoorSpawn spawn : L1DoorSpawn.all()) {
-			L1Location loc = spawn.getLocation();
+		for (final L1DoorSpawn spawn : L1DoorSpawn.all()) {
+			final L1Location loc = spawn.getLocation();
 			if (_doors.containsKey(loc)) {
 				_log.log(Level.WARNING, String.format("重复的门 位置: id = %d", spawn.getId()));
 				continue;
@@ -151,10 +151,10 @@ public class DoorTable {
 	 * 
 	 * @param door
 	 */
-	private List<L1Location> makeDirectionsKeys(L1DoorInstance door) {
-		List<L1Location> keys = Lists.newArrayList();
-		int left = door.getLeftEdgeLocation();
-		int right = door.getRightEdgeLocation();
+	private List<L1Location> makeDirectionsKeys(final L1DoorInstance door) {
+		final List<L1Location> keys = Lists.newArrayList();
+		final int left = door.getLeftEdgeLocation();
+		final int right = door.getRightEdgeLocation();
 		if (door.getDirection() == 0) {
 			for (int x = left; x <= right; x++) {
 				keys.add(new L1Location(x, door.getY(), door.getMapId()));
@@ -173,8 +173,8 @@ public class DoorTable {
 	 * 
 	 * @param door
 	 */
-	private void putDirections(L1DoorInstance door) {
-		for (L1Location key : makeDirectionsKeys(door)) {
+	private void putDirections(final L1DoorInstance door) {
+		for (final L1Location key : makeDirectionsKeys(door)) {
 			_doorDirections.put(key, door);
 		}
 	}
@@ -184,8 +184,8 @@ public class DoorTable {
 	 * 
 	 * @param door
 	 */
-	private void removeDirections(L1DoorInstance door) {
-		for (L1Location key : makeDirectionsKeys(door)) {
+	private void removeDirections(final L1DoorInstance door) {
+		for (final L1Location key : makeDirectionsKeys(door)) {
 			_doorDirections.remove(key);
 		}
 	}

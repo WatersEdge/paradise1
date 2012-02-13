@@ -48,7 +48,7 @@ public class NPCTalkDataTable {
 		parseList();
 	}
 
-	public L1NpcTalkData getTemplate(int i) {
+	public L1NpcTalkData getTemplate(final int i) {
 		return _datatable.get(new Integer(i));
 	}
 
@@ -63,7 +63,7 @@ public class NPCTalkDataTable {
 
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1NpcTalkData l1npctalkdata = new L1NpcTalkData();
+				final L1NpcTalkData l1npctalkdata = new L1NpcTalkData();
 				l1npctalkdata.setNpcID(rs.getInt(1));
 				l1npctalkdata.setNormalAction(rs.getString(2));
 				l1npctalkdata.setCaoticAction(rs.getString(3));
@@ -73,7 +73,7 @@ public class NPCTalkDataTable {
 			}
 			_log.config("NPC说话动作列表 " + _datatable.size() + "件");
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.warning("创建NPC说话表时出现错误 " + e);
 		} finally {
 			SQLUtil.close(rs);

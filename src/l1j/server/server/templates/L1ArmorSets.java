@@ -163,99 +163,99 @@ public class L1ArmorSets {
 		return _wis;
 	}
 
-	public void setAc(int i) {
+	public void setAc(final int i) {
 		_ac = i;
 	}
 
-	public void setBowDmgModifier(int i) {
+	public void setBowDmgModifier(final int i) {
 		_bowDmgModifier = i;
 	}
 
-	public void setBowHitModifier(int i) {
+	public void setBowHitModifier(final int i) {
 		_bowHitModifier = i;
 	}
 
-	public void setCha(int i) {
+	public void setCha(final int i) {
 		_cha = i;
 	}
 
-	public void setCon(int i) {
+	public void setCon(final int i) {
 		_con = i;
 	}
 
-	public void setDefenseEarth(int i) {
+	public void setDefenseEarth(final int i) {
 		_defenseEarth = i;
 	}
 
-	public void setDefenseFire(int i) {
+	public void setDefenseFire(final int i) {
 		_defenseFire = i;
 	}
 
-	public void setDefenseWater(int i) {
+	public void setDefenseWater(final int i) {
 		_defenseWater = i;
 	}
 
-	public void setDefenseWind(int i) {
+	public void setDefenseWind(final int i) {
 		_defenseWind = i;
 	}
 
-	public void setDex(int i) {
+	public void setDex(final int i) {
 		_dex = i;
 	}
 
-	public void setDmgModifier(int i) {
+	public void setDmgModifier(final int i) {
 		_dmgModifier = i;
 	}
 
-	public void setHitModifier(int i) {
+	public void setHitModifier(final int i) {
 		_hitModifier = i;
 	}
 
-	public void setHp(int i) {
+	public void setHp(final int i) {
 		_hp = i;
 	}
 
-	public void setHpr(int i) {
+	public void setHpr(final int i) {
 		_hpr = i;
 	}
 
-	public void setId(int i) {
+	public void setId(final int i) {
 		_id = i;
 	}
 
-	public void setIntl(int i) {
+	public void setIntl(final int i) {
 		_intl = i;
 	}
 
-	public void setMp(int i) {
+	public void setMp(final int i) {
 		_mp = i;
 	}
 
-	public void setMpr(int i) {
+	public void setMpr(final int i) {
 		_mpr = i;
 	}
 
-	public void setMr(int i) {
+	public void setMr(final int i) {
 		_mr = i;
 	}
 
-	public void setPolyId(int i) {
+	public void setPolyId(final int i) {
 		_polyId = i;
 	}
 
-	public void setSets(String s) {
+	public void setSets(final String s) {
 		_sets = s;
 	}
 
-	public void setSp(int i) {
+	public void setSp(final int i) {
 		_sp = i;
 	}
 
-	public void setStr(int i) {
+	public void setStr(final int i) {
 		_str = i;
 	}
 
-	public void setWis(int i) {
+	public void setWis(final int i) {
 		_wis = i;
 	}
 

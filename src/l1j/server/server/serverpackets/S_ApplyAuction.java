@@ -43,7 +43,7 @@ public class S_ApplyAuction extends ServerBasePacket {
 	 * @param objectId
 	 * @param houseNumber
 	 */
-	public S_ApplyAuction(int objectId, String houseNumber) {
+	public S_ApplyAuction(final int objectId, final String houseNumber) {
 		buildPacket(objectId, houseNumber);
 	}
 
@@ -60,19 +60,19 @@ public class S_ApplyAuction extends ServerBasePacket {
 		return S_APPLYAUCTION;
 	}
 
-	private void buildPacket(int objectId, String houseNumber) {
+	private void buildPacket(final int objectId, final String houseNumber) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM board_auction WHERE house_id=?");
-			int number = Integer.valueOf(houseNumber);
+			final int number = Integer.valueOf(houseNumber);
 			pstm.setInt(1, number);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int nowPrice = rs.getInt(5);
-				int bidderId = rs.getInt(10);
+				final int nowPrice = rs.getInt(5);
+				final int bidderId = rs.getInt(10);
 				writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 				writeD(objectId);
 				writeD(0); // ?
@@ -90,7 +90,7 @@ public class S_ApplyAuction extends ServerBasePacket {
 				writeS("agapply " + houseNumber); // 命令
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

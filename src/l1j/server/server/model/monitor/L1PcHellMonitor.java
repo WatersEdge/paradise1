@@ -22,21 +22,21 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class L1PcHellMonitor extends L1PcMonitor {
 
-	public L1PcHellMonitor(int oId) {
+	public L1PcHellMonitor(final int oId) {
 		super(oId);
 	}
 
 	@Override
-	public void execTask(L1PcInstance pc) {
+	public void execTask(final L1PcInstance pc) {
 		if (pc.isDead()) { // 如果不计算死亡人数
 			return;
 		}
 		pc.setHellTime(pc.getHellTime() - 1);
 		if (pc.getHellTime() <= 0) {
 			// endHellの実行時間が影響ないように
-			Runnable r = new L1PcMonitor(pc.getId()) {
+			final Runnable r = new L1PcMonitor(pc.getId()) {
 				@Override
-				public void execTask(L1PcInstance pc) {
+				public void execTask(final L1PcInstance pc) {
 					pc.endHell();
 				}
 			};

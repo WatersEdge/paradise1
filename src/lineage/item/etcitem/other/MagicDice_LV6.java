@@ -37,10 +37,10 @@ public class MagicDice_LV6 extends ItemExecutor {
 
 		int A = 0;
 		if (pc.getInventory().consumeItem(40318, 1)) {
-			int SK = Random.nextInt(5) + 1;
+			final int SK = Random.nextInt(5) + 1;
 			{
 
-				if (SK >= 1 && SK <= 6) {
+				if ((SK >= 1) && (SK <= 6)) {
 
 					A = SK;
 					pc.sendPackets(new S_SystemMessage("你骰出的点数是(" + (A) + ")"));

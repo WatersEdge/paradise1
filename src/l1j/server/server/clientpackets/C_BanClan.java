@@ -36,22 +36,22 @@ public class C_BanClan extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_BanClan.class.getName());
 
-	public C_BanClan(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_BanClan(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
-		String s = readS();
+		final String s = readS();
 
-		L1PcInstance pc = clientthread.getActiveChar();
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			String clanMemberName[] = clan.getAllMembers();
+			final String clanMemberName[] = clan.getAllMembers();
 			int i;
-			if (pc.isCrown() && pc.getId() == clan.getLeaderId()) { // 王族，或者已经创立血盟
+			if (pc.isCrown() && (pc.getId() == clan.getLeaderId())) { // 王族，或者已经创立血盟
 				for (i = 0; i < clanMemberName.length; i++) {
 					if (pc.getName().toLowerCase().equals(s.toLowerCase())) { // 是血盟创立者
 						return;
 					}
 				}
-				L1PcInstance tempPc = L1World.getInstance().getPlayer(s);
+				final L1PcInstance tempPc = L1World.getInstance().getPlayer(s);
 				if (tempPc != null) { // 玩家在线上
 					if (tempPc.getClanid() == pc.getClanid()) { // 确定同血盟
 						tempPc.setClanid(0);
@@ -68,8 +68,8 @@ public class C_BanClan extends ClientBasePacket {
 				}
 				else { // 玩家离线中
 					try {
-						L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(s);
-						if (restorePc != null && restorePc.getClanid() == pc.getClanid()) { // 确定同血盟
+						final L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(s);
+						if ((restorePc != null) && (restorePc.getClanid() == pc.getClanid())) { // 确定同血盟
 							restorePc.setClanid(0);
 							restorePc.setClanname("");
 							restorePc.setClanRank(0);
@@ -81,7 +81,7 @@ public class C_BanClan extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(109, s)); // %0%o 被你从你的血盟驱逐了。
 						}
 					}
-					catch (Exception e) {
+					catch (final Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}

@@ -33,11 +33,11 @@ import l1j.server.server.utils.collections.Lists;
 public class L1Commands {
 	private static Logger _log = Logger.getLogger(L1Commands.class.getName());
 
-	public static List<L1Command> availableCommandList(int accessLevel) {
+	public static List<L1Command> availableCommandList(final int accessLevel) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<L1Command> result = Lists.newList();
+		final List<L1Command> result = Lists.newList();
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM commands WHERE access_level <= ?");
@@ -47,7 +47,7 @@ public class L1Commands {
 				result.add(fromResultSet(rs));
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "错误的指令", e);
 		} finally {
 			SQLUtil.close(rs);
@@ -57,7 +57,7 @@ public class L1Commands {
 		return result;
 	}
 
-	public static L1Command get(String name) {
+	public static L1Command get(final String name) {
 		/*
 		 * 每次为便于调试和实验，以便读取数据库。缓存性能低于理论是微不足道的。
 		 */
@@ -74,7 +74,7 @@ public class L1Commands {
 			}
 			return fromResultSet(rs);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "错误的指令", e);
 		} finally {
 			SQLUtil.close(rs);
@@ -84,7 +84,7 @@ public class L1Commands {
 		return null;
 	}
 
-	private static L1Command fromResultSet(ResultSet rs) throws SQLException {
+	private static L1Command fromResultSet(final ResultSet rs) throws SQLException {
 		return new L1Command(rs.getString("name"), rs.getInt("access_level"), rs.getString("class_name"));
 	}
 }

@@ -49,19 +49,19 @@ public class L1PrivateShopSellList {
 		return _sellTotalCount;
 	}
 
-	public void setItemObjectId(int i) {
+	public void setItemObjectId(final int i) {
 		_itemObjectId = i;
 	}
 
-	public void setSellCount(int i) {
+	public void setSellCount(final int i) {
 		_sellCount = i;
 	}
 
-	public void setSellPrice(int i) {
+	public void setSellPrice(final int i) {
 		_sellPrice = i;
 	}
 
-	public void setSellTotalCount(int i) {
+	public void setSellTotalCount(final int i) {
 		_sellTotalCount = i;
 	}
 }

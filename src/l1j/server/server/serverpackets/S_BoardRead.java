@@ -31,7 +31,7 @@ public class S_BoardRead extends ServerBasePacket {
 	 * 
 	 * @param number
 	 */
-	public S_BoardRead(int number) {
+	public S_BoardRead(final int number) {
 		buildPacket(number);
 	}
 
@@ -48,8 +48,8 @@ public class S_BoardRead extends ServerBasePacket {
 		return S_BoardRead;
 	}
 
-	private void buildPacket(int number) {
-		L1BoardTopic topic = L1BoardTopic.findById(number);
+	private void buildPacket(final int number) {
+		final L1BoardTopic topic = L1BoardTopic.findById(number);
 		writeC(Opcodes.S_OPCODE_BOARDREAD);
 		writeD(number);
 		writeS(topic.getName());

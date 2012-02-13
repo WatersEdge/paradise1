@@ -46,20 +46,20 @@ public class Getback {
 	 *            (未使用)
 	 * @return locx,locy,mapid的顺序存储阵列
 	 */
-	public static int[] GetBack_Location(L1PcInstance pc, boolean bScroll_Escape) {
+	public static int[] GetBack_Location(final L1PcInstance pc, final boolean bScroll_Escape) {
 
 		int[] loc = new int[3];
 
-		int nPosition = Random.nextInt(3);
+		final int nPosition = Random.nextInt(3);
 
-		int pcLocX = pc.getX();
-		int pcLocY = pc.getY();
-		int pcMapId = pc.getMapId();
-		List<Getback> getbackList = _getback.get(pcMapId);
+		final int pcLocX = pc.getX();
+		final int pcLocY = pc.getY();
+		final int pcMapId = pc.getMapId();
+		final List<Getback> getbackList = _getback.get(pcMapId);
 
 		if (getbackList != null) {
 			Getback getback = null;
-			for (Getback gb : getbackList) {
+			for (final Getback gb : getbackList) {
 				if (gb.isSpecifyArea()) {
 					if ((gb._areaX1 <= pcLocX) && (pcLocX <= gb._areaX2) && (gb._areaY1 <= pcLocY) && (pcLocY <= gb._areaY2)) {
 						getback = gb;
@@ -102,11 +102,11 @@ public class Getback {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			// 同一张地图中，指定地点和非指定地点混在一起、为了先读取指定地点area_x1 DESC
-			String sSQL = "SELECT * FROM getback ORDER BY area_mapid,area_x1 DESC ";
+			final String sSQL = "SELECT * FROM getback ORDER BY area_mapid,area_x1 DESC ";
 			pstm = con.prepareStatement(sSQL);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				Getback getback = new Getback();
+				final Getback getback = new Getback();
 				getback._areaX1 = rs.getInt("area_x1");
 				getback._areaY1 = rs.getInt("area_y1");
 				getback._areaX2 = rs.getInt("area_x2");
@@ -131,7 +131,7 @@ public class Getback {
 				getbackList.add(getback);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "不能获取Getback数据", e);
 		} finally {
 			SQLUtil.close(rs);
@@ -141,23 +141,23 @@ public class Getback {
 	}
 
 	/** 阅读Getback信息 */
-	private static int[] ReadGetbackInfo(Getback getback, int nPosition) {
-		int[] loc = new int[3];
+	private static int[] ReadGetbackInfo(final Getback getback, final int nPosition) {
+		final int[] loc = new int[3];
 		switch (nPosition) {
-		case 0:
-			loc[0] = getback._getbackX1;
-			loc[1] = getback._getbackY1;
-			break;
+			case 0:
+				loc[0] = getback._getbackX1;
+				loc[1] = getback._getbackY1;
+				break;
 
-		case 1:
-			loc[0] = getback._getbackX2;
-			loc[1] = getback._getbackY2;
-			break;
+			case 1:
+				loc[0] = getback._getbackX2;
+				loc[1] = getback._getbackY2;
+				break;
 
-		case 2:
-			loc[0] = getback._getbackX3;
-			loc[1] = getback._getbackY3;
-			break;
+			case 2:
+				loc[0] = getback._getbackX3;
+				loc[1] = getback._getbackY3;
+				break;
 		}
 		loc[2] = getback._getbackMapId;
 

@@ -20,18 +20,18 @@ import java.io.File;
  * 文件使用率
  */
 public class FileUtil {
-	public static String getExtension(File file) {
-		String fileName = file.getName();
-		int index = fileName.lastIndexOf('.');
+	public static String getExtension(final File file) {
+		final String fileName = file.getName();
+		final int index = fileName.lastIndexOf('.');
 		if (index != -1) {
 			return fileName.substring(index + 1, fileName.length());
 		}
 		return "";
 	}
 
-	public static String getNameWithoutExtension(File file) {
-		String fileName = file.getName();
-		int index = fileName.lastIndexOf('.');
+	public static String getNameWithoutExtension(final File file) {
+		final String fileName = file.getName();
+		final int index = fileName.lastIndexOf('.');
 		if (index != -1) {
 			return fileName.substring(0, index);
 		}

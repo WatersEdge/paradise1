@@ -38,7 +38,7 @@ public class S_TrueTarget extends ServerBasePacket {
 	 * @param message
 	 *            附加讯息
 	 */
-	public S_TrueTarget(int targetId, int objectId, String message) {
+	public S_TrueTarget(final int targetId, final int objectId, final String message) {
 		buildPacket(targetId, objectId, message);
 	}
 
@@ -55,7 +55,7 @@ public class S_TrueTarget extends ServerBasePacket {
 		return S_TRUETARGET;
 	}
 
-	private void buildPacket(int targetId, int objectId, String message) {
+	private void buildPacket(final int targetId, final int objectId, final String message) {
 		writeC(Opcodes.S_OPCODE_TRUETARGET);
 		writeD(targetId);
 		writeD(objectId);

@@ -30,7 +30,7 @@ public class S_AddItem extends ServerBasePacket {
 	/**
 	 * 在清单中增加一个道具。
 	 */
-	public S_AddItem(L1ItemInstance item) {
+	public S_AddItem(final L1ItemInstance item) {
 		writeC(Opcodes.S_OPCODE_ADDITEM);
 		writeD(item.getId());
 		writeC(item.getItem().getUseType());
@@ -45,9 +45,9 @@ public class S_AddItem extends ServerBasePacket {
 			writeC(0);
 		}
 		else {
-			byte[] status = item.getStatusBytes();
+			final byte[] status = item.getStatusBytes();
 			writeC(status.length);
-			for (byte b : status) {
+			for (final byte b : status) {
 				writeC(b);
 			}
 		}

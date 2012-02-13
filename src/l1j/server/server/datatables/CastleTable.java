@@ -52,7 +52,7 @@ public class CastleTable {
 		load();
 	}
 
-	public L1Castle getCastleTable(int id) {
+	public L1Castle getCastleTable(final int id) {
 		return _castles.get(id);
 	}
 
@@ -66,15 +66,15 @@ public class CastleTable {
 	 * @param castle
 	 *            城堡
 	 */
-	public void updateCastle(L1Castle castle) {
+	public void updateCastle(final L1Castle castle) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE castle SET name=?, war_time=?, tax_rate=?, public_money=? WHERE castle_id=?");
 			pstm.setString(1, castle.getName());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			String fm = sdf.format(castle.getWarTime().getTime());
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			final String fm = sdf.format(castle.getWarTime().getTime());
 			pstm.setString(2, fm);
 			pstm.setInt(3, castle.getTaxRate());
 			pstm.setInt(4, castle.getPublicMoney());
@@ -83,7 +83,7 @@ public class CastleTable {
 
 			_castles.put(castle.getId(), castle);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -102,7 +102,7 @@ public class CastleTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
+				final L1Castle castle = new L1Castle(rs.getInt(1), rs.getString(2));
 				castle.setWarTime(timestampToCalendar((Timestamp) rs.getObject(3)));
 				castle.setTaxRate(rs.getInt(4));
 				castle.setPublicMoney(rs.getInt(5));
@@ -110,7 +110,7 @@ public class CastleTable {
 				_castles.put(castle.getId(), castle);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -119,8 +119,8 @@ public class CastleTable {
 		}
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
+	private Calendar timestampToCalendar(final Timestamp ts) {
+		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
 	}

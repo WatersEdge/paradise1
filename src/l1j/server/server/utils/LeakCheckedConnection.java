@@ -31,7 +31,7 @@ import l1j.server.server.utils.collections.Maps;
 public class LeakCheckedConnection {
 	private class ConnectionHandler implements java.lang.reflect.InvocationHandler {
 		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 			if (method.getName().equals("close")) {
 				closeAll();
 			}
@@ -45,17 +45,17 @@ public class LeakCheckedConnection {
 	}
 
 	private class Delegate implements InvocationHandler {
-		private Object _delegateProxy;
+		private final Object _delegateProxy;
 
-		private Object _original;
+		private final Object _original;
 
-		Delegate(Object o, Class<?> c) {
+		Delegate(final Object o, final Class<?> c) {
 			_original = o;
 			_delegateProxy = Proxy.newProxyInstance(c.getClassLoader(), new Class[] { c }, this);
 		}
 
 		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 			if (method.getName().equals("close")) {
 				remove(_original);
 			}
@@ -70,24 +70,24 @@ public class LeakCheckedConnection {
 
 	private static final Logger _log = Logger.getLogger(LeakCheckedConnection.class.getName());
 
-	public static Connection create(Connection con) {
+	public static Connection create(final Connection con) {
 		return (Connection) new LeakCheckedConnection(con)._proxy;
 	}
 
-	private Connection _con;
+	private final Connection _con;
 
-	private Map<Statement, Throwable> _openedStatements = Maps.newMap();
+	private final Map<Statement, Throwable> _openedStatements = Maps.newMap();
 
-	private Map<ResultSet, Throwable> _openedResultSets = Maps.newMap();
+	private final Map<ResultSet, Throwable> _openedResultSets = Maps.newMap();
 
-	private Object _proxy;
+	private final Object _proxy;
 
-	private LeakCheckedConnection(Connection con) {
+	private LeakCheckedConnection(final Connection con) {
 		_con = con;
 		_proxy = Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] { Connection.class }, new ConnectionHandler());
 	}
 
-	private void remove(Object o) {
+	private void remove(final Object o) {
 		if (o instanceof ResultSet) {
 			_openedResultSets.remove(o);
 		}
@@ -99,11 +99,11 @@ public class LeakCheckedConnection {
 		}
 	}
 
-	private Object send(Object o, Method m, Object[] args) throws Throwable {
+	private Object send(final Object o, final Method m, final Object[] args) throws Throwable {
 		try {
 			return m.invoke(o, args);
 		}
-		catch (InvocationTargetException e) {
+		catch (final InvocationTargetException e) {
 			if (e.getCause() != null) {
 				throw e.getCause();
 			}
@@ -113,19 +113,19 @@ public class LeakCheckedConnection {
 
 	void closeAll() {
 		if (!_openedResultSets.isEmpty()) {
-			for (Throwable t : _openedResultSets.values()) {
+			for (final Throwable t : _openedResultSets.values()) {
 				_log.log(Level.WARNING, "Leaked ResultSets detected.", t);
 			}
 		}
 		if (!_openedStatements.isEmpty()) {
-			for (Throwable t : _openedStatements.values()) {
+			for (final Throwable t : _openedStatements.values()) {
 				_log.log(Level.WARNING, "Leaked Statement detected.", t);
 			}
 		}
-		for (ResultSet rs : _openedResultSets.keySet()) {
+		for (final ResultSet rs : _openedResultSets.keySet()) {
 			SQLUtil.close(rs);
 		}
-		for (Statement ps : _openedStatements.keySet()) {
+		for (final Statement ps : _openedStatements.keySet()) {
 			SQLUtil.close(ps);
 		}
 	}

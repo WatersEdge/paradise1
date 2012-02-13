@@ -56,37 +56,38 @@ public class L1NpcXmlParser {
 		_questIds.put("Generalhamelofresentment", L1Quest.QUEST_GENERALHAMELOFRESENTMENT);
 	}
 
-	public static boolean getBoolAttribute(Element element, String name, boolean defaultValue) {
+	public static boolean getBoolAttribute(final Element element, final String name, final boolean defaultValue) {
 		boolean result = defaultValue;
-		String value = element.getAttribute(name);
+		final String value = element.getAttribute(name);
 		if (!value.equals("")) {
 			result = Boolean.valueOf(value);
 		}
 		return result;
 	}
 
-	public static Element getFirstChildElementByTagName(Element element, String tagName) {
-		IterableElementList list = new IterableElementList(element.getElementsByTagName(tagName));
-		for (Element elem : list) {
+	public static Element getFirstChildElementByTagName(final Element element, final String tagName) {
+		final IterableElementList list = new IterableElementList(element.getElementsByTagName(tagName));
+		for (final Element elem : list) {
 			return elem;
 		}
 		return null;
 	}
 
-	public static int getIntAttribute(Element element, String name, int defaultValue) {
+	public static int getIntAttribute(final Element element, final String name, final int defaultValue) {
 		int result = defaultValue;
 		try {
 			result = Integer.valueOf(element.getAttribute(name));
 		}
-		catch (NumberFormatException e) {
+		catch (final NumberFormatException e) {
 		}
 		return result;
 	}
-	public static List<L1NpcAction> listActions(Element element) {
-		List<L1NpcAction> result = Lists.newList();
-		NodeList list = element.getChildNodes();
-		for (Element elem : new IterableElementList(list)) {
-			L1NpcAction action = L1NpcActionFactory.newAction(elem);
+
+	public static List<L1NpcAction> listActions(final Element element) {
+		final List<L1NpcAction> result = Lists.newList();
+		final NodeList list = element.getChildNodes();
+		for (final Element elem : new IterableElementList(list)) {
+			final L1NpcAction action = L1NpcActionFactory.newAction(elem);
 			if (action != null) {
 				result.add(action);
 			}
@@ -94,18 +95,18 @@ public class L1NpcXmlParser {
 		return result;
 	}
 
-	public static int parseQuestId(String questId) {
+	public static int parseQuestId(final String questId) {
 		if (questId.equals("")) {
 			return -1;
 		}
-		Integer result = _questIds.get(questId.toLowerCase());
+		final Integer result = _questIds.get(questId.toLowerCase());
 		if (result == null) {
 			throw new IllegalArgumentException();
 		}
 		return result;
 	}
 
-	public static int parseQuestStep(String questStep) {
+	public static int parseQuestStep(final String questStep) {
 		if (questStep.equals("")) {
 			return -1;
 		}

@@ -77,7 +77,7 @@ public class L1NpcTalkData {
 	 * @param caoticAction
 	 *            The caoticAction to set.
 	 */
-	public void setCaoticAction(String caoticAction) {
+	public void setCaoticAction(final String caoticAction) {
 		this.caoticAction = caoticAction;
 	}
 
@@ -85,7 +85,7 @@ public class L1NpcTalkData {
 	 * @param id
 	 *            The iD to set.
 	 */
-	public void setID(int id) {
+	public void setID(final int id) {
 		ID = id;
 	}
 
@@ -93,7 +93,7 @@ public class L1NpcTalkData {
 	 * @param normalAction
 	 *            The normalAction to set.
 	 */
-	public void setNormalAction(String normalAction) {
+	public void setNormalAction(final String normalAction) {
 		this.normalAction = normalAction;
 	}
 
@@ -101,7 +101,7 @@ public class L1NpcTalkData {
 	 * @param npcID
 	 *            The npcID to set.
 	 */
-	public void setNpcID(int npcID) {
+	public void setNpcID(final int npcID) {
 		NpcID = npcID;
 	}
 
@@ -109,7 +109,7 @@ public class L1NpcTalkData {
 	 * @param teleportURL
 	 *            The teleportURL to set.
 	 */
-	public void setTeleportURL(String teleportURL) {
+	public void setTeleportURL(final String teleportURL) {
 		this.teleportURL = teleportURL;
 	}
 
@@ -117,7 +117,7 @@ public class L1NpcTalkData {
 	 * @param teleportURLA
 	 *            The teleportURLA to set.
 	 */
-	public void setTeleportURLA(String teleportURLA) {
+	public void setTeleportURLA(final String teleportURLA) {
 		this.teleportURLA = teleportURLA;
 	}
 

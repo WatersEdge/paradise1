@@ -18,7 +18,7 @@ public class L1NpcCount {
 	private final int _id;
 	private final int _count;
 
-	public L1NpcCount(int id, int count) {
+	public L1NpcCount(final int id, final int count) {
 		_id = id;
 		_count = count;
 	}
@@ -32,6 +32,6 @@ public class L1NpcCount {
 	}
 
 	public boolean isZero() {
-		return _id == 0 && _count == 0;
+		return (_id == 0) && (_count == 0);
 	}
 }

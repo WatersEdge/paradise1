@@ -53,7 +53,7 @@ public class InnTable {
 		load();
 	}
 
-	public L1Inn getTemplate(int npcid, int roomNumber) {
+	public L1Inn getTemplate(final int npcid, final int roomNumber) {
 		if (_dataMap.containsKey(npcid)) {
 			return _dataMap.get(npcid)._inn.get(roomNumber);
 		}
@@ -65,7 +65,7 @@ public class InnTable {
 	 * 
 	 * @param inn
 	 */
-	public void updateInn(L1Inn inn) {
+	public void updateInn(final L1Inn inn) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -80,7 +80,7 @@ public class InnTable {
 			pstm.setInt(6, inn.getRoomNumber());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -101,7 +101,7 @@ public class InnTable {
 			L1Inn l1inn;
 			int roomNumber;
 			while (rs.next()) {
-				int key = rs.getInt("npcid");
+				final int key = rs.getInt("npcid");
 				if (!_dataMap.containsKey(key)) {
 					inn = new Inn();
 					_dataMap.put(key, inn);
@@ -122,7 +122,7 @@ public class InnTable {
 				inn._inn.put(Integer.valueOf(roomNumber), l1inn);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

@@ -21,14 +21,14 @@ import l1j.server.server.Opcodes;
 
 public class S_SkillIconAura extends ServerBasePacket {
 
-	public S_SkillIconAura(int i, int j) {
+	public S_SkillIconAura(final int i, final int j) {
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(0x16);
 		writeC(i);
 		writeH(j);
 	}
 
-	public S_SkillIconAura(int i, int j, int k) {
+	public S_SkillIconAura(final int i, final int j, final int k) {
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(0x16);
 		writeC(i);

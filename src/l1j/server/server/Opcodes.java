@@ -479,6 +479,7 @@ public class Opcodes {
 	public static final int C_OPCODE_PUTSOLDIER = 145;// 要求配置已雇用士兵
 	public static final int C_OPCODE_SELECTWARTIME = 146;// 要求选择 变更攻城时间(but3.3C无使用)
 	public static final int C_OPCODE_PUTBOWSOLDIER = 147;// 要求配置城墙上弓手
+
 	public Opcodes() {
 	}
 

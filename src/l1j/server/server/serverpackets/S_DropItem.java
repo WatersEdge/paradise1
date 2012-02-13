@@ -29,7 +29,7 @@ public class S_DropItem extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_DropItem(L1ItemInstance item) {
+	public S_DropItem(final L1ItemInstance item) {
 		buildPacket(item);
 	}
 
@@ -46,7 +46,7 @@ public class S_DropItem extends ServerBasePacket {
 		return _S__OB_DropItem;
 	}
 
-	private void buildPacket(L1ItemInstance item) {
+	private void buildPacket(final L1ItemInstance item) {
 		// int addbyte = 0;
 		// int addbyte1 = 1;
 		// int addbyte2 = 13;
@@ -54,7 +54,7 @@ public class S_DropItem extends ServerBasePacket {
 
 		String itemName = item.getItem().getUnidentifiedNameId();
 		// 已鉴定
-		int isId = item.isIdentified() ? 1 : 0;
+		final int isId = item.isIdentified() ? 1 : 0;
 		if (isId == 1) {
 			itemName = item.getItem().getIdentifiedNameId();
 		}
@@ -76,7 +76,7 @@ public class S_DropItem extends ServerBasePacket {
 		writeC(0);
 		writeC(0);
 		if (item.getCount() > 1) {
-			if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅馆钥匙
+			if ((item.getItem().getItemId() == 40312) && (item.getKeyId() != 0)) { // 旅馆钥匙
 				writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
 			}
 			else {
@@ -84,17 +84,17 @@ public class S_DropItem extends ServerBasePacket {
 			}
 		}
 		else {
-			int itemId = item.getItem().getItemId();
+			final int itemId = item.getItem().getItemId();
 			if ((itemId == 20383) && (isId == 1)) { // 军马头盔
 				writeS(itemName + " [" + item.getChargeCount() + "]");
 			}
-			else if (item.getChargeCount() != 0 && (isId == 1)) { // 可使用的次数
+			else if ((item.getChargeCount() != 0) && (isId == 1)) { // 可使用的次数
 				writeS(itemName + " (" + item.getChargeCount() + ")");
 			}
 			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) { // 灯具
 				writeS(itemName + " ($10)");
 			}
-			else if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅馆钥匙
+			else if ((item.getItem().getItemId() == 40312) && (item.getKeyId() != 0)) { // 旅馆钥匙
 				writeS(itemName + item.getInnKeyName());
 			}
 			else {

@@ -44,7 +44,7 @@ public class Wand_SummonMonster extends ItemExecutor {
 			final S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
 			pc.sendPackets(s_attackPacket);
 			pc.broadcastPacket(s_attackPacket);
-			int[] mobArray = { 45008, 45140, 45016, 45021, 45025, // 哥布林・哈柏哥布林・鹿・葛林
+			final int[] mobArray = { 45008, 45140, 45016, 45021, 45025, // 哥布林・哈柏哥布林・鹿・葛林
 					45033, 45099, 45147, 45123, // 安普・安普长老・欧熊・骷髅弓箭手
 					45130, 45046, 45092, 45138, // 骷髅斧手・小猎犬・侏儒战士・妖魔巡守
 					45098, 45127, 45143, 45149, // 甘地妖魔・罗孚妖魔・都达玛拉妖魔・阿吐巴妖魔

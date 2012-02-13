@@ -26,14 +26,14 @@ public class NumberUtil {
 	 *            - 原始的数
 	 * @return 四舍五入的整数
 	 */
-	public static int randomRound(double number) {
-		double percentage = (number - Math.floor(number)) * 100;
+	public static int randomRound(final double number) {
+		final double percentage = (number - Math.floor(number)) * 100;
 
 		if (percentage == 0) {
 			return ((int) number);
 		}
 		else {
-			int r = Random.nextInt(100);
+			final int r = Random.nextInt(100);
 			if (r < percentage) {
 				return ((int) number + 1);
 			}

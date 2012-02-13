@@ -39,29 +39,29 @@ public class C_LeaveClan extends ClientBasePacket {
 	private static final String C_LEAVE_CLAN = "[C] C_LeaveClan";
 	private static Logger _log = Logger.getLogger(C_LeaveClan.class.getName());
 
-	public C_LeaveClan(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_LeaveClan(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		L1PcInstance player = clientthread.getActiveChar();
-		String player_name = player.getName();
-		String clan_name = player.getClanname();
-		int clan_id = player.getClanid();
+		final L1PcInstance player = clientthread.getActiveChar();
+		final String player_name = player.getName();
+		final String clan_name = player.getClanname();
+		final int clan_id = player.getClanid();
 		if (clan_id == 0) { // 还没加入血盟
 			return;
 		}
 
-		L1Clan clan = L1World.getInstance().getClan(clan_name);
+		final L1Clan clan = L1World.getInstance().getClan(clan_name);
 		if (clan != null) {
-			String clan_member_name[] = clan.getAllMembers();
+			final String clan_member_name[] = clan.getAllMembers();
 			int i;
-			if (player.isCrown() && player.getId() == clan.getLeaderId()) { // 是王族而且是联盟王
-				int castleId = clan.getCastleId();
-				int houseId = clan.getHouseId();
-				if (castleId != 0 || houseId != 0) {
+			if (player.isCrown() && (player.getId() == clan.getLeaderId())) { // 是王族而且是联盟王
+				final int castleId = clan.getCastleId();
+				final int houseId = clan.getHouseId();
+				if ((castleId != 0) || (houseId != 0)) {
 					player.sendPackets(new S_ServerMessage(665)); // \f1拥有城堡与血盟小屋的状态下无法解散血盟。
 					return;
 				}
-				for (L1War war : L1World.getInstance().getWarList()) {
+				for (final L1War war : L1World.getInstance().getWarList()) {
 					if (war.CheckClanInWar(clan_name)) {
 						player.sendPackets(new S_ServerMessage(302)); // \f1无法解散。
 						return;
@@ -69,7 +69,7 @@ public class C_LeaveClan extends ClientBasePacket {
 				}
 
 				for (i = 0; i < clan_member_name.length; i++) { // 取得所有血盟成员
-					L1PcInstance online_pc = L1World.getInstance().getPlayer(clan_member_name[i]);
+					final L1PcInstance online_pc = L1World.getInstance().getPlayer(clan_member_name[i]);
 					if (online_pc != null) { // 在线上的血盟成员
 						online_pc.setClanid(0);
 						online_pc.setClanname("");
@@ -82,25 +82,25 @@ public class C_LeaveClan extends ClientBasePacket {
 					}
 					else { // 非线上的血盟成员
 						try {
-							L1PcInstance offline_pc = CharacterTable.getInstance().restoreCharacter(clan_member_name[i]);
+							final L1PcInstance offline_pc = CharacterTable.getInstance().restoreCharacter(clan_member_name[i]);
 							offline_pc.setClanid(0);
 							offline_pc.setClanname("");
 							offline_pc.setClanRank(0);
 							offline_pc.setTitle("");
 							offline_pc.save(); // 储存玩家资料到资料库中
 						}
-						catch (Exception e) {
+						catch (final Exception e) {
 							_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 						}
 					}
 				}
-				String emblem_file = String.valueOf(clan_id);
-				File file = new File("emblem/" + emblem_file);
+				final String emblem_file = String.valueOf(clan_id);
+				final File file = new File("emblem/" + emblem_file);
 				file.delete();
 				ClanTable.getInstance().deleteClan(clan_name);
 			}
 			else { // 除了联盟主之外
-				L1PcInstance clanMember[] = clan.getOnlineClanMember();
+				final L1PcInstance clanMember[] = clan.getOnlineClanMember();
 				for (i = 0; i < clanMember.length; i++) {
 					clanMember[i].sendPackets(new S_ServerMessage(178, player_name, clan_name)); // \f1%0%s退出 %1 血盟了。
 				}

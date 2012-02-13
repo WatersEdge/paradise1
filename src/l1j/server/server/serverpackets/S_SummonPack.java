@@ -32,11 +32,11 @@ public class S_SummonPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_SummonPack(L1SummonInstance pet, L1PcInstance pc) {
+	public S_SummonPack(final L1SummonInstance pet, final L1PcInstance pc) {
 		buildPacket(pet, pc, true);
 	}
 
-	public S_SummonPack(L1SummonInstance pet, L1PcInstance pc, boolean isCheckMaster) {
+	public S_SummonPack(final L1SummonInstance pet, final L1PcInstance pc, final boolean isCheckMaster) {
 		buildPacket(pet, pc, isCheckMaster);
 	}
 
@@ -54,7 +54,7 @@ public class S_SummonPack extends ServerBasePacket {
 		return _S__1F_SUMMONPACK;
 	}
 
-	private void buildPacket(L1SummonInstance pet, L1PcInstance pc, boolean isCheckMaster) {
+	private void buildPacket(final L1SummonInstance pet, final L1PcInstance pc, final boolean isCheckMaster) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(pet.getX());
 		writeH(pet.getY());
@@ -86,7 +86,7 @@ public class S_SummonPack extends ServerBasePacket {
 		writeC(0); // ??
 		// HP的百分比
 		if ((pet.getMaster() != null) && (pet.getMaster().getId() == pc.getId())) {
-			int percent = pet.getMaxHp() != 0 ? 100 * pet.getCurrentHp() / pet.getMaxHp() : 100;
+			final int percent = pet.getMaxHp() != 0 ? 100 * pet.getCurrentHp() / pet.getMaxHp() : 100;
 			writeC(percent);
 		}
 		else {

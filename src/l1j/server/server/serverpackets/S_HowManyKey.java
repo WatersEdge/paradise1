@@ -35,7 +35,7 @@ public class S_HowManyKey extends ServerBasePacket {
 	 * @param max
 	 * @param htmlId
 	 */
-	public S_HowManyKey(L1NpcInstance npc, int price, int min, int max, String htmlId) {
+	public S_HowManyKey(final L1NpcInstance npc, final int price, final int min, final int max, final String htmlId) {
 		writeC(Opcodes.S_OPCODE_INPUTAMOUNT);
 		writeD(npc.getId());
 		writeD(price); // 价钱

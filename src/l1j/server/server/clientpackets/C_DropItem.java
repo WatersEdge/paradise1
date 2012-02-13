@@ -33,29 +33,29 @@ public class C_DropItem extends ClientBasePacket {
 
 	private static final String C_DROP_ITEM = "[C] C_DropItem";
 
-	public C_DropItem(byte[] decrypt, ClientThread client) throws Exception {
+	public C_DropItem(final byte[] decrypt, final ClientThread client) throws Exception {
 		super(decrypt);
-		int x = readH();
-		int y = readH();
-		int objectId = readD();
+		final int x = readH();
+		final int y = readH();
+		final int objectId = readD();
 		int count = readD();
 
-		if (count > 0x77359400 || count < 0) { // 确保数量不会溢位
+		if ((count > 0x77359400) || (count < 0)) { // 确保数量不会溢位
 			count = 0;
 		}
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
-		else if (pc.getMapId() >= 16384 && pc.getMapId() <= 25088) { // 旅馆内判断
+		else if ((pc.getMapId() >= 16384) && (pc.getMapId() <= 25088)) { // 旅馆内判断
 			pc.sendPackets(new S_ServerMessage(539)); // \f1你无法将它放在这。
 			return;
 		}
 
-		L1ItemInstance item = pc.getInventory().getItem(objectId);
+		final L1ItemInstance item = pc.getInventory().getItem(objectId);
 		if (item != null) {
-			L1ItemCheck checkItem = new L1ItemCheck(); // 物品状态检查
+			final L1ItemCheck checkItem = new L1ItemCheck(); // 物品状态检查
 			if (checkItem.ItemCheck(item, pc)) { // 是否作弊
 				return;
 			}
@@ -66,9 +66,9 @@ public class C_DropItem extends ClientBasePacket {
 			}
 
 			// 使用中的宠物项链 - 无法丢弃
-			for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 				if (petNpc instanceof L1PetInstance) {
-					L1PetInstance pet = (L1PetInstance) petNpc;
+					final L1PetInstance pet = (L1PetInstance) petNpc;
 					if (item.getId() == pet.getItemObjId()) {
 						pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
 						return;
@@ -76,7 +76,7 @@ public class C_DropItem extends ClientBasePacket {
 				}
 			}
 			// 使用中的魔法娃娃 - 无法丢弃
-			for (L1DollInstance doll : pc.getDollList().values()) {
+			for (final L1DollInstance doll : pc.getDollList().values()) {
 				if (doll.getItemObjId() == item.getId()) {
 					pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
 					return;
@@ -96,8 +96,9 @@ public class C_DropItem extends ClientBasePacket {
 			}
 
 			// 交易纪录
-			if (Config.writeDropLog)
+			if (Config.writeDropLog) {
 				LogRecorder.writeDropLog(pc, item);
+			}
 
 			pc.getInventory().tradeItem(item, count, L1World.getInstance().getInventory(x, y, pc.getMapId()));
 			pc.turnOnOffLight();

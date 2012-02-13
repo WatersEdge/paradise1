@@ -29,7 +29,7 @@ public class S_DoorPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_DoorPack(L1DoorInstance door) {
+	public S_DoorPack(final L1DoorInstance door) {
 		buildPacket(door);
 	}
 
@@ -47,14 +47,14 @@ public class S_DoorPack extends ServerBasePacket {
 		return S_DOOR_PACK;
 	}
 
-	private void buildPacket(L1DoorInstance door) {
+	private void buildPacket(final L1DoorInstance door) {
 		writeC(Opcodes.S_OPCODE_CHARPACK);
 		writeH(door.getX());
 		writeH(door.getY());
 		writeD(door.getId());
 		writeH(door.getGfxId());
-		int doorStatus = door.getStatus();
-		int openStatus = door.getOpenStatus();
+		final int doorStatus = door.getStatus();
+		final int openStatus = door.getOpenStatus();
 		if (door.isDead()) {
 			writeC(doorStatus);
 		}

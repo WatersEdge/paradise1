@@ -33,7 +33,7 @@ public class Kerosene extends ItemExecutor {
 	@Override
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
-		for (L1ItemInstance lightItem : pc.getInventory().getItems()) {
+		for (final L1ItemInstance lightItem : pc.getInventory().getItems()) {
 			if (lightItem.getItem().getItemId() == 40002) { // 灯笼
 				lightItem.setRemainingTime(item.getItem().getLightFuel());
 				pc.sendPackets(new S_ItemName(lightItem));

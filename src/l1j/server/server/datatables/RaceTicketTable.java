@@ -50,7 +50,7 @@ public class RaceTicketTable {
 		load();
 	}
 
-	public void deleteTicket(int itemobjid) {
+	public void deleteTicket(final int itemobjid) {
 		// PCのインベントリーが減少する再に使用
 		if (_tickets.containsKey(itemobjid)) {
 			_tickets.remove(itemobjid);
@@ -63,7 +63,7 @@ public class RaceTicketTable {
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -79,14 +79,14 @@ public class RaceTicketTable {
 		return _maxRoundNumber;
 	}
 
-	public L1RaceTicket getTemplate(int itemobjid) {
+	public L1RaceTicket getTemplate(final int itemobjid) {
 		if (_tickets.containsKey(itemobjid)) {
 			return _tickets.get(itemobjid);
 		}
 		return null;
 	}
 
-	public void oldTicketDelete(int round) {
+	public void oldTicketDelete(final int round) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -95,7 +95,7 @@ public class RaceTicketTable {
 			pstm.setInt(1, round);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -103,7 +103,7 @@ public class RaceTicketTable {
 		}
 	}
 
-	public void storeNewTiket(L1RaceTicket ticket) {
+	public void storeNewTiket(final L1RaceTicket ticket) {
 		// PCのインベントリーが増える場合に実行
 		// XXX 呼ばれる前と処理の重複
 		if (ticket.get_itemobjid() != 0) {
@@ -122,7 +122,7 @@ public class RaceTicketTable {
 			pstm.setInt(5, ticket.get_runner_num());
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -132,9 +132,9 @@ public class RaceTicketTable {
 		}
 	}
 
-	public void updateTicket(int round, int num, double allotment_percentage) {
-		for (L1RaceTicket ticket : getRaceTicketTableList()) {
-			if (ticket.get_round() == round && ticket.get_runner_num() == num) {
+	public void updateTicket(final int round, final int num, final double allotment_percentage) {
+		for (final L1RaceTicket ticket : getRaceTicketTableList()) {
+			if ((ticket.get_round() == round) && (ticket.get_runner_num() == num)) {
 				ticket.set_victory(1);
 				ticket.set_allotment_percentage(allotment_percentage);
 			}
@@ -151,7 +151,7 @@ public class RaceTicketTable {
 			pstm.setInt(4, num);
 			pstm.execute();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -169,8 +169,8 @@ public class RaceTicketTable {
 			int temp = 0;
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1RaceTicket ticket = new L1RaceTicket();
-				int itemobjid = rs.getInt(1);
+				final L1RaceTicket ticket = new L1RaceTicket();
+				final int itemobjid = rs.getInt(1);
 				ticket.set_itemobjid(itemobjid);
 				ticket.set_round(rs.getInt(2));
 				ticket.set_allotment_percentage(rs.getInt(3));
@@ -184,7 +184,7 @@ public class RaceTicketTable {
 			}
 			_maxRoundNumber = temp;
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

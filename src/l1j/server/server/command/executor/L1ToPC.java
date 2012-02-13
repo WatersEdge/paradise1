@@ -28,9 +28,9 @@ public class L1ToPC implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			L1PcInstance target = L1World.getInstance().getPlayer(arg);
+			final L1PcInstance target = L1World.getInstance().getPlayer(arg);
 
 			if (target != null) {
 				L1Teleport.teleport(pc, target.getX(), target.getY(), target.getMapId(), 5, false);
@@ -40,7 +40,7 @@ public class L1ToPC implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(arg).append("不在线上。").toString()));
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入: " + cmdName + " 玩家名称 。"));
 		}
 	}

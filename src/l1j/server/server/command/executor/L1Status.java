@@ -32,11 +32,11 @@ public class L1Status implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			String char_name = st.nextToken();
-			String param = st.nextToken();
+			final StringTokenizer st = new StringTokenizer(arg);
+			final String char_name = st.nextToken();
+			final String param = st.nextToken();
 			int value = Integer.parseInt(st.nextToken());
 
 			L1PcInstance target = null;
@@ -77,7 +77,7 @@ public class L1Status implements L1CommandExecutor {
 				}
 				else if (param.equalsIgnoreCase("LAWFUL")) {
 					target.setLawful(value);
-					S_Lawful s_lawful = new S_Lawful(target.getId(), target.getLawful());
+					final S_Lawful s_lawful = new S_Lawful(target.getId(), target.getLawful());
 					target.sendPackets(s_lawful);
 					target.broadcastPacket(s_lawful);
 				}
@@ -136,7 +136,7 @@ public class L1Status implements L1CommandExecutor {
 			target.sendPackets(new S_OwnCharStatus(target));
 			pc.sendPackets(new S_SystemMessage(target.getName() + " 的" + param + "值" + value + "被变更了。"));
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入: " + cmdName + " 玩家名称|me 属性 变更值 。"));
 		}
 	}

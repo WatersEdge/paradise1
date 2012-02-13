@@ -86,7 +86,7 @@ public class Shutdown extends Thread {
 	 *            真正的服务器关机后重新启动。
 	 * 
 	 */
-	public Shutdown(int seconds, boolean restart) {
+	public Shutdown(int seconds, final boolean restart) {
 		if (seconds < 0) {
 			seconds = 0;
 		}
@@ -105,8 +105,8 @@ public class Shutdown extends Thread {
 	 * @param activeChar
 	 *            GM who 发出中止命令
 	 */
-	public void abort(L1PcInstance activeChar) {
-		Announcements _an = Announcements.getInstance();
+	public void abort(final L1PcInstance activeChar) {
+		final Announcements _an = Announcements.getInstance();
 		_log.warning("‘游戏管理员’: " + activeChar.getName() + " 使用指令中断之前的行为。");
 		_an.announceToAll("伺服器【中断关机】 并维持正常运作！");
 
@@ -142,16 +142,16 @@ public class Shutdown extends Thread {
 			// last point where logging is operational :(
 			_log.warning("‘游戏管理员’ 关闭伺服器 倒数。" + _modeText[shutdownMode] + " NOW！");
 			switch (shutdownMode) {
-			case GM_SHUTDOWN:
-				_instance.setMode(GM_SHUTDOWN);
-				System.gc();// 内存回收
-				System.exit(0);
-				break;
-			case GM_RESTART:
-				_instance.setMode(GM_RESTART);
-				System.gc(); // 内存回收
-				System.exit(1);
-				break;
+				case GM_SHUTDOWN:
+					_instance.setMode(GM_SHUTDOWN);
+					System.gc();// 内存回收
+					System.exit(0);
+					break;
+				case GM_RESTART:
+					_instance.setMode(GM_RESTART);
+					System.gc(); // 内存回收
+					System.exit(1);
+					break;
 			}
 		}
 	}
@@ -166,8 +166,8 @@ public class Shutdown extends Thread {
 	 * @param restart
 	 *            如果服务器关机后重新启动
 	 */
-	public void startShutdown(L1PcInstance activeChar, int seconds, boolean restart) {
-		Announcements _an = Announcements.getInstance();
+	public void startShutdown(final L1PcInstance activeChar, final int seconds, final boolean restart) {
+		final Announcements _an = Announcements.getInstance();
 		_log.warning("‘游戏管理员’: " + activeChar.getId() + " 使用关机指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 		_an.announceToAll("伺服器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 
@@ -181,8 +181,8 @@ public class Shutdown extends Thread {
 		GeneralThreadPool.getInstance().execute(_counterInstance);
 	}
 
-	public void startTelnetShutdown(String IP, int seconds, boolean restart) {
-		Announcements _an = Announcements.getInstance();
+	public void startTelnetShutdown(final String IP, final int seconds, final boolean restart) {
+		final Announcements _an = Announcements.getInstance();
 		_log.warning("IP: " + IP + " 使用关闭指令。" + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 		_an.announceToAll("服务器 是 " + _modeText[shutdownMode] + " 在 " + seconds + " 秒！");
 
@@ -201,8 +201,8 @@ public class Shutdown extends Thread {
 	 * <br>
 	 *            IP 发出关机指令
 	 */
-	public void Telnetabort(String IP) {
-		Announcements _an = Announcements.getInstance();
+	public void Telnetabort(final String IP) {
+		final Announcements _an = Announcements.getInstance();
 		_log.warning("IP: " + IP + " 使用中断关闭指令。" + _modeText[shutdownMode] + " 已停止！");
 		_an.announceToAll("伺服器中断了 " + _modeText[shutdownMode] + " 并维持正常运作！");
 
@@ -224,50 +224,50 @@ public class Shutdown extends Thread {
 	 * 中止，如果中止的模式改变
 	 */
 	private void countdown() {
-		Announcements _an = Announcements.getInstance();
+		final Announcements _an = Announcements.getInstance();
 
 		try {
 			while (secondsShut > 0) {
 
 				switch (secondsShut) {
-				case 240:
-					_an.announceToAll("服务器将在4分钟内关闭。");
-					break;
-				case 180:
-					_an.announceToAll("服务器将在3分钟内关闭。");
-					break;
-				case 120:
-					_an.announceToAll("服务器将在2分钟内关闭。");
-					break;
-				case 60:
-					_an.announceToAll("服务器将在1分钟内关闭。");
-					break;
-				case 30:
-					_an.announceToAll("服务器将在30秒内关闭。");
-					break;
-				case 10:
-					_an.announceToAll("服务器将在10秒内关闭。");
-					break;
-				case 5:
-					_an.announceToAll("服务器将在5秒内关闭。");
-					break;
-				case 4:
-					_an.announceToAll("服务器将在4秒内关闭。");
-					break;
-				case 3:
-					_an.announceToAll("服务器将在3秒内关闭。");
-					break;
-				case 2:
-					_an.announceToAll("服务器将在2秒内关闭。");
-					break;
-				case 1:
-					_an.announceToAll("服务器将在1秒内关闭。");
-					break;
+					case 240:
+						_an.announceToAll("服务器将在4分钟内关闭。");
+						break;
+					case 180:
+						_an.announceToAll("服务器将在3分钟内关闭。");
+						break;
+					case 120:
+						_an.announceToAll("服务器将在2分钟内关闭。");
+						break;
+					case 60:
+						_an.announceToAll("服务器将在1分钟内关闭。");
+						break;
+					case 30:
+						_an.announceToAll("服务器将在30秒内关闭。");
+						break;
+					case 10:
+						_an.announceToAll("服务器将在10秒内关闭。");
+						break;
+					case 5:
+						_an.announceToAll("服务器将在5秒内关闭。");
+						break;
+					case 4:
+						_an.announceToAll("服务器将在4秒内关闭。");
+						break;
+					case 3:
+						_an.announceToAll("服务器将在3秒内关闭。");
+						break;
+					case 2:
+						_an.announceToAll("服务器将在2秒内关闭。");
+						break;
+					case 1:
+						_an.announceToAll("服务器将在1秒内关闭。");
+						break;
 				}
 
 				secondsShut--;
 
-				int delay = 1000; // 毫秒
+				final int delay = 1000; // 毫秒
 				Thread.sleep(delay);
 
 				if (shutdownMode == ABORT) {
@@ -275,7 +275,7 @@ public class Shutdown extends Thread {
 				}
 			}
 		}
-		catch (InterruptedException e) {
+		catch (final InterruptedException e) {
 			// this will never happen
 			// 这绝不会发生
 		}
@@ -286,17 +286,17 @@ public class Shutdown extends Thread {
 	 * 
 	 */
 	private void saveData() {
-		Announcements _an = Announcements.getInstance();
+		final Announcements _an = Announcements.getInstance();
 		switch (shutdownMode) {
-		case SIGTERM:
-			System.err.println("【 动作：经由主程式 执行关闭 】");
-			break;
-		case GM_SHUTDOWN:
-			System.err.println("【 动作：‘游戏管理员’ 执行关闭!!! 】");
-			break;
-		case GM_RESTART:
-			System.err.println("【 动作：‘游戏管理员’ 执行重启!!! 】");
-			break;
+			case SIGTERM:
+				System.err.println("【 动作：经由主程式 执行关闭 】");
+				break;
+			case GM_SHUTDOWN:
+				System.err.println("【 动作：‘游戏管理员’ 执行关闭!!! 】");
+				break;
+			case GM_RESTART:
+				System.err.println("【 动作：‘游戏管理员’ 执行重启!!! 】");
+				break;
 
 		}
 		_an.announceToAll("伺服器目前是" + _modeText[shutdownMode] + " NOW! bye bye");
@@ -306,10 +306,10 @@ public class Shutdown extends Thread {
 
 		System.err.println("【资料储存完毕，强制玩家全部离线】");
 		try {
-			int delay = 500;
+			final int delay = 500;
 			Thread.sleep(delay);
 		}
-		catch (InterruptedException e) {
+		catch (final InterruptedException e) {
 			// never happens :p
 		}
 	}
@@ -320,7 +320,7 @@ public class Shutdown extends Thread {
 	 * @param mode
 	 *            应设置什么样的模式
 	 */
-	private void setMode(int mode) {
+	private void setMode(final int mode) {
 		shutdownMode = mode;
 	}
 

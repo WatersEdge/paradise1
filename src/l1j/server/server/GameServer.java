@@ -92,13 +92,13 @@ public class GameServer extends Thread {
 	private class ServerShutdownThread extends Thread {
 		private final int _secondsCount;
 
-		public ServerShutdownThread(int secondsCount) {
+		public ServerShutdownThread(final int secondsCount) {
 			_secondsCount = secondsCount;
 		}
 
 		@Override
 		public void run() {
-			L1World world = L1World.getInstance();
+			final L1World world = L1World.getInstance();
 			try {
 				int secondsCount = _secondsCount;
 				world.broadcastServerMessage("伺服器即将关闭。");
@@ -117,7 +117,7 @@ public class GameServer extends Thread {
 				}
 				shutdown();
 			}
-			catch (InterruptedException e) {
+			catch (final InterruptedException e) {
 				world.broadcastServerMessage("已取消伺服器关机。伺服器将会正常运作。");
 				return;
 			}
@@ -130,12 +130,14 @@ public class GameServer extends Thread {
 	private ServerSocket _serverSocket;
 
 	private static int YesNoCount = 0;
+
 	public static GameServer getInstance() {
 		if (_instance == null) {
 			_instance = new GameServer();
 		}
 		return _instance;
 	}
+
 	private int _port;
 
 	// private Logins _logins;
@@ -177,28 +179,28 @@ public class GameServer extends Thread {
 	 * 踢掉世界地图中所有的玩家与储存资料。
 	 */
 	public void disconnectAllCharacters() {
-		Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
-		for (L1PcInstance pc : players) {
+		final Collection<L1PcInstance> players = L1World.getInstance().getAllPlayers();
+		for (final L1PcInstance pc : players) {
 			pc.getNetConnection().setActiveChar(null);
 			pc.getNetConnection().kick();
 		}
 		// 踢除所有在线上的玩家
-		for (L1PcInstance pc : players) {
+		for (final L1PcInstance pc : players) {
 			ClientThread.quitGame(pc);
 			L1World.getInstance().removeObject(pc);
-			Account account = Account.load(pc.getAccountName());
+			final Account account = Account.load(pc.getAccountName());
 			Account.online(account, false);
 		}
 	}
 
 	/** 初始化 */
 	public void initialize() throws Exception {
-		String s = Config.GAME_SERVER_HOST_NAME;
-		double rateXp = Config.RATE_XP;
-		double LA = Config.RATE_LA;
-		double rateKarma = Config.RATE_KARMA;
-		double rateDropItems = Config.RATE_DROP_ITEMS;
-		double rateDropAdena = Config.RATE_DROP_ADENA;
+		final String s = Config.GAME_SERVER_HOST_NAME;
+		final double rateXp = Config.RATE_XP;
+		final double LA = Config.RATE_LA;
+		final double rateKarma = Config.RATE_KARMA;
+		final double rateDropItems = Config.RATE_DROP_ITEMS;
+		final double rateDropAdena = Config.RATE_DROP_ADENA;
 
 		// Locale 多国语系
 		L1Message.getInstance();
@@ -206,7 +208,7 @@ public class GameServer extends Thread {
 		chatlvl = Config.GLOBAL_CHAT_LEVEL;
 		_port = Config.GAME_SERVER_PORT;
 		if (!"*".equals(s)) {
-			InetAddress inetaddress = InetAddress.getByName(s);
+			final InetAddress inetaddress = InetAddress.getByName(s);
 			inetaddress.getHostAddress();
 			_serverSocket = new ServerSocket(_port, 50, inetaddress);
 			System.out.println(L1Message.setporton + _port);
@@ -232,7 +234,7 @@ public class GameServer extends Thread {
 			System.out.println("└" + L1Message.nonpvpYes + "\n");
 		}
 
-		int maxOnlineUsers = Config.MAX_ONLINE_USERS;
+		final int maxOnlineUsers = Config.MAX_ONLINE_USERS;
 		System.out.println(L1Message.maxplayer + (maxOnlineUsers) + L1Message.player);
 
 		System.out.println("┌───────────────────────────────┐");
@@ -259,16 +261,16 @@ public class GameServer extends Thread {
 		}
 
 		// 初始化无限大战
-		UbTimeController ubTimeContoroller = UbTimeController.getInstance();
+		final UbTimeController ubTimeContoroller = UbTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(ubTimeContoroller);
 
 		// 初始化攻城
-		WarTimeController warTimeController = WarTimeController.getInstance();
+		final WarTimeController warTimeController = WarTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(warTimeController);
 
 		// 设定精灵石的产生
 		if (Config.ELEMENTAL_STONE_AMOUNT > 0) {
-			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator.getInstance();
+			final ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator.getInstance();
 			GeneralThreadPool.getInstance().execute(elementalStoneGenerator);
 		}
 
@@ -276,23 +278,23 @@ public class GameServer extends Thread {
 		HomeTownTimeController.getInstance();
 
 		// 初始化盟屋拍卖
-		AuctionTimeController auctionTimeController = AuctionTimeController.getInstance();
+		final AuctionTimeController auctionTimeController = AuctionTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(auctionTimeController);
 
 		// 初始化盟屋的税金
-		HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController.getInstance();
+		final HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(houseTaxTimeController);
 
 		// 初始化钓鱼
-		FishingTimeController fishingTimeController = FishingTimeController.getInstance();
+		final FishingTimeController fishingTimeController = FishingTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(fishingTimeController);
 
 		// 初始化 NPC 聊天
-		NpcChatTimeController npcChatTimeController = NpcChatTimeController.getInstance();
+		final NpcChatTimeController npcChatTimeController = NpcChatTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(npcChatTimeController);
 
 		// 初始化 Light
-		LightTimeController lightTimeController = LightTimeController.getInstance();
+		final LightTimeController lightTimeController = LightTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(lightTimeController);
 
 		// 初始化游戏公告
@@ -311,7 +313,7 @@ public class GameServer extends Thread {
 		Account.InitialOnlineStatus();
 
 		NpcTable.getInstance();
-		L1DeleteItemOnGround deleteitem = new L1DeleteItemOnGround();
+		final L1DeleteItemOnGround deleteitem = new L1DeleteItemOnGround();
 		deleteitem.initialize();
 
 		if (!NpcTable.getInstance().isInitialized()) {
@@ -363,10 +365,10 @@ public class GameServer extends Thread {
 		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 
-		Thread cp = new ConsoleProcess(); // cmd互动指令
+		final Thread cp = new ConsoleProcess(); // cmd互动指令
 		cp.start();
 
-		this.start();
+		start();
 	}
 
 	@Override
@@ -375,18 +377,18 @@ public class GameServer extends Thread {
 		System.out.println(L1Message.waitingforuser);
 		while (true) {
 			try {
-				Socket socket = _serverSocket.accept();
+				final Socket socket = _serverSocket.accept();
 				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
-				String host = socket.getInetAddress().getHostAddress();
+				final String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
 					_log.info("禁用IP (" + host + ")");
 				}
 				else {
-					ClientThread client = new ClientThread(socket);
+					final ClientThread client = new ClientThread(socket);
 					GeneralThreadPool.getInstance().execute(client);
 				}
 			}
-			catch (IOException ioexception) {
+			catch (final IOException ioexception) {
 			}
 		}
 	}
@@ -398,7 +400,7 @@ public class GameServer extends Thread {
 	}
 
 	/** 关机倒计时 */
-	public synchronized void shutdownWithCountdown(int secondsCount) {
+	public synchronized void shutdownWithCountdown(final int secondsCount) {
 		if (_shutdownThread != null) {
 			// 如果正在关闭
 			// TODO 可能要有错误通知之类的

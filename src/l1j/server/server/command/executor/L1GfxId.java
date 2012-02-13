@@ -34,18 +34,18 @@ public class L1GfxId implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			int gfxid = Integer.parseInt(st.nextToken(), 10);
-			int count = Integer.parseInt(st.nextToken(), 10);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final int gfxid = Integer.parseInt(st.nextToken(), 10);
+			final int count = Integer.parseInt(st.nextToken(), 10);
 			for (int i = 0; i < count; i++) {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(45001);
+				final L1Npc l1npc = NpcTable.getInstance().getTemplate(45001);
 				if (l1npc != null) {
-					String s = l1npc.getImpl();
-					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-					Object aobj[] = { l1npc };
-					L1NpcInstance npc = (L1NpcInstance) constructor.newInstance(aobj);
+					final String s = l1npc.getImpl();
+					final Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
+					final Object aobj[] = { l1npc };
+					final L1NpcInstance npc = (L1NpcInstance) constructor.newInstance(aobj);
 					npc.setId(IdFactory.getInstance().nextId());
 					npc.setGfxId(gfxid + i);
 					npc.setTempCharGfx(0);
@@ -62,7 +62,7 @@ public class L1GfxId implements L1CommandExecutor {
 				}
 			}
 		}
-		catch (Exception exception) {
+		catch (final Exception exception) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 请输入  动画编号  动画数量  人物ID。"));
 		}
 	}

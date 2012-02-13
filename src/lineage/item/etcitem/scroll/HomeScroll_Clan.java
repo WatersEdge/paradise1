@@ -57,9 +57,9 @@ public class HomeScroll_Clan extends ItemExecutor {
 				if (pc.getMap().isEscapable() || pc.isGm()) {
 					int[] loc = new int[3];
 					loc = L1CastleLocation.getCastleLoc(castle_id);
-					int locx = loc[0];
-					int locy = loc[1];
-					short mapid = (short) (loc[2]);
+					final int locx = loc[0];
+					final int locy = loc[1];
+					final short mapid = (short) (loc[2]);
 					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
 					pc.getInventory().removeItem(item, 1);
 				}
@@ -73,9 +73,9 @@ public class HomeScroll_Clan extends ItemExecutor {
 				if (pc.getMap().isEscapable() || pc.isGm()) {
 					int[] loc = new int[3];
 					loc = L1HouseLocation.getHouseLoc(house_id);
-					int locx = loc[0];
-					int locy = loc[1];
-					short mapid = (short) (loc[2]);
+					final int locx = loc[0];
+					final int locy = loc[1];
+					final short mapid = (short) (loc[2]);
 					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
 					pc.getInventory().removeItem(item, 1);
 				}
@@ -89,15 +89,15 @@ public class HomeScroll_Clan extends ItemExecutor {
 
 				// 有登记村庄
 				if (pc.getHomeTownId() > 0) {
-					int[] loc = L1TownLocation.getGetBackLoc(pc.getHomeTownId());
-					int locx = loc[0];
-					int locy = loc[1];
-					short mapid = (short) (loc[2]);
+					final int[] loc = L1TownLocation.getGetBackLoc(pc.getHomeTownId());
+					final int locx = loc[0];
+					final int locy = loc[1];
+					final short mapid = (short) (loc[2]);
 					L1Teleport.teleport(pc, locx, locy, mapid, 5, true);
 					pc.getInventory().removeItem(item, 1);
 				} // 无登记村庄
 				else {
-					int[] loc = Getback.GetBack_Location(pc, true);
+					final int[] loc = Getback.GetBack_Location(pc, true);
 					L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 					pc.getInventory().removeItem(item, 1);
 				}

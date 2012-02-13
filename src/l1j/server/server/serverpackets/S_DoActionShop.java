@@ -28,7 +28,7 @@ public class S_DoActionShop extends ServerBasePacket {
 	 * @param gfxid
 	 * @param message
 	 */
-	public S_DoActionShop(int object, int gfxid, byte[] message) {
+	public S_DoActionShop(final int object, final int gfxid, final byte[] message) {
 		writeC(Opcodes.S_OPCODE_DOACTIONGFX);
 		writeD(object);
 		writeC(gfxid); // 动作编号

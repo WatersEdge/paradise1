@@ -39,7 +39,7 @@ public class L1GameTimeClock {
 				try {
 					Thread.sleep(500);
 				}
-				catch (InterruptedException e) {
+				catch (final InterruptedException e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 			}
@@ -48,9 +48,11 @@ public class L1GameTimeClock {
 
 	private static Logger _log = Logger.getLogger(L1GameTimeClock.class.getName());
 	private static L1GameTimeClock _instance;
+
 	public static L1GameTimeClock getInstance() {
 		return _instance;
 	}
+
 	/** 初始化 */
 	public static void init() {
 		_instance = new L1GameTimeClock();
@@ -63,14 +65,14 @@ public class L1GameTimeClock {
 	private L1GameTime _previousTime = null;
 
 	/**  */
-	private List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
+	private final List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
 
 	private L1GameTimeClock() {
 		GeneralThreadPool.getInstance().execute(new TimeUpdater());
 	}
 
 	/** 增加监听 */
-	public void addListener(L1GameTimeListener listener) {
+	public void addListener(final L1GameTimeListener listener) {
 		_listeners.add(listener);
 	}
 
@@ -80,34 +82,34 @@ public class L1GameTimeClock {
 	}
 
 	/** 删除监听 */
-	public void removeListener(L1GameTimeListener listener) {
+	public void removeListener(final L1GameTimeListener listener) {
 		_listeners.remove(listener);
 	}
 
 	/** 改变 */
-	private boolean isFieldChanged(int field) {
+	private boolean isFieldChanged(final int field) {
 		return _previousTime.get(field) != _currentTime.get(field);
 	}
 
 	/** 通知改变 */
 	private void notifyChanged() {
 		if (isFieldChanged(Calendar.MONTH)) {
-			for (L1GameTimeListener listener : _listeners) {
+			for (final L1GameTimeListener listener : _listeners) {
 				listener.onMonthChanged(_currentTime);
 			}
 		}
 		if (isFieldChanged(Calendar.DAY_OF_MONTH)) {
-			for (L1GameTimeListener listener : _listeners) {
+			for (final L1GameTimeListener listener : _listeners) {
 				listener.onDayChanged(_currentTime);
 			}
 		}
 		if (isFieldChanged(Calendar.HOUR_OF_DAY)) {
-			for (L1GameTimeListener listener : _listeners) {
+			for (final L1GameTimeListener listener : _listeners) {
 				listener.onHourChanged(_currentTime);
 			}
 		}
 		if (isFieldChanged(Calendar.MINUTE)) {
-			for (L1GameTimeListener listener : _listeners) {
+			for (final L1GameTimeListener listener : _listeners) {
 				listener.onMinuteChanged(_currentTime);
 			}
 		}

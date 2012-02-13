@@ -47,7 +47,7 @@ public class HouseTable {
 	 * @return
 	 */
 	public static List<Integer> getHouseIdList() {
-		List<Integer> houseIdList = Lists.newList();
+		final List<Integer> houseIdList = Lists.newList();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -58,11 +58,11 @@ public class HouseTable {
 			pstm = con.prepareStatement("SELECT house_id FROM house ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				int houseId = rs.getInt("house_id");
+				final int houseId = rs.getInt("house_id");
 				houseIdList.add(Integer.valueOf(houseId));
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -93,7 +93,7 @@ public class HouseTable {
 			pstm = con.prepareStatement("SELECT * FROM house ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1House house = new L1House();
+				final L1House house = new L1House();
 				house.setHouseId(rs.getInt(1));
 				house.setHouseName(rs.getString(2));
 				house.setHouseArea(rs.getInt(3));
@@ -105,7 +105,7 @@ public class HouseTable {
 				_house.put(house.getHouseId(), house);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -119,7 +119,7 @@ public class HouseTable {
 	 * 
 	 * @return
 	 */
-	public L1House getHouseTable(int houseId) {
+	public L1House getHouseTable(final int houseId) {
 		return _house.get(houseId);
 	}
 
@@ -135,7 +135,7 @@ public class HouseTable {
 	/**
 	 * 更新盟屋
 	 */
-	public void updateHouse(L1House house) {
+	public void updateHouse(final L1House house) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -147,13 +147,13 @@ public class HouseTable {
 			pstm.setInt(4, house.getKeeperId());
 			pstm.setInt(5, house.isOnSale() == true ? 1 : 0);
 			pstm.setInt(6, house.isPurchaseBasement() == true ? 1 : 0);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			String fm = sdf.format(house.getTaxDeadline().getTime());
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			final String fm = sdf.format(house.getTaxDeadline().getTime());
 			pstm.setString(7, fm);
 			pstm.setInt(8, house.getHouseId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -161,8 +161,8 @@ public class HouseTable {
 		}
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
+	private Calendar timestampToCalendar(final Timestamp ts) {
+		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
 	}

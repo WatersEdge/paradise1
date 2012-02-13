@@ -28,7 +28,7 @@ public class S_SPMR extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	/** 更新魔防以及魔攻 */
-	public S_SPMR(L1PcInstance pc) {
+	public S_SPMR(final L1PcInstance pc) {
 		buildPacket(pc);
 	}
 
@@ -45,7 +45,7 @@ public class S_SPMR extends ServerBasePacket {
 		return S_SPMR;
 	}
 
-	private void buildPacket(L1PcInstance pc) {
+	private void buildPacket(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SPMR);
 		// 智慧药水增加的SP在S_SkillBrave送信时更新
 		if (pc.hasSkillEffect(STATUS_WISDOM_POTION)) {

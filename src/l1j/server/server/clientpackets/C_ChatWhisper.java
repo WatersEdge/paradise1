@@ -33,11 +33,11 @@ public class C_ChatWhisper extends ClientBasePacket {
 
 	private static final String C_CHAT_WHISPER = "[C] C_ChatWhisper";
 
-	public C_ChatWhisper(byte abyte0[], ClientThread client) throws Exception {
+	public C_ChatWhisper(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		String targetName = readS();
-		String text = readS();
-		L1PcInstance whisperFrom = client.getActiveChar();
+		final String targetName = readS();
+		final String text = readS();
+		final L1PcInstance whisperFrom = client.getActiveChar();
 
 		// 被魔封
 		if (whisperFrom.hasSkillEffect(1005)) {
@@ -51,7 +51,7 @@ public class C_ChatWhisper extends ClientBasePacket {
 																											// 以下无法使用密谈。
 			return;
 		}
-		L1PcInstance whisperTo = L1World.getInstance().getPlayer(targetName);
+		final L1PcInstance whisperTo = L1World.getInstance().getPlayer(targetName);
 		// 密语对象不存在
 		if (whisperTo == null) {
 			whisperFrom.sendPackets(new S_ServerMessage(73, targetName)); // \f1%0%d 不在线上。

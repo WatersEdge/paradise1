@@ -34,7 +34,7 @@ public class S_CurseBlind extends ServerBasePacket {
 	 * @param type
 	 *            0:OFF 1:自己 2:周边物件可见
 	 */
-	public S_CurseBlind(int type) {
+	public S_CurseBlind(final int type) {
 		buildPacket(type);
 	}
 
@@ -51,7 +51,7 @@ public class S_CurseBlind extends ServerBasePacket {
 		return S_CurseBlind;
 	}
 
-	private void buildPacket(int type) {
+	private void buildPacket(final int type) {
 		writeC(Opcodes.S_OPCODE_CURSEBLIND);
 		writeH(type);
 	}

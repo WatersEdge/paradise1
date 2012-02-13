@@ -35,7 +35,7 @@ public class S_PetList extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_PetList(int npcObjId, L1PcInstance pc) {
+	public S_PetList(final int npcObjId, final L1PcInstance pc) {
 		buildPacket(npcObjId, pc);
 	}
 
@@ -52,10 +52,10 @@ public class S_PetList extends ServerBasePacket {
 		return S_PETLIST;
 	}
 
-	private void buildPacket(int npcObjId, L1PcInstance pc) {
-		List<L1ItemInstance> amuletList = Lists.newList();
+	private void buildPacket(final int npcObjId, final L1PcInstance pc) {
+		final List<L1ItemInstance> amuletList = Lists.newList();
 		// 判断身上是否有宠物项圈！
-		for (L1ItemInstance item : pc.getInventory().getItems()) {
+		for (final L1ItemInstance item : pc.getInventory().getItems()) {
 			if ((item.getItem().getItemId() == 40314) || (item.getItem().getItemId() == 40316)) {
 				if (!isWithdraw(pc, item)) {
 					amuletList.add(item);
@@ -68,7 +68,7 @@ public class S_PetList extends ServerBasePacket {
 			writeD(npcObjId);
 			writeH(amuletList.size());
 			writeC(0x0c);
-			for (L1ItemInstance item : amuletList) {
+			for (final L1ItemInstance item : amuletList) {
 				writeD(item.getId());
 				writeC(0x00);
 				writeH(item.get_gfxid());
@@ -84,10 +84,10 @@ public class S_PetList extends ServerBasePacket {
 		writeD(0x00000073); // Price
 	}
 
-	private boolean isWithdraw(L1PcInstance pc, L1ItemInstance item) {
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+	private boolean isWithdraw(final L1PcInstance pc, final L1ItemInstance item) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			if (petNpc instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petNpc;
+				final L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					return true;
 				}

@@ -40,17 +40,17 @@ public interface TelnetCommand {
 
 class CharStatusCommand implements TelnetCommand {
 	@Override
-	public TelnetCommandResult execute(String args) {
-		int id = Integer.valueOf(args);
-		L1Object obj = L1World.getInstance().findObject(id);
+	public TelnetCommandResult execute(final String args) {
+		final int id = Integer.valueOf(args);
+		final L1Object obj = L1World.getInstance().findObject(id);
 		if (obj == null) {
 			return new TelnetCommandResult(CMD_INTERNAL_ERROR, "ObjectId " + id + " not found");
 		}
 		if (!(obj instanceof L1Character)) {
 			return new TelnetCommandResult(CMD_INTERNAL_ERROR, "ObjectId " + id + " is not a character");
 		}
-		L1Character cha = (L1Character) obj;
-		StringBuilder result = new StringBuilder();
+		final L1Character cha = (L1Character) obj;
+		final StringBuilder result = new StringBuilder();
 		result.append("Name: " + cha.getName() + "\r\n");
 		result.append("Level: " + cha.getLevel() + "\r\n");
 		result.append("MaxHp: " + cha.getMaxHp() + "\r\n");
@@ -63,18 +63,18 @@ class CharStatusCommand implements TelnetCommand {
 
 class EchoCommand implements TelnetCommand {
 	@Override
-	public TelnetCommandResult execute(String args) {
+	public TelnetCommandResult execute(final String args) {
 		return new TelnetCommandResult(CMD_OK, args);
 	}
 }
 
 class GlobalChatCommand implements TelnetCommand {
 	@Override
-	public TelnetCommandResult execute(String args) {
-		StringTokenizer tok = new StringTokenizer(args, " ");
-		String name = tok.nextToken();
-		String text = args.substring(name.length() + 1);
-		L1PcInstance pc = new MySqlCharacterStorage().loadCharacter(name);
+	public TelnetCommandResult execute(final String args) {
+		final StringTokenizer tok = new StringTokenizer(args, " ");
+		final String name = tok.nextToken();
+		final String text = args.substring(name.length() + 1);
+		final L1PcInstance pc = new MySqlCharacterStorage().loadCharacter(name);
 		if (pc == null) {
 			return new TelnetCommandResult(CMD_INTERNAL_ERROR, " 没有角色存在。");
 		}
@@ -88,16 +88,16 @@ class GlobalChatCommand implements TelnetCommand {
 
 class PlayerIdCommand implements TelnetCommand {
 	@Override
-	public TelnetCommandResult execute(String args) {
-		L1PcInstance pc = L1World.getInstance().getPlayer(args);
-		String result = pc == null ? "0" : String.valueOf(pc.getId());
+	public TelnetCommandResult execute(final String args) {
+		final L1PcInstance pc = L1World.getInstance().getPlayer(args);
+		final String result = pc == null ? "0" : String.valueOf(pc.getId());
 		return new TelnetCommandResult(CMD_OK, result);
 	}
 }
 
 class ShutDownCommand implements TelnetCommand {
 	@Override
-	public TelnetCommandResult execute(String args) {
+	public TelnetCommandResult execute(final String args) {
 		int sec = args.isEmpty() ? 0 : Integer.parseInt(args);
 		sec = IntRange.ensure(sec, 30, Integer.MAX_VALUE);
 

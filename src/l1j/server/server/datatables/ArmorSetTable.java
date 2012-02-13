@@ -65,9 +65,9 @@ public class ArmorSetTable {
 	 * 
 	 * @param rs
 	 */
-	private void fillTable(ResultSet rs) throws SQLException {
+	private void fillTable(final ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			L1ArmorSets as = new L1ArmorSets();
+			final L1ArmorSets as = new L1ArmorSets();
 			as.setId(rs.getInt("id")); // 流水编号 (不能重复)
 			as.setSets(rs.getString("sets")); // 组件 (几件装备组成一套)
 			as.setPolyId(rs.getInt("polyid")); // 变身编号
@@ -108,7 +108,7 @@ public class ArmorSetTable {
 			rs = pstm.executeQuery();
 			fillTable(rs);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建armor_set表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

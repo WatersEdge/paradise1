@@ -56,7 +56,7 @@ public class C_ItemUSe extends ClientBasePacket {
 	 * 
 	 * @param
 	 */
-	public C_ItemUSe(byte[] abyte0, ClientThread client) throws Exception {
+	public C_ItemUSe(final byte[] abyte0, final ClientThread client) throws Exception {
 
 		// 载入资料
 		super(abyte0);
@@ -158,7 +158,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					isDelayEffect = true;
 					final Timestamp lastUsed = useItem.getLastUsed();
 					if (lastUsed != null) {
-						Calendar cal = Calendar.getInstance();
+						final Calendar cal = Calendar.getInstance();
 						long UseTime = (cal.getTimeInMillis() - lastUsed.getTime()) / 1000;
 						if (UseTime <= delayEffect) {
 							// 转换为须等待时间
@@ -191,8 +191,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case -7: // 料理书
 					if (isClass) {
 						final int[] newData = new int[2];
-						newData[0] = this.readC();
-						newData[1] = this.readC();
+						newData[0] = readC();
+						newData[1] = readC();
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -268,9 +268,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 5: // 魔杖类型 (须选取目标/坐标)地面 / 选择对象(远距离)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = this.readD(); // 选取目标的OBJID
-						newData[1] = this.readH(); // X坐标
-						newData[2] = this.readH(); // Y坐标
+						newData[0] = readD(); // 选取目标的OBJID
+						newData[1] = readH(); // X坐标
+						newData[2] = readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -279,8 +279,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 29: // 瞬间移动卷轴(祝福)
 					if (isClass) {
 						final int[] newData = new int[2];
-						newData[1] = this.readH(); // 所在地图编号
-						newData[0] = this.readD(); // 选取目标的OBJID
+						newData[1] = readH(); // 所在地图编号
+						newData[0] = readD(); // 选取目标的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -288,7 +288,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 7: // 鉴定卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readD(); // 选取物件的OBJID
+						newData[0] = readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -296,7 +296,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 8: // 复活卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readD(); // 选取物件的OBJID
+						newData[0] = readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -307,9 +307,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 35: // 白色情人节卡片
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readH();
-						pc.setText(this.readS());
-						pc.setTextByte(this.readByte());
+						newData[0] = readH();
+						pc.setText(readS());
+						pc.setTextByte(readByte());
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -326,7 +326,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 14: // 请选择一个物品 (道具栏位) 灯油/磨刀石/胶水/龙之魔眼等
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readD(); // 选取物件的OBJID
+						newData[0] = readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -345,7 +345,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						return;
 					}
 					if (isClass) {
-						final String cmd = this.readS();
+						final String cmd = readS();
 						pc.setText(cmd); // 选取的变身命令
 						ItemClass.getInstance().item(null, pc, useItem);
 					}
@@ -354,9 +354,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 17: // 选取目标 地面 (近距离)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = this.readD(); // 选取目标的OBJID
-						newData[1] = this.readH(); // X坐标
-						newData[2] = this.readH(); // Y坐标
+						newData[0] = readD(); // 选取目标的OBJID
+						newData[1] = readH(); // X坐标
+						newData[2] = readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -366,7 +366,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 46: // 饰品强化卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readD(); // 选取物件的OBJID
+						newData[0] = readD(); // 选取物件的OBJID
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -374,14 +374,14 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 28: // 空的魔法卷轴
 					if (isClass) {
 						final int[] newData = new int[1];
-						newData[0] = this.readC();
+						newData[0] = readC();
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
 
 				case 30: // 选取目标 (对NPC需要Ctrl 远距离 无XY坐标传回)
 					if (isClass) {
-						final int obj = this.readD(); // 选取目标的OBJID
+						final int obj = readD(); // 选取目标的OBJID
 						final int[] newData = new int[] { obj };
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
@@ -390,8 +390,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				case 42: // 钓鱼杆 (魔法钓竿)
 					if (isClass) {
 						final int[] newData = new int[3];
-						newData[0] = this.readH(); // X坐标
-						newData[1] = this.readH(); // Y坐标
+						newData[0] = readH(); // X坐标
+						newData[1] = readH(); // Y坐标
 						ItemClass.getInstance().item(newData, pc, useItem);
 					}
 					break;
@@ -570,7 +570,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 							// 各种传送卷轴
 							if ((locX != 0) && (locY != 0)) {
-								if (!(itemId >= 40289 && itemId <= 40297)) {
+								if (!((itemId >= 40289) && (itemId <= 40297))) {
 									if (pc.getMap().isEscapable() || pc.isGm()) {
 										L1Teleport.teleport(pc, locX, locY, mapId, pc.getHeading(), true);
 										pc.getInventory().removeItem(useItem, 1);
@@ -603,7 +603,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				L1ItemDelay.onItemUse(client, useItem); // 项目开始延迟
 
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.error("道具使用延迟异常:" + useItem.getItemId(), e);
 			}
 		}

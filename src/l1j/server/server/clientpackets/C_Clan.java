@@ -30,12 +30,12 @@ public class C_Clan extends ClientBasePacket {
 
 	private static final String C_CLAN = "[C] C_Clan";
 
-	public C_Clan(byte abyte0[], ClientThread client) {
+	public C_Clan(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
-		int clanId = readD();
+		final int clanId = readD();
 
-		L1PcInstance pc = client.getActiveChar();
-		L1Clan clan = ClanTable.getInstance().getTemplate(clanId);
+		final L1PcInstance pc = client.getActiveChar();
+		final L1Clan clan = ClanTable.getInstance().getTemplate(clanId);
 		pc.sendPackets(new S_Emblem(clan.getClanId()));
 	}
 

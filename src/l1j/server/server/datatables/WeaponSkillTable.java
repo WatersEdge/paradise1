@@ -49,24 +49,24 @@ public class WeaponSkillTable {
 		loadWeaponSkill();
 	}
 
-	public L1WeaponSkill getTemplate(int weaponId) {
+	public L1WeaponSkill getTemplate(final int weaponId) {
 		return _weaponIdIndex.get(weaponId);
 	}
 
-	private void fillWeaponSkillTable(ResultSet rs) throws SQLException {
+	private void fillWeaponSkillTable(final ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			int weaponId = rs.getInt("weapon_id");
-			int probability = rs.getInt("probability");
-			int fixDamage = rs.getInt("fix_damage");
-			int randomDamage = rs.getInt("random_damage");
-			int area = rs.getInt("area");
-			int skillId = rs.getInt("skill_id");
-			int skillTime = rs.getInt("skill_time");
-			int effectId = rs.getInt("effect_id");
-			int effectTarget = rs.getInt("effect_target");
-			boolean isArrowType = rs.getBoolean("arrow_type");
-			int attr = rs.getInt("attr");
-			L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability, fixDamage, randomDamage, area, skillId, skillTime, effectId, effectTarget, isArrowType, attr);
+			final int weaponId = rs.getInt("weapon_id");
+			final int probability = rs.getInt("probability");
+			final int fixDamage = rs.getInt("fix_damage");
+			final int randomDamage = rs.getInt("random_damage");
+			final int area = rs.getInt("area");
+			final int skillId = rs.getInt("skill_id");
+			final int skillTime = rs.getInt("skill_time");
+			final int effectId = rs.getInt("effect_id");
+			final int effectTarget = rs.getInt("effect_target");
+			final boolean isArrowType = rs.getBoolean("arrow_type");
+			final int attr = rs.getInt("attr");
+			final L1WeaponSkill weaponSkill = new L1WeaponSkill(weaponId, probability, fixDamage, randomDamage, area, skillId, skillTime, effectId, effectTarget, isArrowType, attr);
 			_weaponIdIndex.put(weaponId, weaponSkill);
 		}
 		_log.config("魔法武器列表 " + _weaponIdIndex.size() + "件");
@@ -83,7 +83,7 @@ public class WeaponSkillTable {
 			rs = pstm.executeQuery();
 			fillWeaponSkillTable(rs);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, "创建weapon_skill表时出现错误", e);
 		} finally {
 			SQLUtil.close(rs);

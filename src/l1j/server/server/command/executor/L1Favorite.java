@@ -40,7 +40,7 @@ public class L1Favorite implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			if (!_faviCom.containsKey(pc.getId())) {
 				_faviCom.put(pc.getId(), "");
@@ -48,14 +48,14 @@ public class L1Favorite implements L1CommandExecutor {
 			String faviCom = _faviCom.get(pc.getId());
 			if (arg.startsWith("set")) {
 				// コマンドの登录
-				StringTokenizer st = new StringTokenizer(arg);
+				final StringTokenizer st = new StringTokenizer(arg);
 				st.nextToken();
 				if (!st.hasMoreTokens()) {
 					pc.sendPackets(new S_SystemMessage("指令不存在。"));
 					return;
 				}
-				StringBuilder cmd = new StringBuilder();
-				String temp = st.nextToken(); // コマンドタイプ
+				final StringBuilder cmd = new StringBuilder();
+				final String temp = st.nextToken(); // コマンドタイプ
 				if (temp.equalsIgnoreCase(cmdName)) {
 					pc.sendPackets(new S_SystemMessage(cmdName + " 不能加入自己的名字。"));
 					return;
@@ -75,11 +75,11 @@ public class L1Favorite implements L1CommandExecutor {
 				pc.sendPackets(new S_SystemMessage("没有被登记的名字。"));
 			}
 			else {
-				StringBuilder cmd = new StringBuilder();
-				StringTokenizer st = new StringTokenizer(arg);
-				StringTokenizer st2 = new StringTokenizer(faviCom);
+				final StringBuilder cmd = new StringBuilder();
+				final StringTokenizer st = new StringTokenizer(arg);
+				final StringTokenizer st2 = new StringTokenizer(faviCom);
 				while (st2.hasMoreTokens()) {
-					String temp = st2.nextToken();
+					final String temp = st2.nextToken();
 					if (temp.startsWith("%")) {
 						cmd.append(st.nextToken() + " ");
 					}
@@ -94,7 +94,7 @@ public class L1Favorite implements L1CommandExecutor {
 				GMCommands.getInstance().handleCommands(pc, cmd.toString());
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage("请输入 " + cmdName + " set 玩家名称 " + "| " + cmdName + " show | " + cmdName + " [数量]。"));
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}

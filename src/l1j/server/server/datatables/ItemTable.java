@@ -58,6 +58,7 @@ public class ItemTable {
 	private static final Map<String, Integer> _useTypes = Maps.newMap();
 	/**  */
 	private static ItemTable _instance;
+
 	/**
 	 * 取得序列版本UID
 	 * 
@@ -66,6 +67,7 @@ public class ItemTable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	/** 所有模板 */
 	private L1Item _allTemplates[];
 	/** 道具 */
@@ -260,12 +262,12 @@ public class ItemTable {
 	 * @param itemId
 	 * @return
 	 */
-	public L1ItemInstance createItem(int itemId) {
-		L1Item temp = getTemplate(itemId);
+	public L1ItemInstance createItem(final int itemId) {
+		final L1Item temp = getTemplate(itemId);
 		if (temp == null) {
 			return null;
 		}
-		L1ItemInstance item = new L1ItemInstance();
+		final L1ItemInstance item = new L1ItemInstance();
 		item.setId(IdFactory.getInstance().nextId());
 		item.setItem(temp);
 		L1World.getInstance().storeObject(item);
@@ -278,9 +280,9 @@ public class ItemTable {
 	 * @param name
 	 * @return
 	 */
-	public int findItemIdByName(String name) {
+	public int findItemIdByName(final String name) {
 		int itemid = 0;
-		for (L1Item item : _allTemplates) {
+		for (final L1Item item : _allTemplates) {
 			if ((item != null) && item.getName().equals(name)) {
 				itemid = item.getItemId();
 				break;
@@ -295,9 +297,9 @@ public class ItemTable {
 	 * @param name
 	 * @return
 	 */
-	public int findItemIdByNameWithoutSpace(String name) {
+	public int findItemIdByNameWithoutSpace(final String name) {
 		int itemid = 0;
-		for (L1Item item : _allTemplates) {
+		for (final L1Item item : _allTemplates) {
 			if ((item != null) && item.getName().replace(" ", "").equals(name)) {
 				itemid = item.getItemId();
 				break;
@@ -312,7 +314,7 @@ public class ItemTable {
 	 * @param id
 	 * @return
 	 */
-	public L1Item getTemplate(int id) {
+	public L1Item getTemplate(final int id) {
 		return _allTemplates[id];
 	}
 
@@ -323,7 +325,7 @@ public class ItemTable {
 	 * @return
 	 */
 	public L1Item getTemplate(final String nameid) {
-		for (final L1Item item : this._allTemplates) {
+		for (final L1Item item : _allTemplates) {
 			if ((item != null) && item.getNameId().equals(nameid)) {
 				return item;
 			}
@@ -337,7 +339,7 @@ public class ItemTable {
 	 * @return
 	 */
 	private Map<Integer, L1Armor> allArmor() {
-		Map<Integer, L1Armor> result = Maps.newMap();
+		final Map<Integer, L1Armor> result = Maps.newMap();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
@@ -416,10 +418,10 @@ public class ItemTable {
 				result.put(new Integer(armor.getItemId()), armor);
 			}
 		}
-		catch (NullPointerException e) {
+		catch (final NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(armor.getName()).append("(" + armor.getItemId() + ")").append("无法加载。").toString());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -436,7 +438,7 @@ public class ItemTable {
 	 * @return
 	 */
 	private Map<Integer, L1EtcItem> allEtcItem() {
-		Map<Integer, L1EtcItem> result = Maps.newMap();
+		final Map<Integer, L1EtcItem> result = Maps.newMap();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -488,10 +490,10 @@ public class ItemTable {
 				result.put(new Integer(item.getItemId()), item);
 			}
 		}
-		catch (NullPointerException e) {
+		catch (final NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(item.getName()).append("(" + item.getItemId() + ")").append("无法加载。").toString());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -507,7 +509,7 @@ public class ItemTable {
 	 * @return
 	 */
 	private Map<Integer, L1Weapon> allWeapon() {
-		Map<Integer, L1Weapon> result = Maps.newMap();
+		final Map<Integer, L1Weapon> result = Maps.newMap();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -576,10 +578,10 @@ public class ItemTable {
 				result.put(new Integer(weapon.getItemId()), weapon);
 			}
 		}
-		catch (NullPointerException e) {
+		catch (final NullPointerException e) {
 			_log.log(Level.SEVERE, new StringBuilder().append(weapon.getName()).append("(" + weapon.getItemId() + ")").append("无法加载。").toString());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
 		} finally {
@@ -597,22 +599,22 @@ public class ItemTable {
 	private void buildFastLookupTable() {
 		int highestId = 0;
 
-		Collection<L1EtcItem> items = _etcitems.values();
-		for (L1EtcItem item : items) {
+		final Collection<L1EtcItem> items = _etcitems.values();
+		for (final L1EtcItem item : items) {
 			if (item.getItemId() > highestId) {
 				highestId = item.getItemId();
 			}
 		}
 
-		Collection<L1Weapon> weapons = _weapons.values();
-		for (L1Weapon weapon : weapons) {
+		final Collection<L1Weapon> weapons = _weapons.values();
+		for (final L1Weapon weapon : weapons) {
 			if (weapon.getItemId() > highestId) {
 				highestId = weapon.getItemId();
 			}
 		}
 
-		Collection<L1Armor> armors = _armors.values();
-		for (L1Armor armor : armors) {
+		final Collection<L1Armor> armors = _armors.values();
+		for (final L1Armor armor : armors) {
 			if (armor.getItemId() > highestId) {
 				highestId = armor.getItemId();
 			}
@@ -620,18 +622,18 @@ public class ItemTable {
 
 		_allTemplates = new L1Item[highestId + 1];
 
-		for (Integer id : _etcitems.keySet()) {
-			L1EtcItem item = _etcitems.get(id);
+		for (final Integer id : _etcitems.keySet()) {
+			final L1EtcItem item = _etcitems.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
 
-		for (Integer id : _weapons.keySet()) {
-			L1Weapon item = _weapons.get(id);
+		for (final Integer id : _weapons.keySet()) {
+			final L1Weapon item = _weapons.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
 
-		for (Integer id : _armors.keySet()) {
-			L1Armor item = _armors.get(id);
+		for (final Integer id : _armors.keySet()) {
+			final L1Armor item = _armors.get(id);
 			_allTemplates[id.intValue()] = item;
 		}
 	}

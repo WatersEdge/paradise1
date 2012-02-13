@@ -99,12 +99,12 @@ public class L1DatabaseFactory {
 			// 测试连接
 			_source.getConnection().close();
 		}
-		catch (SQLException x) {
+		catch (final SQLException x) {
 			_log.fine("数据库连接失败");
 			// 重新抛出异常
 			throw x;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.fine("数据库连接失败");
 			throw new SQLException("无法初始化DB连接:" + e);
 		}
@@ -123,7 +123,7 @@ public class L1DatabaseFactory {
 			try {
 				con = _source.getConnection();
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.warning("L1DatabaseFactory: getConnection() failed, trying again " + e);
 			}
 		}
@@ -137,13 +137,13 @@ public class L1DatabaseFactory {
 		try {
 			_source.close();
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.INFO, "", e);
 		}
 		try {
 			_source = null;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.INFO, "", e);
 		}
 	}

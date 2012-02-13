@@ -37,7 +37,7 @@ public class S_Mail extends ServerBasePacket {
 	/**
 	 * // 无法传送信件 [Server] opcode = 48 0000: 30 20 00 45 54 fa 00 b5
 	 */
-	public S_Mail(int type) { // 通知收信者
+	public S_Mail(final int type) { // 通知收信者
 		writeC(Opcodes.S_OPCODE_MAIL);
 		writeC(type);
 	}
@@ -48,7 +48,7 @@ public class S_Mail extends ServerBasePacket {
 	 * //信件存到保管箱 [Server] opcode = 48 0000: [30] [40] [2b 00 00 00] [01] 95
 	 * 
 	 */
-	public S_Mail(int mailId, int type) {
+	public S_Mail(final int mailId, final int type) {
 		// 刪除信件
 		// 0x30: 刪除一般 0x31:刪除血盟 0x32:?保存到保管箱 0x40:刪除保管箱
 		if ((type == 0x30) || (type == 0x31) || (type == 0x32) || (type == 0x40)) {
@@ -59,7 +59,7 @@ public class S_Mail extends ServerBasePacket {
 			return;
 		}
 		MailTable.getInstance();
-		L1Mail mail = MailTable.getMail(mailId);
+		final L1Mail mail = MailTable.getMail(mailId);
 		if (mail != null) {
 			writeC(Opcodes.S_OPCODE_MAIL);
 			writeC(type);
@@ -76,10 +76,10 @@ public class S_Mail extends ServerBasePacket {
 	 * [Server] opcode = 48 2封 0000: 30 /00 02/ 00/ 27 00 00 00/ 00/ 09 01 12 32 32 33 33 0...'.......2233 0010: 32 31 00 31 00 00 00 28 00 00 00 00 09 01 12 32 21.1...(.......2 0020: 32 33 33 32 31 00 31 00 00 00 96 3d c4 79 1a 4d 23321.1....=.y.M
 	 */
 	// 打开收信夹 ?封信件显示标题
-	public S_Mail(String receiverName, int type) {
-		List<L1Mail> mails = Lists.newList();
+	public S_Mail(final String receiverName, final int type) {
+		final List<L1Mail> mails = Lists.newList();
 		MailTable.getInstance();
-		for (L1Mail mail : MailTable.getAllMail()) {
+		for (final L1Mail mail : MailTable.getAllMail()) {
 			if (mail.getReceiverName().equalsIgnoreCase(receiverName)) {
 				if (mail.getType() == type) {
 					mails.add(mail);
@@ -94,12 +94,12 @@ public class S_Mail extends ServerBasePacket {
 		writeC(type);
 		writeH(mails.size());
 		for (int i = 0; i < mails.size(); i++) {
-			L1Mail mail = mails.get(i);
+			final L1Mail mail = mails.get(i);
 			writeD(mail.getId());
 			writeC(mail.getReadStatus());
 
-			StringTokenizer st = new StringTokenizer(mail.getDate(), "/"); // yy/mm/dd
-			int size = st.countTokens();
+			final StringTokenizer st = new StringTokenizer(mail.getDate(), "/"); // yy/mm/dd
+			final int size = st.countTokens();
 			for (int j = 0; j < size; j++) {
 				// XXX writeC(Year) writeC(Month) writeC(Day)
 				writeC(Integer.parseInt(st.nextToken()));

@@ -32,7 +32,7 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 	/**
 	 * 更新角色物理防御与四属性防御
 	 */
-	public S_OwnCharAttrDef(L1PcInstance pc) {
+	public S_OwnCharAttrDef(final L1PcInstance pc) {
 		buildPacket(pc);
 	}
 
@@ -49,7 +49,7 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 		return S_OWNCHARATTRDEF;
 	}
 
-	private void buildPacket(L1PcInstance pc) {
+	private void buildPacket(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_OWNCHARATTRDEF);
 		writeC(pc.getAc());
 		writeC(pc.getFire());

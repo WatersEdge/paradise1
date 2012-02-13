@@ -35,15 +35,15 @@ public class S_WhoCharinfo extends ServerBasePacket {
 	 * 
 	 * @param pc
 	 */
-	public S_WhoCharinfo(L1PcInstance pc) {
+	public S_WhoCharinfo(final L1PcInstance pc) {
 		_log.fine("Who charpack for : " + pc.getName());
 
 		String lawfulness = "";
-		int lawful = pc.getLawful();
+		final int lawful = pc.getLawful();
 		if (lawful < 0) {
 			lawfulness = "(Chaotic)"; // 邪恶者
 		}
-		else if (lawful >= 0 && lawful < 500) {
+		else if ((lawful >= 0) && (lawful < 500)) {
 			lawfulness = "(Neutral)"; // 中立者
 		}
 		else if (lawful >= 500) {

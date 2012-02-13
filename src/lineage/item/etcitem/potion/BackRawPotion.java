@@ -50,7 +50,7 @@ public class BackRawPotion extends ItemExecutor {
 			pc.broadcastPacket(new S_SkillSound(pc.getId(), 2568)); // 风龙降临动画特效。(可见范围的其他角色)
 			pc.save(); // 将玩家资料储存到资料库中
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			// TODO Auto-generated catch block
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("返生药水错误" + " File.");

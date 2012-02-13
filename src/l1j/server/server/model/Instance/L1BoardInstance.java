@@ -25,21 +25,21 @@ public class L1BoardInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	public L1BoardInstance(L1Npc template) {
+	public L1BoardInstance(final L1Npc template) {
 		super(template);
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
+	public void onAction(final L1PcInstance player) {
 		player.sendPackets(new S_Board(getId()));
 	}
 
 	@Override
-	public void onAction(L1PcInstance player, int number) {
+	public void onAction(final L1PcInstance player, final int number) {
 		player.sendPackets(new S_Board(getId(), number));
 	}
 
-	public void onActionRead(L1PcInstance player, int number) {
+	public void onActionRead(final L1PcInstance player, final int number) {
 		player.sendPackets(new S_BoardRead(number));
 	}
 }

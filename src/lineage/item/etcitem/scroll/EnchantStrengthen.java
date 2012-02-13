@@ -39,16 +39,16 @@ public class EnchantStrengthen extends ItemExecutor {
 
 		final int itemobj = data[0];
 		final L1ItemInstance l1iteminstance1 = pc.getInventory().getItem(itemobj);
-		int item_id = l1iteminstance1.getItemId();
+		final int item_id = l1iteminstance1.getItemId();
 		if ((item_id < 47053) || (item_id > 47102) || (item_id == 47062) || (item_id == 47072) || (item_id == 47082) || (item_id == 47092) || (item_id == 47102)) {
 			pc.sendPackets(new S_ServerMessage(79));
 			return;
 		}
 
-		int rnd = Random.nextInt(100) + 1;
-		if (Config.MAGIC_STONE_LEVEL < rnd || (item_id >= 47053 && item_id <= 47056) || (item_id >= 47063 && item_id <= 47066) || (item_id >= 47073 && item_id <= 47076) || (item_id >= 47083 && item_id <= 47086) || (item_id >= 47093 && item_id <= 47096)) {
-			int newItem = l1iteminstance1.getItemId() + 1; // X 阶附魔石 -> X+1 阶附魔石
-			L1Item template = ItemTable.getInstance().getTemplate(newItem);
+		final int rnd = Random.nextInt(100) + 1;
+		if ((Config.MAGIC_STONE_LEVEL < rnd) || ((item_id >= 47053) && (item_id <= 47056)) || ((item_id >= 47063) && (item_id <= 47066)) || ((item_id >= 47073) && (item_id <= 47076)) || ((item_id >= 47083) && (item_id <= 47086)) || ((item_id >= 47093) && (item_id <= 47096))) {
+			final int newItem = l1iteminstance1.getItemId() + 1; // X 阶附魔石 -> X+1 阶附魔石
+			final L1Item template = ItemTable.getInstance().getTemplate(newItem);
 			if (template == null) {
 				pc.sendPackets(new S_ServerMessage(79)); // 没有任何事情发生。
 				return;

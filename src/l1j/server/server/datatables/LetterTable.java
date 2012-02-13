@@ -65,7 +65,7 @@ public class LetterTable {
 	 * 
 	 * @param itemObjectId
 	 */
-	public void deleteLetter(int itemObjectId) {
+	public void deleteLetter(final int itemObjectId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -74,7 +74,7 @@ public class LetterTable {
 			pstm.setInt(1, itemObjectId);
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -94,7 +94,7 @@ public class LetterTable {
 	 * @param subject
 	 * @param content
 	 */
-	public void writeLetter(int itemObjectId, int code, String sender, String receiver, String date, int templateId, byte[] subject, byte[] content) {
+	public void writeLetter(final int itemObjectId, final int code, final String sender, final String receiver, final String date, final int templateId, final byte[] subject, final byte[] content) {
 
 		Connection con = null;
 		PreparedStatement pstm1 = null;
@@ -115,7 +115,7 @@ public class LetterTable {
 			pstm2.setBytes(8, content);
 			pstm2.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

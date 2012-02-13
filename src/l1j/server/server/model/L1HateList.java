@@ -40,11 +40,11 @@ public class L1HateList {
 		_hateMap = Maps.newMap();
 	}
 
-	private L1HateList(Map<L1Character, Integer> hateMap) {
+	private L1HateList(final Map<L1Character, Integer> hateMap) {
 		_hateMap = hateMap;
 	}
 
-	public synchronized void add(L1Character cha, int hate) {
+	public synchronized void add(final L1Character cha, final int hate) {
 		if (cha == null) {
 			return;
 		}
@@ -60,7 +60,7 @@ public class L1HateList {
 		_hateMap.clear();
 	}
 
-	public synchronized boolean containsKey(L1Character cha) {
+	public synchronized boolean containsKey(final L1Character cha) {
 		return _hateMap.containsKey(cha);
 	}
 
@@ -72,7 +72,7 @@ public class L1HateList {
 		return _hateMap.entrySet();
 	}
 
-	public synchronized int get(L1Character cha) {
+	public synchronized int get(final L1Character cha) {
 		return _hateMap.get(cha);
 	}
 
@@ -80,7 +80,7 @@ public class L1HateList {
 		L1Character cha = null;
 		int hate = Integer.MIN_VALUE;
 
-		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
 			if (hate < e.getValue()) {
 				cha = e.getKey();
 				hate = e.getValue();
@@ -89,16 +89,16 @@ public class L1HateList {
 		return cha;
 	}
 
-	public synchronized int getPartyHate(L1Party party) {
+	public synchronized int getPartyHate(final L1Party party) {
 		int partyHate = 0;
 
-		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
 			L1PcInstance pc = null;
 			if (e.getKey() instanceof L1PcInstance) {
 				pc = (L1PcInstance) e.getKey();
 			}
 			if (e.getKey() instanceof L1NpcInstance) {
-				L1Character cha = ((L1NpcInstance) e.getKey()).getMaster();
+				final L1Character cha = ((L1NpcInstance) e.getKey()).getMaster();
 				if (cha instanceof L1PcInstance) {
 					pc = (L1PcInstance) cha;
 				}
@@ -111,10 +111,10 @@ public class L1HateList {
 		return partyHate;
 	}
 
-	public synchronized int getPartyLawfulHate(L1Party party) {
+	public synchronized int getPartyLawfulHate(final L1Party party) {
 		int partyHate = 0;
 
-		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
 			L1PcInstance pc = null;
 			if (e.getKey() instanceof L1PcInstance) {
 				pc = (L1PcInstance) e.getKey();
@@ -129,7 +129,7 @@ public class L1HateList {
 
 	public synchronized int getTotalHate() {
 		int totalHate = 0;
-		for (int hate : _hateMap.values()) {
+		for (final int hate : _hateMap.values()) {
 			totalHate += hate;
 		}
 		return totalHate;
@@ -137,7 +137,7 @@ public class L1HateList {
 
 	public synchronized int getTotalLawfulHate() {
 		int totalHate = 0;
-		for (Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
+		for (final Map.Entry<L1Character, Integer> e : _hateMap.entrySet()) {
 			if (e.getKey() instanceof L1PcInstance) {
 				totalHate += e.getValue();
 			}
@@ -149,19 +149,19 @@ public class L1HateList {
 		return _hateMap.isEmpty();
 	}
 
-	public synchronized void remove(L1Character cha) {
+	public synchronized void remove(final L1Character cha) {
 		_hateMap.remove(cha);
 	}
 
-	public synchronized void removeInvalidCharacter(L1NpcInstance npc) {
-		List<L1Character> invalidChars = Lists.newList();
-		for (L1Character cha : _hateMap.keySet()) {
+	public synchronized void removeInvalidCharacter(final L1NpcInstance npc) {
+		final List<L1Character> invalidChars = Lists.newList();
+		for (final L1Character cha : _hateMap.keySet()) {
 			if ((cha == null) || cha.isDead() || !npc.knownsObject(cha)) {
 				invalidChars.add(cha);
 			}
 		}
 
-		for (L1Character cha : invalidChars) {
+		for (final L1Character cha : invalidChars) {
 			_hateMap.remove(cha);
 		}
 	}

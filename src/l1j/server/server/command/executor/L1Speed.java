@@ -27,13 +27,13 @@ public class L1Speed implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			L1BuffUtil.haste(pc, 3600 * 1000);
 			L1BuffUtil.brave(pc, 3600 * 1000);
 			L1BuffUtil.thirdSpeed(pc);
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			pc.sendPackets(new S_SystemMessage(".speed 指令错误"));
 		}
 	}

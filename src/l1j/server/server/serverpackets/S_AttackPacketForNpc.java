@@ -34,7 +34,7 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 	 * @param type
 	 *            动作编号
 	 */
-	public S_AttackPacketForNpc(L1Character cha, int npcObjectId, int type) {
+	public S_AttackPacketForNpc(final L1Character cha, final int npcObjectId, final int type) {
 		buildpacket(cha, npcObjectId, type);
 	}
 
@@ -52,7 +52,7 @@ public class S_AttackPacketForNpc extends ServerBasePacket {
 		return S_ATTACK_PACKET_FOR_NPC;
 	}
 
-	private void buildpacket(L1Character cha, int npcObjectId, int type) {
+	private void buildpacket(final L1Character cha, final int npcObjectId, final int type) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(type);
 		writeD(npcObjectId);

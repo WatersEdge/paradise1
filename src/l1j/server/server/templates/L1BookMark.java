@@ -35,7 +35,7 @@ public class L1BookMark {
 	private static Logger _log = Logger.getLogger(L1BookMark.class.getName());
 
 	/** 增加记忆坐标 */
-	public static void addBookmark(L1PcInstance pc, String s) {
+	public static void addBookmark(final L1PcInstance pc, final String s) {
 		// クライアント側でチェックされるため不要
 		// if (s.length() > 12) {
 		// pc.sendPackets(new S_ServerMessage(204));
@@ -49,13 +49,13 @@ public class L1BookMark {
 		}
 
 		// 输入的记忆坐标太长
-		int size = pc.getBookMarkSize();
+		final int size = pc.getBookMarkSize();
 		if (size > 49) {
 			return;
 		}
 
 		if (pc.getBookMark(s) == null) {
-			L1BookMark bookmark = new L1BookMark();
+			final L1BookMark bookmark = new L1BookMark();
 			bookmark.setId(IdFactory.getInstance().nextId());
 			bookmark.setCharId(pc.getId());
 			bookmark.setName(s);
@@ -77,7 +77,7 @@ public class L1BookMark {
 				pstm.setInt(6, bookmark.getMapId());
 				pstm.execute();
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.log(Level.SEVERE, "增加记忆坐标时发生错误。", e);
 			} finally {
 				SQLUtil.close(pstm);
@@ -93,8 +93,8 @@ public class L1BookMark {
 	}
 
 	/** 删除记忆的坐标 */
-	public static void deleteBookmark(L1PcInstance player, String s) {
-		L1BookMark book = player.getBookMark(s);
+	public static void deleteBookmark(final L1PcInstance player, final String s) {
+		final L1BookMark book = player.getBookMark(s);
 		if (book != null) {
 			Connection con = null;
 			PreparedStatement pstm = null;
@@ -106,7 +106,7 @@ public class L1BookMark {
 				pstm.execute();
 				player.removeBookMark(book);
 			}
-			catch (SQLException e) {
+			catch (final SQLException e) {
 				_log.log(Level.SEVERE, "删除记忆坐标时发生错误。", e);
 			} finally {
 				SQLUtil.close(pstm);
@@ -154,27 +154,27 @@ public class L1BookMark {
 		return _name;
 	}
 
-	public void setCharId(int i) {
+	public void setCharId(final int i) {
 		_charId = i;
 	}
 
-	public void setId(int i) {
+	public void setId(final int i) {
 		_id = i;
 	}
 
-	public void setLocX(int i) {
+	public void setLocX(final int i) {
 		_locX = i;
 	}
 
-	public void setLocY(int i) {
+	public void setLocY(final int i) {
 		_locY = i;
 	}
 
-	public void setMapId(short i) {
+	public void setMapId(final short i) {
 		_mapId = i;
 	}
 
-	public void setName(String s) {
+	public void setName(final String s) {
 		_name = s;
 	}
 

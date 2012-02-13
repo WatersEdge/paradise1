@@ -36,20 +36,20 @@ public class C_Drawal extends ClientBasePacket {
 
 	private static final String C_DRAWAL = "[C] C_Drawal";
 
-	public C_Drawal(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Drawal(final byte abyte0[], final ClientThread clientthread) throws Exception {
 		super(abyte0);
 		readD();
-		int j = Math.abs(readD());
+		final int j = Math.abs(readD());
 
-		L1PcInstance pc = clientthread.getActiveChar();
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int castle_id = clan.getCastleId();
+			final int castle_id = clan.getCastleId();
 			if (castle_id != 0) {
-				L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+				final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
 				int money = l1castle.getPublicMoney();
 				money -= j;
-				L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
+				final L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 				if (item != null) {
 					l1castle.setPublicMoney(money);
 					CastleTable.getInstance().updateCastle(l1castle);

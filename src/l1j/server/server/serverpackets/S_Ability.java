@@ -34,7 +34,7 @@ public class S_Ability extends ServerBasePacket {
 	 * @param type
 	 * @param equipped
 	 */
-	public S_Ability(int type, boolean equipped) {
+	public S_Ability(final int type, final boolean equipped) {
 		buildPacket(type, equipped);
 	}
 
@@ -51,7 +51,7 @@ public class S_Ability extends ServerBasePacket {
 		return S_ABILITY;
 	}
 
-	private void buildPacket(int type, boolean equipped) {
+	private void buildPacket(final int type, final boolean equipped) {
 		writeC(Opcodes.S_OPCODE_ABILITY);
 		writeC(type); // 1:ROTC 5:ROSC
 		if (equipped) {

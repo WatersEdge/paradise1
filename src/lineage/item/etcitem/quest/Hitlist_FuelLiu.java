@@ -37,7 +37,7 @@ public class Hitlist_FuelLiu extends ItemExecutor {
 	public void execute(final int[] data, final L1PcInstance pc, final L1ItemInstance item) {
 
 		if ((pc.getX() == 32730) && (pc.getY() == 32426) && (pc.getMapId() == 4)) {
-			for (L1Object object : L1World.getInstance().getObject()) {
+			for (final L1Object object : L1World.getInstance().getObject()) {
 				if (object instanceof L1NpcInstance) {
 					final L1NpcInstance npc = (L1NpcInstance) object;
 					if (npc.getNpcTemplate().get_npcId() == 45884) {

@@ -44,7 +44,7 @@ public class MpRegeneration extends TimerTask {
 
 	private int _curPoint = 4;
 
-	public MpRegeneration(L1PcInstance pc) {
+	public MpRegeneration(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -93,7 +93,7 @@ public class MpRegeneration extends TimerTask {
 				itemMpr = 0;
 			}
 		}
-		int mpr = baseMpr + itemMpr;
+		final int mpr = baseMpr + itemMpr;
 		int newMp = _pc.getCurrentMp() + mpr;
 		if (newMp < 0) {
 			newMp = 0;
@@ -116,12 +116,12 @@ public class MpRegeneration extends TimerTask {
 				regenMp();
 			}
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	public void setState(int state) {
+	public void setState(final int state) {
 		if (_curPoint < state) {
 			return;
 		}
@@ -129,7 +129,7 @@ public class MpRegeneration extends TimerTask {
 		_curPoint = state;
 	}
 
-	private boolean isOverWeight(L1PcInstance pc) {
+	private boolean isOverWeight(final L1PcInstance pc) {
 		// 体能激发状态、能量激发状态、
 		// 不被视为过重。
 		if (pc.hasSkillEffect(EXOTIC_VITALIZE) || pc.hasSkillEffect(ADDITIONAL_FIRE)) {

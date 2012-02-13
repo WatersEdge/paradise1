@@ -33,7 +33,7 @@ public class S_Weather extends ServerBasePacket {
 	 * 
 	 * @param weather
 	 */
-	public S_Weather(int weather) {
+	public S_Weather(final int weather) {
 		buildPacket(weather);
 	}
 
@@ -50,7 +50,7 @@ public class S_Weather extends ServerBasePacket {
 		return S_WEATHER;
 	}
 
-	private void buildPacket(int weather) {
+	private void buildPacket(final int weather) {
 		writeC(Opcodes.S_OPCODE_WEATHER);
 		writeC(weather);
 	}

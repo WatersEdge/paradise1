@@ -33,7 +33,7 @@ public class S_CharAmount extends ServerBasePacket {
 	 *            已创建的角色数量
 	 * @param client
 	 */
-	public S_CharAmount(int value, ClientThread client) {
+	public S_CharAmount(final int value, final ClientThread client) {
 		buildPacket(value, client);
 	}
 
@@ -45,10 +45,10 @@ public class S_CharAmount extends ServerBasePacket {
 		return _byte;
 	}
 
-	private void buildPacket(int value, ClientThread client) {
-		Account account = Account.load(client.getAccountName());
-		int characterSlot = account.getCharacterSlot();
-		int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
+	private void buildPacket(final int value, final ClientThread client) {
+		final Account account = Account.load(client.getAccountName());
+		final int characterSlot = account.getCharacterSlot();
+		final int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
 
 		writeC(Opcodes.S_OPCODE_CHARAMOUNT);
 		writeC(value);

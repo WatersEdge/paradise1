@@ -469,6 +469,7 @@ public class L1Character extends L1Object {
 	 * 大厅
 	 */
 	private boolean _isHall;
+
 	public L1Character() {
 		_level = 1;
 	}
@@ -476,7 +477,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加寒冰耐性
 	 */
-	public void add_regist_freeze(int i) {
+	public void add_regist_freeze(final int i) {
 		_trueRegistFreeze += i;
 		if (_trueRegistFreeze > 127) {
 			_registFreeze = 127;
@@ -492,14 +493,14 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加物理防御
 	 */
-	public void addAc(int i) {
+	public void addAc(final int i) {
 		setAc(_trueAc + i);
 	}
 
 	/**
 	 * 增加远距离伤害
 	 */
-	public void addBowDmgup(int i) {
+	public void addBowDmgup(final int i) {
 		_trueBowDmgup += i;
 		if (_trueBowDmgup >= 127) {
 			_bowDmgup = 127;
@@ -515,7 +516,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加远距离的命中率
 	 */
-	public void addBowHitup(int i) {
+	public void addBowHitup(final int i) {
 		_trueBowHitup += i;
 		if (_trueBowHitup >= 127) {
 			_bowHitup = 127;
@@ -527,31 +528,32 @@ public class L1Character extends L1Object {
 			_bowHitup = _trueBowHitup;
 		}
 	}
+
 	/**
 	 * 增加魅力值
 	 */
-	public void addCha(int i) {
+	public void addCha(final int i) {
 		setCha(_trueCha + i);
 	}
 
 	/**
 	 * 增加体质值
 	 */
-	public void addCon(int i) {
+	public void addCon(final int i) {
 		setCon(_trueCon + i);
 	}
 
 	/**
 	 * 增加敏捷值
 	 */
-	public void addDex(int i) {
+	public void addDex(final int i) {
 		setDex(_trueDex + i);
 	}
 
 	/**
 	 * 增加近距离伤害
 	 */
-	public void addDmgup(int i) {
+	public void addDmgup(final int i) {
 		_trueDmgup += i;
 		if (_trueDmgup >= 127) {
 			_dmgup = 127;
@@ -567,7 +569,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加闪避率 +
 	 */
-	public void addDodge(byte i) {
+	public void addDodge(final byte i) {
 		_dodge += i;
 		if (_dodge >= 10) {
 			_dodge = 10;
@@ -576,20 +578,21 @@ public class L1Character extends L1Object {
 			_dodge = 0;
 		}
 	}
+
 	/**
 	 * 增加魔法娃娃。
 	 * 
 	 * @param doll
 	 *            添加到doll表、L1DollInstance对象。
 	 */
-	public void addDoll(L1DollInstance doll) {
+	public void addDoll(final L1DollInstance doll) {
 		_dolllist.put(doll.getId(), doll);
 	}
 
 	/**
 	 * 增加地属性防御
 	 */
-	public void addEarth(int i) {
+	public void addEarth(final int i) {
 		_trueEarth += i;
 		if (_trueEarth >= 127) {
 			_earth = 127;
@@ -605,7 +608,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加火属性防御
 	 */
-	public void addFire(int i) {
+	public void addFire(final int i) {
 		_trueFire += i;
 		if (_trueFire >= 127) {
 			_fire = 127;
@@ -624,14 +627,14 @@ public class L1Character extends L1Object {
 	 * @param follower
 	 *            添加到follower表、L1FollowerInstance对象。
 	 */
-	public void addFollower(L1FollowerInstance follower) {
+	public void addFollower(final L1FollowerInstance follower) {
 		_followerlist.put(follower.getId(), follower);
 	}
 
 	/**
 	 * 近距离的命中率增加
 	 */
-	public void addHitup(int i) {
+	public void addHitup(final int i) {
 		_trueHitup += i;
 		if (_trueHitup >= 127) {
 			_hitup = 127;
@@ -643,10 +646,11 @@ public class L1Character extends L1Object {
 			_hitup = _trueHitup;
 		}
 	}
+
 	/**
 	 * 增加智力值
 	 */
-	public void addInt(int i) {
+	public void addInt(final int i) {
 		setInt(_trueInt + i);
 	}
 
@@ -658,7 +662,7 @@ public class L1Character extends L1Object {
 	 * @param timer
 	 *            表示延迟时间 (毫秒)、L1ItemDelay.ItemDelayTimer对象。
 	 */
-	public void addItemDelay(int delayId, L1ItemDelay.ItemDelayTimer timer) {
+	public void addItemDelay(final int delayId, final L1ItemDelay.ItemDelayTimer timer) {
 		_itemdelay.put(delayId, timer);
 	}
 
@@ -668,7 +672,7 @@ public class L1Character extends L1Object {
 	 * @param obj
 	 *            加入对象。
 	 */
-	public void addKnownObject(L1Object obj) {
+	public void addKnownObject(final L1Object obj) {
 		if (!_knownObjects.contains(obj)) {
 			_knownObjects.add(obj);
 			if (obj instanceof L1PcInstance) {
@@ -680,7 +684,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加正义值
 	 */
-	public synchronized void addLawful(int i) {
+	public synchronized void addLawful(final int i) {
 		_lawful += i;
 		if (_lawful > 32767) {
 			_lawful = 32767;
@@ -693,20 +697,21 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加最高ＨＰ
 	 */
-	public void addMaxHp(int i) {
+	public void addMaxHp(final int i) {
 		setMaxHp(_trueMaxHp + i);
 	}
+
 	/**
 	 * 增加最高ＭＰ
 	 */
-	public void addMaxMp(int i) {
+	public void addMaxMp(final int i) {
 		setMaxMp(_trueMaxMp + i);
 	}
 
 	/**
 	 * 增加魔法防御
 	 */
-	public void addMr(int i) {
+	public void addMr(final int i) {
 		_trueMr += i;
 		if (_trueMr <= 0) {
 			_mr = 0;
@@ -719,7 +724,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加闪避率 -
 	 */
-	public void addNdodge(byte i) {
+	public void addNdodge(final byte i) {
 		_nDodge += i;
 		if (_nDodge >= 10) {
 			_nDodge = 10;
@@ -735,7 +740,7 @@ public class L1Character extends L1Object {
 	 * @param npc
 	 *            添加到Npc表、L1NpcInstance对象。
 	 */
-	public void addPet(L1NpcInstance npc) {
+	public void addPet(final L1NpcInstance npc) {
 		_petlist.put(npc.getId(), npc);
 		// if (_petlist.size() < 2) {
 		sendPetCtrlMenu(npc, true); // 显示宠物控制图形介面
@@ -746,7 +751,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加闇黑耐性
 	 */
-	public void addRegistBlind(int i) {
+	public void addRegistBlind(final int i) {
 		_trueRegistBlind += i;
 		if (_trueRegistBlind > 127) {
 			_registBlind = 127;
@@ -762,7 +767,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加睡眠耐性
 	 */
-	public void addRegistSleep(int i) {
+	public void addRegistSleep(final int i) {
 		_trueRegistSleep += i;
 		if (_trueRegistSleep > 127) {
 			_registSleep = 127;
@@ -778,7 +783,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加石化耐性
 	 */
-	public void addRegistStone(int i) {
+	public void addRegistStone(final int i) {
 		_trueRegistStone += i;
 		if (_trueRegistStone > 127) {
 			_registStone = 127;
@@ -794,7 +799,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加昏迷耐性
 	 */
-	public void addRegistStun(int i) {
+	public void addRegistStun(final int i) {
 		_trueRegistStun += i;
 		if (_trueRegistStun > 127) {
 			_registStun = 127;
@@ -810,7 +815,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加支撑耐性
 	 */
-	public void addRegistSustain(int i) {
+	public void addRegistSustain(final int i) {
 		_trueRegistSustain += i;
 		if (_trueRegistSustain > 127) {
 			_registSustain = 127;
@@ -826,21 +831,21 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加魔攻
 	 */
-	public void addSp(int i) {
+	public void addSp(final int i) {
 		_sp += i;
 	}
 
 	/**
 	 * 增加力量值
 	 */
-	public void addStr(int i) {
+	public void addStr(final int i) {
 		setStr(_trueStr + i);
 	}
 
 	/**
 	 * 增加水属性防御
 	 */
-	public void addWater(int i) {
+	public void addWater(final int i) {
 		_trueWater += i;
 		if (_trueWater >= 127) {
 			_water = 127;
@@ -856,7 +861,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加风属性防御
 	 */
-	public void addWind(int i) {
+	public void addWind(final int i) {
 		_trueWind += i;
 		if (_trueWind >= 127) {
 			_wind = 127;
@@ -872,7 +877,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 增加精神值
 	 */
-	public void addWis(int i) {
+	public void addWis(final int i) {
 		setWis(_trueWis + i);
 	}
 
@@ -882,11 +887,12 @@ public class L1Character extends L1Object {
 	 * @param packet
 	 *            ServerBasePacket对象，表示要发送的封包。
 	 */
-	public void broadcastPacket(ServerBasePacket packet) {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+	public void broadcastPacket(final ServerBasePacket packet) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			// 旅馆内判断
-			if (pc.getMapId() < 16384 || pc.getMapId() > 25088 || pc.getInnKeyId() == getInnKeyId())
+			if ((pc.getMapId() < 16384) || (pc.getMapId() > 25088) || (pc.getInnKeyId() == getInnKeyId())) {
 				pc.sendPackets(packet);
+			}
 		}
 	}
 
@@ -896,8 +902,8 @@ public class L1Character extends L1Object {
 	 * @param packet
 	 *            ServerBasePacket对象，表示要发送的封包。
 	 */
-	public void broadcastPacketExceptTargetSight(ServerBasePacket packet, L1Character target) {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayerExceptTargetSight(this, target)) {
+	public void broadcastPacketExceptTargetSight(final ServerBasePacket packet, final L1Character target) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayerExceptTargetSight(this, target)) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -910,8 +916,8 @@ public class L1Character extends L1Object {
 	 * @param isFindInvis
 	 *            true : 见破れるプレイヤーにだけパケットを送信する。 false : 见破れないプレイヤーにだけパケットを送信する。
 	 */
-	public void broadcastPacketForFindInvis(ServerBasePacket packet, boolean isFindInvis) {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
+	public void broadcastPacketForFindInvis(final ServerBasePacket packet, final boolean isFindInvis) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			if (isFindInvis) {
 				if (pc.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 					pc.sendPackets(packet);
@@ -936,7 +942,7 @@ public class L1Character extends L1Object {
 	 * 删除全部的技能效果
 	 */
 	public void clearSkillEffectTimer() {
-		for (L1SkillTimer timer : _skillEffect.values()) {
+		for (final L1SkillTimer timer : _skillEffect.values()) {
 			if (timer != null) {
 				timer.kill();
 			}
@@ -1011,6 +1017,7 @@ public class L1Character extends L1Object {
 	public short getCha() {
 		return _cha;
 	}
+
 	/**
 	 * 取得亮度范围
 	 */
@@ -1045,6 +1052,7 @@ public class L1Character extends L1Object {
 	public int getCurrentMp() {
 		return _currentMp;
 	}
+
 	/**
 	 * 取得敏捷值
 	 */
@@ -1097,6 +1105,7 @@ public class L1Character extends L1Object {
 	public int getFire() {
 		return _fire;
 	} // 当你使用
+
 	/**
 	 * 取得跟随名单。
 	 * 
@@ -1113,9 +1122,9 @@ public class L1Character extends L1Object {
 	 */
 	public int[] getFrontLoc() {
 		final int[] loc = new int[2];
-		int x = this.getX();
-		int y = this.getY();
-		final int heading = this.getHeading();
+		int x = getX();
+		int y = getY();
+		final int heading = getHeading();
 
 		x += HEADING_TABLE_X[heading];
 		y += HEADING_TABLE_Y[heading];
@@ -1138,6 +1147,7 @@ public class L1Character extends L1Object {
 	public int getHeading() {
 		return _heading;
 	}
+
 	/**
 	 * 取得近距离的命中率增加
 	 */
@@ -1182,7 +1192,7 @@ public class L1Character extends L1Object {
 	 *            检查延迟项目ID。 如果是正常的道具0、隐形斗篷、血腥炎魔披风1。
 	 * @return 延迟设置
 	 */
-	public L1ItemDelay.ItemDelayTimer getItemDelayTimer(int delayId) {
+	public L1ItemDelay.ItemDelayTimer getItemDelayTimer(final int delayId) {
 		return _itemdelay.get(delayId);
 	}
 
@@ -1233,82 +1243,82 @@ public class L1Character extends L1Object {
 	 * @return 魔法命中率
 	 */
 	public int getMagicBonus() {
-		switch (this.getInt()) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			return -2;
+		switch (getInt()) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				return -2;
 
-		case 6:
-		case 7:
-		case 8:
-			return -1;
+			case 6:
+			case 7:
+			case 8:
+				return -1;
 
-		case 9:
-		case 10:
-		case 11:
-			return 0;
+			case 9:
+			case 10:
+			case 11:
+				return 0;
 
-		case 12:
-		case 13:
-		case 14:
-			return 1;
+			case 12:
+			case 13:
+			case 14:
+				return 1;
 
-		case 15:
-		case 16:
-		case 17:
-			return 2;
+			case 15:
+			case 16:
+			case 17:
+				return 2;
 
-		case 18:
-			return 3;
-		case 19:
-			return 4;
-		case 20:
-			return 5;
-		case 21:
-			return 6;
-		case 22:
-			return 7;
-		case 23:
-			return 8;
-		case 24:
-			return 9;
-		case 25:
-		case 26:
-		case 27:
-		case 28:
-		case 29:
-		case 30:
-		case 31:
-		case 32:
-		case 33:
-		case 34:
-		case 35:
-			return 10;
-		case 36:
-		case 37:
-		case 38:
-		case 39:
-		case 40:
-		case 41:
-		case 42:
-			return 11;
-		case 43:
-		case 44:
-		case 45:
-		case 46:
-		case 47:
-		case 48:
-		case 49:
-			return 12;
-		case 50:
-			return 13;
+			case 18:
+				return 3;
+			case 19:
+				return 4;
+			case 20:
+				return 5;
+			case 21:
+				return 6;
+			case 22:
+				return 7;
+			case 23:
+				return 8;
+			case 24:
+				return 9;
+			case 25:
+			case 26:
+			case 27:
+			case 28:
+			case 29:
+			case 30:
+			case 31:
+			case 32:
+			case 33:
+			case 34:
+			case 35:
+				return 10;
+			case 36:
+			case 37:
+			case 38:
+			case 39:
+			case 40:
+			case 41:
+			case 42:
+				return 11;
+			case 43:
+			case 44:
+			case 45:
+			case 46:
+			case 47:
+			case 48:
+			case 49:
+				return 12;
+			case 50:
+				return 13;
 
-		default:
-			return this.getInt() - 25;
+			default:
+				return getInt() - 25;
 		}
 	}
 
@@ -1463,8 +1473,8 @@ public class L1Character extends L1Object {
 	 *            技能效果的ID
 	 * @return 技能效果剩余时间(秒)。无限制 -1。
 	 */
-	public int getSkillEffectTimeSec(int skillId) {
-		L1SkillTimer timer = _skillEffect.get(skillId);
+	public int getSkillEffectTimeSec(final int skillId) {
+		final L1SkillTimer timer = _skillEffect.get(skillId);
 		if (timer == null) {
 			return -1;
 		}
@@ -1567,11 +1577,11 @@ public class L1Character extends L1Object {
 	 *            坐标的Y值
 	 * @return 没有障碍物true、有障碍物false。
 	 */
-	public boolean glanceCheck(int tx, int ty) {
+	public boolean glanceCheck(final int tx, final int ty) {
 		int chx = getX();
 		int chy = getY();
 		for (int i = 0; i < 15; i++) {
-			if (chx == tx && chy == ty) {
+			if ((chx == tx) && (chy == ty)) {
 				break;
 			}
 
@@ -1593,7 +1603,7 @@ public class L1Character extends L1Object {
 	 *            检查延迟项目ID。 如果是正常的道具0、隐形斗篷、血腥炎魔披风1。
 	 * @return 有延迟true、没有false。
 	 */
-	public boolean hasItemDelay(int delayId) {
+	public boolean hasItemDelay(final int delayId) {
 		return _itemdelay.containsKey(delayId);
 	}
 
@@ -1604,89 +1614,89 @@ public class L1Character extends L1Object {
 	 *            检查技能效果的ID。
 	 * @return 有技能效果true、没有false。
 	 */
-	public boolean hasSkillEffect(int skillId) {
+	public boolean hasSkillEffect(final int skillId) {
 		return _skillEffect.containsKey(skillId);
 	}
 
 	/**
 	 * 恢复HP
 	 */
-	public void healHp(int pt) {
+	public void healHp(final int pt) {
 		setCurrentHp(getCurrentHp() + pt);
 	}
 
 	/**
 	 * 判断特定状态下才可攻击 NPC
 	 */
-	public boolean isAttackMiss(L1Character cha, int npcId) {
+	public boolean isAttackMiss(final L1Character cha, final int npcId) {
 		switch (npcId) {
-		case 45912: // 士兵的怨灵
-		case 45913: // 士兵的怨灵
-		case 45914: // 怨灵
-		case 45915: // 怨灵
-			if (!cha.hasSkillEffect(STATUS_HOLY_WATER)) {
-				return true;
-			}
-			return false;
-		case 45916: // 哈蒙将军的怨灵
-			if (!cha.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
-				return true;
-			}
-			return false;
-		case 45941: // 受诅咒的巫女莎尔
-			if (!cha.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-				return true;
-			}
-			return false;
-		case 45752: // 炎魔(变身前)
-			if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				return true;
-			}
-			return false;
-		case 45753: // 炎魔(变身后)
-			if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				return true;
-			}
-			return false;
-		case 45675: // 火焰之影(变身前)
-			if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return true;
-			}
-			return false;
-		case 81082: // 火焰之影(变身后)
-			if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return true;
-			}
-			return false;
-		case 45625: // 混沌
-			if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return true;
-			}
-			return false;
-		case 45674: // 死亡
-			if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return true;
-			}
-			return false;
-		case 45685: // 堕落
-			if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return true;
-			}
-			return false;
-		case 81341: // 再生之祭坛
-			if (!cha.hasSkillEffect(SECRET_MEDICINE_OF_DESTRUCTION)) {
-				return true;
-			}
-		default:
-			if ((npcId >= 46068) && (npcId <= 46091) // 原生魔族
-					&& (cha.getTempCharGfx() == 6035)) {
-				return true;
-			}
-			else if ((npcId >= 46092) && (npcId <= 46106) // 不死魔族
-					&& (cha.getTempCharGfx() == 6034)) {
-				return true;
-			}
-			return false;
+			case 45912: // 士兵的怨灵
+			case 45913: // 士兵的怨灵
+			case 45914: // 怨灵
+			case 45915: // 怨灵
+				if (!cha.hasSkillEffect(STATUS_HOLY_WATER)) {
+					return true;
+				}
+				return false;
+			case 45916: // 哈蒙将军的怨灵
+				if (!cha.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
+					return true;
+				}
+				return false;
+			case 45941: // 受诅咒的巫女莎尔
+				if (!cha.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
+					return true;
+				}
+				return false;
+			case 45752: // 炎魔(变身前)
+				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
+					return true;
+				}
+				return false;
+			case 45753: // 炎魔(变身后)
+				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
+					return true;
+				}
+				return false;
+			case 45675: // 火焰之影(变身前)
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 81082: // 火焰之影(变身后)
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45625: // 混沌
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45674: // 死亡
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45685: // 堕落
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 81341: // 再生之祭坛
+				if (!cha.hasSkillEffect(SECRET_MEDICINE_OF_DESTRUCTION)) {
+					return true;
+				}
+			default:
+				if ((npcId >= 46068) && (npcId <= 46091) // 原生魔族
+						&& (cha.getTempCharGfx() == 6035)) {
+					return true;
+				}
+				else if ((npcId >= 46092) && (npcId <= 46106) // 不死魔族
+						&& (cha.getTempCharGfx() == 6034)) {
+					return true;
+				}
+				return false;
 		}
 	}
 
@@ -1701,7 +1711,7 @@ public class L1Character extends L1Object {
 	 *            可以攻击的范围(格数)
 	 * @return 可以攻击true,不能攻击false
 	 */
-	public boolean isAttackPosition(int x, int y, int range) {
+	public boolean isAttackPosition(final int x, final int y, final int range) {
 		if (range >= 7) // 远程武器（走出画面考虑至少7对角线的情况下）
 		{
 			if (getLocation().getTileDistance(new Point(x, y)) > range) {
@@ -1765,8 +1775,8 @@ public class L1Character extends L1Object {
 	 * @param skillId
 	 *            要删除的技能ＩＤ
 	 */
-	public void killSkillEffectTimer(int skillId) {
-		L1SkillTimer timer = _skillEffect.remove(skillId);
+	public void killSkillEffectTimer(final int skillId) {
+		final L1SkillTimer timer = _skillEffect.remove(skillId);
 		if (timer != null) {
 			timer.kill();
 		}
@@ -1779,7 +1789,7 @@ public class L1Character extends L1Object {
 	 *            检查对象。
 	 * @return 如果是知道的角色对象true、不知道false。 对自己false。
 	 */
-	public boolean knownsObject(L1Object obj) {
+	public boolean knownsObject(final L1Object obj) {
 		return _knownObjects.contains(obj);
 	}
 
@@ -1797,7 +1807,7 @@ public class L1Character extends L1Object {
 	 * @param doll
 	 *            删除doll表、L1DollInstance对象。
 	 */
-	public void removeDoll(L1DollInstance doll) {
+	public void removeDoll(final L1DollInstance doll) {
 		_dolllist.remove(doll.getId());
 	}
 
@@ -1807,7 +1817,7 @@ public class L1Character extends L1Object {
 	 * @param follower
 	 *            删除follower表、L1FollowerInstance对象。
 	 */
-	public void removeFollower(L1FollowerInstance follower) {
+	public void removeFollower(final L1FollowerInstance follower) {
 		_followerlist.remove(follower.getId());
 	}
 
@@ -1817,7 +1827,7 @@ public class L1Character extends L1Object {
 	 * @param delayId
 	 *            延迟物品ID。 如果是正常的道具0、隐形斗篷、血腥炎魔披风1。
 	 */
-	public void removeItemDelay(int delayId) {
+	public void removeItemDelay(final int delayId) {
 		_itemdelay.remove(delayId);
 	}
 
@@ -1827,7 +1837,7 @@ public class L1Character extends L1Object {
 	 * @param obj
 	 *            删除对象
 	 */
-	public void removeKnownObject(L1Object obj) {
+	public void removeKnownObject(final L1Object obj) {
 		_knownObjects.remove(obj);
 		if (obj instanceof L1PcInstance) {
 			_knownPlayer.remove(obj);
@@ -1840,7 +1850,7 @@ public class L1Character extends L1Object {
 	 * @param npc
 	 *            添加到Npc表、L1NpcInstance对象。
 	 */
-	public void removePet(L1NpcInstance npc) {
+	public void removePet(final L1NpcInstance npc) {
 		_petlist.remove(npc.getId());
 		// if (_petlist.isEmpty()) {
 		sendPetCtrlMenu(npc, false); // 关闭宠物控制图形介面
@@ -1853,8 +1863,8 @@ public class L1Character extends L1Object {
 	 * @param skillId
 	 *            结束技能效果的ID
 	 */
-	public void removeSkillEffect(int skillId) {
-		L1SkillTimer timer = _skillEffect.remove(skillId);
+	public void removeSkillEffect(final int skillId) {
+		final L1SkillTimer timer = _skillEffect.remove(skillId);
 		if (timer != null) {
 			timer.end();
 		}
@@ -1883,7 +1893,7 @@ public class L1Character extends L1Object {
 		// 解除变身
 		L1PolyMorph.undoPoly(this);
 		// 重新认识物件
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			pc.sendPackets(new S_RemoveObject(this));
 			pc.removeKnownObject(this);
 			pc.updateObject();
@@ -1897,21 +1907,21 @@ public class L1Character extends L1Object {
 	 * @param type
 	 *            1:显示 0:关闭
 	 */
-	public void sendPetCtrlMenu(L1NpcInstance npc, boolean type) {
+	public void sendPetCtrlMenu(final L1NpcInstance npc, final boolean type) {
 		if (npc instanceof L1PetInstance) {
-			L1PetInstance pet = (L1PetInstance) npc;
-			L1Character cha = pet.getMaster();
+			final L1PetInstance pet = (L1PetInstance) npc;
+			final L1Character cha = pet.getMaster();
 			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
+				final L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_PetCtrlMenu(cha, npc, type));
 				// 处理宠物控制图形介面
 			}
 		}
 		else if (npc instanceof L1SummonInstance) {
-			L1SummonInstance summon = (L1SummonInstance) npc;
-			L1Character cha = summon.getMaster();
+			final L1SummonInstance summon = (L1SummonInstance) npc;
+			final L1Character cha = summon.getMaster();
 			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
+				final L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_PetCtrlMenu(cha, npc, type));
 			}
 		}
@@ -1920,14 +1930,14 @@ public class L1Character extends L1Object {
 	/**
 	 * 设定饱食度
 	 */
-	public void set_food(int i) {
+	public void set_food(final int i) {
 		_food = i;
 	}
 
 	/**
 	 * 设置物理防御
 	 */
-	public void setAc(int i) {
+	public void setAc(final int i) {
 		_trueAc = i;
 		_ac = IntRange.ensure(i, -211, 211);
 	}
@@ -1935,21 +1945,21 @@ public class L1Character extends L1Object {
 	/**
 	 * 设置属性种类
 	 */
-	public void setAddAttrKind(int i) {
+	public void setAddAttrKind(final int i) {
 		_addAttrKind = i;
 	}
 
 	/**
 	 * 设置攻击速度: 0，通常 1，勇敢
 	 */
-	public void setBraveSpeed(int i) {
+	public void setBraveSpeed(final int i) {
 		_braveSpeed = i;
 	}
 
 	/**
 	 * 设置魅力值
 	 */
-	public void setCha(int i) {
+	public void setCha(final int i) {
 		_trueCha = (short) i;
 		_cha = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -1957,14 +1967,14 @@ public class L1Character extends L1Object {
 	/**
 	 * 设定亮度范围
 	 */
-	public void setChaLightSize(int i) {
+	public void setChaLightSize(final int i) {
 		_chaLightSize = i;
 	}
 
 	/**
 	 * 设置体质值
 	 */
-	public void setCon(int i) {
+	public void setCon(final int i) {
 		_trueCon = (short) i;
 		_con = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -1976,7 +1986,7 @@ public class L1Character extends L1Object {
 	 *            新的HP
 	 */
 	// 特殊处理的场合覆盖（分组传输等）
-	public void setCurrentHp(int i) {
+	public void setCurrentHp(final int i) {
 		_currentHp = i;
 		if (_currentHp >= getMaxHp()) {
 			_currentHp = getMaxHp();
@@ -1989,7 +1999,7 @@ public class L1Character extends L1Object {
 	 * @param i
 	 *            登场物件的HP
 	 */
-	public void setCurrentHpDirect(int i) {
+	public void setCurrentHpDirect(final int i) {
 		_currentHp = i;
 	}
 
@@ -2000,7 +2010,7 @@ public class L1Character extends L1Object {
 	 *            新的MP
 	 */
 	// 特殊处理的场合覆盖（分组传输等）
-	public void setCurrentMp(int i) {
+	public void setCurrentMp(final int i) {
 		_currentMp = i;
 		if (_currentMp >= getMaxMp()) {
 			_currentMp = getMaxMp();
@@ -2013,21 +2023,21 @@ public class L1Character extends L1Object {
 	 * @param i
 	 *            登场物件的MP
 	 */
-	public void setCurrentMpDirect(int i) {
+	public void setCurrentMpDirect(final int i) {
 		_currentMp = i;
 	}
 
 	/**
 	 * 设置死亡状态
 	 */
-	public void setDead(boolean flag) {
+	public void setDead(final boolean flag) {
 		_isDead = flag;
 	}
 
 	/**
 	 * 设置敏捷值
 	 */
-	public void setDex(int i) {
+	public void setDex(final int i) {
 		_trueDex = (short) i;
 		_dex = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -2038,49 +2048,49 @@ public class L1Character extends L1Object {
 	 * @param exp
 	 *            经验值。
 	 */
-	public void setExp(long exp) {
+	public void setExp(final long exp) {
 		_exp = exp;
 	}
 
 	/**
 	 * 设置原始外形ＩＤ
 	 */
-	public void setGfxId(int i) {
+	public void setGfxId(final int i) {
 		_gfxid = i;
 	}
 
 	/**
 	 * 设置大厅
 	 */
-	public void setHall(boolean i) {
+	public void setHall(final boolean i) {
 		_isHall = i;
 	}
 
 	/**
 	 * 设置面向: 0.左上 1.上 2.右上 3.右 4.右下 5.下 6.左下 7.左
 	 */
-	public void setHeading(int i) {
+	public void setHeading(final int i) {
 		_heading = i;
 	}
 
 	/**
 	 * 设置旅馆钥匙ID
 	 */
-	public void setInnKeyId(int i) {
+	public void setInnKeyId(final int i) {
 		_innKeyId = i;
 	}
 
 	/**
 	 * 设置旅馆编号
 	 */
-	public void setInnRoomNumber(int i) {
+	public void setInnRoomNumber(final int i) {
 		_innRoomNumber = i;
 	}
 
 	/**
 	 * 设置智力值
 	 */
-	public void setInt(int i) {
+	public void setInt(final int i) {
 		_trueInt = (short) i;
 		_int = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -2091,35 +2101,35 @@ public class L1Character extends L1Object {
 	 * @param karma
 	 *            友好度。
 	 */
-	public void setKarma(int karma) {
+	public void setKarma(final int karma) {
 		_karma = karma;
 	}
 
 	/**
 	 * 设置正义值
 	 */
-	public void setLawful(int i) {
+	public void setLawful(final int i) {
 		_lawful = i;
 	}
 
 	/**
 	 * 设置等级
 	 */
-	public synchronized void setLevel(long level) {
+	public synchronized void setLevel(final long level) {
 		_level = (int) level;
 	}
 
 	/**
 	 * 设定附魔石等级
 	 */
-	public void setMagicStoneLevel(byte i) {
+	public void setMagicStoneLevel(final byte i) {
 		_magicStoneLevel = i;
 	}
 
 	/**
 	 * 设置最高ＨＰ
 	 */
-	public void setMaxHp(int hp) {
+	public void setMaxHp(final int hp) {
 		_trueMaxHp = hp;
 		_maxHp = (short) IntRange.ensure(_trueMaxHp, 1, 32767);
 		_currentHp = Math.min(_currentHp, _maxHp);
@@ -2128,7 +2138,7 @@ public class L1Character extends L1Object {
 	/**
 	 * 设置最高ＭＰ
 	 */
-	public void setMaxMp(int mp) {
+	public void setMaxMp(final int mp) {
 		_trueMaxMp = mp;
 		_maxMp = (short) IntRange.ensure(_trueMaxMp, 0, 32767);
 		_currentMp = Math.min(_currentMp, _maxMp);
@@ -2137,14 +2147,14 @@ public class L1Character extends L1Object {
 	/**
 	 * 设置移动速度: 0.通常 1.加速 2.缓速
 	 */
-	public void setMoveSpeed(int i) {
+	public void setMoveSpeed(final int i) {
 		_moveSpeed = i;
 	}
 
 	/**
 	 * 设置魔防
 	 */
-	public void setMr(int i) {
+	public void setMr(final int i) {
 		_trueMr = i;
 		if (_trueMr <= 0) {
 			_mr = 0;
@@ -2157,21 +2167,21 @@ public class L1Character extends L1Object {
 	/**
 	 * 设置名称
 	 */
-	public void setName(String s) {
+	public void setName(final String s) {
 		_name = s;
 	}
 
 	/**
 	 * 设定自身亮度范围(S_OwnCharPack用)
 	 */
-	public void setOwnLightSize(int i) {
+	public void setOwnLightSize(final int i) {
 		_ownLightSize = i;
 	}
 
 	/**
 	 * 设定麻痹
 	 */
-	public void setParalaysis(L1Paralysis p) {
+	public void setParalaysis(final L1Paralysis p) {
 		_paralysis = p;
 	}
 
@@ -2181,7 +2191,7 @@ public class L1Character extends L1Object {
 	 * @param paralyzed
 	 *            true:麻痹 false:无
 	 */
-	public void setParalyzed(boolean paralyzed) {
+	public void setParalyzed(final boolean paralyzed) {
 		_paralyzed = paralyzed;
 	}
 
@@ -2191,7 +2201,7 @@ public class L1Character extends L1Object {
 	 * @param poison
 	 *            毒列表、L1Poison对象。
 	 */
-	public void setPoison(L1Poison poison) {
+	public void setPoison(final L1Poison poison) {
 		_poison = poison;
 	}
 
@@ -2201,14 +2211,14 @@ public class L1Character extends L1Object {
 	 * @param effectId
 	 * @see S_Poison#S_Poison(int, int)
 	 */
-	public void setPoisonEffect(int effectId) {
+	public void setPoisonEffect(final int effectId) {
 		broadcastPacket(new S_Poison(getId(), effectId));
 	}
 
 	/**
 	 * 设定龙之门扉编号
 	 */
-	public void setPortalNumber(int portalNumber) {
+	public void setPortalNumber(final int portalNumber) {
 		_portalNumber = portalNumber;
 	}
 
@@ -2217,7 +2227,7 @@ public class L1Character extends L1Object {
 	 * 
 	 * @param flag
 	 */
-	public void setSkillDelay(boolean flag) {
+	public void setSkillDelay(final boolean flag) {
 		_isSkillDelay = flag;
 	}
 
@@ -2231,9 +2241,9 @@ public class L1Character extends L1Object {
 	 * @param timeMillis
 	 *            设置技能效果的持续时间。无限制是0。
 	 */
-	public void setSkillEffect(int skillId, int timeMillis) {
+	public void setSkillEffect(final int skillId, final int timeMillis) {
 		if (hasSkillEffect(skillId)) {
-			int remainingTimeMills = getSkillEffectTimeSec(skillId) * 1000;
+			final int remainingTimeMills = getSkillEffectTimeSec(skillId) * 1000;
 
 			// 残り时间が有限で、パラメータの效果时间の方が长いか无限の场合は上书きする。
 			if ((remainingTimeMills >= 0) && ((remainingTimeMills < timeMillis) || (timeMillis == 0))) {
@@ -2252,21 +2262,21 @@ public class L1Character extends L1Object {
 	 * @param sleeped
 	 *            true:睡眠 false:无
 	 */
-	public void setSleeped(boolean sleeped) {
+	public void setSleeped(final boolean sleeped) {
 		_sleeped = sleeped;
 	}
 
 	/**
 	 * 设置初始化状态
 	 */
-	public void setStatus(int i) {
+	public void setStatus(final int i) {
 		_status = i;
 	}
 
 	/**
 	 * 设置力量值
 	 */
-	public void setStr(int i) {
+	public void setStr(final int i) {
 		_trueStr = (short) i;
 		_str = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -2274,21 +2284,21 @@ public class L1Character extends L1Object {
 	/**
 	 * 设置变身ID
 	 */
-	public void setTempCharGfx(int i) {
+	public void setTempCharGfx(final int i) {
 		_tempCharGfx = i;
 	}
 
 	/**
 	 * 设置封号
 	 */
-	public void setTitle(String s) {
+	public void setTitle(final String s) {
 		_title = s;
 	}
 
 	/**
 	 * 设置精神值
 	 */
-	public void setWis(int i) {
+	public void setWis(final int i) {
 		_trueWis = (short) i;
 		_wis = (short) IntRange.ensure(i, 1, 255);
 	}
@@ -2302,15 +2312,15 @@ public class L1Character extends L1Object {
 	 *            坐标的Y值
 	 * @return 指定的坐标对应的面向
 	 */
-	public int targetDirection(int tx, int ty) {
-		float dis_x = Math.abs(getX() - tx); // 距离目标在X方向
-		float dis_y = Math.abs(getY() - ty); // 距离目标在Y方向
-		float dis = Math.max(dis_x, dis_y); // 距离目标
+	public int targetDirection(final int tx, final int ty) {
+		final float dis_x = Math.abs(getX() - tx); // 距离目标在X方向
+		final float dis_y = Math.abs(getY() - ty); // 距离目标在Y方向
+		final float dis = Math.max(dis_x, dis_y); // 距离目标
 		if (dis == 0) {
 			return getHeading(); // 回到同一个位置的面向
 		}
-		int avg_x = (int) Math.floor((dis_x / dis) + 0.59f); // 上下左右がちょっと优先な丸め
-		int avg_y = (int) Math.floor((dis_y / dis) + 0.59f); // 上下左右がちょっと优先な丸め
+		final int avg_x = (int) Math.floor((dis_x / dis) + 0.59f); // 上下左右がちょっと优先な丸め
+		final int avg_y = (int) Math.floor((dis_y / dis) + 0.59f); // 上下左右がちょっと优先な丸め
 
 		int dir_x = 0;
 		int dir_y = 0;
@@ -2367,16 +2377,16 @@ public class L1Character extends L1Object {
 	public void turnOnOffLight() {
 		int lightSize = 0;
 		if (this instanceof L1NpcInstance) {
-			L1NpcInstance npc = (L1NpcInstance) this;
+			final L1NpcInstance npc = (L1NpcInstance) this;
 			lightSize = npc.getLightSize(); // npc.sqlのライトサイズ
 		}
 		if (hasSkillEffect(LIGHT)) {
 			lightSize = 14;
 		}
 
-		for (L1ItemInstance item : getInventory().getItems()) {
+		for (final L1ItemInstance item : getInventory().getItems()) {
 			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系アイテム
-				int itemlightSize = item.getItem().getLightRange();
+				final int itemlightSize = item.getItem().getLightRange();
 				if ((itemlightSize != 0) && item.isNowLighting()) {
 					if (itemlightSize > lightSize) {
 						lightSize = itemlightSize;
@@ -2387,7 +2397,7 @@ public class L1Character extends L1Object {
 
 		// 角色
 		if (this instanceof L1PcInstance) {
-			L1PcInstance pc = (L1PcInstance) this;
+			final L1PcInstance pc = (L1PcInstance) this;
 			pc.sendPackets(new S_Light(pc.getId(), lightSize));
 		}
 		if (!isInvisble()) {
@@ -2404,8 +2414,8 @@ public class L1Character extends L1Object {
 	 * @param packet
 	 *            ServerBasePacket对象，表示要发送的封包。
 	 */
-	public void wideBroadcastPacket(ServerBasePacket packet) {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 50)) {
+	public void wideBroadcastPacket(final ServerBasePacket packet) {
+		for (final L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 50)) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -2418,7 +2428,7 @@ public class L1Character extends L1Object {
 	 * @param timeMillis
 	 *            设定技能效果的持续时间。无限制是0。
 	 */
-	private void addSkillEffect(int skillId, int timeMillis) {
+	private void addSkillEffect(final int skillId, final int timeMillis) {
 		L1SkillTimer timer = null;
 		if (0 < timeMillis) {
 			timer = L1SkillTimerCreator.create(this, skillId, timeMillis);

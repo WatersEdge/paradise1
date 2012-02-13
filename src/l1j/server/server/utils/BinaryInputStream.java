@@ -28,7 +28,7 @@ public class BinaryInputStream extends InputStream {
 	 * 
 	 * @param in
 	 */
-	public BinaryInputStream(InputStream in) {
+	public BinaryInputStream(final InputStream in) {
 		_in = in;
 	}
 
@@ -60,7 +60,7 @@ public class BinaryInputStream extends InputStream {
 	}
 
 	@Override
-	public long skip(long n) throws IOException {
+	public long skip(final long n) throws IOException {
 		return _in.skip(n);
 	}
 }

@@ -40,15 +40,15 @@ public class C_Shop extends ClientBasePacket {
 
 	private static final String C_SHOP = "[C] C_Shop";
 
-	public C_Shop(byte abyte0[], ClientThread clientthread) {
+	public C_Shop(final byte abyte0[], final ClientThread clientthread) {
 		super(abyte0);
 
-		L1PcInstance pc = clientthread.getActiveChar();
+		final L1PcInstance pc = clientthread.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
 
-		int mapId = pc.getMapId();
+		final int mapId = pc.getMapId();
 		// 可以开设个人商店的地图
 		if ((mapId != 340 // 古鲁丁商店村
 				)
@@ -60,14 +60,14 @@ public class C_Shop extends ClientBasePacket {
 			return;
 		}
 
-		List<L1PrivateShopSellList> sellList = pc.getSellList();
-		List<L1PrivateShopBuyList> buyList = pc.getBuyList();
+		final List<L1PrivateShopSellList> sellList = pc.getSellList();
+		final List<L1PrivateShopBuyList> buyList = pc.getBuyList();
 		L1ItemInstance checkItem;
 		boolean tradable = true;
 
-		int type = readC();
+		final int type = readC();
 		if (type == 0) { // 开始
-			int sellTotalCount = readH();
+			final int sellTotalCount = readH();
 			int sellObjectId;
 			int sellPrice;
 			int sellCount;
@@ -82,9 +82,9 @@ public class C_Shop extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(166, // \f1%0%s %4%1%3 %2。
 							checkItem.getItem().getName(), "这是不可能处理。"));
 				}
-				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+				for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 					if (petNpc instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petNpc;
+						final L1PetInstance pet = (L1PetInstance) petNpc;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(166, // \f1%0%s %4%1%3 %2。
@@ -93,13 +93,13 @@ public class C_Shop extends ClientBasePacket {
 						}
 					}
 				}
-				L1PrivateShopSellList pssl = new L1PrivateShopSellList();
+				final L1PrivateShopSellList pssl = new L1PrivateShopSellList();
 				pssl.setItemObjectId(sellObjectId);
 				pssl.setSellPrice(sellPrice);
 				pssl.setSellTotalCount(sellCount);
 				sellList.add(pssl);
 			}
-			int buyTotalCount = readH();
+			final int buyTotalCount = readH();
 			int buyObjectId;
 			int buyPrice;
 			int buyCount;
@@ -129,9 +129,9 @@ public class C_Shop extends ClientBasePacket {
 				}
 
 				// 使用中的宠物项链 - 无法贩卖
-				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+				for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 					if (petNpc instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petNpc;
+						final L1PetInstance pet = (L1PetInstance) petNpc;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
@@ -141,14 +141,14 @@ public class C_Shop extends ClientBasePacket {
 				}
 
 				// 使用中的魔法娃娃 - 无法贩卖
-				for (L1DollInstance doll : pc.getDollList().values()) {
+				for (final L1DollInstance doll : pc.getDollList().values()) {
 					if (doll.getItemObjId() == checkItem.getId()) {
 						tradable = false;
 						pc.sendPackets(new S_ServerMessage(1181)); // 这个魔法娃娃目前正在使用中。
 						break;
 					}
 				}
-				L1PrivateShopBuyList psbl = new L1PrivateShopBuyList();
+				final L1PrivateShopBuyList psbl = new L1PrivateShopBuyList();
 				psbl.setItemObjectId(buyObjectId);
 				psbl.setBuyPrice(buyPrice);
 				psbl.setBuyTotalCount(buyCount);
@@ -162,7 +162,7 @@ public class C_Shop extends ClientBasePacket {
 				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 				return;
 			}
-			byte[] chat = readByte();
+			final byte[] chat = readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
 			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));

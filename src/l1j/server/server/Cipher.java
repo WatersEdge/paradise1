@@ -62,8 +62,8 @@ public class Cipher {
 	 * @param key
 	 *            , 由乱数产生的编码钥匙
 	 */
-	public Cipher(int key) {
-		int[] keys = { key ^ _1, _2 };
+	public Cipher(final int key) {
+		final int[] keys = { key ^ _1, _2 };
 		keys[0] = Integer.rotateLeft(keys[0], 0x13);
 		keys[1] ^= keys[0] ^ _3;
 
@@ -81,7 +81,7 @@ public class Cipher {
 	 *            , 受保护的资料
 	 * @return data, 原始的资料
 	 */
-	public byte[] decrypt(byte[] data) {
+	public byte[] decrypt(final byte[] data) {
 		data[0] ^= db[5] ^ data[1];
 		data[1] ^= db[4] ^ data[2];
 		data[2] ^= db[3] ^ data[3];
@@ -103,7 +103,7 @@ public class Cipher {
 	 *            , 未受保护的资料
 	 * @return data, 受保护的资料
 	 */
-	public byte[] encrypt(byte[] data) {
+	public byte[] encrypt(final byte[] data) {
 		for (int i = 0; i < tb.length; i++) {
 			tb[i] = data[i];
 		}
@@ -129,12 +129,12 @@ public class Cipher {
 	 *            , 受保护的资料
 	 * @return data, 原始的资料
 	 */
-	private void update(byte[] data, byte[] ref) {
+	private void update(final byte[] data, final byte[] ref) {
 		for (int i = 0; i < tb.length; i++) {
 			data[i] ^= ref[i];
 		}
 
-		int int32 = (((data[7] & 0xFF) << 24) | ((data[6] & 0xFF) << 16) | ((data[5] & 0xFF) << 8) | (data[4] & 0xFF)) + _4;
+		final int int32 = (((data[7] & 0xFF) << 24) | ((data[6] & 0xFF) << 16) | ((data[5] & 0xFF) << 8) | (data[4] & 0xFF)) + _4;
 
 		for (int i = 0; i < tb.length; i++) {
 			data[i + 4] = (byte) (int32 >> (i * 8) & 0xff);

@@ -47,7 +47,8 @@ public class S_CharPacks extends ServerBasePacket {
 	 * @param accessLevel
 	 * @param birthday
 	 */
-	public S_CharPacks(String name, String clanName, int type, int sex, int lawful, int hp, int mp, int ac, int lv, int str, int dex, int con, int wis, int cha, int intel, int accessLevel, int birthday) {
+	public S_CharPacks(final String name, final String clanName, final int type, final int sex, final int lawful, final int hp, final int mp, final int ac, final int lv, final int str, final int dex, final int con, final int wis, final int cha, final int intel,
+			final int accessLevel, final int birthday) {
 		writeC(Opcodes.S_OPCODE_CHARLIST);
 		writeS(name);
 		writeS(clanName);

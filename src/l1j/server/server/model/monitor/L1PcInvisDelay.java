@@ -21,12 +21,12 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public class L1PcInvisDelay extends L1PcMonitor {
 
-	public L1PcInvisDelay(int oId) {
+	public L1PcInvisDelay(final int oId) {
 		super(oId);
 	}
 
 	@Override
-	public void execTask(L1PcInstance pc) {
+	public void execTask(final L1PcInstance pc) {
 		pc.addInvisDelayCounter(-1);
 	}
 }

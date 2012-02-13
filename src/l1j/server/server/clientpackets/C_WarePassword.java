@@ -31,23 +31,23 @@ import l1j.server.server.serverpackets.S_SystemMessage;
  * 仓库密码
  */
 public class C_WarePassword extends ClientBasePacket {
-	public C_WarePassword(byte abyte0[], ClientThread client) {
+	public C_WarePassword(final byte abyte0[], final ClientThread client) {
 		super(abyte0);
 		// 类型(0: 密码变更, 1: 一般仓库, 2: 血盟仓库)
-		int type = readC();
+		final int type = readC();
 
 		// 取得第一组数值(旧密码, 或待验证的密码)
-		int pass1 = readD();
+		final int pass1 = readD();
 
 		// 取得第二组数值(新密码, 或仓库 NPC 的 objId)
-		int pass2 = readD();
+		final int pass2 = readD();
 
 		// 不明的2个位元组
 		readH();
 
 		// 取得角色物件
-		L1PcInstance pc = client.getActiveChar();
-		Account account = client.getAccount();
+		final L1PcInstance pc = client.getActiveChar();
+		final Account account = client.getAccount();
 
 		// 变更密码
 		if (type == 0) {
@@ -89,24 +89,25 @@ public class C_WarePassword extends ClientBasePacket {
 		// 密码验证
 		else {
 			if (account.getWarePassword() == pass1) {
-				int objid = pass2;
-				L1Object obj = L1World.getInstance().findObject(objid);
+				final int objid = pass2;
+				final L1Object obj = L1World.getInstance().findObject(objid);
 				if (pc.getLevel() >= 5) {// 判断玩家等级
 					if (type == 1) {
 						if (obj != null) {
 							if (obj instanceof L1NpcInstance) {
-								L1NpcInstance npc = (L1NpcInstance) obj;
+								final L1NpcInstance npc = (L1NpcInstance) obj;
 								// 判断npc所属仓库类别
 								switch (npc.getNpcId()) {
-								case 60028:// 仓库-艾尔(妖森)
-									// 密码吻合 输出仓库视窗
-									if (pc.isElf()) // 判断是否为妖精
-										pc.sendPackets(new S_RetrieveElfList(objid, pc));
-									break;
-								default:
-									// 密码吻合 输出仓库视窗
-									pc.sendPackets(new S_RetrieveList(objid, pc));
-									break;
+									case 60028:// 仓库-艾尔(妖森)
+										// 密码吻合 输出仓库视窗
+										if (pc.isElf()) {
+											pc.sendPackets(new S_RetrieveElfList(objid, pc));
+										}
+										break;
+									default:
+										// 密码吻合 输出仓库视窗
+										pc.sendPackets(new S_RetrieveList(objid, pc));
+										break;
 								}
 							}
 						}
@@ -117,7 +118,7 @@ public class C_WarePassword extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(208));
 							return;
 						}
-						int rank = pc.getClanRank();
+						final int rank = pc.getClanRank();
 						if (rank == L1Clan.CLAN_RANK_PROBATION) {
 							// 只有收到称谓的人才能使用血盟仓库。
 							pc.sendPackets(new S_ServerMessage(728));

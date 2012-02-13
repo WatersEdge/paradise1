@@ -37,13 +37,13 @@ public class L1ItemDelay {
 	static class ItemDelayTimer implements Runnable {
 
 		/** 延迟角色 */
-		private L1Character _cha;
+		private final L1Character _cha;
 
 		/** 延迟ID */
-		private int _delayId;
+		private final int _delayId;
 
 		/** 延迟时间 (毫秒) */
-		private int _delayTime;
+		private final int _delayTime;
 
 		/**
 		 * 道具使用延迟计时器
@@ -56,9 +56,9 @@ public class L1ItemDelay {
 		 *            延迟时间 (毫秒)
 		 */
 		public ItemDelayTimer(final L1Character cha, final int id, final int delayTime) {
-			this._cha = cha;
-			this._delayId = id;
-			this._delayTime = delayTime;
+			_cha = cha;
+			_delayId = id;
+			_delayTime = delayTime;
 		}
 
 		/**
@@ -72,7 +72,7 @@ public class L1ItemDelay {
 
 		@Override
 		public void run() {
-			this.stopDelayTimer(this._delayId);
+			stopDelayTimer(_delayId);
 		}
 
 		/**
@@ -82,7 +82,7 @@ public class L1ItemDelay {
 		 *            延迟ID
 		 */
 		public void stopDelayTimer(final int delayId) {
-			this._cha.removeItemDelay(delayId);
+			_cha.removeItemDelay(delayId);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class L1ItemDelay {
 	static class TeleportUnlockTimer implements Runnable {
 
 		/** 角色 */
-		private L1PcInstance _pc;
+		private final L1PcInstance _pc;
 
 		/**
 		 * 瞬移解锁定时器
@@ -100,7 +100,7 @@ public class L1ItemDelay {
 		 * @param pc
 		 *            角色
 		 */
-		public TeleportUnlockTimer(L1PcInstance pc) {
+		public TeleportUnlockTimer(final L1PcInstance pc) {
 			_pc = pc;
 		}
 
@@ -171,7 +171,7 @@ public class L1ItemDelay {
 	 * @param delayTime
 	 *            延迟时间 (毫秒)
 	 */
-	public static void onItemUse(final L1PcInstance pc, int delayId, int delayTime) {
+	public static void onItemUse(final L1PcInstance pc, final int delayId, final int delayTime) {
 		try {
 			if ((delayId != 0) && (delayTime != 0)) {
 				final ItemDelayTimer timer = new ItemDelayTimer(pc, delayId, delayTime);
@@ -199,30 +199,30 @@ public class L1ItemDelay {
 			int delayId = 0;
 			int delayTime = 0;
 			switch (item.getItem().getType2()) {
-			case 0: // 类别：道具
-				delayId = ((L1EtcItem) item.getItem()).get_delayid();
-				delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
-				break;
-
-			case 1: // 类别：武器
-				return;
-
-			case 2: // 类别：防具
-				switch (item.getItemId()) {
-				case 20077: // 隐身斗篷
-				case 120077: // 祝福的 隐身斗篷
-				case 20062: // 炎魔的血光斗篷
-
-					// 装备使用中 && 非隐身状态
-					if (item.isEquipped() && !pc.isInvisble()) {
-						pc.beginInvisTimer();
-					}
+				case 0: // 类别：道具
+					delayId = ((L1EtcItem) item.getItem()).get_delayid();
+					delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
 					break;
 
-				default: // 其他道具
+				case 1: // 类别：武器
 					return;
-				}
-				break;
+
+				case 2: // 类别：防具
+					switch (item.getItemId()) {
+						case 20077: // 隐身斗篷
+						case 120077: // 祝福的 隐身斗篷
+						case 20062: // 炎魔的血光斗篷
+
+							// 装备使用中 && 非隐身状态
+							if (item.isEquipped() && !pc.isInvisble()) {
+								pc.beginInvisTimer();
+							}
+							break;
+
+						default: // 其他道具
+							return;
+					}
+					break;
 			}
 
 			if ((delayId != 0) && (delayTime != 0)) {
@@ -246,9 +246,9 @@ public class L1ItemDelay {
 	 * @param item
 	 *            物件
 	 */
-	public static void teleportUnlock(L1PcInstance pc, L1ItemInstance item) {
-		int delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
-		TeleportUnlockTimer timer = new TeleportUnlockTimer(pc);
+	public static void teleportUnlock(final L1PcInstance pc, final L1ItemInstance item) {
+		final int delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
+		final TeleportUnlockTimer timer = new TeleportUnlockTimer(pc);
 		GeneralThreadPool.getInstance().schedule(timer, delayTime);
 	}
 

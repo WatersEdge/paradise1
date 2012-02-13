@@ -51,7 +51,7 @@ public class AuctionBoardTable {
 			pstm = con.prepareStatement("SELECT * FROM board_auction ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				L1AuctionBoard board = new L1AuctionBoard();
+				final L1AuctionBoard board = new L1AuctionBoard();
 				board.setHouseId(rs.getInt(1)); // 盟屋ID
 				board.setHouseName(rs.getString(2)); // 盟屋名称
 				board.setHouseArea(rs.getInt(3)); // 盟屋面积
@@ -65,7 +65,7 @@ public class AuctionBoardTable {
 				_boards.put(board.getHouseId(), board);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -80,7 +80,7 @@ public class AuctionBoardTable {
 	 * @param houseId
 	 *            盟屋ID
 	 */
-	public void deleteAuctionBoard(int houseId) {
+	public void deleteAuctionBoard(final int houseId) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -91,7 +91,7 @@ public class AuctionBoardTable {
 
 			_boards.remove(houseId);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -106,7 +106,7 @@ public class AuctionBoardTable {
 	 *            盟屋ID
 	 * @return
 	 */
-	public L1AuctionBoard getAuctionBoardTable(int houseId) {
+	public L1AuctionBoard getAuctionBoardTable(final int houseId) {
 		return _boards.get(houseId);
 	}
 
@@ -125,7 +125,7 @@ public class AuctionBoardTable {
 	 * @param board
 	 *            拍卖布告栏
 	 */
-	public void insertAuctionBoard(L1AuctionBoard board) {
+	public void insertAuctionBoard(final L1AuctionBoard board) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -134,8 +134,8 @@ public class AuctionBoardTable {
 			pstm.setInt(1, board.getHouseId());
 			pstm.setString(2, board.getHouseName());
 			pstm.setInt(3, board.getHouseArea());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			String fm = sdf.format(board.getDeadline().getTime());
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			final String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(4, fm);
 			pstm.setInt(5, board.getPrice());
 			pstm.setString(6, board.getLocation());
@@ -147,7 +147,7 @@ public class AuctionBoardTable {
 
 			_boards.put(board.getHouseId(), board);
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -161,7 +161,7 @@ public class AuctionBoardTable {
 	 * @param board
 	 *            拍卖布告栏
 	 */
-	public void updateAuctionBoard(L1AuctionBoard board) {
+	public void updateAuctionBoard(final L1AuctionBoard board) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -169,8 +169,8 @@ public class AuctionBoardTable {
 			pstm = con.prepareStatement("UPDATE board_auction SET house_name=?, house_area=?, deadline=?, price=?, location=?, old_owner=?, old_owner_id=?, bidder=?, bidder_id=? WHERE house_id=?");
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			String fm = sdf.format(board.getDeadline().getTime());
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			final String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(3, fm);
 			pstm.setInt(4, board.getPrice());
 			pstm.setString(5, board.getLocation());
@@ -181,7 +181,7 @@ public class AuctionBoardTable {
 			pstm.setInt(10, board.getHouseId());
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -189,8 +189,8 @@ public class AuctionBoardTable {
 		}
 	}
 
-	private Calendar timestampToCalendar(Timestamp ts) {
-		Calendar cal = Calendar.getInstance();
+	private Calendar timestampToCalendar(final Timestamp ts) {
+		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(ts.getTime());
 		return cal;
 	}

@@ -58,12 +58,12 @@ public class ShopTable {
 		loadShops();
 	}
 
-	public L1Shop get(int npcId) {
+	public L1Shop get(final int npcId) {
 		return _allShops.get(npcId);
 	}
 
 	private List<Integer> enumNpcIds() {
-		List<Integer> ids = Lists.newList();
+		final List<Integer> ids = Lists.newList();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -76,7 +76,7 @@ public class ShopTable {
 				ids.add(rs.getInt("npc_id"));
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);
@@ -84,21 +84,21 @@ public class ShopTable {
 		return ids;
 	}
 
-	private L1Shop loadShop(int npcId, ResultSet rs) throws SQLException {
-		List<L1ShopItem> sellingList = Lists.newList();
-		List<L1ShopItem> purchasingList = Lists.newList();
+	private L1Shop loadShop(final int npcId, final ResultSet rs) throws SQLException {
+		final List<L1ShopItem> sellingList = Lists.newList();
+		final List<L1ShopItem> purchasingList = Lists.newList();
 		while (rs.next()) {
-			int itemId = rs.getInt("item_id");
-			int sellingPrice = rs.getInt("selling_price");
-			int purchasingPrice = rs.getInt("purchasing_price");
+			final int itemId = rs.getInt("item_id");
+			final int sellingPrice = rs.getInt("selling_price");
+			final int purchasingPrice = rs.getInt("purchasing_price");
 			int packCount = rs.getInt("pack_count");
 			packCount = packCount == 0 ? 1 : packCount;
 			if (0 <= sellingPrice) {
-				L1ShopItem item = new L1ShopItem(itemId, sellingPrice, packCount);
+				final L1ShopItem item = new L1ShopItem(itemId, sellingPrice, packCount);
 				sellingList.add(item);
 			}
 			if (0 <= purchasingPrice) {
-				L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
+				final L1ShopItem item = new L1ShopItem(itemId, purchasingPrice, packCount);
 				purchasingList.add(item);
 			}
 		}
@@ -112,15 +112,15 @@ public class ShopTable {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM shop WHERE npc_id=? ORDER BY order_id");
-			for (int npcId : enumNpcIds()) {
+			for (final int npcId : enumNpcIds()) {
 				pstm.setInt(1, npcId);
 				rs = pstm.executeQuery();
-				L1Shop shop = loadShop(npcId, rs);
+				final L1Shop shop = loadShop(npcId, rs);
 				_allShops.put(npcId, shop);
 				rs.close();
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs, pstm, con);

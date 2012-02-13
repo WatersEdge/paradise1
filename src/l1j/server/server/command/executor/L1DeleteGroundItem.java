@@ -38,28 +38,28 @@ public class L1DeleteGroundItem implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
-		for (L1Object l1object : L1World.getInstance().getObject()) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
+		for (final L1Object l1object : L1World.getInstance().getObject()) {
 			if (l1object instanceof L1ItemInstance) {
-				L1ItemInstance l1iteminstance = (L1ItemInstance) l1object;
+				final L1ItemInstance l1iteminstance = (L1ItemInstance) l1object;
 				if ((l1iteminstance.getX() == 0) && (l1iteminstance.getY() == 0)) { // 地面上のアイテムではなく、谁かの所有物
 					continue;
 				}
 
-				List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(l1iteminstance, 0);
+				final List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(l1iteminstance, 0);
 				if (0 == players.size()) {
-					L1Inventory groundInventory = L1World.getInstance().getInventory(l1iteminstance.getX(), l1iteminstance.getY(), l1iteminstance.getMapId());
-					int itemId = l1iteminstance.getItem().getItemId();
+					final L1Inventory groundInventory = L1World.getInstance().getInventory(l1iteminstance.getX(), l1iteminstance.getY(), l1iteminstance.getMapId());
+					final int itemId = l1iteminstance.getItem().getItemId();
 					if ((itemId == 40314) || (itemId == 40316)) { // ペットのアミュレット
 						PetTable.getInstance().deletePet(l1iteminstance.getId());
 					}
 					else if ((itemId >= 49016) && (itemId <= 49025)) { // 便笺
-						LetterTable lettertable = new LetterTable();
+						final LetterTable lettertable = new LetterTable();
 						lettertable.deleteLetter(l1iteminstance.getId());
 					}
 					else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具
 						if (l1object instanceof L1FurnitureInstance) {
-							L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
+							final L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
 							if (furniture.getItemObjId() == l1iteminstance.getId()) { // 既に引き出している家具
 								FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
 							}

@@ -28,10 +28,10 @@ public class C_ExitGhost extends ClientBasePacket {
 	private static final String C_EXIT_GHOST = "[C] C_ExitGhost";
 
 	// 移动
-	public C_ExitGhost(byte decrypt[], ClientThread client) throws Exception {
+	public C_ExitGhost(final byte decrypt[], final ClientThread client) throws Exception {
 		super(decrypt);
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 
 		if (!pc.isGhost()) {
 			return;

@@ -23,22 +23,22 @@ public class S_WhoStationery extends ServerBasePacket {
 	 * @param pc
 	 *            查询的玩家
 	 */
-	public S_WhoStationery(L1PcInstance pc) {
+	public S_WhoStationery(final L1PcInstance pc) {
 
-		double EXP = Config.RATE_XP;
-		double RWL = Config.RATE_WEIGHT_LIMIT;
-		double RDI = Config.RATE_DROP_ITEMS;
-		double RDA = Config.RATE_DROP_ADENA;
-		double RLA = Config.RATE_LA;
-		double RKA = Config.RATE_KARMA;
-		int RKC = pc.get_PKcount();
-		int time = L1GameReStart.getWillRestartTime();
+		final double EXP = Config.RATE_XP;
+		final double RWL = Config.RATE_WEIGHT_LIMIT;
+		final double RDI = Config.RATE_DROP_ITEMS;
+		final double RDA = Config.RATE_DROP_ADENA;
+		final double RLA = Config.RATE_LA;
+		final double RKA = Config.RATE_KARMA;
+		final int RKC = pc.get_PKcount();
+		final int time = L1GameReStart.getWillRestartTime();
 
 		final String S_WhoCharinfo = "经验倍率:" + EXP + " 倍\r\n" + "负重倍率:" + RWL + " 倍\r\n" + "掉宝倍率:" + RDI + " 倍\r\n" + "金币倍率:" + RDA + " 倍\r\n" + "正义倍率:" + RLA + " 倍\r\n" + "友好倍率:" + RKA + " 倍\r\n" + "总PK次数:" + RKC + " 次\r\n" + "距离重启时间剩余:" + (time / 60) / 60 + "小时" + (time / 60)
 				% 60 + "分钟";
 
 		// 当前的 年、月、日 (范例:12/01/10)
-		SimpleDateFormat setDateFormat = new SimpleDateFormat("yy/MM/dd");
+		final SimpleDateFormat setDateFormat = new SimpleDateFormat("yy/MM/dd");
 		writeC(Opcodes.S_OPCODE_BOARDREAD);
 		writeD(0x00);
 		writeS("Lineage"); // 作者

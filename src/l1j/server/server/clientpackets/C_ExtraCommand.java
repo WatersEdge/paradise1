@@ -29,10 +29,10 @@ public class C_ExtraCommand extends ClientBasePacket {
 
 	private static final String C_EXTRA_COMMAND = "[C] C_ExtraCommand";
 
-	public C_ExtraCommand(byte abyte0[], ClientThread client) throws Exception {
+	public C_ExtraCommand(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		int actionId = readC();
-		L1PcInstance pc = client.getActiveChar();
+		final int actionId = readC();
+		final L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
 		}
@@ -43,12 +43,12 @@ public class C_ExtraCommand extends ClientBasePacket {
 			return;
 		}
 		if (pc.hasSkillEffect(SHAPE_CHANGE)) { // 变身中
-			int gfxId = pc.getTempCharGfx();
+			final int gfxId = pc.getTempCharGfx();
 			if ((gfxId != 6080) && (gfxId != 6094)) { // 骑马用的变身例外
 				return;
 			}
 		}
-		S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
+		final S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
 		pc.broadcastPacket(gfx); // 将动作送给附近的玩家
 	}
 

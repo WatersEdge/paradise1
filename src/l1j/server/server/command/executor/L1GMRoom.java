@@ -29,13 +29,13 @@ public class L1GMRoom implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
 			int i = 0;
 			try {
 				i = Integer.parseInt(arg);
 			}
-			catch (NumberFormatException e) {
+			catch (final NumberFormatException e) {
 			}
 
 			if (i == 1) {
@@ -54,7 +54,7 @@ public class L1GMRoom implements L1CommandExecutor {
 				L1Teleport.teleport(pc, 32894, 32535, (short) 300, 5, false);
 			}
 			else {
-				L1Location loc = GMCommandsConfig.ROOMS.get(arg.toLowerCase());
+				final L1Location loc = GMCommandsConfig.ROOMS.get(arg.toLowerCase());
 				if (loc == null) {
 					pc.sendPackets(new S_SystemMessage(arg + " 未定义的Room～"));
 					return;
@@ -62,7 +62,7 @@ public class L1GMRoom implements L1CommandExecutor {
 				L1Teleport.teleport(pc, loc.getX(), loc.getY(), (short) loc.getMapId(), 5, false);
 			}
 		}
-		catch (Exception exception) {
+		catch (final Exception exception) {
 			pc.sendPackets(new S_SystemMessage("请输入 .gmroom1～.gmroom5 or .gmroom name 。"));
 		}
 	}

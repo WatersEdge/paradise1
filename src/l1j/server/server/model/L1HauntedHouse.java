@@ -37,14 +37,14 @@ public class L1HauntedHouse {
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 90000); // 约90秒？
 		}
 
 		@Override
 		public void run() {
 			startHauntedHouse();
-			L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
+			final L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
 			hhTimer.begin();
 		}
 
@@ -56,7 +56,7 @@ public class L1HauntedHouse {
 		}
 
 		public void begin() {
-			Timer timer = new Timer();
+			final Timer timer = new Timer();
 			timer.schedule(this, 300000); // 5分
 		}
 
@@ -91,7 +91,7 @@ public class L1HauntedHouse {
 		return _instance;
 	}
 
-	public void addMember(L1PcInstance pc) {
+	public void addMember(final L1PcInstance pc) {
 		if (!_members.contains(pc)) {
 			_members.add(pc);
 		}
@@ -108,17 +108,17 @@ public class L1HauntedHouse {
 		setHauntedHouseStatus(STATUS_NONE);
 		setWinnersCount(0);
 		setGoalCount(0);
-		for (L1PcInstance pc : getMembersArray()) {
+		for (final L1PcInstance pc : getMembersArray()) {
 			if (pc.getMapId() == 5140) {
-				L1SkillUse l1skilluse = new L1SkillUse();
+				final L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 				L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
 			}
 		}
 		clearMembers();
-		for (L1Object object : L1World.getInstance().getObject()) {
+		for (final L1Object object : L1World.getInstance().getObject()) {
 			if (object instanceof L1DoorInstance) {
-				L1DoorInstance door = (L1DoorInstance) object;
+				final L1DoorInstance door = (L1DoorInstance) object;
 				if (door.getMapId() == 5140) {
 					door.close();
 				}
@@ -146,50 +146,50 @@ public class L1HauntedHouse {
 		return _winnersCount;
 	}
 
-	public boolean isMember(L1PcInstance pc) {
+	public boolean isMember(final L1PcInstance pc) {
 		return _members.contains(pc);
 	}
 
-	public void removeMember(L1PcInstance pc) {
+	public void removeMember(final L1PcInstance pc) {
 		_members.remove(pc);
 	}
 
 	public void removeRetiredMembers() {
-		L1PcInstance[] temp = getMembersArray();
-		for (L1PcInstance element : temp) {
+		final L1PcInstance[] temp = getMembersArray();
+		for (final L1PcInstance element : temp) {
 			if (element.getMapId() != 5140) {
 				removeMember(element);
 			}
 		}
 	}
 
-	public void sendMessage(int type, String msg) {
-		for (L1PcInstance pc : getMembersArray()) {
+	public void sendMessage(final int type, final String msg) {
+		for (final L1PcInstance pc : getMembersArray()) {
 			pc.sendPackets(new S_ServerMessage(type, msg));
 		}
 	}
 
-	public void setGoalCount(int i) {
+	public void setGoalCount(final int i) {
 		_goalCount = i;
 	}
 
 	private void readyHauntedHouse() {
 		setHauntedHouseStatus(STATUS_READY);
-		L1HauntedHouseReadyTimer hhrTimer = new L1HauntedHouseReadyTimer();
+		final L1HauntedHouseReadyTimer hhrTimer = new L1HauntedHouseReadyTimer();
 		hhrTimer.begin();
 	}
 
-	private void setHauntedHouseStatus(int i) {
+	private void setHauntedHouseStatus(final int i) {
 		_hauntedHouseStatus = i;
 	}
 
-	private void setWinnersCount(int i) {
+	private void setWinnersCount(final int i) {
 		_winnersCount = i;
 	}
 
 	private void startHauntedHouse() {
 		setHauntedHouseStatus(STATUS_PLAYING);
-		int membersCount = getMembersCount();
+		final int membersCount = getMembersCount();
 		if (membersCount <= 4) {
 			setWinnersCount(1);
 		}
@@ -199,15 +199,15 @@ public class L1HauntedHouse {
 		else if ((8 >= membersCount) && (membersCount <= 10)) {
 			setWinnersCount(3);
 		}
-		for (L1PcInstance pc : getMembersArray()) {
-			L1SkillUse l1skilluse = new L1SkillUse();
+		for (final L1PcInstance pc : getMembersArray()) {
+			final L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 			L1PolyMorph.doPoly(pc, 6284, 300, L1PolyMorph.MORPH_BY_NPC);
 		}
 
-		for (L1Object object : L1World.getInstance().getObject()) {
+		for (final L1Object object : L1World.getInstance().getObject()) {
 			if (object instanceof L1DoorInstance) {
-				L1DoorInstance door = (L1DoorInstance) object;
+				final L1DoorInstance door = (L1DoorInstance) object;
 				if (door.getMapId() == 5140) {
 					door.open();
 				}

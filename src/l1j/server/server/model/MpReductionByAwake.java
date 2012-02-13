@@ -29,7 +29,7 @@ public class MpReductionByAwake extends TimerTask {
 
 	private final L1PcInstance _pc;
 
-	public MpReductionByAwake(L1PcInstance pc) {
+	public MpReductionByAwake(final L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -50,7 +50,7 @@ public class MpReductionByAwake extends TimerTask {
 			}
 			decreaseMp();
 		}
-		catch (Throwable e) {
+		catch (final Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}

@@ -48,15 +48,15 @@ public class SpawnTable {
 		return _instance;
 	}
 
-	public static void storeSpawn(L1PcInstance pc, L1Npc npc) {
+	public static void storeSpawn(final L1PcInstance pc, final L1Npc npc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			int count = 1;
-			int randomXY = 12;
-			int minRespawnDelay = 60;
-			int maxRespawnDelay = 120;
-			String note = npc.get_name();
+			final int count = 1;
+			final int randomXY = 12;
+			final int minRespawnDelay = 60;
+			final int maxRespawnDelay = 120;
+			final String note = npc.get_name();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO spawnlist SET location=?,count=?,npc_templateid=?,group_id=?,locx=?,locy=?,randomx=?,randomy=?,heading=?,min_respawn_delay=?,max_respawn_delay=?,mapid=?");
@@ -75,7 +75,7 @@ public class SpawnTable {
 			pstm.execute();
 
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -83,7 +83,7 @@ public class SpawnTable {
 		}
 	}
 
-	private static int calcCount(L1Npc npc, int count, double rate) {
+	private static int calcCount(final L1Npc npc, final int count, final double rate) {
 		if (rate == 0) {
 			return 0;
 		}
@@ -101,20 +101,20 @@ public class SpawnTable {
 	private int _highestId;
 
 	private SpawnTable() {
-		PerformanceTimer timer = new PerformanceTimer();
+		final PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("╠》正在产生 Mob...");
 		fillSpawnTable();
 		_log.config("怪物配置清单  " + _spawntable.size() + "件");
 		System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
 	}
 
-	public void addNewSpawn(L1Spawn spawn) {
+	public void addNewSpawn(final L1Spawn spawn) {
 		_highestId++;
 		spawn.setId(_highestId);
 		_spawntable.put(new Integer(spawn.getId()), spawn);
 	}
 
-	public L1Spawn getTemplate(int Id) {
+	public L1Spawn getTemplate(final int Id) {
 		return _spawntable.get(new Integer(Id));
 	}
 
@@ -134,12 +134,12 @@ public class SpawnTable {
 			L1Npc template1;
 			while (rs.next()) {
 				if (Config.ALT_HALLOWEENIVENT == false) {
-					int npcid = rs.getInt("id");
+					final int npcid = rs.getInt("id");
 					if ((npcid >= 26656) && (npcid <= 26734)) {
 						continue;
 					}
 				}
-				int npcTemplateId = rs.getInt("npc_templateid");
+				final int npcTemplateId = rs.getInt("npc_templateid");
 				template1 = NpcTable.getInstance().getTemplate(npcTemplateId);
 				int count;
 
@@ -151,7 +151,7 @@ public class SpawnTable {
 					if (rs.getInt("count") == 0) {
 						continue;
 					}
-					double amount_rate = MapsTable.getInstance().getMonsterAmount(rs.getShort("mapid"));
+					final double amount_rate = MapsTable.getInstance().getMonsterAmount(rs.getShort("mapid"));
 					count = calcCount(template1, rs.getInt("count"), amount_rate);
 					if (count == 0) {
 						continue;
@@ -184,7 +184,7 @@ public class SpawnTable {
 					if ((count > 1) && (spawnDat.getLocX1() == 0)) {
 						// 複数かつ固定spawnの場合は、個体数 * 6 の範囲spawnに変える。
 						// ただし範囲が30を超えないようにする
-						int range = Math.min(count * 6, 30);
+						final int range = Math.min(count * 6, 30);
 						spawnDat.setLocX1(spawnDat.getLocX() - range);
 						spawnDat.setLocY1(spawnDat.getLocY() - range);
 						spawnDat.setLocX2(spawnDat.getLocX() + range);
@@ -203,7 +203,7 @@ public class SpawnTable {
 			}
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

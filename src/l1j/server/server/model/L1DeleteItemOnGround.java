@@ -39,12 +39,12 @@ public class L1DeleteItemOnGround {
 		@Override
 		public void run() {
 			L1Message.getInstance();// Locale 多国语系
-			int time = Config.ALT_ITEM_DELETION_TIME * 60 * 1000 - 10 * 1000;
+			final int time = Config.ALT_ITEM_DELETION_TIME * 60 * 1000 - 10 * 1000;
 			for (;;) {
 				try {
 					Thread.sleep(time);
 				}
-				catch (Exception exception) {
+				catch (final Exception exception) {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
@@ -52,7 +52,7 @@ public class L1DeleteItemOnGround {
 				try {
 					Thread.sleep(10000);
 				}
-				catch (Exception exception) {
+				catch (final Exception exception) {
 					_log.warning("L1DeleteItemOnGround error: " + exception);
 					break;
 				}
@@ -81,13 +81,13 @@ public class L1DeleteItemOnGround {
 	/** 删除道具 */
 	private void deleteItem() {
 		int numOfDeleted = 0;
-		for (L1Object obj : L1World.getInstance().getObject()) {
+		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (!(obj instanceof L1ItemInstance)) {
 				continue;
 			}
 
-			L1ItemInstance item = (L1ItemInstance) obj;
-			if (item.getX() == 0 && item.getY() == 0) { // 地面上のアイテムではなく、誰かの所有物
+			final L1ItemInstance item = (L1ItemInstance) obj;
+			if ((item.getX() == 0) && (item.getY() == 0)) { // 地面上のアイテムではなく、誰かの所有物
 				continue;
 			}
 			if (item.getItem().getItemId() == 40515) { // 元素石
@@ -97,9 +97,9 @@ public class L1DeleteItemOnGround {
 				continue;
 			}
 
-			List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
+			final List<L1PcInstance> players = L1World.getInstance().getVisiblePlayer(item, Config.ALT_ITEM_DELETION_RANGE);
 			if (players.isEmpty()) { // 删除人物指定范围内的道具
-				L1Inventory groundInventory = L1World.getInstance().getInventory(item.getX(), item.getY(), item.getMapId());
+				final L1Inventory groundInventory = L1World.getInstance().getInventory(item.getX(), item.getY(), item.getMapId());
 				groundInventory.removeItem(item);
 				numOfDeleted++;
 			}

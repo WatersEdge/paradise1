@@ -84,9 +84,10 @@ public class S_DelSkill extends ServerBasePacket {
 	 * @param p5
 	 *            幻术师LV3
 	 */
-	public S_DelSkill(int i, int j, int k, int l, int i1, int j1, int k1, int l1, int i2, int j2, int k2, int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4, int l4, int i5, int j5, int k5, int l5, int m5, int n5, int o5, int p5) {
-		int i6 = i1 + j1 + k1 + l1;
-		int j6 = i2 + j2;
+	public S_DelSkill(final int i, final int j, final int k, final int l, final int i1, final int j1, final int k1, final int l1, final int i2, final int j2, final int k2, final int l2, final int i3, final int j3, final int k3, final int l3, final int i4, final int j4,
+			final int k4, final int l4, final int i5, final int j5, final int k5, final int l5, final int m5, final int n5, final int o5, final int p5) {
+		final int i6 = i1 + j1 + k1 + l1;
+		final int j6 = i2 + j2;
 		writeC(Opcodes.S_OPCODE_DELSKILL);
 		if ((i6 > 0) && (j6 == 0)) {
 			writeC(50);

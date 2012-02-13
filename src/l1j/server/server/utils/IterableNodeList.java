@@ -49,7 +49,7 @@ public class IterableNodeList implements Iterable<Node> {
 
 	private final NodeList _list;
 
-	public IterableNodeList(NodeList list) {
+	public IterableNodeList(final NodeList list) {
 		_list = list;
 	}
 

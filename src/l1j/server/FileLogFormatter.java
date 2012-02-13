@@ -27,8 +27,8 @@ public class FileLogFormatter extends Formatter {
 	private static final String _ = "\t";
 
 	@Override
-	public String format(LogRecord record) {
-		StringBuffer output = new StringBuffer();
+	public String format(final LogRecord record) {
+		final StringBuffer output = new StringBuffer();
 		output.append(record.getMillis());
 		output.append(_);
 		output.append(record.getLevel().getName());

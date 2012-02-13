@@ -49,19 +49,19 @@ public class L1PrivateShopBuyList {
 		return _itemObjectId;
 	}
 
-	public void setBuyCount(int i) {
+	public void setBuyCount(final int i) {
 		_buyCount = i;
 	}
 
-	public void setBuyPrice(int i) {
+	public void setBuyPrice(final int i) {
 		_buyPrice = i;
 	}
 
-	public void setBuyTotalCount(int i) {
+	public void setBuyTotalCount(final int i) {
 		_buyTotalCount = i;
 	}
 
-	public void setItemObjectId(int i) {
+	public void setItemObjectId(final int i) {
 		_itemObjectId = i;
 	}
 }

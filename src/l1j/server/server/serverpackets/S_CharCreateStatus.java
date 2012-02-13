@@ -35,7 +35,7 @@ public class S_CharCreateStatus extends ServerBasePacket {
 	 * 
 	 * @param reason
 	 */
-	public S_CharCreateStatus(int reason) {
+	public S_CharCreateStatus(final int reason) {
 		writeC(Opcodes.S_OPCODE_NEWCHARWRONG);
 		writeC(reason);
 		writeD(0x00000000);

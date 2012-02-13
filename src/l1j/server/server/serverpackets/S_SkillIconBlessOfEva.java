@@ -30,7 +30,7 @@ public class S_SkillIconBlessOfEva extends ServerBasePacket {
 	 * @param objectId
 	 * @param time
 	 */
-	public S_SkillIconBlessOfEva(int objectId, int time) {
+	public S_SkillIconBlessOfEva(final int objectId, final int time) {
 		writeC(Opcodes.S_OPCODE_BLESSOFEVA);
 		writeD(objectId);
 		writeH(time);

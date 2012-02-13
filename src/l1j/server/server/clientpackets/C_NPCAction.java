@@ -128,10 +128,10 @@ public class C_NPCAction extends ClientBasePacket {
 
 	private static Logger _log = Logger.getLogger(C_NPCAction.class.getName());
 
-	public C_NPCAction(byte abyte0[], ClientThread client) throws Exception {
+	public C_NPCAction(final byte abyte0[], final ClientThread client) throws Exception {
 		super(abyte0);
-		int objid = readD();
-		String s = readS();
+		final int objid = readD();
+		final String s = readS();
 
 		String s2 = null;
 		if (s.equalsIgnoreCase("select") // 拍卖公告板的选择
@@ -140,7 +140,7 @@ public class C_NPCAction extends ClientBasePacket {
 			s2 = readS();
 		}
 		else if (s.equalsIgnoreCase("ent")) {
-			L1Object obj = L1World.getInstance().findObject(objid);
+			final L1Object obj = L1World.getInstance().findObject(objid);
 			if ((obj != null) && (obj instanceof L1NpcInstance)) {
 				if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80088) { // 宠物战管理人
 					s2 = readS();
@@ -162,14 +162,14 @@ public class C_NPCAction extends ClientBasePacket {
 		int questvalue = 0;
 		int contribution = 0;
 
-		L1PcInstance pc = client.getActiveChar();
+		final L1PcInstance pc = client.getActiveChar();
 		L1PcInstance target;
-		L1Object obj = L1World.getInstance().findObject(objid);
+		final L1Object obj = L1World.getInstance().findObject(objid);
 		if (obj != null) {
 			if (obj instanceof L1NpcInstance) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				int difflocx = Math.abs(pc.getX() - npc.getX());
-				int difflocy = Math.abs(pc.getY() - npc.getY());
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final int difflocx = Math.abs(pc.getX() - npc.getX());
+				final int difflocy = Math.abs(pc.getY() - npc.getY());
 				if (!(obj instanceof L1PetInstance) && !(obj instanceof L1SummonInstance)) {
 					if ((difflocx > 3) || (difflocy > 3)) { // 3格以上的距离对话无效
 						return;
@@ -186,7 +186,7 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 				}
 				else {
-					int awakeSkillId = target.getAwakeSkillId();
+					final int awakeSkillId = target.getAwakeSkillId();
 					if ((awakeSkillId == AWAKEN_ANTHARAS // 龙骑士魔法 (觉醒：安塔瑞斯)
 							)
 							|| (awakeSkillId == AWAKEN_FAFURION // 龙骑士魔法 (觉醒：法利昂)
@@ -200,7 +200,7 @@ public class C_NPCAction extends ClientBasePacket {
 						target.setShapeChange(false);
 					}
 					else {
-						L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
+						final L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
 						if ((poly != null) || s.equals("none")) {
 							if (target.getInventory().checkItem(40088) && usePolyScroll(target, 40088, s)) {
 							}
@@ -219,9 +219,9 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		// XML化されたアクション
-		L1NpcAction action = NpcActionTable.getInstance().get(s, pc, obj);
+		final L1NpcAction action = NpcActionTable.getInstance().get(s, pc, obj);
 		if (action != null) {
-			L1NpcHtml result = action.execute(s, pc, obj, readByte());
+			final L1NpcHtml result = action.execute(s, pc, obj, readByte());
 			if (result != null) {
 				pc.sendPackets(new S_NPCTalkReturn(obj.getId(), result));
 			}
@@ -234,7 +234,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 购买清单
 		if (s.equalsIgnoreCase("buy")) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			// sell 应该指给 NPC 检查
 			if (isNpcSellOnly(npc)) { // 只出售的NPC
 				return;
@@ -244,7 +244,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 贩卖清单
 		else if (s.equalsIgnoreCase("sell")) {
-			int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+			final int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
 			if ((npcid == 70523) || (npcid == 70805)) { // 拉达 or 朱莉
 				htmlid = "ladar2";
 			}
@@ -259,7 +259,7 @@ public class C_NPCAction extends ClientBasePacket {
 					|| (npcid == 50501) || (npcid == 50503) || (npcid == 50508) || (npcid == 50514) || (npcid == 50532) || (npcid == 50544) || (npcid == 50524) || (npcid == 50535) || (npcid == 50521) || (npcid == 50517) || (npcid == 50537) || (npcid == 50539) || (npcid == 50507)
 					|| (npcid == 50530) || (npcid == 50502) || (npcid == 50506) || (npcid == 50522) || (npcid == 50541) || (npcid == 50523) || (npcid == 50620) || (npcid == 50623) || (npcid == 50619) || (npcid == 50621) || (npcid == 50622) || (npcid == 50624) || (npcid == 50617)
 					|| (npcid == 50614) || (npcid == 50618) || (npcid == 50616) || (npcid == 50615) || (npcid == 50626) || (npcid == 50627) || (npcid == 50628) || (npcid == 50629) || (npcid == 50630) || (npcid == 50631)) { // アジトのNPC
-				String sellHouseMessage = sellHouse(pc, objid, npcid);
+				final String sellHouseMessage = sellHouse(pc, objid, npcid);
 				if (sellHouseMessage != null) {
 					htmlid = sellHouseMessage;
 				}
@@ -307,7 +307,7 @@ public class C_NPCAction extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(208)); // \f1若想使用血盟仓库，必须加入血盟。
 					return;
 				}
-				int rank = pc.getClanRank();
+				final int rank = pc.getClanRank();
 				if ((rank != L1Clan.CLAN_RANK_PUBLIC) && (rank != L1Clan.CLAN_RANK_GUARDIAN) && (rank != L1Clan.CLAN_RANK_PRINCE)) {
 					pc.sendPackets(new S_ServerMessage(728)); // 只有收到称谓的人才能使用血盟仓库。
 					return;
@@ -327,22 +327,22 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 接受礼物.
 		else if (s.equalsIgnoreCase("get")) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
-			int npcId = npc.getNpcTemplate().get_npcId();
+			final L1NpcInstance npc = (L1NpcInstance) obj;
+			final int npcId = npc.getNpcTemplate().get_npcId();
 			// 库伯 or 德汉
 			if ((npcId == 70099) || (npcId == 70796)) {
-				L1ItemInstance item = pc.getInventory().storeItem(20081, 1); // 油布斗篷
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1ItemInstance item = pc.getInventory().storeItem(20081, 1); // 油布斗篷
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				pc.getQuest().set_end(L1Quest.QUEST_OILSKINMANT);
 				htmlid = ""; // 关闭窗口
 			}
 			// HomeTown 村庄管理人 支付福利金
 			else if ((npcId == 70528) || (npcId == 70546) || (npcId == 70567) || (npcId == 70594) || (npcId == 70654) || (npcId == 70748) || (npcId == 70774) || (npcId == 70799) || (npcId == 70815) || (npcId == 70860)) {
-				int townId = pc.getHomeTownId();
+				final int townId = pc.getHomeTownId();
 				int pay = pc.getPay();
-				int cb = pc.getContribution(); // 贡献度
+				final int cb = pc.getContribution(); // 贡献度
 				htmlid = "";
 				if (pay < 1) {
 					pc.sendPackets(new S_ServerMessage(767));// 没有村庄支援费，请在下个月再来。
@@ -352,8 +352,8 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				else if (townId > 0) {
 					double payBonus = 1.0; // cb > 499 && cb < 1000
-					boolean isLeader = TownTable.getInstance().isLeader(pc, townId); // 村长
-					L1ItemInstance item = pc.getInventory().findItemId(L1ItemId.ADENA);
+					final boolean isLeader = TownTable.getInstance().isLeader(pc, townId); // 村长
+					final L1ItemInstance item = pc.getInventory().findItemId(L1ItemId.ADENA);
 					if ((cb > 999) && (cb < 1500)) {
 						payBonus = 1.5;
 					}
@@ -388,8 +388,8 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 确认目前贡献度
 		else if (s.equalsIgnoreCase("townscore")) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
-			int npcId = npc.getNpcTemplate().get_npcId();
+			final L1NpcInstance npc = (L1NpcInstance) obj;
+			final int npcId = npc.getNpcTemplate().get_npcId();
 			if ((npcId == 70528) || (npcId == 70546) || (npcId == 70567) || (npcId == 70594) || (npcId == 70654) || (npcId == 70748) || (npcId == 70774) || (npcId == 70799) || (npcId == 70815) || (npcId == 70860)) {
 				if (pc.getHomeTownId() > 0) {
 					pc.sendPackets(new S_ServerMessage(1569, String.valueOf(pc.getContribution()))); // 您的贡献度为 %0。
@@ -404,8 +404,8 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 租房间
 		else if (s.equalsIgnoreCase("room")) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
-			int npcId = npc.getNpcTemplate().get_npcId();
+			final L1NpcInstance npc = (L1NpcInstance) obj;
+			final int npcId = npc.getNpcTemplate().get_npcId();
 			boolean canRent = false;
 			boolean findRoom = false;
 			boolean isRent = false;
@@ -413,12 +413,12 @@ public class C_NPCAction extends ClientBasePacket {
 			int roomNumber = 0;
 			byte roomCount = 0;
 			for (int i = 0; i < 16; i++) {
-				L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+				final L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
 				if (inn != null) { // 此旅馆NPC资讯不为空值
-					Timestamp dueTime = inn.getDueTime();
-					Calendar cal = Calendar.getInstance();
-					long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
-					if (inn.getLodgerId() == pc.getId() && checkDueTime < 0) { // 出租时间未到的房间租用人判断
+					final Timestamp dueTime = inn.getDueTime();
+					final Calendar cal = Calendar.getInstance();
+					final long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
+					if ((inn.getLodgerId() == pc.getId()) && (checkDueTime < 0)) { // 出租时间未到的房间租用人判断
 						if (inn.isHall()) { // 租用的是会议室
 							isHall = true;
 						}
@@ -459,8 +459,8 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("hall") && (obj instanceof L1MerchantInstance)) { // 租会议厅
 			if (pc.isCrown()) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				int npcId = npc.getNpcTemplate().get_npcId();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final int npcId = npc.getNpcTemplate().get_npcId();
 				boolean canRent = false;
 				boolean findRoom = false;
 				boolean isRent = false;
@@ -468,12 +468,12 @@ public class C_NPCAction extends ClientBasePacket {
 				int roomNumber = 0;
 				byte roomCount = 0;
 				for (int i = 0; i < 16; i++) {
-					L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+					final L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
 					if (inn != null) { // 此旅馆NPC资讯不为空值
-						Timestamp dueTime = inn.getDueTime();
-						Calendar cal = Calendar.getInstance();
-						long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
-						if (inn.getLodgerId() == pc.getId() && checkDueTime < 0) { // 出租时间未到的房间租用人判断
+						final Timestamp dueTime = inn.getDueTime();
+						final Calendar cal = Calendar.getInstance();
+						final long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
+						if ((inn.getLodgerId() == pc.getId()) && (checkDueTime < 0)) { // 出租时间未到的房间租用人判断
 							if (inn.isHall()) { // 租用的是会议室
 								isHall = true;
 							}
@@ -518,24 +518,24 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		else if (s.equalsIgnoreCase("return")) { // 退租
-			L1NpcInstance npc = (L1NpcInstance) obj;
-			int npcId = npc.getNpcTemplate().get_npcId();
+			final L1NpcInstance npc = (L1NpcInstance) obj;
+			final int npcId = npc.getNpcTemplate().get_npcId();
 			int price = 0;
 			boolean isBreak = false;
 			// 退租判断
 			for (int i = 0; i < 16; i++) {
-				L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+				final L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
 				if (inn != null) { // 此旅馆NPC房间资讯不为空值
 					if (inn.getLodgerId() == pc.getId()) { // 欲退租的租用人
-						Timestamp dueTime = inn.getDueTime();
+						final Timestamp dueTime = inn.getDueTime();
 						if (dueTime != null) { // 时间不为空值
-							Calendar cal = Calendar.getInstance();
+							final Calendar cal = Calendar.getInstance();
 							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用时间未到
 								isBreak = true;
 								price += 60; // 退 20%租金
 							}
 						}
-						Timestamp ts = new Timestamp(System.currentTimeMillis()); // 目前时间
+						final Timestamp ts = new Timestamp(System.currentTimeMillis()); // 目前时间
 						inn.setDueTime(ts); // 退租时间
 						inn.setLodgerId(0); // 租用人
 						inn.setKeyId(0); // 旅馆钥匙
@@ -547,7 +547,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 			// 删除钥匙判断
-			for (L1ItemInstance item : pc.getInventory().getItems()) {
+			for (final L1ItemInstance item : pc.getInventory().getItems()) {
 				if (item.getInnNpcId() == npcId) { // 钥匙与退租的NPC相符
 					price += 20 * item.getCount(); // 钥匙的价钱 20 * 钥匙数量
 					InnKeyTable.DeleteKey(item); // 删除钥匙纪录
@@ -566,43 +566,43 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		else if (s.equalsIgnoreCase("enter")) { // 进入房间或会议厅
-			L1NpcInstance npc = (L1NpcInstance) obj;
-			int npcId = npc.getNpcTemplate().get_npcId();
+			final L1NpcInstance npc = (L1NpcInstance) obj;
+			final int npcId = npc.getNpcTemplate().get_npcId();
 
-			for (L1ItemInstance item : pc.getInventory().getItems()) {
+			for (final L1ItemInstance item : pc.getInventory().getItems()) {
 				if (item.getInnNpcId() == npcId) { // 钥匙与NPC相符
 					for (int i = 0; i < 16; i++) {
-						L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+						final L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
 						if (inn.getKeyId() == item.getKeyId()) {
-							Timestamp dueTime = item.getDueTime();
+							final Timestamp dueTime = item.getDueTime();
 							if (dueTime != null) { // 时间不为空值
-								Calendar cal = Calendar.getInstance();
+								final Calendar cal = Calendar.getInstance();
 								if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 钥匙租用时间未到
 									int[] data = null;
 									switch (npcId) {
-									case 70012: // 说话之岛 - 瑟琳娜
-										data = new int[] { 32745, 32803, 16384, 32743, 32808, 16896 };
-										break;
-									case 70019: // 古鲁丁 - 罗利雅
-										data = new int[] { 32743, 32803, 17408, 32744, 32807, 17920 };
-										break;
-									case 70031: // 奇岩 - 玛理
-										data = new int[] { 32744, 32803, 18432, 32744, 32807, 18944 };
-										break;
-									case 70065: // 欧瑞 - 小安安
-										data = new int[] { 32744, 32803, 19456, 32744, 32807, 19968 };
-										break;
-									case 70070: // 风木 - 维莱莎
-										data = new int[] { 32744, 32803, 20480, 32744, 32807, 20992 };
-										break;
-									case 70075: // 银骑士 - 米兰德
-										data = new int[] { 32744, 32803, 21504, 32744, 32807, 22016 };
-										break;
-									case 70084: // 海音 - 伊莉
-										data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
-										break;
-									default:
-										break;
+										case 70012: // 说话之岛 - 瑟琳娜
+											data = new int[] { 32745, 32803, 16384, 32743, 32808, 16896 };
+											break;
+										case 70019: // 古鲁丁 - 罗利雅
+											data = new int[] { 32743, 32803, 17408, 32744, 32807, 17920 };
+											break;
+										case 70031: // 奇岩 - 玛理
+											data = new int[] { 32744, 32803, 18432, 32744, 32807, 18944 };
+											break;
+										case 70065: // 欧瑞 - 小安安
+											data = new int[] { 32744, 32803, 19456, 32744, 32807, 19968 };
+											break;
+										case 70070: // 风木 - 维莱莎
+											data = new int[] { 32744, 32803, 20480, 32744, 32807, 20992 };
+											break;
+										case 70075: // 银骑士 - 米兰德
+											data = new int[] { 32744, 32803, 21504, 32744, 32807, 22016 };
+											break;
+										case 70084: // 海音 - 伊莉
+											data = new int[] { 32744, 32803, 22528, 32744, 32807, 23040 };
+											break;
+										default:
+											break;
 									}
 
 									pc.setInnKeyId(item.getKeyId()); // 登入钥匙编号
@@ -622,17 +622,17 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		else if (s.equalsIgnoreCase("openigate")) { // 看门人 / 打开城门
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			openCloseGate(pc, npc.getNpcTemplate().get_npcId(), true);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("closeigate")) { // 看门人 / 关闭城门
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			openCloseGate(pc, npc.getNpcTemplate().get_npcId(), false);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("askwartime")) { // 近卫兵 / 查询下次攻城战时间
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (npc.getNpcTemplate().get_npcId() == 60514) { // 肯特城堡卫兵
 				htmldata = makeWarTimeStrings(L1CastleLocation.KENT_CASTLE_ID);
 				htmlid = "ktguard7";
@@ -673,11 +673,11 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("inex")) { // 收入/支出の报告を受ける
 			// 暂定的に公金をチャットウィンドウに表示させる。
 			// メッセージは适当。
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int castle_id = clan.getCastleId();
+				final int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 血盟城主
-					L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+					final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
 					pc.sendPackets(new S_ServerMessage(309, // %0的总财产额为 %1金币。
 							l1castle.getName(), String.valueOf(l1castle.getPublicMoney())));
 					htmlid = ""; // 关闭窗口
@@ -688,11 +688,11 @@ public class C_NPCAction extends ClientBasePacket {
 			pc.sendPackets(new S_TaxRate(pc.getId()));
 		}
 		else if (s.equalsIgnoreCase("withdrawal")) { // 提取资金
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int castle_id = clan.getCastleId();
+				final int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 血盟城主
-					L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+					final L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
 					pc.sendPackets(new S_Drawal(pc.getId(), l1castle.getPublicMoney()));
 				}
 			}
@@ -715,9 +715,9 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(79));
 			}
 			else {
-				for (L1ItemInstance item : pc.getInventory().getItems()) {
+				for (final L1ItemInstance item : pc.getInventory().getItems()) {
 					if (pc.getWeapon().equals(item)) {
-						L1SkillUse l1skilluse = new L1SkillUse();
+						final L1SkillUse l1skilluse = new L1SkillUse();
 						l1skilluse.handleCommands(pc, ENCHANT_WEAPON, item.getId(), 0, 0, null, 0, L1SkillUse.TYPE_SPELLSC);
 						break;
 					}
@@ -726,9 +726,9 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("enca")) { // 防具专门家 / 防具强化魔法
-			L1ItemInstance item = pc.getInventory().getItemEquipped(2, 2);
+			final L1ItemInstance item = pc.getInventory().getItemEquipped(2, 2);
 			if (item != null) {
-				L1SkillUse l1skilluse = new L1SkillUse();
+				final L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(pc, BLESSED_ARMOR, item.getId(), 0, 0, null, 0, L1SkillUse.TYPE_SPELLSC);
 			}
 			else {
@@ -737,9 +737,9 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("depositnpc")) { // 寄托宠物
-			for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 				if (petNpc instanceof L1PetInstance) { // 宠物
-					L1PetInstance pet = (L1PetInstance) petNpc;
+					final L1PetInstance pet = (L1PetInstance) petNpc;
 					pc.sendPackets(new S_PetCtrlMenu(pc, petNpc, false));// 关闭宠物控制图形介面
 					// 停止饱食度计时
 					pet.stopFoodTimer(pet);
@@ -759,37 +759,37 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("aggressive")) { // 攻击型态
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(1);
 			}
 		}
 		else if (s.equalsIgnoreCase("defensive")) { // 防御型态
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(2);
 			}
 		}
 		else if (s.equalsIgnoreCase("stay")) { // 休息
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(3);
 			}
 		}
 		else if (s.equalsIgnoreCase("extend")) { // 配备
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(4);
 			}
 		}
 		else if (s.equalsIgnoreCase("alert")) { // 警戒
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(5);
 			}
 		}
 		else if (s.equalsIgnoreCase("dismiss")) { // 解散
 			if (obj instanceof L1PetInstance) {
-				L1PetInstance l1pet = (L1PetInstance) obj;
+				final L1PetInstance l1pet = (L1PetInstance) obj;
 				l1pet.setCurrentPetStatus(6);
 			}
 		}
@@ -799,7 +799,7 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("attackchr")) {
 			if (obj instanceof L1Character) {
-				L1Character cha = (L1Character) obj;
+				final L1Character cha = (L1Character) obj;
 				pc.sendPackets(new S_SelectTarget(cha.getId()));
 			}
 		}
@@ -810,7 +810,7 @@ public class C_NPCAction extends ClientBasePacket {
 			pc.sendPackets(new S_HouseMap(objid, s2));
 		}
 		else if (s.equalsIgnoreCase("apply")) { // 竞卖に参加する
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				if (pc.isCrown() && (pc.getId() == clan.getLeaderId())) { // 君主、かつ、血盟主
 					if (pc.getLevel() >= 15) {
@@ -839,35 +839,36 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("open") // 打开门
 				|| s.equalsIgnoreCase("close")) { // 关闭门
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			openCloseDoor(pc, npc, s);
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("expel")) { // 外部の人间を追い出す
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			expelOtherClan(pc, npc.getNpcTemplate().get_npcId());
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("pay")) { // 税金を纳める
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			htmldata = makeHouseTaxStrings(pc, npc);
 			htmlid = "agpay";
 		}
 		else if (s.equalsIgnoreCase("payfee")) { // 税金を纳める
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			htmldata = new String[] { npc.getNpcTemplate().get_name(), "2000" };
 			htmlid = "";
-			if (payFee(pc, npc))
+			if (payFee(pc, npc)) {
 				htmlid = "agpayfee";
+			}
 		}
 		else if (s.equalsIgnoreCase("name")) { // 盟屋改名
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int houseId = clan.getHouseId();
+				final int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
-					int keeperId = house.getKeeperId();
-					L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					final int keeperId = house.getKeeperId();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
 					if (npc.getNpcTemplate().get_npcId() == keeperId) {
 						pc.setTempID(houseId); // 暂时保存盟屋的ID
 						pc.sendPackets(new S_Message_YN(512, "")); // 请输入血盟小屋名称?
@@ -882,13 +883,13 @@ public class C_NPCAction extends ClientBasePacket {
 				|| s.equalsIgnoreCase("tel1") // テレポートする(ペット保管所)
 				|| s.equalsIgnoreCase("tel2") // テレポートする(赎罪の使者)
 				|| s.equalsIgnoreCase("tel3")) { // テレポートする(ギラン市场)
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int houseId = clan.getHouseId();
+				final int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
-					int keeperId = house.getKeeperId();
-					L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					final int keeperId = house.getKeeperId();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
 					if (npc.getNpcTemplate().get_npcId() == keeperId) {
 						int[] loc = new int[3];
 						if (s.equalsIgnoreCase("tel0")) {
@@ -910,13 +911,13 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("upgrade")) { // 制作地下盟屋
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int houseId = clan.getHouseId();
+				final int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
-					int keeperId = house.getKeeperId();
-					L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					final int keeperId = house.getKeeperId();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
 					if (npc.getNpcTemplate().get_npcId() == keeperId) {
 						if (pc.isCrown() && (pc.getId() == clan.getLeaderId())) { // 君主、かつ、血盟主
 							if (house.isPurchaseBasement()) {
@@ -946,13 +947,13 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = ""; // 关闭窗口
 		}
 		else if (s.equalsIgnoreCase("hall") && (obj instanceof L1HousekeeperInstance)) { // 瞬移到地下盟屋
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				int houseId = clan.getHouseId();
+				final int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
-					int keeperId = house.getKeeperId();
-					L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					final int keeperId = house.getKeeperId();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
 					if (npc.getNpcTemplate().get_npcId() == keeperId) {
 						if (house.isPurchaseBasement()) {
 							int[] loc = new int[3];
@@ -1022,8 +1023,8 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				for (int cnt = 129; cnt <= 176; cnt++) // 检查所有的魔法精灵
 				{
-					L1Skills l1skills1 = SkillsTable.getInstance().getTemplate(cnt);
-					int skill_attr = l1skills1.getAttr();
+					final L1Skills l1skills1 = SkillsTable.getInstance().getTemplate(cnt);
+					final int skill_attr = l1skills1.getAttr();
 					if (skill_attr != 0) // 从资料库删除无属性魔法以外魔法
 					{
 						SkillsTable.getInstance().spellLost(pc.getId(), l1skills1.getSkillId());
@@ -1045,8 +1046,8 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("exp")) {
 			if (pc.getExpRes() == 1) {
 				int cost = 0;
-				int level = pc.getLevel();
-				int lawful = pc.getLawful();
+				final int level = pc.getLevel();
+				final int lawful = pc.getLawful();
 				if (level < 45) {
 					cost = level * level * 100;
 				}
@@ -1091,7 +1092,7 @@ public class C_NPCAction extends ClientBasePacket {
 		// “ステータス再分配”
 		else if (s.equalsIgnoreCase("ent")) {
 
-			int npcId = ((L1NpcInstance) obj).getNpcId();
+			final int npcId = ((L1NpcInstance) obj).getNpcId();
 			if (npcId == 80085) { // 幽灵之家管理人杜乌
 				htmlid = enterHauntedHouse(pc);
 			}
@@ -1106,11 +1107,11 @@ public class C_NPCAction extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1290)); // 没有角色初始化所需要的道具。
 					return;
 				}
-				L1SkillUse l1skilluse = new L1SkillUse();
+				final L1SkillUse l1skilluse = new L1SkillUse();
 				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 				pc.getInventory().takeoffEquip(945); // 牛のpolyIdで装备を全部外す。
 				L1Teleport.teleport(pc, 32737, 32789, (short) 997, 4, false);
-				int initStatusPoint = 75 + pc.getElixirStats();
+				final int initStatusPoint = 75 + pc.getElixirStats();
 				int pcStatusPoint = pc.getBaseStr() // 角色基本力量
 						+ pc.getBaseInt() // 角色基本智力
 						+ pc.getBaseWis() // 角色基本精神
@@ -1120,7 +1121,7 @@ public class C_NPCAction extends ClientBasePacket {
 				if (pc.getLevel() > 50) {
 					pcStatusPoint += (pc.getLevel() - 50 - pc.getBonusStats());
 				}
-				int diff = pcStatusPoint - initStatusPoint;
+				final int diff = pcStatusPoint - initStatusPoint;
 				/**
 				 * [50级以上]
 				 * 
@@ -1164,8 +1165,8 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 加速师
 		else if (s.equalsIgnoreCase("haste")) {
-			L1NpcInstance l1npcinstance = (L1NpcInstance) obj;
-			int npcid = l1npcinstance.getNpcTemplate().get_npcId();
+			final L1NpcInstance l1npcinstance = (L1NpcInstance) obj;
+			final int npcid = l1npcinstance.getNpcTemplate().get_npcId();
 			if (npcid == 70514) {
 				pc.sendPackets(new S_ServerMessage(183)); // \f1你的腿得到新的能量。
 				pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
@@ -1216,9 +1217,9 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71095) {
 			if (s.equalsIgnoreCase("teleport evil-dungeon")) { // 往邪念地监
 				boolean find = false;
-				for (Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
+				for (final Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
 					if (objs instanceof L1PcInstance) {
-						L1PcInstance _pc = (L1PcInstance) objs;
+						final L1PcInstance _pc = (L1PcInstance) objs;
 						if (_pc != null) {
 							find = true;
 							htmlid = "csoulqn"; // 你的邪念还不够！
@@ -1227,8 +1228,8 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 				}
 				if (!find) {
-					L1Quest quest = pc.getQuest();
-					int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+					final L1Quest quest = pc.getQuest();
+					final int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
 					if (lv50_step == L1Quest.QUEST_END) {
 						htmlid = "csoulq3";
 					}
@@ -1264,10 +1265,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71038) {
 			// “接受信件”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41060, 1); // 诺曼阿吐巴的信
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41060, 1); // 诺曼阿吐巴的信
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfnoname9";
 			}
@@ -1291,10 +1292,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71040) {
 			// “我试试看”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41065, 1); // 死亡之树调查书：诺亚阿吐巴
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41065, 1); // 死亡之树调查书：诺亚阿吐巴
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfnoa4";
 			}
@@ -1310,10 +1311,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71041) {
 			// “帮助调查”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41064, 1); // 妖魔调查书：弧邬牟那鲁加
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41064, 1); // 妖魔调查书：弧邬牟那鲁加
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfhuwoomo4";
 			}
@@ -1329,10 +1330,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71042) {
 			// “帮助调查”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41062, 1); // 人类调查书：巴库摩那鲁加
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41062, 1); // 人类调查书：巴库摩那鲁加
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfbakumo4";
 			}
@@ -1348,10 +1349,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71043) {
 			// “帮助调查”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41063, 1); // 精灵调查书：可普都达玛拉
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41063, 1); // 精灵调查书：可普都达玛拉
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfbuka4";
 			}
@@ -1367,10 +1368,10 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71044) {
 			// “帮助调查”
 			if (s.equalsIgnoreCase("A")) {
-				L1NpcInstance npc = (L1NpcInstance) obj;
-				L1ItemInstance item = pc.getInventory().storeItem(41061, 1); // 妖精调查书：卡麦都达玛拉
-				String npcName = npc.getNpcTemplate().get_name();
-				String itemName = item.getItem().getName();
+				final L1NpcInstance npc = (L1NpcInstance) obj;
+				final L1ItemInstance item = pc.getInventory().storeItem(41061, 1); // 妖精调查书：卡麦都达玛拉
+				final String npcName = npc.getNpcTemplate().get_name();
+				final String itemName = item.getItem().getName();
 				pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 				htmlid = "orcfkame4";
 			}
@@ -1510,13 +1511,13 @@ public class C_NPCAction extends ClientBasePacket {
 				String successHtmlId = null;
 				String htmlId = null;
 
-				int[] aliceMaterialIdList = { 40991, 196, 197, 198, 199, 200, 201, 202 };
-				int[] karmaLevelList = { -1, -2, -3, -4, -5, -6, -7, -8 };
-				int[][] materialsList = { { 40995, 40718, 40991 }, { 40997, 40718, 196 }, { 40990, 40718, 197 }, { 40994, 40718, 198 }, { 40993, 40718, 199 }, { 40998, 40718, 200 }, { 40996, 40718, 201 }, { 40992, 40718, 202 } };
-				int[][] countList = { { 100, 100, 1 }, { 100, 100, 1 }, { 100, 100, 1 }, { 50, 100, 1 }, { 50, 100, 1 }, { 50, 100, 1 }, { 10, 100, 1 }, { 10, 100, 1 } };
-				int[] createItemList = { 196, 197, 198, 199, 200, 201, 202, 203 };
-				String[] successHtmlIdList = { "alice_1", "alice_2", "alice_3", "alice_4", "alice_5", "alice_6", "alice_7", "alice_8" };
-				String[] htmlIdList = { "aliceyet", "alice_1", "alice_2", "alice_3", "alice_4", "alice_5", "alice_5", "alice_7" };
+				final int[] aliceMaterialIdList = { 40991, 196, 197, 198, 199, 200, 201, 202 };
+				final int[] karmaLevelList = { -1, -2, -3, -4, -5, -6, -7, -8 };
+				final int[][] materialsList = { { 40995, 40718, 40991 }, { 40997, 40718, 196 }, { 40990, 40718, 197 }, { 40994, 40718, 198 }, { 40993, 40718, 199 }, { 40998, 40718, 200 }, { 40996, 40718, 201 }, { 40992, 40718, 202 } };
+				final int[][] countList = { { 100, 100, 1 }, { 100, 100, 1 }, { 100, 100, 1 }, { 50, 100, 1 }, { 50, 100, 1 }, { 50, 100, 1 }, { 10, 100, 1 }, { 10, 100, 1 } };
+				final int[] createItemList = { 196, 197, 198, 199, 200, 201, 202, 203 };
+				final String[] successHtmlIdList = { "alice_1", "alice_2", "alice_3", "alice_4", "alice_5", "alice_6", "alice_7", "alice_8" };
+				final String[] htmlIdList = { "aliceyet", "alice_1", "alice_2", "alice_3", "alice_4", "alice_5", "alice_5", "alice_7" };
 
 				for (int i = 0; i < aliceMaterialIdList.length; i++) {
 					if (pc.getInventory().checkItem(aliceMaterialIdList[i])) {
@@ -1555,13 +1556,13 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 火焰之影的辅佐官
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80055) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			htmlid = getYaheeAmulet(pc, npc, s);
 		}
 
 		// 业の管理者
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80056) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (pc.getKarma() <= -10000000) {
 				getBloodCrystalByKarma(pc, npc, s);
 			}
@@ -1670,7 +1671,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 炎魔的辅佐官
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80071) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			htmlid = getBarlogEarring(pc, npc, s);
 		}
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80073) { // 炎魔的军师
@@ -1697,13 +1698,13 @@ public class C_NPCAction extends ClientBasePacket {
 			String failureHtmlId = null;
 			String htmlId = null;
 
-			String[] sEqualsList = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "a", "b", "c", "d", "e", "f", "g", "h" };
-			String[] htmlIdList = { "lsmitha", "lsmithb", "lsmithc", "lsmithd", "lsmithe", "", "lsmithf", "lsmithg", "lsmithh" };
-			int[] karmaLevelList = { 1, 2, 3, 4, 5, 6, 7, 8 };
-			int[][] materialsList = { { 20158, 40669, 40678 }, { 20144, 40672, 40678 }, { 20075, 40671, 40678 }, { 20183, 40674, 40678 }, { 20190, 40674, 40678 }, { 20078, 40674, 40678 }, { 20078, 40670, 40678 }, { 40719, 40673, 40678 } };
-			int[][] countList = { { 1, 50, 100 }, { 1, 50, 100 }, { 1, 50, 100 }, { 1, 20, 100 }, { 1, 40, 100 }, { 1, 5, 100 }, { 1, 1, 100 }, { 1, 1, 100 } };
-			int[] createItemList = { 20083, 20131, 20069, 20179, 20209, 20290, 20261, 20031 };
-			String[] failureHtmlIdList = { "lsmithaa", "lsmithbb", "lsmithcc", "lsmithdd", "lsmithee", "lsmithff", "lsmithgg", "lsmithhh" };
+			final String[] sEqualsList = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "a", "b", "c", "d", "e", "f", "g", "h" };
+			final String[] htmlIdList = { "lsmitha", "lsmithb", "lsmithc", "lsmithd", "lsmithe", "", "lsmithf", "lsmithg", "lsmithh" };
+			final int[] karmaLevelList = { 1, 2, 3, 4, 5, 6, 7, 8 };
+			final int[][] materialsList = { { 20158, 40669, 40678 }, { 20144, 40672, 40678 }, { 20075, 40671, 40678 }, { 20183, 40674, 40678 }, { 20190, 40674, 40678 }, { 20078, 40674, 40678 }, { 20078, 40670, 40678 }, { 40719, 40673, 40678 } };
+			final int[][] countList = { { 1, 50, 100 }, { 1, 50, 100 }, { 1, 50, 100 }, { 1, 20, 100 }, { 1, 40, 100 }, { 1, 5, 100 }, { 1, 1, 100 }, { 1, 1, 100 } };
+			final int[] createItemList = { 20083, 20131, 20069, 20179, 20209, 20290, 20261, 20031 };
+			final String[] failureHtmlIdList = { "lsmithaa", "lsmithbb", "lsmithcc", "lsmithdd", "lsmithee", "lsmithff", "lsmithgg", "lsmithhh" };
 			for (int i = 0; i < sEqualsList.length; i++) {
 				if (s.equalsIgnoreCase(sEqualsList[i])) {
 					sEquals = sEqualsList[i];
@@ -1737,7 +1738,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 业の管理者
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80074) {
-			L1NpcInstance npc = (L1NpcInstance) obj;
+			final L1NpcInstance npc = (L1NpcInstance) obj;
 			if (pc.getKarma() >= 10000000) {
 				getSoulCrystalByKarma(pc, npc, s);
 			}
@@ -1811,8 +1812,8 @@ public class C_NPCAction extends ClientBasePacket {
 
 				totem = 0;
 				if (pc.getInventory().checkItem(40131)) { // 甘地图腾
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40131);
-					int i1 = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40131);
+					final int i1 = l1iteminstance.getCount();
 					materials[totem] = 40131;
 					counts[totem] = i1;
 					createitem[totem] = L1ItemId.ADENA;
@@ -1820,8 +1821,8 @@ public class C_NPCAction extends ClientBasePacket {
 					totem++;
 				}
 				if (pc.getInventory().checkItem(40132)) { // 那鲁加图腾
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40132);
-					int i1 = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40132);
+					final int i1 = l1iteminstance.getCount();
 					materials[totem] = 40132;
 					counts[totem] = i1;
 					createitem[totem] = L1ItemId.ADENA;
@@ -1829,8 +1830,8 @@ public class C_NPCAction extends ClientBasePacket {
 					totem++;
 				}
 				if (pc.getInventory().checkItem(40133)) { // 都达玛拉图腾
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40133);
-					int i1 = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40133);
+					final int i1 = l1iteminstance.getCount();
 					materials[totem] = 40133;
 					counts[totem] = i1;
 					createitem[totem] = L1ItemId.ADENA;
@@ -1838,8 +1839,8 @@ public class C_NPCAction extends ClientBasePacket {
 					totem++;
 				}
 				if (pc.getInventory().checkItem(40134)) { // 罗孚图腾
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40134);
-					int i1 = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40134);
+					final int i1 = l1iteminstance.getCount();
 					materials[totem] = 40134;
 					counts[totem] = i1;
 					createitem[totem] = L1ItemId.ADENA;
@@ -1847,8 +1848,8 @@ public class C_NPCAction extends ClientBasePacket {
 					totem++;
 				}
 				if (pc.getInventory().checkItem(40135)) { // 阿吐巴图腾
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40135);
-					int i1 = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40135);
+					final int i1 = l1iteminstance.getCount();
 					materials[totem] = 40135;
 					counts[totem] = i1;
 					createitem[totem] = L1ItemId.ADENA;
@@ -1889,16 +1890,16 @@ public class C_NPCAction extends ClientBasePacket {
 				|| s.equalsIgnoreCase("shivan3") // 70083: 须凡(海音 武器商)
 		) {
 			htmlid = s;
-			int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
-			int taxRatesCastle = L1CastleLocation.getCastleTaxRateByNpcId(npcid);
+			final int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+			final int taxRatesCastle = L1CastleLocation.getCastleTaxRateByNpcId(npcid);
 			htmldata = new String[] { String.valueOf(taxRatesCastle) };
 		}
 
 		// 村镇（登记村民）
 		else if (s.equalsIgnoreCase("set")) {
 			if (obj instanceof L1NpcInstance) {
-				int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
-				int town_id = L1TownLocation.getTownIdByNpcid(npcid);
+				final int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+				final int town_id = L1TownLocation.getTownIdByNpcid(npcid);
 
 				if ((town_id >= 1) && (town_id <= 10)) {
 					if (pc.getHomeTownId() == -1) {
@@ -1909,7 +1910,7 @@ public class C_NPCAction extends ClientBasePacket {
 					else if (pc.getHomeTownId() > 0) {
 						// 已经登录
 						if (pc.getHomeTownId() != town_id) {
-							L1Town town = TownTable.getInstance().getTownTable(pc.getHomeTownId());
+							final L1Town town = TownTable.getInstance().getTownTable(pc.getHomeTownId());
 							if (town != null) {
 								// 目前你所登录的村庄为%0。
 								pc.sendPackets(new S_ServerMessage(758, town.get_name()));
@@ -1929,8 +1930,8 @@ public class C_NPCAction extends ClientBasePacket {
 							htmlid = "";
 						}
 						else {
-							int level = pc.getLevel();
-							int cost = level * level * 10;
+							final int level = pc.getLevel();
+							final int cost = level * level * 10;
 							if (pc.getInventory().consumeItem(L1ItemId.ADENA, cost)) {
 								pc.setHomeTownId(town_id);
 								pc.setContribution(0); // 贡献
@@ -1950,8 +1951,8 @@ public class C_NPCAction extends ClientBasePacket {
 		// 村镇（取消登记）
 		else if (s.equalsIgnoreCase("clear")) {
 			if (obj instanceof L1NpcInstance) {
-				int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
-				int town_id = L1TownLocation.getTownIdByNpcid(npcid);
+				final int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+				final int town_id = L1TownLocation.getTownIdByNpcid(npcid);
 				if (town_id > 0) {
 					if (pc.getHomeTownId() > 0) {
 						if (pc.getHomeTownId() == town_id) {
@@ -1972,12 +1973,12 @@ public class C_NPCAction extends ClientBasePacket {
 		// 村镇（确认当前村长是谁）
 		else if (s.equalsIgnoreCase("ask")) {
 			if (obj instanceof L1NpcInstance) {
-				int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
-				int town_id = L1TownLocation.getTownIdByNpcid(npcid);
+				final int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
+				final int town_id = L1TownLocation.getTownIdByNpcid(npcid);
 
 				if ((town_id >= 1) && (town_id <= 10)) {
-					L1Town town = TownTable.getInstance().getTownTable(town_id);
-					String leader = town.get_leader_name();
+					final L1Town town = TownTable.getInstance().getTownTable(town_id);
+					final String leader = town.get_leader_name();
 					if ((leader != null) && (leader.length() != 0)) {
 						htmlid = "owner"; // 目前这里的村长叫"#0"
 						htmldata = new String[] { leader };
@@ -2013,7 +2014,7 @@ public class C_NPCAction extends ClientBasePacket {
 				final int[] item_ids = { 41146, 4, 20322, 173, 40743, };
 				final int[] item_amounts = { 1, 1, 1, 1, 500, };
 				for (int i = 0; i < item_ids.length; i++) {
-					L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+					final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getLogName()));
 				}
 				pc.getQuest().set_step(L1Quest.QUEST_DOROMOND, 1);
@@ -2029,7 +2030,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 23, 20219, 20193, };
 					final int[] item_amounts = { 1, 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getLogName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_DOROMOND, 2);
@@ -2037,7 +2038,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 			else if (s.equalsIgnoreCase("2")) {
-				L1ItemInstance item = pc.getInventory().storeItem(41227, 1); // [jp]亚历斯的介绍书
+				final L1ItemInstance item = pc.getInventory().storeItem(41227, 1); // [jp]亚历斯的介绍书
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getLogName()));
 				pc.getQuest().set_step(L1Quest.QUEST_AREX, L1Quest.QUEST_END);
 				htmlid = "";
@@ -2049,7 +2050,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// アイテムを受け取る
 			if (s.equalsIgnoreCase("0")) {
 				if (!pc.getInventory().checkItem(41209)) { // [jp]ポピレアの依赖书
-					L1ItemInstance item = pc.getInventory().storeItem(41209, 1);
+					final L1ItemInstance item = pc.getInventory().storeItem(41209, 1);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					htmlid = ""; // 关闭窗口
 				}
@@ -2057,7 +2058,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// アイテムを受け取る
 			else if (s.equalsIgnoreCase("1")) {
 				if (pc.getInventory().consumeItem(41213, 1)) {
-					L1ItemInstance item = pc.getInventory().storeItem(40029, 20);
+					final L1ItemInstance item = pc.getInventory().storeItem(40029, 20);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName() + " (" + 20 + ")"));
 					htmlid = ""; // 关闭窗口
 				}
@@ -2097,7 +2098,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70512) {
 			// 治疗を受ける("fullheal"でリクエストが来ることはあるのか？)
 			if (s.equalsIgnoreCase("0") || s.equalsIgnoreCase("fullheal")) {
-				int hp = Random.nextInt(21) + 70;
+				final int hp = Random.nextInt(21) + 70;
 				pc.setCurrentHp(pc.getCurrentHp() + hp);
 				pc.sendPackets(new S_ServerMessage(77)); // \f1你觉得舒服多了。
 				pc.sendPackets(new S_SkillSound(pc.getId(), 830));
@@ -2143,7 +2144,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// 取得了神奇的取消
 			if (s.equalsIgnoreCase("0")) {
 				if (pc.getLevel() <= 13) {
-					L1SkillUse skillUse = new L1SkillUse();
+					final L1SkillUse skillUse = new L1SkillUse();
 					skillUse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_NPCBUFF, (L1NpcInstance) obj);
 					htmlid = ""; // 关闭窗口
 				}
@@ -2153,7 +2154,7 @@ public class C_NPCAction extends ClientBasePacket {
 		// 卡斯金(歌唱岛)
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71025) {
 			if (s.equalsIgnoreCase("0")) {
-				L1ItemInstance item = pc.getInventory().storeItem(41225, 1); // 遗失钥匙商人的请求
+				final L1ItemInstance item = pc.getInventory().storeItem(41225, 1); // 遗失钥匙商人的请求
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 				htmlid = "jpe0083";
 			}
@@ -2163,7 +2164,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71055) {
 			// 嗯我知道了
 			if (s.equalsIgnoreCase("0")) {
-				L1ItemInstance item = pc.getInventory().storeItem(40701, 1); // 小藏宝图
+				final L1ItemInstance item = pc.getInventory().storeItem(40701, 1); // 小藏宝图
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 				pc.getQuest().set_step(L1Quest.QUEST_LUKEIN1, 1);
 				htmlid = "lukein8";
@@ -2183,9 +2184,9 @@ public class C_NPCAction extends ClientBasePacket {
 				createcount = new int[] { 1 };
 				htmlid = "maptbox1";
 				pc.getQuest().set_end(L1Quest.QUEST_TBOX1);
-				int[] nextbox = { 1, 2, 3 };
-				int pid = Random.nextInt(nextbox.length);
-				int nb = nextbox[pid];
+				final int[] nextbox = { 1, 2, 3 };
+				final int pid = Random.nextInt(nextbox.length);
+				final int nb = nextbox[pid];
 				if (nb == 1) { // b地点
 					pc.getQuest().set_step(L1Quest.QUEST_LUKEIN1, 2);
 				}
@@ -2209,9 +2210,9 @@ public class C_NPCAction extends ClientBasePacket {
 				createcount = new int[] { 1 };
 				htmlid = "maptbox1";
 				pc.getQuest().set_end(L1Quest.QUEST_TBOX2);
-				int[] nextbox2 = { 1, 2, 3, 4, 5, 6 };
-				int pid = Random.nextInt(nextbox2.length);
-				int nb2 = nextbox2[pid];
+				final int[] nextbox2 = { 1, 2, 3, 4, 5, 6 };
+				final int pid = Random.nextInt(nextbox2.length);
+				final int nb2 = nextbox2[pid];
 				if (nb2 == 1) { // e地点
 					pc.getQuest().set_step(L1Quest.QUEST_LUKEIN1, 5);
 				}
@@ -2288,7 +2289,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// 让我为你报仇吧
 			if (s.equalsIgnoreCase("A")) {
 				htmlid = "rudian6";
-				L1ItemInstance item = pc.getInventory().storeItem(40700, 1);
+				final L1ItemInstance item = pc.getInventory().storeItem(40700, 1);
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 				pc.getQuest().set_step(L1Quest.QUEST_RUDIAN, 1);
 			}
@@ -2381,7 +2382,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// 我会想办法向她证明你的清白的
 			if (s.equalsIgnoreCase("a")) {
 				htmlid = "francu10";
-				L1ItemInstance item = pc.getInventory().storeItem(40644, 1); // 迷宫构造图
+				final L1ItemInstance item = pc.getInventory().storeItem(40644, 1); // 迷宫构造图
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 				pc.getQuest().set_step(L1Quest.QUEST_KAMYLA, 2);
 			}
@@ -2395,7 +2396,7 @@ public class C_NPCAction extends ClientBasePacket {
 				final int[] item_ids = { 246, 247, 248, 249, 40660 };
 				final int[] item_amounts = { 1, 1, 1, 1, 5 };
 				for (int i = 0; i < item_ids.length; i++) {
-					L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+					final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					pc.getQuest().set_step(L1Quest.QUEST_CRYSTAL, 1);
 				}
@@ -2426,8 +2427,8 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				else {
 					pc.getInventory().checkItem(40660);
-					L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40660);
-					int sc = l1iteminstance.getCount();
+					final L1ItemInstance l1iteminstance = pc.getInventory().findItemId(40660);
+					final int sc = l1iteminstance.getCount();
 					if (sc > 0) {
 						pc.getInventory().consumeItem(40660, sc);
 					}
@@ -2487,7 +2488,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(41339, 5)) { // 亡者的信件
-					L1ItemInstance item = ItemTable.getInstance().createItem(41340); // 佣兵团长多文的推荐书
+					final L1ItemInstance item = ItemTable.getInstance().createItem(41340); // 佣兵团长多文的推荐书
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
 							pc.getInventory().storeItem(item);
@@ -2518,7 +2519,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(41343, 1)) { // 法利昂的血痕
-					L1ItemInstance item = ItemTable.getInstance().createItem(21057); // 训练骑士披肩1
+					final L1ItemInstance item = ItemTable.getInstance().createItem(21057); // 训练骑士披肩1
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
 							pc.getInventory().storeItem(item);
@@ -2537,7 +2538,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(41344, 1)) { // 水中的水
-					L1ItemInstance item = ItemTable.getInstance().createItem(21058); // 训练骑士披肩2
+					final L1ItemInstance item = ItemTable.getInstance().createItem(21058); // 训练骑士披肩2
 					if (item != null) {
 						pc.getInventory().consumeItem(21057, 1); // 训练骑士披肩1
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
@@ -2557,7 +2558,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(41345, 1)) { // 酸性液体
-					L1ItemInstance item = ItemTable.getInstance().createItem(21059); // 毒蛇之牙披肩
+					final L1ItemInstance item = ItemTable.getInstance().createItem(21059); // 毒蛇之牙披肩
 					if (item != null) {
 						pc.getInventory().consumeItem(21058, 1); // 训练骑士披肩2
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
@@ -2594,7 +2595,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(40308, 1000000)) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(41341); // 帝伦之教本
+					final L1ItemInstance item = ItemTable.getInstance().createItem(41341); // 帝伦之教本
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
 							pc.getInventory().storeItem(item);
@@ -2614,7 +2615,7 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 				if (pc.getInventory().consumeItem(41342, 1)) { // 梅杜莎之血
-					L1ItemInstance item = ItemTable.getInstance().createItem(41341); // 帝伦之教本
+					final L1ItemInstance item = ItemTable.getInstance().createItem(41341); // 帝伦之教本
 					if (item != null) {
 						if (pc.getInventory().checkAddItem(item, 1) == 0) {
 							pc.getInventory().storeItem(item);
@@ -2636,7 +2637,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// 接受凯莉纱的灵魂契约
 			if (s.equalsIgnoreCase("0")) {
 				if (!pc.getInventory().checkItem(41312)) { // 占星术师の壶 XXX 貌似有错误
-					L1ItemInstance item = pc.getInventory().storeItem(41312, 1);
+					final L1ItemInstance item = pc.getInventory().storeItem(41312, 1);
 					if (item != null) {
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName())); // \f1%0%s 给你 %1%o 。
 						pc.getQuest().set_step(L1Quest.QUEST_KEPLISHA, L1Quest.QUEST_END);
@@ -2652,23 +2653,23 @@ public class C_NPCAction extends ClientBasePacket {
 						counts = new int[] { 1000, 1 };
 						createitem = new int[] { 41314 }; // 占星术师のお守り XXX 貌似有错误
 						createcount = new int[] { 1 };
-						int htmlA = Random.nextInt(3) + 1;
-						int htmlB = Random.nextInt(100) + 1;
+						final int htmlA = Random.nextInt(3) + 1;
+						final int htmlB = Random.nextInt(100) + 1;
 						switch (htmlA) {
-						case 1:
-							htmlid = "horosa" + htmlB; // horosa1 ~
-														// horosa100
-							break;
-						case 2:
-							htmlid = "horosb" + htmlB; // horosb1 ~
-														// horosb100
-							break;
-						case 3:
-							htmlid = "horosc" + htmlB; // horosc1 ~
-														// horosc100
-							break;
-						default:
-							break;
+							case 1:
+								htmlid = "horosa" + htmlB; // horosa1 ~
+															// horosa100
+								break;
+							case 2:
+								htmlid = "horosb" + htmlB; // horosb1 ~
+															// horosb100
+								break;
+							case 3:
+								htmlid = "horosc" + htmlB; // horosc1 ~
+															// horosc100
+								break;
+							default:
+								break;
 						}
 					}
 					else {
@@ -2684,39 +2685,39 @@ public class C_NPCAction extends ClientBasePacket {
 				else {
 					if (pc.getInventory().checkItem(41314)) { // 占星术师のお守り XXX 貌似有错误
 						pc.getInventory().consumeItem(41314, 1); // 占星术师のお守り XXX 貌似有错误
-						int html = Random.nextInt(9) + 1;
-						int PolyId = 6180 + Random.nextInt(64);
+						final int html = Random.nextInt(9) + 1;
+						final int PolyId = 6180 + Random.nextInt(64);
 						polyByKeplisha(client, PolyId);
 						switch (html) {
-						case 1:
-							htmlid = "horomon11";
-							break;
-						case 2:
-							htmlid = "horomon12";
-							break;
-						case 3:
-							htmlid = "horomon13";
-							break;
-						case 4:
-							htmlid = "horomon21";
-							break;
-						case 5:
-							htmlid = "horomon22";
-							break;
-						case 6:
-							htmlid = "horomon23";
-							break;
-						case 7:
-							htmlid = "horomon31";
-							break;
-						case 8:
-							htmlid = "horomon32";
-							break;
-						case 9:
-							htmlid = "horomon33";
-							break;
-						default:
-							break;
+							case 1:
+								htmlid = "horomon11";
+								break;
+							case 2:
+								htmlid = "horomon12";
+								break;
+							case 3:
+								htmlid = "horomon13";
+								break;
+							case 4:
+								htmlid = "horomon21";
+								break;
+							case 5:
+								htmlid = "horomon22";
+								break;
+							case 6:
+								htmlid = "horomon23";
+								break;
+							case 7:
+								htmlid = "horomon31";
+								break;
+							case 8:
+								htmlid = "horomon32";
+								break;
+							case 9:
+								htmlid = "horomon33";
+								break;
+							default:
+								break;
 						}
 					}
 				}
@@ -2762,7 +2763,7 @@ public class C_NPCAction extends ClientBasePacket {
 					htmlid = "rparum4";
 				}
 				else {
-					L1ItemInstance item = pc.getInventory().storeItem(41356, 1);
+					final L1ItemInstance item = pc.getInventory().storeItem(41356, 1);
 					if (item != null) {
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName())); // \f1%0%s 给你 %1%o 。
 					}
@@ -2778,7 +2779,7 @@ public class C_NPCAction extends ClientBasePacket {
 				if (pc.isCrown()) {
 					if (pc.getInventory().checkItem(20383, 1)) {
 						if (pc.getInventory().checkItem(L1ItemId.ADENA, 100000)) {
-							L1ItemInstance item = pc.getInventory().findItemId(20383);
+							final L1ItemInstance item = pc.getInventory().findItemId(20383);
 							if ((item != null) && (item.getChargeCount() != 50)) {
 								item.setChargeCount(50);
 								pc.getInventory().updateItem(item, L1PcInventory.COL_CHARGE_COUNT);
@@ -2802,10 +2803,10 @@ public class C_NPCAction extends ClientBasePacket {
 					htmlid = "eris10";
 				}
 				else {
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(41007, 1);
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(41007, 1);
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 					htmlid = "eris6";
 				}
@@ -2815,10 +2816,10 @@ public class C_NPCAction extends ClientBasePacket {
 					htmlid = "eris10";
 				}
 				else {
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(41009, 1);
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(41009, 1);
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 					htmlid = "eris8";
 				}
@@ -2924,23 +2925,23 @@ public class C_NPCAction extends ClientBasePacket {
 		// 航海士的灵魂
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80076) {
 			if (s.equalsIgnoreCase("A")) {
-				int[] diaryno = { 49082, 49083 };
-				int pid = Random.nextInt(diaryno.length);
-				int di = diaryno[pid];
+				final int[] diaryno = { 49082, 49083 };
+				final int pid = Random.nextInt(diaryno.length);
+				final int di = diaryno[pid];
 				if (di == 49082) { // 奇数 不完整的航海日志
 					htmlid = "voyager6a";
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(di, 1);
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(di, 1);
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 				}
 				else if (di == 49083) { // 偶数 不完整的航海日志
 					htmlid = "voyager6b";
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(di, 1);
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(di, 1);
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName));
 				}
 			}
@@ -3482,7 +3483,7 @@ public class C_NPCAction extends ClientBasePacket {
 				final int[] item_ids = { 41132, 41133, 41134 };
 				final int[] item_amounts = { 1, 1, 1 };
 				for (int i = 0; i < item_ids.length; i++) {
-					L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+					final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					pc.getQuest().set_step(L1Quest.QUEST_DESIRE, 1);
 				}
@@ -3527,7 +3528,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			else if (s.equalsIgnoreCase("g")) {
 				htmlid = "";
-				L1ItemInstance item = pc.getInventory().storeItem(41130, 1); // 炎魔的契约书
+				final L1ItemInstance item = pc.getInventory().storeItem(41130, 1); // 炎魔的契约书
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 			}
 		}
@@ -3541,7 +3542,7 @@ public class C_NPCAction extends ClientBasePacket {
 				final int[] item_ids = { 41123, 41124, 41125 };
 				final int[] item_amounts = { 1, 1, 1 };
 				for (int i = 0; i < item_ids.length; i++) {
-					L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+					final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 					pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					pc.getQuest().set_step(L1Quest.QUEST_SHADOWS, 1);
 				}
@@ -3586,7 +3587,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			else if (s.equalsIgnoreCase("g")) {
 				htmlid = "";
-				L1ItemInstance item = pc.getInventory().storeItem(41121, 1); // 火焰之影的契约书
+				final L1ItemInstance item = pc.getInventory().storeItem(41121, 1); // 火焰之影的契约书
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 			}
 		}
@@ -3638,7 +3639,7 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.getInventory().consumeEnchantItem(weapon2, 7, 1);
 				pc.getInventory().consumeItem(41246, 1000);
 				pc.getInventory().consumeItem(49143, 10);
-				L1ItemInstance item = pc.getInventory().storeItem(newWeapon, 1);
+				final L1ItemInstance item = pc.getInventory().storeItem(newWeapon, 1);
 				pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 			}
 			else {
@@ -3849,10 +3850,10 @@ public class C_NPCAction extends ClientBasePacket {
 					htmlid = "marba20"; //
 				}
 				else {
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(40637, 1);
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(40637, 1);
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 					htmlid = "marba6"; // 你就去找阿拉斯看看吧...他人在眠龙洞穴前面。
 				}
@@ -3888,10 +3889,10 @@ public class C_NPCAction extends ClientBasePacket {
 						}
 					}
 					else {
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(40664, 1); // 阿拉斯的护身符
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(40664, 1); // 阿拉斯的护身符
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 						htmlid = "aras6"; // 我相信你一定可以找回我儿子的遗物...
 					}
@@ -3899,19 +3900,19 @@ public class C_NPCAction extends ClientBasePacket {
 				else if (s.equalsIgnoreCase("B")) {
 					if (pc.getInventory().checkItem(40664)) { // 阿拉斯的护身符
 						pc.getInventory().consumeItem(40664, 1);
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(40665, 1); // 阿拉斯的信
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(40665, 1); // 阿拉斯的信
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 						htmlid = "aras13"; // 赶快将这封信交给玛勒巴！
 					}
 					else {
 						htmlid = "aras14"; // 啊...你把护身符弄丢了！ 赶快把信交给玛勒巴吧...
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(40665, 1); // 阿拉斯的信
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(40665, 1); // 阿拉斯的信
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 					}
 				}
@@ -4028,17 +4029,17 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 长老 普洛凯尔
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80136) {
-			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
-			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
-			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
-			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
+			final int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
+			final int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
+			final int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
+			final int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
 			if (pc.isDragonKnight()) {
 				// 执行普洛凯尔的课题
 				if (s.equalsIgnoreCase("a") && (lv15_step == 0)) {
-					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(49210, 1); // 普洛凯尔的第一次指令书
-					String npcName = npc.getNpcTemplate().get_name();
-					String itemName = item.getItem().getName();
+					final L1NpcInstance npc = (L1NpcInstance) obj;
+					final L1ItemInstance item = pc.getInventory().storeItem(49210, 1); // 普洛凯尔的第一次指令书
+					final String npcName = npc.getNpcTemplate().get_name();
+					final String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL15, 1);
 					htmlid = "prokel3";
@@ -4048,7 +4049,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49211, 49215, }; // 普洛凯尔的第二次指令书、普洛凯尔的矿物袋
 					final int[] item_amounts = { 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL30, 1);
@@ -4060,10 +4061,10 @@ public class C_NPCAction extends ClientBasePacket {
 						htmlid = "prokel35";
 					}
 					else {
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(49215, 1); // 普洛凯尔的矿物袋
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(49215, 1); // 普洛凯尔的矿物袋
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 						htmlid = "prokel13";
 					}
@@ -4073,7 +4074,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49209, 49212, 49226, }; // 长老普洛凯尔的信件、普洛凯尔的第三次指令书、结盟瞬间移动卷轴
 					final int[] item_amounts = { 1, 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 1);
@@ -4084,7 +4085,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49287, }; // 普洛凯尔的第四次指令书
 					final int[] item_amounts = { 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 1);
@@ -4099,7 +4100,7 @@ public class C_NPCAction extends ClientBasePacket {
 						final int[] item_ids = { 49202, 49216, };
 						final int[] item_amounts = { 1, 1, };
 						for (int i = 0; i < item_ids.length; i++) {
-							L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+							final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 							pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 						}
 						htmlid = "prokel28";
@@ -4117,10 +4118,10 @@ public class C_NPCAction extends ClientBasePacket {
 						htmlid = "elas5";
 					}
 					else {
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(49220, 1); // 妖魔密使变形卷轴
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(49220, 1); // 妖魔密使变形卷轴
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 						htmlid = "elas4";
 					}
@@ -4134,10 +4135,10 @@ public class C_NPCAction extends ClientBasePacket {
 				if (s.equalsIgnoreCase("request flute of spy")) {
 					if (pc.getInventory().checkItem(49223, 1)) { // check
 						pc.getInventory().consumeItem(49223, 1); // del
-						L1NpcInstance npc = (L1NpcInstance) obj;
-						L1ItemInstance item = pc.getInventory().storeItem(49222, 1); // 妖魔密使之笛子
-						String npcName = npc.getNpcTemplate().get_name();
-						String itemName = item.getItem().getName();
+						final L1NpcInstance npc = (L1NpcInstance) obj;
+						final L1ItemInstance item = pc.getInventory().storeItem(49222, 1); // 妖魔密使之笛子
+						final String npcName = npc.getNpcTemplate().get_name();
+						final String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0%s 给你 %1%o 。
 						htmlid = "";
 					}
@@ -4217,8 +4218,9 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		// 燃柳宠物商
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70077 // 罗德尼
-				|| ((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81290) { // 班酷
+		else if ((((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70077 // 罗德尼
+				)
+				|| (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81290)) { // 班酷
 			int consumeItem = 0;
 			int consumeItemCount = 0;
 			int petNpcId = 0;
@@ -4289,8 +4291,8 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				else if (pc.getInventory().checkItem(consumeItem, consumeItemCount)) {
 					pc.getInventory().consumeItem(consumeItem, consumeItemCount);
-					L1PcInventory inv = pc.getInventory();
-					L1ItemInstance petamu = inv.storeItem(petItemId, 1);
+					final L1PcInventory inv = pc.getInventory();
+					final L1ItemInstance petamu = inv.storeItem(petItemId, 1);
 					if (petamu != null) {
 						PetTable.getInstance().buyNewPet(petNpcId, petamu.getId() + 1, petamu.getId(), upLv, lvExp);
 						pc.sendPackets(new S_ItemName(petamu));
@@ -4306,10 +4308,10 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 幻术师 试练任务
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) { // 长老 希莲恩
-			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
-			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
-			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
-			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
+			final int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
+			final int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
+			final int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
+			final int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
 			if (pc.isDragonKnight()) {
 				if (s.equalsIgnoreCase("l") && (lv45_step == 1)) {
 					if (pc.getInventory().checkItem(49209, 1)) { // check
@@ -4329,7 +4331,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49172, 49182, }; // 希莲恩的第一次信件、妖精森林瞬间移动卷轴
 					final int[] item_amounts = { 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL15, 1);
@@ -4341,7 +4343,7 @@ public class C_NPCAction extends ClientBasePacket {
 																// 获得【欧瑞村庄瞬间移动卷轴、生锈的笛子】
 					final int[] item_amounts = { 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL30, 1);
@@ -4353,7 +4355,7 @@ public class C_NPCAction extends ClientBasePacket {
 						htmlid = "silrein17";// 已经有 希莲恩之袋、生锈的笛子 不可再取得
 					}
 					else {
-						L1ItemInstance item = pc.getInventory().storeItem(49186, 1); // 生锈的笛子
+						final L1ItemInstance item = pc.getInventory().storeItem(49186, 1); // 生锈的笛子
 						pc.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
 						htmlid = "silrein16";
 					}
@@ -4364,7 +4366,7 @@ public class C_NPCAction extends ClientBasePacket {
 																// 获得【风木村庄瞬间移动卷轴、时空裂痕水晶(绿色3个)】
 					final int[] item_amounts = { 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 1);
@@ -4375,7 +4377,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49176, }; // 希莲恩的第五次信件
 					final int[] item_amounts = { 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 1);
@@ -4391,7 +4393,7 @@ public class C_NPCAction extends ClientBasePacket {
 						final int[] item_ids = { 49202, 49178, };
 						final int[] item_amounts = { 1, 1, };
 						for (int i = 0; i < item_ids.length; i++) {
-							L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+							final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 							pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 						}
 						htmlid = "silrein32";
@@ -4549,7 +4551,7 @@ public class C_NPCAction extends ClientBasePacket {
 					final int[] item_ids = { 49239, };
 					final int[] item_amounts = { 1, };
 					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
+						final L1ItemInstance item = pc.getInventory().storeItem(item_ids[i], item_amounts[i]);
 						pc.sendPackets(new S_ServerMessage(143, ((L1NpcInstance) obj).getNpcTemplate().get_name(), item.getItem().getName()));
 					}
 				}
@@ -4559,20 +4561,20 @@ public class C_NPCAction extends ClientBasePacket {
 		// 魔法商人- 仿正设定
 		else if ((((L1NpcInstance) obj).getNpcTemplate().get_npcId() >= 81353) && (((L1NpcInstance) obj).getNpcTemplate().get_npcId() <= 81363)) {
 			int[] skills = new int[10];
-			char s1 = s.charAt(0);
+			final char s1 = s.charAt(0);
 			switch (s1) {
-			case 'b':
-				skills = new int[] { 43, 79, 151, 158, 160, 206, 211, 216, 115, 149 };
-				break;
-			case 'a':
-				skills = new int[] { 43, 79, 151, 158, 160, 206, 211, 216, 115, 148 };
-				break;
+				case 'b':
+					skills = new int[] { 43, 79, 151, 158, 160, 206, 211, 216, 115, 149 };
+					break;
+				case 'a':
+					skills = new int[] { 43, 79, 151, 158, 160, 206, 211, 216, 115, 148 };
+					break;
 			}
 			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b")) {
 				if (pc.getInventory().consumeItem(40308, 3000)) {
-					L1SkillUse l1skilluse = new L1SkillUse();
-					for (int i = 0; i < skills.length; i++) {
-						l1skilluse.handleCommands(pc, skills[i], pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
+					final L1SkillUse l1skilluse = new L1SkillUse();
+					for (final int skill : skills) {
+						l1skilluse.handleCommands(pc, skill, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
 					}
 					htmlid = "bs_done";
 				}
@@ -4624,269 +4626,269 @@ public class C_NPCAction extends ClientBasePacket {
 		// 新手导师
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81255) {
 			@SuppressWarnings("unused")
-			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR); // 任务编号阶段
-			int level = pc.getLevel(); // 角色等级
-			char s1 = s.charAt(0);
+			final int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR); // 任务编号阶段
+			final int level = pc.getLevel(); // 角色等级
+			final char s1 = s.charAt(0);
 			if (level < 13) {
 				switch (s1) {
-				case 'A':
-				case 'a': // isCrown
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutorp1"; // 指引
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutorp2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutorp3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
-						htmlid = "tutorp4"; // 传送服务
-					}
-					else if ((level > 11) && (level < 13)) { // lv12
-						htmlid = "tutorp5"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutorp6"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'B':
-				case 'b': // isKnight
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutork1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutork2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutork3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
-						htmlid = "tutork4"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutork5"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'C':
-				case 'c': // isElf
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutore1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutore2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutore3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
-						htmlid = "tutore4"; // 传送服务
-					}
-					else if ((level > 11) && (level < 13)) { // lv12
-						htmlid = "tutore5"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutore6"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'D':
-				case 'd': // isWizard
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutorm1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutorm2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutorm3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
-						htmlid = "tutorm4"; // 传送服务
-					}
-					else if ((level > 11) && (level < 13)) { // lv12
-						htmlid = "tutorm5"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutorm6"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'E':
-				case 'e': // isDarkelf
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutord1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutord2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutord3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
-						htmlid = "tutord4"; // 传送服务
-					}
-					else if ((level > 11) && (level < 13)) { // lv12
-						htmlid = "tutord5"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutord6"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'F':
-				case 'f': // isDragonKnight
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutordk1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutordk2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutordk3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
-						htmlid = "tutordk4"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutordk5"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'G':
-				case 'g': // isIllusionist
-					if ((level > 1) && (level < 5)) { // lv2 ~ lv4
-						htmlid = "tutori1"; // 接受帮助
-					}
-					else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
-						htmlid = "tutori2"; // 传送服务
-					}
-					else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
-						htmlid = "tutori3"; // 传送服务
-					}
-					else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
-						htmlid = "tutori4"; // 传送服务
-					}
-					else if (level > 12) { // lv13
-						htmlid = "tutori5"; // 离开隐藏之谷
-					}
-					else {
-						htmlid = "tutorend";
-					}
-					break;
-				case 'H':
-				case 'h':
-					L1Teleport.teleport(pc, 32575, 32945, (short) 0, 5, true); // 说话之岛仓库管理员
-					htmlid = "";
-					break;
-				case 'I':
-				case 'i':
-					L1Teleport.teleport(pc, 32579, 32923, (short) 0, 5, true); // 血盟执行人
-					htmlid = "";
-					break;
-				case 'J':
-				case 'j':
-					createitem = new int[] { 42099 };
-					createcount = new int[] { 1 };
-					L1Teleport.teleport(pc, 32676, 32813, (short) 2005, 5, true); // 隐藏之谷地下洞穴
-					htmlid = "";
-					break;
-				case 'K':
-				case 'k':
-					L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法师吉伦小屋
-					htmlid = "";
-					break;
-				case 'L':
-				case 'l':
-					L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 象牙塔
-					htmlid = "";
-					break;
-				case 'M':
-				case 'm':
-					L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法师赛帝亚
-					htmlid = "";
-					break;
-				case 'N':
-				case 'n':
-					L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 幻术士史菲尔
-					htmlid = "";
-					break;
-				case 'O':
-				case 'o':
-					L1Teleport.teleport(pc, 32605, 32837, (short) 2005, 5, true); // 村庄西郊
-					htmlid = "";
-					break;
-				case 'P':
-				case 'p':
-					L1Teleport.teleport(pc, 32733, 32902, (short) 2005, 5, true); // 村庄东郊
-					htmlid = "";
-					break;
-				case 'Q':
-				case 'q':
-					L1Teleport.teleport(pc, 32559, 32843, (short) 2005, 5, true); // 村庄南部狩猎场
-					htmlid = "";
-					break;
-				case 'R':
-				case 'r':
-					L1Teleport.teleport(pc, 32677, 32982, (short) 2005, 5, true); // 村庄东南部狩猎场
-					htmlid = "";
-					break;
-				case 'S':
-				case 's':
-					L1Teleport.teleport(pc, 32781, 32854, (short) 2005, 5, true); // 村庄东北部狩猎场
-					htmlid = "";
-					break;
-				case 'T':
-				case 't':
-					L1Teleport.teleport(pc, 32674, 32739, (short) 2005, 5, true); // 村庄西北部狩猎场
-					htmlid = "";
-					break;
-				case 'U':
-				case 'u':
-					L1Teleport.teleport(pc, 32578, 32737, (short) 2005, 5, true); // 村庄西部狩猎场
-					htmlid = "";
-					break;
-				case 'V':
-				case 'v':
-					L1Teleport.teleport(pc, 32542, 32996, (short) 2005, 5, true); // 村庄南部狩猎场
-					htmlid = "";
-					break;
-				case 'W':
-				case 'w':
-					L1Teleport.teleport(pc, 32794, 32973, (short) 2005, 5, true); // 村庄东部狩猎场
-					htmlid = "";
-					break;
-				case 'X':
-				case 'x':
-					L1Teleport.teleport(pc, 32803, 32789, (short) 2005, 5, true); // 村庄北部狩猎场
-					htmlid = "";
-					break;
-				default:
-					break;
+					case 'A':
+					case 'a': // isCrown
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutorp1"; // 指引
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutorp2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutorp3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
+							htmlid = "tutorp4"; // 传送服务
+						}
+						else if ((level > 11) && (level < 13)) { // lv12
+							htmlid = "tutorp5"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutorp6"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'B':
+					case 'b': // isKnight
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutork1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutork2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutork3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
+							htmlid = "tutork4"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutork5"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'C':
+					case 'c': // isElf
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutore1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutore2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutore3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
+							htmlid = "tutore4"; // 传送服务
+						}
+						else if ((level > 11) && (level < 13)) { // lv12
+							htmlid = "tutore5"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutore6"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'D':
+					case 'd': // isWizard
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutorm1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutorm2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutorm3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
+							htmlid = "tutorm4"; // 传送服务
+						}
+						else if ((level > 11) && (level < 13)) { // lv12
+							htmlid = "tutorm5"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutorm6"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'E':
+					case 'e': // isDarkelf
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutord1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutord2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutord3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 12)) { // lv10 ~ lv11
+							htmlid = "tutord4"; // 传送服务
+						}
+						else if ((level > 11) && (level < 13)) { // lv12
+							htmlid = "tutord5"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutord6"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'F':
+					case 'f': // isDragonKnight
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutordk1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutordk2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutordk3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
+							htmlid = "tutordk4"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutordk5"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'G':
+					case 'g': // isIllusionist
+						if ((level > 1) && (level < 5)) { // lv2 ~ lv4
+							htmlid = "tutori1"; // 接受帮助
+						}
+						else if ((level > 4) && (level < 8)) { // lv5 ~ lv7
+							htmlid = "tutori2"; // 传送服务
+						}
+						else if ((level > 7) && (level < 10)) { // lv8 ~ lv9
+							htmlid = "tutori3"; // 传送服务
+						}
+						else if ((level > 9) && (level < 13)) { // lv10 ~ lv12
+							htmlid = "tutori4"; // 传送服务
+						}
+						else if (level > 12) { // lv13
+							htmlid = "tutori5"; // 离开隐藏之谷
+						}
+						else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'H':
+					case 'h':
+						L1Teleport.teleport(pc, 32575, 32945, (short) 0, 5, true); // 说话之岛仓库管理员
+						htmlid = "";
+						break;
+					case 'I':
+					case 'i':
+						L1Teleport.teleport(pc, 32579, 32923, (short) 0, 5, true); // 血盟执行人
+						htmlid = "";
+						break;
+					case 'J':
+					case 'j':
+						createitem = new int[] { 42099 };
+						createcount = new int[] { 1 };
+						L1Teleport.teleport(pc, 32676, 32813, (short) 2005, 5, true); // 隐藏之谷地下洞穴
+						htmlid = "";
+						break;
+					case 'K':
+					case 'k':
+						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法师吉伦小屋
+						htmlid = "";
+						break;
+					case 'L':
+					case 'l':
+						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 象牙塔
+						htmlid = "";
+						break;
+					case 'M':
+					case 'm':
+						L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法师赛帝亚
+						htmlid = "";
+						break;
+					case 'N':
+					case 'n':
+						L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 幻术士史菲尔
+						htmlid = "";
+						break;
+					case 'O':
+					case 'o':
+						L1Teleport.teleport(pc, 32605, 32837, (short) 2005, 5, true); // 村庄西郊
+						htmlid = "";
+						break;
+					case 'P':
+					case 'p':
+						L1Teleport.teleport(pc, 32733, 32902, (short) 2005, 5, true); // 村庄东郊
+						htmlid = "";
+						break;
+					case 'Q':
+					case 'q':
+						L1Teleport.teleport(pc, 32559, 32843, (short) 2005, 5, true); // 村庄南部狩猎场
+						htmlid = "";
+						break;
+					case 'R':
+					case 'r':
+						L1Teleport.teleport(pc, 32677, 32982, (short) 2005, 5, true); // 村庄东南部狩猎场
+						htmlid = "";
+						break;
+					case 'S':
+					case 's':
+						L1Teleport.teleport(pc, 32781, 32854, (short) 2005, 5, true); // 村庄东北部狩猎场
+						htmlid = "";
+						break;
+					case 'T':
+					case 't':
+						L1Teleport.teleport(pc, 32674, 32739, (short) 2005, 5, true); // 村庄西北部狩猎场
+						htmlid = "";
+						break;
+					case 'U':
+					case 'u':
+						L1Teleport.teleport(pc, 32578, 32737, (short) 2005, 5, true); // 村庄西部狩猎场
+						htmlid = "";
+						break;
+					case 'V':
+					case 'v':
+						L1Teleport.teleport(pc, 32542, 32996, (short) 2005, 5, true); // 村庄南部狩猎场
+						htmlid = "";
+						break;
+					case 'W':
+					case 'w':
+						L1Teleport.teleport(pc, 32794, 32973, (short) 2005, 5, true); // 村庄东部狩猎场
+						htmlid = "";
+						break;
+					case 'X':
+					case 'x':
+						L1Teleport.teleport(pc, 32803, 32789, (short) 2005, 5, true); // 村庄北部狩猎场
+						htmlid = "";
+						break;
+					default:
+						break;
 				}
 			}
 		}
 
 		// 修练场管理员
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81256) {
-			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR2); // 任务编号阶段
-			int level = pc.getLevel(); // 角色等级
+			final int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR2); // 任务编号阶段
+			final int level = pc.getLevel(); // 角色等级
 			@SuppressWarnings("unused")
-			boolean isOK = false;
+			final boolean isOK = false;
 			if (s.equalsIgnoreCase("A")) {
 				if ((level > 4) && (quest_step == 2)) {
 					createitem = new int[] { 20028, 20126, 20173, 20206, 20232, 40029, 40030, 40098, 40099, 42099 }; // 获得装备
@@ -4900,320 +4902,320 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 旅人谘询员
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81257) {
-			int level = pc.getLevel(); // 角色等级
-			char s1 = s.charAt(0);
+			final int level = pc.getLevel(); // 角色等级
+			final char s1 = s.charAt(0);
 			if (level < 46) {
 				switch (s1) {
-				case 'A':
-				case 'a':
-					L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法师吉伦小屋
-					htmlid = "";
-					break;
-				case 'B':
-				case 'b':
-					L1Teleport.teleport(pc, 33119, 32933, (short) 4, 5, true); // 正义神殿
-					htmlid = "";
-					break;
-				case 'C':
-				case 'c':
-					L1Teleport.teleport(pc, 32887, 32652, (short) 4, 5, true); // 邪恶神殿
-					htmlid = "";
-					break;
-				case 'D':
-				case 'd':
-					L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 贩售妖精精灵魔法的琳达
-					htmlid = "";
-					break;
-				case 'E':
-				case 'e':
-					L1Teleport.teleport(pc, 32789, 32851, (short) 76, 5, true); // 象牙塔的精灵魔法修炼室
-					htmlid = "";
-					break;
-				case 'F':
-				case 'f':
-					L1Teleport.teleport(pc, 32750, 32847, (short) 76, 5, true); // 象牙塔的艾利温
-					htmlid = "";
-					break;
-				case 'G':
-				case 'g':
-					if (pc.isDarkelf()) {
-						L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法师赛帝亚
+					case 'A':
+					case 'a':
+						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法师吉伦小屋
 						htmlid = "";
-					}
-					else {
-						htmlid = "lowlv40";
-					}
-					break;
-				case 'H':
-				case 'h':
-					if (pc.isDragonKnight()) {
-						L1Teleport.teleport(pc, 32811, 32873, (short) 1001, 5, true); // 贩售龙骑士技能的森帕尔处
+						break;
+					case 'B':
+					case 'b':
+						L1Teleport.teleport(pc, 33119, 32933, (short) 4, 5, true); // 正义神殿
 						htmlid = "";
-					}
-					else {
-						htmlid = "lowlv41";
-					}
-					break;
-				case 'I':
-				case 'i':
-					if (pc.isIllusionist()) {
-						L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 贩售幻术士魔法的史菲尔处
+						break;
+					case 'C':
+					case 'c':
+						L1Teleport.teleport(pc, 32887, 32652, (short) 4, 5, true); // 邪恶神殿
 						htmlid = "";
-					}
-					else {
-						htmlid = "lowlv42";
-					}
-					break;
-				case 'J':
-				case 'j':
-					L1Teleport.teleport(pc, 32509, 32867, (short) 0, 5, true); // 说话之岛的甘特处
-					htmlid = "";
-					break;
-				case 'K':
-				case 'k':
-					if ((level > 34)) {
-						createitem = new int[] { 20282, 21139 }; // 补充象牙塔饰品
-						createcount = new int[] { 0, 0 };
+						break;
+					case 'D':
+					case 'd':
+						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 贩售妖精精灵魔法的琳达
+						htmlid = "";
+						break;
+					case 'E':
+					case 'e':
+						L1Teleport.teleport(pc, 32789, 32851, (short) 76, 5, true); // 象牙塔的精灵魔法修炼室
+						htmlid = "";
+						break;
+					case 'F':
+					case 'f':
+						L1Teleport.teleport(pc, 32750, 32847, (short) 76, 5, true); // 象牙塔的艾利温
+						htmlid = "";
+						break;
+					case 'G':
+					case 'g':
+						if (pc.isDarkelf()) {
+							L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法师赛帝亚
+							htmlid = "";
+						}
+						else {
+							htmlid = "lowlv40";
+						}
+						break;
+					case 'H':
+					case 'h':
+						if (pc.isDragonKnight()) {
+							L1Teleport.teleport(pc, 32811, 32873, (short) 1001, 5, true); // 贩售龙骑士技能的森帕尔处
+							htmlid = "";
+						}
+						else {
+							htmlid = "lowlv41";
+						}
+						break;
+					case 'I':
+					case 'i':
+						if (pc.isIllusionist()) {
+							L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 贩售幻术士魔法的史菲尔处
+							htmlid = "";
+						}
+						else {
+							htmlid = "lowlv42";
+						}
+						break;
+					case 'J':
+					case 'j':
+						L1Teleport.teleport(pc, 32509, 32867, (short) 0, 5, true); // 说话之岛的甘特处
+						htmlid = "";
+						break;
+					case 'K':
+					case 'k':
+						if ((level > 34)) {
+							createitem = new int[] { 20282, 21139 }; // 补充象牙塔饰品
+							createcount = new int[] { 0, 0 };
+							boolean isOK = false;
+							for (int i = 0; i < createitem.length; i++) {
+								if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
+									createcount[i] = 1;
+									isOK = true;
+								}
+							}
+							if (isOK) {
+								success_htmlid = "lowlv43";
+							}
+							else {
+								htmlid = "lowlv45";
+							}
+						}
+						else {
+							htmlid = "lowlv44";
+						}
+						break;
+					case '0':
+						if (level < 13) {
+							htmlid = "lowlvS1";
+						}
+						else if ((level > 12) && (level < 46)) {
+							htmlid = "lowlvS2";
+						}
+						else {
+							htmlid = "lowlvno";
+						}
+						break;
+					case '1':
+						if (level < 13) {
+							htmlid = "lowlv14";
+						}
+						else if ((level > 12) && (level < 46)) {
+							htmlid = "lowlv15";
+						}
+						else {
+							htmlid = "lowlvno";
+						}
+						break;
+					case '2':
+						createitem = new int[] { 20028, 20126, 20173, 20206, 20232, 21138, 49310 }; // 补充象牙塔装备
+						createcount = new int[] { 0, 0, 0, 0, 0, 0, 0 };
 						boolean isOK = false;
 						for (int i = 0; i < createitem.length; i++) {
-							if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
+							if (createitem[i] == 49310) {
+								final L1ItemInstance item = pc.getInventory().findItemId(createitem[i]);
+								if (item != null) {
+									if (item.getCount() < 1000) {
+										createcount[i] = 1000 - item.getCount();
+										isOK = true;
+									}
+								}
+								else {
+									createcount[i] = 1000;
+									isOK = true;
+								}
+							}
+							else if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
 								createcount[i] = 1;
 								isOK = true;
 							}
 						}
 						if (isOK) {
-							success_htmlid = "lowlv43";
+							success_htmlid = "lowlv16";
 						}
 						else {
-							htmlid = "lowlv45";
+							htmlid = "lowlv17";
 						}
-					}
-					else {
-						htmlid = "lowlv44";
-					}
-					break;
-				case '0':
-					if (level < 13) {
-						htmlid = "lowlvS1";
-					}
-					else if ((level > 12) && (level < 46)) {
-						htmlid = "lowlvS2";
-					}
-					else {
-						htmlid = "lowlvno";
-					}
-					break;
-				case '1':
-					if (level < 13) {
-						htmlid = "lowlv14";
-					}
-					else if ((level > 12) && (level < 46)) {
-						htmlid = "lowlv15";
-					}
-					else {
-						htmlid = "lowlvno";
-					}
-					break;
-				case '2':
-					createitem = new int[] { 20028, 20126, 20173, 20206, 20232, 21138, 49310 }; // 补充象牙塔装备
-					createcount = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-					boolean isOK = false;
-					for (int i = 0; i < createitem.length; i++) {
-						if (createitem[i] == 49310) {
-							L1ItemInstance item = pc.getInventory().findItemId(createitem[i]);
-							if (item != null) {
-								if (item.getCount() < 1000) {
-									createcount[i] = 1000 - item.getCount();
-									isOK = true;
-								}
-							}
-							else {
-								createcount[i] = 1000;
-								isOK = true;
-							}
+						break;
+					case '6':
+						if (!pc.getInventory().checkItem(49313, 1) && !pc.getInventory().checkItem(49314, 1)) {
+							createitem = new int[] { 49313 }; // 象牙塔魔法袋
+							createcount = new int[] { 2 };
+							materials = new int[] { 40308 };
+							counts = new int[] { 2000 };
+							success_htmlid = "lowlv22";
+							failure_htmlid = "lowlv20";
 						}
-						else if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
-							createcount[i] = 1;
-							isOK = true;
+						else if (pc.getInventory().checkItem(49313, 1) || pc.getInventory().checkItem(49314, 1)) {
+							htmlid = "lowlv23";
 						}
-					}
-					if (isOK) {
-						success_htmlid = "lowlv16";
-					}
-					else {
-						htmlid = "lowlv17";
-					}
-					break;
-				case '6':
-					if (!pc.getInventory().checkItem(49313, 1) && !pc.getInventory().checkItem(49314, 1)) {
-						createitem = new int[] { 49313 }; // 象牙塔魔法袋
-						createcount = new int[] { 2 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 2000 };
-						success_htmlid = "lowlv22";
-						failure_htmlid = "lowlv20";
-					}
-					else if (pc.getInventory().checkItem(49313, 1) || pc.getInventory().checkItem(49314, 1)) {
-						htmlid = "lowlv23";
-					}
-					else {
-						htmlid = "lowlvno";
-					}
-					break;
-				default:
-					break;
+						else {
+							htmlid = "lowlvno";
+						}
+						break;
+					default:
+						break;
 				}
 			}
 		}
 
 		// 村庄福利员
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81260) {
-			int townid = pc.getHomeTownId(); // 角色所属村庄
-			char s1 = s.charAt(0);
+			final int townid = pc.getHomeTownId(); // 角色所属村庄
+			final char s1 = s.charAt(0);
 			if ((pc.getLevel() > 9) && (townid > 0) && (townid < 11)) {
 				switch (s1) {
-				case '0':
-					createitem = new int[] { 49305 }; // 制作 福利勇敢药水
-														// addContribution + 2
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40014 };
-					counts = new int[] { 1000, 3 };
-					contribution = 2;
-					htmlid = "";
-					break;
-				case '1':
-					createitem = new int[] { 49304 }; // 制作 福利森林药水
-														// addContribution + 4
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40068 };
-					counts = new int[] { 1000, 3 };
-					contribution = 4;
-					htmlid = "";
-					break;
-				case '2':
-					createitem = new int[] { 49307 }; // 制作 福利慎重药水
-														// addContribution + 2
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40016 };
-					counts = new int[] { 500, 3 };
-					contribution = 2;
-					htmlid = "";
-					break;
-				case '3':
-					createitem = new int[] { 49306 }; // 制作 福利蓝色药水
-														// addContribution + 2
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40015 };
-					counts = new int[] { 1000, 3 };
-					contribution = 2;
-					htmlid = "";
-					break;
-				case '4':
-					createitem = new int[] { 49302 }; // 制作 福利加速药水
-														// addContribution + 1
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40013 };
-					counts = new int[] { 500, 3 };
-					contribution = 1;
-					htmlid = "";
-					break;
-				case '5':
-					createitem = new int[] { 49303 }; // 制作 福利呼吸药水
-														// addContribution + 1
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40032 };
-					counts = new int[] { 500, 3 };
-					contribution = 1;
-					htmlid = "";
-					break;
-				case '6':
-					createitem = new int[] { 49308 }; // 制作 福利变形药水
-														// addContribution + 3
-					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40088 };
-					counts = new int[] { 1000, 3 };
-					contribution = 3;
-					htmlid = "";
-					break;
-				case 'A':
-				case 'a':
-					switch (townid) {
-					case 1:
-						createitem = new int[] { 49292 }; // 购买 福利传送卷轴：说话之岛
+					case '0':
+						createitem = new int[] { 49305 }; // 制作 福利勇敢药水
+															// addContribution + 2
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40014 };
+						counts = new int[] { 1000, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
-					case 2:
-						createitem = new int[] { 49297 }; // 购买 福利传送卷轴：银骑士
+					case '1':
+						createitem = new int[] { 49304 }; // 制作 福利森林药水
+															// addContribution + 4
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40068 };
+						counts = new int[] { 1000, 3 };
+						contribution = 4;
 						htmlid = "";
 						break;
-					case 3:
-						createitem = new int[] { 49293 }; // 购买 福利传送卷轴：古鲁丁
+					case '2':
+						createitem = new int[] { 49307 }; // 制作 福利慎重药水
+															// addContribution + 2
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40016 };
+						counts = new int[] { 500, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
-					case 4:
-						createitem = new int[] { 49296 }; // 购买 福利传送卷轴：燃柳
+					case '3':
+						createitem = new int[] { 49306 }; // 制作 福利蓝色药水
+															// addContribution + 2
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40015 };
+						counts = new int[] { 1000, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
-					case 5:
-						createitem = new int[] { 49295 }; // 购买 福利传送卷轴：风木
+					case '4':
+						createitem = new int[] { 49302 }; // 制作 福利加速药水
+															// addContribution + 1
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40013 };
+						counts = new int[] { 500, 3 };
+						contribution = 1;
 						htmlid = "";
 						break;
-					case 6:
-						createitem = new int[] { 49294 }; // 购买 福利传送卷轴：肯特
+					case '5':
+						createitem = new int[] { 49303 }; // 制作 福利呼吸药水
+															// addContribution + 1
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40032 };
+						counts = new int[] { 500, 3 };
+						contribution = 1;
 						htmlid = "";
 						break;
-					case 7:
-						createitem = new int[] { 49298 }; // 购买 福利传送卷轴：奇岩
+					case '6':
+						createitem = new int[] { 49308 }; // 制作 福利变形药水
+															// addContribution + 3
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
+						materials = new int[] { 40308, 40088 };
+						counts = new int[] { 1000, 3 };
+						contribution = 3;
 						htmlid = "";
 						break;
-					case 8:
-						createitem = new int[] { 49299 }; // 购买 福利传送卷轴：海音
-						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
-						htmlid = "";
-						break;
-					case 9:
-						createitem = new int[] { 49301 }; // 购买 福利传送卷轴：威顿
-						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
-						htmlid = "";
-						break;
-					case 10:
-						createitem = new int[] { 49300 }; // 购买 福利传送卷轴：欧瑞
-						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
-						counts = new int[] { 400 };
-						htmlid = "";
+					case 'A':
+					case 'a':
+						switch (townid) {
+							case 1:
+								createitem = new int[] { 49292 }; // 购买 福利传送卷轴：说话之岛
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 2:
+								createitem = new int[] { 49297 }; // 购买 福利传送卷轴：银骑士
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 3:
+								createitem = new int[] { 49293 }; // 购买 福利传送卷轴：古鲁丁
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 4:
+								createitem = new int[] { 49296 }; // 购买 福利传送卷轴：燃柳
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 5:
+								createitem = new int[] { 49295 }; // 购买 福利传送卷轴：风木
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 6:
+								createitem = new int[] { 49294 }; // 购买 福利传送卷轴：肯特
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 7:
+								createitem = new int[] { 49298 }; // 购买 福利传送卷轴：奇岩
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 8:
+								createitem = new int[] { 49299 }; // 购买 福利传送卷轴：海音
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 9:
+								createitem = new int[] { 49301 }; // 购买 福利传送卷轴：威顿
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 10:
+								createitem = new int[] { 49300 }; // 购买 福利传送卷轴：欧瑞
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							default:
+								break;
+						}
 						break;
 					default:
 						break;
-					}
-					break;
-				default:
-					break;
 				}
 			}
 		}
@@ -5240,10 +5242,10 @@ public class C_NPCAction extends ClientBasePacket {
 
 		// 隐匿的巨龙谷入口
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81277) {
-			int level = pc.getLevel(); // 角色等级
-			char s1 = s.charAt(0);
+			final int level = pc.getLevel(); // 角色等级
+			final char s1 = s.charAt(0);
 			if (s.equalsIgnoreCase("0")) {
-				if (level >= 30 && level <= 51) {
+				if ((level >= 30) && (level <= 51)) {
 					L1Teleport.teleport(pc, 32820, 32904, (short) 1002, 5, true); // 前往侏儒部落
 					htmlid = "";
 				}
@@ -5253,27 +5255,27 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			else if (level >= 52) {
 				switch (s1) {
-				case '1':
-					L1Teleport.teleport(pc, 32904, 32627, (short) 1002, 5, true); // 前往造化之地(地)
-					break;
-				case '2':
-					L1Teleport.teleport(pc, 32793, 32593, (short) 1002, 5, true); // 前往造化之地(火)
-					break;
-				case '3':
-					L1Teleport.teleport(pc, 32874, 32785, (short) 1002, 5, true); // 前往造化之地(水)
-					break;
-				case '4':
-					L1Teleport.teleport(pc, 32993, 32716, (short) 1002, 4, true); // 前往造化之地(风)
-					break;
-				case '5':
-					L1Teleport.teleport(pc, 32698, 32664, (short) 1002, 6, true); // 前往龙之墓(北边)
-					break;
-				case '6':
-					L1Teleport.teleport(pc, 32710, 32759, (short) 1002, 6, true); // 前往龙之墓(南边)
-					break;
-				case '7':
-					L1Teleport.teleport(pc, 32986, 32630, (short) 1002, 4, true); // 前往苍空之谷
-					break;
+					case '1':
+						L1Teleport.teleport(pc, 32904, 32627, (short) 1002, 5, true); // 前往造化之地(地)
+						break;
+					case '2':
+						L1Teleport.teleport(pc, 32793, 32593, (short) 1002, 5, true); // 前往造化之地(火)
+						break;
+					case '3':
+						L1Teleport.teleport(pc, 32874, 32785, (short) 1002, 5, true); // 前往造化之地(水)
+						break;
+					case '4':
+						L1Teleport.teleport(pc, 32993, 32716, (short) 1002, 4, true); // 前往造化之地(风)
+						break;
+					case '5':
+						L1Teleport.teleport(pc, 32698, 32664, (short) 1002, 6, true); // 前往龙之墓(北边)
+						break;
+					case '6':
+						L1Teleport.teleport(pc, 32710, 32759, (short) 1002, 6, true); // 前往龙之墓(南边)
+						break;
+					case '7':
+						L1Teleport.teleport(pc, 32986, 32630, (short) 1002, 4, true); // 前往苍空之谷
+						break;
 				}
 				htmlid = "";
 			}
@@ -5291,7 +5293,7 @@ public class C_NPCAction extends ClientBasePacket {
 			if (materials != null) {
 				for (int j = 0; j < materials.length; j++) {
 					if (!pc.getInventory().checkItemNotEquipped(materials[j], counts[j])) {
-						L1Item temp = ItemTable.getInstance().getTemplate(materials[j]);
+						final L1Item temp = ItemTable.getInstance().getTemplate(materials[j]);
 						pc.sendPackets(new S_ServerMessage(337, temp.getName())); // \f1%0不足%s。
 						isCreate = false;
 					}
@@ -5304,7 +5306,7 @@ public class C_NPCAction extends ClientBasePacket {
 				int create_weight = 0;
 				for (int k = 0; k < createitem.length; k++) {
 					if ((createitem[k] > 0) && (createcount[k] > 0)) {
-						L1Item temp = ItemTable.getInstance().getTemplate(createitem[k]);
+						final L1Item temp = ItemTable.getInstance().getTemplate(createitem[k]);
 						if (temp != null) {
 							if (temp.isStackable()) {
 								if (!pc.getInventory().checkItem(createitem[k])) {
@@ -5337,10 +5339,10 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				for (int k = 0; k < createitem.length; k++) {
 					if ((createitem[k] > 0) && (createcount[k] > 0)) {
-						L1ItemInstance item = pc.getInventory().storeItem(createitem[k], createcount[k]);
+						final L1ItemInstance item = pc.getInventory().storeItem(createitem[k], createcount[k]);
 
 						if (item != null) {
-							String itemName = ItemTable.getInstance().getTemplate(createitem[k]).getName();
+							final String itemName = ItemTable.getInstance().getTemplate(createitem[k]).getName();
 							String createrName = "";
 							if (obj instanceof L1NpcInstance) {
 								createrName = ((L1NpcInstance) obj).getNpcTemplate().get_name();
@@ -5382,7 +5384,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 进入幽灵之家
-	private String enterHauntedHouse(L1PcInstance pc) {
+	private String enterHauntedHouse(final L1PcInstance pc) {
 		if (L1HauntedHouse.getInstance().getHauntedHouseStatus() == L1HauntedHouse.STATUS_PLAYING) { // 竞技中
 			pc.sendPackets(new S_ServerMessage(1182)); // 游戏已经开始了。
 			return "";
@@ -5398,7 +5400,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 进入宠物比赛
-	private String enterPetMatch(L1PcInstance pc, int objid2) {
+	private String enterPetMatch(final L1PcInstance pc, final int objid2) {
 		if (pc.getPetList().values().size() > 0) {
 			pc.sendPackets(new S_ServerMessage(1187)); // 宠物项链正在使用中。
 			return "";
@@ -5410,8 +5412,8 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 进入竞技场
-	private String enterUb(L1PcInstance pc, int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+	private String enterUb(final L1PcInstance pc, final int npcId) {
+		final L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
 		if (!ub.isActive() || !ub.canPcEnter(pc)) { // 时间外
 			return "colos2";
 		}
@@ -5423,15 +5425,15 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		ub.addMember(pc); // 人员加入
-		L1Location loc = ub.getLocation().randomLocation(10, false);
+		final L1Location loc = ub.getLocation().randomLocation(10, false);
 		L1Teleport.teleport(pc, loc.getX(), loc.getY(), ub.getMapId(), 5, true);
 		return "";
 	}
 
 	// 排除其他血盟
-	private void expelOtherClan(L1PcInstance clanPc, int keeperId) {
+	private void expelOtherClan(final L1PcInstance clanPc, final int keeperId) {
 		int houseId = 0;
-		for (L1House house : HouseTable.getInstance().getHouseTableList()) {
+		for (final L1House house : HouseTable.getInstance().getHouseTableList()) {
 			if (house.getKeeperId() == keeperId) {
 				houseId = house.getHouseId();
 			}
@@ -5441,9 +5443,9 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		int[] loc = new int[3];
-		for (L1Object object : L1World.getInstance().getObject()) {
+		for (final L1Object object : L1World.getInstance().getObject()) {
 			if (object instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) object;
+				final L1PcInstance pc = (L1PcInstance) object;
 				if (L1HouseLocation.isInHouseLoc(houseId, pc.getX(), pc.getY(), pc.getMapId()) && (clanPc.getClanid() != pc.getClanid())) {
 					loc = L1HouseLocation.getHouseTeleportLoc(houseId, 0);
 					if (pc != null) {
@@ -5455,8 +5457,8 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 炎魔耳环
-	private String getBarlogEarring(L1PcInstance pc, L1NpcInstance npc, String s) {
-		int[] earringIdList = { 21020, 21021, 21022, 21023, // 舞动耳环`双子耳环`庆典耳环`绝顶耳环
+	private String getBarlogEarring(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
+		final int[] earringIdList = { 21020, 21021, 21022, 21023, // 舞动耳环`双子耳环`庆典耳环`绝顶耳环
 				21024, 21025, 21026, 21027 // 暴走耳环`幻魔耳环`族群耳环`奴隶耳环
 		};
 		int earringId = 0; // 耳环ID
@@ -5491,7 +5493,7 @@ public class C_NPCAction extends ClientBasePacket {
 			if (item != null) {
 				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
 			}
-			for (int id : earringIdList) {
+			for (final int id : earringIdList) {
 				if (id == earringId) {
 					break;
 				}
@@ -5505,7 +5507,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 获得火焰之影友好度
-	private void getBloodCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
+	private void getBloodCrystalByKarma(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
 		L1ItemInstance item = null;
 
 		// “血石碎片1个”
@@ -5538,7 +5540,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 获得获得炎魔友好度
-	private void getSoulCrystalByKarma(L1PcInstance pc, L1NpcInstance npc, String s) {
+	private void getSoulCrystalByKarma(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
 		L1ItemInstance item = null;
 
 		// “灵魂石碎片1个”
@@ -5571,8 +5573,8 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 火焰之影项链
-	private String getYaheeAmulet(L1PcInstance pc, L1NpcInstance npc, String s) {
-		int[] amuletIdList = { 20358, 20359, 20360, 20361, // 奴隶项链`约定项链`解放项链`猎犬项链
+	private String getYaheeAmulet(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
+		final int[] amuletIdList = { 20358, 20359, 20360, 20361, // 奴隶项链`约定项链`解放项链`猎犬项链
 				20362, 20363, 20364, 20365 // 魔族项链`勇士项链`将军项链`大将军项链
 		};
 		int amuletId = 0;
@@ -5607,7 +5609,7 @@ public class C_NPCAction extends ClientBasePacket {
 			if (item != null) {
 				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
 			}
-			for (int id : amuletIdList) {
+			for (final int id : amuletIdList) {
 				if (id == amuletId) {
 					break;
 				}
@@ -5621,9 +5623,9 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	//
-	private boolean isExistDefenseClan(int castleId) {
+	private boolean isExistDefenseClan(final int castleId) {
 		boolean isExistDefenseClan = false;
-		for (L1Clan clan : L1World.getInstance().getAllClans()) {
+		for (final L1Clan clan : L1World.getInstance().getAllClans()) {
 			if (castleId == clan.getCastleId()) {
 				isExistDefenseClan = true;
 				break;
@@ -5633,9 +5635,9 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 只有出售的Npc
-	private boolean isNpcSellOnly(L1NpcInstance npc) {
-		int npcId = npc.getNpcTemplate().get_npcId();
-		String npcName = npc.getNpcTemplate().get_name();
+	private boolean isNpcSellOnly(final L1NpcInstance npc) {
+		final int npcId = npc.getNpcTemplate().get_npcId();
+		final String npcName = npc.getNpcTemplate().get_name();
 		if ((npcId == 70027 // 迪欧
 				)
 				|| "亚丁商团".equals(npcName)) {
@@ -5645,7 +5647,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	//
-	private String karmaLevelToHtmlId(int level) {
+	private String karmaLevelToHtmlId(final int level) {
 		if ((level == 0) || (level < -7) || (7 < level)) {
 			return "";
 		}
@@ -5660,21 +5662,21 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 构造房屋税字符串
-	private String[] makeHouseTaxStrings(L1PcInstance pc, L1NpcInstance npc) {
-		String name = npc.getNpcTemplate().get_name();
+	private String[] makeHouseTaxStrings(final L1PcInstance pc, final L1NpcInstance npc) {
+		final String name = npc.getNpcTemplate().get_name();
 		String[] result;
 		result = new String[] { name, "2000", "1", "1", "00" };
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int houseId = clan.getHouseId();
+			final int houseId = clan.getHouseId();
 			if (houseId != 0) {
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
-				int keeperId = house.getKeeperId();
+				final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				final int keeperId = house.getKeeperId();
 				if (npc.getNpcTemplate().get_npcId() == keeperId) {
-					Calendar cal = house.getTaxDeadline();
-					int month = cal.get(Calendar.MONTH) + 1;
-					int day = cal.get(Calendar.DATE);
-					int hour = cal.get(Calendar.HOUR_OF_DAY);
+					final Calendar cal = house.getTaxDeadline();
+					final int month = cal.get(Calendar.MONTH) + 1;
+					final int day = cal.get(Calendar.DATE);
+					final int hour = cal.get(Calendar.HOUR_OF_DAY);
 					result = new String[] { name, "2000", String.valueOf(month), String.valueOf(day), String.valueOf(hour) };
 				}
 			}
@@ -5682,23 +5684,23 @@ public class C_NPCAction extends ClientBasePacket {
 		return result;
 	}
 
-	private String[] makeUbInfoStrings(int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+	private String[] makeUbInfoStrings(final int npcId) {
+		final L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
 		return ub.makeUbInfoStrings();
 	}
 
 	// 构造战争时间字符串
-	private String[] makeWarTimeStrings(int castleId) {
-		L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
+	private String[] makeWarTimeStrings(final int castleId) {
+		final L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
 		if (castle == null) {
 			return null;
 		}
-		Calendar warTime = castle.getWarTime();
-		int year = warTime.get(Calendar.YEAR);
-		int month = warTime.get(Calendar.MONTH) + 1;
-		int day = warTime.get(Calendar.DATE);
-		int hour = warTime.get(Calendar.HOUR_OF_DAY);
-		int minute = warTime.get(Calendar.MINUTE);
+		final Calendar warTime = castle.getWarTime();
+		final int year = warTime.get(Calendar.YEAR);
+		final int month = warTime.get(Calendar.MONTH) + 1;
+		final int day = warTime.get(Calendar.DATE);
+		final int hour = warTime.get(Calendar.HOUR_OF_DAY);
+		final int minute = warTime.get(Calendar.MINUTE);
 		String[] result;
 		if (castleId == L1CastleLocation.OT_CASTLE_ID) {
 			result = new String[] { String.valueOf(year), String.valueOf(month), String.valueOf(day), String.valueOf(hour), String.valueOf(minute) };
@@ -5710,19 +5712,19 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 打开关闭 门
-	private void openCloseDoor(L1PcInstance pc, L1NpcInstance npc, String s) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+	private void openCloseDoor(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int houseId = clan.getHouseId();
+			final int houseId = clan.getHouseId();
 			if (houseId != 0) {
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
-				int keeperId = house.getKeeperId();
+				final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				final int keeperId = house.getKeeperId();
 				if (npc.getNpcTemplate().get_npcId() == keeperId) {
 					L1DoorInstance door1 = null;
 					L1DoorInstance door2 = null;
 					L1DoorInstance door3 = null;
 					L1DoorInstance door4 = null;
-					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+					for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (door.getKeeperId() == keeperId) {
 							if (door1 == null) {
 								door1 = door;
@@ -5780,11 +5782,11 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 打开关闭 城门
-	private void openCloseGate(L1PcInstance pc, int keeperId, boolean isOpen) {
+	private void openCloseGate(final L1PcInstance pc, final int keeperId, final boolean isOpen) {
 		boolean isNowWar = false;
 		int pcCastleId = 0;
 		if (pc.getClanid() != 0) {
-			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				pcCastleId = clan.getCastleId();
 			}
@@ -5846,7 +5848,7 @@ public class C_NPCAction extends ClientBasePacket {
 			isNowWar = WarTimeController.getInstance().isNowWar(L1CastleLocation.ADEN_CASTLE_ID);
 		}
 
-		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+		for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if (door.getKeeperId() == keeperId) {
 				if (isNowWar && (door.getMaxHp() > 1)) { // 战争中は城门开闭不可
 				}
@@ -5863,22 +5865,23 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 支付费用
-	private boolean payFee(L1PcInstance pc, L1NpcInstance npc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+	private boolean payFee(final L1PcInstance pc, final L1NpcInstance npc) {
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int houseId = clan.getHouseId();
+			final int houseId = clan.getHouseId();
 			if (houseId != 0) {
-				L1House house = HouseTable.getInstance().getHouseTable(houseId);
-				int keeperId = house.getKeeperId();
+				final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+				final int keeperId = house.getKeeperId();
 				if (npc.getNpcTemplate().get_npcId() == keeperId) {
-					TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
-					Calendar cal = Calendar.getInstance(tz); // 目前时间
-					Calendar deadlineCal = house.getTaxDeadline(); // 盟屋到期时间
+					final TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
+					final Calendar cal = Calendar.getInstance(tz); // 目前时间
+					final Calendar deadlineCal = house.getTaxDeadline(); // 盟屋到期时间
 
-					int remainingTime = (int) ((deadlineCal.getTimeInMillis() - cal.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+					final int remainingTime = (int) ((deadlineCal.getTimeInMillis() - cal.getTimeInMillis()) / (1000 * 60 * 60 * 24));
 					// 租期剩余时间大于一半 不用缴房租
-					if (remainingTime >= Config.HOUSE_TAX_INTERVAL / 2)
+					if (remainingTime >= Config.HOUSE_TAX_INTERVAL / 2) {
 						return true;
+					}
 					else if (pc.getInventory().checkItem(L1ItemId.ADENA, 2000)) {
 						pc.getInventory().consumeItem(L1ItemId.ADENA, 2000);
 						// 支付后 deadline延期
@@ -5899,9 +5902,9 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 变身
-	private void poly(ClientThread clientthread, int polyId) {
-		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
+	private void poly(final ClientThread clientthread, final int polyId) {
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
@@ -5918,9 +5921,9 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	//
-	private void polyByKeplisha(ClientThread clientthread, int polyId) {
-		L1PcInstance pc = clientthread.getActiveChar();
-		int awakeSkillId = pc.getAwakeSkillId();
+	private void polyByKeplisha(final ClientThread clientthread, final int polyId) {
+		final L1PcInstance pc = clientthread.getActiveChar();
+		final int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 目前状态中无法变身。
 			return;
@@ -5937,14 +5940,14 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 修复城门
-	private void repairGate(L1PcInstance pc) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+	private void repairGate(final L1PcInstance pc) {
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
-			int castleId = clan.getCastleId();
+			final int castleId = clan.getCastleId();
 			if (castleId != 0) { // 血盟城主
 				if (!WarTimeController.getInstance().isNowWar(castleId)) {
 					// 修复城门
-					for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
+					for (final L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(castleId, door)) {
 							door.repairGate();
 						}
@@ -5959,17 +5962,17 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 出售盟屋
-	private String sellHouse(L1PcInstance pc, int objectId, int npcId) {
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+	private String sellHouse(final L1PcInstance pc, final int objectId, final int npcId) {
+		final L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan == null) {
 			return ""; // 关闭窗口
 		}
-		int houseId = clan.getHouseId();
+		final int houseId = clan.getHouseId();
 		if (houseId == 0) {
 			return ""; // 关闭窗口
 		}
-		L1House house = HouseTable.getInstance().getHouseTable(houseId);
-		int keeperId = house.getKeeperId();
+		final L1House house = HouseTable.getInstance().getHouseTable(houseId);
+		final int keeperId = house.getKeeperId();
 		if (npcId != keeperId) {
 			return ""; // 关闭窗口
 		}
@@ -5990,7 +5993,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 召唤怪物
-	private void summonMonster(L1PcInstance pc, String s) {
+	private void summonMonster(final L1PcInstance pc, final String s) {
 		String[] summonstr_list;
 		int[] summonid_list;
 		int[] summonlvl_list;
@@ -6039,7 +6042,7 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		int petcost = 0;
-		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+		for (final L1NpcInstance petNpc : pc.getPetList().values()) {
 			// 现在のペットコスト
 			petcost += petNpc.getPetcost();
 		}
@@ -6070,9 +6073,9 @@ public class C_NPCAction extends ClientBasePacket {
 		charisma = pcCha + 6 - petcost;
 		summoncount = charisma / summoncost;
 
-		L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
+		final L1Npc npcTemp = NpcTable.getInstance().getTemplate(summonid);
 		for (int cnt = 0; cnt < summoncount; cnt++) {
-			L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
+			final L1SummonInstance summon = new L1SummonInstance(npcTemp, pc);
 			// if (summonid == 81103 || summonid == 81104) {
 			// summon.setPetcost(pc.getCha() + 7);
 			// } else {
@@ -6083,7 +6086,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 四大领域传送门
-	private String talkToDimensionDoor(L1PcInstance pc, L1NpcInstance npc, String s) {
+	private String talkToDimensionDoor(final L1PcInstance pc, final L1NpcInstance npc, final String s) {
 
 		String htmlid = "";
 		int protectionId = 0;
@@ -6127,7 +6130,7 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		// “把鬼脸上凸出的部分拿掉”
 		else if (s.equalsIgnoreCase("b")) {
-			L1ItemInstance item = pc.getInventory().storeItem(protectionId, 1);
+			final L1ItemInstance item = pc.getInventory().storeItem(protectionId, 1);
 			if (item != null) {
 				pc.sendPackets(new S_ServerMessage(143, npc.getNpcTemplate().get_name(), item.getLogName())); // \f1%0%s 给你 %1%o 。
 			}
@@ -6140,7 +6143,7 @@ public class C_NPCAction extends ClientBasePacket {
 		// “继续”
 		else if (s.equalsIgnoreCase("d")) {
 			if (pc.getInventory().checkItem(sealId)) { // 土之印记
-				L1ItemInstance item = pc.getInventory().findItemId(sealId);
+				final L1ItemInstance item = pc.getInventory().findItemId(sealId);
 				pc.getInventory().consumeItem(sealId, item.getCount());
 			}
 		}
@@ -6154,7 +6157,7 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.getInventory().consumeItem(protectionId, 1);
 			}
 			if (pc.getInventory().checkItem(sealId)) { // 土之印记
-				L1ItemInstance item = pc.getInventory().findItemId(sealId);
+				final L1ItemInstance item = pc.getInventory().findItemId(sealId);
 				pc.getInventory().consumeItem(sealId, item.getCount());
 			}
 			htmlid = "";
@@ -6163,7 +6166,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 使用变形卷轴
-	private boolean usePolyScroll(L1PcInstance pc, int itemId, String s) {
+	private boolean usePolyScroll(final L1PcInstance pc, final int itemId, final String s) {
 		int time = 0;
 		if ((itemId == 40088) || (itemId == 40096)) { // 变形卷轴、象牙塔变形卷轴
 			time = 1800;
@@ -6172,8 +6175,8 @@ public class C_NPCAction extends ClientBasePacket {
 			time = 2100;
 		}
 
-		L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
-		L1ItemInstance item = pc.getInventory().findItemId(itemId);
+		final L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
+		final L1ItemInstance item = pc.getInventory().findItemId(itemId);
 		boolean isUseItem = false;
 		if ((poly != null) || s.equals("none")) {
 			if (s.equals("none")) {
@@ -6200,15 +6203,15 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	// 观看竞技场
-	private String watchUb(L1PcInstance pc, int npcId) {
-		L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
-		L1Location loc = ub.getLocation();
+	private String watchUb(final L1PcInstance pc, final int npcId) {
+		final L1UltimateBattle ub = UBTable.getInstance().getUbForNpcId(npcId);
+		final L1Location loc = ub.getLocation();
 		if (pc.getInventory().consumeItem(L1ItemId.ADENA, 100)) {
 			try {
 				pc.save();
 				pc.beginGhost(loc.getX(), loc.getY(), (short) loc.getMapId(), true);
 			}
-			catch (Exception e) {
+			catch (final Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}

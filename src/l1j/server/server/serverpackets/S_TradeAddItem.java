@@ -34,7 +34,7 @@ public class S_TradeAddItem extends ServerBasePacket {
 	 * @param count
 	 * @param type
 	 */
-	public S_TradeAddItem(L1ItemInstance item, int count, int type) {
+	public S_TradeAddItem(final L1ItemInstance item, final int count, final int type) {
 		writeC(Opcodes.S_OPCODE_TRADEADDITEM);
 		writeC(type); // 0:最大的交易窗口 1:最小的交易窗口
 		writeH(item.getItem().getGfxId());
@@ -47,9 +47,9 @@ public class S_TradeAddItem extends ServerBasePacket {
 		}
 		else {
 			writeC(item.getBless());
-			byte[] status = item.getStatusBytes();
+			final byte[] status = item.getStatusBytes();
 			writeC(status.length);
-			for (byte b : status) {
+			for (final byte b : status) {
 				writeC(b);
 			}
 		}

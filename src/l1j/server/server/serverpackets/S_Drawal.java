@@ -30,7 +30,7 @@ public class S_Drawal extends ServerBasePacket {
 	 * @param objectId
 	 * @param count
 	 */
-	public S_Drawal(int objectId, int count) {
+	public S_Drawal(final int objectId, final int count) {
 		writeC(Opcodes.S_OPCODE_DRAWAL);
 		writeD(objectId);
 		writeD(count);

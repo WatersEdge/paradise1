@@ -50,12 +50,12 @@ public class NpcActionTable {
 
 	public static void load() {
 		try {
-			PerformanceTimer timer = new PerformanceTimer();
+			final PerformanceTimer timer = new PerformanceTimer();
 			System.out.print("╠》正在读取 NpcAction...");
 			_instance = new NpcActionTable();
 			System.out.println("完成!\t\t耗时: " + timer.get() + "\t毫秒");
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "无法加载NpcAction", e);
 			System.exit(0);
 		}
@@ -66,15 +66,15 @@ public class NpcActionTable {
 	private final List<L1NpcAction> _talkActions = Lists.newList();
 
 	private NpcActionTable() throws Exception {
-		File usersDir = new File("./data/xml/NpcActions/users/");
+		final File usersDir = new File("./data/xml/NpcActions/users/");
 		if (usersDir.exists()) {
 			loadDirectoryActions(usersDir);
 		}
 		loadDirectoryActions(new File("./data/xml/NpcActions/"));
 	}
 
-	public L1NpcAction get(L1PcInstance pc, L1Object obj) {
-		for (L1NpcAction action : _talkActions) {
+	public L1NpcAction get(final L1PcInstance pc, final L1Object obj) {
+		for (final L1NpcAction action : _talkActions) {
 			if (action.acceptsRequest("", pc, obj)) {
 				return action;
 			}
@@ -82,8 +82,8 @@ public class NpcActionTable {
 		return null;
 	}
 
-	public L1NpcAction get(String actionName, L1PcInstance pc, L1Object obj) {
-		for (L1NpcAction action : _actions) {
+	public L1NpcAction get(final String actionName, final L1PcInstance pc, final L1Object obj) {
+		for (final L1NpcAction action : _actions) {
 			if (action.acceptsRequest(actionName, pc, obj)) {
 				return action;
 			}
@@ -91,15 +91,15 @@ public class NpcActionTable {
 		return null;
 	}
 
-	private void loadAction(File file) throws Exception {
+	private void loadAction(final File file) throws Exception {
 		_actions.addAll(loadAction(file, "NpcActionList"));
 	}
 
-	private List<L1NpcAction> loadAction(File file, String nodeName)
+	private List<L1NpcAction> loadAction(final File file, final String nodeName)
 
 	throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document doc = builder.parse(file);
+		final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		final Document doc = builder.parse(file);
 
 		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
 			return Lists.newList();
@@ -107,9 +107,9 @@ public class NpcActionTable {
 		return L1NpcXmlParser.listActions(doc.getDocumentElement());
 	}
 
-	private void loadDirectoryActions(File dir) throws Exception {
-		for (String file : dir.list()) {
-			File f = new File(dir, file);
+	private void loadDirectoryActions(final File dir) throws Exception {
+		for (final String file : dir.list()) {
+			final File f = new File(dir, file);
 			if (FileUtil.getExtension(f).equalsIgnoreCase("xml")) {
 				loadAction(f);
 				loadTalkAction(f);
@@ -117,7 +117,7 @@ public class NpcActionTable {
 		}
 	}
 
-	private void loadTalkAction(File file) throws Exception {
+	private void loadTalkAction(final File file) throws Exception {
 		_talkActions.addAll(loadAction(file, "NpcTalkActionList"));
 	}
 }

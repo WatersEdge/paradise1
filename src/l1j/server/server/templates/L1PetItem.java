@@ -103,59 +103,59 @@ public class L1PetItem {
 		return _useType;
 	}
 
-	public void setAddAc(int i) {
+	public void setAddAc(final int i) {
 		_AddAc = i;
 	}
 
-	public void setAddCon(int i) {
+	public void setAddCon(final int i) {
 		_addCon = i;
 	}
 
-	public void setAddDex(int i) {
+	public void setAddDex(final int i) {
 		_addDex = i;
 	}
 
-	public void setAddHp(int i) {
+	public void setAddHp(final int i) {
 		_addHp = i;
 	}
 
-	public void setAddInt(int i) {
+	public void setAddInt(final int i) {
 		_addInt = i;
 	}
 
-	public void setAddMp(int i) {
+	public void setAddMp(final int i) {
 		_addMp = i;
 	}
 
-	public void setAddMr(int i) {
+	public void setAddMr(final int i) {
 		_addMr = i;
 	}
 
-	public void setAddSp(int i) {
+	public void setAddSp(final int i) {
 		_addSp = i;
 	}
 
-	public void setAddStr(int i) {
+	public void setAddStr(final int i) {
 		_addStr = i;
 	}
 
-	public void setAddWis(int i) {
+	public void setAddWis(final int i) {
 		_addWis = i;
 	}
 
-	public void setDamageModifier(int i) {
+	public void setDamageModifier(final int i) {
 		_damageModifier = i;
 	}
 
-	public void setHitModifier(int i) {
+	public void setHitModifier(final int i) {
 		_hitModifier = i;
 	}
 
-	public void setItemId(int i) {
+	public void setItemId(final int i) {
 		_itemId = i;
 	}
 
-	public void setUseType(int i) {
+	public void setUseType(final int i) {
 		_useType = i;
 	}
 

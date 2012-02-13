@@ -45,7 +45,7 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 	private String _name;
 
 	@Override
-	public int compareTo(L1UbSpawn rhs) {
+	public int compareTo(final L1UbSpawn rhs) {
 		// XXX - 本当はもっと厳密な順序付けがあるはずだが、必要なさそうなので後回し
 		if (getId() < rhs.getId()) {
 			return -1;
@@ -93,41 +93,41 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		return _ubId;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(final int amount) {
 		_amount = amount;
 	}
 
-	public void setGroup(int group) {
+	public void setGroup(final int group) {
 		_group = group;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 		_id = id;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		_name = name;
 	}
 
-	public void setNpcTemplateId(int npcTemplateId) {
+	public void setNpcTemplateId(final int npcTemplateId) {
 		_npcTemplateId = npcTemplateId;
 	}
 
-	public void setPattern(int pattern) {
+	public void setPattern(final int pattern) {
 		_pattern = pattern;
 	}
 
-	public void setSealCount(int i) {
+	public void setSealCount(final int i) {
 		_sealCount = i;
 	}
 
-	public void setSpawnDelay(int spawnDelay) {
+	public void setSpawnDelay(final int spawnDelay) {
 		_spawnDelay = spawnDelay;
 	}
 
 	// --------------------end getter/setter--------------------
 
-	public void setUbId(int ubId) {
+	public void setUbId(final int ubId) {
 		_ubId = ubId;
 	}
 
@@ -138,9 +138,9 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 	}
 
 	public void spawnOne() {
-		L1UltimateBattle ub = UBTable.getInstance().getUb(_ubId);
-		L1Location loc = ub.getLocation().randomLocation((ub.getLocX2() - ub.getLocX1()) / 2, false);
-		L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(getNpcTemplateId()));
+		final L1UltimateBattle ub = UBTable.getInstance().getUb(_ubId);
+		final L1Location loc = ub.getLocation().randomLocation((ub.getLocX2() - ub.getLocX1()) / 2, false);
+		final L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(getNpcTemplateId()));
 
 		mob.setId(IdFactory.getInstance().nextId());
 		mob.setHeading(5);
@@ -156,8 +156,8 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		L1World.getInstance().storeObject(mob);
 		L1World.getInstance().addVisibleObject(mob);
 
-		S_NPCPack s_npcPack = new S_NPCPack(mob);
-		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
+		final S_NPCPack s_npcPack = new S_NPCPack(mob);
+		for (final L1PcInstance pc : L1World.getInstance().getRecognizePlayer(mob)) {
 			pc.addKnownObject(mob);
 			mob.addKnownObject(pc);
 			pc.sendPackets(s_npcPack);

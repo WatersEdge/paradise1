@@ -51,12 +51,12 @@ public class TownTable {
 		load();
 	}
 
-	public synchronized void addSalesMoney(int town_id, int salesMoney) {
+	public synchronized void addSalesMoney(final int town_id, final int salesMoney) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 
-		L1Town town = TownTable.getInstance().getTownTable(town_id);
-		int townTaxRate = town.get_tax_rate();
+		final L1Town town = TownTable.getInstance().getTownTable(town_id);
+		final int townTaxRate = town.get_tax_rate();
 
 		int townTax = salesMoney / 100 * townTaxRate;
 		int townFixTax = salesMoney / 100 * 2;
@@ -82,7 +82,7 @@ public class TownTable {
 			town.set_town_fix_tax(town.get_town_fix_tax() + townFixTax);
 
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -90,7 +90,7 @@ public class TownTable {
 		}
 	}
 
-	public L1Town getTownTable(int id) {
+	public L1Town getTownTable(final int id) {
 		return _towns.get(id);
 	}
 
@@ -98,8 +98,8 @@ public class TownTable {
 		return _towns.values().toArray(new L1Town[_towns.size()]);
 	}
 
-	public boolean isLeader(L1PcInstance pc, int town_id) {
-		L1Town town = getTownTable(town_id);
+	public boolean isLeader(final L1PcInstance pc, final int town_id) {
+		final L1Town town = getTownTable(town_id);
 		return (town.get_leader_id() == pc.getId());
 	}
 
@@ -118,7 +118,7 @@ public class TownTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1Town town = new L1Town();
+				final L1Town town = new L1Town();
 				townid = rs.getInt("town_id");
 				town.set_townid(townid);
 				town.set_name(rs.getString("name"));
@@ -134,7 +134,7 @@ public class TownTable {
 				_towns.put(new Integer(townid), town);
 			}
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);
@@ -152,7 +152,7 @@ public class TownTable {
 			pstm = con.prepareStatement("UPDATE town SET sales_money_yesterday = sales_money, sales_money = 0");
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);
@@ -169,7 +169,7 @@ public class TownTable {
 			pstm = con.prepareStatement("UPDATE town SET tax_rate = tax_rate_reserved");
 			pstm.execute();
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(pstm);

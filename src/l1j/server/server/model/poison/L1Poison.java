@@ -24,7 +24,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  */
 public abstract class L1Poison {
 
-	protected static boolean isValidTarget(L1Character cha) {
+	protected static boolean isValidTarget(final L1Character cha) {
 		if (cha == null) {
 			return false;
 		}
@@ -37,7 +37,7 @@ public abstract class L1Poison {
 			return true;
 		}
 
-		L1PcInstance player = (L1PcInstance) cha;
+		final L1PcInstance player = (L1PcInstance) cha;
 		if (player.getInventory().checkEquipped(20298) // 洁尼斯戒指
 				|| player.getInventory().checkEquipped(20117) // 巴风特盔甲
 				|| player.getInventory().checkEquipped(21115) // 安塔瑞斯的力量
@@ -52,12 +52,12 @@ public abstract class L1Poison {
 	}
 
 	// 微妙・・・素直にsendPacketsをL1Characterへ引き上げるべきかもしれない
-	protected static void sendMessageIfPlayer(L1Character cha, int msgId) {
+	protected static void sendMessageIfPlayer(final L1Character cha, final int msgId) {
 		if (!(cha instanceof L1PcInstance)) {
 			return;
 		}
 
-		L1PcInstance player = (L1PcInstance) cha;
+		final L1PcInstance player = (L1PcInstance) cha;
 		player.sendPackets(new S_ServerMessage(msgId));
 	}
 

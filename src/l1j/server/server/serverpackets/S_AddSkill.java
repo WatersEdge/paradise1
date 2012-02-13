@@ -28,15 +28,15 @@ public class S_AddSkill extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AddSkill(int level, int id) {
-		int ids[] = new int[28];
+	public S_AddSkill(final int level, final int id) {
+		final int ids[] = new int[28];
 		for (int i = 0; i < ids.length; i++) {
 			ids[i] = 0;
 		}
 		ids[level] = id;
 
-		boolean hasLevel5to8 = 0 < (ids[4] + ids[5] + ids[6] + ids[7]);
-		boolean hasLevel9to10 = 0 < (ids[8] + ids[9]);
+		final boolean hasLevel5to8 = 0 < (ids[4] + ids[5] + ids[6] + ids[7]);
+		final boolean hasLevel9to10 = 0 < (ids[8] + ids[9]);
 
 		writeC(Opcodes.S_OPCODE_ADDSKILL);
 		if (hasLevel5to8 && !hasLevel9to10) {
@@ -48,17 +48,17 @@ public class S_AddSkill extends ServerBasePacket {
 		else {
 			writeC(32);
 		}
-		for (int i : ids) {
+		for (final int i : ids) {
 			writeC(i);
 		}
 		writeD(0);
 		writeD(0);
 	}
 
-	public S_AddSkill(int level1, int level2, int level3, int level4, int level5, int level6, int level7, int level8, int level9, int level10, int knight, int l2, int de1, int de2, int royal, int l3, int elf1, int elf2, int elf3, int elf4, int elf5, int elf6, int k5, int l5,
-			int m5, int n5, int o5, int p5) {
-		int i6 = level5 + level6 + level7 + level8;
-		int j6 = level9 + level10;
+	public S_AddSkill(final int level1, final int level2, final int level3, final int level4, final int level5, final int level6, final int level7, final int level8, final int level9, final int level10, final int knight, final int l2, final int de1, final int de2,
+			final int royal, final int l3, final int elf1, final int elf2, final int elf3, final int elf4, final int elf5, final int elf6, final int k5, final int l5, final int m5, final int n5, final int o5, final int p5) {
+		final int i6 = level5 + level6 + level7 + level8;
+		final int j6 = level9 + level10;
 		writeC(Opcodes.S_OPCODE_ADDSKILL);
 		if ((i6 > 0) && (j6 == 0)) {
 			writeC(50);

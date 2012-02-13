@@ -14,7 +14,7 @@ import lineage.console.connector.UniversalUseItem;
 public class UsePotion_AddMp implements UniversalUseItem {
 
 	@Override
-	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
+	public void useItem(final L1PcInstance pc, final L1ItemInstance item, final int itemId, int effect, final int time, final int gfxid) {
 
 		pc.delAbsoluteBarrier(); // 删除绝对屏障效果
 

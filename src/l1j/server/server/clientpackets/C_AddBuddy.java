@@ -32,12 +32,12 @@ public class C_AddBuddy extends ClientBasePacket {
 
 	private static final String C_ADD_BUDDY = "[C] C_AddBuddy";
 
-	public C_AddBuddy(byte[] decrypt, ClientThread client) {
+	public C_AddBuddy(final byte[] decrypt, final ClientThread client) {
 		super(decrypt);
-		L1PcInstance pc = client.getActiveChar();
-		BuddyTable buddyTable = BuddyTable.getInstance();
-		L1Buddy buddyList = buddyTable.getBuddyTable(pc.getId());
-		String charName = readS();
+		final L1PcInstance pc = client.getActiveChar();
+		final BuddyTable buddyTable = BuddyTable.getInstance();
+		final L1Buddy buddyList = buddyTable.getBuddyTable(pc.getId());
+		final String charName = readS();
 
 		if (charName.equalsIgnoreCase(pc.getName())) {
 			return;
@@ -47,10 +47,10 @@ public class C_AddBuddy extends ClientBasePacket {
 			return;
 		}
 
-		for (L1CharName cn : CharacterTable.getInstance().getCharNameList()) {
+		for (final L1CharName cn : CharacterTable.getInstance().getCharNameList()) {
 			if (charName.equalsIgnoreCase(cn.getName())) {
-				int objId = cn.getId();
-				String name = cn.getName();
+				final int objId = cn.getId();
+				final String name = cn.getName();
 				buddyList.add(objId, name);
 				buddyTable.addBuddy(pc.getId(), objId, name);
 				return;

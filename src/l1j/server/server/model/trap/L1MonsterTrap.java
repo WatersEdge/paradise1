@@ -47,7 +47,7 @@ public class L1MonsterTrap extends L1Trap {
 
 	private Constructor<?> _constructor = null; // 性能缓存
 
-	public L1MonsterTrap(TrapStorage storage) {
+	public L1MonsterTrap(final TrapStorage storage) {
 		super(storage);
 
 		_npcId = storage.getInt("monsterNpcId");
@@ -55,10 +55,10 @@ public class L1MonsterTrap extends L1Trap {
 	}
 
 	@Override
-	public void onTrod(L1PcInstance trodFrom, L1Object trapObj) {
+	public void onTrod(final L1PcInstance trodFrom, final L1Object trapObj) {
 		sendEffect(trapObj);
 
-		List<Point> points = getSpawnablePoints(trapObj.getLocation(), 5);
+		final List<Point> points = getSpawnablePoints(trapObj.getLocation(), 5);
 
 		// 沸ける場所が無ければ終了
 		if (points.isEmpty()) {
@@ -68,7 +68,7 @@ public class L1MonsterTrap extends L1Trap {
 		try {
 			int cnt = 0;
 			while (true) {
-				for (Point pt : points) {
+				for (final Point pt : points) {
 					spawn(new L1Location(pt, trapObj.getMap()));
 					cnt++;
 					if (_count <= cnt) {
@@ -77,12 +77,12 @@ public class L1MonsterTrap extends L1Trap {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}
 
-	private void addListIfPassable(List<Point> list, L1Map map, Point pt) {
+	private void addListIfPassable(final List<Point> list, final L1Map map, final Point pt) {
 		if (map.isPassable(pt)) {
 			list.add(pt);
 		}
@@ -99,15 +99,15 @@ public class L1MonsterTrap extends L1Trap {
 		return (L1NpcInstance) _constructor.newInstance(new Object[] { _npcTemp });
 	}
 
-	private Constructor<?> getConstructor(L1Npc npc) throws ClassNotFoundException {
+	private Constructor<?> getConstructor(final L1Npc npc) throws ClassNotFoundException {
 		return Class.forName("l1j.server.server.model.Instance." + npc.getImpl() + "Instance").getConstructors()[0];
 	}
 
-	private List<Point> getSpawnablePoints(L1Location loc, int d) {
-		List<Point> result = Lists.newList();
-		L1Map m = loc.getMap();
-		int x = loc.getX();
-		int y = loc.getY();
+	private List<Point> getSpawnablePoints(final L1Location loc, final int d) {
+		final List<Point> result = Lists.newList();
+		final L1Map m = loc.getMap();
+		final int x = loc.getX();
+		final int y = loc.getY();
 		// locを中心に、1辺dタイルの正方形を描くPointリストを作る
 		for (int i = 0; i < d; i++) {
 			addListIfPassable(result, m, new Point(d - i + x, i + y));
@@ -118,8 +118,8 @@ public class L1MonsterTrap extends L1Trap {
 		return result;
 	}
 
-	private void spawn(L1Location loc) throws Exception {
-		L1NpcInstance npc = createNpc();
+	private void spawn(final L1Location loc) throws Exception {
+		final L1NpcInstance npc = createNpc();
 		npc.setId(IdFactory.getInstance().nextId());
 		npc.getLocation().set(loc);
 		npc.setHomeX(loc.getX());

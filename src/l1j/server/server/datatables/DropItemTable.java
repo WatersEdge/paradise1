@@ -62,8 +62,8 @@ public final class DropItemTable {
 	 * 
 	 * @param itemId
 	 */
-	public double getDropAmount(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
+	public double getDropAmount(final int itemId) {
+		final dropItemData data = _dropItem.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -75,8 +75,8 @@ public final class DropItemTable {
 	 * 
 	 * @param itemId
 	 */
-	public double getDropRate(int itemId) {
-		dropItemData data = _dropItem.get(itemId);
+	public double getDropRate(final int itemId) {
+		final dropItemData data = _dropItem.get(itemId);
 		if (data == null) {
 			return 1;
 		}
@@ -95,8 +95,8 @@ public final class DropItemTable {
 			pstm = con.prepareStatement("SELECT * FROM drop_item");
 
 			for (rs = pstm.executeQuery(); rs.next();) {
-				dropItemData data = new dropItemData();
-				int itemId = rs.getInt("item_id");
+				final dropItemData data = new dropItemData();
+				final int itemId = rs.getInt("item_id");
 				data.dropRate = rs.getDouble("drop_rate");
 				data.dropAmount = rs.getDouble("drop_amount");
 
@@ -105,7 +105,7 @@ public final class DropItemTable {
 
 			_log.config("drop_item " + _dropItem.size());
 		}
-		catch (SQLException e) {
+		catch (final SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
 			SQLUtil.close(rs);

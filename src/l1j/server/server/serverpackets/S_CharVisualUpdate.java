@@ -31,7 +31,7 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * @param cha
 	 * @param status
 	 */
-	public S_CharVisualUpdate(L1Character cha, int status) {
+	public S_CharVisualUpdate(final L1Character cha, final int status) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
 		writeD(cha.getId());
 		writeC(status);
@@ -44,7 +44,7 @@ public class S_CharVisualUpdate extends ServerBasePacket {
 	 * 
 	 * @param cha
 	 */
-	public S_CharVisualUpdate(L1PcInstance pc) {
+	public S_CharVisualUpdate(final L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
 		writeD(pc.getId());
 		writeC(pc.getCurrentWeapon());

@@ -33,7 +33,7 @@ public class S_OwnCharStatus extends ServerBasePacket {
 	/**
 	 * 更新角色属性与能力值
 	 */
-	public S_OwnCharStatus(L1PcInstance pc) {
+	public S_OwnCharStatus(final L1PcInstance pc) {
 		int time = L1GameTimeClock.getInstance().currentTime().getSeconds();
 		time = time - (time % 300);
 		// _log.warning((new

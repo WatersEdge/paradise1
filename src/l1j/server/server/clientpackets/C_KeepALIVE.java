@@ -26,7 +26,7 @@ public class C_KeepALIVE extends ClientBasePacket {
 
 	private static final String C_KEEP_ALIVE = "[C] C_KeepALIVE";
 
-	public C_KeepALIVE(byte decrypt[], ClientThread client) {
+	public C_KeepALIVE(final byte decrypt[], final ClientThread client) {
 		super(decrypt);
 		// XXX:发送GameTime（也许我应该使用它，因为事情已经到了发送数据的三个字节）
 		// L1PcInstance pc = client.getActiveChar();

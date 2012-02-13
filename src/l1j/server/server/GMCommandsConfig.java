@@ -50,22 +50,22 @@ public class GMCommandsConfig {
 		}
 
 		@Override
-		public void loadElement(Element element) {
-			List<L1ItemSetItem> list = Lists.newList();
-			NodeList nodes = element.getChildNodes();
-			for (Element elem : new IterableElementList(nodes)) {
+		public void loadElement(final Element element) {
+			final List<L1ItemSetItem> list = Lists.newList();
+			final NodeList nodes = element.getChildNodes();
+			for (final Element elem : new IterableElementList(nodes)) {
 				if (elem.getNodeName().equalsIgnoreCase("Item")) {
 					list.add(loadItem(elem));
 				}
 			}
-			String name = element.getAttribute("Name");
+			final String name = element.getAttribute("Name");
 			ITEM_SETS.put(name.toLowerCase(), list);
 		}
 
-		public L1ItemSetItem loadItem(Element element) {
-			int id = Integer.valueOf(element.getAttribute("Id"));
-			int amount = Integer.valueOf(element.getAttribute("Amount"));
-			int enchant = Integer.valueOf(element.getAttribute("Enchant"));
+		public L1ItemSetItem loadItem(final Element element) {
+			final int id = Integer.valueOf(element.getAttribute("Id"));
+			final int amount = Integer.valueOf(element.getAttribute("Amount"));
+			final int enchant = Integer.valueOf(element.getAttribute("Enchant"));
 			return new L1ItemSetItem(id, amount, enchant);
 		}
 	}
@@ -73,14 +73,14 @@ public class GMCommandsConfig {
 	private abstract class ListLoaderAdapter implements ConfigLoader {
 		private final String _listName;
 
-		public ListLoaderAdapter(String listName) {
+		public ListLoaderAdapter(final String listName) {
 			_listName = listName;
 		}
 
 		@Override
-		public final void load(Element element) {
-			NodeList nodes = element.getChildNodes();
-			for (Element elem : new IterableElementList(nodes)) {
+		public final void load(final Element element) {
+			final NodeList nodes = element.getChildNodes();
+			for (final Element elem : new IterableElementList(nodes)) {
 				if (elem.getNodeName().equalsIgnoreCase(_listName)) {
 					loadElement(elem);
 				}
@@ -96,11 +96,11 @@ public class GMCommandsConfig {
 		}
 
 		@Override
-		public void loadElement(Element element) {
-			String name = element.getAttribute("Name");
-			int locX = Integer.valueOf(element.getAttribute("LocX"));
-			int locY = Integer.valueOf(element.getAttribute("LocY"));
-			int mapId = Integer.valueOf(element.getAttribute("MapId"));
+		public void loadElement(final Element element) {
+			final String name = element.getAttribute("Name");
+			final int locX = Integer.valueOf(element.getAttribute("LocX"));
+			final int locY = Integer.valueOf(element.getAttribute("LocY"));
+			final int mapId = Integer.valueOf(element.getAttribute("MapId"));
 			ROOMS.put(name.toLowerCase(), new L1Location(locX, locY, mapId));
 		}
 	}
@@ -109,7 +109,7 @@ public class GMCommandsConfig {
 
 	private static Map<String, ConfigLoader> _loaders = Maps.newMap();
 	static {
-		GMCommandsConfig instance = new GMCommandsConfig();
+		final GMCommandsConfig instance = new GMCommandsConfig();
 		_loaders.put("roomlist", instance.new RoomLoader());
 		_loaders.put("itemsetlist", instance.new ItemSetLoader());
 	}
@@ -120,22 +120,22 @@ public class GMCommandsConfig {
 
 	public static void load() {
 		try {
-			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
-			NodeList nodes = doc.getDocumentElement().getChildNodes();
+			final Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
+			final NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
+				final ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
 				if (loader != null) {
 					loader.load((Element) nodes.item(i));
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, "读取 GMCommands.xml 失败", e);
 		}
 	}
 
-	private static Document loadXml(String file) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	private static Document loadXml(final String file) throws ParserConfigurationException, SAXException, IOException {
+		final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		return builder.parse(file);
 	}
 }

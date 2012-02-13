@@ -54,10 +54,10 @@ public class GMCommands {
 	}
 
 	/** 处理GM指令 */
-	public void handleCommands(L1PcInstance gm, String cmdLine) {
-		StringTokenizer token = new StringTokenizer(cmdLine);
+	public void handleCommands(final L1PcInstance gm, final String cmdLine) {
+		final StringTokenizer token = new StringTokenizer(cmdLine);
 		// 命令，直到第一个空白，并在其后当作参数空格隔开
-		String cmd = token.nextToken();
+		final String cmd = token.nextToken();
 		String param = "";
 		while (token.hasMoreTokens()) {
 			param = new StringBuilder(param).append(token.nextToken()).append(' ').toString();
@@ -82,7 +82,7 @@ public class GMCommands {
 		gm.sendPackets(new S_SystemMessage("指令 " + cmd + " 不存在。"));
 	}
 
-	private String complementClassName(String className) {
+	private String complementClassName(final String className) {
 		// 如果包涵 . 则认为他已经有完整路径，所以直接丢回去
 		if (className.contains(".")) {
 			return className;
@@ -92,9 +92,9 @@ public class GMCommands {
 		return "l1j.server.server.command.executor." + className;
 	}
 
-	private boolean executeDatabaseCommand(L1PcInstance pc, String name, String arg) {
+	private boolean executeDatabaseCommand(final L1PcInstance pc, final String name, final String arg) {
 		try {
-			L1Command command = L1Commands.get(name);
+			final L1Command command = L1Commands.get(name);
 			if (command == null) {
 				return false;
 			}
@@ -103,34 +103,34 @@ public class GMCommands {
 				return true;
 			}
 
-			Class<?> cls = Class.forName(complementClassName(command.getExecutorClassName()));
-			L1CommandExecutor exe = (L1CommandExecutor) cls.getMethod("getInstance").invoke(null);
+			final Class<?> cls = Class.forName(complementClassName(command.getExecutorClassName()));
+			final L1CommandExecutor exe = (L1CommandExecutor) cls.getMethod("getInstance").invoke(null);
 			exe.execute(pc, name, arg);
 			_log.info(pc.getName() + " 使用 ." + name + " " + arg + " 的指令。");
 			return true;
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, " 错误的GM指令。", e);
 		}
 		return false;
 	}
 
-	private void redo(L1PcInstance pc, String arg) {
+	private void redo(final L1PcInstance pc, final String arg) {
 		try {
-			String lastCmd = _lastCommands.get(pc.getId());
+			final String lastCmd = _lastCommands.get(pc.getId());
 			if (arg.isEmpty()) {
 				pc.sendPackets(new S_SystemMessage("指令 " + lastCmd + " 重新执行。"));
 				handleCommands(pc, lastCmd);
 			}
 			else {
 				// 引数を变えて实行
-				StringTokenizer token = new StringTokenizer(lastCmd);
-				String cmd = token.nextToken() + " " + arg;
+				final StringTokenizer token = new StringTokenizer(lastCmd);
+				final String cmd = token.nextToken() + " " + arg;
 				pc.sendPackets(new S_SystemMessage("指令 " + cmd + " 执行。"));
 				handleCommands(pc, cmd);
 			}
 		}
-		catch (Exception e) {
+		catch (final Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(".r 指令错误。"));
 		}

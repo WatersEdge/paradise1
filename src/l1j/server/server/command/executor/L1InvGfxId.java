@@ -30,19 +30,19 @@ public class L1InvGfxId implements L1CommandExecutor {
 	}
 
 	@Override
-	public void execute(L1PcInstance pc, String cmdName, String arg) {
+	public void execute(final L1PcInstance pc, final String cmdName, final String arg) {
 		try {
-			StringTokenizer st = new StringTokenizer(arg);
-			int gfxid = Integer.parseInt(st.nextToken(), 10);
-			int count = Integer.parseInt(st.nextToken(), 10);
+			final StringTokenizer st = new StringTokenizer(arg);
+			final int gfxid = Integer.parseInt(st.nextToken(), 10);
+			final int count = Integer.parseInt(st.nextToken(), 10);
 			for (int i = 0; i < count; i++) {
-				L1ItemInstance item = ItemTable.getInstance().createItem(40005);
+				final L1ItemInstance item = ItemTable.getInstance().createItem(40005);
 				item.getItem().setGfxId(gfxid + i);
 				item.getItem().setName(String.valueOf(gfxid + i));
 				pc.getInventory().storeItem(item);
 			}
 		}
-		catch (Exception exception) {
+		catch (final Exception exception) {
 			pc.sendPackets(new S_SystemMessage(cmdName + " 请输入 id 出现的数量。"));
 		}
 	}

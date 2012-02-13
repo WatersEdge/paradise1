@@ -29,10 +29,10 @@ import l1j.server.server.utils.Random;
 public class L1BossSpawn extends L1Spawn {
 
 	private class SpawnTask implements Runnable {
-		private int _spawnNumber;
-		private int _objectId;
+		private final int _spawnNumber;
+		private final int _objectId;
 
-		private SpawnTask(int spawnNumber, int objectId) {
+		private SpawnTask(final int spawnNumber, final int objectId) {
 			_spawnNumber = spawnNumber;
 			_objectId = objectId;
 		}
@@ -55,7 +55,7 @@ public class L1BossSpawn extends L1Spawn {
 
 	private Calendar _activeSpawnTime;
 
-	public L1BossSpawn(L1Npc mobTemplate) {
+	public L1BossSpawn(final L1Npc mobTemplate) {
 		super(mobTemplate);
 	}
 
@@ -66,17 +66,17 @@ public class L1BossSpawn extends L1Spawn {
 	 *            L1Spawn管理这些数字。也可以指定任意一点。
 	 */
 	@Override
-	public void executeSpawnTask(int spawnNumber, int objectId) {
+	public void executeSpawnTask(final int spawnNumber, final int objectId) {
 		// countをデクリメントして全部死んだかチェック
 		if (subAndGetCount() != 0) {
 			return; // 没有全部死
 		}
 		// 前回出现时间に对して、次の出现时间を算出
 		Calendar spawnTime;
-		Calendar now = Calendar.getInstance(); // 现时刻
-		Calendar latestStart = _cycle.getLatestStartTime(now); // 现时刻に对する最近の周期の开始时间
+		final Calendar now = Calendar.getInstance(); // 现时刻
+		final Calendar latestStart = _cycle.getLatestStartTime(now); // 现时刻に对する最近の周期の开始时间
 
-		Calendar activeStart = _cycle.getSpawnStartTime(_activeSpawnTime); // アクティブだった周期の开始时间
+		final Calendar activeStart = _cycle.getSpawnStartTime(_activeSpawnTime); // アクティブだった周期の开始时间
 		// アクティブだった周期の开始时间 >= 最近の周期开始时间の场合、次の出现
 		if (!activeStart.before(latestStart)) {
 			spawnTime = calcNextSpawnTime(activeStart);
@@ -99,10 +99,10 @@ public class L1BossSpawn extends L1Spawn {
 		if (_cycle == null) {
 			throw new RuntimeException(_cycleType + " not found");
 		}
-		Calendar now = Calendar.getInstance();
+		final Calendar now = Calendar.getInstance();
 		// 出现时间
 		Calendar spawnTime;
-		if (Config.INIT_BOSS_SPAWN && _percentage > Random.nextInt(100)) {
+		if (Config.INIT_BOSS_SPAWN && (_percentage > Random.nextInt(100))) {
 			spawnTime = _cycle.calcSpawnTime(now);
 
 		}
@@ -112,11 +112,11 @@ public class L1BossSpawn extends L1Spawn {
 		spawnBoss(spawnTime, 0);
 	}
 
-	public void setCycleType(String type) {
+	public void setCycleType(final String type) {
 		_cycleType = type;
 	}
 
-	public void setPercentage(int percentage) {
+	public void setPercentage(final int percentage) {
 		_percentage = percentage;
 	}
 
@@ -125,7 +125,7 @@ public class L1BossSpawn extends L1Spawn {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("[MOB]npcid:" + getNpcId());
 		builder.append(" name:" + getName());
 		builder.append("[Type]" + _cycle.getName());
@@ -147,10 +147,10 @@ public class L1BossSpawn extends L1Spawn {
 	}
 
 	// 指定时间BOSS出现计划
-	private void spawnBoss(Calendar spawnTime, int objectId) {
+	private void spawnBoss(final Calendar spawnTime, final int objectId) {
 		// 保存这次的出现时间。再出现时使用。
 		_activeSpawnTime = spawnTime;
-		long delay = spawnTime.getTimeInMillis() - System.currentTimeMillis();
+		final long delay = spawnTime.getTimeInMillis() - System.currentTimeMillis();
 
 		int cnt = _spawnCount;
 		_spawnCount = getAmount();

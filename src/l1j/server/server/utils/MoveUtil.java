@@ -29,7 +29,7 @@ public class MoveUtil {
 	 * 
 	 * @param loc
 	 */
-	public static void MoveLoc(int[] loc) {
+	public static void MoveLoc(final int[] loc) {
 		loc[0] += MoveX(loc[2]);
 		loc[1] += MoveY(loc[2]);
 	}
@@ -40,7 +40,7 @@ public class MoveUtil {
 	 * @param loc
 	 * @param heading
 	 */
-	public static void MoveLoc(int[] loc, final int heading) {
+	public static void MoveLoc(final int[] loc, final int heading) {
 		loc[0] += MoveX(heading);
 		loc[1] += MoveY(heading);
 	}

@@ -20,7 +20,7 @@ import lineage.console.connector.UniversalUseItem;
 public class UseSpeedPotion_1 implements UniversalUseItem {
 
 	@Override
-	public void useItem(L1PcInstance pc, L1ItemInstance item, int itemId, int effect, int time, int gfxid) {
+	public void useItem(final L1PcInstance pc, final L1ItemInstance item, final int itemId, final int effect, final int time, final int gfxid) {
 
 		// 如果正在使用加速装备时停止
 		if (pc.getHasteItemEquipped() > 0) {
