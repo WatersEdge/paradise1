@@ -2,7 +2,8 @@ package lineage.item.etcitem.scroll;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.item.action.Enchant;
+import lineage.console.connector.ScrollEnchant;
+import lineage.console.connector.cite.CiteScrollEnchant;
 import lineage.console.executor.ItemExecutor;
 
 /**
@@ -34,6 +35,7 @@ public class S_Scroll_Jewelry extends ItemExecutor {
 
 		final int targetID = data[0];
 		final L1ItemInstance l1iteminstance1 = pc.getInventory().getItem(targetID);
+		final ScrollEnchant Enchant = new CiteScrollEnchant();
 
 		Enchant.scrollOfEnchantAccessory(pc, item, l1iteminstance1);
 	}

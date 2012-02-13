@@ -1,18 +1,4 @@
-/**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
- * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
- * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
- * 
- */
-package l1j.server.server.model.item.action;
+package lineage.console.connector.cite;
 
 import l1j.server.Config;
 import l1j.server.server.datatables.LogEnchantTable;
@@ -26,29 +12,26 @@ import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Armor;
 import l1j.server.server.utils.Random;
+import lineage.console.connector.ScrollEnchant;
 
 /**
- * 强化装备道具
+ * 强化卷轴效果 (对武器施法的卷轴、对盔甲施法的卷轴、饰品强化卷轴及强化效果)
+ * 
+ * @author jrwz
  */
-public class Enchant {
+public class CiteScrollEnchant implements ScrollEnchant {
 
-	/**
-	 * 对武器施法的卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantWeapon(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantWeapon(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
-		int itemId = l1iteminstance.getItem().getItemId();
+		final int itemId = l1iteminstance.getItem().getItemId();
 
 		// 安定值
-		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
+		final int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 
 		// 武器ID
-		int weaponId = l1iteminstance1.getItem().getItemId();
+		final int weaponId = l1iteminstance1.getItem().getItemId();
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) // 为空
@@ -100,7 +83,7 @@ public class Enchant {
 		}
 
 		// 强化等级
-		int enchant_level = l1iteminstance1.getEnchantLevel();
+		final int enchant_level = l1iteminstance1.getEnchantLevel();
 
 		// 受咀咒的 对武器施法的卷轴
 		if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON) {
@@ -122,7 +105,7 @@ public class Enchant {
 		else {
 			pc.getInventory().removeItem(l1iteminstance, 1);
 
-			int rnd = Random.nextInt(100) + 1;
+			final int rnd = Random.nextInt(100) + 1;
 			int enchant_chance_wepon;
 			if (enchant_level >= 9) {
 				enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 6;
@@ -132,7 +115,7 @@ public class Enchant {
 			}
 
 			if (rnd < enchant_chance_wepon) {
-				int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
+				final int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
 				SuccessEnchant(pc, l1iteminstance1, randomEnchantLevel);
 			}
 			else if ((enchant_level >= 9) && (rnd < (enchant_chance_wepon * 2))) {
@@ -145,23 +128,17 @@ public class Enchant {
 		}
 	}
 
-	/**
-	 * 对盔甲施法的卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantArmor(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantArmor(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
-		int itemId = l1iteminstance.getItem().getItemId();
+		final int itemId = l1iteminstance.getItem().getItemId();
 
 		// 安定值
-		int safe_enchant = ((L1Armor) l1iteminstance1.getItem()).get_safeenchant();
+		final int safe_enchant = ((L1Armor) l1iteminstance1.getItem()).get_safeenchant();
 
 		// 装备ID
-		int armorId = l1iteminstance1.getItem().getItemId();
+		final int armorId = l1iteminstance1.getItem().getItemId();
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) || (l1iteminstance1.getItem().getType2() != 2) || (safe_enchant < 0) || (l1iteminstance1.getBless() >= 128)) {
@@ -195,7 +172,7 @@ public class Enchant {
 		}
 
 		// 强化等级
-		int enchant_level = l1iteminstance1.getEnchantLevel();
+		final int enchant_level = l1iteminstance1.getEnchantLevel();
 
 		// 受咀咒的 对盔甲施法的卷轴
 		if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) {
@@ -216,10 +193,10 @@ public class Enchant {
 		}
 		else {
 			pc.getInventory().removeItem(l1iteminstance, 1);
-			int rnd = Random.nextInt(100) + 1;
+			final int rnd = Random.nextInt(100) + 1;
 			int enchant_chance_armor;
 			int enchant_level_tmp;
-			if (safe_enchant == 0) { // 骨、ブラックミスリル用补正
+			if (safe_enchant == 0) { // 骨、黑色米索莉用补正
 				enchant_level_tmp = enchant_level + 2;
 			}
 			else {
@@ -233,7 +210,7 @@ public class Enchant {
 			}
 
 			if (rnd < enchant_chance_armor) {
-				int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
+				final int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
 				SuccessEnchant(pc, l1iteminstance1, randomEnchantLevel);
 			}
 			else if ((enchant_level >= 9) && (rnd < (enchant_chance_armor * 2))) {
@@ -246,14 +223,8 @@ public class Enchant {
 		}
 	}
 
-	/**
-	 * 饰品强化卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantAccessory(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantAccessory(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128) // 封印中
@@ -266,7 +237,7 @@ public class Enchant {
 		}
 
 		// 加成等级
-		int enchant_level = l1iteminstance1.getEnchantLevel();
+		final int enchant_level = l1iteminstance1.getEnchantLevel();
 
 		// 强化上限 + 10
 		if (enchant_level < 0 || enchant_level >= 10) {
@@ -274,9 +245,9 @@ public class Enchant {
 			return;
 		}
 
-		int rnd = Random.nextInt(100) + 1;
+		final int rnd = Random.nextInt(100) + 1;
 		int enchant_chance_accessory;
-		int enchant_level_tmp = enchant_level;
+		final int enchant_level_tmp = enchant_level;
 		int itemStatus = 0;
 		// +6 时额外奖励效果判断
 		boolean award = false;
@@ -370,17 +341,11 @@ public class Enchant {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	/**
-	 * 武器属性强化卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantWeaponAttr(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantWeaponAttr(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
-		int itemId = l1iteminstance.getItem().getItemId();
+		final int itemId = l1iteminstance.getItem().getItemId();
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) // 为空
@@ -395,8 +360,8 @@ public class Enchant {
 		}
 
 		// 0:无属性 1:地 2:火 4:水 8:风
-		int oldAttrEnchantKind = l1iteminstance1.getAttrEnchantKind();
-		int oldAttrEnchantLevel = l1iteminstance1.getAttrEnchantLevel();
+		final int oldAttrEnchantKind = l1iteminstance1.getAttrEnchantKind();
+		final int oldAttrEnchantLevel = l1iteminstance1.getAttrEnchantLevel();
 
 		boolean isSameAttr = false;
 		if (((itemId == 41429) && (oldAttrEnchantKind == 8)) || ((itemId == 41430) && (oldAttrEnchantKind == 1)) || ((itemId == 41431) && (oldAttrEnchantKind == 4)) || ((itemId == 41432) && (oldAttrEnchantKind == 2))) { // 同属性
@@ -407,7 +372,7 @@ public class Enchant {
 			return;
 		}
 
-		int rnd = Random.nextInt(100) + 1;
+		final int rnd = Random.nextInt(100) + 1;
 		if (Config.ATTR_ENCHANT_CHANCE >= rnd) {
 			pc.sendPackets(new S_ServerMessage(1410, l1iteminstance1.getLogName())); // 对\f1%0附加强大的魔法力量成功。
 			int newAttrEnchantKind = 0;
@@ -443,17 +408,11 @@ public class Enchant {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	/**
-	 * 象牙塔对武器施法的卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantWeaponIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantWeaponIvoryTower(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 道具ID
-		int weaponId = l1iteminstance1.getItem().getItemId();
+		final int weaponId = l1iteminstance1.getItem().getItemId();
 
 		// 无法使用的类型
 		if ((l1iteminstance1 == null) // 为空
@@ -475,7 +434,7 @@ public class Enchant {
 		}
 
 		// 安定值
-		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
+		final int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
 			pc.getInventory().removeItem(l1iteminstance, 1);
 			SuccessEnchant(pc, l1iteminstance1, 1);
@@ -485,17 +444,11 @@ public class Enchant {
 		}
 	}
 
-	/**
-	 * 象牙塔对盔甲施法的卷轴
-	 * 
-	 * @param pc
-	 * @param l1iteminstance
-	 * @param l1iteminstance1
-	 */
-	public static void scrollOfEnchantArmorIvoryTower(L1PcInstance pc, L1ItemInstance l1iteminstance, L1ItemInstance l1iteminstance1) {
+	@Override
+	public void scrollOfEnchantArmorIvoryTower(final L1PcInstance pc, final L1ItemInstance l1iteminstance, final L1ItemInstance l1iteminstance1) {
 
 		// 装备ID
-		int armorId = l1iteminstance1.getItem().getItemId();
+		final int armorId = l1iteminstance1.getItem().getItemId();
 
 		// 无法使用的状态
 		if ((l1iteminstance1 == null) // 为空
@@ -513,7 +466,7 @@ public class Enchant {
 		}
 
 		// 安定值
-		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
+		final int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 
 		//
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
@@ -532,20 +485,20 @@ public class Enchant {
 	 * @param item
 	 * @param i
 	 */
-	private static void SuccessEnchant(L1PcInstance pc, L1ItemInstance item, int i) {
+	private static void SuccessEnchant(final L1PcInstance pc, final L1ItemInstance item, final int i) {
 
 		// 取得类型
-		int itemType2 = item.getItem().getType2();
+		final int itemType2 = item.getItem().getType2();
 
-		String[][] sa = { { "", "", "", "", "" }, { "$246", "", "$245", "$245", "$245" }, { "$246", "", "$252", "$252", "$252" } };
-		String[][] sb = { { "", "", "", "", "" }, { "$247", "", "$247", "$248", "$248" }, { "$247", "", "$247", "$248", "$248" } };
-		String sa_temp = sa[itemType2][i + 1];
-		String sb_temp = sb[itemType2][i + 1];
+		final String[][] sa = { { "", "", "", "", "" }, { "$246", "", "$245", "$245", "$245" }, { "$246", "", "$252", "$252", "$252" } };
+		final String[][] sb = { { "", "", "", "", "" }, { "$247", "", "$247", "$248", "$248" }, { "$247", "", "$247", "$248", "$248" } };
+		final String sa_temp = sa[itemType2][i + 1];
+		final String sb_temp = sb[itemType2][i + 1];
 
 		pc.sendPackets(new S_ServerMessage(161, item.getLogName(), sa_temp, sb_temp));
-		int oldEnchantLvl = item.getEnchantLevel();
-		int newEnchantLvl = oldEnchantLvl + i;
-		int safe_enchant = item.getItem().get_safeenchant();
+		final int oldEnchantLvl = item.getEnchantLevel();
+		final int newEnchantLvl = oldEnchantLvl + i;
+		final int safe_enchant = item.getItem().get_safeenchant();
 		item.setEnchantLevel(newEnchantLvl);
 		pc.getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
 
@@ -554,13 +507,13 @@ public class Enchant {
 		}
 		if ((item.getItem().getType2() == 1) && (Config.LOGGING_WEAPON_ENCHANT != 0)) {
 			if ((safe_enchant == 0) || (newEnchantLvl >= Config.LOGGING_WEAPON_ENCHANT)) {
-				LogEnchantTable logenchant = new LogEnchantTable();
+				final LogEnchantTable logenchant = new LogEnchantTable();
 				logenchant.storeLogEnchant(pc.getId(), item.getId(), oldEnchantLvl, newEnchantLvl);
 			}
 		}
 		else if ((item.getItem().getType2() == 2) && (Config.LOGGING_ARMOR_ENCHANT != 0)) {
 			if ((safe_enchant == 0) || (newEnchantLvl >= Config.LOGGING_ARMOR_ENCHANT)) {
-				LogEnchantTable logenchant = new LogEnchantTable();
+				final LogEnchantTable logenchant = new LogEnchantTable();
 				logenchant.storeLogEnchant(pc.getId(), item.getId(), oldEnchantLvl, newEnchantLvl);
 			}
 		}
@@ -571,9 +524,9 @@ public class Enchant {
 				if ((item.getItem().getType() < 8 || item.getItem().getType() > 12)) {
 					pc.addAc(-i);
 				}
-				int armorId = item.getItem().getItemId();
+				final int armorId = item.getItem().getItemId();
 				// 强化等级+1，魔防+1
-				int[] i1 = { 20011, 20110, 21123, 21124, 21125, 21126, 120011 };
+				final int[] i1 = { 20011, 20110, 21123, 21124, 21125, 21126, 120011 };
 				// 抗魔法头盔、抗魔法链甲、林德拜尔的XX、受祝福的 抗魔法头盔
 				for (int j = 0; j < i1.length; j++) {
 					if (armorId == i1[j]) {
@@ -583,7 +536,7 @@ public class Enchant {
 					}
 				}
 				// 强化等级+1，魔防+2
-				int[] i2 = { 20056, 120056, 220056 };
+				final int[] i2 = { 20056, 120056, 220056 };
 				// 抗魔法斗篷
 				for (int j = 0; j < i2.length; j++) {
 					if (armorId == i2[j]) {
@@ -603,9 +556,9 @@ public class Enchant {
 	 * @param pc
 	 * @param item
 	 */
-	private static void FailureEnchant(L1PcInstance pc, L1ItemInstance item) {
-		String[] sa = { "", "$245", "$252" }; // ""、蓝色的、银色的
-		int itemType2 = item.getItem().getType2();
+	private static void FailureEnchant(final L1PcInstance pc, final L1ItemInstance item) {
+		final String[] sa = { "", "$245", "$252" }; // ""、蓝色的、银色的
+		final int itemType2 = item.getItem().getType2();
 
 		if (item.getEnchantLevel() < 0) { // 强化等级为负值
 			sa[itemType2] = "$246"; // 黑色的
@@ -620,31 +573,35 @@ public class Enchant {
 	 * @param item
 	 * @param itemId
 	 */
-	private static int RandomELevel(L1ItemInstance item, int itemId) {
+	private static int RandomELevel(final L1ItemInstance item, final int itemId) {
 
-		// 祝福魔法卷轴
-		if ((itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON) || (itemId == 140129) || (itemId == 140130)) {
-			if (item.getEnchantLevel() <= 2) {
-				int j = Random.nextInt(100) + 1;
-				if (j < 32) {
-					return 1;
+		switch (itemId) {
+			case 140074: // 受祝福的 对盔甲施法的卷轴
+			case 140087: // 受祝福的 对武器施法的卷轴
+			case 140129: // 奇安的卷轴
+			case 140130: // 金侃的卷轴
+				if (item.getEnchantLevel() <= 2) {
+					int j = Random.nextInt(100) + 1;
+					if (j < 32) {
+						return 1;
+					}
+					else if ((j >= 33) && (j <= 76)) {
+						return 2;
+					}
+					else if ((j >= 77) && (j <= 100)) {
+						return 3;
+					}
 				}
-				else if ((j >= 33) && (j <= 76)) {
-					return 2;
+				else if ((item.getEnchantLevel() >= 3) && (item.getEnchantLevel() <= 5)) {
+					int j = Random.nextInt(100) + 1;
+					if (j < 50) {
+						return 2;
+					}
+					else {
+						return 1;
+					}
 				}
-				else if ((j >= 77) && (j <= 100)) {
-					return 3;
-				}
-			}
-			else if ((item.getEnchantLevel() >= 3) && (item.getEnchantLevel() <= 5)) {
-				int j = Random.nextInt(100) + 1;
-				if (j < 50) {
-					return 2;
-				}
-				else {
-					return 1;
-				}
-			}
+				break;
 		}
 		return 1;
 	}
