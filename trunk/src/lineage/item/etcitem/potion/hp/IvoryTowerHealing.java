@@ -3,8 +3,8 @@ package lineage.item.etcitem.potion.hp;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.connector.cite.UsePotion_AddHp;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.UsePotion_AddHp;
 
 /**
  * 象牙塔治愈药水 - 40029

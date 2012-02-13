@@ -15,6 +15,7 @@
 package l1j.server.server.serverpackets;
 
 import java.util.List;
+
 import l1j.server.server.Opcodes;
 import l1j.server.server.templates.L1BoardTopic;
 

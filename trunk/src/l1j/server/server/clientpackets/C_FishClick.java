@@ -18,8 +18,6 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.FishingTimeController;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
-// Referenced classes of package l1j.server.server.clientpackets:
-// ClientBasePacket
 
 /**
  * 处理收到由客户端传来停止钓鱼的封包

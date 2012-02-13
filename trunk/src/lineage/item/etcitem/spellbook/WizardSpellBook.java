@@ -3,8 +3,8 @@ package lineage.item.etcitem.spellbook;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.connector.cite.UseSpellBook;
 import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.UseSpellBook;
 
 /**
  * 法师技能书 (LV1~LV10)

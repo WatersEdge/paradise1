@@ -16,7 +16,6 @@ package l1j.server.server.serverpackets;
 
 import static l1j.server.server.Opcodes.S_OPCODE_ADDSKILL;
 import static l1j.server.server.Opcodes.S_OPCODE_DELSKILL;
-
 import l1j.server.server.templates.L1Skills;
 
 /**

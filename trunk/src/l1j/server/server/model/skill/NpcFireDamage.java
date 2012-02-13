@@ -1,13 +1,13 @@
 package l1j.server.server.model.skill;
 
-import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
 import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
-import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
 import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
-
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.L1Character;
+import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
@@ -15,7 +15,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
-import l1j.server.server.model.L1Object;
 
 /**
  * NPC 火牢伤害
@@ -35,7 +34,7 @@ public class NpcFireDamage {
 	 * @param firewall
 	 */
 	public NpcFireDamage(L1Character cha, L1NpcInstance firewall) {
-		user = (L1Character) cha;
+		user = cha;
 		fire = (L1EffectInstance) firewall;
 	}
 

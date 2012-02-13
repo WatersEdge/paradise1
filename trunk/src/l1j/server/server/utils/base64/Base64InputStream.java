@@ -34,6 +34,7 @@ public class Base64InputStream extends InputStream {
 		this.inputStream = inputStream;
 	}
 
+	@Override
 	public int read() throws IOException {
 		if (buffer == null || bufferCounter == buffer.length) {
 			if (eof) {
@@ -113,6 +114,7 @@ public class Base64InputStream extends InputStream {
 		}
 	}
 
+	@Override
 	public void close() throws IOException {
 		inputStream.close();
 	}

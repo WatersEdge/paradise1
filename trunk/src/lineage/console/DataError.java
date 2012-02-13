@@ -1,8 +1,8 @@
 package lineage.console;
 
-import org.apache.commons.logging.Log;
-
 import l1j.server.Config;
+
+import org.apache.commons.logging.Log;
 
 /**
  * 错误讯息

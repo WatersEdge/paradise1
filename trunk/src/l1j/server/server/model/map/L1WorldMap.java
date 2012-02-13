@@ -15,7 +15,7 @@
 package l1j.server.server.model.map;
 
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -720,6 +720,7 @@ public class L1PolyRace {
 
 	/** 对比计时器 */
 	private class CompareTimer extends TimerTask {
+		@Override
 		public void run() {
 			comparePosition();
 			addTime();

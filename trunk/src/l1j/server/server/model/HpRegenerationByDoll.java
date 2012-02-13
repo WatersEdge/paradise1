@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.serverpackets.S_SkillSound; //TODO HPR効果
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1MagicDoll;
 
 /**

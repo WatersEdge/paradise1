@@ -14,14 +14,14 @@
  */
 package l1j.server.server.model;
 
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Calendar;
-import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.utils.Random;
 
 /**
  * 产生BOSS
