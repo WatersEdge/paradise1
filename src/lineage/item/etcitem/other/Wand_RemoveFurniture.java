@@ -9,7 +9,7 @@ import l1j.server.server.model.Instance.L1FurnitureInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_AttackPacket;
-import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 移除家具魔杖 - 41401

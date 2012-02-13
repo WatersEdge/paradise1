@@ -10,7 +10,7 @@ import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.utils.Random;
-import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 各阶段料理书 - (41255 - 41259)

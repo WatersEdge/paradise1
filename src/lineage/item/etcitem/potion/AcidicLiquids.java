@@ -3,7 +3,7 @@ package lineage.item.etcitem.potion;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.poison.L1DamagePoison;
-import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 酸性液体 - 41345

@@ -3,8 +3,8 @@ package lineage.item.etcitem.potion.speed3;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import lineage.console.connector.UniversalUseItem;
-import lineage.console.executor.ItemExecutor;
 import lineage.item.etcitem.UseSpeedPotion_3;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 巧克力蛋糕 - 49138

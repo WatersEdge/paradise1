@@ -19,7 +19,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_ShowPolyList;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.Random;
-import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 /**
  * 枫木魔杖 - 40008 <br>

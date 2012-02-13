@@ -6,7 +6,7 @@ import java.util.Map;
 
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import lineage.console.executor.ItemExecutor;
+import lineage.item.etcitem.executor.ItemExecutor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
