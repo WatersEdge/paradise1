@@ -205,106 +205,134 @@ public class L1MonsterInstance extends L1NpcInstance {
 		return this._ubSealCount;
 	}
 
-	/** 初始化隐藏动作 */
+	/**
+	 * 初始化隐藏动作 (出现)
+	 */
 	public void initHide() {
 		// 出现的隐藏动作
 		// MOB有一定概率钻入地下或飞到天上
 		final int npcid = this.getNpcTemplate().get_npcId();
-		if ((npcid == 45061) // 弱化史巴托
-				|| (npcid == 45161) // 弱化史巴托
-				|| (npcid == 45181) // 史巴托 (SC)
-				|| (npcid == 45455)) { // 残暴的史巴托
-			final int rnd = Random.nextInt(3);
-			if (1 > rnd) {
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
-				this.setStatus(11);
-			}
-		}
-		else if ((npcid == 45045) // 弱化石头高仑
-				|| (npcid == 45126) // 石头高仑 (普通)
-				|| (npcid == 45134) // 石头高仑 (SC)
-				|| (npcid == 45281)) { // 奇岩 石头高仑
-			final int rnd = Random.nextInt(3);
-			if (1 > rnd) {
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
+		switch (npcid) {
+
+			case 45061: // 弱化史巴托 (新手村)
+			case 45161: // 弱化史巴托 (普通)
+			case 45181: // 史巴托 (SC)
+			case 45455: // 残暴的史巴托 (傲慢塔)
+			case 46107: // 底比斯 曼陀罗草 (白)
+			case 46108: // 底比斯 曼陀罗草 (黑)
+				final int rnd = Random.nextInt(3);
+				if (1 > rnd) {
+					this.setHiddenStatus(HIDDEN_STATUS_SINK);
+					this.setStatus(11);
+				}
+				break;
+
+			case 45045: // 弱化石头高仑 (新手村)
+			case 45126: // 石头高仑 (普通)
+			case 45134: // 石头高仑 (SC)
+			case 45281: // 奇岩 石头高仑 (奇岩地监)
+				final int rnd1 = Random.nextInt(3);
+				if (1 > rnd1) {
+					this.setHiddenStatus(HIDDEN_STATUS_SINK);
+					this.setStatus(4);
+				}
+				break;
+
+			case 45067: // 弱化哈维 (新手村庄)
+			case 45264: // 哈维 (普通)
+			case 45452: // 哈维 (遗忘之岛)
+			case 45090: // 弱化格利芬 (新手村庄)
+			case 45321: // 格利芬 (普通)
+			case 45445: // 格利芬 (遗忘之岛)
+			case 45681: // 林德拜尔 (亚丁:风龙的伤痕)
+				this.setHiddenStatus(HIDDEN_STATUS_FLY);
+				break;
+
+			case 46125: // 钢铁高仑 (水晶洞穴)
+			case 46126: // 莱肯 (水晶洞穴)
+			case 46127: // 欧熊 (水晶洞穴)
+			case 46128: // 冰原老虎 (水晶洞穴)
+				this.setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
 				this.setStatus(4);
-			}
-		}
-		else if ((npcid == 45067) // 弱化哈维 (新手村庄)
-				|| (npcid == 45264) // 哈维 (普通)
-				|| (npcid == 45452) // 哈维 (遗忘之岛)
-				|| (npcid == 45090) // 弱化格利芬 (新手村庄)
-				|| (npcid == 45321) // 格利芬 (普通)
-				|| (npcid == 45445)) { // 格利芬 (遗忘之岛)
-			this.setHiddenStatus(HIDDEN_STATUS_FLY);
-		}
-		else if (npcid == 45681) { // 林德拜尔
-			this.setHiddenStatus(HIDDEN_STATUS_FLY);
-		}
-		else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
-				|| (npcid == 46108)) { // 底比斯 曼陀罗草 (黑)
-			final int rnd = Random.nextInt(3);
-			if (1 > rnd) {
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
-				this.setStatus(11);
-			}
-		}
-		else if ((npcid >= 46125) && (npcid <= 46128)) {
-			this.setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
-			this.setStatus(4);
-		}
-		else if (npcid == 81163) { // 吉尔塔斯
-			this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
-			this.setStatus(4);
+				break;
+
+			case 81163: // 吉尔塔斯 (黑暗妖精圣地)
+				this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
+				this.setStatus(4);
+				break;
 		}
 	}
 
+	/**
+	 * 初始化隐藏动作 (一直出现)
+	 */
 	public void initHideForMinion(final L1NpcInstance leader) {
-		// グループに属するモンスターの出现直后の隐れる动作（リーダーと同じ动作にする）
+		// 怪物一直出现的隐藏动作（读取相同的动作）
+		// 取得NPC编号
 		final int npcid = this.getNpcTemplate().get_npcId();
-		if (leader.getHiddenStatus() == HIDDEN_STATUS_SINK) {
-			if ((npcid == 45061) // 弱化史巴托
-					|| (npcid == 45161) // 史巴托 (普通)
-					|| (npcid == 45181) // 史巴托 (SC)
-					|| (npcid == 45455)) { // 残暴的史巴托
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
-				this.setStatus(11);
-			}
-			else if ((npcid == 45045) // 弱化石头高仑
-					|| (npcid == 45126) // 石头高仑 (普通)
-					|| (npcid == 45134) // 石头高仑 (SC)
-					|| (npcid == 45281)) { // 奇岩 石头高仑
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
-				this.setStatus(4);
-			}
-			else if ((npcid == 46107) // 底比斯 曼陀罗草 (白)
-					|| (npcid == 46108)) { // 底比斯 曼陀罗草 (黑)
-				this.setHiddenStatus(HIDDEN_STATUS_SINK);
-				this.setStatus(11);
-			}
-		}
-		else if (leader.getHiddenStatus() == HIDDEN_STATUS_FLY) {
-			if ((npcid == 45067) // 弱化哈维 (新手村庄)
-					|| (npcid == 45264) // 哈维 (普通)
-					|| (npcid == 45452) // 哈维 (遗忘之岛)
-					|| (npcid == 45090) // 弱化格利芬 (新手村庄)
-					|| (npcid == 45321) // 格利芬 (普通)
-					|| (npcid == 45445)) { // 格利芬 (遗忘之岛)
-				this.setHiddenStatus(HIDDEN_STATUS_FLY);
-				this.setStatus(4);
-			}
-			else if (npcid == 45681) { // 林德拜尔
-				this.setHiddenStatus(HIDDEN_STATUS_FLY);
-				this.setStatus(11);
-			}
-		}
-		else if ((npcid >= 46125) && (npcid <= 46128)) {
-			this.setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
-			this.setStatus(4);
-		}
-		else if (npcid == 81163) { // 吉尔塔斯
-			this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
-			this.setStatus(4);
+		final int HiddenStatus = leader.getHiddenStatus();
+		switch (HiddenStatus) {
+			case HIDDEN_STATUS_SINK: // 隐藏状态 (遁地)
+				switch (npcid) {
+					case 45061: // 弱化史巴托 (新手村)
+					case 45161: // 弱化史巴托 (普通)
+					case 45181: // 史巴托 (SC)
+					case 45455: // 残暴的史巴托 (傲慢塔)
+					case 46107: // 底比斯 曼陀罗草 (白)
+					case 46108: // 底比斯 曼陀罗草 (黑)
+						this.setHiddenStatus(HIDDEN_STATUS_SINK);
+						this.setStatus(11);
+						break;
+
+					case 45045: // 弱化石头高仑 (新手村)
+					case 45126: // 石头高仑 (普通)
+					case 45134: // 石头高仑 (SC)
+					case 45281: // 奇岩 石头高仑 (奇岩地监)
+						this.setHiddenStatus(HIDDEN_STATUS_SINK);
+						this.setStatus(4);
+						break;
+				}
+				break;
+
+			case HIDDEN_STATUS_FLY: // 隐藏状态 (飞天)
+				switch (npcid) {
+					case 45067: // 弱化哈维 (新手村庄)
+					case 45264: // 哈维 (普通)
+					case 45452: // 哈维 (遗忘之岛)
+					case 45090: // 弱化格利芬 (新手村庄)
+					case 45321: // 格利芬 (普通)
+					case 45445: // 格利芬 (遗忘之岛)
+						this.setHiddenStatus(HIDDEN_STATUS_FLY);
+						this.setStatus(4);
+						break;
+
+					case 45681: // 林德拜尔 (亚丁:风龙的伤痕)
+						this.setHiddenStatus(HIDDEN_STATUS_FLY);
+						this.setStatus(11);
+						break;
+				}
+				break;
+
+			case HIDDEN_STATUS_COUNTERATTACK_BARRIER: // 隐藏状态 (反击屏障)
+				switch (npcid) {
+					case 81163: // 吉尔塔斯 (黑暗妖精圣地)
+						this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
+						this.setStatus(4);
+						break;
+				}
+				break;
+
+			case HIDDEN_STATUS_ICE: // 隐藏状态 (冰冻)
+				switch (npcid) {
+					case 46125: // 钢铁高仑 (水晶洞穴)
+					case 46126: // 莱肯 (水晶洞穴)
+					case 46127: // 欧熊 (水晶洞穴)
+					case 46128: // 冰原老虎 (水晶洞穴)
+						this.setHiddenStatus(L1NpcInstance.HIDDEN_STATUS_ICE);
+						this.setStatus(4);
+						break;
+				}
+				break;
 		}
 	}
 
@@ -923,82 +951,91 @@ public class L1MonsterInstance extends L1NpcInstance {
 		}
 	}
 
-	/** 隐藏动作 */
+	/**
+	 * 隐藏动作
+	 */
 	private void hide() {
 		final int npcid = this.getNpcTemplate().get_npcId();
-		if ((npcid == 45061) // 弱化史巴托
-				|| (npcid == 45161) // 史巴托 (普通)
-				|| (npcid == 45181) // 史巴托 (SC)
-				|| (npcid == 45455)) { // 残暴的史巴托
-			if (this.getMaxHp() / 3 > this.getCurrentHp()) {
-				final int rnd = Random.nextInt(10);
-				if (2 > rnd) {
+		switch (npcid) {
+			case 45061: // 弱化史巴托 (新手村)
+			case 45161: // 弱化史巴托 (普通)
+			case 45181: // 史巴托 (SC)
+			case 45455: // 残暴的史巴托 (傲慢塔)
+				if (this.getMaxHp() / 3 > this.getCurrentHp()) {
+					final int rnd = Random.nextInt(10);
+					if (2 > rnd) {
+						this.allTargetClear();
+						this.setHiddenStatus(HIDDEN_STATUS_SINK);
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Hide));
+						this.setStatus(11);
+						this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
+					}
+				}
+				break;
+
+			case 45067: // 弱化哈维 (新手村庄)
+			case 45264: // 哈维 (普通)
+			case 45452: // 哈维 (遗忘之岛)
+			case 45090: // 弱化格利芬 (新手村庄)
+			case 45321: // 格利芬 (普通)
+			case 45445: // 格利芬 (遗忘之岛)
+				if (this.getMaxHp() / 3 > this.getCurrentHp()) {
+					final int rnd = Random.nextInt(10);
+					if (2 > rnd) {
+						this.allTargetClear();
+						this.setHiddenStatus(HIDDEN_STATUS_FLY);
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Moveup));
+					}
+				}
+				break;
+
+			case 46107: // 底比斯 曼陀罗草(白)
+			case 46108: // 底比斯 曼陀罗草(黑)
+				if (this.getMaxHp() / 4 > this.getCurrentHp()) {
+					final int rnd = Random.nextInt(10);
+					if (2 > rnd) {
+						this.allTargetClear();
+						this.setHiddenStatus(HIDDEN_STATUS_SINK);
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Hide));
+						this.setStatus(11);
+						this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
+					}
+				}
+				break;
+
+			case 45681: // 林德拜尔 (亚丁:风龙的伤痕)
+				if (this.getMaxHp() / 3 > this.getCurrentHp()) {
+					final int rnd = Random.nextInt(50);
+					if (1 > rnd) {
+						this.allTargetClear();
+						this.setHiddenStatus(HIDDEN_STATUS_FLY);
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Moveup));
+					}
+				}
+				break;
+
+			case 45682: // 安塔瑞斯 (龙之谷地监7)
+				if (this.getMaxHp() / 3 > this.getCurrentHp()) {
+					final int rnd = Random.nextInt(50);
+					if (1 > rnd) {
+						this.allTargetClear();
+						this.setHiddenStatus(HIDDEN_STATUS_SINK);
+						this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_AntharasHide));
+						this.setStatus(20);
+						this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
+					}
+				}
+				break;
+
+			case 81163: // 吉尔塔斯 (黑暗妖精圣地)
+				if (this.getCurrentHp() <= 5000) {
 					this.allTargetClear();
-					this.setHiddenStatus(HIDDEN_STATUS_SINK);
+					this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
 					this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Hide));
-					this.setStatus(11);
+					this.setStatus(4);
 					this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
 				}
-			}
-		}
-		else if (npcid == 45682) { // 安塔瑞斯
-			if (this.getMaxHp() / 3 > this.getCurrentHp()) {
-				final int rnd = Random.nextInt(50);
-				if (1 > rnd) {
-					this.allTargetClear();
-					this.setHiddenStatus(HIDDEN_STATUS_SINK);
-					this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_AntharasHide));
-					this.setStatus(20);
-					this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
-				}
-			}
-		}
-		else if ((npcid == 45067) // 弱化哈维 (新手村庄)
-				|| (npcid == 45264) // 哈维 (普通)
-				|| (npcid == 45452) // 哈维 (遗忘之岛)
-				|| (npcid == 45090) // 弱化格利芬 (新手村庄)
-				|| (npcid == 45321) // 格利芬 (普通)
-				|| (npcid == 45445)) { // 格利芬 (遗忘之岛)
-			if (this.getMaxHp() / 3 > this.getCurrentHp()) {
-				final int rnd = Random.nextInt(10);
-				if (2 > rnd) {
-					this.allTargetClear();
-					this.setHiddenStatus(HIDDEN_STATUS_FLY);
-					this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Moveup));
-				}
-			}
-		}
-		else if (npcid == 45681) { // 林德拜尔
-			if (this.getMaxHp() / 3 > this.getCurrentHp()) {
-				final int rnd = Random.nextInt(50);
-				if (1 > rnd) {
-					this.allTargetClear();
-					this.setHiddenStatus(HIDDEN_STATUS_FLY);
-					this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Moveup));
-				}
-			}
-		}
-		else if ((npcid == 46107) // 底比斯 曼陀罗草(白)
-				|| (npcid == 46108)) { // 底比斯 曼陀罗草(黑)
-			if (this.getMaxHp() / 4 > this.getCurrentHp()) {
-				final int rnd = Random.nextInt(10);
-				if (2 > rnd) {
-					this.allTargetClear();
-					this.setHiddenStatus(HIDDEN_STATUS_SINK);
-					this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Hide));
-					this.setStatus(11);
-					this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
-				}
-			}
-		}
-		else if (npcid == 81163) { // 吉尔塔斯
-			if (this.getCurrentHp() <= 5000) {
-				this.allTargetClear();
-				this.setHiddenStatus(HIDDEN_STATUS_COUNTERATTACK_BARRIER);
-				this.broadcastPacket(new S_DoActionGFX(this.getId(), ActionCodes.ACTION_Hide));
-				this.setStatus(4);
-				this.broadcastPacket(new S_CharVisualUpdate(this, this.getStatus()));
-			}
+				break;
 		}
 	}
 
