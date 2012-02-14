@@ -210,16 +210,14 @@ public class L1PetInstance extends L1NpcInstance {
 				if (!isDepositnpc) { // 非寄放宠物
 					continue;
 				}
-				else {
-					final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
-					if (petItem.getUseType() == 1) { // 牙齿
-						this.setWeapon(null);
-					}
-					else if (petItem.getUseType() == 0) { // 盔甲
-						this.setArmor(null);
-					}
-					item.setEquipped(false);
+				final L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+				if (petItem.getUseType() == 1) { // 牙齿
+					this.setWeapon(null);
 				}
+				else if (petItem.getUseType() == 0) { // 盔甲
+					this.setArmor(null);
+				}
+				item.setEquipped(false);
 			}
 			if (this._petMaster.getInventory().checkAddItem( // 主人可否拿取判断
 					item, item.getCount()) == L1Inventory.OK) {

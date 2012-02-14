@@ -68,9 +68,7 @@ public class CiteScrollEnchant implements ScrollEnchant {
 					if (j < 50) {
 						return 2;
 					}
-					else {
-						return 1;
-					}
+					return 1;
 				}
 				break;
 		}

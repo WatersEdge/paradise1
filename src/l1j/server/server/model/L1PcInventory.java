@@ -663,14 +663,11 @@ public class L1PcInventory extends L1Inventory {
 			if (bullet != null) {
 				return bullet;
 			}
-			else // なくなっていた场合は优先を消す
-			{
-				if (type == 0) {
-					this._arrowId = 0;
-				}
-				if (type == 15) {
-					this._stingId = 0;
-				}
+			if (type == 0) {
+				this._arrowId = 0;
+			}
+			if (type == 15) {
+				this._stingId = 0;
 			}
 		}
 

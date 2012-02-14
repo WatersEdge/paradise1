@@ -64,11 +64,9 @@ public class Base64InputStream extends InputStream {
 				if (i != 0) {
 					throw new IOException("Bad base64 stream");
 				}
-				else {
-					this.buffer = new int[0];
-					this.eof = true;
-					return;
-				}
+				this.buffer = new int[0];
+				this.eof = true;
+				return;
 			}
 			final char c = (char) b;
 			if ((Base64.Shared.chars.indexOf(c) != -1) || (c == Base64.Shared.pad)) {

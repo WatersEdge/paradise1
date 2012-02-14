@@ -117,10 +117,8 @@ public class L1QuestInstance extends L1NpcInstance {
 				)) {
 			return;
 		}
-		else {
-			this.setActived(false);
-			this.startAI();
-		}
+		this.setActived(false);
+		this.startAI();
 	}
 
 	@Override

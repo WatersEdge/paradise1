@@ -175,9 +175,7 @@ public class SprTable {
 			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
 				return _dataMap.get(sprid).specialSpeed.get(actid);
 			}
-			else {
-				return 1200;
-			}
+			return 1200;
 		}
 		return 0;
 	}

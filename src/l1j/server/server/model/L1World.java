@@ -184,9 +184,7 @@ public class L1World {
 		if (object == null) {
 			return new L1GroundInventory(inventoryKey, x, y, map);
 		}
-		else {
-			return (L1GroundInventory) object;
-		}
+		return (L1GroundInventory) object;
 	}
 
 	public L1GroundInventory getInventory(final L1Location loc) {

@@ -80,10 +80,8 @@ public class Logins {
 					_log.info("创建新账户: " + account);
 					return true;
 				}
-				else {
-					_log.warning("为用户帐户丢失 " + account);
-					return false;
-				}
+				_log.warning("为用户帐户丢失 " + account);
+				return false;
 			}
 
 			try {

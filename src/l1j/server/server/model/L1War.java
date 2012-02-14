@@ -184,9 +184,7 @@ public class L1War {
 		if ((player_clan_flag == true) && (target_clan_flag == true)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	/** 检查在战争的血盟 */

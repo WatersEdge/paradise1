@@ -2398,17 +2398,15 @@ public class L1SkillUse {
 					if (this._targetList.isEmpty()) { // 失败
 						return;
 					}
-					else {
-						if (this._target instanceof L1PcInstance) {
-							final L1PcInstance targetPc = (L1PcInstance) this._target;
-							targetPc.sendPackets(new S_SkillSound(targetid, 4434));
-							targetPc.broadcastPacket(new S_SkillSound(targetid, 4434));
-						}
-						else if (this._target instanceof L1NpcInstance) {
-							this._target.broadcastPacket(new S_SkillSound(targetid, 4434));
-						}
-						return;
+					if (this._target instanceof L1PcInstance) {
+						final L1PcInstance targetPc = (L1PcInstance) this._target;
+						targetPc.sendPackets(new S_SkillSound(targetid, 4434));
+						targetPc.broadcastPacket(new S_SkillSound(targetid, 4434));
 					}
+					else if (this._target instanceof L1NpcInstance) {
+						this._target.broadcastPacket(new S_SkillSound(targetid, 4434));
+					}
+					return;
 				case LIGHT: // 日光术
 					pc.sendPackets(new S_Sound(145));
 					break;

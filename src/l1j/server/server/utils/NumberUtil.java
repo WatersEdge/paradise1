@@ -32,14 +32,10 @@ public class NumberUtil {
 		if (percentage == 0) {
 			return ((int) number);
 		}
-		else {
-			final int r = Random.nextInt(100);
-			if (r < percentage) {
-				return ((int) number + 1);
-			}
-			else {
-				return ((int) number);
-			}
+		final int r = Random.nextInt(100);
+		if (r < percentage) {
+			return ((int) number + 1);
 		}
+		return ((int) number);
 	}
 }
