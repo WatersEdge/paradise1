@@ -1366,9 +1366,7 @@ public class L1Character extends L1Object {
 		if (this.hasSkillEffect(153) == true) {
 			return this._mr / 4;
 		}
-		else {
-			return this._mr;
-		}
+		return this._mr;
 	} // 当你使用
 
 	/**

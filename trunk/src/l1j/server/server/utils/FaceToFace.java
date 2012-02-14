@@ -55,73 +55,57 @@ public class FaceToFace {
 				if (targetHeading == 4) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 1) && (pcX == (targetX - 1)) && (pcY == (targetY + 1))) {
 				if (targetHeading == 5) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 2) && (pcX == (targetX - 1)) && (pcY == targetY)) {
 				if (targetHeading == 6) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 3) && (pcX == (targetX - 1)) && (pcY == (targetY - 1))) {
 				if (targetHeading == 7) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 4) && (pcX == targetX) && (pcY == (targetY - 1))) {
 				if (targetHeading == 0) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 5) && (pcX == (targetX + 1)) && (pcY == (targetY - 1))) {
 				if (targetHeading == 1) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 6) && (pcX == (targetX + 1)) && (pcY == targetY)) {
 				if (targetHeading == 2) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 			else if ((pcHeading == 7) && (pcX == (targetX + 1)) && (pcY == (targetY + 1))) {
 				if (targetHeading == 3) {
 					return target;
 				}
-				else {
-					pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
-					return null;
-				}
+				pc.sendPackets(new S_ServerMessage(91, target.getName())); // \f1%0%s 没有面对看你。
+				return null;
 			}
 		}
 		pc.sendPackets(new S_ServerMessage(93)); // \f1你注视的地方没有人。

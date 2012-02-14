@@ -124,19 +124,56 @@ public class L1DwarfInventory extends L1Inventory {
 		if (ItemTable.getInstance().getTemplate(itemid) == null) {
 			throw new Exception("道具编号不存在。");
 		}
-		else {
-			Connection con = null;
-			PreparedStatement ps = null;
+		Connection con = null;
+		PreparedStatement ps = null;
 
-			try {
-				con = L1DatabaseFactory.getInstance().getConnection();
-				con.setAutoCommit(false);
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			con.setAutoCommit(false);
 
-				for (final String account : accountList) {
-					if (itemtemp.isStackable()) {
-						final L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
+			for (final String account : accountList) {
+				if (itemtemp.isStackable()) {
+					final L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
+					item.setEnchantLevel(enchant);
+					item.setCount(count);
+
+					ps = con.prepareStatement("INSERT INTO character_warehouse SET " + "id = ?," + "account_name = ?," + "item_id = ?," + "item_name = ?," + "count = ?," + "is_equipped=0," + "enchantlvl = ?," + "is_id = ?," + "durability = ?," + "charge_count = ?,"
+							+ "remaining_time = ?," + "last_used = ?," + "bless = ?," + "attr_enchant_kind = ?," + "attr_enchant_level = ?," + "firemr = ?," + "watermr = ?," + "earthmr = ?," + "windmr = ?," + "addsp = ?," + "addhp = ?," + "addmp = ?," + "hpr = ?," + "mpr = ?,"
+							+ "m_def = ?");
+
+					ps.setInt(1, item.getId());
+					ps.setString(2, account);
+					ps.setInt(3, item.getItemId());
+					ps.setString(4, item.getName());
+					ps.setInt(5, item.getCount());
+					ps.setInt(6, item.getEnchantLevel());
+					ps.setInt(7, item.isIdentified() ? 1 : 0);
+					ps.setInt(8, item.get_durability());
+					ps.setInt(9, item.getChargeCount());
+					ps.setInt(10, item.getRemainingTime());
+					ps.setTimestamp(11, item.getLastUsed());
+					ps.setInt(12, item.getBless());
+					ps.setInt(13, item.getAttrEnchantKind());
+					ps.setInt(14, item.getAttrEnchantLevel());
+					ps.setInt(15, item.getFireMr());
+					ps.setInt(16, item.getWaterMr());
+					ps.setInt(17, item.getEarthMr());
+					ps.setInt(18, item.getWindMr());
+					ps.setInt(19, item.getaddSp());
+					ps.setInt(20, item.getaddHp());
+					ps.setInt(21, item.getaddMp());
+					ps.setInt(22, item.getHpr());
+					ps.setInt(23, item.getMpr());
+					ps.setInt(24, item.getM_Def());
+					ps.execute();
+				}
+				else {
+					L1ItemInstance item = null;
+					int createCount;
+
+					for (createCount = 0; createCount < count; createCount++) {
+						item = ItemTable.getInstance().createItem(itemid);
 						item.setEnchantLevel(enchant);
-						item.setCount(count);
 
 						ps = con.prepareStatement("INSERT INTO character_warehouse SET " + "id = ?," + "account_name = ?," + "item_id = ?," + "item_name = ?," + "count = ?," + "is_equipped=0," + "enchantlvl = ?," + "is_id = ?," + "durability = ?," + "charge_count = ?,"
 								+ "remaining_time = ?," + "last_used = ?," + "bless = ?," + "attr_enchant_kind = ?," + "attr_enchant_level = ?," + "firemr = ?," + "watermr = ?," + "earthmr = ?," + "windmr = ?," + "addsp = ?," + "addhp = ?," + "addmp = ?," + "hpr = ?,"
@@ -168,63 +205,24 @@ public class L1DwarfInventory extends L1Inventory {
 						ps.setInt(24, item.getM_Def());
 						ps.execute();
 					}
-					else {
-						L1ItemInstance item = null;
-						int createCount;
-
-						for (createCount = 0; createCount < count; createCount++) {
-							item = ItemTable.getInstance().createItem(itemid);
-							item.setEnchantLevel(enchant);
-
-							ps = con.prepareStatement("INSERT INTO character_warehouse SET " + "id = ?," + "account_name = ?," + "item_id = ?," + "item_name = ?," + "count = ?," + "is_equipped=0," + "enchantlvl = ?," + "is_id = ?," + "durability = ?," + "charge_count = ?,"
-									+ "remaining_time = ?," + "last_used = ?," + "bless = ?," + "attr_enchant_kind = ?," + "attr_enchant_level = ?," + "firemr = ?," + "watermr = ?," + "earthmr = ?," + "windmr = ?," + "addsp = ?," + "addhp = ?," + "addmp = ?," + "hpr = ?,"
-									+ "mpr = ?," + "m_def = ?");
-
-							ps.setInt(1, item.getId());
-							ps.setString(2, account);
-							ps.setInt(3, item.getItemId());
-							ps.setString(4, item.getName());
-							ps.setInt(5, item.getCount());
-							ps.setInt(6, item.getEnchantLevel());
-							ps.setInt(7, item.isIdentified() ? 1 : 0);
-							ps.setInt(8, item.get_durability());
-							ps.setInt(9, item.getChargeCount());
-							ps.setInt(10, item.getRemainingTime());
-							ps.setTimestamp(11, item.getLastUsed());
-							ps.setInt(12, item.getBless());
-							ps.setInt(13, item.getAttrEnchantKind());
-							ps.setInt(14, item.getAttrEnchantLevel());
-							ps.setInt(15, item.getFireMr());
-							ps.setInt(16, item.getWaterMr());
-							ps.setInt(17, item.getEarthMr());
-							ps.setInt(18, item.getWindMr());
-							ps.setInt(19, item.getaddSp());
-							ps.setInt(20, item.getaddHp());
-							ps.setInt(21, item.getaddMp());
-							ps.setInt(22, item.getHpr());
-							ps.setInt(23, item.getMpr());
-							ps.setInt(24, item.getM_Def());
-							ps.execute();
-						}
-					}
 				}
-
-				con.commit();
-				con.setAutoCommit(true);
 			}
-			catch (final SQLException e) {
-				try {
-					con.rollback();
-				}
-				catch (final SQLException ignore) {
-				}
 
-				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				throw new Exception(".present 处理时发生了例外的错误。");
-			} finally {
-				SQLUtil.close(ps);
-				SQLUtil.close(con);
+			con.commit();
+			con.setAutoCommit(true);
+		}
+		catch (final SQLException e) {
+			try {
+				con.rollback();
 			}
+			catch (final SQLException ignore) {
+			}
+
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw new Exception(".present 处理时发生了例外的错误。");
+		} finally {
+			SQLUtil.close(ps);
+			SQLUtil.close(con);
 		}
 	}
 

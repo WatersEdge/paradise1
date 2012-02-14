@@ -69,11 +69,9 @@ public class L1BugBearRace {
 						this._bugBear.setHeading(L1BugBearRace.this.rePressHeading(this._bugBear.getHeading() + 1));
 						break;
 					}
-					else {
-						this._bugBear.setHeading(L1BugBearRace.this.rePressHeading(this._bugBear.getHeading() - 1));
-						if (this._bugBear.getMap().isPassable(this._bugBear.getX(), this._bugBear.getY(), this._bugBear.getHeading())) {
-							break;
-						}
+					this._bugBear.setHeading(L1BugBearRace.this.rePressHeading(this._bugBear.getHeading() - 1));
+					if (this._bugBear.getMap().isPassable(this._bugBear.getX(), this._bugBear.getY(), this._bugBear.getHeading())) {
+						break;
 					}
 				}
 				this._bugBear.setDirectionMove(this._bugBear.getHeading());// ヘッジ方向
@@ -81,11 +79,9 @@ public class L1BugBearRace {
 					this._bugBear = null;
 					return;
 				}
-				else {
-					// new BugBearRunning(_runnerNumber).
-					// インスタンスを生成しないでください　メモリリークが発生します
-					sleepTime = L1BugBearRace.this.calcSleepTime(this._bugBear.getPassispeed(), this._runnerNumber);
-				}
+				// new BugBearRunning(_runnerNumber).
+				// インスタンスを生成しないでください　メモリリークが発生します
+				sleepTime = L1BugBearRace.this.calcSleepTime(this._bugBear.getPassispeed(), this._runnerNumber);
 			}
 		}
 	}

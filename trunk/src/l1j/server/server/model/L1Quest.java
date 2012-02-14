@@ -150,9 +150,7 @@ public class L1Quest {
 		if (step == null) {
 			return 0;
 		}
-		else {
-			return step.intValue();
-		}
+		return step.intValue();
 	}
 
 	/** 是结束 */

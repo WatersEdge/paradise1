@@ -1120,9 +1120,7 @@ public class L1ItemInstance extends L1Object {
 		if (this.getItem().getWeight() == 0) {
 			return 0;
 		}
-		else {
-			return Math.max(this.getCount() * this.getItem().getWeight() / 1000, 1);
-		}
+		return Math.max(this.getCount() * this.getItem().getWeight() / 1000, 1);
 	}
 
 	public int getWindMr() {

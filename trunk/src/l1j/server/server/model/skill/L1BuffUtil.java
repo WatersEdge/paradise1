@@ -534,9 +534,7 @@ public class L1BuffUtil {
 							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 1314, npc.getLawful(), npc.getStatus()));
 							return 0;
 						}
-						else {
-							return 0;
-						}
+						return 0;
 					}
 					if (npcId == 45640) { // 独角兽
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
@@ -562,9 +560,7 @@ public class L1BuffUtil {
 							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 4310, npc.getLawful(), npc.getStatus()));
 							return 0;
 						}
-						else {
-							return 0;
-						}
+						return 0;
 					}
 					if (npcId == 81352) { // 欧姆民兵
 						if (npc.getGfxId() == npc.getTempCharGfx()) {

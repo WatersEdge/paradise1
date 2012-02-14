@@ -271,21 +271,17 @@ public class L1PetMatch {
 			if (pc2.getMapId() == PET_MATCH_MAPID[petMatchNo]) {
 				return STATUS_READY2;
 			}
-			else {
-				this._pc2Name[petMatchNo] = null;
-				this._pet2[petMatchNo] = null;
-				return STATUS_NONE;
-			}
+			this._pc2Name[petMatchNo] = null;
+			this._pet2[petMatchNo] = null;
+			return STATUS_NONE;
 		}
 		if ((pc1 != null) && (pc2 == null)) {
 			if (pc1.getMapId() == PET_MATCH_MAPID[petMatchNo]) {
 				return STATUS_READY1;
 			}
-			else {
-				this._pc1Name[petMatchNo] = null;
-				this._pet1[petMatchNo] = null;
-				return STATUS_NONE;
-			}
+			this._pc1Name[petMatchNo] = null;
+			this._pet1[petMatchNo] = null;
+			return STATUS_NONE;
 		}
 
 		// PCが試合場に2人いる場合

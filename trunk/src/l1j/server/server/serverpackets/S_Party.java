@@ -91,33 +91,31 @@ public class S_Party extends ServerBasePacket {
 		if (pc.getParty() == null) {
 			return;
 		}
-		else {
-			this.writeC(Opcodes.S_OPCODE_PACKETBOX);
-			this.writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
-			nowhp = leader.getCurrentHp();
-			maxhp = leader.getMaxHp();
-			this.writeC(member.length - 1);
-			this.writeD(leader.getId());
-			this.writeS(leader.getName());
-			this.writeC((int) (nowhp / maxhp) * 100);
-			this.writeD(leader.getMapId());
-			this.writeH(leader.getX());
-			this.writeH(leader.getY());
-			for (final L1PcInstance element : member) {
-				if ((element.getId() == leader.getId()) || (element == null)) {
-					continue;
-				}
-				nowhp = element.getCurrentHp();
-				maxhp = element.getMaxHp();
-				this.writeD(element.getId());
-				this.writeS(element.getName());
-				this.writeC((int) (nowhp / maxhp) * 100);
-				this.writeD(element.getMapId());
-				this.writeH(element.getX());
-				this.writeH(element.getY());
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
+		nowhp = leader.getCurrentHp();
+		maxhp = leader.getMaxHp();
+		this.writeC(member.length - 1);
+		this.writeD(leader.getId());
+		this.writeS(leader.getName());
+		this.writeC((int) (nowhp / maxhp) * 100);
+		this.writeD(leader.getMapId());
+		this.writeH(leader.getX());
+		this.writeH(leader.getY());
+		for (final L1PcInstance element : member) {
+			if ((element.getId() == leader.getId()) || (element == null)) {
+				continue;
 			}
-			this.writeC(0x00);
+			nowhp = element.getCurrentHp();
+			maxhp = element.getMaxHp();
+			this.writeD(element.getId());
+			this.writeS(element.getName());
+			this.writeC((int) (nowhp / maxhp) * 100);
+			this.writeD(element.getMapId());
+			this.writeH(element.getX());
+			this.writeH(element.getY());
 		}
+		this.writeC(0x00);
 	}
 
 	/**
@@ -145,18 +143,16 @@ public class S_Party extends ServerBasePacket {
 		if (pc.getParty() == null) {
 			return;
 		}
-		else {
-			this.writeC(Opcodes.S_OPCODE_PACKETBOX);
-			this.writeC(S_PacketBox.PATRY_MEMBERS);
-			this.writeC(member.length);
-			for (final L1PcInstance element : member) {
-				this.writeD(element.getId());
-				this.writeD(element.getMapId());
-				this.writeH(element.getX());
-				this.writeH(element.getY());
-			}
-			this.writeC(0x00);
+		this.writeC(Opcodes.S_OPCODE_PACKETBOX);
+		this.writeC(S_PacketBox.PATRY_MEMBERS);
+		this.writeC(member.length);
+		for (final L1PcInstance element : member) {
+			this.writeD(element.getId());
+			this.writeD(element.getMapId());
+			this.writeH(element.getX());
+			this.writeH(element.getY());
 		}
+		this.writeC(0x00);
 	}
 
 	private void buildPacket(final String htmlid, final int objid, final String partyname, final String partymembers, final int type) {

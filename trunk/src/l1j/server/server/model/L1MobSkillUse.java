@@ -145,10 +145,8 @@ public class L1MobSkillUse {
 			if (this.isSkillUseble(i, isTriRnd) == false) {
 				continue;
 			}
-			else { // 有技能，符合标准
-				skills[skillSizeCounter] = i;
-				skillSizeCounter++;
-			}
+			skills[skillSizeCounter] = i;
+			skillSizeCounter++;
 		}
 
 		if (skillSizeCounter != 0) {

@@ -44,9 +44,7 @@ public class L1Castle {
 		if (this._publicMoney < 0) {
 			return 0;
 		}
-		else {
-			return this._publicMoney;
-		}
+		return this._publicMoney;
 	}
 
 	public int getTaxRate() {

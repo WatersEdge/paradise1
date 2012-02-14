@@ -1214,10 +1214,8 @@ public class L1NpcInstance extends L1Character {
 						if (dir == -1) {
 							return true;
 						}
-						else {
-							this.setDirectionMove(dir);
-							this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
-						}
+						this.setDirectionMove(dir);
+						this.setSleepTime(this.calcSleepTime(this.getPassispeed(), MOVE_SPEED));
 					}
 				}
 			}

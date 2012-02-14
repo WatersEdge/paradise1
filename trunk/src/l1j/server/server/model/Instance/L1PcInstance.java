@@ -1675,9 +1675,7 @@ public class L1PcInstance extends L1Character {
 			}
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	/** 确认是否属于新手, 并设定相关状态 */
@@ -1738,9 +1736,7 @@ public class L1PcInstance extends L1Character {
 			pc.sendPackets(new S_ServerMessage(403, item.getLogName())); // 获得%0%o 。
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	/**
@@ -2602,9 +2598,7 @@ public class L1PcInstance extends L1Character {
 			final int BornTime = Integer.parseInt(SimpleDate.format(this._birthday.getTime()));
 			return BornTime;
 		}
-		else {
-			return 0;
-		}
+		return 0;
 	}
 
 	/** 取得传送目的地面向 */
@@ -5029,39 +5023,34 @@ public class L1PcInstance extends L1Character {
 				return;
 
 			}
-			else {
+			// 穿着盔甲时不能脱下内衣
+			if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
+				this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
+				return;
 
-				// 穿着盔甲时不能脱下内衣
-				if ((type == 3) && (pcInventory.getTypeEquipped(2, 2) >= 1)) {
-					this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
-					return;
-
-				}
-
-				// 穿着斗篷时不能脱下内衣
-				else if (((type == 2) || (type == 3)) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
-					this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
-					return;
-				}
-
-				// 解除坚固防御
-				if (type == 7) {
-					if (this.hasSkillEffect(SOLID_CARRIAGE)) {
-						this.removeSkillEffect(SOLID_CARRIAGE);
-					}
-				}
-				pcInventory.setEquipped(armor, false);
 			}
+
+			// 穿着斗篷时不能脱下内衣
+			else if (((type == 2) || (type == 3)) && (pcInventory.getTypeEquipped(2, 4) >= 1)) {
+				this.sendPackets(new S_ServerMessage(127)); // \f1你不能够脱掉那个。
+				return;
+			}
+
+			// 解除坚固防御
+			if (type == 7) {
+				if (this.hasSkillEffect(SOLID_CARRIAGE)) {
+					this.removeSkillEffect(SOLID_CARRIAGE);
+				}
+			}
+			pcInventory.setEquipped(armor, false);
 		}
 		else {
 			if (armor.getItem().getUseType() == 23) {
 				this.sendPackets(new S_ServerMessage(144)); // \f1你已经戴着二个戒指。
 				return;
 			}
-			else {
-				this.sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
-				return;
-			}
+			this.sendPackets(new S_ServerMessage(124)); // \f1已经装备其他东西。
+			return;
 		}
 
 		this.setCurrentHp(this.getCurrentHp()); // 更新角色HP
@@ -5117,9 +5106,7 @@ public class L1PcInstance extends L1Character {
 				pcInventory.setEquipped(this.getWeapon(), false, false, false);
 				return;
 			}
-			else { // 武器交换
-				pcInventory.setEquipped(this.getWeapon(), false, false, true);
-			}
+			pcInventory.setEquipped(this.getWeapon(), false, false, true);
 		}
 
 		// 被诅咒的装备

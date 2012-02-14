@@ -208,32 +208,30 @@ public class L1TreasureBox {
 		if (item == null) {
 			return false;
 		}
-		else {
-			final int itemId = this.getBoxId();
+		final int itemId = this.getBoxId();
 
-			// 灵魂水晶、黑暗安特的水果、魔族的卷轴
-			if ((itemId == 40576 // 灵魂水晶
-					)
-					|| (itemId == 40577 // 灵魂水晶
-					) || (itemId == 40578 // 灵魂水晶
-					) || (itemId == 40411 // 黑暗安特的水果
-					) || (itemId == 49013 // 魔族的卷轴
-					)) {
-				pc.death(null); // 角色死亡
-			}
-
-			// 多魯嘉之袋
-			if ((itemId == 46000)) {
-				final L1ItemInstance box = pc.getInventory().findItemId(itemId);
-				box.setChargeCount(box.getChargeCount() - 1);
-				pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
-				if (box.getChargeCount() < 1) {
-					pc.getInventory().removeItem(box, 1);
-				}
-			}
-
-			return true;
+		// 灵魂水晶、黑暗安特的水果、魔族的卷轴
+		if ((itemId == 40576 // 灵魂水晶
+				)
+				|| (itemId == 40577 // 灵魂水晶
+				) || (itemId == 40578 // 灵魂水晶
+				) || (itemId == 40411 // 黑暗安特的水果
+				) || (itemId == 49013 // 魔族的卷轴
+				)) {
+			pc.death(null); // 角色死亡
 		}
+
+		// 多魯嘉之袋
+		if ((itemId == 46000)) {
+			final L1ItemInstance box = pc.getInventory().findItemId(itemId);
+			box.setChargeCount(box.getChargeCount() - 1);
+			pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
+			if (box.getChargeCount() < 1) {
+				pc.getInventory().removeItem(box, 1);
+			}
+		}
+
+		return true;
 	}
 
 	private int getBoxId() {
