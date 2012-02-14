@@ -57,7 +57,7 @@ public class AnnouncementsCycle {
 		}
 	}
 
-	private int round = 0;
+	int round = 0;
 
 	private String line = null;
 
@@ -74,7 +74,7 @@ public class AnnouncementsCycle {
 	private static File dir = new File("data/announceCycle.txt");
 
 	/** 纪录上一次修改时间 */
-	private static long lastmodify = dir.lastModified();
+	static long lastmodify = dir.lastModified();
 
 	public static AnnouncementsCycle getInstance() {
 		if (_instance == null) {
@@ -84,7 +84,7 @@ public class AnnouncementsCycle {
 	}
 
 	/** 在公告首显示公告修改时间 */
-	private final boolean AnnounceTimeDisplay = Config.Announcements_Cycle_Modify_Time;
+	final boolean AnnounceTimeDisplay = Config.Announcements_Cycle_Modify_Time;
 
 	/** 容器 */
 	List<String> list = new FastList<String>();
@@ -113,7 +113,7 @@ public class AnnouncementsCycle {
 	/**
 	 * 从announcementsCycle.txt将字串读入
 	 */
-	private void scanfile() {
+	void scanfile() {
 		try {
 			this.fileEnsure(); // 先确保档案存在
 			if ((dir.lastModified() > lastmodify) || this.firstboot) { // 如果有修改过
@@ -148,7 +148,7 @@ public class AnnouncementsCycle {
 	/**
 	 * 把字串广播到伺服器上
 	 */
-	private void ShowAnnouncementsCycle(final String announcement) {
+	void ShowAnnouncementsCycle(final String announcement) {
 		final Collection<L1PcInstance> AllPlayer = L1World.getInstance().getAllPlayers();
 		for (final L1PcInstance pc : AllPlayer) {
 			pc.sendPackets(new S_SystemMessage(announcement));

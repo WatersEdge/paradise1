@@ -28,6 +28,10 @@ public class TelnetServer {
 	private class ServerThread extends Thread {
 		ServerSocket _sock;
 
+		public ServerThread() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			try {

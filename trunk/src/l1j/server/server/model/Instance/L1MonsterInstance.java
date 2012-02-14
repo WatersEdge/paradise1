@@ -784,7 +784,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 		}
 	}
 
-	private void distributeExpDropKarma(L1Character lastAttacker) {
+	void distributeExpDropKarma(L1Character lastAttacker) {
 		if (lastAttacker == null) {
 			return;
 		}
@@ -909,7 +909,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 	}
 
 	/** 给予UB勋章 */
-	private void giveUbSeal() {
+	void giveUbSeal() {
 		if (this.getUbSealCount() != 0) { // UB勇者的勋章
 			final L1UltimateBattle ub = UBTable.getInstance().getUb(this.getUbId());
 			if (ub != null) {

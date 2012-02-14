@@ -44,6 +44,10 @@ public class L1PolyRace {
 
 	/** 确认人数OK --->开始 */
 	private class CheckTimer extends TimerTask {
+		public CheckTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.schedule(this, 30 * 1000); // 60s
@@ -63,6 +67,10 @@ public class L1PolyRace {
 
 	/** 倒数5秒--->开始计时 */
 	private class ClockTimer extends TimerTask {
+		public ClockTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.schedule(this, 5000); // 5s
@@ -82,6 +90,10 @@ public class L1PolyRace {
 
 	/** 对比计时器 */
 	private class CompareTimer extends TimerTask {
+		public CompareTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1PolyRace.this.comparePosition();
@@ -95,6 +107,10 @@ public class L1PolyRace {
 
 	/** 结束计时器 */
 	private class EndTimer extends TimerTask {
+		public EndTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.schedule(this, 5000); // 10s
@@ -110,6 +126,10 @@ public class L1PolyRace {
 
 	/** 开始计时--->游戏结束 */
 	private class GameTimeLimitTimer extends TimerTask {
+		public GameTimeLimitTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1PolyRace.this.setGameEnd(END_STATUS_NOWINNER);
@@ -123,6 +143,10 @@ public class L1PolyRace {
 
 	/** 进场等待--->确认人数 */
 	private class ReadyTimer extends TimerTask {
+		public ReadyTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public void begin() {
 			final Timer timer = new Timer();
 			timer.schedule(this, readyTime);
@@ -161,7 +185,7 @@ public class L1PolyRace {
 	private static final int minPlayer = 2; // 最小玩家数
 
 	/** 进场之后等待时间 */
-	private static int readyTime = 60 * 1000; // 进场之后等待时间 60秒
+	static int readyTime = 60 * 1000; // 进场之后等待时间 60秒
 
 	/** 游戏时间 */
 	private static int limitTime = 240 * 1000; // 游戏时间 240秒
@@ -183,7 +207,7 @@ public class L1PolyRace {
 	}
 
 	/** 玩家清单 */
-	private final FastTable<L1PcInstance> playerList = new FastTable<L1PcInstance>();
+	final FastTable<L1PcInstance> playerList = new FastTable<L1PcInstance>();
 
 	/** 预约清单 */
 	private final FastTable<L1PcInstance> orderList = new FastTable<L1PcInstance>();
@@ -438,12 +462,12 @@ public class L1PolyRace {
 	}
 
 	/** 增加时间 */
-	private void addTime() {
+	void addTime() {
 		this._time++;
 	}
 
 	/** 检查角色OK */
-	private boolean checkPlayersOK() {
+	boolean checkPlayersOK() {
 		if (this.getGameStatus() == STATUS_READY) {
 			return this.playerList.size() >= minPlayer;
 		}
@@ -456,7 +480,7 @@ public class L1PolyRace {
 	}
 
 	/** 判断排名 */
-	private void comparePosition() {
+	void comparePosition() {
 		final FastTable<L1PcInstance> temp = new FastTable<L1PcInstance>();
 		final int size = this.playerList.size();
 		int count = 0;
@@ -487,7 +511,7 @@ public class L1PolyRace {
 	}
 
 	/** 奖励获胜者 */
-	private void giftWinner() {
+	void giftWinner() {
 		final L1PcInstance winner = this.getWinner();
 		final L1ItemInstance item = ItemTable.getInstance().createItem(41308); // 勇者的南瓜袋子
 		if ((winner == null) || (item == null)) {
@@ -582,7 +606,7 @@ public class L1PolyRace {
 	}
 
 	/** 设定关门 */
-	private void setDoorClose(final boolean isClose) {
+	void setDoorClose(final boolean isClose) {
 		final L1DoorInstance[] list = DoorTable.getInstance().getDoorList();
 		for (final L1DoorInstance door : list) {
 			if (door.getMapId() == 5143) {
@@ -602,7 +626,7 @@ public class L1PolyRace {
 	 * @param type
 	 *            情况
 	 */
-	private void setGameEnd(final int type) {
+	void setGameEnd(final int type) {
 		this.setGameStatus(STATUS_END);
 		switch (type) {
 			case END_STATUS_WINNER:
@@ -626,7 +650,7 @@ public class L1PolyRace {
 	}
 
 	/** 初始化 + 下一场准备 */
-	private void setGameInit() {
+	void setGameInit() {
 		for (final L1PcInstance pc : this.playerList) {
 			pc.sendPackets(new S_Race(S_Race.GameEnd));
 			pc.setLap(1);
@@ -642,7 +666,7 @@ public class L1PolyRace {
 	}
 
 	/** 设定游戏开始 */
-	private void setGameStart() {
+	void setGameStart() {
 		this.setGameStatus(STATUS_PLAYING);
 		for (final L1PcInstance pc : this.playerList) {
 			this.speedUp(pc, 0, 0);
@@ -690,7 +714,7 @@ public class L1PolyRace {
 	}
 
 	/** 开始检查定时器 */
-	private void startCheckTimer() {
+	void startCheckTimer() {
 		new CheckTimer().begin();
 	}
 
@@ -714,7 +738,7 @@ public class L1PolyRace {
 	}
 
 	/** 启动游戏时间限制定时器 */
-	private void startGameTimeLimitTimer() {
+	void startGameTimeLimitTimer() {
 		final Timer timer = new Timer();
 		this.limitTimer = new GameTimeLimitTimer();
 		timer.schedule(this.limitTimer, limitTime);

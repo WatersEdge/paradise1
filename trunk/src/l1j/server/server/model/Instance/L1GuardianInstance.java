@@ -58,7 +58,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	private class GDropItemTask implements Runnable {
 		int npcId = L1GuardianInstance.this.getNpcTemplate().get_npcId();
 
-		private GDropItemTask() {
+		GDropItemTask() {
 		}
 
 		@Override
@@ -143,14 +143,14 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
+	static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
 
-	private final L1GuardianInstance _npc = this;
+	final L1GuardianInstance _npc = this;
 
 	/** NPC道具重置时间 */
-	private final int GDROPITEM_TIME = Config.GDROPITEM_TIME;
+	final int GDROPITEM_TIME = Config.GDROPITEM_TIME;
 
-	private L1Character _lastattacker;
+	L1Character _lastattacker;
 
 	private static final long REST_MILLISEC = 10000;
 

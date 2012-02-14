@@ -179,9 +179,9 @@ public class L1UltimateBattle {
 
 	private int _locY2;
 
-	private int _ubId;
+	int _ubId;
 
-	private int _pattern;
+	int _pattern;
 
 	private boolean _isNowUb;
 
@@ -217,13 +217,13 @@ public class L1UltimateBattle {
 
 	private int _mpr;
 
-	private static int BEFORE_MINUTE = 5; // 入场前5分钟开始
+	static int BEFORE_MINUTE = 5; // 入场前5分钟开始
 
 	private final Set<Integer> _managers = new HashSet<Integer>();
 
 	private final SortedSet<Integer> _ubTimes = new TreeSet<Integer>();
 
-	private static final Logger _log = Logger.getLogger(L1UltimateBattle.class.getName());
+	static final Logger _log = Logger.getLogger(L1UltimateBattle.class.getName());
 
 	private static String intToTimeFormat(final int n) {
 		return n / 100 + ":" + n % 100 / 10 + "" + n % 10;
@@ -570,7 +570,7 @@ public class L1UltimateBattle {
 	/**
 	 * 删除竞技场内所有的怪物与道具。
 	 */
-	private void clearColosseum() {
+	void clearColosseum() {
 		for (final Object obj : L1World.getInstance().getVisibleObjects(this._mapId).values()) {
 			if (obj instanceof L1MonsterInstance) // 删除怪物
 			{
@@ -604,7 +604,7 @@ public class L1UltimateBattle {
 	/**
 	 * 从成员列表删除退出人员。
 	 */
-	private void removeRetiredMembers() {
+	void removeRetiredMembers() {
 		final L1PcInstance[] temp = this.getMembersArray();
 		for (final L1PcInstance element : temp) {
 			if (element.getMapId() != this._mapId) {
@@ -621,7 +621,7 @@ public class L1UltimateBattle {
 	 * @param msg
 	 *            发送消息
 	 */
-	private void sendMessage(final int type, final String msg) {
+	void sendMessage(final int type, final String msg) {
 		for (final L1PcInstance pc : this.getMembersArray()) {
 			pc.sendPackets(new S_ServerMessage(type, msg));
 		}
@@ -633,14 +633,14 @@ public class L1UltimateBattle {
 	 * @param curRound
 	 *            回合开始
 	 */
-	private void sendRoundMessage(final int curRound) {
+	void sendRoundMessage(final int curRound) {
 		// XXX - 此ID错误
 		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
 
 		this.sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
 	}
 
-	private void setActive(final boolean f) {
+	void setActive(final boolean f) {
 		this._active = f;
 	}
 
@@ -650,7 +650,7 @@ public class L1UltimateBattle {
 	 * @param i
 	 *            true/false
 	 */
-	private void setNowUb(final boolean i) {
+	void setNowUb(final boolean i) {
 		this._isNowUb = i;
 	}
 
@@ -701,7 +701,7 @@ public class L1UltimateBattle {
 	 * @param curRound
 	 *            本轮
 	 */
-	private void spawnSupplies(final int curRound) {
+	void spawnSupplies(final int curRound) {
 		if (curRound == 1) {
 			this.spawnGroundItem(L1ItemId.ADENA, 1000, 60);
 			this.spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 3, 20);

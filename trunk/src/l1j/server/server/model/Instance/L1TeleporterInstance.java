@@ -57,7 +57,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	private boolean _isNowDely = false;
+	boolean _isNowDely = false;
 
 	private static Logger _log = Logger.getLogger(l1j.server.server.model.Instance.L1TeleporterInstance.class.getName());
 

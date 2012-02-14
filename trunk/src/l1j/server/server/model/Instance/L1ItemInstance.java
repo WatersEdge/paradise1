@@ -266,11 +266,11 @@ public class L1ItemInstance extends L1Object {
 
 	private final LastStatus _lastStatus = new LastStatus();
 
-	private L1PcInstance _pc;
+	L1PcInstance _pc;
 
-	private boolean _isRunning = false;
+	boolean _isRunning = false;
 
-	private EnchantTimer _timer;
+	EnchantTimer _timer;
 
 	private int _bless;
 

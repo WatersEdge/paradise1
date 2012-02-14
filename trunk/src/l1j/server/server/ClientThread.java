@@ -146,7 +146,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	}
 
 	/** 提示信息 */
-	private static Logger _log = Logger.getLogger(ClientThread.class.getName());
+	static Logger _log = Logger.getLogger(ClientThread.class.getName());
 
 	/** 离开游戏 */
 	public static void quitGame(final L1PcInstance pc) {
@@ -270,15 +270,15 @@ public class ClientThread implements Runnable, PacketOutput {
 	/** 账号 */
 	private Account _account;
 
-	private L1PcInstance _activeChar;
+	L1PcInstance _activeChar;
 
 	private String _ip;
 
 	/** 主机名 */
-	private String _hostname;
+	String _hostname;
 
 	/** CSocket类 */
-	private Socket _csocket;
+	Socket _csocket;
 
 	/** 登录状态 */
 	private int _loginStatus = 0;
@@ -304,7 +304,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	private static final int H_CAPACITY = 2;// 一方接受的最高限额所需的行动
 
-	private static Timer _observerTimer = new Timer();
+	static Timer _observerTimer = new Timer();
 
 	public ClientThread(final Socket socket) throws IOException {
 		this._csocket = socket;

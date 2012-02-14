@@ -216,7 +216,11 @@ public class L1DragonSlayer {
 	}
 
 	private static class DragonSlayer {
-		private final ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
+		public DragonSlayer() {
+			// TODO Auto-generated constructor stub
+		}
+
+		final ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
 	}
 
 	private static Logger _log = Logger.getLogger(L1DragonSlayer.class.getName());

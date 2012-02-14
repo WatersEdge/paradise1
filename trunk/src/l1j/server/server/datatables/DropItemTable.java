@@ -35,6 +35,10 @@ public final class DropItemTable {
 	 * 掉落物品几率资料
 	 */
 	private class dropItemData {
+		public dropItemData() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public double dropRate = 1;
 		public double dropAmount = 1;
 	}

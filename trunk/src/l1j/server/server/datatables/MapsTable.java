@@ -32,6 +32,10 @@ import l1j.server.server.utils.collections.Maps;
 public final class MapsTable {
 
 	private class MapData {
+		public MapData() {
+			// TODO Auto-generated constructor stub
+		}
+
 		/** 开始坐标X */
 		public int startX = 0;
 		/** 结束坐标X */

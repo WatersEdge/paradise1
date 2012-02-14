@@ -58,7 +58,7 @@ public class Dungeon {
 
 		DungeonType _dungeonType;
 
-		private NewDungeon(final int newX, final int newY, final short newMapId, final int heading, final DungeonType dungeonType) {
+		NewDungeon(final int newX, final int newY, final short newMapId, final int heading, final DungeonType dungeonType) {
 			this._newX = newX;
 			this._newY = newY;
 			this._newMapId = newMapId;

@@ -30,6 +30,10 @@ import l1j.server.server.utils.collections.Maps;
 
 public class LeakCheckedConnection {
 	private class ConnectionHandler implements java.lang.reflect.InvocationHandler {
+		public ConnectionHandler() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
 			if (method.getName().equals("close")) {
@@ -45,7 +49,7 @@ public class LeakCheckedConnection {
 	}
 
 	private class Delegate implements InvocationHandler {
-		private final Object _delegateProxy;
+		final Object _delegateProxy;
 
 		private final Object _original;
 
@@ -74,11 +78,11 @@ public class LeakCheckedConnection {
 		return (Connection) new LeakCheckedConnection(con)._proxy;
 	}
 
-	private final Connection _con;
+	final Connection _con;
 
-	private final Map<Statement, Throwable> _openedStatements = Maps.newMap();
+	final Map<Statement, Throwable> _openedStatements = Maps.newMap();
 
-	private final Map<ResultSet, Throwable> _openedResultSets = Maps.newMap();
+	final Map<ResultSet, Throwable> _openedResultSets = Maps.newMap();
 
 	private final Object _proxy;
 
@@ -87,7 +91,7 @@ public class LeakCheckedConnection {
 		this._proxy = Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] { Connection.class }, new ConnectionHandler());
 	}
 
-	private void remove(final Object o) {
+	void remove(final Object o) {
 		if (o instanceof ResultSet) {
 			this._openedResultSets.remove(o);
 		}
@@ -99,7 +103,7 @@ public class LeakCheckedConnection {
 		}
 	}
 
-	private Object send(final Object o, final Method m, final Object[] args) throws Throwable {
+	Object send(final Object o, final Method m, final Object[] args) throws Throwable {
 		try {
 			return m.invoke(o, args);
 		}

@@ -243,11 +243,11 @@ public class L1BugBearRace {
 		return instance;
 	}
 
-	private final L1NpcInstance[] _runner;
+	final L1NpcInstance[] _runner;
 	private final int[] _runnerStatus = new int[5];
-	private final double[] _winning_average = new double[5];
+	final double[] _winning_average = new double[5];
 
-	private final double[] _allotment_percentage = new double[5];
+	final double[] _allotment_percentage = new double[5];
 
 	private final int[] _condition = new int[5];
 
@@ -403,7 +403,7 @@ public class L1BugBearRace {
 		this._status = i;
 	}
 
-	private int calcSleepTime(int sleepTime, final int runnerNumber) {
+	int calcSleepTime(int sleepTime, final int runnerNumber) {
 		final L1NpcInstance npc = this._runner[runnerNumber];
 		if (npc.getBraveSpeed() == 1) {
 			sleepTime -= (sleepTime * 0.25);
@@ -434,7 +434,7 @@ public class L1BugBearRace {
 		return false;
 	}
 
-	private void clearRunner() {
+	void clearRunner() {
 		for (int i = 0; i < 5; i++) {
 			if (this._runner[i] != null) {
 				this._runner[i].deleteMe();
@@ -473,7 +473,7 @@ public class L1BugBearRace {
 		}
 	}
 
-	private double getRandomProbability() {
+	double getRandomProbability() {
 		return (_random.nextInt(10000) + 1) / 100D;
 	}
 
@@ -492,7 +492,7 @@ public class L1BugBearRace {
 		}
 	}
 
-	private int rePressHeading(int heading) {
+	int rePressHeading(int heading) {
 		if (0 > heading) {// 0未満ならば7
 			heading = 7;
 		}
@@ -502,13 +502,13 @@ public class L1BugBearRace {
 		return heading;
 	}
 
-	private void sendMessage(final String id) {
+	void sendMessage(final String id) {
 		this.parkin.wideBroadcastPacket(new S_NpcChatPacket(this.parkin, id, 2));
 		// cecile.broadcastPacket(new S_NpcChatPacket(cecile,id, 2));
 		this.pory.wideBroadcastPacket(new S_NpcChatPacket(this.pory, id, 2));
 	}
 
-	private void setRandomCondition() {
+	void setRandomCondition() {
 		for (int i = 0; i < this._condition.length; i++) {
 			this._condition[i] = -1 + _random.nextInt(3);
 		}
@@ -518,7 +518,7 @@ public class L1BugBearRace {
 	 * private void setCondition(int num, int condition) { this._condition[num] = condition; }
 	 */
 
-	private void setRandomRunner() {
+	void setRandomRunner() {
 		for (int i = 0; i < 5; i++) {
 			int npcid = FIRST_NPCID + _random.nextInt(20);
 			while (this.checkDuplicate(npcid, i)) {
@@ -530,11 +530,11 @@ public class L1BugBearRace {
 		}
 	}
 
-	private void setRound(final int round) {
+	void setRound(final int round) {
 		this._round = round;
 	}
 
-	private void setWinnigAverage() {
+	void setWinnigAverage() {
 		for (int i = 0; i < this._winning_average.length; i++) {
 			double winningAverage = this.getRandomProbability();
 

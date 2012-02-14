@@ -261,7 +261,7 @@ public class L1EffectInstance extends L1NpcInstance {
 		this._pc = pc;
 	}
 
-	private void cubeToAlly(final L1Character cha, final L1Character effect) {
+	void cubeToAlly(final L1Character cha, final L1Character effect) {
 		final int npcId = this.getNpcTemplate().get_npcId();
 		final int castGfx = SkillsTable.getInstance().getTemplate(this.getSkillId()).getCastGfx();
 		L1PcInstance pc = null;
@@ -316,7 +316,7 @@ public class L1EffectInstance extends L1NpcInstance {
 		}
 	}
 
-	private void cubeToEnemy(final L1Character cha, final L1Character effect) {
+	void cubeToEnemy(final L1Character cha, final L1Character effect) {
 		final int npcId = this.getNpcTemplate().get_npcId();
 		final int castGfx2 = SkillsTable.getInstance().getTemplate(this.getSkillId()).getCastGfx2();
 		L1PcInstance pc = null;

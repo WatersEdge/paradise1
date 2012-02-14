@@ -26,6 +26,10 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public class L1DamagePoison extends L1Poison {
 
 	private class NormalPoisonTimer extends Thread {
+		public NormalPoisonTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			while (true) {
@@ -69,13 +73,13 @@ public class L1DamagePoison extends L1Poison {
 
 	private Thread _timer;
 
-	private final L1Character _attacker;
+	final L1Character _attacker;
 
-	private final L1Character _target;
+	final L1Character _target;
 
-	private final int _damageSpan;
+	final int _damageSpan;
 
-	private final int _damage;
+	final int _damage;
 
 	private L1DamagePoison(final L1Character attacker, final L1Character cha, final int damageSpan, final int damage) {
 		this._attacker = attacker;

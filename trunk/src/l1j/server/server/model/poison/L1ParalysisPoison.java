@@ -32,6 +32,10 @@ public class L1ParalysisPoison extends L1Poison {
 	// D-グール 39 45
 
 	private class ParalysisPoisonTimer extends Thread {
+		public ParalysisPoisonTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1ParalysisPoison.this._target.setSkillEffect(STATUS_POISON_PARALYZING, 0);
@@ -63,6 +67,10 @@ public class L1ParalysisPoison extends L1Poison {
 	}
 
 	private class ParalysisTimer extends Thread {
+		public ParalysisTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1ParalysisPoison.this._target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
@@ -93,15 +101,15 @@ public class L1ParalysisPoison extends L1Poison {
 		return true;
 	}
 
-	private final L1Character _target;
+	final L1Character _target;
 
-	private Thread _timer;
+	Thread _timer;
 
-	private final int _delay;
+	final int _delay;
 
-	private final int _time;
+	final int _time;
 
-	private int _effectId = 1;
+	int _effectId = 1;
 
 	private L1ParalysisPoison(final L1Character cha, final int delay, final int time) {
 		this._target = cha;

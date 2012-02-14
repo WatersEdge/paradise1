@@ -42,6 +42,10 @@ public class L1GameReStart {
 
 	private class TimeUpdaterRestar implements Runnable {
 
+		public TimeUpdaterRestar() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			while (true) {
@@ -167,7 +171,7 @@ public class L1GameReStart {
 		}
 	}
 
-	private static Logger _log = Logger.getLogger(L1GameReStart.class.getName());
+	static Logger _log = Logger.getLogger(L1GameReStart.class.getName());
 
 	private static L1GameReStart _instance;
 
@@ -179,13 +183,13 @@ public class L1GameReStart {
 		_instance = new L1GameReStart();
 	}
 
-	private volatile L1GameTime _currentTime = new L1GameTime();
+	volatile L1GameTime _currentTime = new L1GameTime();
 
-	private L1GameTime _previousTime = null;
+	L1GameTime _previousTime = null;
 
 	private final List<L1GameTimeListener> _listeners = new CopyOnWriteArrayList<L1GameTimeListener>();
 
-	private static int willRestartTime;
+	static int willRestartTime;
 
 	public static int getWillRestartTime() {
 		return willRestartTime;
@@ -235,14 +239,14 @@ public class L1GameReStart {
 		this._remnant = remnant;
 	}
 
-	private void BroadCastToAll(final String string) {
+	void BroadCastToAll(final String string) {
 		final Collection<L1PcInstance> allpc = L1World.getInstance().getAllPlayers();
 		for (final L1PcInstance pc : allpc) {
 			pc.sendPackets(new S_SystemMessage(string));
 		}
 	}
 
-	private int GetRestartTime() {
+	int GetRestartTime() {
 		return Config.REST_TIME;
 	}
 
@@ -250,7 +254,7 @@ public class L1GameReStart {
 		return this._previousTime.get(field) != this._currentTime.get(field);
 	}
 
-	private void notifyChanged() {
+	void notifyChanged() {
 		if (this.isFieldChanged(Calendar.MONTH)) {
 			for (final L1GameTimeListener listener : this._listeners) {
 				listener.onMonthChanged(this._currentTime);

@@ -23,7 +23,7 @@ public class NpcFireDamage {
 
 	class Damage implements Runnable {
 
-		private Damage() {
+		Damage() {
 		}
 
 		@Override
@@ -86,10 +86,10 @@ public class NpcFireDamage {
 	}
 
 	/** 使用者 */
-	private L1Character user = null;
+	L1Character user = null;
 
 	/** 火牢 */
-	private L1EffectInstance fire = null;
+	L1EffectInstance fire = null;
 
 	/**
 	 * NPC 火牢伤害
