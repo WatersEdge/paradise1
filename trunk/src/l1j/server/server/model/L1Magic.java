@@ -708,8 +708,7 @@ public class L1Magic {
 			}
 		}
 		if (this._calcType == this.NPC_NPC) {
-			if (((this._npc instanceof L1NpcInstance) || (this._npc instanceof L1PetInstance) || (this._npc instanceof L1SummonInstance))
-					&& ((this._targetNpc instanceof L1NpcInstance) || (this._targetNpc instanceof L1PetInstance) || (this._targetNpc instanceof L1SummonInstance))) {
+			if (((this._npc != null) || (this._npc instanceof L1PetInstance) || (this._npc instanceof L1SummonInstance)) && ((this._targetNpc != null) || (this._targetNpc instanceof L1PetInstance) || (this._targetNpc instanceof L1SummonInstance))) {
 				// 目标在安区、攻击者在安区
 				if ((this._targetNpc.getZoneType() == 1) || (this._npc.getZoneType() == 1)) {
 					dmg = 0;
