@@ -333,13 +333,13 @@ public class L1NpcInstance extends L1Character {
 	public static final int ATTACK_SPEED = 1;
 	/** 施法速度 */
 	public static final int MAGIC_SPEED = 2;
-	/** 隐藏状态 NONE */
+	/** 隐藏状态 (空) */
 	public static final int HIDDEN_STATUS_NONE = 0;
-	/** 隐藏状态 SINK */
+	/** 隐藏状态 (遁地) */
 	public static final int HIDDEN_STATUS_SINK = 1;
-	/** 隐藏状态 FLY */
+	/** 隐藏状态 (飞天) */
 	public static final int HIDDEN_STATUS_FLY = 2;
-	/** 隐藏状态 ICE */
+	/** 隐藏状态 (冰冻) */
 	public static final int HIDDEN_STATUS_ICE = 3;
 	/** 隐藏状态 (吉尔塔斯反击屏障) */
 	public static final int HIDDEN_STATUS_COUNTERATTACK_BARRIER = 4;
