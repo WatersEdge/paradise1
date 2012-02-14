@@ -14,7 +14,6 @@
  */
 package l1j.server.server.utils.collections;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javolution.util.FastTable;
 
 public class Lists {
-	public static class SerializableArrayList<E extends Object> extends FastTable<E> implements Serializable {
+	public static class SerializableArrayList<E extends Object> extends FastTable<E> {
 		private static final long serialVersionUID = 1L;
 
 		public SerializableArrayList() {

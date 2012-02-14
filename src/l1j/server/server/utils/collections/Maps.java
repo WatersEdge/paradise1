@@ -14,7 +14,6 @@
  */
 package l1j.server.server.utils.collections;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javolution.util.FastMap;
 
 public class Maps {
-	public static class SerializableHashMap<K extends Object, V extends Object> extends FastMap<K, V> implements Serializable {
+	public static class SerializableHashMap<K extends Object, V extends Object> extends FastMap<K, V> {
 		private static final long serialVersionUID = 1L;
 
 		public SerializableHashMap() {
