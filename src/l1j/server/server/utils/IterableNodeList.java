@@ -28,6 +28,10 @@ public class IterableNodeList implements Iterable<Node> {
 	private class MyIterator implements Iterator<Node> {
 		private int _idx = 0;
 
+		public MyIterator() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public boolean hasNext() {
 			return this._idx < IterableNodeList.this._list.getLength();
@@ -47,7 +51,7 @@ public class IterableNodeList implements Iterable<Node> {
 		}
 	}
 
-	private final NodeList _list;
+	final NodeList _list;
 
 	public IterableNodeList(final NodeList list) {
 		this._list = list;

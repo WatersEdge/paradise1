@@ -32,6 +32,10 @@ import l1j.server.server.utils.collections.Maps;
  */
 public class L1CastleLocation {
 	private static class L1CastleTaxRateListener extends L1GameTimeAdapter {
+		public L1CastleTaxRateListener() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void onDayChanged(final L1GameTime time) {
 			L1CastleLocation.setCastleTaxRate();

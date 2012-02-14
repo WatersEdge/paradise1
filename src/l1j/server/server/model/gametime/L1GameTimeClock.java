@@ -29,6 +29,10 @@ public class L1GameTimeClock {
 
 	/** 更新时间 */
 	private class TimeUpdater implements Runnable {
+		public TimeUpdater() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			while (true) {
@@ -46,7 +50,7 @@ public class L1GameTimeClock {
 		}
 	}
 
-	private static Logger _log = Logger.getLogger(L1GameTimeClock.class.getName());
+	static Logger _log = Logger.getLogger(L1GameTimeClock.class.getName());
 	private static L1GameTimeClock _instance;
 
 	public static L1GameTimeClock getInstance() {
@@ -59,10 +63,10 @@ public class L1GameTimeClock {
 	}
 
 	/** 当前时间 */
-	private volatile L1GameTime _currentTime = L1GameTime.fromSystemCurrentTime();
+	volatile L1GameTime _currentTime = L1GameTime.fromSystemCurrentTime();
 
 	/** 以前的时间 */
-	private L1GameTime _previousTime = null;
+	L1GameTime _previousTime = null;
 
 	/**  */
 	private final List<L1GameTimeListener> _listeners = Lists.newConcurrentList();
@@ -92,7 +96,7 @@ public class L1GameTimeClock {
 	}
 
 	/** 通知改变 */
-	private void notifyChanged() {
+	void notifyChanged() {
 		if (this.isFieldChanged(Calendar.MONTH)) {
 			for (final L1GameTimeListener listener : this._listeners) {
 				listener.onMonthChanged(this._currentTime);

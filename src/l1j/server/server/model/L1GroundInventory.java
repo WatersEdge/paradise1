@@ -57,7 +57,7 @@ public class L1GroundInventory extends L1Inventory {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1PcInventory.class.getName());
+	static Logger _log = Logger.getLogger(L1PcInventory.class.getName());
 
 	private static final Timer _timer = new Timer();
 

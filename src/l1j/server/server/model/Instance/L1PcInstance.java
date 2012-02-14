@@ -749,7 +749,7 @@ public class L1PcInstance extends L1Character {
 	private final L1EquipmentSlot _equipSlot;
 
 	/**  */
-	private L1PcDeleteTimer _pcDeleteTimer;
+	L1PcDeleteTimer _pcDeleteTimer;
 
 	/** 账号名称 */
 	private String _accountName;
@@ -5838,7 +5838,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 惩罚结果 */
-	private void caoPenaltyResult(final int count) {
+	void caoPenaltyResult(final int count) {
 		for (int i = 0; i < count; i++) {
 			final L1ItemInstance item = this.getInventory().CaoPenalty();
 
@@ -5863,7 +5863,7 @@ public class L1PcInstance extends L1Character {
 	 * @param target
 	 * @return
 	 */
-	private boolean isInWarAreaAndWarTime(final L1PcInstance pc, final L1PcInstance target) {
+	boolean isInWarAreaAndWarTime(final L1PcInstance pc, final L1PcInstance target) {
 		// pcとtargetが战争中に战争エリアに居るか
 		final int castleId = L1CastleLocation.getCastleIdByArea(pc);
 		final int targetCastleId = L1CastleLocation.getCastleIdByArea(target);
@@ -6061,7 +6061,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	/** 设定G-RES有效 */
-	private void setGresValid(final boolean valid) {
+	void setGresValid(final boolean valid) {
 		this._gresValid = valid;
 	}
 

@@ -73,7 +73,7 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	private int _currentPetStatus;
 
-	private final boolean _tamed;
+	final boolean _tamed;
 
 	private boolean _isReturnToNature = false;
 

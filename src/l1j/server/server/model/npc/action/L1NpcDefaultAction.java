@@ -11,10 +11,14 @@ import l1j.server.server.utils.collections.Maps;
 public class L1NpcDefaultAction {
 
 	private static class Action {
-		private int defaultAttack = 1; // 预设攻击
-		private int specialAttack = 0; // 特殊攻击
-		private int rangedAttack = 1; // 远距攻击
-		private int status = 0; // 状态
+		public Action() {
+			// TODO Auto-generated constructor stub
+		}
+
+		int defaultAttack = 1; // 预设攻击
+		int specialAttack = 0; // 特殊攻击
+		int rangedAttack = 1; // 远距攻击
+		int status = 0; // 状态
 	}
 
 	static Logger _log = Logger.getLogger(L1NpcDefaultAction.class.getName());

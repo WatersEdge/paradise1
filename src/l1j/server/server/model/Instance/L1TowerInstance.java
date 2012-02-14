@@ -63,9 +63,9 @@ public class L1TowerInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
-	private L1Character _lastattacker;
+	L1Character _lastattacker;
 
-	private int _castle_id;
+	int _castle_id;
 
 	private int _crackStatus;
 

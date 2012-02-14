@@ -49,6 +49,10 @@ public class L1BossCycle {
 		@XmlAttribute(name = "Time")
 		private String _time;
 
+		public Base() {
+			// TODO Auto-generated constructor stub
+		}
+
 		public String getDate() {
 			return this._date;
 		}

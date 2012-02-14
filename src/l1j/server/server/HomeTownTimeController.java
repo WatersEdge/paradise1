@@ -39,6 +39,10 @@ import l1j.server.server.utils.SQLUtil;
 public class HomeTownTimeController {
 
 	private class L1TownFixedProcListener extends L1GameTimeAdapter {
+		public L1TownFixedProcListener() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void onDayChanged(final L1GameTime time) {
 			HomeTownTimeController.this.fixedProc(time);
@@ -244,7 +248,7 @@ public class HomeTownTimeController {
 		L1World.getInstance().setProcessingContributionTotal(false);
 	}
 
-	private void fixedProc(final L1GameTime time) {
+	void fixedProc(final L1GameTime time) {
 		final Calendar cal = time.getCalendar();
 		final int day = cal.get(Calendar.DAY_OF_MONTH); // Calendar.DAY_OF_WEEK 取得周几之值
 

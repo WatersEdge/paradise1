@@ -28,6 +28,10 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 public class L1CurseParalysis extends L1Paralysis {
 
 	private class ParalysisDelayTimer extends Thread {
+		public ParalysisDelayTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1CurseParalysis.this._target.setSkillEffect(STATUS_CURSE_PARALYZING, 0);
@@ -56,6 +60,10 @@ public class L1CurseParalysis extends L1Paralysis {
 	}
 
 	private class ParalysisTimer extends Thread {
+		public ParalysisTimer() {
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void run() {
 			L1CurseParalysis.this._target.killSkillEffectTimer(STATUS_CURSE_PARALYZING);
@@ -90,13 +98,13 @@ public class L1CurseParalysis extends L1Paralysis {
 		return true;
 	}
 
-	private final L1Character _target;
+	final L1Character _target;
 
-	private final int _delay;
+	final int _delay;
 
-	private final int _time;
+	final int _time;
 
-	private Thread _timer;
+	Thread _timer;
 
 	private L1CurseParalysis(final L1Character cha, final int delay, final int time) {
 		this._target = cha;

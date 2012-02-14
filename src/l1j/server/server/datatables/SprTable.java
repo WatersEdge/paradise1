@@ -61,15 +61,19 @@ import l1j.server.server.utils.collections.Maps;
 public class SprTable {
 
 	private static class Spr {
-		private final Map<Integer, Integer> moveSpeed = Maps.newMap();
+		public Spr() {
+			// TODO Auto-generated constructor stub
+		}
 
-		private final Map<Integer, Integer> attackSpeed = Maps.newMap();
+		final Map<Integer, Integer> moveSpeed = Maps.newMap();
 
-		private final Map<Integer, Integer> specialSpeed = Maps.newMap();
+		final Map<Integer, Integer> attackSpeed = Maps.newMap();
 
-		private int nodirSpellSpeed = 1200;
+		final Map<Integer, Integer> specialSpeed = Maps.newMap();
 
-		private int dirSpellSpeed = 1200;
+		int nodirSpellSpeed = 1200;
+
+		int dirSpellSpeed = 1200;
 	}
 
 	/** 提示信息 */

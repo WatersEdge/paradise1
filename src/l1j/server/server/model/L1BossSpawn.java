@@ -32,7 +32,7 @@ public class L1BossSpawn extends L1Spawn {
 		private final int _spawnNumber;
 		private final int _objectId;
 
-		private SpawnTask(final int spawnNumber, final int objectId) {
+		SpawnTask(final int spawnNumber, final int objectId) {
 			this._spawnNumber = spawnNumber;
 			this._objectId = objectId;
 		}

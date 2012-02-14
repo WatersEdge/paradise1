@@ -187,7 +187,7 @@ public class L1HauntedHouse {
 		this._winnersCount = i;
 	}
 
-	private void startHauntedHouse() {
+	void startHauntedHouse() {
 		this.setHauntedHouseStatus(STATUS_PLAYING);
 		final int membersCount = this.getMembersCount();
 		if (membersCount <= 4) {

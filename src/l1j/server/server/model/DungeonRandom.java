@@ -48,7 +48,7 @@ public class DungeonRandom {
 
 		int _heading;
 
-		private NewDungeonRandom(final int[] newX, final int[] newY, final short[] newMapId, final int heading) {
+		NewDungeonRandom(final int[] newX, final int[] newY, final short[] newMapId, final int heading) {
 			for (int i = 0; i < 5; i++) {
 				this._newX[i] = newX[i];
 				this._newY[i] = newY[i];

@@ -22,17 +22,17 @@ import l1j.server.server.utils.TimePeriod;
 public class L1SpawnTime {
 
 	public static class L1SpawnTimeBuilder {
-		private final int _spawnId;
+		final int _spawnId;
 
-		private Time _timeStart;
+		Time _timeStart;
 
-		private Time _timeEnd;
+		Time _timeEnd;
 
-		private Timestamp _periodStart;
+		Timestamp _periodStart;
 
-		private Timestamp _periodEnd;
+		Timestamp _periodEnd;
 
-		private boolean _isDeleteAtEndTime;
+		boolean _isDeleteAtEndTime;
 
 		public L1SpawnTimeBuilder(final int spawnId) {
 			this._spawnId = spawnId;
@@ -78,7 +78,7 @@ public class L1SpawnTime {
 
 	private final boolean _isDeleteAtEndTime;
 
-	private L1SpawnTime(final L1SpawnTimeBuilder builder) {
+	L1SpawnTime(final L1SpawnTimeBuilder builder) {
 		this._spawnId = builder._spawnId;
 		this._timeStart = builder._timeStart;
 		this._timeEnd = builder._timeEnd;

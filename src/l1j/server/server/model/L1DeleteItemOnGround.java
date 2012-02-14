@@ -64,7 +64,7 @@ public class L1DeleteItemOnGround {
 
 	private DeleteTimer _deleteTimer;
 
-	private static final Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
+	static final Logger _log = Logger.getLogger(L1DeleteItemOnGround.class.getName());
 
 	public L1DeleteItemOnGround() {
 	}
@@ -79,7 +79,7 @@ public class L1DeleteItemOnGround {
 	}
 
 	/** 删除道具 */
-	private void deleteItem() {
+	void deleteItem() {
 		int numOfDeleted = 0;
 		for (final L1Object obj : L1World.getInstance().getObject()) {
 			if (!(obj instanceof L1ItemInstance)) {

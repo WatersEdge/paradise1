@@ -254,6 +254,10 @@ public class L1NpcInstance extends L1Character {
 		 * 处理死亡等待定时器
 		 */
 		private class DeathSyncTimer extends TimerTask {
+			public DeathSyncTimer() {
+				// TODO Auto-generated constructor stub
+			}
+
 			@Override
 			public void run() {
 				if (L1NpcInstance.this.isDeathProcessing()) {
@@ -322,7 +326,7 @@ public class L1NpcInstance extends L1Character {
 	}
 
 	private static final long serialVersionUID = 1L;
-	private static Logger _log = Logger.getLogger(L1NpcInstance.class.getName());
+	static Logger _log = Logger.getLogger(L1NpcInstance.class.getName());
 	/** 移动速度 */
 	public static final int MOVE_SPEED = 0;
 	/** 攻击速度 */
@@ -362,7 +366,7 @@ public class L1NpcInstance extends L1Character {
 	// ■■■■■■■■■■■■■ ＡＩ关连 ■■■■■■■■■■■
 
 	/**  */
-	private L1MobSkillUse mobSkill;
+	L1MobSkillUse mobSkill;
 
 	/** 第一次发现对象。（用于传送） */
 	private boolean firstFound = true;
@@ -386,7 +390,7 @@ public class L1NpcInstance extends L1Character {
 	/**
 	 * 多（核心）处理器，支持为计时器池。定时器用于场合的AI类型实装。
 	 */
-	private static final TimerPool _timerPool = new TimerPool(4);
+	static final TimerPool _timerPool = new TimerPool(4);
 
 	/** 替代 */
 	public static void shuffle(final L1Object[] arr) {
@@ -425,20 +429,20 @@ public class L1NpcInstance extends L1Character {
 
 	private boolean _deathProcessing = false; // 死亡处理中か
 
-	private int _paralysisTime = 0; // Paralysis RestTime
+	int _paralysisTime = 0; // Paralysis RestTime
 
 	/** ＨＰ自然回复 */
-	private boolean _hprRunning = false;
+	boolean _hprRunning = false;
 
 	private HprTimer _hprTimer;
 
 	/** ＭＰ自然回复 */
-	private boolean _mprRunning = false;
+	boolean _mprRunning = false;
 
 	private MprTimer _mprTimer;
 
 	/** 消化项目 */
-	private Map<Integer, Integer> _digestItems;
+	Map<Integer, Integer> _digestItems;
 
 	/** 运行消化项目 */
 	public boolean _digestItemRunning = false;
@@ -2386,7 +2390,7 @@ public class L1NpcInstance extends L1Character {
 	}
 
 	/** ＡＩの处理 (返回ＡＩ处理是否结束) */
-	private boolean AIProcess() {
+	boolean AIProcess() {
 		this.setSleepTime(300);
 
 		this.checkTarget();

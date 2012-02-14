@@ -33,7 +33,11 @@ import l1j.server.server.utils.collections.Maps;
 public class InnTable {
 
 	private static class Inn {
-		private final Map<Integer, L1Inn> _inn = Maps.newMap();
+		public Inn() {
+			// TODO Auto-generated constructor stub
+		}
+
+		final Map<Integer, L1Inn> _inn = Maps.newMap();
 	}
 
 	private static Logger _log = Logger.getLogger(InnTable.class.getName());

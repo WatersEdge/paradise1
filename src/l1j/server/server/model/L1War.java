@@ -83,9 +83,9 @@ public class L1War {
 	}
 
 	/**  */
-	private String _param1 = null;
+	String _param1 = null;
 	/**  */
-	private String _param2 = null;
+	String _param2 = null;
 	/** 攻击方血盟名称 */
 	private final List<String> _attackClanList = Lists.newList();
 	/** 防守方血盟名称 */
@@ -96,10 +96,10 @@ public class L1War {
 	private L1Castle _castle = null;
 
 	/** 战争结束时间 */
-	private Calendar _warEndTime;
+	Calendar _warEndTime;
 
 	/** 删除战争定时器中 */
-	private boolean _isWarTimerDelete = false;
+	boolean _isWarTimerDelete = false;
 
 	public L1War() {
 	}
